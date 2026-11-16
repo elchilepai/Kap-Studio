@@ -9,6 +9,8 @@ import { canTransition, STATUS_LABEL } from "@/domain/workflow";
 import type { Job, ProductionStatus } from "@/domain/types";
 import { Settings } from "@/domain/types";
 import { today } from "@/lib/format";
+import { safeLocalPath } from "@/lib/security";
+import { audit } from "./audit";
 
 const now = () => new Date().toISOString();
 const refresh = () => revalidatePath("/", "layout");
@@ -36,7 +38,8 @@ export async function saveEntity(fd: FormData) {
   if (!parsed.success) throw new Error(parsed.error.issues.map((i) => `${i.path.join(".")}: ${i.message}`).join("; "));
   await repo.save(parsed.data);
   refresh();
-  const back = String(fd.get("_redirect") ?? "");
+  await audit(existing ? "entidad.editar" : "entidad.crear", `${def.key}:${(parsed.data as { id: string }).id}`);
+  const back = safeLocalPath(fd.get("_redirect"), "");
   if (back) redirect(back);
 }
 
@@ -53,8 +56,10 @@ export async function deleteEntity(entity: string, id: string, back?: string) {
     for (const r of (await storage.relationships.list()).filter((r) => r.fromId === id || r.toId === id)) await storage.relationships.remove(r.id);
   }
   await (storage as unknown as Record<string, { remove(id: string): Promise<void> }>)[def.collection as string].remove(id);
+  await audit("entidad.eliminar", `${def.key}:${id}`);
   refresh();
-  if (back) redirect(back);
+  const to = safeLocalPath(back, "");
+  if (to) redirect(to);
 }
 
 async function removeAsset(id: string) {
@@ -66,7 +71,7 @@ async function removeAsset(id: string) {
   for (const p of await storage.productions.list())
     if (p.videoAssetId === id) await storage.productions.save({ ...p, videoAssetId: undefined, updatedAt: now() });
 }
-export async function deleteAsset(id: string) { await removeAsset(id); refresh(); }
+export async function deleteAsset(id: string) { await removeAsset(id); await audit("asset.eliminar", id); refresh(); }
 
 /** Cambia la etapa de una producción respetando el flujo y sus precondiciones. */
 export async function transition(id: string, to: ProductionStatus, note = "") {
@@ -84,6 +89,7 @@ export async function transition(id: string, to: ProductionStatus, note = "") {
       decision: to === "APPROVED" ? "approve" : to === "REJECTED" ? "reject" : "changes",
     });
   }
+  await audit("produccion.transicion", id, `${p.status} → ${to}${note ? " · " + note : ""}`);
   refresh();
 }
 export async function transitionForm(fd: FormData) {
@@ -147,6 +153,7 @@ export async function saveSettings(fd: FormData) {
     channelUrl: String(fd.get("channelUrl") ?? "").trim(), publishWeekday: Number(fd.get("publishWeekday") ?? 5),
   });
   await getProviders().storage.settings.save(parsed);
+  await audit("ajustes.guardar");
   refresh();
 }
 export async function saveStory(fd: FormData) {

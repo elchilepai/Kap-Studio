@@ -5,7 +5,7 @@
  */
 import type {
   Asset, BibleEntry, CanonFact, Character, Cost, Evolution, Job, Place, Production,
-  Relationship, ReviewDecision, Settings, StoryEvent, StoryState,
+  ActivityEntry, Relationship, ReviewDecision, Settings, StoryEvent, StoryState,
 } from "@/domain/types";
 
 export interface Repository<T extends { id: string }> {
@@ -13,6 +13,12 @@ export interface Repository<T extends { id: string }> {
   get(id: string): Promise<T | undefined>;
   save(item: T): Promise<T>;
   remove(id: string): Promise<void>;
+}
+
+/** Registro de actividad append-only (auditoría). */
+export interface ActivityLog {
+  record(e: Omit<ActivityEntry, "id" | "ts">): Promise<void>;
+  recent(limit?: number): Promise<ActivityEntry[]>;
 }
 
 export interface Storage {
@@ -30,6 +36,7 @@ export interface Storage {
   costs: Repository<Cost>;
   story: Repository<StoryState>;
   settings: Repository<Settings>;
+  activity: ActivityLog;
 }
 
 export interface ScriptContext {

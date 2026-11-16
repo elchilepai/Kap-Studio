@@ -15,7 +15,11 @@ export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }
   let size: number;
   try { size = (await fsp.stat(file)).size; } catch { return new Response("No encontrado", { status: 404 }); }
   const type = a.mime || "application/octet-stream";
-  const base = { "Content-Type": type, "Accept-Ranges": "bytes", "Cache-Control": "private, max-age=3600" };
+  const base = {
+    "Content-Type": type, "Accept-Ranges": "bytes", "Cache-Control": "private, max-age=3600",
+    "X-Content-Type-Options": "nosniff", "Content-Security-Policy": "sandbox; default-src 'none'",
+    "Content-Disposition": "inline", "Cross-Origin-Resource-Policy": "same-origin",
+  };
   const range = req.headers.get("range");
   const m = range && /bytes=(\d*)-(\d*)/.exec(range);
   if (m) {

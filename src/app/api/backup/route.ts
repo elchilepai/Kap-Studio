@@ -1,8 +1,10 @@
 import { getProviders } from "@/server/providers";
+import { audit } from "@/server/audit";
 import { STORAGE_COLLECTIONS } from "@/adapters/local/sqlite-storage";
 
 export async function GET() {
   const st = getProviders().storage as unknown as Record<string, { list(): Promise<unknown[]> }>;
+  await audit("backup.descarga");
   const out: Record<string, unknown[]> = {};
   for (const c of STORAGE_COLLECTIONS) out[c] = await st[c].list();
   return new Response(JSON.stringify({ app: "kap-studio", exportedAt: new Date().toISOString(), data: out }, null, 2), {

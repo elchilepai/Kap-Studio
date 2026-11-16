@@ -1,13 +1,15 @@
 import path from "node:path";
 import type { Providers } from "@/ports";
+import { env } from "./env";
 import { createSqliteStorage } from "@/adapters/local/sqlite-storage";
 
 const notAvailable = (what: string) => async () => {
   throw new Error(`${what}: adaptador no configurado todavía`);
 };
 
-export const DATA_DIR = path.resolve(/*turbopackIgnore: true*/ process.env.KAP_DATA_DIR ?? "./data");
+export const DATA_DIR = path.resolve(/*turbopackIgnore: true*/ env().KAP_DATA_DIR);
 export const MEDIA_DIR = path.join(DATA_DIR, "media");
+export const TMP_DIR = path.join(DATA_DIR, "tmp");
 
 const g = globalThis as unknown as { __kapProviders?: Providers };
 

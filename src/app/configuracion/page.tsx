@@ -31,7 +31,7 @@ export default async function Configuracion() {
           <p className="muted small">Variables previstas: <code>YOUTUBE_OAUTH_CLIENT_ID</code>, <code>YOUTUBE_OAUTH_CLIENT_SECRET</code> (ver .env.example).</p></div>
         <div className="card stack"><h2><Database className="i" />Datos</h2>
           <p className="muted small">Base de datos local SQLite y archivos en <code>{DATA_DIR}</code>. Los datos persisten entre reinicios.</p>
-          <div className="row"><a className="btn" href="/api/backup"><Download className="i" />Descargar copia (JSON)</a></div></div>
+          <div className="row"><a className="btn" href="/api/backup"><Download className="i" />Descargar copia (JSON)</a><a className="btn" href="/actividad">Registro de actividad</a></div></div>
       </div>
     </>
   );

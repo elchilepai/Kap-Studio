@@ -121,3 +121,9 @@ export const Settings = z.object({
   channelUrl: z.string().default(""), publishWeekday: z.number().int().min(1).max(7).default(5),
 });
 export type Settings = z.infer<typeof Settings>;
+
+export const ActivityEntry = z.object({
+  id: z.number().optional(), ts: z.string(), actor: z.string(), action: z.string(),
+  target: z.string().optional(), detail: z.string().optional(), ip: z.string().optional(),
+});
+export type ActivityEntry = z.infer<typeof ActivityEntry>;

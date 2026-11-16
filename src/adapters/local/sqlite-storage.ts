@@ -1,7 +1,9 @@
 import { DatabaseSync } from "node:sqlite";
 import fs from "node:fs";
 import path from "node:path";
-import type { Repository, Storage } from "@/ports";
+import type { ActivityLog, Repository, Storage } from "@/ports";
+import type { ActivityEntry } from "@/domain/types";
+import { migrate } from "./migrations";
 
 export const STORAGE_COLLECTIONS = [
   "productions", "characters", "canon", "assets", "jobs", "reviews", "bible",
@@ -10,12 +12,13 @@ export const STORAGE_COLLECTIONS = [
 
 /** Almacenamiento persistente local en SQLite (módulo integrado de Node, sin servicios externos). */
 export function createSqliteStorage(dbPath: string): Storage & { db: DatabaseSync } {
-  fs.mkdirSync(path.dirname(dbPath), { recursive: true });
+  const inMemory = dbPath === ":memory:";
+  if (!inMemory) fs.mkdirSync(path.dirname(dbPath), { recursive: true, mode: 0o700 });
   const db = new DatabaseSync(dbPath);
+  if (!inMemory) { try { fs.chmodSync(dbPath, 0o600); } catch { /* best effort */ } }
   db.exec("PRAGMA journal_mode = WAL");
-  db.exec(`CREATE TABLE IF NOT EXISTS docs (
-    collection TEXT NOT NULL, id TEXT NOT NULL, data TEXT NOT NULL,
-    PRIMARY KEY (collection, id))`);
+  db.exec("PRAGMA busy_timeout = 5000");
+  migrate(db);
 
   const repo = <T extends { id: string }>(c: string): Repository<T> => ({
     async list() {
@@ -35,7 +38,21 @@ export function createSqliteStorage(dbPath: string): Storage & { db: DatabaseSyn
     },
   });
 
-  const s = { db } as Record<string, unknown>;
+  const activity: ActivityLog = {
+    async record(e) {
+      db.prepare("INSERT INTO activity_log (ts, actor, action, target, detail, ip) VALUES (?, ?, ?, ?, ?, ?)")
+        .run(new Date().toISOString(), e.actor, e.action, e.target ?? null, e.detail ?? null, e.ip ?? null);
+    },
+    async recent(limit = 50) {
+      return db.prepare("SELECT id, ts, actor, action, target, detail, ip FROM activity_log ORDER BY id DESC LIMIT ?").all(limit)
+        .map((r) => {
+          const x = r as Record<string, unknown>;
+          return { id: x.id, ts: x.ts, actor: x.actor, action: x.action, target: x.target ?? undefined, detail: x.detail ?? undefined, ip: x.ip ?? undefined } as ActivityEntry;
+        });
+    },
+  };
+
+  const s = { db, activity } as Record<string, unknown>;
   for (const c of STORAGE_COLLECTIONS) s[c] = repo(c);
   return s as unknown as Storage & { db: DatabaseSync };
 }
