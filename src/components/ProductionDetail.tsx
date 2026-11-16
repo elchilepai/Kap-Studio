@@ -7,6 +7,7 @@ import { EntityForm } from "./EntityPanel";
 import SubmitButton from "./SubmitButton";
 import { Notice, PageHeader, Pipeline, StatusBadge, Empty } from "./ui";
 import { deleteEntity, setParent } from "@/server/actions";
+import GenerateCard from "./GenerateCard";
 import { fmtBytes, fmtDate, fmtDuration } from "@/lib/format";
 
 export default async function ProductionDetail({ id, kind, error }: { id: string; kind: "episode" | "short"; error?: string }) {
@@ -37,6 +38,8 @@ export default async function ProductionDetail({ id, kind, error }: { id: string
 
       <div className="cols">
         <div className="stack">
+          {kind === "episode" && <GenerateCard p={p} />}
+          {kind === "short" && p.scenes.length > 0 && <div className="card"><Link href={`/shorts/${p.id}/escenas`} className="btn">Revisar / corregir escenas ({p.scenes.length})</Link></div>}
           <div className="card"><h2>Datos</h2>
             <EntityForm entity="production" doc={p as never} hidden={{ _kind: kind }} redirectTo={here} />
             {kind === "short" && (

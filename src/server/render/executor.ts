@@ -3,6 +3,7 @@ import type { Storage } from "@/ports";
 import { dimensions } from "./presets";
 import { RenderError, ffprobe } from "./ffmpeg";
 import { renderSlate } from "./slate";
+import { produce, type ProduceDeps } from "@/server/studio/produce";
 import type { Executor } from "./queue";
 
 /** Comprueba que la salida es exactamente lo prometido: H.264 + AAC, yuv420p, dimensiones y duración. */
@@ -18,10 +19,13 @@ export async function validateOutput(file: string, expect: { width: number; heig
   return p;
 }
 
-export function createExecutor(storage: Storage, cfg: { threads: number; concurrency: number }): Executor {
+export function createExecutor(storage: Storage, cfg: { threads: number; concurrency: number; studio?: Omit<ProduceDeps, "storage" | "threads"> }): Executor {
   const threads = cfg.threads || Math.max(1, Math.floor(os.cpus().length / cfg.concurrency));
   return async (job, ctx) => {
-    if (job.kind !== "slate") throw new RenderError(`El renderizado de «${job.kind}» se implementa en la subfase B (composición de escenas)`, false);
+    if (job.kind !== "slate") {
+      if (!cfg.studio) throw new RenderError(`El renderizado de «${job.kind}» no está configurado`, false);
+      return produce(job, ctx, { ...cfg.studio, storage, threads });
+    }
     const prod = job.productionId ? await storage.productions.get(job.productionId) : undefined;
     if (job.productionId && !prod) throw new RenderError("La producción asociada ya no existe", false);
     const title = String(job.params.title ?? prod?.title ?? "KAP");

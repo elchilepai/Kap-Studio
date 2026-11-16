@@ -12,6 +12,8 @@ export type Executor = (job: RenderJob, ctx: ExecContext) => Promise<ExecResult>
 export type QueueDeps = {
   store: RenderStore; storage: Storage; execute: Executor; mediaDir: string; tmpRoot: string;
   concurrency: number; timeoutMs: number; minFreeMb: number;
+  /** Se llama tras registrar el vídeo y antes de marcar el trabajo como completado. Sus errores no tumban el render. */
+  afterSuccess?: (job: RenderJob, assetId: string) => Promise<void>;
   workerId?: string; pollMs?: number; heartbeatMs?: number; staleMs?: number; backoffMs?: (attempt: number) => number; tempTtlMs?: number;
 };
 
@@ -106,6 +108,7 @@ export class RenderQueue {
         name: `render-${job.format.replace(":", "x")}-${job.quality}.mp4`, mime: "video/mp4", size: out.sizeBytes,
         durationSec: out.durationSec, width: out.width, height: out.height, hasAudio: true,
       });
+      try { await this.d.afterSuccess?.(job, assetId); } catch (e) { console.error("[render] afterSuccess:", e); }
       await fs.rm(tmpDir, { recursive: true, force: true }).catch(() => {}); // el temporal se borra ANTES de declarar el trabajo terminado
       await store.finish(job.id, { status: "done", now: Date.now(), outputAssetId: assetId, result: { durationSec: out.durationSec, width: out.width, height: out.height, sizeBytes: out.sizeBytes } });
     } catch (e) {

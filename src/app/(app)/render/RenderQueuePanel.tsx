@@ -9,7 +9,7 @@ type Job = Omit<RenderJob, "params" | "worker"> & { productionLabel?: string };
 type Payload = { now: number; counts: { queued: number; running: number }; jobs: Job[] };
 
 const fmtDur = (ms: number) => { const s = Math.max(0, Math.round(ms / 1000)); return s >= 60 ? `${Math.floor(s / 60)} min ${s % 60} s` : `${s} s`; };
-const KIND: Record<string, string> = { slate: "Tarjeta de prueba", episode: "Episodio", short: "Short" };
+const KIND: Record<string, string> = { slate: "Tarjeta de prueba", episode: "Episodio", short: "Short", preview: "Vista previa de escena" };
 
 export default function RenderQueuePanel({ initial }: { initial: Payload }) {
   const [data, setData] = useState<Payload>(initial);
@@ -63,7 +63,7 @@ export default function RenderQueuePanel({ initial }: { initial: Payload }) {
               <div>
                 <div className="bar" role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100}><i style={{ width: `${pct}%` }} /></div>
                 <div className="row between small muted" style={{ marginTop: 6 }}>
-                  <span>{j.status === "queued" ? "Esperando turno…" : `${pct}%`}</span>
+                  <span>{j.status === "queued" ? "Esperando turno…" : j.status === "running" && j.log ? `${j.log} · ${pct}%` : `${pct}%`}</span>
                   <span>{j.status === "running" ? `${fmtDur(elapsed)}${eta !== null ? ` · quedan ≈ ${fmtDur(eta)}` : ""}` : j.status === "done" && j.result ? `${j.result.width}×${j.result.height} · ${j.result.durationSec.toFixed(1)} s · ${(j.result.sizeBytes / 1048576).toFixed(1)} MB` : ""}</span>
                 </div>
               </div>

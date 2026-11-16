@@ -16,10 +16,24 @@ export const Character = z.object({
 });
 export type Character = z.infer<typeof Character>;
 
+export const Transition = z.enum(["cut", "fade", "fadeblack", "dissolve", "slideleft", "slideright", "wipeleft", "circleopen"]);
+export type Transition = z.infer<typeof Transition>;
 export const Scene = z.object({
-  id: Id, order: z.number().int(), location: z.string(), summary: z.string(),
+  id: Id, order: z.number().int(), location: z.string().default(""), summary: z.string().default(""),
   characterIds: z.array(Id).default([]), dialogue: z.string().default(""),
   durationSec: z.number().nonnegative().default(0),
+  // --- generado por el pipeline automático (el editor solo corrige estos campos) ---
+  title: z.string().default(""),
+  /** Texto en orden de lectura: speaker vacío = narrador. Es la fuente de verdad de la voz y los subtítulos. */
+  lines: z.array(z.object({ speaker: z.string().optional(), text: z.string() })).default([]),
+  narration: z.string().default(""),   // derivado: líneas del narrador (para mostrar)
+  visualHint: z.string().default(""), mood: z.string().default(""),
+  tags: z.array(z.string()).default([]),
+  visualAssetId: Id.optional(), visualSource: z.enum(["manual", "directive", "memory", "library", "character", "card"]).optional(),
+  narrationAssetId: Id.optional(), sfxAssetId: Id.optional(),
+  transition: Transition.default("fade"), motion: z.enum(["kenburns", "static"]).default("kenburns"),
+  durationSource: z.enum(["audio", "estimated", "manual"]).default("estimated"),
+  locked: z.boolean().default(false), // escena corregida a mano: el pipeline no la sobrescribe
 });
 export type Scene = z.infer<typeof Scene>;
 
@@ -30,6 +44,10 @@ export const Asset = z.object({
   name: z.string().default(""), mime: z.string().default(""), size: z.number().default(0),
   // metadatos reales (ffprobe), si están disponibles
   durationSec: z.number().optional(), width: z.number().optional(), height: z.number().optional(), hasAudio: z.boolean().optional(),
+  // uso en la producción automática
+  role: z.enum(["background", "character", "narration", "music", "sfx", "other"]).optional(),
+  tags: z.array(z.string()).optional(),
+  attribution: z.string().optional(), // autoría/URL de la licencia (obligatoria para música ajena)
 });
 export type Asset = z.infer<typeof Asset>;
 
@@ -52,6 +70,9 @@ export const Production = z.object({
   producedAt: z.string().optional(),   // YYYY-MM-DD
   videoAssetId: Id.optional(),         // vídeo adjunto para revisión
   publishedUrl: z.string().optional(),
+  generated: z.boolean().default(false),     // creado automáticamente por el pipeline (p. ej. Shorts derivados)
+  brief: z.string().default(""),            // petición libre del usuario para «Generar episodio»
+  musicAssetId: Id.optional(),               // pista de música elegida
   publishedAt: z.string().optional(),
   createdAt: z.string(), updatedAt: z.string(),
 });
@@ -98,6 +119,7 @@ export type StoryEvent = z.infer<typeof StoryEvent>;
 
 export const Place = z.object({
   id: Id, name: z.string().min(1), description: z.string().default(""), createdAt: z.string(),
+  visualAssetId: Id.optional(), // imagen canónica del lugar: se reutiliza en todos los episodios
 });
 export type Place = z.infer<typeof Place>;
 
@@ -121,6 +143,8 @@ export type StoryState = z.infer<typeof StoryState>;
 export const Settings = z.object({
   id: z.literal("settings"), channelName: z.string().default("KAP"),
   channelUrl: z.string().default(""), publishWeekday: z.number().int().min(1).max(7).default(5),
+  subtitlesEnabled: z.boolean().default(true), subtitleScale: z.number().min(0.6).max(1.8).default(1),
+  subtitlePosition: z.enum(["bottom", "center", "top"]).default("bottom"),
 });
 export type Settings = z.infer<typeof Settings>;
 

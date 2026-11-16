@@ -3,6 +3,7 @@ import { getProviders } from "@/server/providers";
 import { Empty, Notice, PageHeader } from "@/components/ui";
 import SubmitButton from "@/components/SubmitButton";
 import { deleteAsset } from "@/server/actions";
+import { setAssetMeta } from "@/server/studio-actions";
 import { fmtBytes, fmtDate } from "@/lib/format";
 import Link from "next/link";
 
@@ -39,6 +40,16 @@ export default async function Biblioteca({ searchParams }: { searchParams: Promi
             <div className="thumb">{a.kind === "image" ? <img src={`/api/media/${a.id}`} alt={a.name} loading="lazy" /> : a.kind === "video" ? <video src={`/api/media/${a.id}#t=0.1`} preload="metadata" playsInline controls /> : a.kind === "audio" ? <audio controls src={`/api/media/${a.id}`} /> : <Icon className="i" />}</div>
             <div><div className="t" style={{ overflowWrap: "anywhere", fontWeight: 600 }}>{a.name || a.path}</div>
               <div className="small muted">{a.kind}{a.width ? ` · ${a.width}×${a.height}` : ""}{a.durationSec ? ` · ${a.durationSec.toFixed(1)} s` : ""} · {fmtBytes(a.size)} · {fmtDate(a.createdAt)} · {a.license}{a.origin === "generated" ? " · generado" : ""}{used.has(a.id) ? " · en uso" : ""}</div></div>
+            {a.kind !== "subtitle" && (
+              <details className="acc"><summary className="small">Uso en producción{a.role ? ` · ${a.role}` : ""}{a.tags?.length ? ` · ${a.tags.join(", ")}` : ""}</summary>
+                <div className="body"><form action={setAssetMeta} className="stack"><input type="hidden" name="id" value={a.id} />
+                  <div className="field"><label htmlFor={`r${a.id}`}>Rol</label><select id={`r${a.id}`} name="role" defaultValue={a.role ?? "other"}>
+                    <option value="background">Fondo / escena</option><option value="character">Personaje</option><option value="narration">Narración</option><option value="music">Música</option><option value="sfx">Efecto de sonido</option><option value="other">Otro</option></select></div>
+                  <div className="field"><label htmlFor={`g${a.id}`}>Etiquetas (lugar, personaje, ánimo…)</label><input id={`g${a.id}`} name="tags" defaultValue={(a.tags ?? []).join(", ")} placeholder="refugio, noche" /></div>
+                  <div className="field"><label htmlFor={`c${a.id}`}>Licencia</label><input id={`c${a.id}`} name="license" defaultValue={a.license} /></div>
+                  <div className="field"><label htmlFor={`a${a.id}`}>Autoría / URL de la licencia</label><input id={`a${a.id}`} name="attribution" defaultValue={a.attribution ?? ""} /></div>
+                  <div className="row"><SubmitButton className="btn sm primary">Guardar</SubmitButton></div></form>
+                  <p className="small muted" style={{ marginTop: 8 }}>La música exige una licencia indicada. Las etiquetas permiten asignar este recurso automáticamente a las escenas.</p></div></details>)}
             <form action={deleteAsset.bind(null, a.id)}><SubmitButton className="btn danger sm" confirm="¿Eliminar este archivo?"><Trash2 className="i" />Eliminar</SubmitButton></form>
           </div>); })}</div>
       )}

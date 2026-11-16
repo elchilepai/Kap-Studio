@@ -12,6 +12,7 @@ const notAvailable = (what: string) => async () => {
 export const DATA_DIR = path.resolve(/*turbopackIgnore: true*/ env().KAP_DATA_DIR);
 export const MEDIA_DIR = path.join(DATA_DIR, "media");
 export const TMP_DIR = path.join(DATA_DIR, "tmp");
+export const CACHE_DIR = path.join(DATA_DIR, "cache"); // clips y locuciones reutilizables entre renders
 
 const g = globalThis as unknown as { __kapProviders?: Providers };
 

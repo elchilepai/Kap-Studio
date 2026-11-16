@@ -8,6 +8,7 @@ import { PageHeader, Notice } from "@/components/ui";
 import SubmitButton from "@/components/SubmitButton";
 import { enqueueRender } from "@/server/render-actions";
 import RenderQueuePanel from "./RenderQueuePanel";
+import { describeCapabilities } from "@/server/studio/capabilities";
 
 export const metadata = { title: "Renderizador" };
 
@@ -18,7 +19,8 @@ const Cap = ({ ok, children }: { ok: boolean; children: React.ReactNode }) => (
 export default async function RenderPage() {
   getRenderQueue();
   const { render } = getProviders();
-  const [cap, prods, jobs, counts] = await Promise.all([getCapabilities(), allProductions(), render.list(60), render.countActive()]);
+  const [cap, prods, jobs, counts, rows] = await Promise.all([getCapabilities(), allProductions(), render.list(60), render.countActive(), describeCapabilities()]);
+  const AREA: Record<string, string> = { guion: "Guion", voz: "Voz", imagen: "Imagen", musica: "Música", video: "Vídeo" };
   const e = env();
   return (
     <>
@@ -32,7 +34,7 @@ export default async function RenderPage() {
           {cap.problems.length > 0 && <ul className="small" style={{ color: "var(--err)", margin: 0, paddingLeft: 18 }}>{cap.problems.map((p) => <li key={p}>{p}</li>)}</ul>}
         </div>
         <div className="card stack"><h2><PlayCircle className="i" />Nuevo render</h2>
-          <p className="small muted">Subfase A: genera una tarjeta real de título para validar el motor. La composición de escenas llega en la subfase B.</p>
+          <p className="small muted">Prueba del motor con una tarjeta de título. Para producir un episodio completo usa «Generar episodio» en su ficha.</p>
           <form action={enqueueRender} className="stack">
             <div className="form">
               <div className="field"><label htmlFor="rf">Formato</label><select id="rf" name="format" defaultValue="16:9"><option value="16:9">16:9 · YouTube</option><option value="9:16">9:16 · Shorts / TikTok</option></select></div>
@@ -44,6 +46,13 @@ export default async function RenderPage() {
           </form>
         </div>
       </div>
+      <details className="acc" style={{ marginBottom: 16 }}>
+        <summary><Cpu className="i kap" />Capacidades de producción automática: qué está conectado y qué no</summary>
+        <div className="body"><ul className="list">{rows.map((r) => (
+          <li key={r.area + r.id} className="item"><div style={{ minWidth: 0 }}><div className="t">{AREA[r.area]} · {r.label}</div><div className="s">{r.detail}</div></div>
+            <span className={`badge ${r.available ? "ok" : ""}`}>{r.available ? (r.free ? "Disponible · gratis" : "Disponible") : "No conectado"}</span></li>))}</ul>
+          <p className="small muted" style={{ marginTop: 10 }}>Lo marcado «No conectado» no se simula: el pipeline funciona con lo disponible y deja los puertos listos para conectar proveedores gratuitos de IA, voz o imagen.</p></div>
+      </details>
       <h2>Cola de trabajos</h2>
       <RenderQueuePanel initial={{ now: Date.now(), counts, jobs: jobs.map((j) => ({ ...j, params: undefined, worker: undefined, productionLabel: prods.find((p) => p.id === j.productionId) ? label(prods.find((p) => p.id === j.productionId)!) : undefined })) as never }} />
     </>
