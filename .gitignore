@@ -1,7 +1,7 @@
 node_modules
 .next
-data/*.db
-data/media
+# Datos locales (base SQLite + WAL/SHM, vídeos, caché, temporales): nunca se versionan
+data/
 .env*
 !.env.example
 *.tsbuildinfo
