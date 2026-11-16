@@ -14,7 +14,7 @@ const SRC: Record<string, string> = { manual: "elegida a mano", directive: "seg�
 const TRANSITIONS: [string, string][] = [["fade", "Fundido"], ["fadeblack", "Fundido a negro"], ["dissolve", "Disolución"], ["slideleft", "Deslizar ←"], ["slideright", "Deslizar →"], ["wipeleft", "Cortinilla"], ["circleopen", "Círculo"], ["cut", "Corte"]];
 
 /** Editor de escenas: herramienta SECUNDARIA para revisar y corregir lo que el pipeline ha generado. */
-export default async function SceneEditor({ id, kind }: { id: string; kind: "episode" | "short" }) {
+export default async function SceneEditor({ id, kind, error }: { id: string; kind: "episode" | "short"; error?: string }) {
   const { storage, render } = getProviders();
   const p = await storage.productions.get(id);
   if (!p || p.kind !== kind) notFound();
@@ -38,6 +38,7 @@ export default async function SceneEditor({ id, kind }: { id: string; kind: "epi
       <PageHeader title="Editor de escenas" sub={`${p.scenes.length} escenas · ${fmtDuration(Math.round(total))} · herramienta de revisión`}>
         <form action={addScene}>{hidden}<SubmitButton className="btn sm"><Plus className="i" />Añadir escena</SubmitButton></form>
       </PageHeader>
+      {error && <Notice kind="err">{error}</Notice>}
       <Notice><span>El vídeo se <b>genera automáticamente</b> desde la ficha del episodio. Aquí solo corriges lo generado: al guardar una escena queda <Lock className="i" size={13} style={{ verticalAlign: -2 }} /> bloqueada y el pipeline no la sobrescribe. Al volver a componer solo se renderizan las escenas modificadas.</span></Notice>
 
       <div className="grid" style={{ marginBottom: 16 }}>

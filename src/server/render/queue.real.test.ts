@@ -79,9 +79,9 @@ describe("cola + FFmpeg real (de principio a fin)", () => {
     const j = (await t.store.get("x"))!; expect(j.attempts).toBe(1); expect(j.error).toMatch(/ya no existe/);
   }, 20_000);
 
-  it("tipos aún no implementados fallan con un mensaje claro", async () => {
+  it("un tipo de trabajo sin el estudio configurado falla con un mensaje claro", async () => {
     const t = await setup(); await t.add("ep", { kind: "episode" }); t.q.start();
     await waitFor(async () => (await status(t, "ep")) === "failed");
-    expect((await t.store.get("ep"))?.error).toMatch(/subfase B/);
+    expect((await t.store.get("ep"))?.error).toMatch(/no está configurado/);
   }, 20_000);
 });

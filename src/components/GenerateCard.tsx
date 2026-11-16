@@ -35,7 +35,7 @@ export default async function GenerateCard({ p }: { p: Production }) {
       )}
 
       <form action={generateEpisode} className="stack">
-        <input type="hidden" name="id" value={p.id} /><input type="hidden" name="_redirect" value="/render" />
+        <input type="hidden" name="id" value={p.id} /><input type="hidden" name="_redirect" value="/render" /><input type="hidden" name="_errorTo" value={`/episodios/${p.id}`} />
         <div className="field wide"><label htmlFor="brief">Petición (opcional)</label>
           <textarea id="brief" name="brief" defaultValue={p.brief} style={{ minHeight: 72 }} placeholder="Ej.: episodio de 5 minutos, 3 shorts, tono oscuro" />
           {hints.recognized.length > 0 && <div className="small muted">Reconocido: {hints.recognized.join(" · ")}. El resto del texto se guarda, pero no se interpreta hasta conectar un proveedor de IA.</div>}
@@ -52,7 +52,7 @@ export default async function GenerateCard({ p }: { p: Production }) {
       </form>
 
       <div className="row">
-        <form action={analyzeScript}><input type="hidden" name="id" value={p.id} /><SubmitButton className="btn sm"><ListChecks className="i" />Solo analizar el guion</SubmitButton></form>
+        <form action={analyzeScript}><input type="hidden" name="id" value={p.id} /><input type="hidden" name="_errorTo" value={`/episodios/${p.id}`} /><SubmitButton className="btn sm"><ListChecks className="i" />Solo analizar el guion</SubmitButton></form>
         {p.scenes.length > 0 && <Link href={`/episodios/${p.id}/escenas`} className="btn sm">Revisar / corregir escenas ({p.scenes.length})</Link>}
       </div>
 

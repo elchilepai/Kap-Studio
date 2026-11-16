@@ -80,7 +80,8 @@ describe.skipIf(!hasTts)("pipeline automático REAL de principio a fin (FFmpeg +
     expect(ep.scenes[0]).toMatchObject({ visualSource: "directive", visualAssetId: "img-refugio", transition: "fadeblack" });
     expect(ep.scenes[1]).toMatchObject({ visualSource: "library", visualAssetId: "img-azotea" });
     expect(ep.scenes.filter((s) => s.visualSource === "card").length).toBe(10);   // sin recurso: tarjetas, no se inventa nada
-    expect((await st.places.list()).map((p) => p.name).sort()).toEqual(["Azotea", "Refugio"]); // memoria visual creada
+    // memoria visual: solo la asignación por biblioteca fija la imagen canónica de un lugar (una directiva [imagen:] es puntual)
+    const places = await st.places.list(); expect(places.map((p) => p.name)).toEqual(["Azotea"]); expect(places[0].visualAssetId).toBe("img-azotea");
 
     // vídeo real
     const v = (await st.assets.get(ep.videoAssetId!))!; const p = await ffprobe(path.join(media(), v.path));

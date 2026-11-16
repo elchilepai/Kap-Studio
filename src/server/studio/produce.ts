@@ -126,7 +126,7 @@ export async function produce(job: RenderJob, ctx: ExecContext, d: ProduceDeps):
     for (const old of await st.assets.list()) if (old.origin === "generated" && old.role === "other" && old.name.startsWith(`subs-${prod.id}`)) { await fs.rm(path.join(d.mediaDir, path.basename(old.path)), { force: true }); await st.assets.remove(old.id); }
     const ids: string[] = [];
     for (const [ext, body, mime] of [["srt", toSRT(global), "text/plain"], ["vtt", toVTT(global), "text/vtt"]] as const) {
-      const id = crypto.randomUUID(); await fs.writeFile(path.join(d.mediaDir, `${id}.${ext}`), body, { mode: 0o600 });
+      const id = crypto.randomUUID(); await fs.writeFile(path.join(/*turbopackIgnore: true*/ d.mediaDir, `${id}.${ext}`), body, { mode: 0o600 });
       await st.assets.save({ id, kind: "subtitle", path: `${id}.${ext}`, origin: "generated", license: "propio", createdAt: now(), name: `subs-${prod.id}.${ext}`, mime, size: Buffer.byteLength(body), role: "other" }); ids.push(id);
     }
     if (cur) await st.productions.save({ ...cur, assetIds: [...new Set([...cur.assetIds.filter((a) => !ids.includes(a)), ...ids])], updatedAt: now() });

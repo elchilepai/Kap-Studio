@@ -16,7 +16,8 @@ const Cap = ({ ok, children }: { ok: boolean; children: React.ReactNode }) => (
   <span className={`badge ${ok ? "ok" : "err"}`}>{ok ? <CheckCircle2 className="i" size={12} /> : <XCircle className="i" size={12} />}{children}</span>
 );
 
-export default async function RenderPage() {
+export default async function RenderPage({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
+  const q = await searchParams;
   getRenderQueue();
   const { render } = getProviders();
   const [cap, prods, jobs, counts, rows] = await Promise.all([getCapabilities(), allProductions(), render.list(60), render.countActive(), describeCapabilities()]);
@@ -25,6 +26,7 @@ export default async function RenderPage() {
   return (
     <>
       <PageHeader title="Renderizador" sub="Motor FFmpeg local · MP4 H.264 + AAC · cola persistente" />
+      {q.error && <Notice kind="err">{q.error}</Notice>}
       {!cap.ok && <Notice kind="err">El motor no está disponible: {cap.problems.join("; ")}</Notice>}
       <div className="grid" style={{ marginBottom: 16 }}>
         <div className="card stack"><h2><Cpu className="i" />Motor</h2>
