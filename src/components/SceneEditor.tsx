@@ -43,7 +43,7 @@ export default async function SceneEditor({ id, kind, error }: { id: string; kin
 
       <div className="grid" style={{ marginBottom: 16 }}>
         <div className="card stack"><h2><Repeat2 className="i" />Volver a componer</h2>
-          <form action={recompose} className="stack">{hidden}
+          <form action={recompose} className="stack"><input type="hidden" name="id" value={p.id} /><input type="hidden" name="_redirect" value="/render" /><input type="hidden" name="_errorTo" value={here} />
             <div className="form">
               <div className="field"><label htmlFor="rq">Resolución</label><select id="rq" name="quality" defaultValue="720p"><option value="480p">480p</option><option value="720p">720p</option><option value="1080p">1080p</option></select></div>
               <div className="field"><label htmlFor="rv">Narración</label><select id="rv" name="voice" defaultValue="none"><option value="none">Sin voz / audios subidos</option><option value="espeak" disabled={!tts}>{tts ? "Voz local eSpeak" : "Voz local no instalada"}</option></select></div>
