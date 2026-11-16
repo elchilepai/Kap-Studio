@@ -28,6 +28,8 @@ export const Asset = z.object({
   path: z.string(), origin: z.enum(["uploaded", "generated", "stock"]),
   license: z.string().default("propio"), createdAt: z.string(),
   name: z.string().default(""), mime: z.string().default(""), size: z.number().default(0),
+  // metadatos reales (ffprobe), si están disponibles
+  durationSec: z.number().optional(), width: z.number().optional(), height: z.number().optional(), hasAudio: z.boolean().optional(),
 });
 export type Asset = z.infer<typeof Asset>;
 

@@ -9,6 +9,15 @@ const Schema = z.object({
   KAP_MAX_UPLOAD_MB: z.coerce.number().int().min(1).max(20000).default(1024),
   KAP_TEMP_TTL_HOURS: z.coerce.number().min(0.1).default(24),
   NODE_ENV: z.string().default("development"),
+  // --- Motor de renderizado (FFmpeg local) ---
+  KAP_FFMPEG_PATH: z.string().default("ffmpeg"),
+  KAP_FFPROBE_PATH: z.string().default("ffprobe"),
+  KAP_FONT_FILE: z.string().optional(),              // fuente para títulos/subtítulos; si falta se busca Inter/DejaVu
+  KAP_RENDER_CONCURRENCY: z.coerce.number().int().min(1).max(4).default(1),
+  KAP_FFMPEG_THREADS: z.coerce.number().int().min(0).max(64).default(0), // 0 = automático (CPUs / concurrencia)
+  KAP_RENDER_TIMEOUT_MIN: z.coerce.number().min(0.05).max(720).default(90),
+  KAP_RENDER_MAX_ATTEMPTS: z.coerce.number().int().min(1).max(5).default(2),
+  KAP_MIN_FREE_MB: z.coerce.number().int().min(0).default(1024), // espacio libre mínimo para empezar un render
   // true solo si la app corre detrás de un proxy/CDN de confianza que fija X-Forwarded-For.
   KAP_TRUST_PROXY: z.enum(["true", "false"]).default("false").transform((v) => v === "true"),
   // Cookie "Secure": por defecto activa en producción. Solo "false" para pruebas locales sin HTTPS.

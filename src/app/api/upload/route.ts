@@ -13,6 +13,7 @@ import { audit } from "@/server/audit";
 import { cleanOldTemp } from "@/server/tmp";
 import { isSameOrigin, safeLocalPath } from "@/lib/security";
 import { sniff } from "@/lib/sniff";
+import { ffprobe, getCapabilities, type ProbeResult } from "@/server/render/ffmpeg";
 
 export const runtime = "nodejs";
 
@@ -61,6 +62,15 @@ export async function POST(req: Request) {
   const kind = sniff(parsed.head);
   if (!kind) return fail("Tipo de archivo no admitido (vídeo, imagen, audio o subtítulos reales; SVG/HTML no se aceptan)");
 
+  // Integridad: el archivo debe ser realmente legible por FFmpeg (si está disponible). Se guardan sus metadatos reales.
+  let probe: ProbeResult | undefined;
+  if (kind.kind !== "subtitle" && (await getCapabilities()).ffprobe) {
+    try { probe = await ffprobe(parsed.tmp); }
+    catch { return fail("El archivo está dañado o no es un medio válido (FFmpeg no pudo leerlo)"); }
+    if (kind.kind === "video" && !probe.hasVideo) return fail("El archivo no contiene pista de vídeo");
+    if (kind.kind === "audio" && !probe.hasAudio) return fail("El archivo no contiene pista de audio");
+  }
+
   const { storage } = getProviders();
   const id = crypto.randomUUID();
   const stored = id + kind.ext;
@@ -69,6 +79,7 @@ export async function POST(req: Request) {
   await storage.assets.save({
     id, kind: kind.kind, path: stored, origin: "uploaded", license: (parsed.fields.license || "propio").slice(0, 120),
     createdAt: new Date().toISOString(), name: safeName, mime: kind.mime, size: parsed.size,
+    ...(probe ? { durationSec: probe.durationSec || undefined, width: probe.width || undefined, height: probe.height || undefined, hasAudio: probe.hasAudio } : {}),
   });
   const attach = parsed.fields.attachTo;
   if (attach && kind.kind === "video") {

@@ -38,7 +38,7 @@ export default async function Biblioteca({ searchParams }: { searchParams: Promi
           <div key={a.id} className="card stack media">
             <div className="thumb">{a.kind === "image" ? <img src={`/api/media/${a.id}`} alt={a.name} loading="lazy" /> : a.kind === "video" ? <video src={`/api/media/${a.id}#t=0.1`} preload="metadata" playsInline controls /> : a.kind === "audio" ? <audio controls src={`/api/media/${a.id}`} /> : <Icon className="i" />}</div>
             <div><div className="t" style={{ overflowWrap: "anywhere", fontWeight: 600 }}>{a.name || a.path}</div>
-              <div className="small muted">{a.kind} · {fmtBytes(a.size)} · {fmtDate(a.createdAt)} · {a.license}{used.has(a.id) ? " · en uso" : ""}</div></div>
+              <div className="small muted">{a.kind}{a.width ? ` · ${a.width}×${a.height}` : ""}{a.durationSec ? ` · ${a.durationSec.toFixed(1)} s` : ""} · {fmtBytes(a.size)} · {fmtDate(a.createdAt)} · {a.license}{a.origin === "generated" ? " · generado" : ""}{used.has(a.id) ? " · en uso" : ""}</div></div>
             <form action={deleteAsset.bind(null, a.id)}><SubmitButton className="btn danger sm" confirm="¿Eliminar este archivo?"><Trash2 className="i" />Eliminar</SubmitButton></form>
           </div>); })}</div>
       )}

@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import { logout } from "@/server/auth-actions";
 import { useEffect, useState } from "react";
 import {
-  BarChart3, BookOpen, LogOut, CheckCircle2, Clapperboard, Factory, Film, Library, LayoutDashboard, MoreHorizontal, Send, Settings, Smartphone,
+  BarChart3, BookOpen, Cpu, LogOut, CheckCircle2, Clapperboard, Factory, Film, Library, LayoutDashboard, MoreHorizontal, Send, Settings, Smartphone,
 } from "lucide-react";
 
 const ITEMS = [
@@ -13,6 +13,7 @@ const ITEMS = [
   { href: "/episodios", label: "Episodios", Icon: Film, short: "Episodios" },
   { href: "/shorts", label: "Shorts", Icon: Smartphone, short: "Shorts" },
   { href: "/produccion", label: "Producción", Icon: Factory, short: "Producción" },
+  { href: "/render", label: "Renderizador", Icon: Cpu, short: "Render" },
   { href: "/biblioteca", label: "Biblioteca", Icon: Library, short: "Biblioteca" },
   { href: "/aprobacion", label: "Centro de aprobación", Icon: CheckCircle2, short: "Aprobación", badge: true },
   { href: "/publicacion", label: "Publicación", Icon: Send, short: "Publicación" },

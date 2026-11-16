@@ -3,6 +3,7 @@
  * interfaces; cada servicio real (LLM, TTS, YouTube...) será un adaptador opcional.
  * Todo puerto tiene un adaptador "local" que funciona sin servicios externos.
  */
+import type { RenderJob } from "@/domain/render";
 import type {
   Asset, BibleEntry, CanonFact, Character, Cost, Evolution, Job, Place, Production,
   ActivityEntry, Relationship, ReviewDecision, Settings, StoryEvent, StoryState,
@@ -71,7 +72,7 @@ export interface ChannelStats {
 }
 
 export interface Providers {
-  storage: Storage; auth: AuthStore; scriptWriter: ScriptWriter; voice: VoiceSynth;
+  storage: Storage; auth: AuthStore; render: RenderStore; scriptWriter: ScriptWriter; voice: VoiceSynth;
   renderer: Renderer; publisher: Publisher; stats: ChannelStats;
 }
 
@@ -97,4 +98,25 @@ export interface AuthStore {
   oldestFailure(key: string, sinceTs: number): Promise<number | undefined>;
   clearFailures(key: string): Promise<void>;
   pruneFailures(beforeTs: number): Promise<void>;
+}
+
+/** Cola de renderizado persistente. `claimNext` es atómico: varios procesos pueden compartir la base sin duplicar trabajos. */
+export interface RenderStore {
+  enqueue(j: Pick<RenderJob, "id" | "productionId" | "kind" | "format" | "quality" | "params" | "maxAttempts">, now: number): Promise<RenderJob>;
+  get(id: string): Promise<RenderJob | undefined>;
+  list(limit?: number): Promise<RenderJob[]>;
+  claimNext(worker: string, now: number): Promise<RenderJob | undefined>;
+  progress(id: string, fraction: number, now: number, log?: string): Promise<void>;
+  heartbeat(id: string, now: number): Promise<void>;
+  finish(id: string, r: { status: "done" | "failed" | "canceled"; now: number; error?: string; outputAssetId?: string; result?: RenderJob["result"] }): Promise<void>;
+  /** Devuelve el trabajo a la cola (reintento). `refundAttempt` no cuenta el intento (p. ej. cierre del servidor). */
+  requeue(id: string, notBefore: number, error?: string, refundAttempt?: boolean): Promise<void>;
+  /** Cola → cancelado al instante; en ejecución → marca la petición. Devuelve el estado resultante. */
+  requestCancel(id: string, now: number): Promise<RenderJob["status"] | undefined>;
+  isCancelRequested(id: string): Promise<boolean>;
+  retry(id: string): Promise<boolean>;
+  remove(id: string): Promise<RenderJob | undefined>;
+  /** Trabajos "running" sin latido reciente (proceso caído) → vuelven a la cola o fallan si agotaron intentos. */
+  recoverStale(now: number, staleMs: number): Promise<number>;
+  countActive(): Promise<{ queued: number; running: number }>;
 }

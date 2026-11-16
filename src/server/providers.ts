@@ -3,6 +3,7 @@ import type { Providers } from "@/ports";
 import { env } from "./env";
 import { createSqliteStorage } from "@/adapters/local/sqlite-storage";
 import { createSqliteAuth } from "@/adapters/local/sqlite-auth";
+import { createSqliteRender } from "@/adapters/local/sqlite-render";
 
 const notAvailable = (what: string) => async () => {
   throw new Error(`${what}: adaptador no configurado todavía`);
@@ -23,7 +24,7 @@ export function getProviders(): Providers {
   if (g.__kapProviders) return g.__kapProviders;
   const storage = createSqliteStorage(path.join(DATA_DIR, "kap.db"));
   return (g.__kapProviders = {
-    storage, auth: createSqliteAuth(storage.db),
+    storage, auth: createSqliteAuth(storage.db), render: createSqliteRender(storage.db),
     scriptWriter: { id: "none", draft: notAvailable("ScriptWriter") },
     voice: { id: "none", synthesize: notAvailable("VoiceSynth") },
     renderer: { id: "none", render: notAvailable("Renderer") },

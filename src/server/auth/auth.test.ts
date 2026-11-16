@@ -90,14 +90,14 @@ describe("login y límite de intentos", () => {
   });
 });
 
-describe("migración 003_auth NO destruye datos", () => {
-  it("una base con datos de Fase A conserva todo al migrar", () => {
+describe("migraciones posteriores a la Fase A NO destruyen datos", () => {
+  it("una base con datos de Fase A conserva todo al migrar (003_auth + 004_render_jobs)", () => {
     const db = new DatabaseSync(":memory:");
     db.exec("CREATE TABLE schema_migrations (id TEXT PRIMARY KEY, applied_at TEXT NOT NULL)");
     for (const m of MIGRATIONS.slice(0, 2)) { db.exec(m.sql); db.prepare("INSERT INTO schema_migrations VALUES (?, ?)").run(m.id, "x"); }
     db.prepare("INSERT INTO docs VALUES ('productions','p1','{\"title\":\"El despertar\"}')").run();
     db.prepare("INSERT INTO activity_log (ts, actor, action) VALUES ('t','owner','x')").run();
-    expect(migrate(db)).toEqual(["003_auth"]);
+    expect(migrate(db)).toEqual(["003_auth", "004_render_jobs"]);
     expect((db.prepare("SELECT data FROM docs WHERE id='p1'").get() as { data: string }).data).toContain("El despertar");
     expect((db.prepare("SELECT COUNT(*) c FROM activity_log").get() as { c: number }).c).toBe(1);
     expect(migrate(db)).toEqual([]);

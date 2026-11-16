@@ -27,6 +27,17 @@ export const MIGRATIONS: { id: string; sql: string }[] = [
       CREATE TABLE login_failures (id INTEGER PRIMARY KEY AUTOINCREMENT, key TEXT NOT NULL, ts INTEGER NOT NULL);
       CREATE INDEX idx_login_failures ON login_failures (key, ts);`,
   },
+  {
+    // Solo CREA una tabla nueva (cola de renderizado persistente).
+    id: "004_render_jobs",
+    sql: `CREATE TABLE render_jobs (
+      id TEXT PRIMARY KEY, production_id TEXT, kind TEXT NOT NULL, format TEXT NOT NULL, quality TEXT NOT NULL,
+      params TEXT NOT NULL DEFAULT '{}', status TEXT NOT NULL, progress REAL NOT NULL DEFAULT 0,
+      attempts INTEGER NOT NULL DEFAULT 0, max_attempts INTEGER NOT NULL DEFAULT 2, error TEXT, log TEXT,
+      output_asset_id TEXT, result TEXT, created_at INTEGER NOT NULL, started_at INTEGER, finished_at INTEGER,
+      not_before INTEGER NOT NULL DEFAULT 0, cancel_requested INTEGER NOT NULL DEFAULT 0, worker TEXT, heartbeat INTEGER);
+      CREATE INDEX idx_render_status ON render_jobs (status, created_at);`,
+  },
 ];
 
 export function migrate(db: DatabaseSync): string[] {
