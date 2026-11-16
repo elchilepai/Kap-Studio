@@ -14,6 +14,19 @@ export const MIGRATIONS: { id: string; sql: string }[] = [
       target TEXT, detail TEXT, ip TEXT);
       CREATE INDEX idx_activity_ts ON activity_log (ts DESC);`,
   },
+  {
+    // Solo CREA tablas nuevas: no toca `docs` ni `activity_log`.
+    id: "003_auth",
+    sql: `CREATE TABLE users (
+      id TEXT PRIMARY KEY, username TEXT NOT NULL UNIQUE, password_hash TEXT NOT NULL,
+      created_at INTEGER NOT NULL, disabled INTEGER NOT NULL DEFAULT 0);
+      CREATE TABLE sessions (
+      token_hash TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+      created_at INTEGER NOT NULL, last_seen INTEGER NOT NULL, expires_at INTEGER NOT NULL, ip TEXT, user_agent TEXT);
+      CREATE INDEX idx_sessions_user ON sessions (user_id);
+      CREATE TABLE login_failures (id INTEGER PRIMARY KEY AUTOINCREMENT, key TEXT NOT NULL, ts INTEGER NOT NULL);
+      CREATE INDEX idx_login_failures ON login_failures (key, ts);`,
+  },
 ];
 
 export function migrate(db: DatabaseSync): string[] {

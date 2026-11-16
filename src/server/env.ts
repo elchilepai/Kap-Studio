@@ -9,6 +9,10 @@ const Schema = z.object({
   KAP_MAX_UPLOAD_MB: z.coerce.number().int().min(1).max(20000).default(1024),
   KAP_TEMP_TTL_HOURS: z.coerce.number().min(0.1).default(24),
   NODE_ENV: z.string().default("development"),
+  // true solo si la app corre detrás de un proxy/CDN de confianza que fija X-Forwarded-For.
+  KAP_TRUST_PROXY: z.enum(["true", "false"]).default("false").transform((v) => v === "true"),
+  // Cookie "Secure": por defecto activa en producción. Solo "false" para pruebas locales sin HTTPS.
+  KAP_COOKIE_SECURE: z.enum(["true", "false"]).optional().transform((v) => v === undefined ? undefined : v === "true"),
 });
 export type Env = z.infer<typeof Schema>;
 

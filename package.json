@@ -8,7 +8,13 @@
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "admin:create": "tsx --no-warnings scripts/admin.ts create",
+    "admin:passwd": "tsx --no-warnings scripts/admin.ts passwd",
+    "admin:list": "tsx --no-warnings scripts/admin.ts list",
+    "admin:revoke": "tsx --no-warnings scripts/admin.ts revoke",
+    "admin:unlock": "tsx --no-warnings scripts/admin.ts unlock",
+    "check:access": "node scripts/check-access.mjs"
   },
   "engines": {
     "node": ">=20"
@@ -27,6 +33,7 @@
     "@types/node": "^26.6.6",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
+    "tsx": "^4.23.15",
     "typescript": "^7.0.2",
     "vitest": "^5.1.0"
   }

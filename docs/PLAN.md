@@ -25,7 +25,7 @@ Pendiente: autenticación de administrador, adaptadores reales (render ffmpeg, g
 ---
 ## Plan Fase 2 (ejecución por fases)
 - **A. Auditoría y seguridad** — HECHA (ver docs/AUDITORIA.md, docs/SEGURIDAD.md).
-- **B. Autenticación de administrador** — usuarios, hash scrypt, sesiones firmadas y revocables, guardia deny-by-default en backend (páginas, acciones y APIs), logout, límite de intentos.
+- **B. Autenticación de administrador** — HECHA (docs/ADMIN.md) — usuarios, hash scrypt, sesiones firmadas y revocables, guardia deny-by-default en backend (páginas, acciones y APIs), logout, límite de intentos.
 - **C. Motor FFmpeg** — escenas→clips, imágenes, narración, música, subtítulos, transiciones, 9:16 y 16:9, H.264/AAC.
 - **D. Cola y almacenamiento** — worker asíncrono persistente, progreso real, reintentos, cancelación, limpieza; abstracción de almacenamiento (disco/S3 compatible).
 - **E. Memoria narrativa** — canon estructurado y comprobación de continuidad antes del guion.

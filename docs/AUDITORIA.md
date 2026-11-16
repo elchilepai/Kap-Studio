@@ -12,7 +12,7 @@ Fecha: 2026-11-16 · Rama `claude/beautiful-dijkstra-0vijpk` · Commit base `13b
 ## Hallazgos de seguridad (verificados con sondeos reales, antes de corregir)
 | # | Gravedad | Hallazgo | Estado |
 |---|---|---|---|
-| 1 | **Crítica** | Sin autenticación: todas las páginas, Server Actions y APIs abiertas; `/api/backup` devolvía toda la base de datos (200) | **Pendiente → Fase B** |
+| 1 | **Crítica** | Sin autenticación: todas las páginas, Server Actions y APIs abiertas; `/api/backup` devolvía toda la base de datos (200) | **Corregido en Fase B** (ver docs/SEGURIDAD.md) |
 | 2 | **Alta** | XSS almacenado: se aceptaba un SVG declarado `image/svg+xml` y se servía inline desde el origen de la app | **Corregido** |
 | 3 | Alta | Redirección abierta: `redirect` de `/api/upload` y `_redirect` de las acciones aceptaban URLs externas (phishing) | **Corregido** |
 | 4 | Alta | `/api/upload` sin comprobación de origen (CSRF) | **Corregido** |

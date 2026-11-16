@@ -1,3 +1,4 @@
+import { adminOr401 } from "@/server/auth/guard";
 import fs from "node:fs";
 import fsp from "node:fs/promises";
 import path from "node:path";
@@ -40,6 +41,7 @@ function receive(req: Request, maxBytes: number): Promise<Parsed> {
 }
 
 export async function POST(req: Request) {
+  const g = await adminOr401(); if ("denied" in g) return g.denied;
   if (!isSameOrigin(req.headers)) return new Response("Origen no permitido", { status: 403 });
   const maxBytes = env().KAP_MAX_UPLOAD_MB * 1024 * 1024;
   await fsp.mkdir(TMP_DIR, { recursive: true, mode: 0o700 });

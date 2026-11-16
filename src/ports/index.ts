@@ -71,6 +71,30 @@ export interface ChannelStats {
 }
 
 export interface Providers {
-  storage: Storage; scriptWriter: ScriptWriter; voice: VoiceSynth;
+  storage: Storage; auth: AuthStore; scriptWriter: ScriptWriter; voice: VoiceSynth;
   renderer: Renderer; publisher: Publisher; stats: ChannelStats;
+}
+
+/** Autenticación del propietario: usuarios, sesiones revocables y registro de intentos fallidos. */
+export interface AuthUser { id: string; username: string; createdAt: number; disabled: boolean }
+export interface AuthSession { tokenHash: string; userId: string; createdAt: number; lastSeen: number; expiresAt: number }
+export interface AuthStore {
+  countUsers(): Promise<number>;
+  createUser(u: { username: string; passwordHash: string }): Promise<AuthUser>;
+  getUserByUsername(username: string): Promise<(AuthUser & { passwordHash: string }) | undefined>;
+  getUser(id: string): Promise<AuthUser | undefined>;
+  listUsers(): Promise<AuthUser[]>;
+  setPassword(userId: string, passwordHash: string): Promise<void>;
+  createSession(s: { tokenHash: string; userId: string; expiresAt: number; ip?: string; userAgent?: string }, now: number): Promise<void>;
+  getSession(tokenHash: string): Promise<AuthSession | undefined>;
+  touchSession(tokenHash: string, now: number): Promise<void>;
+  deleteSession(tokenHash: string): Promise<void>;
+  deleteUserSessions(userId: string, exceptTokenHash?: string): Promise<number>;
+  countSessions(userId: string, now: number): Promise<number>;
+  deleteExpiredSessions(now: number): Promise<number>;
+  recordFailure(key: string, ts: number): Promise<void>;
+  countFailures(key: string, sinceTs: number): Promise<number>;
+  oldestFailure(key: string, sinceTs: number): Promise<number | undefined>;
+  clearFailures(key: string): Promise<void>;
+  pruneFailures(beforeTs: number): Promise<void>;
 }

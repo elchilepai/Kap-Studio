@@ -1,3 +1,4 @@
+import { adminOr401 } from "@/server/auth/guard";
 import fs from "node:fs";
 import fsp from "node:fs/promises";
 import path from "node:path";
@@ -8,6 +9,7 @@ export const runtime = "nodejs";
 
 /** Sirve archivos con soporte de Range (necesario para reproducir vídeo en iPhone/Safari). */
 export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }) {
+  const g = await adminOr401(); if ("denied" in g) return g.denied;
   const { id } = await ctx.params;
   const a = await getProviders().storage.assets.get(id);
   if (!a) return new Response("No encontrado", { status: 404 });

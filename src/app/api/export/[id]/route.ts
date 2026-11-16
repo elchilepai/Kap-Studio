@@ -1,8 +1,10 @@
+import { adminOr401 } from "@/server/auth/guard";
 import { getProviders } from "@/server/providers";
 import { STATUS_LABEL } from "@/domain/workflow";
 
 /** Paquete de publicación manual: metadatos listos para pegar en YouTube Studio. */
 export async function GET(_: Request, ctx: { params: Promise<{ id: string }> }) {
+  const g = await adminOr401(); if ("denied" in g) return g.denied;
   const { id } = await ctx.params;
   const { storage } = getProviders();
   const p = await storage.productions.get(id);

@@ -11,12 +11,14 @@ import { Settings } from "@/domain/types";
 import { today } from "@/lib/format";
 import { safeLocalPath } from "@/lib/security";
 import { audit } from "./audit";
+import { requireAdmin } from "./auth/guard";
 
 const now = () => new Date().toISOString();
 const refresh = () => revalidatePath("/", "layout");
 
 /** Crea o edita cualquier entidad genérica (personaje, lugar, coste, producción…). */
 export async function saveEntity(fd: FormData) {
+  await requireAdmin();
   const def = ENTITIES[String(fd.get("_entity"))];
   if (!def) throw new Error("Entidad desconocida");
   const st = getProviders().storage as unknown as Record<string, { get(id: string): Promise<unknown>; save(x: unknown): Promise<unknown> }>;
@@ -44,6 +46,7 @@ export async function saveEntity(fd: FormData) {
 }
 
 export async function deleteEntity(entity: string, id: string, back?: string) {
+  await requireAdmin();
   const def = ENTITIES[entity];
   if (!def) throw new Error("Entidad desconocida");
   const { storage } = getProviders();
@@ -71,10 +74,12 @@ async function removeAsset(id: string) {
   for (const p of await storage.productions.list())
     if (p.videoAssetId === id) await storage.productions.save({ ...p, videoAssetId: undefined, updatedAt: now() });
 }
-export async function deleteAsset(id: string) { await removeAsset(id); await audit("asset.eliminar", id); refresh(); }
+export async function deleteAsset(id: string) {
+  await requireAdmin(); await removeAsset(id); await audit("asset.eliminar", id); refresh(); }
 
 /** Cambia la etapa de una producción respetando el flujo y sus precondiciones. */
 export async function transition(id: string, to: ProductionStatus, note = "") {
+  await requireAdmin();
   const { storage } = getProviders();
   const p = await storage.productions.get(id);
   if (!p) throw new Error("Producción no encontrada");
@@ -93,10 +98,12 @@ export async function transition(id: string, to: ProductionStatus, note = "") {
   refresh();
 }
 export async function transitionForm(fd: FormData) {
+  await requireAdmin();
   await transition(String(fd.get("id")), String(fd.get("to")) as ProductionStatus, String(fd.get("note") ?? ""));
 }
 
 export async function publishForm(fd: FormData) {
+  await requireAdmin();
   const { storage } = getProviders();
   const id = String(fd.get("id"));
   const p = await storage.productions.get(id);
@@ -106,6 +113,7 @@ export async function publishForm(fd: FormData) {
 }
 
 export async function schedule(fd: FormData) {
+  await requireAdmin();
   const { storage } = getProviders();
   const id = String(fd.get("id"));
   const date = String(fd.get("plannedDate") ?? "");
@@ -121,6 +129,7 @@ const KIND_BY_STATUS: Partial<Record<ProductionStatus, Job["kind"]>> = {
   SCRIPTING: "script", STORYBOARD: "storyboard", ASSETS: "assets", VOICE: "voice", RENDER: "render", SCHEDULED: "publish",
 };
 export async function startJob(fd: FormData) {
+  await requireAdmin();
   const { storage } = getProviders();
   const p = await storage.productions.get(String(fd.get("id")));
   if (!p) throw new Error("Producción no encontrada");
@@ -131,6 +140,7 @@ export async function startJob(fd: FormData) {
   refresh();
 }
 export async function finishJob(fd: FormData) {
+  await requireAdmin();
   const { storage } = getProviders();
   const j = await storage.jobs.get(String(fd.get("jobId")));
   if (!j) return;
@@ -140,6 +150,7 @@ export async function finishJob(fd: FormData) {
   refresh();
 }
 export async function ackJob(fd: FormData) {
+  await requireAdmin();
   const { storage } = getProviders();
   const j = await storage.jobs.get(String(fd.get("jobId")));
   if (j) await storage.jobs.save({ ...j, acknowledged: true });
@@ -148,6 +159,7 @@ export async function ackJob(fd: FormData) {
 
 /* ---- Configuración / historia ---- */
 export async function saveSettings(fd: FormData) {
+  await requireAdmin();
   const parsed = Settings.parse({
     id: "settings", channelName: String(fd.get("channelName") ?? "KAP").trim() || "KAP",
     channelUrl: String(fd.get("channelUrl") ?? "").trim(), publishWeekday: Number(fd.get("publishWeekday") ?? 5),
@@ -157,11 +169,13 @@ export async function saveSettings(fd: FormData) {
   refresh();
 }
 export async function saveStory(fd: FormData) {
+  await requireAdmin();
   await getProviders().storage.story.save({ id: "story", summary: String(fd.get("summary") ?? ""), updatedAt: now() });
   refresh();
 }
 
 export async function setParent(fd: FormData) {
+  await requireAdmin();
   const { storage } = getProviders();
   const p = await storage.productions.get(String(fd.get("id")));
   if (!p) throw new Error("Producción no encontrada");
