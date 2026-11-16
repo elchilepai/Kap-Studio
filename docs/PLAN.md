@@ -15,3 +15,9 @@
 **Fase 6 — Automatización semanal**: planificador que crea la producción de la semana y avanza etapas; se detiene siempre en REVIEW.
 
 **Fase 7 — IA opcional**: adaptadores LLM/TTS/imagen intercambiables, activados por configuración y clave.
+
+---
+**Estado (Fase 1 parcial, interfaz):** hecha la interfaz completa de 10 secciones con persistencia SQLite local (`data/kap.db`, `data/media`),
+subida de vídeo/archivos con soporte Range (iPhone), flujo idea→publicado con aprobación obligatoria, seguimiento manual de trabajos,
+costes manuales, copia de seguridad JSON y paquete de exportación para publicar a mano.
+Pendiente: autenticación de administrador, adaptadores reales (render ffmpeg, guion, voz, YouTube).

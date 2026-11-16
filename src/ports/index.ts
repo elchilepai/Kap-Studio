@@ -3,7 +3,10 @@
  * interfaces; cada servicio real (LLM, TTS, YouTube...) será un adaptador opcional.
  * Todo puerto tiene un adaptador "local" que funciona sin servicios externos.
  */
-import type { Asset, CanonFact, Character, Job, Production } from "@/domain/types";
+import type {
+  Asset, BibleEntry, CanonFact, Character, Cost, Evolution, Job, Place, Production,
+  Relationship, ReviewDecision, Settings, StoryEvent, StoryState,
+} from "@/domain/types";
 
 export interface Repository<T extends { id: string }> {
   list(): Promise<T[]>;
@@ -18,6 +21,15 @@ export interface Storage {
   canon: Repository<CanonFact>;
   assets: Repository<Asset>;
   jobs: Repository<Job>;
+  reviews: Repository<ReviewDecision>;
+  bible: Repository<BibleEntry>;
+  relationships: Repository<Relationship>;
+  events: Repository<StoryEvent>;
+  places: Repository<Place>;
+  evolution: Repository<Evolution>;
+  costs: Repository<Cost>;
+  story: Repository<StoryState>;
+  settings: Repository<Settings>;
 }
 
 export interface ScriptContext {

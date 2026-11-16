@@ -1,24 +1,20 @@
-import type { Metadata } from "next";
-import Link from "next/link";
+import type { Metadata, Viewport } from "next";
+import "@fontsource-variable/inter";
 import "./globals.css";
+import Nav from "@/components/Nav";
+import { pendingReviewCount } from "@/server/queries";
 
-export const metadata: Metadata = { title: "KAP Studio", description: "Estudio de producción del canal KAP" };
+export const dynamic = "force-dynamic";
+export const metadata: Metadata = { title: { default: "KAP Studio", template: "%s · KAP Studio" }, description: "Estudio de producción del canal KAP", appleWebApp: { capable: true, title: "KAP Studio", statusBarStyle: "black-translucent" } };
+export const viewport: Viewport = { width: "device-width", initialScale: 1, viewportFit: "cover", themeColor: "#111318" };
 
-const NAV = [
-  ["/", "Panel"], ["/episodios", "Episodios"], ["/shorts", "Shorts"], ["/personajes", "Personajes"],
-  ["/escenas", "Escenas"], ["/recursos", "Recursos"], ["/calendario", "Calendario"],
-  ["/revision", "Revisión"], ["/estadisticas", "Estadísticas"], ["/ajustes", "Ajustes"],
-] as const;
-
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const pending = await pendingReviewCount();
   return (
     <html lang="es">
       <body>
         <div className="shell">
-          <nav className="side">
-            <div className="brand">KAP STUDIO</div>
-            {NAV.map(([href, label]) => <Link key={href} href={href}>{label}</Link>)}
-          </nav>
+          <Nav pending={pending} />
           <main className="main">{children}</main>
         </div>
       </body>

@@ -14,6 +14,8 @@ function memoryRepo<T extends { id: string }>(): Repository<T> {
 export function createMemoryStorage(): Storage {
   return {
     productions: memoryRepo(), characters: memoryRepo(), canon: memoryRepo(),
-    assets: memoryRepo(), jobs: memoryRepo(),
+    assets: memoryRepo(), jobs: memoryRepo(), reviews: memoryRepo(), bible: memoryRepo(),
+    relationships: memoryRepo(), events: memoryRepo(), places: memoryRepo(), evolution: memoryRepo(),
+    costs: memoryRepo(), story: memoryRepo(), settings: memoryRepo(),
   };
 }
