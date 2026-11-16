@@ -1,6 +1,6 @@
 # Motor de renderizado (Fase C)
 
-Todo local con FFmpeg, sin servicios de pago. Estado: **subfase A completada** (arquitectura del motor y gestión de recursos).
+Todo local con FFmpeg, sin servicios de pago. Estado: **subfases A y B completadas**. La producción automática (episodio → vídeo + Shorts) está en `docs/PRODUCCION-AUTOMATICA.md`.
 
 ## Arquitectura
 ```
@@ -38,7 +38,6 @@ FFmpeg ≥ 6 con `libx264`, `aac`, `libass`, `drawtext` (libfreetype) y `ffprobe
 La pantalla **Renderizador** muestra qué falta si algo no está disponible.
 
 ## Limitaciones conocidas de la subfase A
-- Solo renderiza la tarjeta de prueba (`slate`); `episode` y `short` fallan con un mensaje claro hasta la subfase B.
 - Un único proceso web ejecuta el worker. Varios procesos compartiendo la misma base son seguros (claim atómico) pero no se ha probado con carga real.
 - Los renders se guardan en `data/media` (disco local). Almacenamiento de objetos para cloud queda para la Fase D.
 
