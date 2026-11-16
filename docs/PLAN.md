@@ -1,0 +1,17 @@
+# KAP Studio — Plan por fases
+
+**Fase 0 — Arquitectura base (HECHA)**: scaffold, dominio, workflow, puertos, shell UI.
+
+**Fase 1 — Núcleo de datos y auth**: SQLite local (adaptador de `Storage`), login de administrador, CRUD de personajes, canon, producciones.
+
+**Fase 2 — Guion y continuidad**: editor de episodios/escenas, banco de canon, generador de Shorts derivados (selección de escenas), `ScriptWriter` local (plantillas) .
+
+**Fase 3 — Recursos y producción local**: biblioteca de assets, cola de trabajos + worker, `Renderer` con ffmpeg (≈5 min), subtítulos.
+
+**Fase 4 — Revisión y calendario**: pantalla de revisión (reproductor, aprobar/rechazar/cambios), calendario semanal, paquete de exportación manual.
+
+**Fase 5 — Integración YouTube (opcional, requiere credenciales)**: `Publisher` y `ChannelStats` con OAuth; publicación solo desde estado APPROVED.
+
+**Fase 6 — Automatización semanal**: planificador que crea la producción de la semana y avanza etapas; se detiene siempre en REVIEW.
+
+**Fase 7 — IA opcional**: adaptadores LLM/TTS/imagen intercambiables, activados por configuración y clave.

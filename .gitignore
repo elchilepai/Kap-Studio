@@ -1,0 +1,8 @@
+node_modules
+.next
+data/*.db
+data/media
+.env*
+!.env.example
+*.tsbuildinfo
+next-env.d.ts
