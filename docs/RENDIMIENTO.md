@@ -91,3 +91,45 @@ Misma prueba (`npm run bench:episode`: 22 escenas, 1080p, 4 personajes, 6 escena
 - Tamaño de tramo (4) elegido por criterio, **no** barrido en el benchmark (solo 2 y 3 en los tests con clips sintéticos).
 - Shorts 9:16 a 1080p, varios renders simultáneos y escenas con personajes PNG por capas siguen sin medirse.
 - La memoria mide el árbol de procesos por RSS; no es un pico de cgroup.
+
+---
+
+# Formato vertical 9:16 (Shorts) — prueba y medición
+
+Mismo benchmark (`BENCH_FORMAT=9:16`, `BENCH_SHORTS=3`, `BENCH_SHORTS_ONLY=1`, `BENCH_ONLY=1`; ver `scripts/bench-episode.mts`), configuración por defecto (1 worker, montaje por tramos), 4 vCPU / 16 GB, una ejecución por configuración.
+
+## Cómo se compone el vertical (no es un recorte del 16:9)
+El estudio se dibuja **de nuevo** a 9:16 con su propia dirección (`src/animation/director.ts`, `render.ts`):
+- Los personajes se **agrupan en el centro** (la ventana vertical solo abarca ≈ 5 de las 16 unidades del escenario): 2 personajes a ±1,3, 3 a ±1,4.
+- Planos de narración: la cámara se centra en el grupo con un empuje lento; **si alguien camina o entra, lo sigue** (re-enfoca cada 0,8 s). Diálogo: plano cerrado sobre quien habla con contraplano.
+- La escena **sube en el encuadre** (los pies quedan hacia el 60-65 % de la altura, no el 84 %): el subtítulo cae bajo los pies y la franja inferior (la que tapa la interfaz de Shorts) queda libre. Con una imagen de fondo no se baja la cámara (no hay más imagen debajo).
+- Subtítulos: las frases largas se **parten en varios subtítulos** que caben (≈ 22 caracteres por línea). Antes se cortaban por los dos bordes.
+- El 16:9 **no cambia** (tests `vertical.test.ts`).
+
+## Resultados (1080 × 1920, H.264 High + AAC 48 kHz)
+| Prueba | Resultado |
+|---|---|
+| Episodio de 22 escenas en vertical | 290,1 s · 8.704 fotogramas · 62,7 MB · render completo **405 s (1,40× tiempo real)** · **pico 1.003 MB** · CPU 966 s |
+| · animación / montaje | 283 s / 117 s (en 16:9: 264 s / 106 s) |
+| 3 Shorts derivados (≈ 53 s cada uno) | **223 s en total** (≈ 74 s por Short, 1,4× tiempo real) · **pico 926 MB** · 10,1 / 11,3 / 12,5 MB |
+| Referencia 16:9 (mismo episodio) | 375 s · 991 MB |
+
+El vertical cuesta ≈ 8 % más que el 16:9 (más píxeles por fotograma: 1080 × 1920 frente a 1920 × 1080 no cambia el recuento, pero hay más subtítulos y la cámara cierra más) y usa la misma memoria.
+
+## Calidad y sincronización
+- Episodio y 3 Shorts: 1080 × 1920, H.264 High / yuv420p / 30 fps, AAC 48 kHz estéreo; decodificación completa **sin errores**.
+- Audio ↔ vídeo: duración de vídeo y de audio iguales al centisegundo (290,133 s vs 290,121 s; la diferencia es el relleno de AAC, la misma que en 16:9). La banda sonora es la misma que la del 16:9: mismas muestras, relación señal/diferencia 30,6 dB (AAC + `loudnorm`), sonoridad idéntica (−16,4 LUFS; Shorts −16,2…−16,4 LUFS, pico −1,3 dBFS).
+- Revisión visual de fotogramas de los 3 Shorts y del episodio: personajes enteros y sin deformar, subtítulos dentro de la pantalla y bajo los pies.
+- **No medido**: sincronización labial con una referencia independiente (solo se comprobó que la pista de audio y su duración son las del 16:9 y que el labial usa la misma envolvente de audio).
+
+## Fallos que encontró esta prueba (y ya están corregidos)
+1. **Los Shorts derivados se renderizaban como tarjetas fijas «KAP · ESCENA»**, no como animación: `deriveShorts` no heredaba el modo de animación del episodio. (La primera medición de Shorts —2,1 MB por Short— era inválida por eso.) Corregido y cubierto por `after.test.ts`.
+2. Subtítulos de narración cortados por ambos bordes en vertical.
+3. Personajes cortados por el borde en planos de narración y subtítulo sobre el cuerpo.
+4. Error de hidratación de React (#418) en `/render` si se abría con un trabajo en marcha (la cola calculaba el tiempo con `Date.now()` en el primer pintado).
+
+## Limitaciones del vertical
+- En contraplano a veces asoma medio personaje por el borde (plano «sobre el hombro»).
+- Con 3 personajes y un paseo dirigido pueden solaparse; con 4 personajes en vertical la escena queda muy apretada (los planos cerrados de diálogo lo mitigan).
+- Los escenarios con imagen de fondo no bajan la cámara: el subtítulo puede tapar los pies.
+- Los clips del 16:9 y del 9:16 no se comparten en la caché (distinto tamaño de fotograma y distinta composición).
