@@ -75,8 +75,8 @@ export async function renderSceneClip(spec: ClipSpec, o: { cacheDir: string; tmp
 }
 
 /** Elimina clips antiguos de la caché hasta quedar por debajo de `maxMb` (los menos usados primero). */
-export async function pruneClipCache(cacheDir: string, maxMb: number): Promise<number> {
-  const dir = path.join(cacheDir, "clips"); let names: string[]; try { names = await fs.readdir(dir); } catch { return 0; }
+export async function pruneClipCache(cacheDir: string, maxMb: number, sub = "clips"): Promise<number> {
+  const dir = path.join(cacheDir, sub); let names: string[]; try { names = await fs.readdir(dir); } catch { return 0; }
   const items = (await Promise.all(names.map(async (n) => { try { const st = await fs.stat(path.join(dir, n)); return { n, size: st.size, t: st.mtimeMs }; } catch { return null; } }))).filter(Boolean) as { n: string; size: number; t: number }[];
   let total = items.reduce((a, b) => a + b.size, 0), removed = 0;
   for (const it of items.sort((a, b) => a.t - b.t)) { if (total <= maxMb * 1048576) break; await fs.rm(path.join(dir, it.n), { force: true }); total -= it.size; removed++; }

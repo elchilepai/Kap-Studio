@@ -14,7 +14,7 @@ export function getRenderQueue(): RenderQueue {
     g.__kapRenderQueue = new RenderQueue({
       store: p.render, storage: p.storage, mediaDir: MEDIA_DIR, tmpRoot: TMP_DIR,
       concurrency: e.KAP_RENDER_CONCURRENCY, timeoutMs: e.KAP_RENDER_TIMEOUT_MIN * 60_000, minFreeMb: e.KAP_MIN_FREE_MB,
-      execute: createExecutor(p.storage, { threads: e.KAP_FFMPEG_THREADS, concurrency: e.KAP_RENDER_CONCURRENCY, studio: { mediaDir: MEDIA_DIR, cacheDir: CACHE_DIR, voice: espeakProvider(), clipCacheMb: e.KAP_CLIP_CACHE_MB } }),
+      execute: createExecutor(p.storage, { threads: e.KAP_FFMPEG_THREADS, concurrency: e.KAP_RENDER_CONCURRENCY, studio: { mediaDir: MEDIA_DIR, cacheDir: CACHE_DIR, voice: espeakProvider(), clipCacheMb: e.KAP_CLIP_CACHE_MB, clipWorkers: e.KAP_CLIP_WORKERS, composeMode: e.KAP_COMPOSE_MODE, segmentScenes: e.KAP_COMPOSE_SEGMENT } }),
       afterSuccess: (job, assetId) => afterRender(job, assetId, p.storage, p.render, MEDIA_DIR, e.KAP_RENDER_MAX_ATTEMPTS),
     }).start();
   }

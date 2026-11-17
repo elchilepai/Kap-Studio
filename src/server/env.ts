@@ -19,6 +19,9 @@ const Schema = z.object({
   KAP_FFMPEG_THREADS: z.coerce.number().int().min(0).max(64).default(0), // 0 = automático (CPUs / concurrencia)
   KAP_RENDER_TIMEOUT_MIN: z.coerce.number().min(0.05).max(720).default(90),
   KAP_RENDER_MAX_ATTEMPTS: z.coerce.number().int().min(1).max(5).default(2),
+  KAP_CLIP_WORKERS: z.coerce.number().int().min(1).max(4).default(1),        // clips 2D que se animan a la vez (1 = secuencial: la menor memoria)
+  KAP_COMPOSE_MODE: z.enum(["segmentos", "unico"]).default("segmentos"),     // montaje por tramos (poca memoria) o en una sola pasada
+  KAP_COMPOSE_SEGMENT: z.coerce.number().int().min(1).max(12).default(4),    // escenas por tramo de montaje
   KAP_CLIP_CACHE_MB: z.coerce.number().int().min(50).default(2048),         // caché de clips por escena (se purga la más antigua)
   KAP_MIN_FREE_MB: z.coerce.number().int().min(0).default(1024), // espacio libre mínimo para empezar un render
   // true solo si la app corre detrás de un proxy/CDN de confianza que fija X-Forwarded-For.

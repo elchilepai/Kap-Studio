@@ -5,6 +5,7 @@
  *   BENCH_SCENES=28 BENCH_QUALITY=1080p npx tsx --no-warnings scripts/bench-episode.mts
  */
 import fs from "node:fs/promises";
+import fsSync from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { execFileSync, spawnSync } from "node:child_process";
@@ -54,18 +55,19 @@ await st.productions.save({ id: "ep1", kind: "episode", number: 1, season: 1, ti
 
 // ---- ejecución con medición ----
 const q = new RenderQueue({ store, storage: st, mediaDir: media, tmpRoot: path.join(root, "tmp"), concurrency: 1, timeoutMs: 3 * 3600_000, minFreeMb: 0, pollMs: 100, heartbeatMs: 200,
-  execute: createExecutor(st, { threads: 0, concurrency: 1, studio: { mediaDir: media, cacheDir: cache, voice: espeakProvider(), clipCacheMb: 4000 } }), afterSuccess: (j, id) => afterRender(j, id, st, store, media, 1) }).start();
+  execute: createExecutor(st, { threads: 0, concurrency: 1, studio: { mediaDir: media, cacheDir: cache, voice: espeakProvider(), clipCacheMb: 4000, clipWorkers: Number(process.env.BENCH_WORKERS ?? 1), composeMode: (process.env.BENCH_COMPOSE ?? "segmentos") as "segmentos" | "unico", segmentScenes: Number(process.env.BENCH_SEG ?? 4) } }), afterSuccess: (j, id) => afterRender(j, id, st, store, media, 1) }).start();
+const cpuNow = () => { const [, ...v] = fsSync.readFileSync("/proc/stat", "utf8").split("\n")[0].trim().split(/\s+/).map(Number); const idle = v[3] + (v[4] || 0); return { busy: (v.reduce((a, b) => a + b, 0) - idle) / 100, wall: Date.now() / 1000 }; };   // CPU-segundos de toda la máquina (equipo en reposo)
 const tree = () => { try { const rows = execFileSync("ps", ["-eo", "pid,ppid,rss,comm"]).toString().split("\n").slice(1).map((l) => l.trim().split(/\s+/)); const kids = new Set([String(process.pid)]); let grew = true; while (grew) { grew = false; for (const [pid, ppid] of rows) if (kids.has(ppid) && !kids.has(pid)) { kids.add(pid); grew = true; } } return rows.filter((r) => kids.has(r[0])).reduce((n, r) => n + Number(r[2] || 0), 0) / 1024; } catch { return 0; } };
 
 async function run(id: string, params: Record<string, unknown>, format: "16:9" | "9:16" = "16:9") {
   await store.enqueue({ id, kind: "episode", format, quality: QUALITY, productionId: "ep1", params, maxAttempts: 1 }, Date.now());
-  const t0 = Date.now(); const stages: Record<string, { first: number; last: number }> = {}; let peak = 0; let lastLog = "";
+  const t0 = Date.now(); const stages: Record<string, { first: number; last: number; peak: number; cpu0: number }> = {}; let peak = 0; let lastLog = ""; const c0 = cpuNow();
   for (;;) {
-    const j = (await store.get(id))!; const t = (Date.now() - t0) / 1000; peak = Math.max(peak, tree());
-    const m = /Paso (\d)\/5/.exec(j.log ?? ""); if (m) { const s = stages[m[1]] ??= { first: t, last: t }; s.last = t; }
+    const j = (await store.get(id))!; const t = (Date.now() - t0) / 1000; const mem = tree(); peak = Math.max(peak, mem);
+    const m = /Paso (\d)\/5/.exec(j.log ?? ""); if (m) { const s = stages[m[1]] ??= { first: t, last: t, peak: 0, cpu0: cpuNow().busy }; s.last = t; s.peak = Math.max(s.peak, mem); }
     if (j.log && j.log !== lastLog && /escena (\d+)\/(\d+)/.test(j.log) && process.env.BENCH_VERBOSE) { console.log(`  [${t.toFixed(0)}s] ${j.log} ${(j.progress * 100).toFixed(0)}%`); lastLog = j.log; }
-    if (["done", "failed", "canceled"].includes(j.status)) { if (j.status !== "done") throw new Error(`${id} ${j.status}: ${j.error}`); return { total: t, stages, peakMb: peak, job: j }; }
-    await new Promise((r) => setTimeout(r, 250));
+    if (["done", "failed", "canceled"].includes(j.status)) { if (j.status !== "done") throw new Error(`${id} ${j.status}: ${j.error}`); return { total: t, stages, peakMb: peak, cpuSec: cpuNow().busy - c0.busy, cpuEnd: cpuNow().busy, job: j }; }
+    await new Promise((r) => setTimeout(r, 100));
   }
 }
 const NAMES = ["", "1 Analizar y planificar", "2 Narración (voz + duraciones)", "3 Animación 2D por escena", "4 Montaje + audio + subtítulos", "5 Verificación"];
@@ -75,7 +77,9 @@ const ep = (await st.productions.get("ep1"))!; const vid = (await st.assets.get(
 const dur = ep.scenes.reduce((n, s) => n + s.durationSec, 0);
 console.log(`\nVÍDEO: ${probe.width}×${probe.height} ${probe.videoCodec}/${probe.audioCodec} · ${probe.durationSec.toFixed(1)} s (${(probe.durationSec / 60).toFixed(2)} min) · ${(vid.size / 1048576).toFixed(1)} MB · ${ep.scenes.length} escenas`);
 console.log(`RENDER COMPLETO (sin caché): ${(r1.total / 60).toFixed(2)} min (${r1.total.toFixed(0)} s) · ${(r1.total / probe.durationSec).toFixed(2)}× tiempo real · pico de memoria (web+worker+ffmpeg): ${r1.peakMb.toFixed(0)} MB`);
-const keys = Object.keys(r1.stages).sort(); keys.forEach((k, i) => { const s = r1.stages[k], next = keys[i + 1] ? r1.stages[keys[i + 1]].first : r1.total; console.log(`  etapa ${NAMES[Number(k)]}: ${(next - s.first).toFixed(0)} s`); });
+const keys = Object.keys(r1.stages).sort(); keys.forEach((k, i) => { const s = r1.stages[k], next = keys[i + 1] ? r1.stages[keys[i + 1]].first : r1.total; const cpuNext = keys[i + 1] ? r1.stages[keys[i + 1]].cpu0 : r1.cpuEnd; console.log(`  etapa ${NAMES[Number(k)]}: ${(next - s.first).toFixed(0)} s · pico ${s.peak.toFixed(0)} MB · CPU ${(cpuNext - s.cpu0).toFixed(0)} s (${((cpuNext - s.cpu0) / Math.max(1, next - s.first)).toFixed(1)} núcleos de media)`); });
+console.log(`  CPU total del render: ${r1.cpuSec.toFixed(0)} s (${(r1.cpuSec / r1.total).toFixed(2)} núcleos de media sobre ${os.cpus().length})`);
+if (process.env.BENCH_OUT) { await fs.mkdir(process.env.BENCH_OUT, { recursive: true }); await fs.copyFile(path.join(media, vid.path), path.join(process.env.BENCH_OUT, "episode.mp4")); }
 const frames = Math.round(probe.durationSec * 30); console.log(`  fotogramas: ${frames} → ${(r1.total / frames * 1000).toFixed(0)} ms/fotograma de extremo a extremo`);
 const nClips = (await fs.readdir(path.join(cache, "clips"))).length; console.log(`  clips en caché: ${nClips} · caché ocupa ${(execFileSync("du", ["-sm", cache]).toString().split("\t")[0])} MB`);
 
@@ -88,5 +92,5 @@ const before = new Set(await fs.readdir(path.join(cache, "clips")));
 const r3 = await run("run3", { mode: "rerender", voice: "espeak", animation: "2d", musicAssetId: "mus", shortsCount: 0 });
 const fresh = (await fs.readdir(path.join(cache, "clips"))).filter((f) => !before.has(f)).length;
 console.log(`EDITAR 1 ESCENA Y RECOMPONER: ${r3.total.toFixed(0)} s · clips nuevos: ${fresh} de ${cur.scenes.length}`);
-console.log(JSON.stringify({ scenes: SCENES, quality: QUALITY, videoSec: +probe.durationSec.toFixed(1), fullSec: +r1.total.toFixed(0), cachedSec: +r2.total.toFixed(0), editSec: +r3.total.toFixed(0), peakMb: +r1.peakMb.toFixed(0), sizeMb: +(vid.size / 1048576).toFixed(1), cpus: os.cpus().length, dur: +dur.toFixed(1) }));
+console.log(JSON.stringify({ scenes: SCENES, quality: QUALITY, videoSec: +probe.durationSec.toFixed(1), fullSec: +r1.total.toFixed(0), cachedSec: +r2.total.toFixed(0), editSec: +r3.total.toFixed(0), peakMb: +r1.peakMb.toFixed(0), cpuSec: +r1.cpuSec.toFixed(0), stagePeaks: Object.fromEntries(Object.entries(r1.stages).map(([k, v]) => [k, +v.peak.toFixed(0)])), r2Peak: +r2.peakMb.toFixed(0), r3Peak: +r3.peakMb.toFixed(0), sizeMb: +(vid.size / 1048576).toFixed(1), cpus: os.cpus().length, dur: +dur.toFixed(1) }));
 await q.shutdown(); if (!process.env.BENCH_KEEP) await fs.rm(root, { recursive: true, force: true }); else console.log("datos en", root);

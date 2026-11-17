@@ -1,4 +1,5 @@
 import fs from "node:fs/promises";
+import os from "node:os";
 import path from "node:path";
 import type { Asset, Character, Place, Production, Scene, Settings } from "@/domain/types";
 import type { RenderJob } from "@/domain/render";
@@ -16,7 +17,8 @@ import { defaultElements } from "@/animation/sets";
 import { assignAll } from "./visuals";
 import { DEFAULT_SUB_STYLE, buildSceneCues, toASS, toSRT, toVTT, type Cue, type SubStyle } from "./subtitles";
 import { pruneClipCache, renderSceneClip, type Visual } from "./clip";
-import { composeVideo, MAX_OVERLAP, sceneStarts } from "./compose";
+import { composeVideo, MAX_OVERLAP, sceneStarts, type ComposeMode } from "./compose";
+import { mapLimit } from "./pool";
 import { sceneAudio, type SceneAudio } from "./voice";
 import { norm } from "./text";
 import { renderAnimatedClip } from "@/server/animation/clip2d";
@@ -29,7 +31,8 @@ export type ProduceParams = {
   /** Estrategia de clip: animación 2D (personajes, cámara, escenarios) o imágenes fijas con zoom (alternativa). */
   animation?: "2d" | "still";
 };
-export type ProduceDeps = { storage: Storage; mediaDir: string; cacheDir: string; voice?: VoiceProvider; threads: number; clipCacheMb: number };
+/** `clipWorkers`: clips que se animan a la vez (1 = secuencial, el modo que menos memoria usa). `compose`: montaje por tramos (por defecto) o en una sola pasada. */
+export type ProduceDeps = { storage: Storage; mediaDir: string; cacheDir: string; voice?: VoiceProvider; threads: number; clipCacheMb: number; clipWorkers?: number; composeMode?: ComposeMode; segmentScenes?: number };
 
 const now = () => new Date().toISOString();
 const LEAD = 0.3, TAIL = 0.5, MIN_SCENE = 2.5;
@@ -128,16 +131,20 @@ export async function produce(job: RenderJob, ctx: ExecContext, d: ProduceDeps):
   const animation = prm.animation ?? (styleBible?.defaultMode === "animated2d" ? "2d" : "still");
   const [bibleChars, bibleKnownPlaces] = animation === "2d" ? await Promise.all([st.characters.list(), st.places.list()]) : [[], []];
   const prodNow = (await st.productions.get(prod.id)) ?? prod;
-  const clips: { file: string; dur: number; transition: Scene["transition"] }[] = [];
   const cuesAll: { cue: Cue; at: number }[] = [];
-  for (const [i, s] of scenes.entries()) {
-    const D = durs[i];
+  const cuesOf = scenes.map((s, i) => (style.enabled ? buildSceneCues(s.lines, durs[i], { maxChars: vertical ? 22 : 44, lead: LEAD, tail: TAIL }) : []));
+  cuesOf.forEach((cs, i) => cs.forEach((c) => cuesAll.push({ cue: c, at: starts[i] })));
+  const workers = Math.max(1, Math.min(d.clipWorkers ?? 1, scenes.length));
+  // con varios clips a la vez cada FFmpeg recibe su parte de los núcleos (no se satura la CPU ni se multiplica la memoria)
+  const clipThreads = workers > 1 ? Math.max(1, Math.floor((d.threads || os.cpus().length) / workers)) : d.threads;
+  const frac = new Array<number>(scenes.length).fill(0); let started = 0;
+  const report = () => step(3, 0.25 + 0.55 * (frac.reduce((a, b) => a + b, 0) / scenes.length), animation === "2d" ? `Animando escena ${Math.min(started, scenes.length)}/${scenes.length} (2D)` : `Componiendo escena ${Math.min(started, scenes.length)}/${scenes.length}`);
+  const clips = await mapLimit(scenes, workers, async (s, i) => {
+    const D = durs[i]; started++; report();
     const vis = await assetFile(s.visualAssetId);
     const visual: Visual | undefined = vis && (vis.a.kind === "image" || vis.a.kind === "video") ? { path: vis.f, kind: vis.a.kind, sig: `${vis.a.id}:${vis.a.size}:${vis.a.createdAt}` } : undefined;
-    const cues = style.enabled ? buildSceneCues(s.lines, D, { maxChars: vertical ? 22 : 44, lead: LEAD, tail: TAIL }) : [];
-    cues.forEach((c) => cuesAll.push({ cue: c, at: starts[i] }));
-    const base = 0.25 + 0.55 * (i / scenes.length), span = 0.55 / scenes.length;
-    step(3, base, animation === "2d" ? `Animando escena ${i + 1}/${scenes.length} (2D)` : `Componiendo escena ${i + 1}/${scenes.length}${visual ? "" : " (tarjeta KAP)"}`);
+    const cues = cuesOf[i];
+    const onP = (f: number) => { frac[i] = f; report(); };
     const assText = cues.length ? toASS(cues, { width, height, style }) : undefined;
     let r: { file: string; cached: boolean };
     if (animation === "2d") {
@@ -146,16 +153,18 @@ export async function produce(job: RenderJob, ctx: ExecContext, d: ProduceDeps):
         production: prodNow, characters: bibleChars, places: bibleKnownPlaces, style: styleBible,
         assetInfo: async (id) => { const f = await assetFile(id); return f ? { path: f.f, sig: `${f.a.id}:${f.a.size}:${f.a.createdAt}`, kind: f.a.kind } : undefined; },
       });
-      r = await renderAnimatedClip({ stage: built.stage, width, height, durationSec: D + MAX_OVERLAP, images: built.images, assText, fontsDir: path.dirname(resolveFont()!), threads: d.threads },
-        { cacheDir: d.cacheDir, tmpDir: path.join(ctx.tmpDir, `clip${i}`), signal: ctx.signal, onProgress: (f) => step(3, base + span * f, `Animando escena ${i + 1}/${scenes.length} (2D)`) });
+      r = await renderAnimatedClip({ stage: built.stage, width, height, durationSec: D + MAX_OVERLAP, images: built.images, assText, fontsDir: path.dirname(resolveFont()!), threads: clipThreads },
+        { cacheDir: d.cacheDir, tmpDir: path.join(ctx.tmpDir, `clip${i}`), signal: ctx.signal, onProgress: onP });
     } else {
       r = await renderSceneClip(
-      { scene: s, visual, width, height, durationSec: D + MAX_OVERLAP, sceneNumber: i + 1, threads: d.threads, fontsDir: path.dirname(resolveFont()!),
+      { scene: s, visual, width, height, durationSec: D + MAX_OVERLAP, sceneNumber: i + 1, threads: clipThreads, fontsDir: path.dirname(resolveFont()!),
         assText },
-      { cacheDir: d.cacheDir, tmpDir: path.join(ctx.tmpDir, `clip${i}`), signal: ctx.signal, onProgress: (f) => step(3, base + span * f, `Componiendo escena ${i + 1}/${scenes.length}`) });
+      { cacheDir: d.cacheDir, tmpDir: path.join(ctx.tmpDir, `clip${i}`), signal: ctx.signal, onProgress: onP });
     }
-    clips.push({ file: r.file, dur: D, transition: s.transition });
-  }
+    frac[i] = 1; report();
+    await fs.rm(path.join(ctx.tmpDir, `clip${i}`), { recursive: true, force: true });   // libera disco en cuanto el clip está en caché
+    return { file: r.file, dur: D, transition: s.transition };
+  });
 
   // ④ Montaje: transiciones + narración + efectos + música con ducking
   const narration = audios.flatMap((a, i) => (a ? [{ file: a.file, start: starts[i] + LEAD }] : []));
@@ -166,7 +175,7 @@ export async function produce(job: RenderJob, ctx: ExecContext, d: ProduceDeps):
   step(4, 0.8, "Montando vídeo, transiciones y audio");
   const comp = await composeVideo({
     clips, narration, sfx, music: mus ? { file: mus.f, volume: prm.musicVolume ?? 0.22 } : undefined,
-    tmpDir: path.join(ctx.tmpDir, "compose"), out, threads: d.threads, signal: ctx.signal, onProgress: (f) => step(4, 0.8 + 0.17 * f, "Montando vídeo, transiciones y audio"),
+    tmpDir: path.join(ctx.tmpDir, "compose"), out, threads: d.threads, mode: d.composeMode, segmentScenes: d.segmentScenes, cacheDir: d.cacheDir, signal: ctx.signal, onProgress: (f) => step(4, 0.8 + 0.17 * f, "Montando vídeo, transiciones y audio"),
   });
 
   // ⑤ Verificación + subtítulos sueltos (.srt/.vtt) para subir a YouTube
@@ -185,5 +194,6 @@ export async function produce(job: RenderJob, ctx: ExecContext, d: ProduceDeps):
     if (cur) await st.productions.save({ ...cur, assetIds: [...new Set([...cur.assetIds.filter((a) => !ids.includes(a)), ...ids])], updatedAt: now() });
   }
   await pruneClipCache(d.cacheDir, d.clipCacheMb);
+  await pruneClipCache(d.cacheDir, Math.max(50, Math.round(d.clipCacheMb / 4)), "segments");   // tramos de montaje: caché más pequeña
   return { file: out, durationSec: probe.durationSec, width: probe.width, height: probe.height, sizeBytes: probe.sizeBytes };
 }
