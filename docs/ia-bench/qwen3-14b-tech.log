@@ -1,0 +1,43 @@
+
+== Banco de IA local · qwen3:14b · fase tech · 4 vCPU / 16 GB · contexto 8192 ==
+
+[T1] Crear el primer episodio de la historia …
+   1507 s · RAM pico 10693 MB · IR válida · reintentos 1 · cumplimiento 85% · crit 0
+     ✗ estructura-6-actos — faltan: inicio, conflicto, desarrollo, emocional, resolucion
+     ✗ directivas-validas — «acto: inicio»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto» | «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»
+
+[T2] Continuar exactamente donde termina un episodio …
+   1535 s · RAM pico 10674 MB · IR válida · reintentos 1 · cumplimiento 91% · crit 0
+     ✗ directivas-validas
+
+[T3] Mantener el estado del hermano …
+   1656 s · RAM pico 10675 MB · IR válida · reintentos 1 · cumplimiento 100% · crit 0
+
+[T4] Introducir un personaje nuevo …
+   1595 s · RAM pico 10674 MB · IR válida · reintentos 1 · cumplimiento 71% · crit 0
+     ✗ estructura-6-actos — faltan: inicio, conflicto, desarrollo, emocional, resolucion
+     ✗ directivas-validas — «acto: inicio»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto» | «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»
+     ✗ personaje-nuevo-habla
+     ✗ declara-quien-es-en-memoria
+
+[T5] Continuar con un hilo abierto …
+   1272 s · RAM pico 10674 MB · IR válida · reintentos 1 · cumplimiento 83% · crit 0
+     ✗ estructura-6-actos — faltan: inicio, conflicto, desarrollo, emocional, resolucion
+     ✗ directivas-validas — «acto: inicio»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto» | «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»
+
+[T6] Proponer un cambio de etapa …
+   1518 s · RAM pico 10675 MB · IR válida · reintentos 1 · cumplimiento 75% · crit 0
+     ✗ directivas-validas
+     ✗ edad-progresiva-max-+2 — edades: —
+     ✗ avanza-hito-5
+
+[T8] Petición ambigua …
+   1349 s · RAM pico 10673 MB · IR válida · reintentos 1 · cumplimiento 82% · crit 0
+     ✗ gancho
+     ✗ explicita-suposiciones
+
+[T7] Detectar una contradicción con el canon …
+   290 s · RAM pico 10672 MB · detecta 3/4 · falsos+ 0 · reintentos 0 · cumplimiento 67% · crit -
+     ✗ el-modelo-detecta-las-4 — 3/4
+
+Total 179.3 min · modelo en memoria: {"sizeMb":10609,"context":8192} · guardado en docs/ia-bench/
