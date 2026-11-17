@@ -31,7 +31,7 @@ UI /render ──server actions──▶ render_jobs (SQLite) ◀──claim at�
 - **Seguridad de entrada**: subidas verificadas con ffprobe (archivos corruptos rechazados); ffprobe no puede seguir URLs ni listas de reproducción.
 
 ## Configuración (`.env.local`, ver `.env.example`)
-`KAP_FFMPEG_PATH`, `KAP_FFPROBE_PATH`, `KAP_FONT_FILE`, `KAP_RENDER_CONCURRENCY` (1), `KAP_FFMPEG_THREADS` (0=auto), `KAP_RENDER_TIMEOUT_MIN` (90), `KAP_RENDER_MAX_ATTEMPTS` (2), `KAP_MIN_FREE_MB` (1024).
+`KAP_FFMPEG_PATH`, `KAP_FFPROBE_PATH`, `KAP_FONT_FILE`, `KAP_RENDER_CONCURRENCY` (1), `KAP_FFMPEG_THREADS` (0=auto), `KAP_RENDER_TIMEOUT_MIN` (90), `KAP_RENDER_MAX_ATTEMPTS` (2), `KAP_MIN_FREE_MB` (1024), `KAP_CLIP_WORKERS` (1), `KAP_COMPOSE_MODE` (`segmentos`|`unico`), `KAP_COMPOSE_SEGMENT` (4). Detalle del montaje por tramos y de los workers en `docs/RENDIMIENTO.md`.
 
 ## Requisitos del sistema
 FFmpeg ≥ 6 con `libx264`, `aac`, `libass`, `drawtext` (libfreetype) y `ffprobe`; una fuente (Inter o DejaVu). En contenedores: `apt-get install ffmpeg fonts-inter`.
