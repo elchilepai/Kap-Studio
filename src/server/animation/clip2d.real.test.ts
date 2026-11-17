@@ -48,7 +48,8 @@ describe("motor de animación 2D: trabajador Skia → FFmpeg (real)", () => {
     await expect(p).rejects.toBeInstanceOf(CanceledError);
     await new Promise((r) => setTimeout(r, 600));
     expect(runningFfmpegProcesses()).toBe(0);
-    expect(spawnSync("pgrep", ["-f", "anim-worker.mjs"]).stdout.toString().trim()).toBe("");
+    // solo los procesos de ESTE test (su directorio único aparece en la línea de órdenes del worker y de FFmpeg): otros tests pueden tener trabajadores propios en paralelo
+    expect(spawnSync("pgrep", ["-f", root]).stdout.toString().trim()).toBe("");
     expect(await fs.readdir(path.join(root, "cache", "clips")).catch(() => [])).toEqual([]);
   }, 90_000);
 
