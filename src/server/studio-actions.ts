@@ -119,7 +119,7 @@ export async function regenerateShorts(fd: FormData) {
     const user = await requireAdmin();
     const p = await loadEpisode(fd.get("id"));
     const g = Generate.parse({ quality: fd.get("quality") || undefined, voice: fd.get("voice") || undefined, shortsCount: fd.get("shortsCount") || 3 });
-    const n = await deriveShorts(getProviders().storage, getProviders().render, p.id, g.shortsCount ?? 3, { quality: g.quality, maxAttempts: env().KAP_RENDER_MAX_ATTEMPTS, voice: g.voice }, (await import("./providers")).MEDIA_DIR);
+    const n = await deriveShorts(getProviders().storage, getProviders().render, p.id, g.shortsCount ?? 3, { quality: g.quality, maxAttempts: env().KAP_RENDER_MAX_ATTEMPTS, voice: g.voice, animation: g.animation ?? lastGenerationParams(await getProviders().render.list(500), p.id)?.animation as never }, (await import("./providers")).MEDIA_DIR);
     getRenderQueue().kick(); await audit("estudio.shorts", p.id, `${n} Shorts`, user.username); refresh(); back(fd, "/render");
   });
 }

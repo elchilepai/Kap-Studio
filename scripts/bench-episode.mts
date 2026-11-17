@@ -59,8 +59,8 @@ const q = new RenderQueue({ store, storage: st, mediaDir: media, tmpRoot: path.j
 const cpuNow = () => { const [, ...v] = fsSync.readFileSync("/proc/stat", "utf8").split("\n")[0].trim().split(/\s+/).map(Number); const idle = v[3] + (v[4] || 0); return { busy: (v.reduce((a, b) => a + b, 0) - idle) / 100, wall: Date.now() / 1000 }; };   // CPU-segundos de toda la máquina (equipo en reposo)
 const tree = () => { try { const rows = execFileSync("ps", ["-eo", "pid,ppid,rss,comm"]).toString().split("\n").slice(1).map((l) => l.trim().split(/\s+/)); const kids = new Set([String(process.pid)]); let grew = true; while (grew) { grew = false; for (const [pid, ppid] of rows) if (kids.has(ppid) && !kids.has(pid)) { kids.add(pid); grew = true; } } return rows.filter((r) => kids.has(r[0])).reduce((n, r) => n + Number(r[2] || 0), 0) / 1024; } catch { return 0; } };
 
-async function run(id: string, params: Record<string, unknown>, format: "16:9" | "9:16" = "16:9") {
-  await store.enqueue({ id, kind: "episode", format, quality: QUALITY, productionId: "ep1", params, maxAttempts: 1 }, Date.now());
+async function run(id: string, params: Record<string, unknown>, format: "16:9" | "9:16" = "16:9", quality: "480p" | "720p" | "1080p" = QUALITY) {
+  await store.enqueue({ id, kind: "episode", format, quality, productionId: "ep1", params, maxAttempts: 1 }, Date.now());
   const t0 = Date.now(); const stages: Record<string, { first: number; last: number; peak: number; cpu0: number }> = {}; let peak = 0; let lastLog = ""; const c0 = cpuNow();
   for (;;) {
     const j = (await store.get(id))!; const t = (Date.now() - t0) / 1000; const mem = tree(); peak = Math.max(peak, mem);
@@ -73,7 +73,9 @@ async function run(id: string, params: Record<string, unknown>, format: "16:9" |
 const NAMES = ["", "1 Analizar y planificar", "2 Narración (voz + duraciones)", "3 Animación 2D por escena", "4 Montaje + audio + subtítulos", "5 Verificación"];
 console.log(`\n== Episodio de prueba: ${SCENES} escenas · ${QUALITY} · 4 personajes · 6 escenarios · voz eSpeak · música · subtítulos ==`);
 const FORMAT = (process.env.BENCH_FORMAT ?? "16:9") as "16:9" | "9:16", SHORTS = Number(process.env.BENCH_SHORTS ?? 0);
-const r1 = await run("run1", { mode: "full", voice: "espeak", animation: "2d", musicAssetId: "mus", shortsCount: SHORTS }, FORMAT);
+const SHORTS_ONLY = !!process.env.BENCH_SHORTS_ONLY;   // planifica con una pasada barata (480p) y mide SOLO los Shorts a la resolución pedida
+const r1 = await run("run1", { mode: "full", voice: "espeak", animation: "2d", musicAssetId: "mus", shortsCount: SHORTS_ONLY ? 0 : SHORTS }, FORMAT, SHORTS_ONLY ? "480p" : QUALITY);
+if (SHORTS_ONLY) { const { deriveShorts } = await import("../src/server/studio/after"); await deriveShorts(st, store, "ep1", SHORTS, { quality: QUALITY, maxAttempts: 1, voice: "espeak", animation: "2d" }, media); }
 const ep = (await st.productions.get("ep1"))!; const vid = (await st.assets.get(ep.videoAssetId!))!; const probe = await ffprobe(path.join(media, vid.path));
 const dur = ep.scenes.reduce((n, s) => n + s.durationSec, 0);
 console.log(`\nVÍDEO: ${probe.width}×${probe.height} ${probe.videoCodec}/${probe.audioCodec} · ${probe.durationSec.toFixed(1)} s (${(probe.durationSec / 60).toFixed(2)} min) · ${(vid.size / 1048576).toFixed(1)} MB · ${ep.scenes.length} escenas`);

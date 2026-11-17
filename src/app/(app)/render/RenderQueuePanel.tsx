@@ -16,6 +16,8 @@ export default function RenderQueuePanel({ initial }: { initial: Payload }) {
   const [preview, setPreview] = useState<string | null>(null);
   const [offset, setOffset] = useState(0);              // diferencia reloj servidor/cliente
   const [tick, setTick] = useState(0);
+  const [mounted, setMounted] = useState(false);       // el primer pintado usa la hora del servidor: así el HTML del servidor y el del cliente coinciden (sin error de hidratación)
+  useEffect(() => setMounted(true), []);
   const active = data.counts.queued + data.counts.running > 0;
   const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
@@ -34,7 +36,7 @@ export default function RenderQueuePanel({ initial }: { initial: Payload }) {
   }, [active]);
   useEffect(() => { if (!active) return; const t = setInterval(() => setTick((x) => x + 1), 1000); return () => clearInterval(t); }, [active]);
   void tick;
-  const now = Date.now() + offset;
+  const now = mounted ? Date.now() + offset : data.now;
 
   if (data.jobs.length === 0) return <div className="empty"><Film className="i" /><p>No hay trabajos de renderizado. Encola uno con el formulario.</p></div>;
   return (

@@ -43,12 +43,12 @@ export async function afterRender(job: RenderJob, assetId: string, st: Storage, 
   await audit("estudio.generado", prod.id, `${job.kind} ${job.format} ${job.quality} → en revisión`, "pipeline");
 
   if (job.kind === "episode" && (prm.shortsCount ?? 0) > 0)
-    await deriveShorts(st, render, prod.id, prm.shortsCount!, { quality: job.quality, maxAttempts, voice: prm.voice, musicVolume: prm.musicVolume }, mediaDir);
+    await deriveShorts(st, render, prod.id, prm.shortsCount!, { quality: job.quality, maxAttempts, voice: prm.voice, musicVolume: prm.musicVolume, animation: prm.animation }, mediaDir);
 }
 
 /** Planifica y encola los Shorts 9:16 de un episodio (sustituye los automáticos anteriores aún no aprobados). */
 export async function deriveShorts(st: Storage, render: RenderStore, episodeId: string, count: number,
-  o: { quality: RenderJob["quality"]; maxAttempts: number; voice?: ProduceParams["voice"]; musicVolume?: number }, mediaDir: string): Promise<number> {
+  o: { quality: RenderJob["quality"]; maxAttempts: number; voice?: ProduceParams["voice"]; musicVolume?: number; animation?: ProduceParams["animation"] }, mediaDir: string): Promise<number> {
   const ep = await st.productions.get(episodeId); if (!ep || ep.kind !== "episode") return 0;
   for (const s of await st.productions.list())
     if (s.generated && s.parentId === ep.id && !["APPROVED", "SCHEDULED", "PUBLISHED"].includes(s.status)) { await dropAsset(st, mediaDir, s.videoAssetId); await st.productions.remove(s.id); }
@@ -63,7 +63,7 @@ export async function deriveShorts(st: Storage, render: RenderStore, episodeId: 
       scenes: sc, assetIds: [], durationSec: Math.round(pl.durationSec), generated: true, brief: "", cast: ep.cast, storyTime: ep.storyTime, musicAssetId: ep.musicAssetId, createdAt: now(), updatedAt: now(),
     });
     await render.enqueue({ id: crypto.randomUUID(), kind: "short", format: "9:16", quality: o.quality, productionId: id, maxAttempts: o.maxAttempts,
-      params: { mode: "rerender", voice: o.voice ?? "none", musicAssetId: ep.musicAssetId, musicVolume: o.musicVolume } satisfies ProduceParams }, Date.now());
+      params: { mode: "rerender", voice: o.voice ?? "none", musicAssetId: ep.musicAssetId, musicVolume: o.musicVolume, animation: o.animation } satisfies ProduceParams }, Date.now());
   }
   await audit("estudio.shorts", ep.id, `${plans.length} Shorts derivados y encolados`, "pipeline");
   return plans.length;

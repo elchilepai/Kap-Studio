@@ -12,6 +12,7 @@ import { espeakProvider } from "./voice";
 import { afterRender } from "./after";
 import type { Asset, Production } from "@/domain/types";
 import { buildFilterGraph } from "./compose";
+import { lastGenerationParams } from "./export";
 
 const hasTts = await espeakProvider().available();
 let root: string, st: ReturnType<typeof createSqliteStorage>, store: ReturnType<typeof createSqliteRender>, q: RenderQueue;
@@ -48,7 +49,7 @@ afterAll(async () => { await q.shutdown(); await fs.rm(root, { recursive: true, 
 const waitFor = async (fn: () => Promise<boolean>, ms = 170_000) => { const t = Date.now(); while (Date.now() - t < ms) { if (await fn()) return; await new Promise((r) => setTimeout(r, 100)); } throw new Error("timeout"); };
 const job = async (id: string) => (await store.get(id))!;
 const finished = async (id: string, ms = 170_000) => { await waitFor(async () => ["done", "failed", "canceled"].includes((await job(id)).status), ms); const j = await job(id); if (j.status !== "done") throw new Error(`job ${id} → ${j.status}: ${j.error}`); return j; };
-const enqueue = (id: string, o: { productionId: string; kind?: "episode" | "short" | "preview"; format?: "16:9" | "9:16"; params?: Record<string, unknown> }) =>
+const enqueue = (id: string, o: { productionId: string; kind?: "episode" | "short" | "preview" | "export"; format?: "16:9" | "9:16"; params?: Record<string, unknown> }) =>
   store.enqueue({ id, kind: o.kind ?? "episode", format: o.format ?? "16:9", quality: "480p", productionId: o.productionId, params: o.params ?? {}, maxAttempts: 1 }, Date.now());
 const meanVolume = (file: string) => { const r = spawnSync("ffmpeg", ["-i", file, "-af", "volumedetect", "-f", "null", "-"]); return parseFloat(/mean_volume: (-?[\d.]+) dB/.exec(r.stderr.toString())?.[1] ?? "-99"); };
 
@@ -125,6 +126,26 @@ describe.skipIf(!hasTts)("pipeline automático REAL de principio a fin (FFmpeg +
     expect(dt).toBeLessThan(60_000);
     expect((await st.productions.get(epId))!.status).toBe("REVIEW");
   }, 180_000);
+
+  it("exportación final: solo lo aprobado; re-renderiza sin tocar el estado ni el vídeo aprobado y conserva la última por formato/resolución", async () => {
+    const cur = (await st.productions.get(epId))!; const videoBefore = cur.videoAssetId;
+    await st.productions.save({ ...cur, status: "APPROVED" });
+    const prm = lastGenerationParams(await store.list(100), epId); expect(prm).toMatchObject({ mode: "rerender", voice: "espeak", musicAssetId: "mus" });
+    await enqueue("ex1", { productionId: epId, kind: "export", params: prm! }); const j1 = await finished("ex1");
+    const a1 = (await st.assets.get(j1.outputAssetId!))!; const p1 = await ffprobe(path.join(media(), a1.path));
+    expect([p1.width, p1.height, p1.videoCodec, p1.audioCodec]).toEqual([854, 480, "h264", "aac"]);
+    const after = (await st.productions.get(epId))!;
+    expect(after.status).toBe("APPROVED"); expect(after.videoAssetId).toBe(videoBefore);        // no se des-aprueba ni se cambia el vídeo revisado
+    // un 2.º export con el mismo formato y resolución sustituye al 1.º (no se acumulan archivos de varios GB)
+    await enqueue("ex2", { productionId: epId, kind: "export", params: prm! }); await finished("ex2");
+    expect(await store.get("ex1")).toBeUndefined(); expect(await st.assets.get(a1.id)).toBeUndefined();
+    expect((await store.get("ex2"))!.status).toBe("done"); expect(videoBefore && await st.assets.get(videoBefore)).toBeTruthy();
+    // un Short se exporta en 9:16
+    const sh = (await st.productions.list()).find((x) => x.kind === "short" && x.parentId === epId)!; await st.productions.save({ ...sh, status: "APPROVED" });
+    await enqueue("ex3", { productionId: sh.id, kind: "export", format: "9:16", params: lastGenerationParams(await store.list(100), sh.id)! }); const j3 = await finished("ex3");
+    const p3 = await ffprobe(path.join(media(), (await st.assets.get(j3.outputAssetId!))!.path)); expect([p3.width, p3.height]).toEqual([480, 854]);
+    await st.productions.save({ ...(await st.productions.get(epId))!, status: "REVIEW" });
+  }, 240_000);
 
   it("vista previa de una sola escena (editor) y limpieza de la previa anterior", async () => {
     const sc = (await st.productions.get(epId))!.scenes[2];
