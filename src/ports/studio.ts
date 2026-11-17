@@ -4,6 +4,7 @@
  * REGLA: un adaptador que no está realmente disponible NO se simula: `available()` devuelve false y la interfaz lo dice.
  */
 import type { Scene } from "@/domain/types";
+import type { CanonState, Change, ContextPack, EpisodeInput, EpisodeRequest, RequestCtx } from "@/memory";
 
 export type ProviderInfo = { id: string; label: string; free?: boolean; quality?: "basica" | "buena"; note?: string };
 
@@ -15,7 +16,8 @@ export interface ScriptAnalyzer extends ProviderInfo {
 /** Escribe un guion a partir de una idea y de la memoria narrativa. Hoy: NO DISPONIBLE. */
 export interface ScriptAuthor extends ProviderInfo {
   available(): Promise<boolean>;
-  write(input: { idea: string; canon: string[]; previous: string[] }): Promise<string>;
+  /** Recibe la petición ya interpretada y el PAQUETE DE CONTEXTO de la memoria narrativa (no la historia entera). Devuelve el guion en el formato documentado de KAP (con directivas de memoria). */
+  write(input: { request: EpisodeRequest; context: ContextPack; signal?: AbortSignal }): Promise<{ script: string; warnings: string[] }>;
 }
 
 /** Sintetiza voz a un archivo de audio. Hoy: audio subido por el usuario o espeak-ng local si está instalado. */
@@ -39,5 +41,33 @@ export type CapabilityRow = ProviderInfo & { area: "guion" | "voz" | "imagen" | 
  */
 export interface ScriptInterpreter extends ProviderInfo {
   available(): Promise<boolean>;
-  interpret(input: { script: string; brief: string; characters: { name: string }[]; places: { name: string }[] }): Promise<unknown>;
+  interpret(input: { script: string; brief: string; characters: { name: string }[]; places: { name: string }[]; /** Contexto de continuidad (si hay memoria): permite resolver nombres y referencias. */ context?: ContextPack; signal?: AbortSignal }): Promise<unknown>;
+}
+
+/**
+ * CLIENTE DE MODELO DE LENGUAJE: la ÚNICA pieza que conoce un modelo concreto (Qwen3-8B, Qwen3-14B, otro…). Todo lo demás de KAP
+ * (memoria, contexto, guion, intérprete) habla con este puerto, de modo que cambiar de modelo o de motor (Ollama, llama.cpp…)
+ * es cambiar de adaptador/configuración, sin tocar el motor de animación ni la memoria.
+ * REGLA: si no está realmente disponible, `available()` devuelve false: no se simula.
+ */
+export type LlmRequest = { system?: string; prompt: string; /** JSON Schema que debe cumplir la salida (salida estructurada del motor). */ jsonSchema?: object; temperature?: number; maxTokens?: number; signal?: AbortSignal };
+export interface LlmClient extends ProviderInfo {
+  /** Identificador del modelo (p. ej. «qwen3:8b»). Solo informativo: nada del resto de KAP depende de él. */
+  readonly model: string;
+  /** Tokens de contexto que admite; la memoria ajusta su paquete a este límite. */
+  readonly contextTokens: number;
+  available(): Promise<boolean>;
+  generate(req: LlmRequest): Promise<{ text: string }>;
+}
+
+/** Interpreta una petición en texto libre («Crea el episodio 7 continuando el 6»). Hoy: reglas. Mañana: LLM. */
+export interface EpisodeRequestInterpreter extends ProviderInfo {
+  available(): Promise<boolean>;
+  parse(text: string, ctx: RequestCtx): Promise<EpisodeRequest>;
+}
+
+/** Resume un episodio y propone cambios de memoria (mismo esquema `Change` que las reglas). Hoy: reglas. Mañana: LLM. */
+export interface EpisodeSummarizer extends ProviderInfo {
+  available(): Promise<boolean>;
+  summarize(input: { episode: EpisodeInput; canon: CanonState; signal?: AbortSignal }): Promise<{ summary: string; logline: string; changes: Change[]; warnings: string[] }>;
 }

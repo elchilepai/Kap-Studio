@@ -46,7 +46,10 @@ export function buildContextPack(inp: ContextInput): ContextPack {
   sec("relationships", "Relaciones actuales", 5, false, Object.values(canon.relationships).filter((r) => relSet.has(slug(r.a)) || relSet.has(slug(r.b))).sort((a, b) => Math.abs(b.trust) - Math.abs(a.trust))
     .map((r) => `${r.a} ↔ ${r.b}: ${r.relation} (confianza ${r.trust > 0 ? "+" : ""}${r.trust}; desde ${epLabel(r.since)})${r.note ? ` — ${r.note}` : ""}`));
   const open = Object.values(canon.threads).filter((t) => t.status === "open"), recentClosed = Object.values(canon.threads).filter((t) => t.status === "closed").sort((a, b) => (b.closedIn ?? 0) - (a.closedIn ?? 0)).slice(0, 3);
-  sec("threads", "Hilos narrativos abiertos", 6, false, [...open.map((t) => `«${t.title}» (abierto en ${epLabel(t.openedIn)}${t.involves.length ? `; implicados: ${t.involves.join(", ")}` : ""})${t.notes.length ? ` — ${t.notes.at(-1)}` : ""}`), ...recentClosed.map((t) => `(cerrado en ${epLabel(t.closedIn ?? 0)}) «${t.title}»`)]);
+  const threadLine = (t: typeof open[number]) => `«${t.title}» (abierto en ${epLabel(t.openedIn)}${t.involves.length ? `; implicados: ${t.involves.join(", ")}` : ""})${t.notes.length ? ` — ${t.notes.at(-1)}` : ""}`;
+  const isRel = (t: typeof open[number]) => t.involves.length === 0 || t.involves.some((n) => relSet.has(slug(n)));   // sin implicados declarados: afecta a la historia entera
+  sec("threads", "Hilos narrativos abiertos", 6, false, [...open.filter(isRel).map(threadLine), ...recentClosed.filter(isRel).map((t) => `(cerrado en ${epLabel(t.closedIn ?? 0)}) «${t.title}»`)]);
+  sec("threads-other", "Otros hilos abiertos (no implican a los personajes relevantes)", 12, false, open.filter((t) => !isRel(t)).map(threadLine));
   sec("objects", "Objetos importantes", 7, false, objs.filter((o) => (o.owner && relSet.has(slug(o.owner))) || (!o.owner && o.lastOwner && relSet.has(slug(o.lastOwner))) || o.status !== "intact")
     .sort((a, b) => b.lastChangedIn - a.lastChangedIn).map((o) => `«${o.name}» — ${o.status === "intact" ? "en buen estado" : o.status === "damaged" ? "dañado" : o.status === "destroyed" ? "DESTRUIDO (no puede volver a usarse sin repararlo)" : "PERDIDO"}${o.owner ? `; de ${o.owner}` : o.lastOwner ? `; era de ${o.lastOwner}` : ""}${o.location ? `; está en ${o.location}` : ""}.`));
   sec("rules", "Reglas del universo", 8, true, canon.rules.map((r) => r.text));
@@ -55,7 +58,7 @@ export function buildContextPack(inp: ContextInput): ContextPack {
     ...(prev?.lastShot.location ? (inp.places ?? []).filter((p) => slug(p.name) === slug(prev.lastShot.location)).map((p) => `Lugar del último plano «${p.name}»: ${p.look ?? "escenario ya definido (mantener)"}.`) : []),
   ]);
   sec("facts", "Hechos confirmados", 10, false, [...canon.facts.filter((f) => f.knownBy.some((n) => relSet.has(slug(n))) || f.k).map((f) => f.text), ...canon.facts.filter((f) => !f.k && !f.knownBy.length).slice(-6).map((f) => f.text)]);
-  sec("history", "Episodios anteriores (resumen)", 11, false, [...episodes].sort((a, b) => b.order - a.order).filter((e) => e.order !== request.continuesFrom && (request.continuesFrom === undefined || e.order < request.continuesFrom)).map((e) => `${epLabel(e.order)} «${e.title}»: ${e.logline}`));
+  sec("history", "Episodios anteriores (resumen)", 13, false, [...episodes].sort((a, b) => b.order - a.order).filter((e) => e.order !== request.continuesFrom && (request.continuesFrom === undefined || e.order < request.continuesFrom)).map((e) => `${epLabel(e.order)} «${e.title}»: ${e.logline}`));
 
   // ---- ajuste al presupuesto: se incluyen elementos por prioridad; un elemento que no cabe cierra su sección (no se salta) ----
   const chosen = new Map(S.map((s) => [s.id, [] as string[]])), closed = new Set<string>();

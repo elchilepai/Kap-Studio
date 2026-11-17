@@ -14,6 +14,8 @@ const Schema = z.object({
   KAP_FFPROBE_PATH: z.string().default("ffprobe"),
   KAP_FONT_FILE: z.string().optional(),              // fuente para títulos/subtítulos; si falta se busca Inter/DejaVu
   KAP_LIPSYNC: z.enum(["amplitud", "texto"]).default("amplitud"),   // proveedor de labial: amplitud (por defecto) | texto (experimental)
+  KAP_LLM: z.enum(["none"]).default("none"),            // proveedor de LLM local. Hoy solo «none»: ver docs/IA-LOCAL.md y src/server/ai/registry.ts
+  KAP_CONTEXT_TOKENS: z.coerce.number().int().min(500).max(32000).default(3500), // presupuesto del paquete de contexto de la memoria narrativa
   KAP_ANIM_WORKER: z.string().optional(),             // ruta alternativa del trabajador de animación 2D
   KAP_RENDER_CONCURRENCY: z.coerce.number().int().min(1).max(4).default(1),
   KAP_FFMPEG_THREADS: z.coerce.number().int().min(0).max(64).default(0), // 0 = automático (CPUs / concurrencia)

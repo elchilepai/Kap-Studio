@@ -6,6 +6,7 @@
  * No depende de ningún modelo de IA ni de Next: se usa igual desde acciones, trabajos y tests.
  */
 import type { Storage } from "@/ports";
+import type { EpisodeRequestInterpreter, EpisodeSummarizer, ScriptAuthor } from "@/ports/studio";
 import type { Character, Place, Production } from "@/domain/types";
 import { canExport } from "@/server/studio/export";
 import {
@@ -15,7 +16,8 @@ import {
 } from "@/memory";
 
 export class MemoryError extends Error { constructor(message: string) { super(message); this.name = "MemoryError"; } }
-export type MemoryDeps = { storage: Storage; log?: (action: string, target: string, detail: string) => Promise<void> | void; now?: () => string };
+/** `ai`: adaptadores OPCIONALES (hoy ninguno). Sin IA todo funciona con reglas y formularios; con IA, sus propuestas pasan por el mismo flujo. */
+export type MemoryDeps = { storage: Storage; ai?: { author?: ScriptAuthor; summarizer?: EpisodeSummarizer; requests?: EpisodeRequestInterpreter }; log?: (action: string, target: string, detail: string) => Promise<void> | void; now?: () => string };
 const nowOf = (d: MemoryDeps) => (d.now ?? (() => new Date().toISOString()))();
 const log = async (d: MemoryDeps, a: string, t: string, detail: string) => { try { await d.log?.(a, t, detail); } catch { /* la auditoría nunca rompe la acción */ } };
 
@@ -66,7 +68,16 @@ export async function proposeMemory(deps: MemoryDeps, productionId: string, o: {
   if (prod.kind !== "episode") throw new MemoryError("La memoria narrativa se propone solo para episodios (los Shorts derivan de un episodio)");
   const ep = await episodeInput(storage, prod), before = await canonBefore(storage, orderOf(prod.season, prod.number));
   const previous = await storage.memoryProposals.get(productionId);
-  const { proposal } = buildProposal(ep, before, { previous, manual: o.manual ? parseManual(o.manual) : undefined, now: nowOf(deps) });
+  const built = buildProposal(ep, before, { previous, manual: o.manual ? parseManual(o.manual) : undefined, now: nowOf(deps) });
+  let proposal = built.proposal;
+  const sm = deps.ai?.summarizer;   // IA opcional: propone resumen y cambios con el MISMO esquema; nunca escribe en el canon
+  if (sm && (await sm.available().catch(() => false))) {
+    try {
+      const r = await sm.summarize({ episode: ep, canon: before });
+      const extra = r.changes.map((c) => ({ ...asProposed(c, "llm", before), decision: "pending" as const })).filter((c) => !proposal.changes.some((x) => x.id === c.id));
+      proposal = { ...proposal, changes: [...proposal.changes, ...extra], ...(!previous?.summaryEdited && r.summary ? { summary: r.summary, logline: r.logline || proposal.logline } : {}), ...(r.warnings.length ? { warnings: r.warnings } : {}) };
+    } catch (e) { proposal = { ...proposal, warnings: [`La IA no pudo resumir el episodio (se usan las reglas): ${(e as Error).message}`] }; }
+  }
   // si ya estaba confirmado y el contenido es el mismo, no se toca; si cambió, se abre una propuesta nueva (la confirmación anterior queda desfasada)
   const saved: MemoryProposal = previous?.status === "committed" && previous.contentSig === proposal.contentSig ? previous : { ...proposal, status: "pending" };
   await storage.memoryProposals.save(saved);
@@ -160,11 +171,13 @@ export async function addToBase(deps: MemoryDeps, text: string, by = "usuario"):
 export async function removeFromBase(deps: MemoryDeps, changeId: string): Promise<void> { const b = await loadBase(deps.storage); await deps.storage.memoryCanon.save({ ...b, changes: b.changes.filter((c) => c.id !== changeId), updatedAt: nowOf(deps) }); }
 
 // ------------------------------------------------------------------ contexto para el siguiente episodio
-export async function requestContext(storage: Storage, text: string, o: { budgetTokens?: number } = {}): Promise<{ request: EpisodeRequest; pack: ContextPack }> {
+export async function requestContext(storage: Storage, text: string, o: { budgetTokens?: number; interpreter?: EpisodeRequestInterpreter } = {}): Promise<{ request: EpisodeRequest; pack: ContextPack }> {
   const [chars, places, prods, valid] = await Promise.all([storage.characters.list(), storage.places.list(), storage.productions.list(), validEpisodes(storage)]);
   const eps = prods.filter((p) => p.kind === "episode"), season = Math.max(1, ...eps.map((p) => p.season));
-  const request = parseEpisodeRequest(text, { knownCharacters: chars.map((c) => c.name), defaultSeason: season,
-    nextNumber: (eps.filter((p) => p.season === season).reduce((n, p) => Math.max(n, p.number), 0)) + 1, latestBefore: (s, n) => [...valid].reverse().find((e) => e.order < orderOf(s, n))?.order });
+  const rctx = { knownCharacters: chars.map((c) => c.name), defaultSeason: season,
+    nextNumber: (eps.filter((p) => p.season === season).reduce((n, p) => Math.max(n, p.number), 0)) + 1, latestBefore: (s: number, n: number) => [...valid].reverse().find((e) => e.order < orderOf(s, n))?.order };
+  let request = parseEpisodeRequest(text, rctx);
+  if (o.interpreter && (await o.interpreter.available().catch(() => false))) { try { request = await o.interpreter.parse(text, rctx); } catch { /* si la IA falla, valen las reglas */ } }
   const canon = await canonUpTo(storage, request.continuesFrom ?? Infinity, valid);
   const pack = buildContextPack({ request, canon, episodes: valid.filter((e) => request.continuesFrom === undefined || e.order <= request.continuesFrom), budgetTokens: o.budgetTokens,
     characters: chars.map((c) => ({ name: c.name, designVersion: c.design?.version, outfits: c.design?.outfits.map((x) => x.name), look: lookOf(c) })), places: places.map((p) => ({ name: p.name, look: lookOfPlace(p) })) });
@@ -174,14 +187,19 @@ const lookOf = (c: Character) => c.design ? [c.design.hairStyle ? `pelo ${c.desi
 const lookOfPlace = (p: Place) => p.set ? `${p.set.preset ?? "escenario"} (${p.set.timeOfDay ?? "—"})` : undefined;
 
 /** Crea el borrador del episodio pedido («Crea el episodio 7 continuando el 6») y devuelve su contexto. No genera guion: eso lo hará el ScriptAuthor cuando exista. */
-export async function createEpisodeFromRequest(deps: MemoryDeps, text: string): Promise<{ production: Production; request: EpisodeRequest; pack: ContextPack }> {
-  const { storage } = deps; const { request, pack } = await requestContext(storage, text);
+export async function createEpisodeFromRequest(deps: MemoryDeps, text: string): Promise<{ production: Production; request: EpisodeRequest; pack: ContextPack; authored: boolean; warnings: string[] }> {
+  const { storage } = deps; const { request, pack } = await requestContext(storage, text, { interpreter: deps.ai?.requests });
   const dup = (await storage.productions.list()).find((p) => p.kind === "episode" && p.season === request.season && p.number === request.number);
   if (dup) throw new MemoryError(`El episodio ${request.number} (temporada ${request.season}) ya existe: «${dup.title}»`);
   const now = nowOf(deps);
   const production: Production = { id: crypto.randomUUID(), kind: "episode", number: request.number, season: request.season, title: `Episodio ${request.number}`, status: "SCRIPTING", synopsis: "", script: "", scenes: [], assetIds: [], durationSec: 0,
     cast: [], storyTime: "", generated: false, brief: request.text, ...(request.continuesFrom !== undefined ? { continuesFrom: request.continuesFrom } : {}), createdAt: now, updatedAt: now };
-  await storage.productions.save(production);
-  await log(deps, "memoria.episodio", production.id, `Pedido: «${request.text.slice(0, 200)}»`);
-  return { production, request, pack };
+  const warnings: string[] = []; let authored = false, saved = production;
+  const au = deps.ai?.author;   // si hay IA, redacta el guion con el contexto; si no, el usuario lo escribe (el contexto queda a la vista)
+  if (au && (await au.available().catch(() => false))) {
+    try { const r = await au.write({ request, context: pack }); saved = { ...production, script: r.script }; warnings.push(...r.warnings); authored = true; } catch (e) { warnings.push(`La IA no pudo redactar el guion: ${(e as Error).message}`); }
+  }
+  await storage.productions.save(saved);
+  await log(deps, "memoria.episodio", saved.id, `Pedido: «${request.text.slice(0, 200)}»${authored ? " · guion redactado por IA (pendiente de revisión)" : ""}`);
+  return { production: saved, request, pack, authored, warnings };
 }

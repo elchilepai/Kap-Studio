@@ -65,6 +65,7 @@ export type MemoryProposal = {
   status: "pending" | "committed";
   summary: string; logline: string; present: string[]; summaryEdited?: boolean;   // summaryEdited: el usuario corrigió el resumen; no se sobrescribe al recalcular
   lastShot: LastShot; endingNote: string;         // endingNote: texto del usuario; si está vacío se deriva del estado final
+  warnings?: string[];                            // avisos del proveedor de IA (si lo hubo)
   changes: ProposedChange[];
   createdAt: string; updatedAt: string; committedAt?: string;
 };
