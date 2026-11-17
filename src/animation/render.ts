@@ -6,7 +6,21 @@ import type { FrameState, Grade, StageSpec } from "./types.ts";
 import { GROUND_Y, WORLD_H, WORLD_W } from "./types.ts";
 import { clamp, hash32, rng } from "./util.ts";
 
-export type Resources = { images: Record<string, unknown> };
+export type Resources = { images: Record<string, unknown>; cache?: FrameCache };
+
+/**
+ * Caché de fotograma (solo en el exportador de Node; el navegador dibuja siempre en directo):
+ *  · fondo: el escenario depende solo de la cámara, no del tiempo. Si la cámara no cambia respecto al fotograma anterior
+ *    (planos fijos del diálogo, esperas), se copia 1:1 el bitmap ya dibujado (≈ 0,6 ms) en vez de redibujar el escenario (4-7 ms).
+ *  · superposición: gradación + viñeta + barras no cambian en toda la escena → un único bitmap en espacio de pantalla.
+ * Medido: un bitmap ESCALADO cuesta más que redibujar el escenario, por eso no se cachean capas para hacerles zoom/paralaje.
+ */
+export type FrameCache = {
+  make: (w: number, h: number) => { getContext(k: "2d"): Ctx } & object;
+  stage?: StageSpec; bg?: { cv: object; sig: string }; overlay?: { cv: object; sig: string };
+  stats: { bgHits: number; bgMisses: number };
+};
+export const createFrameCache = (make: FrameCache["make"]): FrameCache => ({ make, stats: { bgHits: 0, bgMisses: 0 } });
 
 export const PORTRAIT_ASPECT = 0.8, PORTRAIT_DROP = 0.2;   // formato vertical: relación < 0,8; desplazamiento = 20 % de la altura visible
 
@@ -27,10 +41,18 @@ const GRADE: Record<Grade, string | null> = { none: null, dusk: "rgba(255,140,80
 /** Dibuja UN fotograma. Mismo código en navegador (previsualización/editor) y en Node/Skia (exportación). */
 export function renderFrame(c: Ctx, stage: StageSpec, t: number, res: Resources, W: number, H: number) {
   const st = evaluate(stage, t); const v = viewFor(stage, W / H, st); const s = H / v.visH;
-  c.save(); c.setTransform(1, 0, 0, 1, 0, 0); c.fillStyle = "#111318"; c.fillRect(0, 0, W, H);
-  c.translate(W / 2, H / 2); c.scale(s, s); c.rotate(st.camera.rot); c.translate(-(v.cx + st.shakeX), -(v.cy + st.shakeY));
+  const cache = res.cache; if (cache && cache.stage !== stage) { cache.stage = stage; cache.bg = undefined; cache.overlay = undefined; }
+  const cam = (k: Ctx) => { k.translate(W / 2, H / 2); k.scale(s, s); k.rotate(st.camera.rot); k.translate(-(v.cx + st.shakeX), -(v.cy + st.shakeY)); };
   const view = { l: v.cx - v.visW / 2 - 1, r: v.cx + v.visW / 2 + 1, t: v.cy - v.visH / 2 - 1, b: v.cy + v.visH / 2 + 1, cx: v.cx };
-  drawSet(c, stage.set, view, t, res.images, stage.style.ink);
+  const paintBg = (k: Ctx) => { k.save(); k.setTransform(1, 0, 0, 1, 0, 0); k.fillStyle = "#111318"; k.fillRect(0, 0, W, H); cam(k); drawSet(k, stage.set, view, t, res.images, stage.style.ink); k.restore(); };
+  c.save(); c.setTransform(1, 0, 0, 1, 0, 0);
+  if (cache) {
+    const sig = [W, H, v.cx, v.cy, s, st.camera.rot, st.shakeX, st.shakeY].join("|");
+    if (cache.bg?.sig === sig) cache.stats.bgHits++;
+    else { const cv = (cache.bg?.cv ?? cache.make(W, H)) as { getContext(k: "2d"): Ctx }; paintBg(cv.getContext("2d")); cache.bg = { cv, sig }; cache.stats.bgMisses++; }
+    c.drawImage(cache.bg!.cv as never, 0, 0);
+  } else paintBg(c);
+  cam(c);
   const accent = stage.set.accent ?? "#E9B949";
   stage.props.forEach((p) => { const a = st.props.find((x) => x.id === p.id)?.alpha ?? 0; if (a > 0.001) drawProp(c, p, a, stage.style.ink, accent); });
   const order = stage.actors.map((a, i) => ({ a, s: st.actors[i] })).filter((x) => x.s.visible).sort((p, q) => p.s.x - q.s.x);
@@ -41,13 +63,23 @@ export function renderFrame(c: Ctx, stage: StageSpec, t: number, res: Resources,
   }
   drawForeground(c, stage.set, view, res.images, stage.style.ink);   // primer plano: delante de los personajes, se desplaza más que la cámara
   c.restore();
-  // efectos y gradación en espacio de pantalla
+  // efectos (cambian con el tiempo) y después gradación + viñeta + barras (constantes: bitmap único si hay caché)
   c.save(); c.setTransform(1, 0, 0, 1, 0, 0);
   for (const e of st.effects) drawEffect(c, e.effect, e.intensity, e.p, t, W, H, stage.seed);
   const g = GRADE[stage.set.timeOfDay === "night" && stage.style.grade === "none" ? "night" : stage.style.grade];
-  if (g) { c.fillStyle = g; c.fillRect(0, 0, W, H); }
-  if (stage.style.vignette > 0) { const r = c.createRadialGradient(W / 2, H / 2, Math.min(W, H) * 0.35, W / 2, H / 2, Math.max(W, H) * 0.75); r.addColorStop(0, "rgba(0,0,0,0)"); r.addColorStop(1, `rgba(0,0,0,${stage.style.vignette})`); c.fillStyle = r; c.fillRect(0, 0, W, H); }
-  if ((stage.style.bars ?? 0) > 0) { const bh = Math.round(H * (stage.style.bars ?? 0)); c.fillStyle = "#000"; c.fillRect(0, 0, W, bh); c.fillRect(0, H - bh, W, bh); }   // barras cinematográficas
+  const paintOverlay = (k: Ctx) => {
+    if (g) { k.fillStyle = g; k.fillRect(0, 0, W, H); }
+    if (stage.style.vignette > 0) { const r = k.createRadialGradient(W / 2, H / 2, Math.min(W, H) * 0.35, W / 2, H / 2, Math.max(W, H) * 0.75); r.addColorStop(0, "rgba(0,0,0,0)"); r.addColorStop(1, `rgba(0,0,0,${stage.style.vignette})`); k.fillStyle = r; k.fillRect(0, 0, W, H); }
+    if ((stage.style.bars ?? 0) > 0) { const bh = Math.round(H * (stage.style.bars ?? 0)); k.fillStyle = "#000"; k.fillRect(0, 0, W, bh); k.fillRect(0, H - bh, W, bh); }   // barras cinematográficas
+  };
+  const hasOverlay = !!g || stage.style.vignette > 0 || (stage.style.bars ?? 0) > 0;
+  if (hasOverlay) {
+    if (cache) {
+      const sig = [W, H, g, stage.style.vignette, stage.style.bars ?? 0].join("|");
+      if (cache.overlay?.sig !== sig) { const cv = cache.make(W, H) as { getContext(k: "2d"): Ctx }; paintOverlay(cv.getContext("2d")); cache.overlay = { cv, sig }; }
+      c.drawImage(cache.overlay!.cv as never, 0, 0);
+    } else paintOverlay(c);
+  }
   c.restore();
 }
 
