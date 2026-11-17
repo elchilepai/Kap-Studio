@@ -1,0 +1,76 @@
+# Casa por la mañana
+Al amanecer, KAP ya está despierto y con el cuaderno abierto. Tiene las ojeras de quien ha dormido poco, pero los ojos brillan de una manera distinta, como si hubiese descubierto un secreto.
+HERMANO DE KAP: ¿Qué escribes tanto?
+KAP: Cosas mías. Luego te las leo.
+[edad: KAP, 9]
+
+# Cocina
+Preparan el desayuno con lo que dejó el vecino. Mientras su hermano mastica el pan, KAP golpea la mesa con los dedos siguiendo el ritmo que lleva todo el día en la cabeza.
+HERMANO DE KAP: Eso suena a la música de Ramiro.
+KAP: Suena a la mía. Escucha.
+[atributo: KAP, esfuerzo = 3]
+
+# Calle
+Antes de ir al colegio, KAP toca a la puerta del vecino. Ramiro abre con una taza de café y una sonrisa cansada, y se aparta para dejarlo entrar en un salón lleno de discos y cables.
+RAMIRO: Sabía que vendrías. ¿Qué has traído?
+KAP: Un cuaderno. Y muchas ganas de aprender.
+[relacion: KAP, Ramiro, mentor, 1]
+
+# Casa de Ramiro
+Ramiro le enseña lo básico con paciencia: cómo contar los tiempos, dónde cae la rima, por qué una frase honesta vale más que una frase bonita. KAP lo apunta todo, con la lengua entre los dientes.
+RAMIRO: Lo primero no es rapear bien. Lo primero es no rendirte.
+KAP: Eso se me da bien. Rendirme no está en mi lista.
+[perfil: KAP, habilidades iniciales = aprende a contar los tiempos y a rimar con ayuda de Ramiro]
+
+# Casa de Ramiro, más tarde
+Le pone una base sencilla en un altavoz viejo y le pide que lea lo que escribió la noche anterior. KAP traga saliva y empieza con la voz temblando, pero a la tercera línea se le suelta algo por dentro.
+Al terminar, Ramiro se queda en silencio, y KAP teme haberlo hecho fatal.
+RAMIRO: Tienes algo. Ni idea de cuánto, pero lo tienes.
+
+# Colegio
+En el colegio, Dani se acerca por detrás y le tira del cuello de la camiseta. KAP se vuelve, y por primera vez no baja la mirada. Dani se sorprende un segundo y luego se ríe más fuerte, pero KAP ya no se esconde.
+DANI: ¿Qué miras, pobre?
+KAP: Miro a alguien que algún día no me va a asustar.
+
+# Clase
+La maestra pide que cada alumno cuente qué quiere ser de mayor. Los demás hablan de futbolistas, médicos y astronautas. Cuando llega el turno de KAP, el aula se queda en silencio.
+KAP: Quiero ser rapero. Voy a ser millonario con mi música.
+Estalla una carcajada general. Dani golpea la mesa de la risa, y la maestra tiene que pedir silencio.
+[evento: KAP cuenta en clase su sueño de ser millonario con su música]
+[perfil: KAP, sueños = ser millonario gracias a su música, aunque en clase se ríen de él]
+
+# Patio
+En el recreo, un grupo repite su frase en tono burlón. Millonario, dicen, con una mano en el pecho y la otra extendida. KAP aprieta los dientes y se sienta con la espalda recta.
+No contesta. Solo piensa que esas mismas voces dirán algún día que siempre creyeron en él.
+
+# Pasillo
+La profesora lo para en el pasillo y le habla con suavidad. Le dice que los sueños grandes no son un problema, pero que no debe dejar de estudiar.
+PROFESORA: No dejes que te quiten eso. Pero tampoco dejes los deberes.
+KAP: No lo haré. Si quiero llegar lejos, tengo que hacerlo todo bien.
+[atributo: KAP, disciplina = 2]
+
+# Guardería
+Recoge a su hermano y, por el camino, le cuenta lo que ha pasado en clase. Espera que se ría, pero el pequeño se queda callado un momento y después lo mira muy serio.
+HERMANO DE KAP: Yo sí te creo. Vas a ser el mejor.
+KAP: ¿De verdad?
+HERMANO DE KAP: De verdad de la buena.
+
+# Casa de noche
+Esa noche, KAP le lee a su hermano las canciones que ha escrito. Con cada verso, el pequeño abre más los ojos, y al terminar aplaude con las manos pequeñas, como si estuviera en un gran escenario.
+KAP siente que nunca ha tenido un público mejor.
+[hito-logrado: Niño con un sueño | lo dice en voz alta ante los demás y ante su hermano]
+
+# Habitación
+Cuando su hermano se duerme, KAP se queda mirando el techo. Piensa en Ramiro, en Dani, en las risas de clase y en el aplauso de una sola persona que lo cree todo.
+Entonces, sin darse cuenta, empieza a escribir una frase nueva: la promesa de que no va a parar hasta conseguirlo.
+[atributo: KAP, perseverancia = 2]
+
+# Calle de noche
+Antes de acostarse, baja un momento a tirar la basura y, al volver, ve a Dani al otro lado de la calle, con un par de amigos, mirando hacia su ventana. Lleva el cuaderno de KAP en la mano, el que se le cayó en el patio.
+Sonríe despacio y levanta el cuaderno para que KAP lo vea.
+[acto: inicio | KAP se levanta con ganas de aprender música]
+[acto: conflicto | Dani y la clase se ríen de su sueño]
+[acto: desarrollo | Ramiro le enseña lo básico y KAP practica]
+[acto: emocional | Su hermano pequeño es el único que cree en él]
+[acto: resolucion | KAP se compromete a no rendirse]
+[gancho: Dani tiene el cuaderno de KAP y lo muestra desde la calle]

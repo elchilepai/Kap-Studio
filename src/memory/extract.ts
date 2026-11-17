@@ -19,7 +19,8 @@ export type PerScene = { index: number; title: string; parsed: ParsedMemory };
 
 /** Firma del contenido narrativo: si cambia (se edita una escena o su memoria), la propuesta y la confirmación quedan desfasadas. */
 export function contentSig(ep: EpisodeInput): string {
-  return hash(JSON.stringify([ep.title, ep.continuesFrom ?? null, ep.characters.map((c) => [c.name, c.castOutfit ?? ""]),
+  const present = new Set(presentNames(ep).map(slug));   // solo cuentan los personajes de ESTE episodio: crear otros en el estudio no debe invalidar episodios ya confirmados
+  return hash(JSON.stringify([ep.title, ep.continuesFrom ?? null, ep.characters.filter((c) => present.has(slug(c.name))).map((c) => [c.name, c.castOutfit ?? ""]),
     ep.scenes.map((s) => [s.title, s.location, s.lines.map((l) => [l.speaker ?? "", l.text]), s.characterNames, s.memory])]));
 }
 

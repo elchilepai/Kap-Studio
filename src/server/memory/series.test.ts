@@ -137,6 +137,14 @@ describe("serie de KAP — canon inicial y arco sobre la memoria real", () => {
     expect(n).toBe(17);   // 17 episodios de prueba solo para el test: la serie real NO fija el número de episodios
   });
 
+  it("crear OTROS personajes en el estudio no invalida episodios ya confirmados (regresión del fallo hallado con el pipeline real)", async () => {
+    const d = await setup(); await registerKapCanon(d.deps); await d.mk("e1", 1, E1); await d.approve("e1");
+    for (const n of ["Ramiro", "Profesora", "Dani2"]) await d.storage.characters.save({ id: `x-${n}`, name: n, description: "", traits: [], voiceNotes: "", referenceAssetIds: [] });   // el pipeline crea personajes al generar el episodio siguiente
+    expect((await answerStory(d.storage, "vivido")).basedOn).toEqual(["ep. 1"]); expect((await seriesStatus(d.storage)).arc.achieved).toBe(2);
+    const p = (await d.storage.productions.get("e1"))!; await d.storage.productions.save({ ...p, scenes: p.scenes.map((s, i) => (i === 0 ? { ...s, lines: [...s.lines, { text: "Una línea nueva." }] } : s)) });   // cambiar el CONTENIDO sí lo invalida
+    expect((await answerStory(d.storage, "vivido")).basedOn).toEqual([]);
+  });
+
   it("«Crea el episodio 7 continuando el 6» se resuelve contra la serie registrada", async () => {
     const d = await setup(); await registerKapCanon(d.deps); await d.mk("e1", 1, E1); await d.approve("e1");
     const r = await createEpisodeFromRequest(d.deps, "Crea el episodio 2 continuando exactamente donde terminó el episodio 1"); expect(r.production.continuesFrom).toBe(1001); expect(r.pack.text).toMatch(/Evolución de KAP hasta ahora/);

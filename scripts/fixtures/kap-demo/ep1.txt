@@ -1,0 +1,77 @@
+# Casa al amanecer
+La luz gris entra por la ventana rota de una casa pequeña y fría. KAP abre los ojos antes que nadie, como cada mañana, porque en esa casa alguien tiene que estar despierto.
+KAP: Vamos, despierta. Hoy toca ir al colegio.
+HERMANO DE KAP: Tengo hambre, KAP.
+[edad: KAP, 8]
+[hito-logrado: Niño con pocos recursos | la casa fría y la nevera casi vacía]
+[perfil: KAP, personalidad = serio y responsable para su edad]
+
+# Cocina
+En la cocina solo quedan un poco de pan duro y un vaso de leche. KAP lo reparte con cuidado, dejando la parte más grande para su hermano pequeño, que lo mira sin entender por qué él no come.
+KAP: Yo ya he desayunado antes. Come tú.
+HERMANO DE KAP: Mentira. Tú nunca desayunas.
+KAP: Calla y come, anda.
+[ropa: KAP, camiseta gris desgastada]
+
+# Salón
+En el salón, los padres de KAP duermen en el sofá entre vasos vacíos y silencio. Sus problemas con las drogas los han dejado lejos de sus hijos, y hace mucho que nadie les pregunta cómo les ha ido el día.
+KAP los mira un momento desde la puerta y aprieta los puños. Luego apaga la televisión sin hacer ruido y sale.
+[evento: Los padres de KAP duermen y no se ocupan de sus hijos]
+
+# Calle camino al colegio
+Caminan juntos por la calle, el pequeño agarrado a la mano de su hermano. KAP le ajusta la bufanda vieja, le sube la cremallera del abrigo y le recuerda mirar a los dos lados antes de cruzar.
+HERMANO DE KAP: ¿Papá y mamá se van a despertar hoy?
+KAP: Seguro que sí. Tú no te preocupes por eso.
+[hito-logrado: Niño que intenta proteger a su hermano | lo cuida en todo el camino]
+
+# Puerta de la guardería
+KAP deja a su hermano en la puerta de la guardería y espera a que entre. Antes de irse le da una galleta que había guardado en el bolsillo desde el día anterior.
+HERMANO DE KAP: Vuelve pronto, ¿vale?
+KAP: Siempre vuelvo. Te lo prometo.
+
+# Colegio
+En clase, KAP intenta concentrarse, pero el hambre le hace ruido en el estómago. Aun así levanta la mano cuando la maestra pregunta, porque cree que estudiar es la única salida que tiene.
+KAP: Yo lo sé. Es la capital de España.
+Algunos compañeros se giran para mirarlo y sonríen entre ellos, y KAP prefiere no mirar atrás.
+
+# Recreo
+A la hora del recreo, KAP se sienta solo en un banco. Mientras los demás juegan, él se queda mirando unas zapatillas nuevas que pasan corriendo, y se esconde los pies con las suelas gastadas.
+No dice nada, pero guarda esa imagen para sí.
+[evento: KAP siente por primera vez que es diferente a los demás]
+
+# Pasillo del colegio
+De camino a la salida, una profesora lo detiene y le pregunta si todo va bien en casa. KAP sabe que si cuenta la verdad se llevarán a su hermano, así que sonríe y dice lo mismo de siempre.
+KAP: Todo bien, de verdad. Solo estoy cansado.
+La profesora duda, pero lo deja marchar.
+
+# Calle de vuelta
+Antes de recoger a su hermano, KAP se detiene bajo la ventana de un vecino. Desde dentro suena una canción con una base de rap, y las palabras caen una tras otra con una fuerza que él nunca había sentido.
+KAP se queda inmóvil, con la mochila colgando, escuchando hasta el final.
+KAP: ¿Cómo se hace eso...?
+[evento: KAP escucha rap por primera vez]
+[perfil: KAP, sueños = escuchar música es lo único que lo hace sentir libre]
+
+# Guardería
+Recoge a su hermano, que sale corriendo a abrazarlo. Pasan por la tienda de la esquina y KAP cuenta las monedas del bolsillo: alcanzan para un pan y poco más.
+HERMANO DE KAP: ¿Hoy cenamos pan otra vez?
+KAP: Hoy cenamos pan con algo especial. Ya verás.
+
+# Cocina por la noche
+KAP prepara la cena con lo poco que hay: pan tostado y un poco de azúcar por encima, que convierte en una fiesta. Su hermano se ríe por primera vez en todo el día.
+HERMANO DE KAP: Esto está buenísimo. Eres el mejor.
+KAP sonríe por dentro, aunque nadie lo ve. Mientras lava los platos se pone a tararear, muy bajito, el ritmo que escuchó en la calle.
+
+# Habitación
+Acuesta a su hermano, lo arropa con la manta más gruesa y se sienta a su lado hasta que se duerme. Después abre un cuaderno viejo y escribe tres frases sueltas que le salen sin pensar.
+Cuando las lee, siente algo extraño: por fin tiene algo suyo.
+[hito: Niño con un sueño | escribe sus primeras frases]
+
+# Salón de noche
+De repente, un golpe seco en la puerta rompe el silencio. Los padres siguen dormidos. KAP se queda quieto, con el cuaderno apretado contra el pecho, mirando cómo la puerta tiembla una vez más.
+Alguien insiste desde fuera, y KAP no sabe si abrir.
+[acto: inicio | Una mañana cualquiera en una casa sin recursos]
+[acto: conflicto | Los padres ausentes y el hambre]
+[acto: desarrollo | KAP cuida de su hermano todo el día]
+[acto: emocional | KAP escucha rap y escribe sus primeras frases]
+[acto: resolucion | Consigue que su hermano cene y duerma tranquilo]
+[gancho: Alguien llama a la puerta de noche y KAP no sabe si abrir]

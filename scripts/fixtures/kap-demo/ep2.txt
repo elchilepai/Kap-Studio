@@ -1,0 +1,79 @@
+# Puerta de casa
+KAP respira hondo y abre la puerta una rendija. En el rellano está el vecino de la música, con una bolsa de papel en la mano y cara de no saber cómo empezar.
+RAMIRO: Perdona la hora. Os he oído llorar al pequeño antes. ¿Estáis bien?
+KAP: Estamos bien. Solo tenía una pesadilla.
+RAMIRO: Te dejo esto aquí. Me sobraba.
+[evento: Un vecino, Ramiro, deja comida en la puerta de KAP]
+
+# Cocina
+Dentro de la bolsa hay pan, queso y una pieza de fruta. KAP la mira con una mezcla de alivio y vergüenza, porque no quiere deber nada a nadie, pero su hermano se ha despertado y ya está sentado a la mesa.
+HERMANO DE KAP: ¿Es para nosotros?
+KAP: Es para nosotros. Pero mañana no se lo contamos a nadie.
+Comen en silencio, y por una noche el hambre se queda fuera.
+
+# Casa por la mañana
+Suena el despertador y los padres no se levantan. KAP viste a su hermano, le hace una trenza de pan con queso para el camino y se mira un segundo en el cristal roto del armario: la camiseta gris sigue igual de desgastada.
+Se estira el cuello para taparlo y sale sin mirar atrás.
+[ropa: KAP, camiseta gris desgastada]
+
+# Calle
+Por el camino, un grupo de niños mayores cruza la acera riéndose. Uno de ellos, Dani, lo señala con el dedo y le dice algo al oído a los demás, que estallan en carcajadas.
+KAP aprieta la mano de su hermano y acelera el paso, fingiendo que no ha oído nada.
+
+# Puerta del colegio
+Deja a su hermano en la guardería y camina hasta el colegio con el estómago encogido. Sabe lo que viene, porque ya lo ha vivido muchas veces, pero cada vez duele un poco más.
+En la entrada, Dani lo espera apoyado en la pared con los brazos cruzados.
+DANI: Mira quién llega. El pobre del barrio.
+KAP: Déjame pasar.
+DANI: ¿Y si no quiero?
+[relacion: KAP, Dani, acoso, -2]
+[abre-hilo: Dani acosa a KAP | KAP, Dani]
+
+# Clase
+En clase, la maestra reparte unas hojas y todos sacan lápices de colores nuevos. KAP solo tiene un lápiz pequeño, casi sin punta, y se lo pasa de mano en mano para no perderlo.
+Desde la fila de atrás, alguien susurra algo sobre su ropa y se oye una risa contenida. KAP baja la cabeza sobre el papel.
+[hito-logrado: Víctima de bullying | se burlan de su ropa y de su situación en clase]
+[perfil: KAP, situación escolar = lo humillan por su ropa y su pobreza, y cada día le cuesta más entrar en el colegio]
+
+# Patio
+En el recreo, Dani y su grupo lo rodean. Le quitan la mochila, tiran los cuadernos al suelo y se ríen al ver que dentro hay un pan envuelto en papel. KAP intenta recogerlo todo sin decir nada.
+DANI: ¿Esto es tu comida? Qué asco. No me extraña que huelas así.
+KAP: Basta, por favor.
+Nadie se atreve a defenderlo, y esa soledad le pesa más que los empujones.
+
+# Baño del colegio
+KAP se encierra en el baño hasta que pasa la mitad del recreo. Se moja la cara, respira despacio y se promete que no va a llorar delante de ellos, aunque por dentro se le deshace todo.
+Saca su cuaderno viejo y escribe una frase furiosa que no sabe si es una rima o un grito.
+[perfil: KAP, personalidad = serio, orgulloso y cada vez más callado]
+
+# Pasillo
+Al salir, se cruza con la profesora que ya le había preguntado por su casa. Ella ve sus ojos rojos y le pone una mano en el hombro.
+PROFESORA: KAP, si necesitas algo, aquí estoy. De verdad.
+KAP: Gracias, pero no pasa nada. Es que me ha entrado polvo.
+La mentira le sale con facilidad, y eso también le duele.
+
+# Guardería
+Recoge a su hermano en la puerta. El pequeño le enseña un dibujo: son los dos cogidos de la mano, con un sol enorme encima. KAP lo mira un rato largo.
+HERMANO DE KAP: Este eres tú y este soy yo. Y aquí está el sol, que nos cuida.
+KAP: Es el mejor dibujo que he visto en mi vida.
+[evento: El dibujo de su hermano le da fuerzas a KAP]
+
+# Calle de vuelta
+Caminando a casa, pasan otra vez bajo la ventana del vecino. Suena la misma música de la noche anterior, y KAP frena sin darse cuenta, con el dibujo apretado contra el pecho.
+RAMIRO: ¿Te gusta? Es rap. Quien lo escribe cuenta su vida sin pedir permiso a nadie.
+KAP: ¿Cualquiera puede escribirlo?
+RAMIRO: Cualquiera que tenga algo que decir.
+
+# Casa de noche
+En casa, sus padres siguen dormidos. KAP acuesta a su hermano, le da las buenas noches y se sienta a oscuras con el cuaderno sobre las rodillas, pensando en las palabras de Ramiro.
+Las humillaciones del día todavía le arden, pero por primera vez no piensa en esconderse, sino en contestar.
+
+# Habitación
+Escribe durante un rato largo y, cuando termina, lee en voz baja lo que ha salido: cuatro líneas torpes, llenas de rabia, pero que hablan de él. Las guarda bajo el colchón como si fueran un secreto.
+Se queda dormido con el lápiz en la mano.
+[acto: inicio | La visita del vecino a medianoche]
+[acto: conflicto | Dani y su grupo humillan a KAP por su ropa y su pobreza]
+[acto: desarrollo | KAP intenta ignorarlos y cuidar de su hermano]
+[acto: emocional | KAP llora a escondidas y el dibujo de su hermano lo reconforta]
+[acto: resolucion | KAP descubre que puede contestar con palabras]
+[gancho: Ramiro le ofrece a KAP enseñarle cómo se escribe una canción]
