@@ -80,8 +80,10 @@ describe.skipIf(!hasTts)("pipeline automático REAL de principio a fin (FFmpeg +
     expect(ep.scenes[0]).toMatchObject({ visualSource: "directive", visualAssetId: "img-refugio", transition: "fadeblack" });
     expect(ep.scenes[1]).toMatchObject({ visualSource: "library", visualAssetId: "img-azotea" });
     expect(ep.scenes.filter((s) => s.visualSource === "card").length).toBe(10);   // sin recurso: tarjetas, no se inventa nada
-    // memoria visual: solo la asignación por biblioteca fija la imagen canónica de un lugar (una directiva [imagen:] es puntual)
-    const places = await st.places.list(); expect(places.map((p) => p.name)).toEqual(["Azotea"]); expect(places[0].visualAssetId).toBe("img-azotea");
+    // lugares: CADA lugar nuevo del guion se crea con su escenario congelado (continuidad); la imagen canónica solo se fija con una coincidencia de biblioteca
+    const places = await st.places.list(); expect(places).toHaveLength(12); const byName = (n: string) => places.find((p) => p.name === n)!;
+    expect(byName("Refugio").set).toMatchObject({ preset: "room" }); expect(byName("Azotea").set).toMatchObject({ preset: "rooftop" });
+    expect(byName("Azotea").visualAssetId).toBe("img-azotea"); expect(byName("Refugio").visualAssetId).toBeUndefined();   // [imagen:] es puntual: no fija la imagen del lugar
 
     // vídeo real
     const v = (await st.assets.get(ep.videoAssetId!))!; const p = await ffprobe(path.join(media(), v.path));
