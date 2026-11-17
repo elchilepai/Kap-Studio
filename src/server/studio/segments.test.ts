@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildSegmentGraph, overlapBetween, planSegments, sceneStarts, type ComposeClip } from "./compose";
+import { buildSegmentGraph, joinFrame, overlapBetween, planSegments, sceneStarts, type ComposeClip } from "./compose";
 import { mapLimit } from "./pool";
 
 const FPS = 30;
@@ -20,7 +20,7 @@ describe("planSegments (puro)", () => {
     for (const s of planSegments(clips, 3).segments.slice(1)) {
       expect(s.trim).toBeGreaterThanOrEqual(overlapBetween(clips[s.a - 1], clips[s.a]) - 1e-9);   // lo anterior ya mostró la mezcla
       expect(s.trim).toBeLessThan(clips[s.a].dur);
-      expect(s.startFrame / FPS).toBeCloseTo(S[s.a] + s.trim, 6);
+      expect(s.startFrame / FPS).toBeCloseTo(joinFrame(S[s.a]) / FPS + s.trim, 6);   // el clip se lee fotograma a fotograma desde el de su unión
       s.offsets.forEach((o, k) => { expect(o).toBeGreaterThan(0); if (k) expect(o).toBeGreaterThan(s.offsets[k - 1]); });
     }
   });

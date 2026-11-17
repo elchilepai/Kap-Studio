@@ -21,6 +21,14 @@ export function overlapBetween(a: { dur: number }, b: { dur: number; transition:
   return Math.max(1 / FPS, Math.min(MAX_OVERLAP, a.dur * 0.4, b.dur * 0.4));
 }
 
+/**
+ * `xfade` empieza la transición en el primer fotograma con pts ≥ offset y consume el segundo clip fotograma a fotograma.
+ * Con desfases fraccionarios el redondeo de coma flotante podía mover ese inicio un fotograma. Se fija a un fotograma entero:
+ * `joinFrame` = fotograma donde empieza la transición hacia la escena i; `xfadeOffset` lo expresa con un margen de medio milisegundo.
+ */
+export const joinFrame = (startSec: number): number => Math.ceil(startSec * FPS - 1e-6);
+export const xfadeOffset = (frame: number): number => Math.max(0, frame / FPS - 0.0005);
+
 /** Instantes de inicio de cada escena en la línea de tiempo final. */
 export function sceneStarts(durs: number[]): number[] { let t = 0; return durs.map((d) => { const s = t; t += d; return s; }); }
 
@@ -67,7 +75,7 @@ export function buildFilterGraph(inp: Pick<ComposeInput, "clips" | "narration" |
   else for (let i = 1; i < n; i++) {
     const x = overlapBetween(inp.clips[i - 1], inp.clips[i]);
     const t = inp.clips[i].transition === "cut" ? "fade" : inp.clips[i].transition;
-    g.push(`[${i === 1 ? "0:v" : `v${i - 1}`}][${i}:v]xfade=transition=${t}:duration=${f(x)}:offset=${f(S[i])}[${i === n - 1 ? "vx" : `v${i}`}]`);
+    g.push(`[${i === 1 ? "0:v" : `v${i - 1}`}][${i}:v]xfade=transition=${t}:duration=${f(x)}:offset=${xfadeOffset(joinFrame(S[i])).toFixed(4)}[${i === n - 1 ? "vx" : `v${i}`}]`);
   }
   g.push(`[vx]fade=t=in:st=0:d=0.4,fade=t=out:st=${f(Math.max(0, total - 0.8))}:d=0.8,format=yuv420p[v]`);
 
@@ -119,12 +127,13 @@ export function planSegments(clips: Pick<ComposeClip, "dur" | "transition">[], p
   const totalFrames = Math.max(1, Math.ceil(total * FPS - 1e-6));
   const step = Math.max(1, Math.floor(per)), firsts: number[] = [];
   for (let i = 0; i < n; i += step) firsts.push(i);
-  const boundary = (i: number) => (i >= n ? totalFrames : Math.ceil((S[i] + overlapBetween(clips[i - 1], clips[i])) * FPS - 1e-6));
+  const J = S.map((t, i) => (i === 0 ? 0 : joinFrame(t)));      // fotograma donde empieza cada escena (la transición hacia ella)
+  // el tramo termina cuando acaba la transición hacia la 1.ª escena del siguiente: desde ahí es solo esa escena
+  const boundary = (i: number) => (i >= n ? totalFrames : J[i] + Math.ceil(overlapBetween(clips[i - 1], clips[i]) * FPS - 1e-6));
   const segments: Segment[] = firsts.map((a, g) => {
     const b = g + 1 < firsts.length ? firsts[g + 1] : n;
     const startFrame = g === 0 ? 0 : boundary(a), endFrame = boundary(b), last = Math.min(b, n - 1);
-    const T0 = startFrame / FPS;
-    return { a, b, last, startFrame, endFrame, trim: g === 0 ? 0 : T0 - S[a], offsets: Array.from({ length: last - a }, (_, k) => S[a + k + 1] - T0) };
+    return { a, b, last, startFrame, endFrame, trim: g === 0 ? 0 : (startFrame - J[a]) / FPS, offsets: Array.from({ length: last - a }, (_, k) => xfadeOffset(J[a + k + 1] - startFrame)) };
   });
   return { segments, totalFrames, total };
 }
@@ -136,7 +145,7 @@ export function buildSegmentGraph(clips: ComposeClip[], seg: Segment, total: num
   if (n === 1) g.push(`[${first}]null[vx]`);
   else for (let k = 1; k < n; k++) {
     const i = seg.a + k, x = overlapBetween(clips[i - 1], clips[i]), t = clips[i].transition === "cut" ? "fade" : clips[i].transition;
-    g.push(`[${k === 1 ? first : `v${k - 1}`}][${k}:v]xfade=transition=${t}:duration=${f(x)}:offset=${f(seg.offsets[k - 1])}[${k === n - 1 ? "vx" : `v${k}`}]`);
+    g.push(`[${k === 1 ? first : `v${k - 1}`}][${k}:v]xfade=transition=${t}:duration=${f(x)}:offset=${seg.offsets[k - 1].toFixed(4)}[${k === n - 1 ? "vx" : `v${k}`}]`);
   }
   const fades: string[] = [];
   if (seg.startFrame === 0) fades.push("fade=t=in:st=0:d=0.4");

@@ -56,7 +56,8 @@ describe("filtro de montaje (puro)", () => {
   it("xfade encadenado con offsets = inicio de cada escena; música con ducking solo si hay voz", () => {
     const c = (d: number, t: "fade" | "cut" = "fade") => ({ file: "x", dur: d, transition: t });
     const g = buildFilterGraph({ clips: [c(5), c(4), c(6, "cut")], narration: [{ file: "n", start: 0.3 }], sfx: [], music: { file: "m", volume: 0.2 } });
-    expect(g.total).toBe(15); expect(g.graph).toContain("xfade=transition=fade:duration=0.700:offset=5.000"); expect(g.graph).toContain("offset=9.000");
+    expect(g.total).toBe(15); expect(g.graph).toContain("xfade=transition=fade:duration=0.700:offset=4.9995");   // inicio de la transición fijado a un fotograma entero (5 s = fotograma 150)
+    expect(g.graph).toContain("offset=8.9995");
     expect(g.graph).toContain("duration=0.033"); expect(g.graph).toContain("sidechaincompress");
     expect(buildFilterGraph({ clips: [c(5)], narration: [], sfx: [], music: { file: "m", volume: 0.2 } }).graph).not.toContain("sidechaincompress");
     expect(buildFilterGraph({ clips: [c(5)], narration: [], sfx: [], music: undefined }).graph).toContain("anullsrc".length ? "atrim=0:5.000[a]" : "");
