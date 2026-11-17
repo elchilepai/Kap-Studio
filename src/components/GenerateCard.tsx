@@ -15,7 +15,7 @@ const SRC: Record<string, string> = { manual: "elegida a mano", directive: "seg�
 /** Producción automática: petición + un botón. Todo lo demás lo hace el pipeline; el editor de escenas es solo para corregir. */
 export default async function GenerateCard({ p }: { p: Production }) {
   const { storage, render } = getProviders();
-  const [assets, jobs, tts] = await Promise.all([storage.assets.list(), render.list(80), espeakProvider().available()]);
+  const [assets, jobs, tts, styleDoc] = await Promise.all([storage.assets.list(), render.list(80), espeakProvider().available(), storage.style.get("style")]);
   const music = assets.filter((a) => a.role === "music" || (a.kind === "audio" && !["narration", "sfx"].includes(a.role ?? "")));
   const mine = jobs.filter((j) => j.productionId === p.id && (j.kind === "episode" || j.kind === "short"));
   const last = mine[0];
@@ -41,6 +41,7 @@ export default async function GenerateCard({ p }: { p: Production }) {
           {hints.recognized.length > 0 && <div className="small muted">Reconocido: {hints.recognized.join(" · ")}. El resto del texto se guarda, pero no se interpreta hasta conectar un proveedor de IA.</div>}
         </div>
         <div className="form">
+          <div className="field"><label htmlFor="g-a">Estilo visual</label><select id="g-a" name="animation" defaultValue={styleDoc?.defaultMode === "still" ? "still" : "2d"}><option value="2d">Animación 2D (personajes, cámara, escenarios)</option><option value="still">Imágenes fijas con zoom</option></select></div>
           <div className="field"><label htmlFor="g-q">Resolución</label><select id="g-q" name="quality" defaultValue="720p"><option value="480p">480p (borrador rápido)</option><option value="720p">720p</option><option value="1080p">1080p (final)</option></select></div>
           <div className="field"><label htmlFor="g-v">Narración</label><select id="g-v" name="voice" defaultValue="none"><option value="none">Sin voz (solo subtítulos / audios subidos)</option><option value="espeak" disabled={!tts}>{tts ? "Voz local eSpeak (básica)" : "Voz local — no instalada"}</option></select></div>
           <div className="field"><label htmlFor="g-s">Shorts a derivar</label><input id="g-s" name="shortsCount" type="number" min={0} max={6} placeholder={String(hints.shortsCount ?? 3)} inputMode="numeric" /></div>

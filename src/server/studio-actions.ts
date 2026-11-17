@@ -53,6 +53,7 @@ async function enqueueJob(kind: RenderJob["kind"], format: RenderJob["format"], 
 const Generate = z.object({
   quality: RenderQuality.default("720p"), voice: z.enum(["none", "espeak"]).default("none"),
   shortsCount: z.coerce.number().int().min(0).max(6).optional(), musicVolume: z.coerce.number().min(0).max(1).default(0.22),
+  animation: z.enum(["2d", "still"]).optional(),
 });
 
 /** «Generar episodio»: un clic → guion → escenas → recursos → voz → montaje → Shorts → revisión. */
@@ -69,7 +70,7 @@ export async function generateEpisode(fd: FormData) {
     const musicAssetId = String(fd.get("musicAssetId") ?? "") || undefined;
     const { storage } = getProviders();
     await storage.productions.save({ ...p, brief, musicAssetId, updatedAt: now() });
-    const jobId = await enqueueJob("episode", "16:9", g.quality, p.id, { mode: "full", brief, voice: g.voice, musicAssetId, musicVolume: g.musicVolume, shortsCount, targetSec: hints.targetSec });
+    const jobId = await enqueueJob("episode", "16:9", g.quality, p.id, { mode: "full", brief, voice: g.voice, animation: g.animation, musicAssetId, musicVolume: g.musicVolume, shortsCount, targetSec: hints.targetSec });
     await audit("estudio.generar", p.id, `${g.quality} voz=${g.voice} shorts=${shortsCount} job=${jobId}`, user.username);
     refresh(); back(fd, "/render");
   });
@@ -83,7 +84,7 @@ export async function recompose(fd: FormData) {
     if (!p.scenes.length) throw new UserError("No hay escenas: analiza el guion primero");
     const g = Generate.parse({ quality: fd.get("quality") || undefined, voice: fd.get("voice") || undefined, musicVolume: fd.get("musicVolume") || undefined });
     const musicAssetId = String(fd.get("musicAssetId") ?? "") || p.musicAssetId;
-    await enqueueJob(p.kind, p.kind === "short" ? "9:16" : "16:9", g.quality, p.id, { mode: "rerender", voice: g.voice, musicAssetId, musicVolume: g.musicVolume });
+    await enqueueJob(p.kind, p.kind === "short" ? "9:16" : "16:9", g.quality, p.id, { mode: "rerender", voice: g.voice, animation: g.animation, musicAssetId, musicVolume: g.musicVolume });
     await audit("estudio.recomponer", p.id, undefined, user.username); refresh(); back(fd, "/render");
   });
 }
@@ -114,6 +115,7 @@ const SceneForm = z.object({
   title: z.string().max(120), location: z.string().max(120), text: z.string().max(8000),
   durationSec: z.coerce.number().min(2).max(120), transition: Transition, motion: z.enum(["kenburns", "static"]),
   visualAssetId: z.string().optional(), narrationAssetId: z.string().optional(), sfxAssetId: z.string().optional(),
+  directions: z.string().max(4000).default(""),
 });
 
 /** Corrección manual de una escena generada. Queda «bloqueada»: el pipeline no la sobrescribe. */
@@ -133,7 +135,7 @@ export async function saveScene(fd: FormData) {
       dialogue: lines.filter((l) => l.speaker).map((l) => `${l.speaker}: ${l.text}`).join("\n"),
       durationSec: f.durationSec, durationSource: f.durationSec !== s.durationSec ? "manual" : s.durationSource, transition: f.transition, motion: f.motion,
       visualAssetId: f.visualAssetId, visualSource: f.visualAssetId ? (f.visualAssetId === s.visualAssetId ? s.visualSource : "manual") : "card",
-      narrationAssetId: f.narrationAssetId, sfxAssetId: f.sfxAssetId, locked: true,
+      narrationAssetId: f.narrationAssetId, sfxAssetId: f.sfxAssetId, directions: f.directions.split(/\r?\n/).map((l) => l.replace(/^\[|\]$/g, "").trim()).filter(Boolean), locked: true,
     });
     await getProviders().storage.productions.save({ ...p, scenes, updatedAt: now() });
     await audit("estudio.escena_editar", `${p.id}:${sid}`, undefined, user.username); refresh(); back(fd, `/episodios/${p.id}/escenas`);
@@ -164,13 +166,13 @@ export async function addScene(fd: FormData) {
     await getProviders().storage.productions.save({ ...p, scenes: [...p.scenes, s], updatedAt: now() }); refresh(); back(fd, `/episodios/${p.id}/escenas`);
   });
 }
-const Scene_default = (order: number): Scene => ({ id: crypto.randomUUID(), order, title: `Escena ${order + 1}`, location: "", summary: "", characterIds: [], dialogue: "", durationSec: 5, lines: [{ text: "Texto de la escena." }], narration: "Texto de la escena.", visualHint: "", mood: "", tags: [], transition: "fade", motion: "kenburns", durationSource: "manual", locked: true });
+const Scene_default = (order: number): Scene => ({ id: crypto.randomUUID(), order, title: `Escena ${order + 1}`, location: "", summary: "", characterIds: [], dialogue: "", durationSec: 5, lines: [{ text: "Texto de la escena." }], narration: "Texto de la escena.", visualHint: "", mood: "", tags: [], transition: "fade", motion: "kenburns", durationSource: "manual", directions: [], locked: true });
 
 export async function previewScene(fd: FormData) {
   return run(fd, "/render", async () => {
     await requireAdmin();
     const p = await loadEpisode(fd.get("id"));
-    await enqueueJob("preview", "16:9", "480p", p.id, { mode: "rerender", sceneId: String(fd.get("sceneId")), voice: String(fd.get("voice") || "none") });
+    await enqueueJob("preview", "16:9", "480p", p.id, { mode: "rerender", sceneId: String(fd.get("sceneId")), voice: String(fd.get("voice") || "none"), animation: fd.get("animation") === "still" ? "still" : fd.get("animation") === "2d" ? "2d" : undefined });
     refresh(); back(fd, `/episodios/${p.id}/escenas`);
   });
 }

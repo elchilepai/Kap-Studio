@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { CastEntry, CharacterDesign, PlaceSet } from "./animation";
 
 /** Estados del flujo de producción. Una producción solo avanza si la etapa anterior está completa. */
 export const ProductionStatus = z.enum([
@@ -13,6 +14,7 @@ export const Character = z.object({
   id: Id, name: z.string(), description: z.string().default(""),
   traits: z.array(z.string()).default([]), voiceNotes: z.string().default(""),
   referenceAssetIds: z.array(Id).default([]),
+  design: CharacterDesign.optional(),   // diseño 2D versionado (aspecto consistente entre episodios)
 });
 export type Character = z.infer<typeof Character>;
 
@@ -33,6 +35,8 @@ export const Scene = z.object({
   narrationAssetId: Id.optional(), sfxAssetId: Id.optional(),
   transition: Transition.default("fade"), motion: z.enum(["kenburns", "static"]).default("kenburns"),
   durationSource: z.enum(["audio", "estimated", "manual"]).default("estimated"),
+  /** Direcciones de escena (cámara, entradas, gestos, efectos…): «clave: valor». El director 2D las convierte en animación. */
+  directions: z.array(z.string()).default([]),
   locked: z.boolean().default(false), // escena corregida a mano: el pipeline no la sobrescribe
 });
 export type Scene = z.infer<typeof Scene>;
@@ -70,6 +74,8 @@ export const Production = z.object({
   producedAt: z.string().optional(),   // YYYY-MM-DD
   videoAssetId: Id.optional(),         // vídeo adjunto para revisión
   publishedUrl: z.string().optional(),
+  cast: z.array(CastEntry).default([]),       // reparto del episodio: qué prenda lleva cada personaje
+  storyTime: z.string().default(""),          // posición temporal dentro de la historia (p. ej. «Día 3, noche»)
   generated: z.boolean().default(false),     // creado automáticamente por el pipeline (p. ej. Shorts derivados)
   brief: z.string().default(""),            // petición libre del usuario para «Generar episodio»
   musicAssetId: Id.optional(),               // pista de música elegida
@@ -120,6 +126,7 @@ export type StoryEvent = z.infer<typeof StoryEvent>;
 export const Place = z.object({
   id: Id, name: z.string().min(1), description: z.string().default(""), createdAt: z.string(),
   visualAssetId: Id.optional(), // imagen canónica del lugar: se reutiliza en todos los episodios
+  set: PlaceSet.optional(),     // escenario 2D del lugar (preset, hora del día, fondo)
 });
 export type Place = z.infer<typeof Place>;
 

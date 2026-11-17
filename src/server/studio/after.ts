@@ -55,7 +55,7 @@ export async function deriveShorts(st: Storage, render: RenderStore, episodeId: 
     await st.productions.save({
       id, kind: "short", number: num, parentId: ep.id, season: ep.season, title: `${ep.title} · Short ${k + 1}`, status: "RENDER",
       synopsis: pl.reason, script: sc.map((s) => s.lines.map((l) => (l.speaker ? `${l.speaker}: ${l.text}` : l.text)).join("\n")).join("\n\n"),
-      scenes: sc, assetIds: [], durationSec: Math.round(pl.durationSec), generated: true, brief: "", musicAssetId: ep.musicAssetId, createdAt: now(), updatedAt: now(),
+      scenes: sc, assetIds: [], durationSec: Math.round(pl.durationSec), generated: true, brief: "", cast: ep.cast, storyTime: ep.storyTime, musicAssetId: ep.musicAssetId, createdAt: now(), updatedAt: now(),
     });
     await render.enqueue({ id: crypto.randomUUID(), kind: "short", format: "9:16", quality: o.quality, productionId: id, maxAttempts: o.maxAttempts,
       params: { mode: "rerender", voice: o.voice ?? "none", musicAssetId: ep.musicAssetId, musicVolume: o.musicVolume } satisfies ProduceParams }, Date.now());

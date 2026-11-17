@@ -7,6 +7,8 @@ import { linesToText } from "@/server/studio/script";
 import { espeakProvider } from "@/server/studio/voice";
 import { addScene, deleteScene, moveScene, previewScene, recompose, saveScene, saveSubtitleStyle } from "@/server/studio-actions";
 import SubmitButton from "./SubmitButton";
+import StagePlayer from "./StagePlayer";
+import { buildPreviews } from "@/server/animation/preview";
 import { Empty, Notice, PageHeader } from "./ui";
 import { fmtDuration } from "@/lib/format";
 
@@ -29,6 +31,8 @@ export default async function SceneEditor({ id, kind, error }: { id: string; kin
   const mine = jobs.filter((j) => j.productionId === p.id);
   const preview = mine.find((j) => j.kind === "preview");
   const total = p.scenes.reduce((n, s) => n + s.durationSec, 0);
+  const previews = new Map((await buildPreviews(p, storage, { width: 854, height: 480 })).map((x) => [x.sceneId, x]));
+  const styleDoc = await storage.style.get("style");
   const st = settings ?? { subtitlesEnabled: true, subtitleScale: 1, subtitlePosition: "bottom" as const };
   const hidden = <><input type="hidden" name="id" value={p.id} /><input type="hidden" name="_redirect" value={here} /></>;
 
@@ -36,6 +40,7 @@ export default async function SceneEditor({ id, kind, error }: { id: string; kin
     <>
       <p className="small"><Link href={base} className="muted">← {label(p)}</Link></p>
       <PageHeader title="Editor de escenas" sub={`${p.scenes.length} escenas · ${fmtDuration(Math.round(total))} · herramienta de revisión`}>
+        <Link href={`${base}/storyboard`} className="btn sm">Storyboard</Link>
         <form action={addScene}>{hidden}<SubmitButton className="btn sm"><Plus className="i" />Añadir escena</SubmitButton></form>
       </PageHeader>
       {error && <Notice kind="err">{error}</Notice>}
@@ -45,6 +50,7 @@ export default async function SceneEditor({ id, kind, error }: { id: string; kin
         <div className="card stack"><h2><Repeat2 className="i" />Volver a componer</h2>
           <form action={recompose} className="stack"><input type="hidden" name="id" value={p.id} /><input type="hidden" name="_redirect" value="/render" /><input type="hidden" name="_errorTo" value={here} />
             <div className="form">
+              <div className="field"><label htmlFor="ra">Estilo visual</label><select id="ra" name="animation" defaultValue={styleDoc?.defaultMode === "still" ? "still" : "2d"}><option value="2d">Animación 2D</option><option value="still">Imágenes fijas</option></select></div>
               <div className="field"><label htmlFor="rq">Resolución</label><select id="rq" name="quality" defaultValue="720p"><option value="480p">480p</option><option value="720p">720p</option><option value="1080p">1080p</option></select></div>
               <div className="field"><label htmlFor="rv">Narración</label><select id="rv" name="voice" defaultValue="none"><option value="none">Sin voz / audios subidos</option><option value="espeak" disabled={!tts}>{tts ? "Voz local eSpeak" : "Voz local no instalada"}</option></select></div>
               <div className="field"><label htmlFor="rm">Música</label><select id="rm" name="musicAssetId" defaultValue={p.musicAssetId ?? ""}><option value="">— Sin música —</option>{music.map((a) => <option key={a.id} value={a.id}>{a.name}</option>)}</select></div>
@@ -78,11 +84,17 @@ export default async function SceneEditor({ id, kind, error }: { id: string; kin
                     <div className="s small muted">{s.durationSec.toFixed(1)} s{s.durationSource === "estimated" ? " (est.)" : s.durationSource === "audio" ? " (audio)" : ""} · {SRC[s.visualSource ?? "card"]}</div></span>
                 </summary>
                 <div className="body stack">
+                  {previews.get(s.id) && (<>
+                    <StagePlayer stage={previews.get(s.id)!.stage} images={previews.get(s.id)!.images} label={`Vista previa 2D de la escena ${i + 1}`} />
+                    {previews.get(s.id)!.provisional.length > 0 && <p className="small" style={{ color: "var(--kap)" }}>Personajes con aspecto PROVISIONAL (sin diseño): {previews.get(s.id)!.provisional.join(", ")}. <Link href="/universo?tab=diseno" className="kap">Diseñarlos →</Link></p>}
+                    {previews.get(s.id)!.stage.warnings.map((w, k) => <p key={k} className="small" style={{ color: "var(--err)" }}>⚠ {w}</p>)}
+                  </>)}
                   <form action={saveScene} className="stack">{hidden}<input type="hidden" name="sceneId" value={s.id} />
                     <div className="form">
                       <div className="field"><label htmlFor={`t${s.id}`}>Título</label><input id={`t${s.id}`} name="title" defaultValue={s.title} /></div>
                       <div className="field"><label htmlFor={`l${s.id}`}>Lugar</label><input id={`l${s.id}`} name="location" defaultValue={s.location} /></div>
                       <div className="field wide"><label htmlFor={`x${s.id}`}>Texto (una línea por intervención; «NOMBRE: texto» para diálogos)</label><textarea id={`x${s.id}`} name="text" defaultValue={linesToText(s.lines)} style={{ minHeight: 110 }} /></div>
+                      <div className="field wide"><label htmlFor={`di${s.id}`}>Direcciones de escena 2D (una por línea: cámara, entra, sale, camina, expresion, gesto, mira, vfx, aparece, desaparece)</label><textarea id={`di${s.id}`} name="directions" defaultValue={s.directions.join("\n")} style={{ minHeight: 80 }} placeholder={"entra: KAP izquierda\nexpresion: Mira preocupada en 2s\ncamara: zoom 1.3 durante 2s\nvfx: lluvia"} /></div>
                       <div className="field"><label htmlFor={`d${s.id}`}>Duración (s)</label><input id={`d${s.id}`} name="durationSec" type="number" step="any" min="2" max="120" defaultValue={s.durationSec} inputMode="decimal" /></div>
                       <div className="field"><label htmlFor={`tr${s.id}`}>Transición de entrada</label><select id={`tr${s.id}`} name="transition" defaultValue={s.transition}>{TRANSITIONS.map(([k, l]) => <option key={k} value={k}>{l}</option>)}</select></div>
                       <div className="field"><label htmlFor={`m${s.id}`}>Movimiento</label><select id={`m${s.id}`} name="motion" defaultValue={s.motion}><option value="kenburns">Zoom suave</option><option value="static">Estático</option></select></div>
@@ -93,7 +105,7 @@ export default async function SceneEditor({ id, kind, error }: { id: string; kin
                     <div className="row"><SubmitButton className="btn primary sm">Guardar escena</SubmitButton></div>
                   </form>
                   <div className="row">
-                    <form action={previewScene}>{hidden}<input type="hidden" name="sceneId" value={s.id} /><input type="hidden" name="voice" value={tts ? "espeak" : "none"} /><SubmitButton className="btn sm"><Play className="i" />Previsualizar escena</SubmitButton></form>
+                    <form action={previewScene}>{hidden}<input type="hidden" name="sceneId" value={s.id} /><input type="hidden" name="voice" value={tts ? "espeak" : "none"} /><input type="hidden" name="animation" value={styleDoc?.defaultMode === "still" ? "still" : "2d"} /><SubmitButton className="btn sm"><Play className="i" />Previsualizar escena</SubmitButton></form>
                     <form action={moveScene}>{hidden}<input type="hidden" name="sceneId" value={s.id} /><input type="hidden" name="dir" value="up" /><SubmitButton className="btn sm" ><ArrowUp className="i" />Subir</SubmitButton></form>
                     <form action={moveScene}>{hidden}<input type="hidden" name="sceneId" value={s.id} /><input type="hidden" name="dir" value="down" /><SubmitButton className="btn sm"><ArrowDown className="i" />Bajar</SubmitButton></form>
                     <form action={deleteScene}>{hidden}<input type="hidden" name="sceneId" value={s.id} /><SubmitButton className="btn sm danger" confirm="¿Eliminar esta escena?"><Trash2 className="i" />Eliminar</SubmitButton></form>

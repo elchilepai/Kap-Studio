@@ -4,6 +4,7 @@
  * Todo puerto tiene un adaptador "local" que funciona sin servicios externos.
  */
 import type { RenderJob } from "@/domain/render";
+import type { StyleBible } from "@/domain/animation";
 import type {
   Asset, BibleEntry, CanonFact, Character, Cost, Evolution, Job, Place, Production,
   ActivityEntry, Relationship, ReviewDecision, Settings, StoryEvent, StoryState,
@@ -37,6 +38,7 @@ export interface Storage {
   costs: Repository<Cost>;
   story: Repository<StoryState>;
   settings: Repository<Settings>;
+  style: Repository<StyleBible>;
   activity: ActivityLog;
 }
 

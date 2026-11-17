@@ -30,3 +30,6 @@ Pendiente: autenticación de administrador, adaptadores reales (render ffmpeg, g
 - **D. Cola y almacenamiento** — worker asíncrono persistente, progreso real, reintentos, cancelación, limpieza; abstracción de almacenamiento (disco/S3 compatible).
 - **E. Memoria narrativa** — canon estructurado y comprobación de continuidad antes del guion.
 - **F. YouTube** · **G. TikTok** · **H. Pruebas integrales**.
+
+---
+**Reorientación a animación 2D (ver docs/ARQUITECTURA-2D.md):** hecha la capa de escena 2D (motor isomórfico Skia/Canvas), director por reglas, diseño versionado de personajes, biblia de estilo, previsualización y storyboard. La subfase C (exportación final, Shorts) queda pendiente.

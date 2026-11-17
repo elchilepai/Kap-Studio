@@ -73,7 +73,7 @@ export const ENTITIES: Record<string, EntityDef> = {
       { name: "durationSec", label: "Duración (segundos)", type: "number" },
       { name: "producedAt", label: "Fecha de producción", type: "date" },
       { name: "plannedDate", label: "Fecha de publicación prevista", type: "date" },
-      area("synopsis", "Sinopsis"), area("script", "Guion")],
+      text("storyTime", "Posición temporal en la historia"), area("synopsis", "Sinopsis"), area("script", "Guion")],
   },
 };
 

@@ -15,16 +15,20 @@ export type Line = { speaker?: string; text: string };
 export type ParsedScene = {
   title: string; location: string; lines: Line[];
   imagen?: string; musica?: string; mood?: string; transicion?: string; duracion?: number; sfx?: string;
+  /** Direcciones de escena 2D («clave: valor»): cámara, entra, sale, camina, expresión, gesto, mira, vfx, aparece, desaparece. */
+  directions?: string[];
 };
 export type KnownCharacter = { id: string; name: string };
 
 const HEADING = /^\s*(?:#{1,3}\s+|(?:ESCENA|ESC\.?|SCENE)\s*\d*\s*[:.\-—–]\s*|(?:INT|EXT)\.?\s+)(.+?)\s*$/i;
-const DIRECTIVE = /^\s*\[\s*(música|musica|imagen|mood|ánimo|animo|transición|transicion|duración|duracion|sfx|efecto)\s*:\s*(.+?)\s*\]\s*$/i;
+const DIRECTIVE = /^\s*\[\s*(música|musica|imagen|mood|ánimo|animo|transición|transicion|duración|duracion|sfx|efecto|cámara|camara|entra|sale|camina|expresión|expresion|gesto|mira|vfx|aparece|desaparece)\s*:\s*(.+?)\s*\]\s*$/i;
+const STAGE_KEYS = new Set(["camara", "entra", "sale", "camina", "expresion", "gesto", "mira", "vfx", "aparece", "desaparece"]);
 const DIALOGUE = /^\s*([A-ZÁÉÍÓÚÑÜ][A-ZÁÉÍÓÚÑÜ0-9 .'-]{1,24}?)\s*:\s*(.+)$/;
 const TRANSITIONS = ["cut", "fade", "fadeblack", "dissolve", "slideleft", "slideright", "wipeleft", "circleopen"];
 
 function applyDirective(sc: ParsedScene, key: string, val: string) {
   const k = norm(key);
+  if (STAGE_KEYS.has(k)) { (sc.directions ??= []).push(`${k}: ${val}`); return; }
   if (k === "musica") sc.musica = val; else if (k === "imagen") sc.imagen = val;
   else if (k === "mood" || k === "animo") sc.mood = val; else if (k === "sfx" || k === "efecto") sc.sfx = val;
   else if (k === "transicion") { const t = norm(val).replace(/[^a-z]/g, ""); if (TRANSITIONS.includes(t)) sc.transicion = t; }
@@ -87,7 +91,7 @@ export function splitLong(scenes: ParsedScene[], maxWords = 52): ParsedScene[] {
     if (sceneWords(sc) <= maxWords) { out.push(sc); continue; }
     const units: Line[] = sc.lines.flatMap((l) => l.speaker ? [l] : sentences(l.text).map((t) => ({ text: t })));
     let part: Line[] = [], w = 0, n = 1;
-    const push = () => { if (part.length) { out.push({ ...sc, title: n === 1 ? sc.title : `${sc.title} (${n})`.trim(), lines: part, imagen: n === 1 ? sc.imagen : sc.imagen, duracion: undefined }); n++; part = []; w = 0; } };
+    const push = () => { if (part.length) { out.push({ ...sc, title: n === 1 ? sc.title : `${sc.title} (${n})`.trim(), lines: part, imagen: sc.imagen, duracion: undefined, directions: n === 1 ? sc.directions : undefined }); n++; part = []; w = 0; } };
     for (const u of units) { const uw = wordCount(u.text); if (w + uw > maxWords && part.length) push(); part.push(u); w += uw; }
     push();
   }
@@ -111,7 +115,7 @@ export function toScenes(parsed: ParsedScene[], chars: KnownCharacter[], newId: 
       transition: (p.transicion as Scene["transition"]) ?? "fade", motion: "kenburns" as const,
       durationSec: p.duracion ?? Math.round(estimateSeconds(words) * 10) / 10,
       durationSource: p.duracion ? ("manual" as const) : ("estimated" as const),
-      sfxAssetId: undefined, locked: false,
+      sfxAssetId: undefined, directions: p.directions ?? [], locked: false,
     };
   });
 }

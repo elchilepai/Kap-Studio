@@ -16,7 +16,7 @@ export function createMemoryStorage(): Storage {
     productions: memoryRepo(), characters: memoryRepo(), canon: memoryRepo(),
     assets: memoryRepo(), jobs: memoryRepo(), reviews: memoryRepo(), bible: memoryRepo(),
     relationships: memoryRepo(), events: memoryRepo(), places: memoryRepo(), evolution: memoryRepo(),
-    costs: memoryRepo(), story: memoryRepo(), settings: memoryRepo(),
+    costs: memoryRepo(), story: memoryRepo(), settings: memoryRepo(), style: memoryRepo(),
     activity: (() => { const l: import("@/domain/types").ActivityEntry[] = []; return {
       async record(e) { l.unshift({ ...e, id: l.length + 1, ts: new Date().toISOString() }); },
       async recent(n = 50) { return l.slice(0, n); } }; })(),

@@ -1,4 +1,5 @@
 import { spawn, type ChildProcess } from "node:child_process";
+import type { Readable } from "node:stream";
 import fs from "node:fs";
 import os from "node:os";
 import { env } from "@/server/env";
@@ -39,6 +40,8 @@ export type RunOptions = {
   signal?: AbortSignal;
   /** Duración esperada de la salida; permite calcular el progreso real (0..1). */
   expectedSec?: number;
+  /** Flujo que se envía a la entrada estándar de FFmpeg (p. ej. fotogramas RGBA del motor de animación). */
+  stdin?: Readable;
   onProgress?: (p: { fraction: number; outSec: number; speed?: number }) => void;
 };
 
@@ -49,15 +52,16 @@ export type RunOptions = {
 export function runFfmpeg(args: string[], opts: RunOptions = {}): Promise<{ stderrTail: string }> {
   return new Promise((resolve, reject) => {
     if (opts.signal?.aborted) return reject(new CanceledError());
-    const full = ["-hide_banner", "-nostdin", "-y", "-loglevel", "error", "-progress", "pipe:1", "-nostats", ...args];
-    const child = spawn(env().KAP_FFMPEG_PATH, full, { stdio: ["ignore", "pipe", "pipe"] });
+    const full = ["-hide_banner", ...(opts.stdin ? [] : ["-nostdin"]), "-y", "-loglevel", "error", "-progress", "pipe:1", "-nostats", ...args];
+    const child = spawn(env().KAP_FFMPEG_PATH, full, { stdio: [opts.stdin ? "pipe" : "ignore", "pipe", "pipe"] });
+    if (opts.stdin && child.stdin) { child.stdin.on("error", () => { /* EPIPE al cancelar: se ignora */ }); opts.stdin.pipe(child.stdin); }
     track(child);
     try { if (child.pid) os.setPriority(child.pid, 10); } catch { /* sin permiso: se ignora */ }
 
     let tail = "", buf = "", aborted = false, killTimer: NodeJS.Timeout | undefined;
     const st: { outSec?: number; speed?: number; ended?: boolean } = {};
-    child.stderr.on("data", (d: Buffer) => { tail = (tail + d.toString()).slice(-4000); });
-    child.stdout.on("data", (d: Buffer) => {
+    child.stderr!.on("data", (d: Buffer) => { tail = (tail + d.toString()).slice(-4000); });
+    child.stdout!.on("data", (d: Buffer) => {
       buf += d.toString(); const lines = buf.split("\n"); buf = lines.pop() ?? "";
       for (const l of lines) {
         parseProgressLine(l, st);

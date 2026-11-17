@@ -16,10 +16,15 @@ import { pruneClipCache, renderSceneClip, type Visual } from "./clip";
 import { composeVideo, MAX_OVERLAP, sceneStarts } from "./compose";
 import { sceneAudio, type SceneAudio } from "./voice";
 import { norm } from "./text";
+import { renderAnimatedClip } from "@/server/animation/clip2d";
+import { buildSceneStage } from "@/server/animation/stage";
+import { audioEnvelope } from "@/server/animation/lipsync";
 
 export type ProduceParams = {
   mode?: "full" | "rerender"; brief?: string; voice?: "none" | "espeak"; musicAssetId?: string; musicVolume?: number;
   sceneId?: string; shortsCount?: number; targetSec?: number;
+  /** Estrategia de clip: animación 2D (personajes, cámara, escenarios) o imágenes fijas con zoom (alternativa). */
+  animation?: "2d" | "still";
 };
 export type ProduceDeps = { storage: Storage; mediaDir: string; cacheDir: string; voice?: VoiceProvider; threads: number; clipCacheMb: number };
 
@@ -88,6 +93,10 @@ export async function produce(job: RenderJob, ctx: ExecContext, d: ProduceDeps):
   const starts = sceneStarts(durs);
 
   // ③ Clips por escena (caché por contenido: solo se renderiza lo que cambió)
+  const styleBible = await st.style.get("style");
+  const animation = prm.animation ?? (styleBible?.defaultMode === "animated2d" ? "2d" : "still");
+  const [bibleChars, bibleKnownPlaces] = animation === "2d" ? await Promise.all([st.characters.list(), st.places.list()]) : [[], []];
+  const prodNow = (await st.productions.get(prod.id)) ?? prod;
   const clips: { file: string; dur: number; transition: Scene["transition"] }[] = [];
   const cuesAll: { cue: Cue; at: number }[] = [];
   for (const [i, s] of scenes.entries()) {
@@ -97,11 +106,23 @@ export async function produce(job: RenderJob, ctx: ExecContext, d: ProduceDeps):
     const cues = style.enabled ? buildSceneCues(s.lines, D, { maxChars: vertical ? 22 : 44, lead: LEAD, tail: TAIL }) : [];
     cues.forEach((c) => cuesAll.push({ cue: c, at: starts[i] }));
     const base = 0.25 + 0.55 * (i / scenes.length), span = 0.55 / scenes.length;
-    step(3, base, `Componiendo escena ${i + 1}/${scenes.length}${visual ? "" : " (tarjeta KAP)"}`);
-    const r = await renderSceneClip(
+    step(3, base, animation === "2d" ? `Animando escena ${i + 1}/${scenes.length} (2D)` : `Componiendo escena ${i + 1}/${scenes.length}${visual ? "" : " (tarjeta KAP)"}`);
+    const assText = cues.length ? toASS(cues, { width, height, style }) : undefined;
+    let r: { file: string; cached: boolean };
+    if (animation === "2d") {
+      const env = audios[i] ? await audioEnvelope(audios[i]!.file, 30, ctx.signal).catch(() => undefined) : undefined;
+      const built = await buildSceneStage(s, { durationSec: D, tail: MAX_OVERLAP, width, height, envelope: env, index: i }, {
+        production: prodNow, characters: bibleChars, places: bibleKnownPlaces, style: styleBible,
+        assetInfo: async (id) => { const f = await assetFile(id); return f ? { path: f.f, sig: `${f.a.id}:${f.a.size}:${f.a.createdAt}`, kind: f.a.kind } : undefined; },
+      });
+      r = await renderAnimatedClip({ stage: built.stage, width, height, durationSec: D + MAX_OVERLAP, images: built.images, assText, fontsDir: path.dirname(resolveFont()!), threads: d.threads },
+        { cacheDir: d.cacheDir, tmpDir: path.join(ctx.tmpDir, `clip${i}`), signal: ctx.signal, onProgress: (f) => step(3, base + span * f, `Animando escena ${i + 1}/${scenes.length} (2D)`) });
+    } else {
+      r = await renderSceneClip(
       { scene: s, visual, width, height, durationSec: D + MAX_OVERLAP, sceneNumber: i + 1, threads: d.threads, fontsDir: path.dirname(resolveFont()!),
-        assText: cues.length ? toASS(cues, { width, height, style }) : undefined },
+        assText },
       { cacheDir: d.cacheDir, tmpDir: path.join(ctx.tmpDir, `clip${i}`), signal: ctx.signal, onProgress: (f) => step(3, base + span * f, `Componiendo escena ${i + 1}/${scenes.length}`) });
+    }
     clips.push({ file: r.file, dur: D, transition: s.transition });
   }
 

@@ -13,6 +13,7 @@ const Schema = z.object({
   KAP_FFMPEG_PATH: z.string().default("ffmpeg"),
   KAP_FFPROBE_PATH: z.string().default("ffprobe"),
   KAP_FONT_FILE: z.string().optional(),              // fuente para títulos/subtítulos; si falta se busca Inter/DejaVu
+  KAP_ANIM_WORKER: z.string().optional(),             // ruta alternativa del trabajador de animación 2D
   KAP_RENDER_CONCURRENCY: z.coerce.number().int().min(1).max(4).default(1),
   KAP_FFMPEG_THREADS: z.coerce.number().int().min(0).max(64).default(0), // 0 = automático (CPUs / concurrencia)
   KAP_RENDER_TIMEOUT_MIN: z.coerce.number().min(0.05).max(720).default(90),

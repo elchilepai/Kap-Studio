@@ -1,5 +1,7 @@
 # Producción automática (Fase C · subfase B)
 
+> **Actualización:** el producto final es **animación 2D**. El clip de escena ahora es una estrategia (`2d` por defecto o `still`); ver `docs/ARQUITECTURA-2D.md`.
+
 **Principio:** KAP Studio es un sistema de producción automatizado. El usuario escribe una petición, elige un episodio y pulsa
 **«Generar episodio»**. El editor de escenas es una herramienta **secundaria** para corregir lo generado. La aprobación final es siempre manual.
 

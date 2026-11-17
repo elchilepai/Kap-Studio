@@ -7,7 +7,7 @@ import { migrate } from "./migrations";
 
 export const STORAGE_COLLECTIONS = [
   "productions", "characters", "canon", "assets", "jobs", "reviews", "bible",
-  "relationships", "events", "places", "evolution", "costs", "story", "settings",
+  "relationships", "events", "places", "evolution", "costs", "story", "settings", "style",
 ] as const;
 
 /** Almacenamiento persistente local en SQLite (módulo integrado de Node, sin servicios externos). */
