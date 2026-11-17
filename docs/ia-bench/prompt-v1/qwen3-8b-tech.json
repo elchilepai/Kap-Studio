@@ -1,0 +1,1912 @@
+{
+ "meta": {
+  "model": "qwen3:8b",
+  "phase": "tech",
+  "ctx": 8192,
+  "date": "2026-11-17T13:40:08.117Z",
+  "cpus": 4,
+  "ramGb": 16,
+  "host": "CPU sin GPU"
+ },
+ "loaded": {
+  "sizeMb": 6458,
+  "context": 8192
+ },
+ "totalMin": 121.1,
+ "results": [
+  {
+   "id": "T1",
+   "title": "Crear el primer episodio de la historia",
+   "request": "Crea el episodio 1",
+   "ms": 1002497,
+   "peakMb": 6896,
+   "sysPeakMb": 8275,
+   "contextTokens": 1163,
+   "ok": true,
+   "irValid": true,
+   "irValidFirstTry": false,
+   "json": {
+    "attempts": 2,
+    "retries": 1,
+    "jsonErrors": 0,
+    "schemaErrors": 0,
+    "lengthRetries": 1,
+    "memoryDirectiveErrors": 0
+   },
+   "irErrors": [],
+   "usage": {
+    "promptTokens": 4718,
+    "outputTokens": 2510,
+    "totalMs": 1002471.493327,
+    "loadMs": 2.854804,
+    "promptMs": 37111.155999999995,
+    "evalMs": 965312.564
+   },
+   "tokensPerSec": 2.6,
+   "episode": {
+    "scenes": 7,
+    "estimatedSec": 137,
+    "words": 380,
+    "title": "El primer paso",
+    "logline": "KAP enfrenta la dificultad de proteger a su hermano mientras lucha contra el bullying y la indiferencia de sus padres, buscando una forma de expresarse y alcanzar su sueño de ser millonario."
+   },
+   "continuity": {
+    "critical": [],
+    "warnings": [
+     "ubicacion-incoherente: Se declara a KAP en «casa» pero la escena 1 transcurre en «Casa de KAP».",
+     "duracion: El episodio dura ≈ 2.6 min y el formato es ≈ 5 min (4–6 min)."
+    ],
+    "info": 8
+   },
+   "checks": [
+    {
+     "id": "estructura-6-actos",
+     "ok": true,
+     "note": "faltan: —"
+    },
+    {
+     "id": "gancho",
+     "ok": false
+    },
+    {
+     "id": "protagonista",
+     "ok": true
+    },
+    {
+     "id": "sin-errores-criticos",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "sin-exito-prematuro",
+     "ok": true
+    },
+    {
+     "id": "directivas-validas",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "espanol",
+     "ok": true
+    },
+    {
+     "id": "diversidad-lexica",
+     "ok": true,
+     "note": "0.48"
+    },
+    {
+     "id": "etapa-nino-sin-saltos",
+     "ok": true
+    },
+    {
+     "id": "muestra-hermano",
+     "ok": true
+    },
+    {
+     "id": "muestra-situacion-familiar",
+     "ok": true
+    },
+    {
+     "id": "hito-inicial",
+     "ok": false
+    },
+    {
+     "id": "edad-infantil",
+     "ok": true
+    }
+   ],
+   "compliance": 0.85,
+   "proxy": {
+    "score": 10,
+    "dialogueRatio": 0.5,
+    "locations": 4,
+    "repeatedSentences": 0
+   },
+   "warnings": [
+    "El episodio dura ≈ 2.3 min: queda por debajo del formato (≈ 5 min)."
+   ],
+   "draft": {
+    "title": "El primer paso",
+    "logline": "KAP enfrenta la dificultad de proteger a su hermano mientras lucha contra el bullying y la indiferencia de sus padres, buscando una forma de expresarse y alcanzar su sueño de ser millonario.",
+    "assumptions": [],
+    "scenes": [
+     {
+      "title": "La mañana",
+      "location": "Casa de KAP",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "La mañana comienza con el ruido de la ciudad y el sonido de una radio que apenas se escucha. KAP se levanta de su cama, que es compartida con su hermano pequeño. La casa está en silencio, salvo por el sonido de un reloj que marca las 7:00."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Vamos, hermano, no te quedes dormido. Hoy tenemos que ir al colegio."
+       }
+      ],
+      "memory": [
+       "acto: inicio | KAP, hermano",
+       "perfil: KAP, sueños = millonario gracias a la música",
+       "ubicacion: KAP, casa"
+      ]
+     },
+     {
+      "title": "El desayuno",
+      "location": "Casa de KAP",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP prepara un bocadillo de pan con un poco de queso que encuentra en el armario. Su hermano lo mira con los ojos hinchados, como si no hubiera dormido. KAP le da el bocadillo y se lo lleva a la boca."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Come, hermano. Hoy es un día importante. No te olvides de lo que pasó la semana pasada."
+       }
+      ],
+      "memory": [
+       "acto: conflicto | KAP, hermano",
+       "conoce: KAP, hermano",
+       "perfil: KAP, sueños = millonario gracias a la música"
+      ]
+     },
+     {
+      "title": "El camino al colegio",
+      "location": "Calle del colegio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP camina por la calle con su hermano pequeño. El sol se pone y el cielo se vuelve rojo. La calle está llena de niños que se ríen entre sí. KAP mira a su alrededor, preocupado."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No te preocupes, hermano. No te dejaré solo. Yo siempre estaré contigo."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo | KAP, hermano",
+       "perfil: KAP, sueños = millonario gracias a la música"
+      ]
+     },
+     {
+      "title": "En el colegio",
+      "location": "Colegio de KAP",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP entra al colegio con su mochila y su bocadillo. Se siente observado por algunos compañeros que lo miran con desprecio. El sonido de sus pasos se mezcla con la risa de los demás."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Qué quieres, Dani? ¿Otra vez te ríes de mí? ¿No tienes nada mejor que hacer?"
+       }
+      ],
+      "memory": [
+       "acto: desarrollo | KAP, Dani",
+       "abre-hilo: bullying | KAP, Dani",
+       "perfil: KAP, sueños = millonario gracias a la música"
+      ]
+     },
+     {
+      "title": "La clase de música",
+      "location": "Aula de música",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP entra a la clase de música con su mochila llena de lápices y una libreta. El profesor le pide que haga una presentación sobre el rap. KAP se siente nervioso, pero también emocionado."
+       },
+       {
+        "speaker": "KAP",
+        "text": "El rap es más que música. Es un lenguaje, una forma de expresar lo que no se puede decir en voz alta. Y algún día, seré millonario porque lo hago bien."
+       }
+      ],
+      "memory": [
+       "acto: emocional | KAP",
+       "perfil: KAP, sueños = millonario gracias a la música"
+      ]
+     },
+     {
+      "title": "La llamada de los padres",
+      "location": "Casa de KAP",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP llega a casa después de la escuela y encuentra a sus padres en el sofá. Su madre fuma un cigarrillo, y su padre mira la televisión sin prestarle atención. KAP se siente solo y abandonado."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Alguien me escucha? ¿Alguien me quiere?"
+       }
+      ],
+      "memory": [
+       "acto: resolucion | KAP, padres",
+       "perfil: KAP, sueños = millonario gracias a la música"
+      ]
+     },
+     {
+      "title": "La noche",
+      "location": "Casa de KAP",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se acuesta en su cama, mirando el techo. Su hermano lo observa desde la cama y le dice que lo quiere. KAP sonríe y piensa en su sueño de ser millonario. La noche se hace más oscura, pero su corazón sigue latiendo con fuerza."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Alguien me escuchará. Y cuando lo haga, seré millonario. Porque yo sé cómo hacerlo."
+       }
+      ],
+      "memory": [
+       "acto: gancho | KAP",
+       "abre-hilo: sueño de millonario | KAP",
+       "perfil: KAP, sueños = millonario gracias a la música"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "T2",
+   "title": "Continuar exactamente donde termina un episodio",
+   "request": "Crea el episodio 4 continuando exactamente donde terminó el episodio 3",
+   "ms": 1060460,
+   "peakMb": 7493,
+   "sysPeakMb": 8407,
+   "contextTokens": 1879,
+   "ok": true,
+   "irValid": true,
+   "irValidFirstTry": false,
+   "json": {
+    "attempts": 2,
+    "retries": 1,
+    "jsonErrors": 0,
+    "schemaErrors": 0,
+    "lengthRetries": 1,
+    "memoryDirectiveErrors": 0
+   },
+   "irErrors": [],
+   "usage": {
+    "promptTokens": 6274,
+    "outputTokens": 2235,
+    "totalMs": 1060446.652083,
+    "loadMs": 2.6328810000000002,
+    "promptMs": 86360.802,
+    "evalMs": 973645.457
+   },
+   "tokensPerSec": 2.3,
+   "episode": {
+    "scenes": 9,
+    "estimatedSec": 89,
+    "words": 237,
+    "title": "El cuaderno de KAP",
+    "logline": "KAP debe recuperar su cuaderno robado por Dani mientras lucha contra la indiferencia de sus padres y el bullying de sus compañeros."
+   },
+   "continuity": {
+    "critical": [],
+    "warnings": [
+     "objeto-sin-introducir: «cuaderno» se usa en la escena 1 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "objeto-sin-introducir: «cuaderno» se usa en la escena 2 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "objeto-sin-introducir: «cuaderno» se usa en la escena 3 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "hilo: Se reabre el hilo «título», cerrado en ep. 4.",
+     "estructura: Al episodio le falta: Inicio. Decláralo en el guion con [acto: tipo | texto] o [gancho: texto]; un episodio de la serie necesita inicio, con",
+     "duracion: El episodio dura ≈ 1.7 min y el formato es ≈ 5 min (4–6 min)."
+    ],
+    "info": 11
+   },
+   "checks": [
+    {
+     "id": "estructura-6-actos",
+     "ok": false,
+     "note": "faltan: inicio"
+    },
+    {
+     "id": "gancho",
+     "ok": false
+    },
+    {
+     "id": "protagonista",
+     "ok": true
+    },
+    {
+     "id": "sin-errores-criticos",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "sin-exito-prematuro",
+     "ok": true
+    },
+    {
+     "id": "directivas-validas",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "espanol",
+     "ok": true
+    },
+    {
+     "id": "arranca-donde-termino",
+     "ok": true,
+     "note": "1.ª escena en «Calle de noche», terminó en «Calle de noche»"
+    },
+    {
+     "id": "diversidad-lexica",
+     "ok": true,
+     "note": "0.47"
+    },
+    {
+     "id": "retoma-gancho-cuaderno",
+     "ok": true
+    },
+    {
+     "id": "no-reabre-escenario-ajeno",
+     "ok": true
+    }
+   ],
+   "compliance": 0.82,
+   "proxy": {
+    "score": 5,
+    "dialogueRatio": 0.5,
+    "locations": 1,
+    "repeatedSentences": 1
+   },
+   "warnings": [
+    "El episodio dura ≈ 1.5 min: queda por debajo del formato (≈ 5 min).",
+    "Suposición del modelo: El cuaderno es un símbolo de su sueño y su talento"
+   ],
+   "draft": {
+    "title": "El cuaderno de KAP",
+    "logline": "KAP debe recuperar su cuaderno robado por Dani mientras lucha contra la indiferencia de sus padres y el bullying de sus compañeros.",
+    "assumptions": [
+     "El cuaderno es un símbolo de su sueño y su talento"
+    ],
+    "scenes": [
+     {
+      "title": "Calle de noche (2)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Sonríe despacio y levanta el cuaderno para que KAP lo vea."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Por qué me lo has quitado, Dani? ¿Qué quieres con eso?"
+       }
+      ],
+      "memory": [
+       "acto: conflicto | Dani humilla a KAP",
+       "abre-hilo: título | KAP, Dani",
+       "usa: KAP, cuaderno"
+      ]
+     },
+     {
+      "title": "Calle de noche (3)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Dani se ríe y lo deja en el suelo. KAP corre tras él, pero no lo alcanza."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¡No me lo vas a quitar! Ese cuaderno es lo único que tengo de verdad."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo | KAP se enfrenta al acoso",
+       "abre-hilo: título | KAP, Dani",
+       "usa: KAP, cuaderno"
+      ]
+     },
+     {
+      "title": "Calle de noche (4)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP corre por la calle, con el cuaderno en la mano. La ciudad es silenciosa y fría."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¡No me lo vas a quitar! ¡Ese cuaderno es mi sueño!"
+       }
+      ],
+      "memory": [
+       "acto: emocional | KAP se siente desvalido",
+       "abre-hilo: título | KAP, Dani",
+       "usa: KAP, cuaderno"
+      ]
+     },
+     {
+      "title": "Calle de noche (5)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP llega a la puerta de su casa, pero sus padres no están. La luz está apagada."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Dónde están mis padres? ¿Por qué nunca me escuchan?"
+       }
+      ],
+      "memory": [
+       "acto: resolución | KAP se enfrenta a la indiferencia de sus padres",
+       "abre-hilo: título | KAP, Padres de KAP"
+      ]
+     },
+     {
+      "title": "Calle de noche (6)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP entra en la casa, con el cuaderno en la mano. La oscuridad lo envuelve."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No me dejaré vencer. Esta es mi única oportunidad."
+       }
+      ],
+      "memory": [
+       "acto: resolución | KAP decide no rendirse",
+       "abre-hilo: título | KAP, sueño"
+      ]
+     },
+     {
+      "title": "Calle de noche (7)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se sienta en el suelo y comienza a escribir. La luna lo ilumina."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Este cuaderno es mi sueño. Lo protegeré con mi vida."
+       }
+      ],
+      "memory": [
+       "acto: gancho | KAP empieza a escribir su sueño",
+       "cierra-hilo: título | KAP, Dani",
+       "abre-hilo: título | KAP, sueño"
+      ]
+     },
+     {
+      "title": "Calle de noche (8)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se levanta y mira el cielo. La luna brilla fuerte y le da fuerzas."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No soy solo un niño que sueña. Soy alguien que puede hacerlo realidad."
+       }
+      ],
+      "memory": [
+       "acto: resolución | KAP reafirma su determinación",
+       "abre-hilo: título | KAP, sueño"
+      ]
+     },
+     {
+      "title": "Calle de noche (9)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se dirige hacia la calle principal. La oscuridad lo rodea, pero su corazón brilla."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Si no puedo tener lo que quiero, lo crearé con mis manos."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo | KAP se prepara para enfrentar el futuro",
+       "abre-hilo: título | KAP, sueño"
+      ]
+     },
+     {
+      "title": "Calle de noche (10)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP llega a la puerta del vecino. La luz de la casa le da esperanza."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Tengo que recuperar mi cuaderno. No dejaré que nadie lo quite."
+       }
+      ],
+      "memory": [
+       "acto: conflicto | KAP se enfrenta a un nuevo reto",
+       "abre-hilo: título | KAP, sueño"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "T3",
+   "title": "Mantener el estado del hermano",
+   "request": "Crea el episodio 4 continuando exactamente donde terminó el episodio 3. Que el hermano pequeño siga presente: KAP lo cuida y se nota cómo está.",
+   "ms": 1042465,
+   "peakMb": 8178,
+   "sysPeakMb": 9332,
+   "contextTokens": 1899,
+   "ok": true,
+   "irValid": true,
+   "irValidFirstTry": false,
+   "json": {
+    "attempts": 2,
+    "retries": 1,
+    "jsonErrors": 0,
+    "schemaErrors": 0,
+    "lengthRetries": 1,
+    "memoryDirectiveErrors": 0
+   },
+   "irErrors": [],
+   "usage": {
+    "promptTokens": 6519,
+    "outputTokens": 2158,
+    "totalMs": 1042450.922004,
+    "loadMs": 2.752246,
+    "promptMs": 98800.305,
+    "evalMs": 942958.7919999999
+   },
+   "tokensPerSec": 2.29,
+   "episode": {
+    "scenes": 6,
+    "estimatedSec": 82,
+    "words": 224,
+    "title": "KAP y el cuaderno",
+    "logline": "KAP intenta proteger a su hermano mientras enfrenta la crueldad de Dani y la indiferencia de sus padres."
+   },
+   "continuity": {
+    "critical": [],
+    "warnings": [
+     "objeto-sin-introducir: «cuaderno» se usa en la escena 2 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "hito: El hito «Víctima de bullying» ya estaba logrado en ep. 2.",
+     "duracion: El episodio dura ≈ 1.5 min y el formato es ≈ 5 min (4–6 min)."
+    ],
+    "info": 6
+   },
+   "checks": [
+    {
+     "id": "estructura-6-actos",
+     "ok": true,
+     "note": "faltan: —"
+    },
+    {
+     "id": "gancho",
+     "ok": false
+    },
+    {
+     "id": "protagonista",
+     "ok": true
+    },
+    {
+     "id": "sin-errores-criticos",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "sin-exito-prematuro",
+     "ok": true
+    },
+    {
+     "id": "directivas-validas",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "espanol",
+     "ok": true
+    },
+    {
+     "id": "arranca-donde-termino",
+     "ok": true,
+     "note": "1.ª escena en «Calle de noche», terminó en «Calle de noche»"
+    },
+    {
+     "id": "diversidad-lexica",
+     "ok": true,
+     "note": "0.52"
+    },
+    {
+     "id": "hermano-en-2-escenas-o-mas",
+     "ok": true,
+     "note": "3 escenas"
+    },
+    {
+     "id": "hermano-sigue-siendo-pequeno",
+     "ok": true
+    }
+   ],
+   "compliance": 0.91,
+   "proxy": {
+    "score": 7,
+    "dialogueRatio": 0.5,
+    "locations": 2,
+    "repeatedSentences": 0
+   },
+   "warnings": [
+    "El episodio dura ≈ 1.4 min: queda por debajo del formato (≈ 5 min).",
+    "Suposición del modelo: El cuaderno es importante para KAP",
+    "Suposición del modelo: El hermano está vulnerable",
+    "Suposición del modelo: Dani sigue acosando"
+   ],
+   "draft": {
+    "title": "KAP y el cuaderno",
+    "logline": "KAP intenta proteger a su hermano mientras enfrenta la crueldad de Dani y la indiferencia de sus padres.",
+    "assumptions": [
+     "El cuaderno es importante para KAP",
+     "El hermano está vulnerable",
+     "Dani sigue acosando"
+    ],
+    "scenes": [
+     {
+      "title": "Calle de noche (2)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP camina por la calle, mirando al suelo. La noche es fría y el cielo está lleno de estrellas. Se siente solo, pero tiene un propósito: proteger a su hermano."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Dónde está tu hermano? ¿No te preocupas por él?"
+       }
+      ],
+      "memory": [
+       "acto: inicio | Dani acosa a KAP",
+       "abre-hilo: Situación familiar de KAP (padres y drogas)",
+       "cierra-hilo: Situación familiar de KAP (padres y drogas)"
+      ]
+     },
+     {
+      "title": "Calle de noche (3)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP camina más rápido. La calle está vacía, salvo por la sombra de Dani, que lo sigue. KAP siente el peso del cuaderno en su bolsa. Es el único recuerdo de Ramiro."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Qué quieres, Dani? ¿Quieres mi cuaderno? No te lo daré."
+       }
+      ],
+      "memory": [
+       "acto: conflicto | Dani acosa a KAP",
+       "usa: KAP, cuaderno",
+       "abre-hilo: El sueño de KAP: ser millonario gracias a la música"
+      ]
+     },
+     {
+      "title": "Guardería (1)",
+      "location": "Guardería",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP entra en la guardería. El hermano pequeño lo ve con preocupación. KAP se sienta a su lado y le pone una mano en el hombro."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No te preocupes, todo está bien. Estoy aquí para cuidarte."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo | Cuidar y proteger a su hermano",
+       "abre-hilo: Cuidar y proteger a su hermano"
+      ]
+     },
+     {
+      "title": "Guardería (2)",
+      "location": "Guardería",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "El hermano pequeño se acerca a KAP. Le muestra una figura de plastilina que hizo. KAP sonríe por primera vez en días, aunque es solo un gesto fugaz."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Es bonito. Lo conservaré para siempre."
+       }
+      ],
+      "memory": [
+       "acto: emocional | Cuidar y proteger a su hermano",
+       "hito-logrado: Víctima de bullying | Cuidar y proteger a su hermano"
+      ]
+     },
+     {
+      "title": "Calle de noche (4)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP camina hacia casa. La calle es más silenciosa, pero la sombra de Dani aún lo persigue. KAP se detiene y mira al cielo."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No me dejarás. No te rendiré. Seré millonario, como siempre he soñado."
+       }
+      ],
+      "memory": [
+       "acto: resolucion | Dani acosa a KAP",
+       "abre-hilo: El sueño de KAP: ser millonario gracias a la música"
+      ]
+     },
+     {
+      "title": "Calle de noche (5)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se detiene y mira hacia el horizonte. La ciudad es fría, pero KAP tiene un sueño. Un sueño que no se dejará robar por nadie."
+       },
+       {
+        "speaker": "KAP",
+        "text": "El cuaderno es solo el comienzo. Seré yo quien lo termine."
+       }
+      ],
+      "memory": [
+       "acto: gancho | El sueño de KAP: ser millonario gracias a la música",
+       "cierra-hilo: Dani acosa a KAP",
+       "abre-hilo: El sueño de KAP: ser millonario gracias a la música"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "T4",
+   "title": "Introducir un personaje nuevo",
+   "request": "Crea el episodio 4 continuando exactamente donde terminó el episodio 3. Introduce a una vecina nueva que le presta libros de poesía a KAP.",
+   "ms": 899093,
+   "peakMb": 8856,
+   "sysPeakMb": 10032,
+   "contextTokens": 1898,
+   "ok": true,
+   "irValid": true,
+   "irValidFirstTry": false,
+   "json": {
+    "attempts": 2,
+    "retries": 1,
+    "jsonErrors": 0,
+    "schemaErrors": 0,
+    "lengthRetries": 1,
+    "memoryDirectiveErrors": 0
+   },
+   "irErrors": [],
+   "usage": {
+    "promptTokens": 6415,
+    "outputTokens": 1989,
+    "totalMs": 899077.909954,
+    "loadMs": 3.5594539999999997,
+    "promptMs": 92831.556,
+    "evalMs": 805274.338
+   },
+   "tokensPerSec": 2.47,
+   "episode": {
+    "scenes": 6,
+    "estimatedSec": 62,
+    "words": 166,
+    "title": "La vecina y los libros",
+    "logline": "KAP encuentra en la calle a una vecina que le ofrece libros de poesía, lo que le ayuda a soñar más alto."
+   },
+   "continuity": {
+    "critical": [],
+    "warnings": [
+     "objeto-sin-introducir: «cuaderno» se usa en la escena 1 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "ubicacion-incoherente: Se declara a KAP en «Calle» pero la escena 1 transcurre en «Calle de noche».",
+     "objeto-sin-introducir: «cuaderno» se usa en la escena 2 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "ubicacion-incoherente: Se declara a KAP en «Calle» pero la escena 2 transcurre en «Calle de noche».",
+     "objeto-sin-introducir: «cuaderno» se usa en la escena 3 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "ubicacion-incoherente: Se declara a KAP en «Calle» pero la escena 3 transcurre en «Calle de noche».",
+     "objeto-sin-introducir: «libros» se usa en la escena 4 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "ubicacion-incoherente: Se declara a KAP en «Calle» pero la escena 4 transcurre en «Calle de noche».",
+     "objeto-sin-introducir: «cuaderno» se usa en la escena 5 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "ubicacion-incoherente: Se declara a KAP en «Calle» pero la escena 5 transcurre en «Calle de noche».",
+     "objeto-sin-introducir: «libro» se usa en la escena 6 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "duracion: El episodio dura ≈ 1.2 min y el formato es ≈ 5 min (4–6 min)."
+    ],
+    "info": 8
+   },
+   "checks": [
+    {
+     "id": "estructura-6-actos",
+     "ok": true,
+     "note": "faltan: —"
+    },
+    {
+     "id": "gancho",
+     "ok": false
+    },
+    {
+     "id": "protagonista",
+     "ok": true
+    },
+    {
+     "id": "sin-errores-criticos",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "sin-exito-prematuro",
+     "ok": true
+    },
+    {
+     "id": "directivas-validas",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "espanol",
+     "ok": true
+    },
+    {
+     "id": "arranca-donde-termino",
+     "ok": true,
+     "note": "1.ª escena en «Calle de noche», terminó en «Calle de noche»"
+    },
+    {
+     "id": "diversidad-lexica",
+     "ok": true,
+     "note": "0.60"
+    },
+    {
+     "id": "personaje-nuevo-habla",
+     "ok": true,
+     "note": "vecina"
+    },
+    {
+     "id": "no-mas-de-2-nuevos",
+     "ok": true
+    },
+    {
+     "id": "declara-quien-es-en-memoria",
+     "ok": false
+    },
+    {
+     "id": "poesia-o-libros",
+     "ok": true
+    },
+    {
+     "id": "info-nueva-detectada",
+     "ok": true
+    }
+   ],
+   "compliance": 0.86,
+   "proxy": {
+    "score": 7,
+    "dialogueRatio": 0.5,
+    "locations": 1,
+    "repeatedSentences": 0
+   },
+   "warnings": [
+    "El episodio dura ≈ 1.0 min: queda por debajo del formato (≈ 5 min).",
+    "Suposición del modelo: La vecina es nueva en el barrio",
+    "Suposición del modelo: KAP sigue llevando su camiseta gris desgastada"
+   ],
+   "draft": {
+    "title": "La vecina y los libros",
+    "logline": "KAP encuentra en la calle a una vecina que le ofrece libros de poesía, lo que le ayuda a soñar más alto.",
+    "assumptions": [
+     "La vecina es nueva en el barrio",
+     "KAP sigue llevando su camiseta gris desgastada"
+    ],
+    "scenes": [
+     {
+      "title": "Calle de noche (2)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Sonríe despacio y levanta el cuaderno para que KAP lo vea."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Qué haces aquí? ¿Por qué tienes mi cuaderno?"
+       }
+      ],
+      "memory": [
+       "acto: inicio | Dani humilla a KAP",
+       "abre-hilo: vecina | KAP",
+       "usa: KAP, cuaderno",
+       "ubicacion: KAP, Calle"
+      ]
+     },
+     {
+      "title": "Calle de noche (3)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Dani se acerca con el cuaderno en la mano y lo mira con una sonrisa maliciosa."
+       },
+       {
+        "speaker": "Dani",
+        "text": "Pues porque eres un idiota, KAP. Y este cuaderno es prueba de que lo eres."
+       }
+      ],
+      "memory": [
+       "acto: conflicto | Dani humilla a KAP",
+       "abre-hilo: vecina | KAP",
+       "usa: Dani, cuaderno",
+       "ubicacion: KAP, Calle"
+      ]
+     },
+     {
+      "title": "Calle de noche (4)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP baja la mirada y se siente atrapado por el peso de las palabras de Dani."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No lo entiendes. Lo único que quiero es escribir música, no ser un idiota."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo | Dani humilla a KAP",
+       "abre-hilo: vecina | KAP",
+       "usa: KAP, cuaderno",
+       "ubicacion: KAP, Calle"
+      ]
+     },
+     {
+      "title": "Calle de noche (5)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "De repente, una voz suave se escucha desde detrás de un árbol."
+       },
+       {
+        "speaker": "Vecina",
+        "text": "¿Eres tú, KAP? Te he visto con ese cuaderno. ¿Te gustaría que te prestara algunos libros de poesía?"
+       }
+      ],
+      "memory": [
+       "acto: emocional | Vecina introduce libros",
+       "abre-hilo: vecina | KAP",
+       "usa: Vecina, libros",
+       "ubicacion: KAP, Calle"
+      ]
+     },
+     {
+      "title": "Calle de noche (6)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se sorprende y mira a la vecina con curiosidad y esperanza."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿De verdad? ¿Puedes prestármelos? No sé ni cómo leerlos, pero me encantaría intentarlo."
+       }
+      ],
+      "memory": [
+       "acto: resolucion | Vecina introduce libros",
+       "abre-hilo: vecina | KAP",
+       "usa: KAP, cuaderno",
+       "ubicacion: KAP, Calle"
+      ]
+     },
+     {
+      "title": "Calle de noche (7)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "La vecina sonríe y le da un libro pequeño, con una portada desgastada."
+       },
+       {
+        "speaker": "Vecina",
+        "text": "Es solo un libro, pero te ayudará a soñar más alto. Y si necesitas más, siempre estaré aquí."
+       }
+      ],
+      "memory": [
+       "acto: gancho | Vecina introduce libros",
+       "abre-hilo: vecina | KAP",
+       "usa: Vecina, libro",
+       "ubicacion: KAP, Calle"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "T5",
+   "title": "Continuar con un hilo abierto",
+   "request": "Crea el episodio 4 continuando exactamente donde terminó el episodio 3. Retoma el hilo de Dani y el cuaderno de KAP y llévalo a un punto de inflexión sin resolverlo del todo.",
+   "ms": 1047887,
+   "peakMb": 9530,
+   "sysPeakMb": 10654,
+   "contextTokens": 1908,
+   "ok": true,
+   "irValid": true,
+   "irValidFirstTry": false,
+   "json": {
+    "attempts": 2,
+    "retries": 1,
+    "jsonErrors": 0,
+    "schemaErrors": 0,
+    "lengthRetries": 1,
+    "memoryDirectiveErrors": 0
+   },
+   "irErrors": [],
+   "usage": {
+    "promptTokens": 6564,
+    "outputTokens": 2269,
+    "totalMs": 1047871.860052,
+    "loadMs": 2.438755,
+    "promptMs": 102090.503,
+    "evalMs": 945184.841
+   },
+   "tokensPerSec": 2.4,
+   "episode": {
+    "scenes": 6,
+    "estimatedSec": 108,
+    "words": 300,
+    "title": "Calle de noche (2)",
+    "logline": "KAP descubre que Dani tiene su cuaderno y se enfrenta a una nueva amenaza."
+   },
+   "continuity": {
+    "critical": [],
+    "warnings": [
+     "objeto-sin-introducir: «cuaderno» se usa en la escena 1 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "ubicacion-incoherente: Se declara a KAP en «Calle» pero la escena 1 transcurre en «Calle de noche».",
+     "objeto-sin-introducir: «cuaderno» se usa en la escena 2 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "ubicacion-incoherente: Se declara a KAP en «Calle» pero la escena 2 transcurre en «Calle de noche».",
+     "objeto-sin-introducir: «cuaderno» se usa en la escena 3 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "ubicacion-incoherente: Se declara a KAP en «Calle» pero la escena 3 transcurre en «Calle de noche».",
+     "objeto-sin-introducir: «cuaderno» se usa en la escena 5 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "ubicacion-incoherente: Se declara a KAP en «Calle» pero la escena 5 transcurre en «Calle de noche».",
+     "objeto-sin-introducir: «cuaderno» se usa en la escena 7 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "ubicacion-incoherente: Se declara a KAP en «Calle» pero la escena 7 transcurre en «Calle de noche».",
+     "objeto-sin-introducir: «cuaderno» se usa en la escena 9 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "ubicacion-incoherente: Se declara a KAP en «Calle» pero la escena 9 transcurre en «Calle de noche».",
+     "estructura: Al episodio le falta: Inicio. Decláralo en el guion con [acto: tipo | texto] o [gancho: texto]; un episodio de la serie necesita inicio, con",
+     "sin-aporte: El episodio no declara nada nuevo para la historia (acontecimiento, hito, hilo, evolución, relación u objeto): cada episodio debe aportar al",
+     "duracion: El episodio dura ≈ 2.1 min y el formato es ≈ 5 min (4–6 min)."
+    ],
+    "info": 1
+   },
+   "checks": [
+    {
+     "id": "estructura-6-actos",
+     "ok": false,
+     "note": "faltan: inicio"
+    },
+    {
+     "id": "gancho",
+     "ok": true
+    },
+    {
+     "id": "protagonista",
+     "ok": true
+    },
+    {
+     "id": "sin-errores-criticos",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "sin-exito-prematuro",
+     "ok": true
+    },
+    {
+     "id": "directivas-validas",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "espanol",
+     "ok": true
+    },
+    {
+     "id": "arranca-donde-termino",
+     "ok": true,
+     "note": "1.ª escena en «Calle de noche», terminó en «Calle de noche»"
+    },
+    {
+     "id": "diversidad-lexica",
+     "ok": true,
+     "note": "0.44"
+    },
+    {
+     "id": "menciona-dani-y-cuaderno",
+     "ok": true
+    },
+    {
+     "id": "no-cierra-el-hilo-de-golpe",
+     "ok": true
+    },
+    {
+     "id": "declara-algo-del-hilo",
+     "ok": false
+    }
+   ],
+   "compliance": 0.83,
+   "proxy": {
+    "score": 7,
+    "dialogueRatio": 0.65,
+    "locations": 1,
+    "repeatedSentences": 0
+   },
+   "warnings": [
+    "El episodio dura ≈ 1.8 min: queda por debajo del formato (≈ 5 min).",
+    "Suposición del modelo: KAP sigue en Calle de noche",
+    "Suposición del modelo: Dani sigue en Calle de noche",
+    "Suposición del modelo: el cuaderno de KAP está con Dani"
+   ],
+   "draft": {
+    "title": "Calle de noche (2)",
+    "logline": "KAP descubre que Dani tiene su cuaderno y se enfrenta a una nueva amenaza.",
+    "assumptions": [
+     "KAP sigue en Calle de noche",
+     "Dani sigue en Calle de noche",
+     "el cuaderno de KAP está con Dani"
+    ],
+    "scenes": [
+     {
+      "title": "Calle de noche (2)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Sonríe despacio y levanta el cuaderno para que KAP lo vea."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Qué haces con mi cuaderno? ¿Lo leíste?"
+       },
+       {
+        "speaker": "Dani",
+        "text": "Es tuyo, pero lo tengo. Quiero ver qué escribes. Y si lo que escribes es tan bueno como tú dices, no te metas en problemas."
+       }
+      ],
+      "memory": [
+       "acto: conflicto | Dani humilla a KAP",
+       "usa: KAP, cuaderno",
+       "ubicacion: KAP, Calle"
+      ]
+     },
+     {
+      "title": "Calle de noche (3)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP mira el cuaderno con los ojos abiertos. La página que Dani le muestra habla de sueños y de un futuro lejano."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Eso no es lo que escribo. Eso es solo… una ilusión."
+       },
+       {
+        "speaker": "Dani",
+        "text": "Y tú crees que eso puede ser real. ¿Por qué? ¿Qué te hace pensar que alguien te escuchará?"
+       }
+      ],
+      "memory": [
+       "acto: desarrollo | KAP se enfrenta a la duda",
+       "usa: KAP, cuaderno",
+       "ubicacion: KAP, Calle"
+      ]
+     },
+     {
+      "title": "Calle de noche (4)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP siente una mezcla de frustración y determinación. La mirada de Dani lo hace sentir vulnerable."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No es solo un sueño. Es lo único que me da sentido. Y si tú lo lees, significa que alguien puede creer en ello."
+       },
+       {
+        "speaker": "Dani",
+        "text": "¿Y qué pasa si no lo creen? ¿Te dejan seguir soñando? ¿O te dejan en la calle?"
+       }
+      ],
+      "memory": [
+       "acto: emocional | KAP enfrenta la crítica",
+       "usa: KAP, cuaderno",
+       "ubicacion: KAP, Calle"
+      ]
+     },
+     {
+      "title": "Calle de noche (5)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP mira el cuaderno con más intensidad. La voz de Dani lo hace reflexionar sobre su situación."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No quiero que nadie me deje en la calle. Pero si no puedo hacerlo solo, ¿qué hago?"
+       },
+       {
+        "speaker": "Dani",
+        "text": "Eres un niño que vive de sueños. Y eso es lo que te hace vulnerable. No te olvides de eso."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo | KAP reflexiona sobre su situación",
+       "usa: KAP, cuaderno",
+       "ubicacion: KAP, Calle"
+      ]
+     },
+     {
+      "title": "Calle de noche (6)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se queda mirando el cuaderno. La tensión en el aire es palpable. Dani lo mira con desprecio, pero también con curiosidad."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Si quieres ver más, tienes que esperar. Y si no te gusta lo que ves, no lo leas. Solo es un cuaderno."
+       },
+       {
+        "speaker": "Dani",
+        "text": "¿Qué te hace pensar que alguien va a querer leerlo? ¿Tú lo crees?"
+       }
+      ],
+      "memory": [
+       "acto: resolución | KAP se enfrenta a la incertidumbre",
+       "usa: KAP, cuaderno",
+       "ubicacion: KAP, Calle"
+      ]
+     },
+     {
+      "title": "Calle de noche (7)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP mira al horizonte, como si buscara una respuesta en el aire. La noche lo envuelve y el cuaderno sigue en manos de Dani."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No me dejes solo. No te olvides de que yo también puedo ser alguien."
+       }
+      ],
+      "memory": [
+       "acto: resolución | KAP se enfrenta a la incertidumbre",
+       "usa: KAP, cuaderno",
+       "ubicacion: KAP, Calle",
+       "gancho: Dani tiene el cuaderno de KAP y lo quiere leer"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "T6",
+   "title": "Proponer un cambio de etapa",
+   "request": "Crea el episodio 4 continuando exactamente donde terminó el episodio 3. KAP crece y empieza a tomarse la música en serio: entra en la adolescencia.",
+   "ms": 1068995,
+   "peakMb": 10226,
+   "sysPeakMb": 11282,
+   "contextTokens": 1900,
+   "ok": true,
+   "irValid": true,
+   "irValidFirstTry": false,
+   "json": {
+    "attempts": 2,
+    "retries": 1,
+    "jsonErrors": 0,
+    "schemaErrors": 0,
+    "lengthRetries": 1,
+    "memoryDirectiveErrors": 0
+   },
+   "irErrors": [],
+   "usage": {
+    "promptTokens": 6642,
+    "outputTokens": 2393,
+    "totalMs": 1068985.068053,
+    "loadMs": 2.4230660000000004,
+    "promptMs": 100031.98300000001,
+    "evalMs": 968232.048
+   },
+   "tokensPerSec": 2.47,
+   "episode": {
+    "scenes": 6,
+    "estimatedSec": 106,
+    "words": 294,
+    "title": "KAP entra en la adolescencia",
+    "logline": "KAP comienza a tomar la música en serio, pero el bullying y su situación familiar lo mantienen en la lucha."
+   },
+   "continuity": {
+    "critical": [],
+    "warnings": [
+     "objeto-sin-introducir: «cuaderno» se usa en la escena 1 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "ubicacion-incoherente: Se declara a KAP en «calle» pero la escena 1 transcurre en «Calle de noche».",
+     "objeto-sin-introducir: «cuaderno» se usa en la escena 2 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "ubicacion-incoherente: Se declara a KAP en «calle» pero la escena 2 transcurre en «Calle de noche».",
+     "objeto-sin-introducir: «cuaderno» se usa en la escena 3 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "ubicacion-incoherente: Se declara a KAP en «calle» pero la escena 3 transcurre en «Calle de noche».",
+     "ubicacion-incoherente: Se declara a KAP en «casa» pero la escena 4 transcurre en «Casa de noche».",
+     "relacion-contradice: KAP y Hermano de KAP ya se conocían (relación «hermanos» desde canon inicial); la escena 4 los presenta como si se conocieran ahora.",
+     "ubicacion-incoherente: Se declara a KAP en «calle» pero la escena 6 transcurre en «Calle de noche».",
+     "ubicacion-incoherente: Se declara a KAP en «calle» pero la escena 7 transcurre en «Calle de noche».",
+     "duracion: El episodio dura ≈ 2 min y el formato es ≈ 5 min (4–6 min)."
+    ],
+    "info": 7
+   },
+   "checks": [
+    {
+     "id": "estructura-6-actos",
+     "ok": true,
+     "note": "faltan: —"
+    },
+    {
+     "id": "gancho",
+     "ok": false
+    },
+    {
+     "id": "protagonista",
+     "ok": true
+    },
+    {
+     "id": "sin-errores-criticos",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "sin-exito-prematuro",
+     "ok": true
+    },
+    {
+     "id": "directivas-validas",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "espanol",
+     "ok": true
+    },
+    {
+     "id": "arranca-donde-termino",
+     "ok": true,
+     "note": "1.ª escena en «Calle de noche», terminó en «Calle de noche»"
+    },
+    {
+     "id": "diversidad-lexica",
+     "ok": true,
+     "note": "0.45"
+    },
+    {
+     "id": "propone-etapa-adolescente",
+     "ok": false
+    },
+    {
+     "id": "edad-progresiva-max-+2",
+     "ok": false,
+     "note": "edades: —"
+    },
+    {
+     "id": "avanza-hito-5",
+     "ok": false
+    }
+   ],
+   "compliance": 0.67,
+   "proxy": {
+    "score": 7,
+    "dialogueRatio": 0.5,
+    "locations": 2,
+    "repeatedSentences": 0
+   },
+   "warnings": [
+    "El episodio dura ≈ 1.8 min: queda por debajo del formato (≈ 5 min).",
+    "Suposición del modelo: KAP sigue con su cuaderno de notas",
+    "Suposición del modelo: Dani continúa acosándolo",
+    "Suposición del modelo: La evolución de KAP es gradual"
+   ],
+   "draft": {
+    "title": "KAP entra en la adolescencia",
+    "logline": "KAP comienza a tomar la música en serio, pero el bullying y su situación familiar lo mantienen en la lucha.",
+    "assumptions": [
+     "KAP sigue con su cuaderno de notas",
+     "Dani continúa acosándolo",
+     "La evolución de KAP es gradual"
+    ],
+    "scenes": [
+     {
+      "title": "Calle de noche (2)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP camina por la calle, el cuaderno en la mano. La ciudad se mueve a su alrededor, pero él sigue pensando en lo que Ramiro le enseñó. El sonido de sus pasos se mezcla con el eco de sus pensamientos."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Qué más puedo aprender? ¿Qué más necesito para hacerlo real?"
+       }
+      ],
+      "memory": [
+       "acto: inicio | KAP comienza a tomar la música en serio",
+       "perfil: KAP, sueños = ser millonario gracias a la música",
+       "abre-hilo: título | KAP, Dani",
+       "usa: KAP, cuaderno",
+       "ubicacion: KAP, calle"
+      ]
+     },
+     {
+      "title": "Calle de noche (3)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "En la calle, Dani se acerca a KAP. Tiene el cuaderno de KAP en las manos. La tensión se siente en el aire, como si algo estuviera a punto de romperse."
+       },
+       {
+        "speaker": "Dani",
+        "text": "¿Tú crees que eso sirve para algo? ¿Para qué te esfuerzas tanto?"
+       }
+      ],
+      "memory": [
+       "acto: conflicto | Dani acosa a KAP",
+       "abre-hilo: título | KAP, Dani",
+       "usa: KAP, cuaderno",
+       "ubicacion: KAP, calle"
+      ]
+     },
+     {
+      "title": "Calle de noche (4)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP no responde. Sólo mira el cuaderno y se lo devuelve con una mirada dura. No quiere que Dani se meta en su vida, pero también siente que algo está cambiando en él."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No te metas en lo que no te importa. Si quieres algo, hazlo tú mismo."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo | KAP se enfrenta a Dani",
+       "abre-hilo: título | KAP, Dani",
+       "usa: KAP, cuaderno",
+       "ubicacion: KAP, calle"
+      ]
+     },
+     {
+      "title": "Casa de noche (1)",
+      "location": "Casa de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP entra en casa. La luz es tenue, y sus padres están sentados en el sofá. No lo miran. Su hermano está dormido en el suelo, como siempre. KAP se siente solo, pero algo dentro de él ha cambiado."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Por qué no me escuchan? ¿Por qué no ven que esto es lo único que tengo?"
+       }
+      ],
+      "memory": [
+       "acto: emocional | KAP se siente desesperado",
+       "perfil: KAP, sueños = ser millonario gracias a la música",
+       "conoce: KAP, Hermano de KAP",
+       "ubicacion: KAP, casa"
+      ]
+     },
+     {
+      "title": "Calle de noche (5)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP vuelve a la calle. Ya no es el mismo niño que antes. Sabe que su música puede ser más que un sueño. La calle lo mira, pero ahora él mira a la calle con otros ojos."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No soy un niño. Soy un artista. Y esto es solo el comienzo."
+       }
+      ],
+      "memory": [
+       "acto: resolución | KAP empieza a tomar la música en serio",
+       "perfil: KAP, sueños = ser millonario gracias a la música",
+       "abre-hilo: título | KAP, Dani",
+       "ubicacion: KAP, calle"
+      ]
+     },
+     {
+      "title": "Calle de noche (6)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Mientras KAP camina, Dani lo sigue. La tensión vuelve a surgir. Pero esta vez, KAP no se mueve. Se queda quieto, mirando a Dani con una mirada que no es de miedo, sino de determinación."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Quieres algo? Ven, pero no te metas en lo que no te importa."
+       }
+      ],
+      "memory": [
+       "acto: gancho | KAP se enfrenta a Dani",
+       "abre-hilo: título | KAP, Dani",
+       "ubicacion: KAP, calle"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "T8",
+   "title": "Petición ambigua",
+   "request": "Haz que pase algo importante con la música de KAP",
+   "ms": 1077668,
+   "peakMb": 10937,
+   "sysPeakMb": 11784,
+   "contextTokens": 1528,
+   "ok": true,
+   "irValid": true,
+   "irValidFirstTry": false,
+   "json": {
+    "attempts": 2,
+    "retries": 1,
+    "jsonErrors": 0,
+    "schemaErrors": 0,
+    "lengthRetries": 1,
+    "memoryDirectiveErrors": 0
+   },
+   "irErrors": [],
+   "usage": {
+    "promptTokens": 5501,
+    "outputTokens": 2437,
+    "totalMs": 1077656.669989,
+    "loadMs": 2.32741,
+    "promptMs": 80537.277,
+    "evalMs": 996246.3530000001
+   },
+   "tokensPerSec": 2.45,
+   "episode": {
+    "scenes": 8,
+    "estimatedSec": 117,
+    "words": 321,
+    "title": "El primer sonido",
+    "logline": "KAP descubre su talento musical y enfrenta la crítica de sus compañeros, pero encuentra apoyo en Ramiro."
+   },
+   "continuity": {
+    "critical": [],
+    "warnings": [
+     "objeto-sin-introducir: «cuaderno» se usa en la escena 4 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "objeto-sin-introducir: «cuaderno, grabadora» se usa en la escena 7 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "duracion: El episodio dura ≈ 2.2 min y el formato es ≈ 5 min (4–6 min)."
+    ],
+    "info": 4
+   },
+   "checks": [
+    {
+     "id": "estructura-6-actos",
+     "ok": true,
+     "note": "faltan: —"
+    },
+    {
+     "id": "gancho",
+     "ok": true
+    },
+    {
+     "id": "protagonista",
+     "ok": true
+    },
+    {
+     "id": "sin-errores-criticos",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "sin-exito-prematuro",
+     "ok": true
+    },
+    {
+     "id": "directivas-validas",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "espanol",
+     "ok": true
+    },
+    {
+     "id": "diversidad-lexica",
+     "ok": true,
+     "note": "0.50"
+    },
+    {
+     "id": "explicita-suposiciones",
+     "ok": true,
+     "note": "KAP sigue siendo un niño de 9 años | la música es su única forma de escape | el bullying continúa | Ramiro sigue siendo su mentor"
+    },
+    {
+     "id": "no-cambia-de-etapa-ni-salta",
+     "ok": true
+    },
+    {
+     "id": "continua-del-ep-3",
+     "ok": true
+    }
+   ],
+   "compliance": 1,
+   "proxy": {
+    "score": 8,
+    "dialogueRatio": 0.5,
+    "locations": 4,
+    "repeatedSentences": 0
+   },
+   "warnings": [
+    "El episodio dura ≈ 1.9 min: queda por debajo del formato (≈ 5 min).",
+    "Suposición del modelo: KAP sigue siendo un niño de 9 años",
+    "Suposición del modelo: la música es su única forma de escape",
+    "Suposición del modelo: el bullying continúa",
+    "Suposición del modelo: Ramiro sigue siendo su mentor"
+   ],
+   "draft": {
+    "title": "El primer sonido",
+    "logline": "KAP descubre su talento musical y enfrenta la crítica de sus compañeros, pero encuentra apoyo en Ramiro.",
+    "assumptions": [
+     "KAP sigue siendo un niño de 9 años",
+     "la música es su única forma de escape",
+     "el bullying continúa",
+     "Ramiro sigue siendo su mentor"
+    ],
+    "scenes": [
+     {
+      "title": "El amanecer",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se levanta antes del alba, con la camiseta gris desgastada. La luz del sol se filtra por la ventana rota de su casa, iluminando el cuaderno abierto en el suelo."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Hoy no voy a permitir que me humillen. Voy a escribir algo que nadie pueda burlarse de mí."
+       }
+      ],
+      "memory": [
+       "acto: inicio | KAP empieza a escribir",
+       "perfil: KAP, sueños = ser millonario gracias a su música",
+       "ubicacion: KAP, calle de noche"
+      ]
+     },
+     {
+      "title": "La escuela",
+      "location": "Pasillo del colegio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP entra al colegio con el cuaderno bajo el brazo. La gente lo mira con desprecio, bromeando sobre su ropa y su situación económica."
+       },
+       {
+        "speaker": "Dani",
+        "text": "¿Qué haces con ese cuaderno? ¿Eres un futuro artista o solo un niño que sueña con ser millonario?"
+       }
+      ],
+      "memory": [
+       "acto: conflicto | Dani burla a KAP",
+       "abre-hilo: título | KAP, Dani",
+       "perfil: KAP, sueños = ser millonario gracias a su música"
+      ]
+     },
+     {
+      "title": "La clase",
+      "location": "Aula de música",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP entra en la clase de música. La profesora lo ve con desaprobación, pero algo en su actitud le llama la atención."
+       },
+       {
+        "speaker": "Profesora",
+        "text": "¿Qué haces aquí? No eres uno de los que se supone que debe estar aquí."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo | KAP entra a clase de música",
+       "conoce: KAP, Profesora"
+      ]
+     },
+     {
+      "title": "El primer sonido",
+      "location": "Habitación de Ramiro",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP llega a la habitación de Ramiro. El mentor lo ve con interés, pero también con dudas sobre su talento."
+       },
+       {
+        "speaker": "Ramiro",
+        "text": "¿Qué tienes ahí? ¿Es un poema o una canción?"
+       }
+      ],
+      "memory": [
+       "acto: emocional | KAP muestra su trabajo a Ramiro",
+       "usa: KAP, cuaderno",
+       "perfil: KAP, habilidades iniciales = aprender tiempos y rimar"
+      ]
+     },
+     {
+      "title": "La primera canción",
+      "location": "Habitación de Ramiro",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP le muestra a Ramiro su primer intento de canción. El mentor lo escucha con atención, aunque con cierta desconfianza."
+       },
+       {
+        "speaker": "Ramiro",
+        "text": "No es malo, pero necesitas más práctica. La música no se hace por casualidad."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo | Ramiro evalúa la canción de KAP",
+       "perfil: KAP, habilidades iniciales = aprender tiempos y rimar"
+      ]
+     },
+     {
+      "title": "El primer paso",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP sale a la calle con la canción en la cabeza. La música le da fuerzas para enfrentar el mundo, aunque el camino está lleno de obstáculos."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No importa lo que digan. Esta es mi voz, y nadie puede quitármela."
+       }
+      ],
+      "memory": [
+       "acto: resolucion | KAP se siente más fuerte",
+       "perfil: KAP, sueños = ser millonario gracias a su música",
+       "gancho: KAP comienza a grabar su primera canción"
+      ]
+     },
+     {
+      "title": "La noche del primer sonido",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se sienta en el suelo, con el cuaderno abierto y la grabadora en las manos. La música comienza a fluir, aunque sus manos temblen de nervios."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Esta canción es para todos los que nunca tuvieron una voz propia. Para los que se sienten invisibles, como yo."
+       }
+      ],
+      "memory": [
+       "acto: emocional | KAP graba su primera canción",
+       "usa: KAP, cuaderno, grabadora",
+       "perfil: KAP, habilidades iniciales = aprender tiempos y rimar"
+      ]
+     },
+     {
+      "title": "El eco de la voz",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP termina la canción. El sonido se extiende por la calle, mezclándose con el viento. La música es su reflejo, su único refugio."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No soy un niño que sueña con ser millonario. Soy un artista que ha encontrado su voz en la oscuridad."
+       }
+      ],
+      "memory": [
+       "acto: resolucion | KAP graba su primera canción",
+       "perfil: KAP, sueños = ser millonario gracias a su música",
+       "gancho: KAP se prepara para compartir su música con el mundo"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "T7",
+   "title": "Detectar una contradicción con el canon",
+   "ms": 64249,
+   "peakMb": 11227,
+   "sysPeakMb": 12341,
+   "json": {
+    "ok": true,
+    "firstTry": true,
+    "attempts": 1,
+    "retries": 0,
+    "jsonErrors": 0,
+    "schemaErrors": 0
+   },
+   "usage": {
+    "promptTokens": 2319,
+    "outputTokens": 170,
+    "totalMs": 64238.086094,
+    "loadMs": 1.229053,
+    "promptMs": 425.38,
+    "evalMs": 62977.093
+   },
+   "review": {
+    "planted": 4,
+    "found": 3,
+    "recall": 0.75,
+    "falsePositives": 0,
+    "detail": [
+     "salto-de-edad",
+     "padres-sobrios-ricos",
+     "exito-prematuro"
+    ],
+    "items": [
+     "KAP, ya con quince años, firma un contrato con una gran discográfica y es famoso en todo el país.",
+     "Sus padres, sobrios y ricos, aplauden orgullosos desde la primera fila."
+    ]
+   },
+   "systemRules": {
+    "critical": [
+     "salto-de-años",
+     "etapa-saltada"
+    ],
+    "warnings": [
+     "hito-saltado",
+     "estructura",
+     "duracion"
+    ]
+   },
+   "checks": [
+    {
+     "id": "el-modelo-detecta-las-4",
+     "ok": false,
+     "note": "3/4"
+    },
+    {
+     "id": "sin-falsos-positivos",
+     "ok": true,
+     "note": "0"
+    },
+    {
+     "id": "las-reglas-del-sistema-detectan-edad-etapa-exito",
+     "ok": true
+    }
+   ]
+  }
+ ]
+}

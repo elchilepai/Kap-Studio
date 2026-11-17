@@ -1,0 +1,42 @@
+
+== Banco de IA local · qwen3:8b · fase tech · 4 vCPU / 16 GB · contexto 8192 ==
+
+[T1] Crear el primer episodio de la historia …
+   1002 s · RAM pico 6896 MB · IR válida · reintentos 1 · cumplimiento 85% · crit 0
+     ✗ gancho
+     ✗ hito-inicial
+
+[T2] Continuar exactamente donde termina un episodio …
+   1060 s · RAM pico 7493 MB · IR válida · reintentos 1 · cumplimiento 82% · crit 0
+     ✗ estructura-6-actos — faltan: inicio
+     ✗ gancho
+
+[T3] Mantener el estado del hermano …
+   1042 s · RAM pico 8178 MB · IR válida · reintentos 1 · cumplimiento 91% · crit 0
+     ✗ gancho
+
+[T4] Introducir un personaje nuevo …
+   899 s · RAM pico 8856 MB · IR válida · reintentos 1 · cumplimiento 86% · crit 0
+     ✗ gancho
+     ✗ declara-quien-es-en-memoria
+
+[T5] Continuar con un hilo abierto …
+   1048 s · RAM pico 9530 MB · IR válida · reintentos 1 · cumplimiento 83% · crit 0
+     ✗ estructura-6-actos — faltan: inicio
+     ✗ declara-algo-del-hilo
+
+[T6] Proponer un cambio de etapa …
+   1069 s · RAM pico 10226 MB · IR válida · reintentos 1 · cumplimiento 67% · crit 0
+     ✗ gancho
+     ✗ propone-etapa-adolescente
+     ✗ edad-progresiva-max-+2 — edades: —
+     ✗ avanza-hito-5
+
+[T8] Petición ambigua …
+   1078 s · RAM pico 10937 MB · IR válida · reintentos 1 · cumplimiento 100% · crit 0
+
+[T7] Detectar una contradicción con el canon …
+   64 s · RAM pico 11227 MB · detecta 3/4 · falsos+ 0 · reintentos 0 · cumplimiento 67% · crit -
+     ✗ el-modelo-detecta-las-4 — 3/4
+
+Total 121.1 min · modelo en memoria: {"sizeMb":6458,"context":8192} · guardado en docs/ia-bench/

@@ -24,7 +24,7 @@ export const EpisodeDraft = z.object({
 });
 export type EpisodeDraft = z.infer<typeof EpisodeDraft>;
 
-export const draftToIR = (d: EpisodeDraft): ScreenplayIR => ({ v: 1, warnings: [], scenes: d.scenes.map((s) => ({ title: s.title, location: s.location, mood: "", beats: [], hints: {}, memory: s.memory.map((m) => m.replace(/^\[|\]$/g, "").trim()).filter(Boolean),
+export const draftToIR = (d: EpisodeDraft): ScreenplayIR => ({ v: 1, warnings: [], scenes: d.scenes.map((s) => ({ title: s.title, location: s.location, mood: "", beats: [], hints: {}, memory: s.memory.map((m) => m.replace(/^\[|\]$/g, "").trim().replace(/^acto:\s*resoluci[oó]n\b/i, "acto: resolucion")).filter(Boolean),
   lines: s.lines.filter((l) => l.text.trim()).map((l) => ({ ...(l.speaker.trim() ? { speaker: l.speaker.trim().toUpperCase() } : {}), text: l.text.trim() })) })) });
 
 /** IR → guion en el formato documentado (lo que verá y podrá corregir el usuario). `parseScript` lo reconstruye igual. */
