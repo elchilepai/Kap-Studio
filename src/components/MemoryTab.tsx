@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { Brain, Plus, Trash2, Wand2 } from "lucide-react";
 import { getProviders } from "@/server/providers";
-import { canonUpTo, loadBase, staleEpisodes, validEpisodes } from "@/server/memory/service";
-import { addBaseCanon, removeBaseCanon, requestEpisode } from "@/server/memory-actions";
+import { answerStory, canonUpTo, loadBase, seriesStatus, staleEpisodes, validEpisodes } from "@/server/memory/service";
+import { addBaseCanon, registerKapCanonAction, removeBaseCanon, requestEpisode } from "@/server/memory-actions";
 import { getAi } from "@/server/ai/registry";
 import { epLabel } from "@/memory";
 import SubmitButton from "./SubmitButton";
@@ -18,8 +18,22 @@ export default async function MemoryTab() {
   const chars = Object.values(canon.characters), rels = Object.values(canon.relationships), objs = Object.values(canon.objects), threads = Object.values(canon.threads), places = Object.values(canon.places);
   const prodOf = new Map(prods.map((p) => [p.id, p]));
   const hidden = <><input type="hidden" name="_redirect" value={here} /><input type="hidden" name="_errorTo" value={here} /></>;
+  const series = await seriesStatus(storage), answers = series.registered ? await Promise.all((["vivido", "terminado", "antes"] as const).map((q) => answerStory(storage, q))) : [];
+  const MARK = { achieved: "✓", in_progress: "◐", pending: "○" } as const;
   return (
     <div className="stack">
+      <div className="card stack" id="serie"><h2><Brain className="i" />Serie: la vida de KAP</h2>
+        {!series.registered ? (<>
+          <p className="small muted">KAP Studio produce <b>una historia serializada y continua</b>, no vídeos aislados. Registra el canon inicial de KAP (premisa, etapas de vida, recorrido de hitos y reglas de la serie) para que la memoria pueda sostener el arco completo. Es idempotente y no fija episodios ni número de episodios.</p>
+          <form action={registerKapCanonAction}>{hidden}<SubmitButton className="btn primary"><Plus className="i" />Registrar canon inicial de KAP</SubmitButton></form></>) : (<>
+          <p className="small muted">Etapa actual: <b style={{ color: "var(--text)" }}>{series.arc.stage?.title ?? "sin definir"}</b> · {series.arc.achieved}/{series.arc.total} hitos logrados{series.arc.finished ? " · arco completo" : ""}. Un hito se da por logrado cuando un episodio aprobado lo cuenta; no se fija cuántos episodios necesita cada uno.</p>
+          <div className="stack">{series.arc.byStage.map((s) => (<div key={s.stage}><div className="small" style={{ fontWeight: 600 }}>{s.title}</div><ul className="list">{s.milestones.map((m) => <li key={m.key} className="item"><span className="t" style={{ whiteSpace: "normal" }}><span className={`badge ${m.status === "achieved" ? "ok" : m.status === "in_progress" ? "kap" : "info"}`}>{MARK[m.status]}</span> {m.title}{m.achievedIn ? <span className="muted"> · {epLabel(m.achievedIn)}</span> : null}</span></li>)}</ul></div>))}</div>
+          <h3 style={{ marginBottom: 0 }}>Preguntas a la memoria <span className="muted small">(solo con episodios aprobados)</span></h3>
+          {answers.map((a) => (<details key={a.question} className="acc"><summary className="small">{a.question}{a.basedOn.length ? ` · basado en ${a.basedOn.join(", ")}` : " · sin episodios aprobados"}</summary><div className="body"><pre className="small" style={{ whiteSpace: "pre-wrap", overflowWrap: "anywhere", margin: 0 }}>{a.text}</pre></div></details>))}
+          <h3 style={{ marginBottom: 0 }}>Qué sabe el sistema de KAP</h3>
+          <ul className="list">{series.checklist.map((x) => <li key={x.label} className="item"><span className="t" style={{ whiteSpace: "normal" }}><b>{x.label}:</b> {x.value ?? <span style={{ color: "var(--kap)" }}>sin datos todavía</span>}</span></li>)}</ul></>)}
+      </div>
+
       <div className="card stack"><h2><Wand2 className="i" />Pedir un episodio</h2>
         <p className="small muted">Escribe la petición en lenguaje normal, p. ej. <i>«Crea el episodio 7 continuando exactamente donde terminó el episodio 6»</i>. KAP recupera lo que está en el canon, arma el contexto de continuidad y crea el borrador del episodio.
           {ai.author ? " El guion lo redacta la IA conectada (queda pendiente de tu revisión)." : " Todavía no hay IA conectada: tú escribes el guion y el contexto queda a la vista en la ficha del episodio."}</p>

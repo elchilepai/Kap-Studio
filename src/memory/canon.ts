@@ -2,7 +2,14 @@
 import type { CanonState, Change, CharState, ObjState, ProposedChange } from "./schema.ts";
 import { epLabel, hash, slug } from "./text.ts";
 
-export const emptyCanon = (): CanonState => ({ asOf: 0, characters: {}, relationships: {}, objects: {}, threads: {}, places: {}, facts: [], rules: [], events: [] });
+export const emptyCanon = (): CanonState => ({ asOf: 0, characters: {}, relationships: {}, objects: {}, threads: {}, places: {}, facts: [], rules: [], events: [], stages: {}, milestones: {} });
+
+/** Hito por clave o por título (normalizados): las directivas pueden escribir cualquiera de los dos. */
+export const findMilestone = (s: CanonState, ref: string) => Object.values(s.milestones ?? {}).find((m) => m.key === slug(ref) || slug(m.title) === slug(ref));
+export const findStage = (s: CanonState, ref: string) => Object.values(s.stages ?? {}).find((x) => x.key === slug(ref) || slug(x.title) === slug(ref));
+export const stagesInOrder = (s: CanonState) => Object.values(s.stages ?? {}).sort((a, b) => a.order - b.order);
+export const milestonesInOrder = (s: CanonState) => Object.values(s.milestones ?? {}).sort((a, b) => a.order - b.order);
+const push = <T>(h: { ep: number; value: T }[] | undefined, ep: number, value: T) => [...(h ?? []), { ep, value }];
 export const cloneCanon = (c: CanonState): CanonState => structuredClone(c);
 const relKey = (a: string, b: string) => [slug(a), slug(b)].sort().join("~");
 
@@ -42,6 +49,18 @@ export function applyChange(state: CanonState, ch: Change, ep: number): CanonSta
       break; }
     case "rule.add": if (!s.rules.some((r) => r.text === ch.text)) s.rules.push({ key: `r_${hash(ch.text)}`, text: ch.text, ep }); break;
     case "place.update": { const k = slug(ch.name), p = (s.places[k] ??= { key: k, name: ch.name.trim(), notes: [], firstSeen: ep, lastSeen: ep }); p.lastSeen = Math.max(p.lastSeen, ep); if (ch.note && !p.notes.includes(ch.note)) p.notes.push(ch.note); break; }
+    case "series.set": { s.series = { protagonist: ch.protagonist, ...(ch.title ? { title: ch.title } : {}) }; ensureChar(s, ch.protagonist, ep); break; }
+    case "stage.define": { const k = slug(ch.key); (s.stages ??= {})[k] = { key: k, title: ch.title, order: ch.order, facets: ch.facets }; break; }
+    case "milestone.define": { const k = slug(ch.key), prev = s.milestones?.[k]; (s.milestones ??= {})[k] = { key: k, title: ch.title, stage: slug(ch.stage), order: ch.order, status: prev?.status ?? "pending", startedIn: prev?.startedIn, achievedIn: prev?.achievedIn, episodes: prev?.episodes ?? [], notes: prev?.notes ?? [] }; break; }
+    case "milestone.progress": {
+      const m = findMilestone(s, ch.key); if (!m) break; const mm = s.milestones![m.key];
+      if (mm.status !== "achieved" || ch.status === "achieved") mm.status = ch.status; if (mm.startedIn === undefined) mm.startedIn = ep; if (ch.status === "achieved") mm.achievedIn = ep;
+      if (!mm.episodes.includes(ep)) mm.episodes.push(ep); if (ch.note) mm.notes.push(ch.note); break; }
+    case "character.stage": { const c = ensureChar(s, ch.name, ep), st = findStage(s, ch.stage), v = st?.key ?? slug(ch.stage); c.stage = v; c.stageHistory = push(c.stageHistory, ep, v); if (ch.note) c.notes.push(ch.note); break; }
+    case "character.age": { const c = ensureChar(s, ch.name, ep); c.age = ch.age; c.ageHistory = push(c.ageHistory, ep, ch.age); break; }
+    case "character.profile": { const c = ensureChar(s, ch.name, ep), k = slug(ch.facet), p = (c.profile ??= {})[k]; c.profile[k] = { value: ch.value, history: push(p?.history, ep, ch.value) }; break; }
+    case "character.trait": { const c = ensureChar(s, ch.name, ep), k = slug(ch.trait), t = (c.traits ??= {})[k]; c.traits[k] = { level: ch.level, history: push(t?.history, ep, ch.level) }; break; }
+    case "character.appearance": { const c = ensureChar(s, ch.name, ep); c.appearance = { description: ch.description, designVersion: ch.designVersion, ep, history: push(c.appearance?.history, ep, ch.description) }; break; }
     case "event.add": { s.events.push({ id: `e_${hash(`${ep}|${ch.title}`)}`, ep, title: ch.title, summary: ch.summary, participants: ch.participants ?? [] }); for (const n of ch.participants ?? []) ensureChar(s, n, ep); break; }
   }
   s.asOf = Math.max(s.asOf, ep);
@@ -87,6 +106,15 @@ export function describeChange(ch: Change, before?: CanonState): string {
     case "rule.add": return `Regla del universo: ${ch.text}`;
     case "place.update": return `Lugar ${q(ch.name)}${ch.note ? `: ${ch.note}` : ""}`;
     case "event.add": return `Acontecimiento: ${ch.title}`;
+    case "series.set": return `Serie sobre ${ch.protagonist}${ch.title ? ` («${ch.title}»)` : ""}`;
+    case "stage.define": return `Etapa de vida «${ch.title}» (${ch.facets.length} rasgos a seguir)`;
+    case "milestone.define": return `Hito del arco ${ch.order}: ${ch.title}`;
+    case "milestone.progress": { const m = before ? findMilestone(before, ch.key) : undefined; return `${ch.status === "achieved" ? "Hito logrado" : "Hito en curso"}: ${m?.title ?? ch.key}${ch.note ? ` — ${ch.note}` : ""}`; }
+    case "character.stage": return `${ch.name} entra en la etapa «${before ? findStage(before, ch.stage)?.title ?? ch.stage : ch.stage}»${before?.characters[slug(ch.name)]?.stage ? ` (antes: ${before.stages?.[before.characters[slug(ch.name)].stage!]?.title ?? before.characters[slug(ch.name)].stage})` : ""}`;
+    case "character.age": { const prev = before?.characters[slug(ch.name)]?.age; return `${ch.name} tiene ≈ ${ch.age} años${prev !== undefined ? ` (antes ${prev})` : ""}`; }
+    case "character.profile": { const prev = before?.characters[slug(ch.name)]?.profile?.[slug(ch.facet)]?.value; return `${ch.name} · ${ch.facet}: ${ch.value}${prev ? ` (antes: ${prev})` : ""}`; }
+    case "character.trait": { const prev = before?.characters[slug(ch.name)]?.traits?.[slug(ch.trait)]?.level; return `${ch.name} · ${ch.trait}: nivel ${ch.level}/10${prev !== undefined ? ` (antes ${prev})` : ""}`; }
+    case "character.appearance": return `${ch.name} · aspecto: ${ch.description}${ch.designVersion ? ` (diseño v${ch.designVersion})` : ""}`;
   }
 }
 export const asProposed = (ch: Change, origin: ProposedChange["origin"], before?: CanonState, scene?: number): ProposedChange => ({ id: changeId(ch), change: ch, origin, decision: "pending", ...(scene !== undefined ? { scene } : {}), text: describeChange(ch, before) });

@@ -8,7 +8,7 @@ import type { EpisodeRequestInterpreter, EpisodeSummarizer, LlmClient, ScriptAut
 import { Change, buildContextPack, deriveEnding, type EpisodeRequest } from "@/memory";
 import { generateJson } from "./json";
 import { AUTHOR_SYSTEM, REQUEST_SYSTEM, SUMMARIZER_SYSTEM, authorPrompt, summarizerPrompt } from "./prompts";
-import { parseMemoryDirectives } from "@/memory/directives";
+import { isMemoryKey, parseMemoryDirectives } from "@/memory/directives";
 
 const info = (llm: LlmClient, what: string) => ({ id: `llm:${llm.model}`, label: `${what} con ${llm.model}`, free: true as const });
 
@@ -21,7 +21,7 @@ export function llmScriptAuthor(llm: LlmClient): ScriptAuthor {
       const script = out.text.replace(/^```[a-z]*\n?|```$/gim, "").trim(), warnings: string[] = [];
       if (!script) throw new Error("El modelo devolvió un guion vacío");
       if (!/^\s*#/m.test(script)) warnings.push("El guion no tiene encabezados de escena («# Lugar»): se dividirá por párrafos.");
-      const directives = [...script.matchAll(/^\s*\[([^\]]+)\]\s*$/gm)].map((m) => m[1]).filter((d) => /^(conoce|obtiene|pierde|destruye|repara|usa|abre-hilo|cierra-hilo|relacion|relación|ropa|ubicacion|ubicación|muere|reaparece|hecho|momento|sabe|regla|lugar|evento)\s*:/i.test(d));
+      const directives = [...script.matchAll(/^\s*\[([^\]]+)\]\s*$/gm)].map((m) => m[1]).filter((d) => isMemoryKey(d.split(":")[0]));
       const bad = parseMemoryDirectives(directives).errors; for (const e of bad) warnings.push(`Directiva de memoria inválida del modelo: ${e}`);
       void request; return { script, warnings };
     },

@@ -7,7 +7,7 @@ import { audit } from "./audit";
 import { requireAdmin } from "./auth/guard";
 import { safeLocalPath } from "@/lib/security";
 import { getAi } from "./ai/registry";
-import { addToBase, commitMemory, createEpisodeFromRequest, MemoryError, proposeMemory, removeFromBase, retractMemory, saveDecisions, type MemoryDeps } from "./memory/service";
+import { addToBase, registerKapCanon, commitMemory, createEpisodeFromRequest, MemoryError, proposeMemory, removeFromBase, retractMemory, saveDecisions, type MemoryDeps } from "./memory/service";
 import type { Decision } from "@/memory";
 
 /** Errores previsibles (reglas de la memoria): Next oculta el texto de los errores de acciones en producción, así que se devuelven por URL. */
@@ -64,4 +64,9 @@ export async function requestEpisode(fd: FormData) {
     if (!text) throw new MemoryError("Escribe la petición del episodio");
     const r = await createEpisodeFromRequest(deps(u.username), text); refresh(); redirect(`/episodios/${r.production.id}#memoria`);
   });
+}
+
+/** Registra el canon inicial de KAP (premisa, etapas, hitos y reglas de la serie). Idempotente; es una decisión explícita del usuario. */
+export async function registerKapCanonAction(fd: FormData) {
+  return run(fd, "/universo?tab=memoria", async () => { const u = await requireAdmin(); await registerKapCanon(deps(u.username), u.username); refresh(); back(fd, "/universo?tab=memoria"); });
 }

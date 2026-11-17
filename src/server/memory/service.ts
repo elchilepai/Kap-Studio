@@ -11,6 +11,7 @@ import { contextBudget, getAi } from "@/server/ai/registry";
 import type { Character, Place, Production } from "@/domain/types";
 import { canExport } from "@/server/studio/export";
 import {
+  kapCanonChanges, beforeNext, lifeSoFar, whereEnded, arcProgress, continuityChecklist,
   applyChanges, buildContextPack, buildProposal, contentSig, deriveEnding, emptyCanon, markPresent, orderOf, parseEpisodeRequest, parseManual, parseScenes, slug, validateContinuity,
   asProposed, epLabel,
   type CanonBase, type CanonState, type ContextPack, type Decision, type EpisodeInput, type EpisodeMemory, type EpisodeRequest, type Finding, type MemoryProposal, type ProposedChange,
@@ -33,7 +34,7 @@ export async function episodeInput(storage: Storage, prod: Production, character
   const cast = new Map(prod.cast.map((c) => [c.characterId, c.outfitId]));
   const infos = chars.map((c) => ({ name: c.name, designVersion: c.design?.version, outfits: c.design?.outfits.map((o) => o.name),
     castOutfit: cast.has(c.id) ? c.design?.outfits.find((o) => o.id === cast.get(c.id))?.name : undefined }));
-  const ep: EpisodeInput = { productionId: prod.id, season: prod.season, number: prod.number, title: prod.title, continuesFrom: prod.continuesFrom, scenes, characters: infos };
+  const ep: EpisodeInput = { productionId: prod.id, season: prod.season, number: prod.number, title: prod.title, continuesFrom: prod.continuesFrom, scenes, characters: infos, continuesExact: /exactamente|justo|inmediatamente|sin saltos?|donde\s+(?:termin|acab|quedo|quedaron|lo dejamos)/i.test(prod.brief), durationSec: prod.scenes.reduce((n, s) => n + s.durationSec, 0) };
   if (ep.continuesFrom === undefined) { const c = parseScenes(ep)[0]?.parsed.continues ?? parseScenes(ep).find((p) => p.parsed.continues !== undefined)?.parsed.continues; if (c !== undefined) ep.continuesFrom = orderOf(prod.season, c); }
   return ep;
 }
@@ -98,9 +99,9 @@ export async function memoryStatus(storage: Storage, productionId: string): Prom
   const sig = contentSig(ep), order = orderOf(production.season, production.number), before = await canonBefore(storage, order);
   const stale = !!proposal && proposal.contentSig !== sig, perScene = parseScenes(ep);
   const changes = proposal?.changes ?? [];
-  const manual = { changes: changes.filter((c) => c.origin === "manual").map((c) => c.change), uses: [], errors: [] };   // lo que el usuario añadió a mano también se valida
+  const manual = { changes: changes.filter((c) => c.origin === "manual").map((c) => c.change), uses: [], acts: [], errors: [] };   // lo que el usuario añadió a mano también se valida
   const prevMem = ep.continuesFrom !== undefined ? (await validEpisodes(storage)).find((e) => e.order === ep.continuesFrom) : undefined;
-  const findings = validateContinuity({ episode: ep, canon: before, perScene, changes, manual, previousLastShot: prevMem ? { characters: prevMem.lastShot.characters, location: prevMem.lastShot.location } : undefined });
+  const findings = validateContinuity({ episode: ep, canon: before, perScene, changes, manual, previousLastShot: prevMem ? { characters: prevMem.lastShot.characters, location: prevMem.lastShot.location } : undefined, previousHook: prevMem?.hook });
   return { production, proposal, committed, findings, parseErrors: perScene.flatMap((p) => p.parsed.errors), stale: stale || (!!committed && committed.contentSig !== sig), approved: canExport(production.status),
     pendingDecisions: changes.filter((c) => c.decision === "pending").length, accepted: changes.filter((c) => c.decision === "accepted").length, rejected: changes.filter((c) => c.decision === "rejected").length };
 }
@@ -145,7 +146,7 @@ export async function commitMemory(deps: MemoryDeps, productionId: string, by = 
     relationshipChanges: accepted.filter((c) => c.change.kind === "relationship.set").map((c) => c.text),
     eventsText: accepted.filter((c) => c.change.kind === "event.add").map((c) => (c.change.kind === "event.add" ? c.change.title : "")),
     threadsOpened: accepted.flatMap((c) => (c.change.kind === "thread.open" ? [c.change.title] : [])), threadsClosed: accepted.flatMap((c) => (c.change.kind === "thread.close" ? [c.change.title] : [])),
-    lastShot: p.lastShot, endingSituation: p.endingNote.trim() || deriveEnding(end, p.present, order), ...(prod.continuesFrom !== undefined || ep.continuesFrom !== undefined ? { continuesFrom: ep.continuesFrom } : {}),
+    acts: p.acts, hook: p.hook, durationSec: p.durationSec, lastShot: p.lastShot, endingSituation: p.endingNote.trim() || deriveEnding(end, p.present, order), ...(prod.continuesFrom !== undefined || ep.continuesFrom !== undefined ? { continuesFrom: ep.continuesFrom } : {}),
     committedAt: nowOf(deps), committedBy: by,
   };
   await storage.memoryEpisodes.save(em);
@@ -215,4 +216,27 @@ export async function createEpisodeFromRequest(deps: MemoryDeps, text: string): 
   await storage.productions.save(saved);
   await log(deps, "memoria.episodio", saved.id, `Pedido: «${request.text.slice(0, 200)}»${authored ? " · guion redactado por IA (pendiente de revisión)" : ""}`);
   return { production: saved, request, pack, authored, warnings };
+}
+
+// ------------------------------------------------------------------ canon inicial de KAP y respuestas de la memoria
+export async function kapCanonRegistered(storage: Storage): Promise<boolean> { return (await loadBase(storage)).changes.some((c) => c.change.kind === "series.set"); }
+
+/** Registra el canon inicial de KAP en el canon base (explícito e idempotente: no duplica nada si ya está). */
+export async function registerKapCanon(deps: MemoryDeps, by = "usuario"): Promise<{ added: number; already: boolean }> {
+  const base = await loadBase(deps.storage); let before = foldBase(base), added = 0; const changes = [...base.changes];
+  for (const ch of kapCanonChanges()) { const pc = { ...asProposed(ch, "manual", before), decision: "accepted" as const }; if (changes.some((c) => c.id === pc.id)) continue; changes.push(pc); before = applyChanges(before, [ch], 0); added++; }
+  if (added) await deps.storage.memoryCanon.save({ ...base, changes, updatedAt: nowOf(deps) });
+  await log(deps, "memoria.canon-inicial", "base", added ? `Canon inicial de KAP registrado (${added} cambios) por ${by}` : "El canon inicial de KAP ya estaba registrado");
+  return { added, already: added === 0 };
+}
+
+export type StoryQuestion = "vivido" | "terminado" | "antes";
+/** Responde con el canon vigente: SOLO el canon base y los episodios aprobados y confirmados (nunca borradores). */
+export async function answerStory(storage: Storage, q: StoryQuestion) {
+  const valid = await validEpisodes(storage), canon = await canonUpTo(storage, Infinity, valid), inp = { canon, episodes: valid };
+  return q === "vivido" ? lifeSoFar(inp) : q === "terminado" ? whereEnded(inp) : beforeNext(inp);
+}
+export async function seriesStatus(storage: Storage) {
+  const valid = await validEpisodes(storage), canon = await canonUpTo(storage, Infinity, valid);
+  return { registered: !!canon.series, canon, arc: arcProgress(canon), checklist: continuityChecklist(canon), episodes: valid };
 }

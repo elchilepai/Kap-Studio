@@ -8,6 +8,9 @@ Reglas:
 - Si el episodio continúa "exactamente" donde terminó el anterior, empieza en el mismo lugar y con los mismos personajes del último plano.
 - Formato: "# Lugar" para cada escena; texto sin prefijo = narrador; "NOMBRE: diálogo".
 - Declara los cambios de la historia con directivas en su propia línea: [conoce: A, B] [obtiene: A, objeto] [pierde: A, objeto] [destruye: objeto] [repara: objeto] [usa: A, objeto] [abre-hilo: título | A, B] [cierra-hilo: título] [relacion: A, B, tipo, -2..2] [ropa: A, prenda] [ubicacion: A, lugar] [muere: A] [reaparece: A] [hecho: clave = valor] [momento: texto].
+- Es una SERIE continua sobre KAP: el episodio es consecuencia del anterior, cuenta UNA etapa concreta (no saltes hitos ni años) y dura ≈ 5 minutos (≈ 700-800 palabras).
+- Estructura obligatoria, cada parte declarada en su línea: [acto: inicio | …] [acto: conflicto | …] [acto: desarrollo | …] [acto: emocional | …] [acto: resolucion | …] y [gancho: …] para el siguiente episodio.
+- Declara la evolución de KAP: [etapa: KAP, …] [edad: KAP, n] [perfil: KAP, rasgo = valor] [atributo: KAP, disciplina = 0..10] [aspecto: KAP, descripción | vN] [hito: …] (en curso) [hito-logrado: … | nota]. Retoma el gancho del episodio anterior. NUNCA llegues a la cima antes de contar el recorrido.
 - Escenas de 6 a 20 segundos de locución. No expliques lo que haces: devuelve solo el guion.`;
 export const authorPrompt = (c: ContextPack) => `${c.text}\n\n# Tarea\nEscribe el guion del episodio ${c.request.number}.${c.request.notes ? ` Petición: ${c.request.notes}` : ""}`;
 

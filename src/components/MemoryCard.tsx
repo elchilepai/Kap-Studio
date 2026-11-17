@@ -4,7 +4,7 @@ import type { Production } from "@/domain/types";
 import { getProviders } from "@/server/providers";
 import { contextForProduction, memoryStatus } from "@/server/memory/service";
 import { memoryDecide, refreshMemory, retractMemoryAction } from "@/server/memory-actions";
-import { SEVERITY_LABEL, epLabel, type Finding, type Severity } from "@/memory";
+import { ACT_LABEL, REQUIRED_ACTS, SEVERITY_LABEL, epLabel, type Finding, type Severity } from "@/memory";
 import SubmitButton from "./SubmitButton";
 import { Notice } from "./ui";
 
@@ -47,6 +47,8 @@ export default async function MemoryCard({ p }: { p: Production }) {
         <FindingsList findings={findings} />
         {errs > 0 && <p className="small" style={{ color: "var(--err)" }}>Hay errores críticos. No bloquean la aprobación: decides tú, pero conviene corregirlos o declarar la razón en el guion.</p>}
         {st.parseErrors.length > 0 && <Notice kind="err"><span>Directivas de memoria no entendidas: {st.parseErrors.join(" · ")}</span></Notice>}</div>
+
+      {proposal?.acts && <div className="small"><b>Estructura del episodio:</b> <span className="row" style={{ gap: 6, display: "inline-flex", flexWrap: "wrap" }}>{REQUIRED_ACTS.map((k) => { const has = proposal.acts!.some((a) => a.kind === k); return <span key={k} className={`badge ${has ? "ok" : "kap"}`}>{has ? "✓" : "falta"} {ACT_LABEL[k]}</span>; })}</span>{proposal.hook ? <div className="muted">Gancho: «{proposal.hook}»</div> : null}{proposal.durationSec ? <div className="muted">Duración ≈ {Math.round(proposal.durationSec / 6) / 10} min (formato ≈ 5 min)</div> : null}</div>}
 
       {!proposal ? (
         <form action={refreshMemory} className="row">{hidden}<SubmitButton className="btn primary"><RotateCcw className="i" />Calcular propuesta de memoria</SubmitButton></form>

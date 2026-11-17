@@ -6,3 +6,5 @@ export * from "./extract.ts";
 export * from "./validate.ts";
 export * from "./context.ts";
 export * from "./request.ts";
+export * from "./story.ts";
+export * from "./kap-canon.ts";

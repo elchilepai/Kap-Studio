@@ -14,6 +14,7 @@
     "admin:list": "tsx --no-warnings scripts/admin.ts list",
     "admin:revoke": "tsx --no-warnings scripts/admin.ts revoke",
     "admin:unlock": "tsx --no-warnings scripts/admin.ts unlock",
+    "memory:seed": "tsx --no-warnings scripts/memory-seed.ts",
     "check:access": "node scripts/check-access.mjs",
     "bench:episode": "tsx --no-warnings scripts/bench-episode.mts"
   },

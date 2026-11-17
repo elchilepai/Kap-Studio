@@ -10,21 +10,23 @@
  *   [ropa: Alex, chaqueta roja]      [ubicacion: Alex, Faro]          [lugar: Faro | abandonado]
  *   [muere: X]  [ausente: X]  [reaparece: X]         [momento: Día 3, noche]   [flashback: sí]   [continua: 6]   [evento: título | resumen]
  */
-import { Change } from "./schema.ts";
+import { Change, type Act, type ActKind } from "./schema.ts";
 import { norm } from "./text.ts";
 
-export const MEMORY_KEYS = new Set(["conoce", "relacion", "obtiene", "pierde", "destruye", "repara", "usa", "abre-hilo", "cierra-hilo", "hecho", "corrige-hecho", "regla", "sabe", "ropa", "ubicacion", "muere", "ausente", "reaparece", "lugar", "momento", "flashback", "continua", "evento"]);
+export const MEMORY_KEYS = new Set(["conoce", "relacion", "obtiene", "pierde", "destruye", "repara", "usa", "abre-hilo", "cierra-hilo", "hecho", "corrige-hecho", "regla", "sabe", "ropa", "ubicacion", "muere", "ausente", "reaparece", "lugar", "momento", "flashback", "continua", "evento",
+  "protagonista", "etapa", "edad", "perfil", "atributo", "aspecto", "hito", "hito-logrado", "acto", "gancho"]);
 export const isMemoryKey = (k: string) => MEMORY_KEYS.has(norm(k).replace(/\s+/g, "-"));
 
 export type Usage = { who?: string; object: string };
-export type ParsedMemory = { changes: Change[]; uses: Usage[]; moment?: string; flashback?: boolean; continues?: number; errors: string[] };
+export type ParsedMemory = { changes: Change[]; uses: Usage[]; acts: Act[]; hook?: string; moment?: string; flashback?: boolean; continues?: number; errors: string[] };
+const ACT_ALIASES: Record<string, ActKind> = { inicio: "inicio", planteamiento: "inicio", conflicto: "conflicto", desarrollo: "desarrollo", emocional: "emocional", tension: "emocional", "punto-emocional": "emocional", "punto-de-tension": "emocional", resolucion: "resolucion", "resolucion-parcial": "resolucion", gancho: "gancho" };
 
 const list = (v: string) => v.split(",").map((s) => s.trim()).filter(Boolean);
 const bar = (v: string) => v.split("|").map((s) => s.trim());
 
 /** Interpreta las directivas de memoria de UNA escena (cada una como «clave: valor»). Tolerante: lo que no entiende se devuelve en `errors`. */
 export function parseMemoryDirectives(lines: string[]): ParsedMemory {
-  const out: ParsedMemory = { changes: [], uses: [], errors: [] };
+  const out: ParsedMemory = { changes: [], uses: [], acts: [], errors: [] };
   const push = (c: unknown, raw: string) => { const r = Change.safeParse(c); if (r.success) out.changes.push(r.data); else out.errors.push(`«${raw}»: ${r.error.issues[0]?.message ?? "no válida"}`); };
   for (const raw of lines) {
     const i = raw.indexOf(":"); if (i < 0) { out.errors.push(`«${raw}»: falta «:»`); continue; }
@@ -54,6 +56,18 @@ export function parseMemoryDirectives(lines: string[]): ParsedMemory {
       case "reaparece": for (const n of a) push({ kind: "character.status", name: n, status: "active" }, raw); break;
       case "lugar": { const [n, note] = bar(val); push({ kind: "place.update", name: n, ...(note ? { note } : {}) }, raw); break; }
       case "evento": { const [t, s] = bar(val); push({ kind: "event.add", title: t, ...(s ? { summary: s } : {}) }, raw); break; }
+      case "protagonista": { const [n, t] = bar(val); push({ kind: "series.set", protagonist: n, ...(t ? { title: t } : {}) }, raw); break; }
+      case "etapa": { if (a.length < 2) { out.errors.push(`«${raw}»: usa «Quién, etapa»`); break; } push({ kind: "character.stage", name: a[0], stage: a.slice(1).join(", ") }, raw); break; }
+      case "edad": { const n = parseInt(/\d+/.exec(a[1] ?? "")?.[0] ?? "", 10); if (a.length < 2 || !Number.isFinite(n)) { out.errors.push(`«${raw}»: usa «Quién, años»`); break; } push({ kind: "character.age", name: a[0], age: n }, raw); break; }
+      case "perfil": case "atributo": { const i2 = val.indexOf(","), rest = i2 < 0 ? "" : val.slice(i2 + 1), m = /^\s*([^=]{1,60}?)\s*=\s*(.+)$/.exec(rest);
+        if (i2 < 0 || !m) { out.errors.push(`«${raw}»: usa «Quién, ${key === "perfil" ? "rasgo = valor" : "atributo = 0..10"}»`); break; }
+        if (key === "perfil") push({ kind: "character.profile", name: val.slice(0, i2).trim(), facet: m[1].trim(), value: m[2].trim() }, raw);
+        else { const lv = parseInt(m[2], 10); if (!Number.isFinite(lv)) out.errors.push(`«${raw}»: el nivel debe ser un número 0..10`); else push({ kind: "character.trait", name: val.slice(0, i2).trim(), trait: m[1].trim(), level: lv }, raw); }
+        break; }
+      case "aspecto": { const i2 = val.indexOf(","); if (i2 < 0) { out.errors.push(`«${raw}»: usa «Quién, descripción[ | vN]»`); break; } const [d, v] = bar(val.slice(i2 + 1)), dv = v ? parseInt(/\d+/.exec(v)?.[0] ?? "", 10) : NaN; push({ kind: "character.appearance", name: val.slice(0, i2).trim(), description: d, ...(Number.isFinite(dv) ? { designVersion: dv } : {}) }, raw); break; }
+      case "hito": case "hito-logrado": { const [k, note] = bar(val); push({ kind: "milestone.progress", key: k, status: key === "hito" ? "in_progress" : "achieved", ...(note ? { note } : {}) }, raw); break; }
+      case "acto": { const [k, t] = bar(val), kind = ACT_ALIASES[norm(k).replace(/\s+/g, "-")]; if (!kind || !t) { out.errors.push(`«${raw}»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»`); break; } out.acts.push({ kind, text: t }); break; }
+      case "gancho": out.hook = val; out.acts.push({ kind: "gancho", text: val }); break;
       case "momento": out.moment = val; break;
       case "flashback": out.flashback = !/^(no|false|0)$/i.test(val); break;
       case "continua": { const n = parseInt(/\d+/.exec(val)?.[0] ?? "", 10); if (Number.isFinite(n)) out.continues = n; else out.errors.push(`«${raw}»: indica el número de episodio`); break; }

@@ -5,7 +5,7 @@
  */
 import { asProposed, changeId } from "./canon.ts";
 import { parseMemoryDirectives, type ParsedMemory } from "./directives.ts";
-import type { CanonState, Change, LastShot, MemoryProposal, ProposedChange } from "./schema.ts";
+import type { Act, CanonState, Change, LastShot, MemoryProposal, ProposedChange } from "./schema.ts";
 import { clip, epLabel, hash, norm, orderOf, slug } from "./text.ts";
 
 export type SceneInput = {
@@ -14,7 +14,7 @@ export type SceneInput = {
   directions: string[]; memory: string[];   // direcciones 2D y directivas de memoria del autor
 };
 export type CharInfo = { name: string; castOutfit?: string; outfits?: string[]; designVersion?: number };
-export type EpisodeInput = { productionId: string; season: number; number: number; title: string; continuesFrom?: number; scenes: SceneInput[]; characters: CharInfo[] };
+export type EpisodeInput = { productionId: string; season: number; number: number; title: string; continuesFrom?: number; /** «Continúa exactamente donde terminó»: el arranque debe coincidir con el último plano. Si es false, un cambio de lugar entre episodios es normal. */ continuesExact?: boolean; scenes: SceneInput[]; characters: CharInfo[]; /** Duración total (suma de las escenas, real o estimada). */ durationSec?: number };
 export type PerScene = { index: number; title: string; parsed: ParsedMemory };
 
 /** Firma del contenido narrativo: si cambia (se edita una escena o su memoria), la propuesta y la confirmación quedan desfasadas. */
@@ -57,7 +57,7 @@ export function deriveEnding(state: CanonState, present: string[], order: number
   return `Al terminar el ${epLabel(order)}: ${per.join(" · ") || "sin personajes"}.${open.length ? ` Hilos abiertos: ${open.join("; ")}.` : ""}`;
 }
 
-export type Extraction = { changes: ProposedChange[]; present: string[]; perScene: PerScene[]; parseErrors: string[] };
+export type Extraction = { changes: ProposedChange[]; present: string[]; perScene: PerScene[]; parseErrors: string[]; acts: Act[]; hook?: string };
 
 /** Cambios propuestos: declarados por el autor + deducidos por reglas (presencia, lugar, ropa, nuevos personajes/lugares). */
 export function extractChanges(ep: EpisodeInput, canon: CanonState, manual: ParsedMemory | undefined = undefined): Extraction {
@@ -84,8 +84,13 @@ export function extractChanges(ep: EpisodeInput, canon: CanonState, manual: Pars
     if (!ci.castOutfit || !present.some((n) => slug(n) === slug(ci.name)) || declaredFor("character.outfit", ci.name)) continue;
     if (norm(canon.characters[slug(ci.name)]?.outfit ?? "") !== norm(ci.castOutfit)) add({ kind: "character.outfit", name: ci.name, outfit: ci.castOutfit }, "rules");
   }
+  for (const ci of ep.characters) {   // qué versión de diseño visual se usa en este episodio (para vigilar la evolución física con la edad)
+    if (ci.designVersion === undefined || !present.some((n) => slug(n) === slug(ci.name)) || declaredFor("character.appearance", ci.name)) continue;
+    if (canon.characters[slug(ci.name)]?.appearance?.designVersion !== ci.designVersion) add({ kind: "character.appearance", name: ci.name, description: `diseño v${ci.designVersion}${canon.characters[slug(ci.name)]?.appearance ? ` (antes: ${canon.characters[slug(ci.name)]!.appearance!.description})` : ""}`, designVersion: ci.designVersion }, "rules");
+  }
   for (const sc of ep.scenes) if (sc.location && !canon.places[slug(sc.location)] && !declared.some((d) => d.kind === "place.update" && slug(d.name) === slug(sc.location))) add({ kind: "place.update", name: sc.location }, "rules");
-  return { changes: out, present, perScene, parseErrors };
+  const acts: Act[] = perScene.flatMap((p) => p.parsed.acts.map((a) => ({ ...a, scene: p.index }))); const hook = [...acts].reverse().find((a) => a.kind === "gancho")?.text;
+  return { changes: out, present, perScene, parseErrors, acts, ...(hook ? { hook } : {}) };
 }
 
 export function buildProposal(ep: EpisodeInput, canonBefore: CanonState, o: { manual?: ParsedMemory; previous?: MemoryProposal; now?: string } = {}): { proposal: MemoryProposal; extraction: Extraction } {
@@ -98,7 +103,7 @@ export function buildProposal(ep: EpisodeInput, canonBefore: CanonState, o: { ma
   const proposal: MemoryProposal = {
     id: ep.productionId, productionId: ep.productionId, season: ep.season, number: ep.number, order, title: ep.title, contentSig: contentSig(ep), status: "pending",
     summary: o.previous?.summaryEdited ? o.previous.summary : sum.summary, logline: o.previous?.summaryEdited ? o.previous.logline : sum.logline, ...(o.previous?.summaryEdited ? { summaryEdited: true } : {}),
-    present: ex.present, lastShot: lastShotOf(ep), endingNote: o.previous?.endingNote ?? "", changes, createdAt: o.previous?.createdAt ?? now, updatedAt: now,
+    present: ex.present, lastShot: lastShotOf(ep), endingNote: o.previous?.endingNote ?? "", acts: ex.acts, ...(ex.hook ? { hook: ex.hook } : {}), ...(ep.durationSec !== undefined ? { durationSec: ep.durationSec } : {}), changes, createdAt: o.previous?.createdAt ?? now, updatedAt: now,
   };
   return { proposal, extraction: ex };
 }

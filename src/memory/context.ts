@@ -4,7 +4,12 @@
  * continuidad visual) y lo recorta a un PRESUPUESTO DE TOKENS. Es texto en español + estructura, independiente de cualquier modelo.
  */
 import type { CanonState, ContextPack, ContextSection, EpisodeMemory, EpisodeRequest } from "./schema.ts";
+import { arcProgress, evolutionLines, evolutionOf, hero } from "./story.ts";
+import { stagesInOrder } from "./canon.ts";
 import { clip, epLabel, estimateTokens, slug } from "./text.ts";
+
+/** Formato de la serie que el guion debe cumplir (se entrega al modelo en cada petición). */
+export const SERIES_FORMAT = "Serie serializada y continua: cada episodio es consecuencia del anterior. Dura ≈ 5 minutos (≈ 700-800 palabras entre narración y diálogo) y cuenta UNA etapa concreta del recorrido. Estructura obligatoria, declarada con [acto: inicio|conflicto|desarrollo|emocional|resolucion | texto] y [gancho: texto]: inicio, conflicto, desarrollo, punto emocional o de tensión, resolución parcial y gancho para el siguiente episodio. Debe aportar algo nuevo (acontecimiento, hito, evolución, relación) y declararlo con directivas.";
 
 export type CharLook = { name: string; look?: string; designVersion?: number; outfits?: string[] };
 export type PlaceLook = { name: string; look?: string };
@@ -35,9 +40,21 @@ export function buildContextPack(inp: ContextInput): ContextPack {
   const sec = (id: string, title: string, priority: number, required: boolean, items: string[]) => { if (items.length) S.push({ id, title, priority, required, items }); };
 
   sec("request", "Petición", 1, true, [`Episodio ${request.number} (temporada ${request.season})${request.continuesFrom !== undefined ? `, continúa del ${epLabel(request.continuesFrom)}${request.exact ? " EXACTAMENTE donde terminó (sin saltos de tiempo ni de lugar salvo que se indique)" : ""}` : ""}.`, ...(request.notes ? [`Petición del usuario: «${clip(request.notes, 400)}»`] : [])]);
+  if (canon.series) sec("format", "Formato de la serie", 1.5, true, [SERIES_FORMAT]);
   if (prev) {
     sec("final", `Estado final del ${epLabel(prev.order)} («${prev.title}»)`, 2, true, [prev.endingSituation, ...(prev.summary ? [`Resumen: ${clip(prev.summary, 500)}`] : [])]);
     sec("lastshot", `Último plano del ${epLabel(prev.order)}`, 3, true, [`Escena «${prev.lastShot.scene}» en ${prev.lastShot.location || "lugar sin definir"}; personajes: ${prev.lastShot.characters.join(", ") || "—"}.`, `Texto literal: «${clip(prev.lastShot.text, 600)}»`, ...(prev.lastShot.directions.length ? [`Direcciones: ${prev.lastShot.directions.join("; ")}`] : [])]);
+  }
+  if (prev?.hook) sec("hook", `Gancho que dejó el ${epLabel(prev.order)} (hay que retomarlo)`, 3.2, true, [prev.hook]);
+  if (canon.series) {
+    const arc = arcProgress(canon), titles = Object.fromEntries(stagesInOrder(canon).flatMap((s) => s.facets.map((f) => [slug(f), f])));
+    sec("arc", "Arco de la serie", 3.5, true, [
+      `Protagonista: ${canon.series.protagonist}. Etapa actual: ${arc.stage ? `«${arc.stage.title}»` : "sin definir"}. Hitos logrados: ${arc.achieved}/${arc.total}${arc.finished ? " (arco completo)" : ""}.`,
+      ...arc.inProgress.map((m) => `Hito en curso (continúalo o ciérralo): ${m.title}`), ...arc.next.map((m, i) => `${i === 0 && !arc.inProgress.length ? "Siguiente hito" : "Después"}: ${m.title}`),
+      "No saltes hitos ni años: la llegada a la cima no ocurre hasta que el recorrido anterior esté contado.",
+      ...arc.byStage.filter((s) => s.milestones.some((m) => m.status === "achieved")).map((s) => `Logrado en «${s.title}»: ${s.milestones.filter((m) => m.status === "achieved").map((m) => m.title).join("; ")}`)]);
+    const h = hero(canon), ev = h && evolutionOf(canon, h.name);
+    if (ev) sec("evolution", `Evolución de ${ev.name} hasta ahora`, 4.5, true, evolutionLines(ev, titles));
   }
   sec("characters", "Personajes relevantes", 4, true, rel.map((n) => {
     const c = canon.characters[slug(n)], own = objs.filter((o) => o.owner && slug(o.owner) === slug(n)).map((o) => o.name);
