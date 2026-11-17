@@ -21,8 +21,10 @@ export type ParsedScene = {
 export type KnownCharacter = { id: string; name: string };
 
 const HEADING = /^\s*(?:#{1,3}\s+|(?:ESCENA|ESC\.?|SCENE)\s*\d*\s*[:.\-—–]\s*|(?:INT|EXT)\.?\s+)(.+?)\s*$/i;
-const DIRECTIVE = /^\s*\[\s*(música|musica|imagen|mood|ánimo|animo|transición|transicion|duración|duracion|sfx|efecto|cámara|camara|entra|sale|camina|expresión|expresion|gesto|mira|vfx|aparece|desaparece)\s*:\s*(.+?)\s*\]\s*$/i;
-const STAGE_KEYS = new Set(["camara", "entra", "sale", "camina", "expresion", "gesto", "mira", "vfx", "aparece", "desaparece"]);
+const DIRECTIVE = /^\s*\[\s*(música|musica|imagen|mood|ánimo|animo|transición|transicion|duración|duracion|sfx|efecto|cámara|camara|entra|sale|camina|expresión|expresion|gesto|pose|plano|mira|vfx|aparece|desaparece)\s*:\s*(.+?)\s*\]\s*$/i;
+const STAGE_KEYS = new Set(["camara", "entra", "sale", "camina", "expresion", "gesto", "pose", "plano", "mira", "vfx", "aparece", "desaparece"]);
+/** Cualquier otra línea «[clave: valor]» es una dirección que no conocemos: se AVISA en el editor, nunca se narra ni se subtitula. */
+const GENERIC_DIRECTIVE = /^\s*\[\s*([^\]:]{1,30}?)\s*:\s*(.+?)\s*\]\s*$/;
 const DIALOGUE = /^\s*([A-ZÁÉÍÓÚÑÜ][A-ZÁÉÍÓÚÑÜ0-9 .'-]{1,24}?)\s*:\s*(.+)$/;
 const TRANSITIONS = ["cut", "fade", "fadeblack", "dissolve", "slideleft", "slideright", "wipeleft", "circleopen"];
 
@@ -33,6 +35,7 @@ function applyDirective(sc: ParsedScene, key: string, val: string) {
   else if (k === "mood" || k === "animo") sc.mood = val; else if (k === "sfx" || k === "efecto") sc.sfx = val;
   else if (k === "transicion") { const t = norm(val).replace(/[^a-z]/g, ""); if (TRANSITIONS.includes(t)) sc.transicion = t; }
   else if (k === "duracion") { const n = parseFloat(val.replace(",", ".")); if (n >= 2 && n <= 60) sc.duracion = n; }
+  else (sc.directions ??= []).push(`${k}: ${val}`);   // clave desconocida: llega al director, que la avisa
 }
 
 export function parseScript(text: string, chars: KnownCharacter[] = []): ParsedScene[] {
@@ -61,7 +64,7 @@ export function parseScript(text: string, chars: KnownCharacter[] = []): ParsedS
   for (const l of raw) {
     const h = HEADING.exec(l);
     if (hasHeadings && h) { flushPara(); cur = open(h[1].trim()); continue; }
-    const d = DIRECTIVE.exec(l);
+    const d = DIRECTIVE.exec(l) ?? (GENERIC_DIRECTIVE.exec(l) && !HEADING.test(l) ? GENERIC_DIRECTIVE.exec(l) : null);
     if (d) { if (!hasHeadings) { flushPara(); } (cur ??= open(hasHeadings ? "Apertura" : "")); applyDirective(cur, d[1], d[2]); continue; }
     if (!l.trim()) { if (!hasHeadings) flushPara(); continue; }
     para.push(lineOf(l));

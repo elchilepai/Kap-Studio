@@ -147,3 +147,15 @@ describe("direcciones de escena (cableado del analizador)", () => {
     expect(sc[0].visualHint).toBe("refugio de noche");
   });
 });
+
+describe("las líneas [clave: valor] nunca se narran ni se subtitulan", () => {
+  it("pose y plano son direcciones; una clave desconocida se conserva para AVISAR, no para locutarla", () => {
+    const sc = toScenes(parseScript(`# Bosque\n[pose: Vega brazos cruzados en 1s]\n[plano: primer plano KAP corte]\n[baila: KAP]\nKAP camina despacio.\nMIRA: Hola.`, chars), chars, id);
+    expect(sc[0].directions).toEqual(["pose: Vega brazos cruzados en 1s", "plano: primer plano KAP corte", "baila: KAP"]);
+    expect(sc[0].narration).toBe("KAP camina despacio."); expect(sc[0].lines.map((l) => l.text).join(" ")).not.toMatch(/pose|plano|baila|\[/);
+  });
+  it("también sin encabezados de escena", () => {
+    const sc = parseScript(`[vfx: lluvia]\nLlueve.\n\n[zumba: KAP]\nOtra frase.`, chars);
+    expect(sc.flatMap((x) => x.lines).every((l) => !/\[|zumba|vfx/.test(l.text))).toBe(true);
+  });
+});
