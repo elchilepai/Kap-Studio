@@ -72,7 +72,8 @@ async function run(id: string, params: Record<string, unknown>, format: "16:9" |
 }
 const NAMES = ["", "1 Analizar y planificar", "2 Narración (voz + duraciones)", "3 Animación 2D por escena", "4 Montaje + audio + subtítulos", "5 Verificación"];
 console.log(`\n== Episodio de prueba: ${SCENES} escenas · ${QUALITY} · 4 personajes · 6 escenarios · voz eSpeak · música · subtítulos ==`);
-const r1 = await run("run1", { mode: "full", voice: "espeak", animation: "2d", musicAssetId: "mus", shortsCount: 0 });
+const FORMAT = (process.env.BENCH_FORMAT ?? "16:9") as "16:9" | "9:16", SHORTS = Number(process.env.BENCH_SHORTS ?? 0);
+const r1 = await run("run1", { mode: "full", voice: "espeak", animation: "2d", musicAssetId: "mus", shortsCount: SHORTS }, FORMAT);
 const ep = (await st.productions.get("ep1"))!; const vid = (await st.assets.get(ep.videoAssetId!))!; const probe = await ffprobe(path.join(media, vid.path));
 const dur = ep.scenes.reduce((n, s) => n + s.durationSec, 0);
 console.log(`\nVÍDEO: ${probe.width}×${probe.height} ${probe.videoCodec}/${probe.audioCodec} · ${probe.durationSec.toFixed(1)} s (${(probe.durationSec / 60).toFixed(2)} min) · ${(vid.size / 1048576).toFixed(1)} MB · ${ep.scenes.length} escenas`);
@@ -83,6 +84,17 @@ if (process.env.BENCH_OUT) { await fs.mkdir(process.env.BENCH_OUT, { recursive: 
 const frames = Math.round(probe.durationSec * 30); console.log(`  fotogramas: ${frames} → ${(r1.total / frames * 1000).toFixed(0)} ms/fotograma de extremo a extremo`);
 const nClips = (await fs.readdir(path.join(cache, "clips"))).length; console.log(`  clips en caché: ${nClips} · caché ocupa ${(execFileSync("du", ["-sm", cache]).toString().split("\t")[0])} MB`);
 
+if (SHORTS > 0) {   // los Shorts derivados los encola afterRender: se espera a que terminen y se mide su memoria/tiempo
+  const t0 = Date.now(); let peak = 0;
+  for (;;) { const js = (await store.list(200)).filter((j) => j.kind === "short"); peak = Math.max(peak, tree());
+    if (js.length && js.every((j) => ["done", "failed", "canceled"].includes(j.status))) { const bad = js.filter((j) => j.status !== "done"); if (bad.length) throw new Error("short " + bad[0].status + ": " + bad[0].error); break; }
+    if (Date.now() - t0 > 3600_000) throw new Error("timeout shorts"); await new Promise((r) => setTimeout(r, 100)); }
+  const shorts = (await st.productions.list()).filter((p) => p.kind === "short");
+  console.log(`\nSHORTS DERIVADOS: ${shorts.length} en ${((Date.now() - t0) / 1000).toFixed(0)} s · pico de memoria ${peak.toFixed(0)} MB`);
+  for (const sh of shorts) { const a = (await st.assets.get(sh.videoAssetId!))!; const pr = await ffprobe(path.join(media, a.path)); console.log(`  ${sh.title}: ${pr.width}×${pr.height} ${pr.videoCodec}/${pr.audioCodec} · ${pr.durationSec.toFixed(1)} s · ${(a.size / 1048576).toFixed(1)} MB`);
+    if (process.env.BENCH_OUT) await fs.copyFile(path.join(media, a.path), path.join(process.env.BENCH_OUT, `short-${sh.number}.mp4`)); }
+}
+if (process.env.BENCH_ONLY) { await q.shutdown(); if (!process.env.BENCH_KEEP) await fs.rm(root, { recursive: true, force: true }); process.exit(0); }
 // segunda ejecución idéntica (todo en caché) y edición de UNA escena
 const r2 = await run("run2", { mode: "rerender", voice: "espeak", animation: "2d", musicAssetId: "mus", shortsCount: 0 });
 console.log(`\nRE-RENDER IDÉNTICO (todo en caché): ${r2.total.toFixed(0)} s (solo montaje y mezcla)`);

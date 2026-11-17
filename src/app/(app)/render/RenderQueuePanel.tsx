@@ -9,7 +9,7 @@ type Job = Omit<RenderJob, "params" | "worker"> & { productionLabel?: string };
 type Payload = { now: number; counts: { queued: number; running: number }; jobs: Job[] };
 
 const fmtDur = (ms: number) => { const s = Math.max(0, Math.round(ms / 1000)); return s >= 60 ? `${Math.floor(s / 60)} min ${s % 60} s` : `${s} s`; };
-const KIND: Record<string, string> = { slate: "Tarjeta de prueba", episode: "Episodio", short: "Short", preview: "Vista previa de escena" };
+const KIND: Record<string, string> = { slate: "Tarjeta de prueba", episode: "Episodio", short: "Short", preview: "Vista previa de escena", export: "Exportación final" };
 
 export default function RenderQueuePanel({ initial }: { initial: Payload }) {
   const [data, setData] = useState<Payload>(initial);

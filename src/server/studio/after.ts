@@ -30,6 +30,11 @@ export async function afterRender(job: RenderJob, assetId: string, st: Storage, 
     for (const j of await render.list(200)) if (j.kind === "preview" && j.productionId === prod.id && j.id !== job.id && j.outputAssetId) { await dropAsset(st, mediaDir, j.outputAssetId); await render.remove(j.id); }
     return;
   }
+  if (job.kind === "export") {   // exportación final: NO toca el estado ni el vídeo revisado/aprobado; solo conserva la última por formato y resolución
+    for (const j of await render.list(500)) if (j.kind === "export" && j.productionId === prod.id && j.id !== job.id && j.format === job.format && j.quality === job.quality && j.outputAssetId) { await dropAsset(st, mediaDir, j.outputAssetId); await render.remove(j.id); }
+    await audit("estudio.exportado", prod.id, `${job.format} ${job.quality}`, "pipeline");
+    return;
+  }
   const old = prod.videoAssetId ? await st.assets.get(prod.videoAssetId) : undefined;
   if (old && old.origin === "generated") await dropAsset(st, mediaDir, old.id);
   const fresh = (await st.productions.get(prod.id))!;

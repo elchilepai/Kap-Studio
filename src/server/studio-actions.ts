@@ -15,6 +15,7 @@ import { irToScenes } from "./studio/interpreter";
 import { validateIR } from "@/domain/screenplay";
 import { parseBrief } from "./studio/brief";
 import { deriveShorts } from "./studio/after";
+import { canExport, lastGenerationParams } from "./studio/export";
 import { textToLines } from "./studio/script";
 import { safeLocalPath } from "@/lib/security";
 
@@ -88,6 +89,28 @@ export async function recompose(fd: FormData) {
     const musicAssetId = String(fd.get("musicAssetId") ?? "") || p.musicAssetId;
     await enqueueJob(p.kind, p.kind === "short" ? "9:16" : "16:9", g.quality, p.id, { mode: "rerender", voice: g.voice, animation: g.animation, musicAssetId, musicVolume: g.musicVolume });
     await audit("estudio.recomponer", p.id, undefined, user.username); refresh(); back(fd, "/render");
+  });
+}
+
+/**
+ * Exportación definitiva de lo APROBADO: re-renderiza con las escenas aprobadas a la resolución elegida (1080p por defecto),
+ * con la misma voz/música/estilo de la generación revisada. No cambia el estado ni el vídeo aprobado. Reutiliza la caché de
+ * clips y de tramos: si ya se generó a esa resolución, apenas cuesta. En un episodio incluye sus Shorts aprobados.
+ */
+export async function exportFinal(fd: FormData) {
+  return run(fd, "/render", async () => {
+    const user = await requireAdmin(); const { storage, render } = getProviders();
+    const p = await storage.productions.get(String(fd.get("id") ?? "")); if (!p) throw new UserError("Producción no encontrada");
+    if (!canExport(p.status)) throw new UserError("Solo se exporta lo aprobado: aprueba primero la producción en «Aprobación».");
+    const quality = RenderQuality.parse(fd.get("quality") || "1080p");
+    const targets = [p, ...(p.kind === "episode" ? (await storage.productions.list()).filter((x) => x.kind === "short" && x.parentId === p.id && canExport(x.status)) : [])];
+    const jobs = await render.list(500); let n = 0;
+    for (const t of targets) {
+      if (!t.scenes.length) { if (t.id === p.id) throw new UserError("No hay escenas: este vídeo se subió a mano y no se puede re-exportar; descarga el archivo adjunto."); continue; }
+      const prm = lastGenerationParams(jobs, t.id); if (!prm) { if (t.id === p.id) throw new UserError("No hay una generación previa de la que exportar."); continue; }
+      await enqueueJob("export", t.kind === "short" ? "9:16" : "16:9", quality, t.id, prm); n++;
+    }
+    await audit("estudio.exportar", p.id, `${quality} · ${n} archivo(s)`, user.username); refresh(); back(fd, "/render");
   });
 }
 

@@ -19,14 +19,27 @@ export function wrap2(text: string, max: number): string[] {
   return [words.slice(0, best).join(" "), words.slice(best).join(" ")];
 }
 
-export function buildSceneCues(lines: Line[], durationSec: number, o: { maxChars: number; lead?: number; tail?: number } ): Cue[] {
+/** Reparte `text` en n trozos de longitud parecida cortando entre palabras (n = lo mínimo para que ninguno pase de `limit`). */
+export function splitBalanced(text: string, limit: number): string[] {
+  const t = text.trim(); if (t.length <= limit) return [t];
+  const n = Math.ceil(t.length / limit), target = t.length / n, out: string[] = []; let buf = "";
+  for (const w of t.split(/\s+/)) {
+    const next = buf ? `${buf} ${w}` : w;
+    if (buf && out.length < n - 1 && next.length > target && Math.abs(buf.length - target) <= Math.abs(next.length - target)) { out.push(buf); buf = w; } else buf = next;
+  }
+  if (buf) out.push(buf); return out;
+}
+
+/** `splitLong`: en formato vertical una frase larga no cabe en 2 líneas de ~22 caracteres: se divide en varios subtítulos consecutivos. */
+export function buildSceneCues(lines: Line[], durationSec: number, o: { maxChars: number; lead?: number; tail?: number; splitLong?: boolean } ): Cue[] {
   const lead = o.lead ?? 0.3, tail = o.tail ?? 0.3;
   const win = Math.max(0.5, durationSec - lead - tail);
   const chunks: { speaker?: string; text: string }[] = [];
   for (const l of lines) {
     let buf = "";
     const flush = () => { if (buf.trim()) chunks.push({ speaker: l.speaker, text: buf.trim() }); buf = ""; };
-    for (const s of sentences(l.text)) { if (buf && (buf + " " + s).length > o.maxChars * 2) flush(); buf = (buf + " " + s).trim(); }
+    const parts = sentences(l.text).flatMap((x) => (o.splitLong ? splitBalanced(x, o.maxChars * 2) : [x]));
+    for (const s of parts) { if (buf && (buf + " " + s).length > o.maxChars * 2) flush(); buf = (buf + " " + s).trim(); }
     flush();
   }
   const total = chunks.reduce((n, c) => n + c.text.length + 8, 0) || 1;

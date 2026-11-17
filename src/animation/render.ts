@@ -8,12 +8,17 @@ import { clamp, hash32, rng } from "./util.ts";
 
 export type Resources = { images: Record<string, unknown> };
 
+export const PORTRAIT_ASPECT = 0.8, PORTRAIT_DROP = 0.2;   // formato vertical: relación < 0,8; desplazamiento = 20 % de la altura visible
+
 /** Ventana de cámara sobre el mundo según formato: en 9:16 recorta una columna y sigue la acción. */
 export function viewFor(stage: StageSpec, aspect: number, st: FrameState) {
   const visH = WORLD_H / Math.max(0.3, st.camera.zoom), visW = visH * aspect;
   const margin = 1.2;
   const cx = visW >= WORLD_W + 2 * margin ? WORLD_W / 2 : clamp(st.camera.x, visW / 2 - margin, WORLD_W - visW / 2 + margin);
-  const cy = visH >= WORLD_H ? WORLD_H / 2 : clamp(st.camera.y, visH / 2, WORLD_H - visH / 2);
+  let cy = visH >= WORLD_H ? WORLD_H / 2 : clamp(st.camera.y, visH / 2, WORLD_H - visH / 2);
+  // Vertical: la escena sube en el encuadre (los pies quedan hacia el 60-65 % en vez del 84 %). Así el subtítulo cae bajo los pies,
+  // no sobre el cuerpo, y se libera la franja inferior que la interfaz de Shorts tapa. Con una imagen de fondo no se baja (no hay más imagen debajo).
+  if (aspect < PORTRAIT_ASPECT && stage.set.preset !== "image") cy += PORTRAIT_DROP * visH;
   return { visH, visW, cx, cy };
 }
 

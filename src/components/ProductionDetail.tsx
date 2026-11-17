@@ -8,6 +8,7 @@ import SubmitButton from "./SubmitButton";
 import { Notice, PageHeader, Pipeline, StatusBadge, Empty } from "./ui";
 import { deleteEntity, setParent } from "@/server/actions";
 import GenerateCard from "./GenerateCard";
+import ExportCard from "./ExportCard";
 import { fmtBytes, fmtDate, fmtDuration } from "@/lib/format";
 
 export default async function ProductionDetail({ id, kind, error }: { id: string; kind: "episode" | "short"; error?: string }) {
@@ -65,6 +66,8 @@ export default async function ProductionDetail({ id, kind, error }: { id: string
               <div className="row"><SubmitButton className="btn primary"><Upload className="i" />Subir y adjuntar</SubmitButton></div>
             </form>
           </div>
+
+          <ExportCard p={p} />
 
           {kind === "episode" && (
             <div className="card stack"><h2>Shorts asociados</h2>

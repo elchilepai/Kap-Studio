@@ -123,7 +123,7 @@ export async function produce(job: RenderJob, ctx: ExecContext, d: ProduceDeps):
     return Math.max(MIN_SCENE, s.durationSec);
   });
   scenes = scenes.map((s, i) => ({ ...s, durationSec: Math.round(durs[i] * 100) / 100, durationSource: audios[i] ? "audio" : s.durationSource }));
-  if (job.kind !== "preview") await st.productions.save({ ...(await st.productions.get(prod.id))!, scenes, updatedAt: now() });
+  if (job.kind === "episode" || job.kind === "short") await st.productions.save({ ...(await st.productions.get(prod.id))!, scenes, updatedAt: now() });
   const starts = sceneStarts(durs);
 
   // ③ Clips por escena (caché por contenido: solo se renderiza lo que cambió)
@@ -132,7 +132,7 @@ export async function produce(job: RenderJob, ctx: ExecContext, d: ProduceDeps):
   const [bibleChars, bibleKnownPlaces] = animation === "2d" ? await Promise.all([st.characters.list(), st.places.list()]) : [[], []];
   const prodNow = (await st.productions.get(prod.id)) ?? prod;
   const cuesAll: { cue: Cue; at: number }[] = [];
-  const cuesOf = scenes.map((s, i) => (style.enabled ? buildSceneCues(s.lines, durs[i], { maxChars: vertical ? 22 : 44, lead: LEAD, tail: TAIL }) : []));
+  const cuesOf = scenes.map((s, i) => (style.enabled ? buildSceneCues(s.lines, durs[i], { maxChars: vertical ? 22 : 44, lead: LEAD, tail: TAIL, splitLong: vertical }) : []));
   cuesOf.forEach((cs, i) => cs.forEach((c) => cuesAll.push({ cue: c, at: starts[i] })));
   const workers = Math.max(1, Math.min(d.clipWorkers ?? 1, scenes.length));
   // con varios clips a la vez cada FFmpeg recibe su parte de los núcleos (no se satura la CPU ni se multiplica la memoria)

@@ -44,12 +44,16 @@ export function resolveSet(location: string, tags: string[], mood: string, given
 const MOOD_EXPR: [RegExp, Expression][] = [[/oscur|tens|miedo|preocup/, "worried"], [/trist|melanc/, "sad"], [/aleg|diverti|feliz/, "happy"], [/misteri|intrig/, "thinking"], [/enfad|furi|ira/, "angry"]];
 
 const slots = (n: number) => (n <= 1 ? [8] : n === 2 ? [5.8, 10.2] : n === 3 ? [4.4, 8, 11.6] : [3.4, 6, 10, 12.6]);
+/** En vertical la ventana solo abarca ~5 unidades de las 16 del escenario: los personajes se agrupan en el centro para que quepan. */
+const PORTRAIT_SQUEEZE = [1, 1, 0.6, 0.42, 0.34];
 
 export function direct(inp: DirectorInput): StageSpec {
   const warnings: string[] = []; const cues: Cue[] = []; const D = inp.duration; const tail = inp.tail ?? 0;
-  const chars = inp.characters.slice(0, 4); const sl = slots(chars.length);
+  const chars = inp.characters.slice(0, 4); const portraitShot = inp.aspect < 0.8;
+  const sl = slots(chars.length).map((x) => (portraitShot ? 8 + (x - 8) * PORTRAIT_SQUEEZE[chars.length] : x));
   const byName = (nm: string) => { const k = norm(nm); return chars.find((c) => norm(c.name) === k) ?? chars.find((c) => norm(c.name).startsWith(k) || k.startsWith(norm(c.name))); };
   const actors = chars.map((c, i) => ({ id: c.id, name: c.name, appearance: c.appearance, slot: sl[i], facing: (chars.length === 1 || i < chars.length / 2 ? 1 : -1) as 1 | -1, presentAtStart: true }));
+  const centroid = actors.length ? actors.reduce((n, a) => n + a.slot, 0) / actors.length : WORLD_W / 2;
   const props: PropSpec[] = []; const touched = new Set<string>();   // actores con movimiento dirigido a mano
 
   // ---------- acciones: beats estructurados + texto editable (ambos se convierten al mismo vocabulario) ----------
@@ -115,7 +119,7 @@ export function direct(inp: DirectorInput): StageSpec {
       camSpeaker = a.id; camZoom = zoom;
     }
   });
-  if (dialogueCam && inp.lines.length) cues.push({ t: Math.min(D, inp.lines[inp.lines.length - 1].end + 0.2), type: "camera", x: WORLD_W / 2, zoom: 1, dur: 0.8, ease: "inOut" });   // vuelve al plano general
+  if (dialogueCam && inp.lines.length) cues.push({ t: Math.min(D, inp.lines[inp.lines.length - 1].end + 0.2), type: "camera", x: portraitShot ? centroid : WORLD_W / 2, zoom: 1, dur: 0.8, ease: "inOut" });   // vuelve al plano general
 
   // ---------- acciones sugeridas por la narración ----------
   const nar = norm(inp.narration); const lead = actors[0];
@@ -128,7 +132,18 @@ export function direct(inp: DirectorInput): StageSpec {
   if (/rayo|relampago|trueno|explosi|estruendo/.test(nar) && !cues.some((c) => c.type === "shake")) { cues.push({ t: Math.min(D * 0.4, 1.5), type: "effect", effect: "flash", dur: 0.6 }); cues.push({ t: Math.min(D * 0.4, 1.5), type: "shake", amp: 0.3, dur: 0.8 }); }
 
   // ---------- cámara por defecto: nunca queda estática ----------
-  if (!explicitCamera && !dialogueCam) {
+  if (!explicitCamera && !dialogueCam && portraitShot) {
+    // Vertical: la cámara acompaña a quien se mueve (re-enfocando cada 0,8 s) o se queda en el grupo con un empuje lento; nunca recorta a un personaje.
+    const T = Math.max(1, D + tail), mv = cues.filter((c) => (c.type === "move" || c.type === "enter") && actors.some((a) => a.id === c.actor)).sort((a, b) => a.t - b.t)[0];
+    if (mv && "actor" in mv) {
+      const end = Math.min(T, mv.t + ("dur" in mv && typeof mv.dur === "number" ? mv.dur : 2) + 0.8);
+      cues.push({ t: 0, type: "camera", focus: mv.actor, zoom: 1.0, dur: 0.01 });
+      for (let t = Math.max(0.05, mv.t); t < end; t += 0.8) cues.push({ t, type: "camera", focus: mv.actor, zoom: 1.0, dur: 0.8, ease: "linear" });
+    } else {
+      const k = inp.index % 2;
+      cues.push({ t: 0, type: "camera", x: centroid, zoom: k ? 1.1 : 1.0, dur: 0.01 }, { t: 0.01, type: "camera", x: centroid, zoom: k ? 1.0 : 1.1, dur: T, ease: "linear" });
+    }
+  } else if (!explicitCamera && !dialogueCam) {
     const k = inp.index % 3, T = Math.max(1, D + tail);
     if (k === 0) cues.push({ t: 0, type: "camera", zoom: 1.0, dur: 0.01 }, { t: 0.01, type: "camera", zoom: 1.09, dur: T, ease: "linear" });
     else if (k === 1) cues.push({ t: 0, type: "camera", zoom: 1.1, dur: 0.01 }, { t: 0.01, type: "camera", zoom: 1.0, dur: T, ease: "linear" });
