@@ -3,6 +3,7 @@ import { createCanvas } from "@napi-rs/canvas";
 import { renderFrame } from "./render.ts";
 import { direct, type DirectorInput } from "./director.ts";
 import { evaluate } from "./timeline.ts";
+import { visibility } from "./framing.ts";
 import { defaultElements } from "./sets.ts";
 import { KAP_LOOK, MIRA_LOOK } from "./demo.ts";
 import type { StageSpec } from "./types.ts";
@@ -67,9 +68,10 @@ describe("composición cinematográfica", () => {
     expect(kapAt.camera.x).toBeGreaterThan(ax(kapAt, "k"));    // KAP (a la izquierda, mira a la derecha) → la cámara va a su derecha → él queda en el tercio izquierdo
     expect(miraAt.camera.x).toBeLessThan(ax(miraAt, "m"));     // Mira (a la derecha, mira a la izquierda) → tercio derecho
   });
-  it("en vertical (9:16) se centra al hablante", () => {
+  it("en vertical (9:16) quien habla queda entero y nadie queda cortado por el borde", () => {
     const s = direct(input({ aspect: 9 / 16, width: 480, height: 854 })); const st = evaluate(s, 1.5); const kap = st.actors.find((a) => a.id === "k")!;
-    expect(Math.abs(st.camera.x - kap.x)).toBeLessThan(0.05);
+    const visW = (9 / st.camera.zoom) * (9 / 16); expect(visibility(kap.x, st.camera.x, visW)).toBe("in");
+    for (const a of st.actors) expect(visibility(a.x, st.camera.x, visW)).not.toBe("cut");
   });
   it("barras cinematográficas: negras arriba y abajo y nada en el centro", () => {
     const s = base({ cues: [], style: { ink: "#000", line: 0.04, grade: "none", vignette: 0, shadow: false, bars: 0.1 } }); const cv = createCanvas(800, 450); const c = cv.getContext("2d"); renderFrame(c as never, s, 1, { images: {} }, 800, 450);

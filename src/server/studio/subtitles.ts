@@ -1,5 +1,6 @@
 import type { Line } from "./script";
 import { sentences } from "./text";
+import { subtitleMetrics } from "@/animation/framing";
 
 /**
  * Subtítulos. La sincronización es PROPORCIONAL: el tiempo de cada fragmento depende de su longitud dentro de la
@@ -60,9 +61,7 @@ const ACCENT = "&H0049B9E9", WHITE = "&H00F5F5F5";
 /** ASS (libass) con la identidad KAP: texto blanco con contorno oscuro #111318 y nombre del personaje en amarillo #E9B949. */
 export function toASS(cues: Cue[], o: { width: number; height: number; style: SubStyle; maxChars?: number }): string {
   const vertical = o.height > o.width;
-  const fs = Math.round((vertical ? o.width * 0.058 : o.height * 0.047) * o.style.scale);
-  const align = o.style.position === "top" ? 8 : o.style.position === "center" ? 5 : 2;
-  const marginV = Math.round(o.style.position === "bottom" ? o.height * (vertical ? 0.17 : 0.07) : o.style.position === "top" ? o.height * 0.08 : 0);
+  const { fontSize: fs, align, marginV } = subtitleMetrics(o.width, o.height, o.style);   // misma fórmula que usa la composición para la zona segura
   const maxChars = o.maxChars ?? (vertical ? 22 : 44);
   const head = `[Script Info]\nScriptType: v4.00+\nPlayResX: ${o.width}\nPlayResY: ${o.height}\nWrapStyle: 2\nScaledBorderAndShadow: yes\n\n[V4+ Styles]\nFormat: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding\nStyle: KAP,${o.style.fontName},${fs},${WHITE},${WHITE},&H00131118,&H80000000,-1,0,0,0,100,100,0,0,1,${Math.max(2, Math.round(fs * 0.07))},${Math.max(1, Math.round(fs * 0.03))},${align},${Math.round(o.width * 0.06)},${Math.round(o.width * 0.06)},${marginV},1\n\n[Events]\nFormat: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text\n`;
   const ev = cues.map((c) => {

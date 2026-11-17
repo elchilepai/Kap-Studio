@@ -1,3 +1,5 @@
+import { frameShot, layoutSlots, wideZoom, type SafeZone } from "./framing.ts";
+import { evaluate } from "./timeline.ts";
 import type { Appearance, Cue, EffectKind, Expression, Gesture, PropKind, PropSpec, SetPreset, SetSpec, Side, StageSpec, StyleParams, TimeOfDay } from "./types.ts";
 import { WORLD_W } from "./types.ts";
 import { hash32 } from "./util.ts";
@@ -23,6 +25,8 @@ export type DirectorInput = {
   /** Proveedor de sincronización labial (por defecto: amplitud). Sustituible sin tocar nada más. */
   lipsync?: LipSyncProvider;
   style: StyleParams;
+  /** Zona de subtítulos (fracción de la altura) para que la cámara deje los pies por encima. */
+  safe?: SafeZone;
 };
 
 export const norm = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
@@ -43,16 +47,15 @@ export function resolveSet(location: string, tags: string[], mood: string, given
 
 const MOOD_EXPR: [RegExp, Expression][] = [[/oscur|tens|miedo|preocup/, "worried"], [/trist|melanc/, "sad"], [/aleg|diverti|feliz/, "happy"], [/misteri|intrig/, "thinking"], [/enfad|furi|ira/, "angry"]];
 
-const slots = (n: number) => (n <= 1 ? [8] : n === 2 ? [5.8, 10.2] : n === 3 ? [4.4, 8, 11.6] : [3.4, 6, 10, 12.6]);
-/** En vertical la ventana solo abarca ~5 unidades de las 16 del escenario: los personajes se agrupan en el centro para que quepan. */
-const PORTRAIT_SQUEEZE = [1, 1, 0.6, 0.42, 0.34];
-
 export function direct(inp: DirectorInput): StageSpec {
   const warnings: string[] = []; const cues: Cue[] = []; const D = inp.duration; const tail = inp.tail ?? 0;
   const chars = inp.characters.slice(0, 4); const portraitShot = inp.aspect < 0.8;
-  const sl = slots(chars.length).map((x) => (portraitShot ? 8 + (x - 8) * PORTRAIT_SQUEEZE[chars.length] : x));
+  const sl = layoutSlots(chars.length, inp.aspect);                  // una fila en horizontal; en vertical con 3-4 personajes, dos filas sin solaparse
   const byName = (nm: string) => { const k = norm(nm); return chars.find((c) => norm(c.name) === k) ?? chars.find((c) => norm(c.name).startsWith(k) || k.startsWith(norm(c.name))); };
-  const actors = chars.map((c, i) => ({ id: c.id, name: c.name, appearance: c.appearance, slot: sl[i], facing: (chars.length === 1 || i < chars.length / 2 ? 1 : -1) as 1 | -1, presentAtStart: true }));
+  const actors = chars.map((c, i) => ({ id: c.id, name: c.name, appearance: c.appearance, slot: sl[i].x, ...(sl[i].row ? { row: sl[i].row } : {}), facing: (chars.length === 1 || i < chars.length / 2 ? 1 : -1) as 1 | -1, presentAtStart: true }));
+  const imageSet = inp.set?.preset === "image" || !!inp.set?.imageId;                 // con imagen de fondo no se abre por debajo de 1 (no hay imagen fuera)
+  const actorX = actors.map((a) => a.slot), fitZoom = wideZoom(actorX, inp.aspect, 0.3, 3);      // zoom máximo con el que el reparto sigue entero
+  const wideZ = portraitShot ? Math.min(1, imageSet ? Math.max(1, fitZoom) : Math.max(0.8, fitZoom)) : 1; // plano general: en vertical se abre si hace falta (solo ese plano)
   const centroid = actors.length ? actors.reduce((n, a) => n + a.slot, 0) / actors.length : WORLD_W / 2;
   const props: PropSpec[] = []; const touched = new Set<string>();   // actores con movimiento dirigido a mano
 
@@ -94,7 +97,8 @@ export function direct(inp: DirectorInput): StageSpec {
   if (base) for (const a of actors) cues.push({ t: 0, type: "expression", actor: a.id, value: base });
 
   // ---------- diálogo: boca, mirada, gestos, cámara ----------
-  let dialogueCam = false; let camSpeaker: string | undefined, camZoom = 0;
+  let dialogueCam = false; let camSpeaker: string | undefined;
+  const shotReqs: { t: number; until: number; id: string; name: string; ideal: number; look: -1 | 0 | 1; first: boolean }[] = [];
   inp.lines.forEach((l, li) => {
     const a = l.speaker ? byName(l.speaker) : undefined; const dur = Math.max(0.3, l.end - l.start); if (!a) return;
     const trk: LipSyncTrack = (inp.lipsync ?? amplitudeProvider).track({ text: l.text, durationSec: dur, fps: inp.fps, audioEnvelope: inp.envelopes?.[li] });
@@ -113,13 +117,13 @@ export function direct(inp: DirectorInput): StageSpec {
       // Plano / contraplano: tras la primera intervención se CORTA entre quien habla (ritmo dinámico). El hablante se coloca en un
       // tercio de la imagen mirando hacia el espacio libre (regla de tercios). Las frases emotivas piden un plano más cerrado.
       dialogueCam = true; const portrait = inp.aspect < 1, emotional = q || ex, firstLine = camSpeaker === undefined;
-      const zoom = portrait ? 1.35 : emotional ? 1.55 : actors.length > 1 ? 1.25 : 1.18; const dirTo = target ? (target.slot >= me.slot ? 1 : -1) : 0;
-      // lead: la cámara va hacia donde mira el hablante → él queda en el tercio opuesto, con espacio para mirar
-      if (camSpeaker !== a.id || camZoom !== zoom) cues.push({ t: Math.max(0, l.start - 0.05), type: "camera", focus: a.id, zoom, lead: portrait ? 0 : dirTo * 0.17, dur: firstLine ? 0.7 : 0.01, ease: "inOut" });
-      camSpeaker = a.id; camZoom = zoom;
+      const ideal = portrait ? (emotional ? 1.45 : 1.3) : emotional ? 1.55 : actors.length > 1 ? 1.25 : 1.18; const dirTo = target ? (target.slot >= me.slot ? 1 : -1) : 0;
+      // El plano se RESUELVE más abajo, cuando ya están todos los movimientos (dirigidos y sugeridos por la narración): así se encuadra
+      // a los personajes donde están en cada momento, no donde empezaron.
+      if (camSpeaker !== a.id) shotReqs.push({ t: Math.max(0, l.start - 0.05), until: l.end, id: a.id, name: a.name, ideal, look: dirTo as -1 | 0 | 1, first: firstLine });
+      camSpeaker = a.id;
     }
   });
-  if (dialogueCam && inp.lines.length) cues.push({ t: Math.min(D, inp.lines[inp.lines.length - 1].end + 0.2), type: "camera", x: portraitShot ? centroid : WORLD_W / 2, zoom: 1, dur: 0.8, ease: "inOut" });   // vuelve al plano general
 
   // ---------- acciones sugeridas por la narración ----------
   const nar = norm(inp.narration); const lead = actors[0];
@@ -131,17 +135,49 @@ export function direct(inp: DirectorInput): StageSpec {
   for (const [re, e] of weather) if (re.test(nar + " " + norm(inp.location)) && !cues.some((c) => c.type === "effect" && c.effect === e)) cues.push({ t: 0, type: "effect", effect: e, dur: D + tail });
   if (/rayo|relampago|trueno|explosi|estruendo/.test(nar) && !cues.some((c) => c.type === "shake")) { cues.push({ t: Math.min(D * 0.4, 1.5), type: "effect", effect: "flash", dur: 0.6 }); cues.push({ t: Math.min(D * 0.4, 1.5), type: "shake", amp: 0.3, dur: 0.8 }); }
 
+  // ---------- encuadre de los planos de diálogo (con las posiciones reales de cada momento) ----------
+  const nonCam = cues.filter((c) => c.type !== "camera");
+  const live = (t: number): { id: string; x: number }[] => {
+    const f = evaluate({ v: 1, width: inp.width, height: inp.height, fps: inp.fps, duration: D + tail, seed: 0, set: { preset: "abstract", timeOfDay: "day", seed: 0 }, actors, props, cues: nonCam, style: inp.style, warnings: [] } as StageSpec, Math.max(0, t));
+    return actors.flatMap((a, i) => (f.actors[i].visible && f.actors[i].alpha > 0.3 ? [{ id: a.id, x: f.actors[i].x }] : []));
+  };
+  const minZ = portraitShot && !imageSet ? Math.min(0.8, wideZ) : 1;
+  for (const r of shotReqs) {
+    let prev: { zoom: number; cx: number } | undefined; const dur0 = r.first ? 0.7 : 0.01;
+    for (let k = 0, tt = r.t; tt < Math.max(r.t + 0.01, r.until - 0.2); k++, tt = r.t + k * 0.7) {
+      const dur = k === 0 ? dur0 : 0.6, pos = live(tt + dur); const focus = pos.find((p) => p.id === r.id); if (!focus) continue;
+      const fr = frameShot({ actors: pos, focus: r.id, aspect: inp.aspect, zoom: r.ideal, minZoom: minZ, maxZoom: 1.9, look: r.look, leadFrac: portraitShot ? 0.1 : 0.17 });
+      if (fr.cut.length && k === 0) warnings.push(`Plano de «${r.name}»: ${fr.cut.length} personaje(s) quedan cortados por el borde; cambia la posición o el plano`);
+      if (prev && Math.abs(prev.cx - fr.cx) < 0.2 && Math.abs(prev.zoom - fr.zoom) < 0.03) continue;   // no se mueve la cámara si el plano sigue valiendo
+      cues.push({ t: tt, type: "camera", focus: r.id, zoom: fr.zoom, lead: fr.lead, dur, ease: "inOut" }); prev = { zoom: fr.zoom, cx: fr.cx };
+    }
+  }
+
+  if (dialogueCam && portraitShot) cues.push({ t: 0, type: "camera", x: centroid, zoom: wideZ, dur: 0.01 });   // antes de la 1.ª intervención: plano general que cabe entero (en vertical no es el de por defecto)
+  if (dialogueCam && inp.lines.length) {   // vuelve al plano general; en vertical, el más abierto que deje a todos enteros (o al último que habló con quien quepa a su lado)
+    const lastLine = inp.lines[inp.lines.length - 1], tEnd = Math.min(D, lastLine.end + 0.2), pos = live(tEnd + 0.8);
+    if (portraitShot && pos.length) {
+      const f = (lastLine.speaker ? byName(lastLine.speaker)?.id : undefined) ?? pos[0].id, focus = pos.some((p) => p.id === f) ? f : pos[0].id;
+      const fr = frameShot({ actors: pos, focus, aspect: inp.aspect, zoom: wideZ, minZoom: minZ, maxZoom: 1.9, look: 0, leadFrac: 0 });
+      cues.push({ t: tEnd, type: "camera", x: fr.cx, zoom: fr.zoom, dur: 0.8, ease: "inOut" });
+    } else cues.push({ t: tEnd, type: "camera", x: WORLD_W / 2, zoom: wideZ, dur: 0.8, ease: "inOut" });
+  }
+
   // ---------- cámara por defecto: nunca queda estática ----------
   if (!explicitCamera && !dialogueCam && portraitShot) {
     // Vertical: la cámara acompaña a quien se mueve (re-enfocando cada 0,8 s) o se queda en el grupo con un empuje lento; nunca recorta a un personaje.
     const T = Math.max(1, D + tail), mv = cues.filter((c) => (c.type === "move" || c.type === "enter") && actors.some((a) => a.id === c.actor)).sort((a, b) => a.t - b.t)[0];
     if (mv && "actor" in mv) {
       const end = Math.min(T, mv.t + ("dur" in mv && typeof mv.dur === "number" ? mv.dur : 2) + 0.8);
-      cues.push({ t: 0, type: "camera", focus: mv.actor, zoom: 1.0, dur: 0.01 });
-      for (let t = Math.max(0.05, mv.t); t < end; t += 0.8) cues.push({ t, type: "camera", focus: mv.actor, zoom: 1.0, dur: 0.8, ease: "linear" });
+      cues.push({ t: 0, type: "camera", focus: mv.actor, zoom: wideZ, dur: 0.01 });
+      for (let t = Math.max(0.05, mv.t); t < end; t += 0.8) {
+        const pos = live(t + 0.8); if (!pos.some((p) => p.id === mv.actor)) continue;
+        const fr = frameShot({ actors: pos, focus: mv.actor, aspect: inp.aspect, zoom: wideZ, minZoom: minZ, maxZoom: Math.max(wideZ, 1), look: 0, leadFrac: 0 });   // acompaña al que camina sin dejar a nadie cortado
+        cues.push({ t, type: "camera", focus: mv.actor, zoom: fr.zoom, lead: fr.lead, dur: 0.8, ease: "linear" });
+      }
     } else {
-      const k = inp.index % 2;
-      cues.push({ t: 0, type: "camera", x: centroid, zoom: k ? 1.1 : 1.0, dur: 0.01 }, { t: 0.01, type: "camera", x: centroid, zoom: k ? 1.0 : 1.1, dur: T, ease: "linear" });
+      const k = inp.index % 2, z0 = wideZ, z1 = Math.min(wideZ * 1.1, fitZoom);      // el empuje lento nunca llega a cortar a nadie
+      cues.push({ t: 0, type: "camera", x: centroid, zoom: k ? z1 : z0, dur: 0.01 }, { t: 0.01, type: "camera", x: centroid, zoom: k ? z0 : z1, dur: T, ease: "linear" });
     }
   } else if (!explicitCamera && !dialogueCam) {
     const k = inp.index % 3, T = Math.max(1, D + tail);
@@ -150,5 +186,5 @@ export function direct(inp: DirectorInput): StageSpec {
     else cues.push({ t: 0, type: "camera", x: WORLD_W / 2 - 0.8, dur: 0.01 }, { t: 0.01, type: "camera", x: WORLD_W / 2 + 0.8, dur: T, ease: "linear" });
   }
 
-  return { v: 1, width: inp.width, height: inp.height, fps: inp.fps, duration: D + tail, seed: hash32(inp.location + inp.index) % 100000, set: resolveSet(inp.location, inp.tags, inp.mood, inp.set), actors, props, cues, style: inp.style, warnings };
+  return { v: 1, width: inp.width, height: inp.height, fps: inp.fps, duration: D + tail, seed: hash32(inp.location + inp.index) % 100000, set: resolveSet(inp.location, inp.tags, inp.mood, inp.set), actors, props, cues, style: inp.style, warnings, ...(inp.safe ? { safe: inp.safe } : {}) };
 }

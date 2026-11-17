@@ -3,7 +3,8 @@ import { drawCharacter, poseFor } from "./character.ts";
 import { drawForeground, drawProp, drawSet } from "./sets.ts";
 import { evaluate } from "./timeline.ts";
 import type { FrameState, Grade, StageSpec } from "./types.ts";
-import { GROUND_Y, WORLD_H, WORLD_W } from "./types.ts";
+import { GROUND_Y, WORLD_H } from "./types.ts";
+import { clampCx, feetDrop, ROW_DY, ROW_SCALE, subtitleMetrics, visibleSize } from "./framing.ts";
 import { clamp, hash32, rng } from "./util.ts";
 
 export type Resources = { images: Record<string, unknown>; cache?: FrameCache };
@@ -22,17 +23,13 @@ export type FrameCache = {
 };
 export const createFrameCache = (make: FrameCache["make"]): FrameCache => ({ make, stats: { bgHits: 0, bgMisses: 0 } });
 
-export const PORTRAIT_ASPECT = 0.8, PORTRAIT_DROP = 0.2;   // formato vertical: relación < 0,8; desplazamiento = 20 % de la altura visible
-
-/** Ventana de cámara sobre el mundo según formato: en 9:16 recorta una columna y sigue la acción. */
+/** Ventana de cámara sobre el mundo según formato. La escena sube lo necesario para que los pies queden sobre la zona de subtítulos. */
 export function viewFor(stage: StageSpec, aspect: number, st: FrameState) {
-  const visH = WORLD_H / Math.max(0.3, st.camera.zoom), visW = visH * aspect;
-  const margin = 1.2;
-  const cx = visW >= WORLD_W + 2 * margin ? WORLD_W / 2 : clamp(st.camera.x, visW / 2 - margin, WORLD_W - visW / 2 + margin);
+  const { visH, visW } = visibleSize(st.camera.zoom, aspect);
+  const cx = clampCx(st.camera.x, visW);
   let cy = visH >= WORLD_H ? WORLD_H / 2 : clamp(st.camera.y, visH / 2, WORLD_H - visH / 2);
-  // Vertical: la escena sube en el encuadre (los pies quedan hacia el 60-65 % en vez del 84 %). Así el subtítulo cae bajo los pies,
-  // no sobre el cuerpo, y se libera la franja inferior que la interfaz de Shorts tapa. Con una imagen de fondo no se baja (no hay más imagen debajo).
-  if (aspect < PORTRAIT_ASPECT && stage.set.preset !== "image") cy += PORTRAIT_DROP * visH;
+  // Con una imagen de fondo no se baja la cámara (no hay más imagen debajo).
+  if (stage.set.preset !== "image") cy += feetDrop(cy, visH, stage.safe ?? subtitleMetrics(stage.width, stage.height));
   return { visH, visW, cx, cy };
 }
 
@@ -55,9 +52,10 @@ export function renderFrame(c: Ctx, stage: StageSpec, t: number, res: Resources,
   cam(c);
   const accent = stage.set.accent ?? "#E9B949";
   stage.props.forEach((p) => { const a = st.props.find((x) => x.id === p.id)?.alpha ?? 0; if (a > 0.001) drawProp(c, p, a, stage.style.ink, accent); });
-  const order = stage.actors.map((a, i) => ({ a, s: st.actors[i] })).filter((x) => x.s.visible).sort((p, q) => p.s.x - q.s.x);
+  const order = stage.actors.map((a, i) => ({ a, s: st.actors[i] })).filter((x) => x.s.visible).sort((p, q) => (q.a.row ?? 0) - (p.a.row ?? 0) || p.s.x - q.s.x);   // fila trasera primero
   for (const { a, s: as } of order) {
-    c.save(); c.translate(as.x, GROUND_Y + 0.55); // los pies pisan el suelo con un poco de profundidad
+    const back = a.row === 1;
+    c.save(); c.translate(as.x, GROUND_Y + 0.55 - (back ? ROW_DY : 0)); if (back) c.scale(ROW_SCALE, ROW_SCALE); // los pies pisan el suelo con un poco de profundidad
     drawCharacter(c, a.appearance, poseFor(as, t, hash32(a.id)), { ink: stage.style.ink, line: stage.style.line, facing: as.facing, shadow: stage.style.shadow, alpha: as.alpha }, res.images);
     c.restore();
   }

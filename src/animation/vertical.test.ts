@@ -1,9 +1,10 @@
 import { describe, expect, it } from "vitest";
 import { createCanvas } from "@napi-rs/canvas";
 import { direct, type DirectorInput } from "./director.ts";
-import { PORTRAIT_ASPECT, renderFrame, viewFor } from "./render.ts";
+import { renderFrame, viewFor } from "./render.ts";
 import { evaluate } from "./timeline.ts";
 import { KAP_LOOK, MIRA_LOOK } from "./demo.ts";
+import { subtitleMetrics } from "./framing.ts";
 import { GROUND_Y } from "./types.ts";
 
 const chars = [{ id: "kap", name: "KAP", appearance: KAP_LOOK }, { id: "mira", name: "Mira", appearance: MIRA_LOOK }, { id: "vega", name: "Vega", appearance: KAP_LOOK }, { id: "nico", name: "Nico", appearance: MIRA_LOOK }];
@@ -13,7 +14,7 @@ const base = (portrait: boolean, o: Partial<DirectorInput> = {}): DirectorInput 
 });
 
 describe("formato vertical 9:16 — composición propia (no es un recorte del 16:9)", () => {
-  it("16:9 no cambia: mismos huecos y misma cámara por defecto que antes", () => {
+  it("16:9: mismos huecos y misma cámara por defecto que antes (solo cambia la altura de la escena por la zona de subtítulos)", () => {
     const s = direct(base(false)); expect(s.actors.map((a) => a.slot)).toEqual([5.8, 10.2]);
     expect(direct(base(false, { characters: chars.slice(0, 3) })).actors.map((a) => a.slot)).toEqual([4.4, 8, 11.6]);
     expect(s.cues.filter((c) => c.type === "camera")).toEqual([{ t: 0, type: "camera", zoom: 1, dur: 0.01 }, { t: 0.01, type: "camera", zoom: 1.09, dur: 8, ease: "linear" }]);
@@ -39,11 +40,12 @@ describe("formato vertical 9:16 — composición propia (no es un recorte del 16
     const foc = s.cues.filter((c) => c.type === "camera" && (c as { focus?: string }).focus) as { focus: string; zoom: number }[];
     expect(foc.map((c) => c.focus)).toEqual(["kap", "mira"]); expect(foc.every((c) => c.zoom > 1.2)).toBe(true);
   });
-  it("la escena sube en el encuadre: los pies quedan en el 55-70 % de la altura (el subtítulo cae debajo)", () => {
-    const s = direct(base(true)); const v = viewFor(s, 9 / 16, evaluate(s, 0.01)); const feet = 0.5 + (GROUND_Y + 0.55 - v.cy) / v.visH;
-    expect(feet).toBeGreaterThan(0.55); expect(feet).toBeLessThan(0.7);
-    const land = direct(base(false)); const vl = viewFor(land, 16 / 9, evaluate(land, 0.01)); expect(vl.cy).toBe(4.5);   // en horizontal no se desplaza
-    expect(9 / 16).toBeLessThan(PORTRAIT_ASPECT);
+  it("la escena sube lo justo: los pies quedan por encima de la zona de subtítulos (9:16 y 16:9)", () => {
+    for (const [portrait, ar] of [[true, 9 / 16], [false, 16 / 9]] as const) {
+      const s = direct(base(portrait, { safe: subtitleMetrics(portrait ? 720 : 1280, portrait ? 1280 : 720) })); const v = viewFor(s, ar, evaluate(s, 0.01));
+      const feet = 0.5 + (GROUND_Y + 0.55 - v.cy) / v.visH; expect(feet).toBeLessThanOrEqual(s.safe!.top - 0.025); expect(feet).toBeGreaterThan(0.55);
+    }
+    const none = direct(base(false, { safe: { top: 1, bottom: 1 } })); expect(viewFor(none, 16 / 9, evaluate(none, 0.01)).cy).toBe(4.5);   // sin subtítulos no se desplaza
   });
   it("con una imagen de fondo no se baja la cámara (no hay más imagen debajo)", () => {
     const s = { ...direct(base(true)), set: { preset: "image" as const, timeOfDay: "day" as const, seed: 1, imageId: "x" } };

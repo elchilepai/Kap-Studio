@@ -149,7 +149,7 @@ export async function produce(job: RenderJob, ctx: ExecContext, d: ProduceDeps):
     let r: { file: string; cached: boolean };
     if (animation === "2d") {
       const env = audios[i] ? await audioEnvelope(audios[i]!.file, 30, ctx.signal).catch(() => undefined) : undefined;
-      const built = await buildSceneStage(s, { durationSec: D, tail: MAX_OVERLAP, width, height, envelope: env, index: i }, {
+      const built = await buildSceneStage(s, { durationSec: D, tail: MAX_OVERLAP, width, height, envelope: env, index: i, subtitles: style }, {
         production: prodNow, characters: bibleChars, places: bibleKnownPlaces, style: styleBible,
         assetInfo: async (id) => { const f = await assetFile(id); return f ? { path: f.f, sig: `${f.a.id}:${f.a.size}:${f.a.createdAt}`, kind: f.a.kind } : undefined; },
       });

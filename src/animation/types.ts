@@ -69,13 +69,15 @@ export type SetPreset = "room" | "street" | "city" | "forest" | "rooftop" | "abs
 export type TimeOfDay = "day" | "dusk" | "night";
 export type SetSpec = { preset: SetPreset; timeOfDay: TimeOfDay; seed: number; imageId?: string; accent?: string; layers?: SetLayer[]; elements?: SetElement[]; foreground?: SetElement[] };
 
-export type ActorSpec = { id: string; name: string; appearance: Appearance; slot: number; facing: 1 | -1; presentAtStart: boolean };
+export type ActorSpec = { id: string; name: string; appearance: Appearance; slot: number; facing: 1 | -1; presentAtStart: boolean; /** 0 = delante (por defecto), 1 = fila trasera (más arriba y algo menor) */ row?: 0 | 1 };
 export type Grade = "none" | "dusk" | "night" | "warm" | "cold" | "dark";
 export type StyleParams = { ink: string; line: number; grade: Grade; vignette: number; shadow: boolean; bars?: number };
 
 export type StageSpec = {
   v: 1; width: number; height: number; fps: number; duration: number; seed: number;
   set: SetSpec; actors: ActorSpec[]; props: PropSpec[]; cues: Cue[]; style: StyleParams;
+  /** Zona de subtítulos (fracción de la altura). La cámara sube la escena para que los pies queden por encima. Si falta se asume el subtítulo por defecto. */
+  safe?: { top: number; bottom: number };
   /** Avisos del director (directivas no entendidas…): se muestran al revisar. */
   warnings: string[];
 };
