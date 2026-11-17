@@ -1,0 +1,468 @@
+{
+ "meta": {
+  "model": "qwen3:8b",
+  "phase": "tech",
+  "ctx": 8192,
+  "date": "2026-11-17T17:52:47.152Z",
+  "cpus": 4,
+  "ramGb": 16,
+  "host": "CPU sin GPU"
+ },
+ "loaded": {
+  "sizeMb": 6458,
+  "context": 8192
+ },
+ "totalMin": 45,
+ "results": [
+  {
+   "id": "T4",
+   "title": "Introducir un personaje nuevo",
+   "request": "Crea el episodio 4 continuando exactamente donde terminó el episodio 3. Introduce a una vecina nueva que le presta libros de poesía a KAP.",
+   "ms": 2693763,
+   "peakMb": 6536,
+   "sysPeakMb": 7286,
+   "contextTokens": 1898,
+   "ok": true,
+   "irValid": true,
+   "irValidFirstTry": false,
+   "json": {
+    "attempts": 2,
+    "retries": 1,
+    "jsonErrors": 0,
+    "schemaErrors": 0,
+    "lengthRetries": 1,
+    "memoryDirectiveErrors": 1
+   },
+   "irErrors": [],
+   "usage": {
+    "promptTokens": 7796,
+    "outputTokens": 4890,
+    "totalMs": 2693726.92002,
+    "loadMs": 8123.7196969999995,
+    "promptMs": 159414.2,
+    "evalMs": 2526104.657
+   },
+   "tokensPerSec": 1.94,
+   "episode": {
+    "scenes": 17,
+    "estimatedSec": 180,
+    "words": 484,
+    "title": "La vecina y el cuaderno",
+    "logline": "KAP encuentra un nuevo amigo en una vecina que le ofrece libros de poesía, pero Dani sigue acosándolo con el cuaderno robado."
+   },
+   "continuity": {
+    "critical": [],
+    "warnings": [
+     "relacion-contradice: KAP y Dani ya se conocían (relación «acoso» desde ep. 2); la escena 2 los presenta como si se conocieran ahora.",
+     "hito: El hito «Víctima de bullying» ya estaba logrado en ep. 2.",
+     "objeto-sin-introducir: «cuaderno» se usa en la escena 5 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "relacion-contradice: KAP y Hermano de KAP ya se conocían (relación «hermanos» desde canon inicial); la escena 8 los presenta como si se conocieran ahora.",
+     "hito: El hito «Niño que intenta proteger a su hermano» ya estaba logrado en ep. 1.",
+     "hito: El hito «Niño con un sueño» ya estaba logrado en ep. 3.",
+     "hito: El hito «Niño con un sueño» ya estaba logrado en ep. 4.",
+     "hito: El hito «Niño con un sueño» ya estaba logrado en ep. 4.",
+     "hito: El hito «Niño con un sueño» ya estaba logrado en ep. 4.",
+     "hito: El hito «Niño con un sueño» ya estaba logrado en ep. 4.",
+     "duracion: El episodio dura ≈ 3.4 min y el formato es ≈ 5 min (4–6 min)."
+    ],
+    "info": 4
+   },
+   "checks": [
+    {
+     "id": "estructura-6-actos",
+     "ok": true,
+     "note": "faltan: —"
+    },
+    {
+     "id": "gancho",
+     "ok": true
+    },
+    {
+     "id": "protagonista",
+     "ok": true
+    },
+    {
+     "id": "sin-errores-criticos",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "sin-exito-prematuro",
+     "ok": true
+    },
+    {
+     "id": "directivas-validas",
+     "ok": false,
+     "note": ""
+    },
+    {
+     "id": "espanol",
+     "ok": true
+    },
+    {
+     "id": "arranca-donde-termino",
+     "ok": true,
+     "note": "1.ª escena en «Calle de noche», terminó en «Calle de noche»"
+    },
+    {
+     "id": "diversidad-lexica",
+     "ok": true,
+     "note": "0.35"
+    },
+    {
+     "id": "personaje-nuevo-habla",
+     "ok": true,
+     "note": "vecina"
+    },
+    {
+     "id": "no-mas-de-2-nuevos",
+     "ok": true
+    },
+    {
+     "id": "declara-quien-es-en-memoria",
+     "ok": false
+    },
+    {
+     "id": "poesia-o-libros",
+     "ok": true
+    },
+    {
+     "id": "info-nueva-detectada",
+     "ok": true
+    }
+   ],
+   "compliance": 0.86,
+   "proxy": {
+    "score": 7,
+    "dialogueRatio": 0.5,
+    "locations": 1,
+    "repeatedSentences": 8
+   },
+   "warnings": [
+    "Directiva de memoria inválida del modelo: «conflicto: Dani acosa a KAP»: directiva de memoria desconocida",
+    "El episodio dura ≈ 3.0 min: queda por debajo del formato (≈ 5 min).",
+    "Suposición del modelo: KAP está en Calle de noche",
+    "Suposición del modelo: Dani tiene el cuaderno de KAP"
+   ],
+   "draft": {
+    "title": "La vecina y el cuaderno",
+    "logline": "KAP encuentra un nuevo amigo en una vecina que le ofrece libros de poesía, pero Dani sigue acosándolo con el cuaderno robado.",
+    "assumptions": [
+     "KAP está en Calle de noche",
+     "Dani tiene el cuaderno de KAP"
+    ],
+    "scenes": [
+     {
+      "title": "Calle de noche (2)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Sonríe despacio y levanta el cuaderno para que KAP lo vea."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Y si se lo devuelves? Es mío."
+       }
+      ],
+      "memory": [
+       "acto: inicio | KAP, 9",
+       "perfil: KAP, sueños = ser millonario gracias a la música",
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "Calle de noche (3)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Dani se acerca con el cuaderno en la mano, sonriendo con una mirada cruel."
+       },
+       {
+        "speaker": "Dani",
+        "text": "¿Y si te lo quedas? No lo necesitas. ¿O sí?"
+       }
+      ],
+      "memory": [
+       "acto: conflicto | Dani acosa a KAP",
+       "conoce: KAP, Dani",
+       "abre-hilo: el cuaderno robado | KAP, Dani"
+      ]
+     },
+     {
+      "title": "Calle de noche (4)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se queda callado, mirando el cuaderno con una mezcla de miedo y rabia."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No lo necesito. Pero no me lo vas a quitar."
+       }
+      ],
+      "memory": [
+       "conflicto: Dani acosa a KAP",
+       "hito-logrado: Víctima de bullying | Dani acosa a KAP"
+      ]
+     },
+     {
+      "title": "Calle de noche (5)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "De repente, una voz femenina se escucha desde la puerta de una casa cercana."
+       },
+       {
+        "speaker": "Vecina",
+        "text": "KAP, ¿estás ahí? ¿Te gustaría que te prestara algunos libros de poesía?"
+       }
+      ],
+      "memory": [
+       "abre-hilo: vecina presta libros | KAP, vecina",
+       "perfil: KAP, sueños = ser millonario gracias a la música"
+      ]
+     },
+     {
+      "title": "Calle de noche (6)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se sorprende y mira hacia la casa de la vecina, que le sonríe con amabilidad."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Sí, me encantaría. ¿Puedo pasar a recogerlos mañana?"
+       }
+      ],
+      "memory": [
+       "acto: desarrollo | KAP conoce a una vecina",
+       "usa: KAP, cuaderno"
+      ]
+     },
+     {
+      "title": "Calle de noche (7)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Antes de irse, Dani se acerca a KAP y le susurra algo al oído."
+       },
+       {
+        "speaker": "Dani",
+        "text": "No te olvides de lo que te dije. El cuaderno es tuyo, pero no lo uses en público."
+       }
+      ],
+      "memory": [
+       "acto: resolucion | Dani acosa a KAP",
+       "cierra-hilo: el cuaderno robado"
+      ]
+     },
+     {
+      "title": "Calle de noche (8)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se aleja caminando hacia su casa, con el cuaderno en la mano y la sonrisa de la vecina en la cabeza."
+       },
+       {
+        "speaker": "KAP",
+        "text": "La poesía me hace sentir libre. Y si puedo escribir una canción, quizás pueda ser millonario."
+       }
+      ],
+      "memory": [
+       "acto: emocional | KAP encuentra esperanza",
+       "perfil: KAP, sueños = ser millonario gracias a la música"
+      ]
+     },
+     {
+      "title": "Calle de noche (9)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP llega a casa y entra en su habitación, donde su hermano lo espera con preocupación."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¿Qué pasó? ¿Por qué te quedaste con el cuaderno?"
+       }
+      ],
+      "memory": [
+       "acto: resolucion | KAP cuida a su hermano",
+       "conoce: KAP, Hermano de KAP"
+      ]
+     },
+     {
+      "title": "Calle de noche (10)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP le explica lo que pasó con Dani y la vecina, mientras su hermano lo escucha atentamente."
+       },
+       {
+        "speaker": "KAP",
+        "text": "La vecina me prestó libros. Y quizás, algún día, pueda escribir una canción como ella."
+       }
+      ],
+      "memory": [
+       "acto: resolucion | KAP cuida a su hermano",
+       "perfil: KAP, sueños = ser millonario gracias a la música"
+      ]
+     },
+     {
+      "title": "Calle de noche (11)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "El hermano de KAP le da un abrazo y le dice que puede hacerlo."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "Eres más fuerte de lo que crees. Y yo siempre estaré contigo."
+       }
+      ],
+      "memory": [
+       "acto: resolucion | KAP cuida a su hermano",
+       "hito-logrado: Niño que intenta proteger a su hermano"
+      ]
+     },
+     {
+      "title": "Calle de noche (12)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se queda mirando el cuaderno, con la idea de escribir una canción que le haga sentirse libre."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Tengo que seguir adelante. Por mí y por mi hermano."
+       }
+      ],
+      "memory": [
+       "acto: resolucion | KAP sigue soñando",
+       "perfil: KAP, sueños = ser millonario gracias a la música"
+      ]
+     },
+     {
+      "title": "Calle de noche (13)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se dirige hacia la cama, con el cuaderno bajo el brazo y una sonrisa en los labios."
+       },
+       {
+        "speaker": "KAP",
+        "text": "La música me hace sentir libre. Y si puedo escribir una canción, quizás pueda ser millonario."
+       }
+      ],
+      "memory": [
+       "acto: resolucion | KAP sigue soñando",
+       "hito-logrado: Niño con un sueño"
+      ]
+     },
+     {
+      "title": "Calle de noche (14)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "La luz de la luna ilumina su rostro mientras escribe en el cuaderno, con la esperanza de un futuro mejor."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No importa lo que pase. La música me llevará a donde quiera que vaya."
+       }
+      ],
+      "memory": [
+       "acto: resolucion | KAP sigue soñando",
+       "perfil: KAP, sueños = ser millonario gracias a la música"
+      ]
+     },
+     {
+      "title": "Calle de noche (15)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP cierra el cuaderno y se acuesta, con la sonrisa de la vecina en la cabeza."
+       },
+       {
+        "speaker": "KAP",
+        "text": "La música me hace sentir libre. Y si puedo escribir una canción, quizás pueda ser millonario."
+       }
+      ],
+      "memory": [
+       "acto: resolucion | KAP sigue soñando",
+       "hito-logrado: Niño con un sueño"
+      ]
+     },
+     {
+      "title": "Calle de noche (16)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se queda dormido, con el cuaderno a su lado y la esperanza de un futuro mejor."
+       },
+       {
+        "speaker": "KAP",
+        "text": "La música me hará millonario. Por mí y por mi hermano."
+       }
+      ],
+      "memory": [
+       "acto: resolucion | KAP sigue soñando",
+       "hito-logrado: Niño con un sueño"
+      ]
+     },
+     {
+      "title": "Calle de noche (17)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "El cielo se tiñe de rojo y amarillo, anunciando el amanecer. KAP sigue soñando con un futuro mejor."
+       },
+       {
+        "speaker": "KAP",
+        "text": "La música me hará millonario. Por mí y por mi hermano."
+       }
+      ],
+      "memory": [
+       "acto: resolucion | KAP sigue soñando",
+       "hito-logrado: Niño con un sueño"
+      ]
+     },
+     {
+      "title": "Calle de noche (18)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "El amanecer llega, y KAP se prepara para el día, con la sonrisa de la vecina en la cabeza."
+       },
+       {
+        "speaker": "KAP",
+        "text": "La música me hará millonario. Por mí y por mi hermano."
+       }
+      ],
+      "memory": [
+       "acto: resolucion | KAP sigue soñando",
+       "hito-logrado: Niño con un sueño",
+       "gancho: La vecina le presta libros de poesía, pero Dani sigue acosándolo"
+      ]
+     }
+    ]
+   }
+  }
+ ]
+}
