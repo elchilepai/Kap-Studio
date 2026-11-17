@@ -133,3 +133,45 @@ El vertical tarda un 8 % más que el 16:9 (405 s frente a 375 s) con la misma me
 - Con 3 personajes y un paseo dirigido pueden solaparse; con 4 personajes en vertical la escena queda muy apretada (los planos cerrados de diálogo lo mitigan).
 - Los escenarios con imagen de fondo no bajan la cámara: el subtítulo puede tapar los pies.
 - Los clips del 16:9 y del 9:16 no se comparten en la caché (distinto tamaño de fotograma y distinta composición).
+
+---
+
+# Fase 1 — caché de fotograma del motor 2D (fondos y superposición)
+
+Mismo benchmark (22 escenas, 1080p, 4 personajes, 6 escenarios, voz, música, subtítulos), 4 vCPU / 16 GB, config. por defecto (1 worker, montaje por tramos). Herramienta de perfilado: `node --no-warnings scripts/prof-frame.mjs [h|v] [preset] [momento]`.
+
+## Qué se investigó antes de implementar (medido, no supuesto)
+- **Skia dibuja de forma diferida**: los tiempos de dibujo solo son reales si se fuerza la lectura de píxeles (`cv.data()`). Con eso, un fotograma 1080p cuesta ≈ 13-15 ms en el worker: escenario 4-7 ms, personajes 2-3 ms, primer plano 1-2 ms, viñeta/gradación 1-3 ms, **lectura RGBA ≈ 3,5 ms + copia ≈ 2 ms**. FFmpeg codifica a ≈ 8,5 ms/fotograma. La tubería real (worker | FFmpeg) tarda ≈ 21 ms/fotograma: el cuello de botella es el worker.
+- **Cachear capas de fondo como bitmaps escalados sale PEOR** que redibujar: un bitmap grande dibujado con zoom/desplazamiento cuesta ≈ 7,5 ms frente a 2-3 ms de rellenar un degradado o dibujar el horizonte. Por eso **no** se hicieron capas de paralaje precalculadas.
+- **Sí es barato** copiar un bitmap 1:1 (≈ 0,6 ms) y una superposición 1:1 (≈ 0,5 ms frente a 3 ms de la viñeta en vivo).
+- `cv.data()` ya devuelve memoria nueva en cada llamada: la `Buffer.from(...)` posterior copiaba 8 MB por fotograma sin necesidad.
+
+## Qué se implementó
+1. **Fondo reutilizado con cámara fija** (`createFrameCache`, `renderFrame`): el escenario no depende del tiempo, solo de la cámara. Si la firma de cámara (posición, zoom, giro, temblor, tamaño) no cambia respecto al fotograma anterior —planos fijos del diálogo, esperas— se copia 1:1 el bitmap ya dibujado en vez de redibujar el escenario. Se invalida solo cuando cambia la cámara o el escenario (`StageSpec`).
+2. **Superposición única**: gradación + viñeta + barras cinematográficas se pintan una vez en un bitmap de pantalla y se copian 1:1.
+3. **Sin copia extra por fotograma** en el worker (con comprobación al arrancar de que el buffer es independiente; si una versión futura de la librería lo reutilizara, vuelve a copiar).
+4. `KAP_ANIM_CACHE=0` desactiva la caché (modo anterior). El navegador sigue dibujando en directo (sin caché).
+- **Reutilización entre escenas**: no se implementó a propósito. Cada escena es un proceso independiente y el escenario de una escena solo se reutiliza dentro de ella; compartirlo entre escenas ahorraría ≈ un fotograma de dibujo (≈ 5 ms) por escena. No compensa la complejidad.
+
+## Resultados (antes → después)
+La dispersión entre ejecuciones del mismo código es de ≈ ±12 %, por eso se dan **todas** las muestras.
+
+| Métrica | Antes (muestras) | Después (muestras) |
+|---|---|---|
+| Animación 2D por escena (22 escenas) | 280 s · 264 s | 225 s · 247 s · 219 s |
+| **Render completo (sin caché)** | 391 s · 375 s | 338 s · 364 s · 338 s |
+| CPU de la animación | 652 s · 589 s | 568 s · 621 s · 541 s |
+| Pico de memoria (proceso + worker + FFmpeg) | 2.933 MB · 991 MB | 991 MB · 1.018 MB · 978 MB |
+| · pico en la animación | 1.394 MB · 796 MB | 822 MB · 853 MB · 824 MB |
+| Montaje (sin cambios) | 106 s · 106 s | 108 s · 113 s · 116 s |
+| Re-render con todo en caché / editar 1 escena | 31 s / 60 s | 33 s / 61 s |
+| Fondo reutilizado (fotogramas) | — | **82-83 %** |
+| MP4 | 60,2 MB | 58,8-59,2 MB |
+
+(«Antes» incluye la medición previa a la optimización del montaje —2.933 MB— y la ya optimizada —991 MB—. La memoria es la del montaje por tramos; la caché de fotograma no la cambia: el pico lo marca el montaje, no la animación.)
+
+Lectura honesta: la animación baja **≈ 15 %** de media (≈ 272 s → ≈ 230 s) y el render completo **≈ 9 %** (≈ 383 s → ≈ 347 s). Es menos que el recorte del dibujo porque el montaje (≈ 110 s, FFmpeg) no cambia y la animación está parcialmente limitada por FFmpeg y la tubería. La **RAM no mejora** (ya estaba en ≈ 1 GB gracias al montaje por tramos).
+
+## Calidad
+- Prueba de equivalencia (`framecache.test.ts`): 6 tipos de escenario × cámara fija y en movimiento, horizontal y vertical, con lluvia, gradación, viñeta y barras: diferencia **≤ 2 niveles de 255** y **PSNR > 50 dB** frente al dibujo en directo (sin superposición, idéntico). La diferencia viene del redondeo del alfa al componer la viñeta como bitmap; imperceptible.
+- Episodio completo, antes vs. después de la caché (mismo guion y composición): 8.704 fotogramas en ambos, PSNR medio **48,5 dB**, mínimo **43,5 dB**, SSIM **0,996**, 0 errores de decodificación.
