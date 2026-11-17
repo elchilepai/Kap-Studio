@@ -30,7 +30,7 @@ export default async function MemoryCard({ p }: { p: Production }) {
   const groups = new Map<string, NonNullable<typeof proposal>["changes"]>();
   for (const c of proposal?.changes ?? []) { const g = KIND[c.change.kind] ?? "Otros"; groups.set(g, [...(groups.get(g) ?? []), c]); }
   const pack = await contextForProduction(storage, p);
-  const hidden = <><input type="hidden" name="id" value={p.id} /><input type="hidden" name="_redirect" value={`${here}#memoria`} /><input type="hidden" name="_errorTo" value={`${here}#memoria`} /></>;
+  const hidden = <><input type="hidden" name="id" value={p.id} /><input type="hidden" name="_redirect" value={`${here}#memoria`} /><input type="hidden" name="_errorTo" value={here} />   {/* sin «#»: el mensaje de error viaja en ?error= y debe ir antes del fragmento */}</>;
 
   return (
     <div className="card stack" id="memoria">

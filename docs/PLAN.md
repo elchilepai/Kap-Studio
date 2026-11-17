@@ -33,3 +33,14 @@ Pendiente: autenticación de administrador, adaptadores reales (render ffmpeg, g
 
 ---
 **Reorientación a animación 2D (ver docs/ARQUITECTURA-2D.md):** hecha la capa de escena 2D (motor isomórfico Skia/Canvas), director por reglas, diseño versionado de personajes, biblia de estilo, previsualización y storyboard. La subfase C (exportación final, Shorts) queda pendiente.
+
+
+---
+
+## Registro: optimización de render (subfase C) — estado
+Pedido: render por tramos, clips intermedios, liberación de memoria, re-render solo de lo modificado y composición final desde clips. **Ya implementado y medido** (detalle y cifras en `docs/RENDIMIENTO.md`):
+- **Render por tramos** (`composeSegmented`, `KAP_COMPOSE_MODE=segmentos`, tramos de 4 escenas, unión sin recodificar) y **clips intermedios** por escena en caché de contenido; **composición final desde clips**. Modo anterior disponible (`unico`).
+- **Liberación de memoria**: cada tramo es un FFmpeg que termina y libera; pico 2.933 MB → ≈ 1 GB. `KAP_CLIP_WORKERS=1` por defecto (2 workers: −16 % de tiempo, +300 MB).
+- **Re-render solo de lo modificado**: caché por escena y por tramo (editar 1 escena: 124 s → ≈ 60 s; todo en caché: 113 s → ≈ 31 s).
+- Caché de fotograma del motor 2D (fondo con cámara fija, superposición): animación −15 %.
+Pendiente (no es el foco ahora): medir 3–4 workers, varios renders simultáneos, Shorts 9:16 a 1080p con muchos Shorts, personajes PNG por capas.

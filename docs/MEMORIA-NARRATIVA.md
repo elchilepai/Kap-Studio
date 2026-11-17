@@ -1,94 +1,87 @@
-# Memoria narrativa y continuidad — propuesta técnica
+# Memoria narrativa y continuidad (implementada)
 
-> **Estado: diseño para decidir. No hay código nuevo.** Resuelve: *«Crea el episodio 7 continuando exactamente donde terminó el episodio 6»*.
-> La generación de guion con IA depende de la decisión de `docs/IA-LOCAL.md`; **la memoria en sí es independiente del modelo** y puede construirse y validarse antes de conectar ninguno.
+> **Estado: implementado y probado** (sin IA). Referencia de hardware del diseño: **16 GB de RAM, solo CPU, sin GPU dedicada**. No hay ningún modelo conectado ni descargado (`KAP_LLM=none`): todo funciona con reglas y formularios, y la IA futura se enchufa por puertos (§9).
+> Regla fundamental: **solo lo aprobado por el usuario se convierte en canon.** Un borrador o una generación fallida nunca lo modifican.
 
-## 1. Punto de partida (lo que ya existe)
-`Universo KAP` ya guarda, **a mano**: personajes (con diseño versionado y regla de continuidad visual), lugares (con escenario congelado), relaciones (`fromId/toId/kind/note`), acontecimientos y cronología (`StoryEvent`), evolución (`Evolution`), entradas de biblia (`BibleEntry`), hechos canónicos (`CanonFact`) y un resumen global (`StoryState`). También `Production.cast` (prenda de cada personaje en cada episodio) y `Production.storyTime`.
+## 1. Dónde está el código
+| Capa | Módulo | Qué hace |
+|---|---|---|
+| Núcleo puro (sin Next/Node) | `src/memory/` | `schema` (cambios tipados, canon, propuestas), `directives` (sintaxis del guion), `canon` (libro de cambios), `extract` (propuesta sin IA), `validate` (continuidad), `context` (paquete con presupuesto de tokens), `request` (petición → estructura) |
+| Servicio | `src/server/memory/service.ts` | Orquesta almacenamiento + núcleo; aplica la regla «solo aprobado» |
+| Acciones/UI | `src/server/memory-actions.ts`, `src/components/MemoryCard.tsx`, `MemoryTab.tsx`, `/aprobacion` | Panel de cambios propuestos, pestaña Universo → Memoria, hallazgos al aprobar |
+| IA (preparada) | `src/ports/studio.ts` (`LlmClient`, `ScriptAuthor`, `EpisodeSummarizer`, `EpisodeRequestInterpreter`), `src/server/ai/` | Adaptadores genéricos sobre un cliente de modelo intercambiable (§9) |
+| Pipeline | `src/server/studio/script.ts`, `domain/screenplay.ts`, `interpreter.ts`, `after.ts` | Las directivas viajan guion → IR → escenas; al terminar un episodio se PROPONE su memoria |
 
-**Carencias**: el pipeline **no lee** nada de eso al producir; nada se actualiza solo al aprobar un episodio; no hay *estado actual* de cada personaje, ni hilos pendientes, ni objetos, ni «dónde terminó el episodio N». Es un archivo, no una memoria.
+## 2. Cómo se almacena el canon (libro de cambios)
+Todo cambio es un `Change` tipado y validado con zod (el mismo esquema para reglas, directivas, usuario y —en el futuro— IA): `character.add|status|location|outfit|knows`, `relationship.set`, `object.introduce|update`, `thread.open|close`, `fact.add`, `rule.add`, `place.update`, `event.add`.
 
-## 2. Principios
-1. **Solo lo aprobado es canon.** Un episodio entra en la memoria cuando el administrador lo aprueba (modo APPROVAL). Los borradores nunca contaminan el canon.
-2. **Los cambios de memoria se revisan.** Tras aprobar, el sistema *propone* las actualizaciones (diferencias legibles) y el usuario las confirma o corrige. Nada cambia el canon en silencio.
-3. **Reglas deterministas primero, IA después.** Lo que se puede sacar sin IA (quién aparece, dónde, con qué prenda, qué lugares) se extrae de la IR ya validada. La IA solo resume y detecta eventos/hilos, con salida estructurada validada.
-4. **Instantáneas inmutables por episodio.** El estado tras el episodio N es una foto fija; «continuar desde el 6» = leer la foto del 6. La memoria se puede **reconstruir** desde cero a partir de los episodios aprobados.
-5. **Contexto acotado.** Un modelo local pequeño no puede recibir toda la historia: se le entrega un *paquete de contexto* priorizado y con presupuesto de tokens.
-6. **Sin inventar.** Si la memoria no contiene algo, el guion no lo da por hecho; el validador lo señala.
-
-## 3. Modelo de datos
-Se almacena en SQLite (tabla de documentos JSON existente, nuevas colecciones + migración 005), con esquemas zod y puertos como el resto.
-
-| Colección | Qué guarda | Fuente | Estado |
-|---|---|---|---|
-| `Character` (existe) | identidad, **apariencia** (diseño versionado), voz | manual / auto-creado | existe |
-| **`CharacterState`** (nueva; 1 por personaje y episodio) | `lugar`, `prenda/accesorios` (desde `cast`), `estado emocional`, `objetivo actual`, `heridas/condición`, `qué sabe` (hechos conocidos), `vivo/ausente`, `etapa de su arco` | IR (reglas) + resumen IA revisado | nuevo |
-| **`Relationship`** (existe, ampliar) | `from/to`, `tipo`, **`confianza (−2..+2)`**, `historia` (eventos que la cambiaron) | manual + propuestas tras cada episodio | ampliar |
-| `Place` (existe) | escenario congelado | auto/manual | existe |
-| **`StoryObject`** (nueva) | objetos importantes: dueño, ubicación, estado, primera aparición | IR + IA revisada | nuevo |
-| **`StoryEvent`** (existe, ampliar) | `episodio`, `escena`, `tiempo de historia`, resumen, participantes, **consecuencias**, importancia 1-3 | IA revisada | ampliar |
-| **`Thread`** (nueva; «historias pendientes») | título, `abierto/avanzado/resuelto`, abierto en ep., último avance, pista de desenlace | IA revisada | nuevo |
-| **`EpisodeSummary`** (nueva) | logline, resumen 200-400 palabras, **estado final** (foto de todos los `CharacterState`/objetos/hilos), **último plano** (texto verbatim de la última escena) y gancho/cliffhanger | IA + reglas | nuevo |
-| `CanonFact` (existe) | reglas del mundo y hechos inmutables | manual | existe |
-| `BibleEntry` / `StoryState` (existen) | biblia de tono/estilo y sinopsis global | manual | existen |
-
-Notas: `Evolution` pasa a *derivarse* de la secuencia de `CharacterState` (la evolución de cada personaje es su historia de estados); se conserva como vista.
-
-## 4. Ciclo de vida
+El **canon vigente es el pliegue (fold) ordenado de los cambios aceptados**; no es un documento mutable:
 ```
-Aprobar episodio N
-  └─► ① Extracción por REGLAS desde la IR validada: reparto, lugares, prendas (cast), objetos que aparecen, nº de escenas.
-  └─► ② Resumen con IA (trabajo en cola, salida JSON validada por zod): EpisodeSummary, StoryEvents, cambios de CharacterState,
-        Thread (abrir/avanzar/resolver), cambios de confianza en relaciones.   [sin IA: formulario manual, igual que hoy]
-  └─► ③ Panel «Memoria → Cambios propuestos»: diferencias legibles; el usuario acepta/edita/rechaza.
-  └─► ④ Al confirmar: se escribe la instantánea «tras el episodio N» (inmutable) y se actualiza el índice.
+canon = base (escrito por el usuario) ⊕ episodio 1 aceptado ⊕ episodio 2 aceptado ⊕ …   (solo episodios VÁLIDOS)
 ```
-Editar un episodio ya aprobado reinicia su aprobación (regla existente) y marca como **obsoletas** las instantáneas posteriores hasta reconfirmar.
+- Colecciones SQLite nuevas (tabla de documentos existente; entran en la copia de seguridad): `memoryCanon` (canon base), `memoryEpisodes` (episodios en el canon), `memoryProposals` (borradores).
+- **Canon base**: reglas del universo, hechos y estados iniciales que escribe el usuario (Universo → Memoria). Escribirlos es su confirmación.
+- **Estado del canon** (`CanonState`): personajes (estado, lugar, ropa, accesorios, qué saben, primera/última aparición), relaciones (tipo, confianza −2…+2, historial), objetos (estado intacto/dañado/destruido/perdido, dueño, último dueño), hilos (abierto/cerrado), lugares, hechos (con clave opcional `clave = valor`), reglas y acontecimientos.
+- **Episodio válido** = confirmado **y** su producción sigue aprobada **y** su contenido es el mismo con el que se confirmó (firma del contenido). Si se edita o vuelve a revisión, **deja de contar como canon** hasta aprobarlo y confirmarlo de nuevo (o retirarlo). Se puede **retirar** un episodio del canon: el canon se recalcula solo.
 
-## 5. Recuperación: «continúa exactamente donde terminó el 6»
-Determinista, sin embeddings:
-1. **Interpretar la petición** (IA o reglas): `{episodio: 7, relación: "continúa", referencia: 6, notas}`. Sin IA, un formulario («Episodio 7 · continúa del 6»).
-2. **Ensamblar el `ContextPack`** (presupuesto configurable: ≈ 3-4k tokens para modelos de 4-8B), por prioridad:
-   1. petición y tono; 2. **`EpisodeSummary(6)`: estado final + último plano verbatim + gancho**; 3. **`CharacterState(6)`** de los personajes previstos (± los que reaparecen por hilos abiertos); 4. **hilos abiertos** ordenados por antigüedad/importancia; 5. relaciones relevantes (solo del reparto); 6. lugares recurrentes y objetos activos; 7. `CanonFact` y biblia de estilo; 8. resúmenes de episodios anteriores (de más reciente a más antiguo, hasta agotar presupuesto).
-3. **Generar** guion (`ScriptAuthor`) → **IR** (`ScriptInterpreter` + `validateIR`) → continúa el pipeline existente.
-4. **Validación de continuidad (reglas, no IA)** sobre la IR resultante, con avisos revisables:
-   - personaje ausente/fallecido que aparece; personaje en un lugar imposible respecto al estado final del 6;
-   - prenda distinta a la última sin justificación (ya existe la regla `applyDesignChange` para el diseño; se extiende a la prenda);
-   - objeto que aparece sin haber sido adquirido; hilo cerrado que se reabre; relación contradictoria con su estado.
-5. El usuario ve el guion + los avisos y aprueba; **nada se publica**.
+## 3. Estado por episodio (`EpisodeMemory`)
+Resumen y resumen corto · **estado inicial y final** (instantáneas completas) · personajes presentes · cambios de relaciones · objetos introducidos / modificados · acontecimientos · hilos abiertos / cerrados · **último plano** (escena, lugar, personajes y texto literal) · **situación exacta donde termina** (derivada del estado final: dónde y cómo queda cada personaje, qué lleva, hilos abiertos; el usuario puede sobrescribirla) · cambios aceptados y rechazados (auditoría) · quién y cuándo lo confirmó.
 
-*Recuperación semántica opcional* (episodios 30+): embeddings locales (p. ej. un modelo de embeddings de Ollama) para traer eventos antiguos relevantes. No es necesaria al principio; se añade tras medir si el paquete determinista se queda corto.
+## 4. Directivas del guion (declarar sin IA)
+Líneas `[clave: valor]` en el guion (nunca se narran ni se subtitulan; viajan por la IR y quedan en `Scene.memory`):
+`[conoce: A, B]` `[relacion: A, B, tipo, -2..2]` `[obtiene: A, objeto]` `[pierde: A, objeto]` `[destruye: objeto]` `[repara: objeto]` `[usa: A, objeto]` `[abre-hilo: título | A, B]` `[cierra-hilo: título]` `[hecho: clave = valor]` `[corrige-hecho: …]` `[regla: texto]` `[sabe: A | texto]` `[ropa: A, prenda]` `[ubicacion: A, lugar]` `[lugar: nombre | nota]` `[muere|ausente|reaparece: A]` `[evento: título | resumen]` `[momento: texto]` `[flashback: sí]` `[continua: N]`.
+Lo que no se entiende se **avisa** (no se inventa). Las mismas directivas sirven para el canon base y para añadir cambios a mano en el panel.
 
-### Ejemplo (petición → paquete de contexto)
-> «Crea el episodio 7 continuando exactamente donde terminó el episodio 6»
+## 5. Cómo se generan las propuestas de cambios
+Al terminar la generación de un episodio (`afterRender`, solo si el render **terminó bien**) y al aprobarlo, se (re)calcula su **propuesta** (un borrador):
+1. **Declarados** por el autor (directivas por escena) y los **añadidos a mano**.
+2. **Deducidos por reglas**: personajes nuevos, dónde termina cada uno (último escenario en el que aparece), prenda del reparto del episodio, lugares nuevos, personajes ausentes que vuelven.
+3. (Futuro) **Propuestos por IA** con el mismo esquema (`origin: "llm"`), siempre pendientes.
+Cada cambio tiene **id estable** (se conservan las decisiones al recalcular), origen y texto legible («Alex obtiene el coche», «El teléfono queda destruido», «Se abre el hilo “deuda con Marcos”»).
+
+## 6. Cómo se aprueban los cambios
+En la ficha del episodio (**Memoria y continuidad**): por cada cambio **Aceptar / Rechazar**; botones **Aceptar todo**, **Rechazar todo**, **Guardar decisiones**, añadir un cambio a mano y corregir resumen / situación final. **Confirmar en el canon** exige: episodio **aprobado**, todo **decidido** y propuesta **no desfasada**. Nada más entra en el canon.
+Orden del flujo: `generar → borrador + propuesta → (revisar) → APROBAR episodio → decidir cambios → CONFIRMAR → canon`.
+
+## 7. Contexto para continuar (`ContextPack`)
+«Crea el episodio 7 continuando exactamente donde terminó el episodio 6» → `parseEpisodeRequest` (número, temporada, de qué episodio continúa, «exactamente», personajes) → **paquete de contexto** con **presupuesto de tokens** (`KAP_CONTEXT_TOKENS`, 3.500 por defecto; con un modelo, `45 %` de su contexto) y secciones por prioridad:
+`petición` · `estado final del ep. N` · `último plano (literal)` · `personajes relevantes` · `relaciones` · `hilos abiertos` (los que implican a personajes relevantes primero) · `objetos` (marca DESTRUIDO/PERDIDO) · `reglas del universo` · `continuidad visual` (ropa, accesorios, versión de diseño, escenario del último plano) · `hechos` · `otros hilos` · `resumen de episodios anteriores`.
+Lo imprescindible (petición, estado final, último plano, personajes, reglas) siempre entra; lo menos importante se recorta primero; no se vuelca la historia completa. Se ve en la ficha del episodio (con tokens usados/presupuesto). Si el presupuesto es absurdamente pequeño se **avisa** (`overBudget`).
+
+## 8. Reglas de continuidad (sin IA; informan, no bloquean)
+Tres niveles: **error crítico**, **advertencia**, **información nueva pendiente de confirmar**. Se muestran en la ficha y en el centro de aprobación; aprobar con errores críticos **pide confirmación** (no impide).
+| Regla | Nivel | Ejemplo |
+|---|---|---|
+| Personaje **muerto** aparece | crítico | «Marcos murió en ep. 3 y aparece sin explicación» (explican: `[reaparece]`, `[flashback]`) |
+| Personaje **ausente** aparece | aviso | explican: `[reaparece]` o una entrada `[entra: …]` |
+| **Cambio de ropa** sin razón | aviso | canon «camisa roja», reparto «traje azul» sin `[ropa: …]` |
+| Objeto **destruido/perdido** vuelve a usarse | crítico (uso declarado o verbo de uso: «pedalea su bicicleta») · aviso (mención suelta) | hablar de él como perdido («perdí la bicicleta») no es fallo; lo explican `[obtiene]`/`[repara]` |
+| Objeto **sin introducir** / **ajeno** | aviso | `[usa: Alex, coche]` sin que exista; Alex usa lo que es de Laura |
+| Personaje en **dos lugares a la vez** | crítico | misma `[momento: …]` en dos lugares; `[ubicacion]` ≠ lugar de la escena (aviso) |
+| **Arranque discontinuo** | aviso (quien salía en el último plano) · información (el resto) | termina en «Faro» y el siguiente arranca en «Calle» sin transición |
+| **Relación** contradice el canon | crítico / aviso | «se conocen» cuando ya se conocían (aviso); «desconocidos» contra el canon (crítico); salto de confianza ≥ 3 (aviso) |
+| **Acontecimiento** contradice un episodio anterior | crítico | morir dos veces; destruir lo destruido; perder lo destruido; `hecho: k = v` distinto del canon (corrige con `[corrige-hecho]`) |
+| **Hilos** | aviso / información | cerrar uno no abierto o ya cerrado; reabrir; abrir uno abierto |
+| **Nuevo** | información | personajes, objetos, hilos, lugares, relaciones, hechos y reglas nuevos |
+
+## 9. Preparado para la IA local (sin conectarla)
+Arquitectura objetivo (cada flecha es una interfaz ya definida):
 ```
-PETICIÓN: episodio 7 · continúa del 6 · tono: el de la serie (oscuro, misterio)
-ESTADO FINAL EP.6: KAP — en el faro, solo, preocupado, lleva la linterna; Mira — en el puente, herida en el brazo; Vega — desaparecida desde la escena 9; …
-ÚLTIMO PLANO EP.6 (verbatim): «Una luz se enciende en lo alto del faro. KAP da un paso atrás…»
-GANCHO: ¿quién enciende el faro?
-HILOS ABIERTOS: «La luz del faro» (abierto ep.4, avanzó ep.6) · «Dónde está Vega» (abierto ep.6) · …
-RELACIONES: KAP→Mira confianza +2 · KAP→Vega confianza −1 (tras ep.5) · …
-OBJETOS: linterna (KAP) · llave del faro (desconocida)
-CANON: el faro está abandonado desde hace años · …
+Usuario → petición → [EpisodeRequestInterpreter] → memoria/canon → ContextPack → [ScriptAuthor] → guion
+ → [ScriptInterpreter] → IR (validateIR) → validación de continuidad → Animación 2D → Render → Preview → Aprobación
+ → [EpisodeSummarizer] propone cambios → usuario confirma → canon
 ```
+- `LlmClient` (`src/ports/studio.ts`) es **la única pieza que conoce un modelo** (`model`, `contextTokens`, `generate`). Los adaptadores genéricos `llmScriptAuthor`, `llmEpisodeSummarizer`, `llmRequestInterpreter` (`src/server/ai/adapters.ts`) funcionan con cualquier cliente. **Cambiar Qwen3-8B → Qwen3-14B u otro = otro cliente/configuración**, sin tocar memoria, animación ni render.
+- Toda salida del modelo se **valida** (`generateJson`: JSON Schema derivado de zod al motor + validación + reintentos con los errores) y se trata como entrada no fiable: el guion pasa por el intérprete, `validateIR` y la validación de continuidad; los cambios de memoria llegan **pendientes** y exigen la confirmación del usuario. Un modelo nunca escribe en el canon.
+- Si el modelo no está o falla, se usan las reglas (y se avisa).
+- **Para conectar Ollama más adelante**: (1) implementar `LlmClient` (HTTP a `127.0.0.1:11434`, `format` = JSON Schema, modelo por configuración) en `src/server/ai/ollama.ts`; (2) registrarlo en `CLIENTS` de `registry.ts` y ampliar `KAP_LLM`; (3) pasar el banco de pruebas de `docs/IA-LOCAL.md`. Nada más cambia. **No está hecho.**
 
-## 6. Interfaz (mínima)
-- **Universo → Memoria**: línea de tiempo de eventos, hilos (abiertos/resueltos), estado actual de cada personaje, relaciones; vista «estado tras el episodio N».
-- **Cambios propuestos** tras aprobar: diferencias aceptar/editar/rechazar.
-- **Nuevo episodio**: un cuadro de texto libre («Crea el episodio 7 continuando…») + vista previa del `ContextPack` (para ver qué recordó KAP antes de generar).
+## 10. Pruebas
+`src/memory/memory.test.ts` (parser de directivas, canon, propuesta, **una prueba por regla de continuidad**, peticiones, **presupuesto de tokens**), `src/server/memory/scenario.test.ts` (escenario manual contra el pipeline real: Alex/Laura/bicicleta/deuda con Marcos; borrador no toca el canon; no confirmar sin aprobar; aceptar algunos; episodio 2 coherente; **contradicción deliberada**; invalidación al editar), `src/server/ai/ai.test.ts` (adaptadores con un doble de prueba: JSON con reparación, cambio de modelo, fallback, inyección de instrucciones). E2E de navegador: `memory-e2e.js` (27 comprobaciones).
 
-## 7. Riesgos y mitigaciones
-| Riesgo | Mitigación |
-|---|---|
-| El modelo inventa hechos o contradice el canon | Salida con esquema + validación + validador de continuidad por reglas + revisión humana de los cambios de memoria |
-| Un modelo pequeño pierde el hilo con contexto largo | `ContextPack` corto y estructurado (no la historia entera); último plano verbatim |
-| Deriva de la memoria tras muchas ediciones | Instantáneas inmutables + reconstrucción desde episodios aprobados + marcado de obsoletas |
-| El resumen se pierde si no hay IA | Formulario manual equivalente: la memoria funciona sin modelo |
-| Coste de mantenimiento para el usuario | Extracción automática por reglas; la IA hace el resto; el usuario solo confirma |
-
-## 8. Plan de implementación propuesto (cada paso con pruebas y sin romper lo existente)
-1. **Esquemas + migración + extracción por reglas** (`CharacterState`, `EpisodeSummary`, `Thread`, `StoryObject`) y la instantánea tras aprobar. *Aceptación*: aprobar un episodio de prueba genera la foto correcta; reconstrucción idempotente.
-2. **`ContextPack`** determinista + vista previa en la interfaz. *Aceptación*: para el episodio 6 de prueba, el paquete contiene estado final, último plano e hilos; respeta el presupuesto de tokens.
-3. **Validador de continuidad** sobre la IR. *Aceptación*: casos de contradicción detectados (personaje ausente, prenda, objeto).
-4. **Interfaz «Memoria»** y «Cambios propuestos» (formulario manual, sin IA).
-5. *(tras decidir IA)* **Adaptadores Ollama** (resumen + guion) con el banco de pruebas de `IA-LOCAL.md`.
+## 11. Limitaciones
+- Lo **semántico** (quién conoce a quién, qué se pierde) lo declara el autor con directivas o el usuario en el panel; sin IA no se deduce del texto libre (solo hay heurística para objetos perdidos/destruidos por verbo de uso).
+- Los nombres de objetos se emparejan por texto normalizado (singular/plural); sinónimos («la bici») no se reconocen.
+- Las relaciones son simétricas (un único tipo y confianza por pareja).
+- No hay recuperación semántica (embeddings): el contexto es determinista y suficiente para decenas de episodios; se añadiría tras medir.
+- Los Shorts no tienen memoria propia (derivan del episodio).
