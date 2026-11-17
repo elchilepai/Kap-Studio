@@ -114,7 +114,7 @@ El estudio se dibuja **de nuevo** a 9:16 con su propia dirección (`src/animatio
 | 3 Shorts derivados (≈ 53 s cada uno) | **223 s en total** (≈ 74 s por Short, 1,4× tiempo real) · **pico 926 MB** · 10,1 / 11,3 / 12,5 MB |
 | Referencia 16:9 (mismo episodio) | 375 s · 991 MB |
 
-El vertical cuesta ≈ 8 % más que el 16:9 (más píxeles por fotograma: 1080 × 1920 frente a 1920 × 1080 no cambia el recuento, pero hay más subtítulos y la cámara cierra más) y usa la misma memoria.
+El vertical tarda un 8 % más que el 16:9 (405 s frente a 375 s) con la misma memoria. Con una sola ejecución por configuración no se puede atribuir a una causa concreta; el recuento de píxeles por fotograma es el mismo (1080 × 1920 = 1920 × 1080).
 
 ## Calidad y sincronización
 - Episodio y 3 Shorts: 1080 × 1920, H.264 High / yuv420p / 30 fps, AAC 48 kHz estéreo; decodificación completa **sin errores**.
