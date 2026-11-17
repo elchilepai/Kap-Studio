@@ -192,7 +192,7 @@ export async function addScene(fd: FormData) {
     await getProviders().storage.productions.save({ ...p, scenes: [...p.scenes, s], updatedAt: now() }); refresh(); back(fd, `/episodios/${p.id}/escenas`);
   });
 }
-const Scene_default = (order: number): Scene => ({ id: crypto.randomUUID(), order, title: `Escena ${order + 1}`, location: "", summary: "", characterIds: [], dialogue: "", durationSec: 5, lines: [{ text: "Texto de la escena." }], narration: "Texto de la escena.", visualHint: "", mood: "", tags: [], transition: "fade", motion: "kenburns", durationSource: "manual", directions: [], locked: true });
+const Scene_default = (order: number): Scene => ({ id: crypto.randomUUID(), order, title: `Escena ${order + 1}`, location: "", summary: "", characterIds: [], dialogue: "", durationSec: 5, lines: [{ text: "Texto de la escena." }], narration: "Texto de la escena.", visualHint: "", mood: "", tags: [], transition: "fade", motion: "kenburns", durationSource: "manual", directions: [], memory: [], locked: true });
 
 export async function previewScene(fd: FormData) {
   return run(fd, "/render", async () => {

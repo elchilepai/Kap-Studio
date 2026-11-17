@@ -1,5 +1,6 @@
 import type { Scene } from "@/domain/types";
 import { estimateSeconds, norm, sentences, tokens, uniq, wordCount } from "./text";
+import { isMemoryKey } from "@/memory/directives";
 
 /**
  * ANALIZADOR DE GUION POR REGLAS (no usa IA). Formato admitido:
@@ -17,6 +18,8 @@ export type ParsedScene = {
   imagen?: string; musica?: string; mood?: string; transicion?: string; duracion?: number; sfx?: string;
   /** Direcciones de escena 2D («clave: valor»): cámara, entra, sale, camina, expresión, gesto, mira, vfx, aparece, desaparece. */
   directions?: string[];
+  /** Directivas de memoria narrativa («conoce: …», «obtiene: …»): se conservan aparte y NUNCA se narran ni van al director. */
+  memory?: string[];
 };
 export type KnownCharacter = { id: string; name: string };
 
@@ -30,6 +33,7 @@ const TRANSITIONS = ["cut", "fade", "fadeblack", "dissolve", "slideleft", "slide
 
 function applyDirective(sc: ParsedScene, key: string, val: string) {
   const k = norm(key);
+  if (isMemoryKey(k)) { (sc.memory ??= []).push(`${k.replace(/\s+/g, "-")}: ${val}`); return; }
   if (STAGE_KEYS.has(k)) { (sc.directions ??= []).push(`${k}: ${val}`); return; }
   if (k === "musica") sc.musica = val; else if (k === "imagen") sc.imagen = val;
   else if (k === "mood" || k === "animo") sc.mood = val; else if (k === "sfx" || k === "efecto") sc.sfx = val;
@@ -43,7 +47,7 @@ export function parseScript(text: string, chars: KnownCharacter[] = []): ParsedS
   const raw = text.replace(/\r/g, "").split("\n");
   const hasHeadings = raw.some((l) => HEADING.test(l));
   const scenes: ParsedScene[] = [];
-  let cur: ParsedScene | null = null; let para: Line[] = [];
+  let cur: ParsedScene | null = null; let para: Line[] = []; const globalMem: string[] = [];
   const open = (title: string): ParsedScene => { const s: ParsedScene = { title, location: title, lines: [] }; scenes.push(s); return s; };
 
   const lineOf = (l: string): Line => {
@@ -65,13 +69,16 @@ export function parseScript(text: string, chars: KnownCharacter[] = []): ParsedS
     const h = HEADING.exec(l);
     if (hasHeadings && h) { flushPara(); cur = open(h[1].trim()); continue; }
     const d = DIRECTIVE.exec(l) ?? (GENERIC_DIRECTIVE.exec(l) && !HEADING.test(l) ? GENERIC_DIRECTIVE.exec(l) : null);
+    if (d && isMemoryKey(d[1]) && !cur) { globalMem.push(`${norm(d[1]).replace(/\s+/g, "-")}: ${d[2]}`); continue; }   // antes de la 1.ª escena: es del episodio entero
     if (d) { if (!hasHeadings) { flushPara(); } (cur ??= open(hasHeadings ? "Apertura" : "")); applyDirective(cur, d[1], d[2]); continue; }
     if (!l.trim()) { if (!hasHeadings) flushPara(); continue; }
     para.push(lineOf(l));
     if (hasHeadings) flushPara();
   }
   flushPara();
-  return hasHeadings ? scenes.filter((s) => s.lines.length) : shape(scenes);
+  const result = hasHeadings ? scenes.filter((s) => s.lines.length) : shape(scenes);
+  if (globalMem.length && result[0]) result[0].memory = [...globalMem, ...(result[0].memory ?? [])];
+  return result;
 }
 
 const sceneWords = (s: ParsedScene) => s.lines.reduce((n, l) => n + wordCount(l.text), 0);
@@ -94,7 +101,7 @@ export function splitLong(scenes: ParsedScene[], maxWords = 52): ParsedScene[] {
     if (sceneWords(sc) <= maxWords) { out.push(sc); continue; }
     const units: Line[] = sc.lines.flatMap((l) => l.speaker ? [l] : sentences(l.text).map((t) => ({ text: t })));
     let part: Line[] = [], w = 0, n = 1;
-    const push = () => { if (part.length) { out.push({ ...sc, title: n === 1 ? sc.title : `${sc.title} (${n})`.trim(), lines: part, imagen: sc.imagen, duracion: undefined, directions: n === 1 ? sc.directions : undefined }); n++; part = []; w = 0; } };
+    const push = () => { if (part.length) { out.push({ ...sc, title: n === 1 ? sc.title : `${sc.title} (${n})`.trim(), lines: part, imagen: sc.imagen, duracion: undefined, directions: n === 1 ? sc.directions : undefined, memory: n === 1 ? sc.memory : undefined }); n++; part = []; w = 0; } };
     for (const u of units) { const uw = wordCount(u.text); if (w + uw > maxWords && part.length) push(); part.push(u); w += uw; }
     push();
   }
@@ -118,7 +125,7 @@ export function toScenes(parsed: ParsedScene[], chars: KnownCharacter[], newId: 
       transition: (p.transicion as Scene["transition"]) ?? "fade", motion: "kenburns" as const,
       durationSec: p.duracion ?? Math.round(estimateSeconds(words) * 10) / 10,
       durationSource: p.duracion ? ("manual" as const) : ("estimated" as const),
-      sfxAssetId: undefined, directions: p.directions ?? [], locked: false,
+      sfxAssetId: undefined, directions: p.directions ?? [], memory: p.memory ?? [], locked: false,
     };
   });
 }

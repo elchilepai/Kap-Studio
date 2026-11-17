@@ -31,6 +31,8 @@ export const IRScene = z.object({
   lines: z.array(IRLine).min(1).max(120), beats: z.array(BeatSchema).max(200).default([]),
   /** Direcciones tal como las escribió el autor (se conservan para no reescribir su texto). */
   source: z.array(z.string().max(300)).max(200).optional(),
+  /** Directivas de memoria narrativa de la escena (misma sintaxis que en el guion). Las puede declarar el autor o devolver un modelo. */
+  memory: z.array(z.string().max(400)).max(100).optional(),
   hints: z.object({ image: z.string().max(200).optional(), music: z.string().max(200).optional(), transition: z.string().max(40).optional(), durationSec: z.number().min(2).max(120).optional(), sfx: z.string().max(200).optional() }).default({}),
 });
 export const ScreenplayIR = z.object({ v: z.literal(1), scenes: z.array(IRScene).min(1).max(300), warnings: z.array(z.string()).default([]) });

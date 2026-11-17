@@ -37,6 +37,8 @@ export const Scene = z.object({
   durationSource: z.enum(["audio", "estimated", "manual"]).default("estimated"),
   /** Direcciones de escena (cámara, entradas, gestos, efectos…): «clave: valor». El director 2D las convierte en animación. */
   directions: z.array(z.string()).default([]),
+  /** Directivas de memoria narrativa del autor («conoce: Alex, Laura», «obtiene: …»): declaran qué cambia en la historia. Nunca se narran ni se subtitulan. */
+  memory: z.array(z.string()).default([]),
   locked: z.boolean().default(false), // escena corregida a mano: el pipeline no la sobrescribe
 });
 export type Scene = z.infer<typeof Scene>;
@@ -78,6 +80,7 @@ export const Production = z.object({
   storyTime: z.string().default(""),          // posición temporal dentro de la historia (p. ej. «Día 3, noche»)
   generated: z.boolean().default(false),     // creado automáticamente por el pipeline (p. ej. Shorts derivados)
   brief: z.string().default(""),            // petición libre del usuario para «Generar episodio»
+  continuesFrom: z.number().int().optional(), // orden (temporada×1000+nº) del episodio del que continúa; la memoria lo usa para la continuidad
   musicAssetId: Id.optional(),               // pista de música elegida
   publishedAt: z.string().optional(),
   createdAt: z.string(), updatedAt: z.string(),

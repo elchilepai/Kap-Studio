@@ -5,6 +5,7 @@
  */
 import type { RenderJob } from "@/domain/render";
 import type { StyleBible } from "@/domain/animation";
+import type { CanonBase, EpisodeMemory, MemoryProposal } from "@/memory/schema";
 import type {
   Asset, BibleEntry, CanonFact, Character, Cost, Evolution, Job, Place, Production,
   ActivityEntry, Relationship, ReviewDecision, Settings, StoryEvent, StoryState,
@@ -39,6 +40,10 @@ export interface Storage {
   story: Repository<StoryState>;
   settings: Repository<Settings>;
   style: Repository<StyleBible>;
+  /** Memoria narrativa: canon base (escrito por el usuario), episodios incorporados al canon y propuestas de cambios (borradores). */
+  memoryCanon: Repository<CanonBase>;
+  memoryEpisodes: Repository<EpisodeMemory>;
+  memoryProposals: Repository<MemoryProposal>;
   activity: ActivityLog;
 }
 

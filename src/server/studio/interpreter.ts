@@ -13,7 +13,7 @@ export function parsedToIR(parsed: ParsedScene[]): ScreenplayIR {
     for (const raw of p.directions ?? []) { const r = parseDirection(raw); if (r.beat) beats.push(r.beat); else warnings.push(`Escena ${i + 1}: ${r.warning}`); }
     return {
       title: p.title, location: p.location, mood: p.mood ?? "", lines: p.lines.map((l) => ({ ...(l.speaker ? { speaker: l.speaker } : {}), text: l.text })), beats,
-      ...(p.directions?.length ? { source: p.directions } : {}),
+      ...(p.directions?.length ? { source: p.directions } : {}), memory: p.memory ?? [],
       hints: { ...(p.imagen ? { image: p.imagen } : {}), ...(p.musica ? { music: p.musica } : {}), ...(p.transicion ? { transition: p.transicion } : {}), ...(p.duracion ? { durationSec: p.duracion } : {}), ...(p.sfx ? { sfx: p.sfx } : {}) },
     };
   });
@@ -42,7 +42,7 @@ export function irToScenes(ir: ScreenplayIR, chars: { id: string; name: string }
       tags: uniq([...tokens(p.location), ...tokens(p.hints.image ?? ""), ...tokens(p.mood), ...chars.filter((c) => characterIds.includes(c.id)).flatMap((c) => tokens(c.name))]),
       transition: (p.hints.transition as Scene["transition"]) ?? "fade", motion: "kenburns" as const,
       durationSec: p.hints.durationSec ?? Math.round(estimateSeconds(words) * 10) / 10, durationSource: p.hints.durationSec ? ("manual" as const) : ("estimated" as const),
-      directions: p.source ?? p.beats.map(beatToDirection), locked: false,
+      directions: p.source ?? p.beats.map(beatToDirection), memory: p.memory ?? [], locked: false,
     };
   });
   // Ritmo: si el autor no fija la transición, cambio de lugar → fundido (a negro si es oscuro); mismo lugar con diálogo → CORTE seco; mismo lugar sin diálogo → disolución.

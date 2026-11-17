@@ -65,7 +65,7 @@ describe("petición del usuario (solo patrones reconocibles)", () => {
 });
 
 const A = (o: Partial<Asset> & { id: string }): Asset => ({ kind: "image", path: o.id + ".png", origin: "uploaded", license: "propio", createdAt: "2026-01-01", name: o.id, mime: "image/png", size: 1, ...o });
-const S = (o: Partial<Scene>): Scene => ({ id: "x", order: 0, location: "", summary: "", characterIds: [], dialogue: "", durationSec: 5, title: "", lines: [], narration: "", visualHint: "", mood: "", tags: [], transition: "fade", motion: "kenburns", durationSource: "estimated", directions: [], locked: false, ...o });
+const S = (o: Partial<Scene>): Scene => ({ id: "x", order: 0, location: "", summary: "", characterIds: [], dialogue: "", durationSec: 5, title: "", lines: [], narration: "", visualHint: "", mood: "", tags: [], transition: "fade", motion: "kenburns", durationSource: "estimated", directions: [], memory: [], locked: false, ...o });
 const P = (o: Partial<Place>): Place => ({ id: "p", name: "Refugio", description: "", createdAt: "x", ...o });
 const C = (o: Partial<Character>): Character => ({ id: "c1", name: "KAP", description: "", traits: [], voiceNotes: "", referenceAssetIds: [], ...o });
 
