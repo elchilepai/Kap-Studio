@@ -14,7 +14,12 @@ const Schema = z.object({
   KAP_FFPROBE_PATH: z.string().default("ffprobe"),
   KAP_FONT_FILE: z.string().optional(),              // fuente para títulos/subtítulos; si falta se busca Inter/DejaVu
   KAP_LIPSYNC: z.enum(["amplitud", "texto"]).default("amplitud"),   // proveedor de labial: amplitud (por defecto) | texto (experimental)
-  KAP_LLM: z.enum(["none"]).default("none"),            // proveedor de LLM local. Hoy solo «none»: ver docs/IA-LOCAL.md y src/server/ai/registry.ts
+  KAP_LLM: z.enum(["none", "ollama"]).default("none"),  // proveedor de LLM LOCAL (nunca de pago). «none» = KAP funciona solo con reglas y formularios
+  KAP_OLLAMA_URL: z.string().default("http://127.0.0.1:11434"),   // solo loopback salvo KAP_LLM_ALLOW_REMOTE=true
+  KAP_LLM_MODEL: z.string().default("qwen3:8b"),                  // cambiar de modelo = cambiar esto; nada más del sistema depende de él
+  KAP_LLM_CONTEXT: z.coerce.number().int().min(2048).max(131072).default(8192),   // tokens de contexto que se piden al motor (más contexto = más RAM)
+  KAP_LLM_TIMEOUT_S: z.coerce.number().int().min(10).max(7200).default(1800),     // en CPU un episodio completo tarda minutos
+  KAP_LLM_ALLOW_REMOTE: z.enum(["true", "false"]).default("false").transform((v) => v === "true"),
   KAP_CONTEXT_TOKENS: z.coerce.number().int().min(500).max(32000).default(3500), // presupuesto del paquete de contexto de la memoria narrativa
   KAP_ANIM_WORKER: z.string().optional(),             // ruta alternativa del trabajador de animación 2D
   KAP_RENDER_CONCURRENCY: z.coerce.number().int().min(1).max(4).default(1),

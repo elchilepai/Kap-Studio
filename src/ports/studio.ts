@@ -17,7 +17,7 @@ export interface ScriptAnalyzer extends ProviderInfo {
 export interface ScriptAuthor extends ProviderInfo {
   available(): Promise<boolean>;
   /** Recibe la petición ya interpretada y el PAQUETE DE CONTEXTO de la memoria narrativa (no la historia entera). Devuelve el guion en el formato documentado de KAP (con directivas de memoria). */
-  write(input: { request: EpisodeRequest; context: ContextPack; signal?: AbortSignal }): Promise<{ script: string; warnings: string[] }>;
+  write(input: { request: EpisodeRequest; context: ContextPack; signal?: AbortSignal }): Promise<{ script: string; warnings: string[]; /** IR validada (si el autor devuelve estructura): el pipeline la re-valida igualmente. */ ir?: unknown; stats?: AuthorStats }>;
 }
 
 /** Sintetiza voz a un archivo de audio. Hoy: audio subido por el usuario o espeak-ng local si está instalado. */
@@ -51,13 +51,17 @@ export interface ScriptInterpreter extends ProviderInfo {
  * REGLA: si no está realmente disponible, `available()` devuelve false: no se simula.
  */
 export type LlmRequest = { system?: string; prompt: string; /** JSON Schema que debe cumplir la salida (salida estructurada del motor). */ jsonSchema?: object; temperature?: number; maxTokens?: number; signal?: AbortSignal };
+/** Medidas agregadas de una redacción (para el banco de pruebas): intentos, reintentos por tipo y uso del modelo. */
+export type AuthorStats = { attempts: number; retries: number; jsonErrors: number; schemaErrors: number; lengthRetries: number; memoryDirectiveErrors: number; usage: LlmUsage; estimatedSec: number };
+/** Medidas de una llamada (si el motor las da): sirven para el banco de pruebas y para ajustar el presupuesto de contexto. */
+export type LlmUsage = { promptTokens: number; outputTokens: number; totalMs: number; loadMs: number; promptMs: number; evalMs: number };
 export interface LlmClient extends ProviderInfo {
   /** Identificador del modelo (p. ej. «qwen3:8b»). Solo informativo: nada del resto de KAP depende de él. */
   readonly model: string;
   /** Tokens de contexto que admite; la memoria ajusta su paquete a este límite. */
   readonly contextTokens: number;
   available(): Promise<boolean>;
-  generate(req: LlmRequest): Promise<{ text: string }>;
+  generate(req: LlmRequest): Promise<{ text: string; usage?: LlmUsage }>;
 }
 
 /** Interpreta una petición en texto libre («Crea el episodio 7 continuando el 6»). Hoy: reglas. Mañana: LLM. */

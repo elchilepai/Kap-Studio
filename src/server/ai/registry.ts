@@ -6,11 +6,17 @@
 import type { EpisodeRequestInterpreter, EpisodeSummarizer, LlmClient, ScriptAuthor } from "@/ports/studio";
 import { env } from "@/server/env";
 import { llmEpisodeSummarizer, llmRequestInterpreter, llmScriptAuthor } from "./adapters";
+import { createOllamaClient } from "./ollama";
+import { llmEpisodeAuthor } from "./episode";
 
 export type Ai = { llm?: LlmClient; author?: ScriptAuthor; summarizer?: EpisodeSummarizer; requests?: EpisodeRequestInterpreter };
 /** Construye los adaptadores de IA a partir de un cliente (también lo usan los tests con un doble de prueba). */
-export const aiFrom = (llm?: LlmClient): Ai => (llm ? { llm, author: llmScriptAuthor(llm), summarizer: llmEpisodeSummarizer(llm), requests: llmRequestInterpreter(llm) } : {});
+/** `authorMode`: «json» (por defecto) = el modelo devuelve un borrador JSON validado → IR; «text» = guion en texto libre (más flexible, menos estructura). */
+export const aiFrom = (llm?: LlmClient, o: { authorMode?: "json" | "text"; scenes?: number } = {}): Ai => (llm ? { llm, author: (o.authorMode ?? "json") === "json" ? llmEpisodeAuthor(llm, { scenes: o.scenes }) : llmScriptAuthor(llm), summarizer: llmEpisodeSummarizer(llm), requests: llmRequestInterpreter(llm) } : {});
 
-const CLIENTS: Record<string, (() => LlmClient) | undefined> = {};   // aquí se registrarán los clientes reales (p. ej. "ollama")
+/** Clientes registrados. Añadir otro motor/modelo local = una entrada aquí; nada más cambia. */
+const CLIENTS: Record<string, (() => LlmClient) | undefined> = {
+  ollama: () => { const e = env(); return createOllamaClient({ baseUrl: e.KAP_OLLAMA_URL, model: e.KAP_LLM_MODEL, contextTokens: e.KAP_LLM_CONTEXT, timeoutMs: e.KAP_LLM_TIMEOUT_S * 1000, allowRemote: e.KAP_LLM_ALLOW_REMOTE }); },
+};
 export function getAi(): Ai { const k = env().KAP_LLM as string; const make = CLIENTS[k]; return k === "none" || !make ? {} : aiFrom(make()); }
 export const contextBudget = (ai: Ai) => Math.min(env().KAP_CONTEXT_TOKENS, ai.llm ? Math.floor(ai.llm.contextTokens * 0.45) : env().KAP_CONTEXT_TOKENS);

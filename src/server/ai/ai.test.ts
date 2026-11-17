@@ -56,7 +56,7 @@ describe("IA local preparada (sin conectar): adaptadores genéricos sobre un Llm
   it("el redactor recibe el contexto de continuidad (no la historia entera) y su guion pasa por el pipeline y la validación", async () => {
     const w = await world();
     const bad = "# Puente\nALEX: Sigo con mi bicicleta.\nAlex pedalea su bicicleta hacia el taller.\n[usa: Alex, bicicleta]\n";   // el modelo «olvida» que la bicicleta se perdió
-    const llm = new ScriptedLlm("qwen3:8b", [bad]); const ai = { author: aiFrom(llm).author };
+    const llm = new ScriptedLlm("qwen3:8b", [bad]); const ai = { author: aiFrom(llm, { authorMode: "text" }).author };
     const r = await createEpisodeFromRequest(w.deps(ai), "Crea el episodio 2 continuando exactamente donde terminó el episodio 1");
     expect(r.authored).toBe(true); expect(r.production.script).toBe(bad.trim());
     const call = llm.calls[0]; expect(call.system).toMatch(/guionista de la serie de animación KAP/); expect(call.prompt).toMatch(/EXACTAMENTE donde terminó/); expect(call.prompt).toMatch(/Último plano del ep\. 1/); expect(call.prompt).toMatch(/«bicicleta» — PERDIDO/);
@@ -70,20 +70,20 @@ describe("IA local preparada (sin conectar): adaptadores genéricos sobre un Llm
   it("cambiar de modelo (Qwen3-8B → Qwen3-14B → otro) solo cambia el cliente: mismo flujo, mismos resultados", async () => {
     for (const [model, ctx] of [["qwen3:8b", 8192], ["qwen3:14b", 32768], ["otro-modelo:7b", 4096]] as const) {
       const w = await world(); const llm = new ScriptedLlm(model, ["# Puente\nALEX: Hola.\n"], ctx);
-      const r = await createEpisodeFromRequest(w.deps({ author: aiFrom(llm).author }), "Crea el episodio 2 continuando el episodio 1"); expect(r.authored).toBe(true); expect(llm.model).toBe(model);
+      const r = await createEpisodeFromRequest(w.deps({ author: aiFrom(llm, { authorMode: "text" }).author }), "Crea el episodio 2 continuando el episodio 1"); expect(r.authored).toBe(true); expect(llm.model).toBe(model);
     }
     expect(contextBudget(aiFrom(new ScriptedLlm("a", [], 4096)))).toBe(Math.floor(4096 * 0.45)); expect(contextBudget(aiFrom(new ScriptedLlm("b", [], 32768)))).toBe(3500);   // el presupuesto se ajusta al contexto del modelo
   });
 
   it("modelo no disponible o que falla → se cae a las reglas, sin romper nada", async () => {
     const w = await world(); const llm = new ScriptedLlm("qwen3:8b", [new Error("modelo no cargado")]);
-    const r = await createEpisodeFromRequest(w.deps({ author: aiFrom(llm).author }), "Crea el episodio 2 continuando el episodio 1"); expect(r.authored).toBe(false); expect(r.warnings.join()).toMatch(/no pudo redactar.*modelo no cargado/); expect(r.production.script).toBe("");
-    const off = new ScriptedLlm("q", ["x"]); off.up = false; const w2 = await world(); const r2 = await createEpisodeFromRequest(w2.deps({ author: aiFrom(off).author }), "Crea el episodio 2 continuando el episodio 1"); expect(r2.authored).toBe(false); expect(off.calls).toEqual([]);
+    const r = await createEpisodeFromRequest(w.deps({ author: aiFrom(llm, { authorMode: "text" }).author }), "Crea el episodio 2 continuando el episodio 1"); expect(r.authored).toBe(false); expect(r.warnings.join()).toMatch(/no pudo redactar.*modelo no cargado/); expect(r.production.script).toBe("");
+    const off = new ScriptedLlm("q", ["x"]); off.up = false; const w2 = await world(); const r2 = await createEpisodeFromRequest(w2.deps({ author: aiFrom(off, { authorMode: "text" }).author }), "Crea el episodio 2 continuando el episodio 1"); expect(r2.authored).toBe(false); expect(off.calls).toEqual([]);
   });
 
   it("el redactor avisa de directivas de memoria inválidas y de guiones sin escenas", async () => {
     const w = await world(); const llm = new ScriptedLlm("m", ["Alex camina.\n[obtiene: solo]\n[conoce: Alex]\n"]);
-    const r = await createEpisodeFromRequest(w.deps({ author: aiFrom(llm).author }), "Crea el episodio 2 continuando el episodio 1"); expect(r.warnings.join("\n")).toMatch(/sin encabezados|encabezados de escena/); expect(r.warnings.join("\n")).toMatch(/Directiva de memoria inválida/);
+    const r = await createEpisodeFromRequest(w.deps({ author: aiFrom(llm, { authorMode: "text" }).author }), "Crea el episodio 2 continuando el episodio 1"); expect(r.warnings.join("\n")).toMatch(/sin encabezados|encabezados de escena/); expect(r.warnings.join("\n")).toMatch(/Directiva de memoria inválida/);
   });
 
   it("el resumidor propone cambios con el MISMO esquema: se validan, quedan pendientes y NO tocan el canon; una salida inválida se descarta", async () => {
