@@ -5,7 +5,7 @@ import { CharacterDesign as DesignSchema } from "@/domain/animation";
 import { ContinuityError, applyDesignChange, autoDesign, diffDesign, resolveAppearance } from "./design";
 import { envelopeFromPcm } from "./lipsync";
 
-const base: CharacterDesign = { archetype: "flat", skin: "#f1c9a5", hairStyle: "spiky", hairColor: "#2b2a33", eyeColor: "#3b6ea8", height: 1, build: 1, version: 1, changeLog: [],
+const base: CharacterDesign = { archetype: "flat", skin: "#f1c9a5", hairStyle: "spiky", hairColor: "#2b2a33", eyeColor: "#3b6ea8", height: 1, build: 1, body: "regular", eyeStyle: "round", version: 1, changeLog: [],
   outfits: [{ id: "base", name: "Base", top: "#E9B949", bottom: "#2f3a52", shoes: "#1c1f27", accent: "#ffffff", accessory: "scarf" }] };
 const chr = (design?: CharacterDesign): Character => ({ id: "c1", name: "KAP", description: "", traits: [], voiceNotes: "", referenceAssetIds: [], design });
 

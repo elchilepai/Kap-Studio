@@ -7,12 +7,12 @@ import type { Appearance, Cue, Expression, StageSpec } from "@/animation/types";
 import { saveCharacterDesign } from "@/server/animation-actions";
 
 type Outfit = { id: string; name: string; top: string; bottom: string; shoes: string; accent: string; accessory: Appearance["accessory"] };
-export type DesignDraft = { skin: string; hairStyle: Appearance["hairStyle"]; hairColor: string; eyeColor: string; height: number; build: number; outfits: Outfit[] };
+export type DesignDraft = { skin: string; hairStyle: Appearance["hairStyle"]; hairColor: string; eyeColor: string; height: number; build: number; body: NonNullable<Appearance["body"]>; eyeStyle: NonNullable<Appearance["eyeStyle"]>; outfits: Outfit[] };
 
-const ACTIONS = [["idle", "Reposo"], ["walk", "Caminar"], ["talk", "Hablar"], ["wave", "Saludar"], ["think", "Pensar"]] as const;
+const ACTIONS = [["idle", "Reposo"], ["walk", "Caminar"], ["run", "Correr"], ["talk", "Hablar"], ["wave", "Saludar"], ["think", "Pensar"], ["arms_crossed", "Brazos cruzados"], ["hands_hips", "Manos en la cintura"], ["pointing", "Señalar"], ["facepalm", "Mano en la cara"], ["cheer", "Celebrar"], ["shrug", "Encogerse de hombros"]] as const;
 const EXPRS: [Expression, string][] = [["neutral", "Neutral"], ["happy", "Feliz"], ["sad", "Triste"], ["angry", "Enfadado"], ["surprised", "Sorprendido"], ["worried", "Preocupado"], ["thinking", "Pensativo"]];
-const HAIR: [string, string][] = [["short", "Corto"], ["long", "Largo"], ["spiky", "De punta"], ["bun", "Moño"], ["cap", "Gorra"], ["bald", "Calvo"]];
-const ACC: [string, string][] = [["none", "Ninguno"], ["glasses", "Gafas"], ["scarf", "Bufanda"], ["hat", "Sombrero"], ["backpack", "Mochila"]];
+const HAIR: [string, string][] = [["short", "Corto"], ["long", "Largo"], ["spiky", "De punta"], ["bun", "Moño"], ["ponytail", "Coleta"], ["curly", "Rizado"], ["cap", "Gorra"], ["bald", "Calvo"]];
+const ACC: [string, string][] = [["none", "Ninguno"], ["glasses", "Gafas"], ["scarf", "Bufanda"], ["hat", "Sombrero"], ["backpack", "Mochila"], ["headphones", "Auriculares"], ["cape", "Capa"], ["tie", "Corbata"]];
 
 /** Diseñador de personajes con vista previa EN VIVO (mismo motor 2D que la exportación). Guarda un diseño versionado. */
 export default function CharacterDesigner({ characterId, name, initial, version, hasDesign, log }: { characterId: string; name: string; initial: DesignDraft; version: number; hasDesign: boolean; log: { version: number; note: string; at: string }[] }) {
@@ -23,14 +23,15 @@ export default function CharacterDesigner({ characterId, name, initial, version,
   const patchOutfit = (p: Partial<Outfit>) => setD((x) => ({ ...x, outfits: x.outfits.map((o) => (o.id === outfit.id ? { ...o, ...p } : o)) }));
 
   const stage: StageSpec = useMemo(() => {
-    const dur = 4, app: Appearance = { skin: d.skin, hairStyle: d.hairStyle, hairColor: d.hairColor, eyeColor: d.eyeColor, top: outfit.top, bottom: outfit.bottom, shoes: outfit.shoes, accent: outfit.accent, accessory: outfit.accessory, height: d.height, build: d.build };
+    const dur = 4, app: Appearance = { skin: d.skin, hairStyle: d.hairStyle, hairColor: d.hairColor, eyeColor: d.eyeColor, top: outfit.top, bottom: outfit.bottom, shoes: outfit.shoes, accent: outfit.accent, accessory: outfit.accessory, height: d.height, build: d.build, body: d.body, eyeStyle: d.eyeStyle };
     const cues: Cue[] = [{ t: 0, type: "expression", actor: "a", value: expr }];
-    if (action === "walk") cues.push({ t: 0, type: "move", actor: "a", x: 11, dur: 2 }, { t: 2, type: "move", actor: "a", x: 5, dur: 2 });
+    if (action === "walk" || action === "run") cues.push({ t: 0, type: "move", actor: "a", x: 11, dur: 2, run: action === "run" }, { t: 2, type: "move", actor: "a", x: 5, dur: 2, run: action === "run" });
     if (action === "talk") cues.push({ t: 0.2, type: "speak", actor: "a", dur: 3.6, envelope: syntheticEnvelope("Hola, soy yo. Este es mi aspecto en todos los episodios.", 3.6, 30) });
     if (action === "wave") cues.push({ t: 0.3, type: "gesture", actor: "a", value: "wave", dur: 3 });
     if (action === "think") cues.push({ t: 0.3, type: "gesture", actor: "a", value: "think", dur: 3 });
+    if (["arms_crossed", "hands_hips", "pointing", "facepalm", "cheer", "shrug"].includes(action)) cues.push({ t: 0.05, type: "pose", actor: "a", value: action as never });
     return { v: 1, width: 640, height: 400, fps: 30, duration: dur, seed: 1, warnings: [], set: { preset: "abstract", timeOfDay: "night", seed: 5 }, style: { ink: "#0d0f14", line: 0.045, grade: "none", vignette: 0.25, shadow: true },
-      props: [], actors: [{ id: "a", name, appearance: app, slot: action === "walk" ? 5 : 8, facing: 1, presentAtStart: true }], cues };
+      props: [], actors: [{ id: "a", name, appearance: app, slot: action === "walk" || action === "run" ? 5 : 8, facing: 1, presentAtStart: true }], cues };
   }, [d, outfit, action, expr, name]);
 
   const Color = ({ label, v, on }: { label: string; v: string; on: (c: string) => void }) => (
@@ -47,6 +48,8 @@ export default function CharacterDesigner({ characterId, name, initial, version,
       <div className="form">
         <Color label="Piel" v={d.skin} on={(c) => patch({ skin: c })} /><Color label="Pelo" v={d.hairColor} on={(c) => patch({ hairColor: c })} /><Color label="Ojos" v={d.eyeColor} on={(c) => patch({ eyeColor: c })} />
         <div className="field"><label htmlFor={`hs-${characterId}`}>Peinado</label><select id={`hs-${characterId}`} value={d.hairStyle} onChange={(e) => patch({ hairStyle: e.target.value as DesignDraft["hairStyle"] })}>{HAIR.map(([k, l]) => <option key={k} value={k}>{l}</option>)}</select></div>
+        <div className="field"><label htmlFor={`bt-${characterId}`}>Cuerpo</label><select id={`bt-${characterId}`} value={d.body} onChange={(e) => patch({ body: e.target.value as DesignDraft["body"] })}><option value="slim">Delgado</option><option value="regular">Normal</option><option value="broad">Corpulento</option></select></div>
+        <div className="field"><label htmlFor={`es-${characterId}`}>Ojos</label><select id={`es-${characterId}`} value={d.eyeStyle} onChange={(e) => patch({ eyeStyle: e.target.value as DesignDraft["eyeStyle"] })}><option value="round">Redondos</option><option value="narrow">Rasgados</option><option value="big">Grandes</option></select></div>
         <div className="field"><label htmlFor={`h-${characterId}`}>Altura ({d.height.toFixed(2)})</label><input id={`h-${characterId}`} type="range" min={0.8} max={1.2} step={0.01} value={d.height} onChange={(e) => patch({ height: Number(e.target.value) })} style={{ minHeight: 0, padding: 0 }} /></div>
         <div className="field"><label htmlFor={`b-${characterId}`}>Complexión ({d.build.toFixed(2)})</label><input id={`b-${characterId}`} type="range" min={0.85} max={1.2} step={0.01} value={d.build} onChange={(e) => patch({ build: Number(e.target.value) })} style={{ minHeight: 0, padding: 0 }} /></div>
       </div>

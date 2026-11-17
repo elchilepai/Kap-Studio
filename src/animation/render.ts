@@ -1,6 +1,6 @@
 import type { Ctx } from "./character.ts";
 import { drawCharacter, poseFor } from "./character.ts";
-import { drawProp, drawSet } from "./sets.ts";
+import { drawForeground, drawProp, drawSet } from "./sets.ts";
 import { evaluate } from "./timeline.ts";
 import type { FrameState, Grade, StageSpec } from "./types.ts";
 import { GROUND_Y, WORLD_H, WORLD_W } from "./types.ts";
@@ -25,15 +25,16 @@ export function renderFrame(c: Ctx, stage: StageSpec, t: number, res: Resources,
   c.save(); c.setTransform(1, 0, 0, 1, 0, 0); c.fillStyle = "#111318"; c.fillRect(0, 0, W, H);
   c.translate(W / 2, H / 2); c.scale(s, s); c.rotate(st.camera.rot); c.translate(-(v.cx + st.shakeX), -(v.cy + st.shakeY));
   const view = { l: v.cx - v.visW / 2 - 1, r: v.cx + v.visW / 2 + 1, t: v.cy - v.visH / 2 - 1, b: v.cy + v.visH / 2 + 1, cx: v.cx };
-  drawSet(c, stage.set, view, t, res.images);
+  drawSet(c, stage.set, view, t, res.images, stage.style.ink);
   const accent = stage.set.accent ?? "#E9B949";
   stage.props.forEach((p) => { const a = st.props.find((x) => x.id === p.id)?.alpha ?? 0; if (a > 0.001) drawProp(c, p, a, stage.style.ink, accent); });
   const order = stage.actors.map((a, i) => ({ a, s: st.actors[i] })).filter((x) => x.s.visible).sort((p, q) => p.s.x - q.s.x);
   for (const { a, s: as } of order) {
     c.save(); c.translate(as.x, GROUND_Y + 0.55); // los pies pisan el suelo con un poco de profundidad
-    drawCharacter(c, a.appearance, poseFor(as, t, hash32(a.id)), { ink: stage.style.ink, line: stage.style.line, facing: as.facing, shadow: stage.style.shadow, alpha: as.alpha });
+    drawCharacter(c, a.appearance, poseFor(as, t, hash32(a.id)), { ink: stage.style.ink, line: stage.style.line, facing: as.facing, shadow: stage.style.shadow, alpha: as.alpha }, res.images);
     c.restore();
   }
+  drawForeground(c, stage.set, view, res.images, stage.style.ink);   // primer plano: delante de los personajes, se desplaza más que la cámara
   c.restore();
   // efectos y gradación en espacio de pantalla
   c.save(); c.setTransform(1, 0, 0, 1, 0, 0);
@@ -41,6 +42,7 @@ export function renderFrame(c: Ctx, stage: StageSpec, t: number, res: Resources,
   const g = GRADE[stage.set.timeOfDay === "night" && stage.style.grade === "none" ? "night" : stage.style.grade];
   if (g) { c.fillStyle = g; c.fillRect(0, 0, W, H); }
   if (stage.style.vignette > 0) { const r = c.createRadialGradient(W / 2, H / 2, Math.min(W, H) * 0.35, W / 2, H / 2, Math.max(W, H) * 0.75); r.addColorStop(0, "rgba(0,0,0,0)"); r.addColorStop(1, `rgba(0,0,0,${stage.style.vignette})`); c.fillStyle = r; c.fillRect(0, 0, W, H); }
+  if ((stage.style.bars ?? 0) > 0) { const bh = Math.round(H * (stage.style.bars ?? 0)); c.fillStyle = "#000"; c.fillRect(0, 0, W, bh); c.fillRect(0, H - bh, W, bh); }   // barras cinematográficas
   c.restore();
 }
 

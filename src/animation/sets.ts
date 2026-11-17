@@ -1,5 +1,5 @@
 import type { Ctx } from "./character.ts";
-import type { PropSpec, SetSpec, TimeOfDay } from "./types.ts";
+import type { ElementKind, PropSpec, SetElement, SetSpec, TimeOfDay } from "./types.ts";
 import { GROUND_Y, WORLD_H, WORLD_W } from "./types.ts";
 import { rng, shade, mix } from "./util.ts";
 
@@ -36,7 +36,7 @@ function tree(c: Ctx, x: number, base: number, h: number, col: string, ink: stri
 }
 
 /** Dibuja el escenario con paralaje: las capas lejanas se desplazan menos que la cámara. */
-export function drawSet(c: Ctx, set: SetSpec, v: View, t: number, images: Record<string, unknown>) {
+function drawBase(c: Ctx, set: SetSpec, v: View, t: number, images: Record<string, unknown>) {
   const p = PAL[set.timeOfDay]; const par = (k: number) => (v.cx - WORLD_W / 2) * k;
   if (set.preset === "image" && set.imageId && images[set.imageId]) {
     const img = images[set.imageId] as { width: number; height: number }; const ar = img.width / img.height; const w = Math.max(WORLD_W + 3, WORLD_H * ar * 1.1), h = w / ar;
@@ -80,3 +80,56 @@ export function drawProp(c: Ctx, pr: PropSpec, alpha: number, ink: string, accen
   }
   c.restore();
 }
+
+type Img = { width: number; height: number };
+const parShift = (v: View, depth: number) => (v.cx - WORLD_W / 2) * depth;
+
+/** Elementos por defecto de un preset (deterministas): dan profundidad sin que el usuario coloque nada. */
+export function defaultElements(preset: SetSpec["preset"], seed: number): { elements: SetElement[]; foreground: SetElement[] } {
+  const r = rng(seed + 31); const el = (id: string, kind: ElementKind, x: number, depth: number, scale = 1, y?: number): SetElement => ({ id, kind, x, depth, scale, ...(y !== undefined ? { y } : {}) });
+  switch (preset) {
+    case "street": return { elements: [el("e1", "bench", 2.4 + r() * 1.5, 0.05, 1.2), el("e2", "crate", 12.8 + r(), 0.05, 1)], foreground: [el("f1", "pillar", -0.2, -0.45, 2.6), el("f2", "bush", 15.6, -0.5, 2)] };
+    case "forest": return { elements: [el("e1", "bush", 3 + r() * 2, 0.1, 1.4), el("e2", "bush", 11 + r() * 2, 0.1, 1.2)], foreground: [el("f1", "bush", 0.2, -0.5, 2.6), el("f2", "bush", 15.2, -0.55, 2.4)] };
+    case "room": return { elements: [el("e1", "crate", 14, 0.05, 1.3), el("e2", "plant", 1.2, 0.05, 1.4)], foreground: [el("f1", "pillar", 15.8, -0.4, 2.8)] };
+    case "rooftop": return { elements: [el("e1", "crate", 13.6, 0.05, 1.1)], foreground: [el("f1", "pillar", -0.3, -0.4, 2.2)] };
+    case "city": return { elements: [el("e1", "lamp", 3.4, 0.05, 1.1), el("e2", "lamp", 12.4, 0.05, 1.1)], foreground: [] };
+    default: return { elements: [], foreground: [] };
+  }
+}
+
+/** Dibuja un elemento reutilizable en coordenadas del mundo (con paralaje). */
+export function drawElement(c: Ctx, e: SetElement, v: View, ink: string, accent: string, tint: string, fg = false) {
+  const x = e.x + parShift(v, e.depth), y = e.y ?? (fg ? WORLD_H + 0.2 : GROUND_Y + 0.55); c.save(); c.translate(x, y); c.scale(e.flip ? -e.scale : e.scale, e.scale); c.lineWidth = 0.05; c.strokeStyle = ink; c.lineJoin = "round";
+  const f = (col: string) => { c.fillStyle = fg ? mix(col, "#05060a", 0.45) : mix(col, tint, 0.25); c.fill(); c.stroke(); };
+  switch (e.kind) {
+    case "bench": c.beginPath(); c.rect(-0.9, -0.55, 1.8, 0.14); f("#6b5338"); c.beginPath(); c.rect(-0.9, -0.95, 1.8, 0.12); f("#6b5338"); for (const dx of [-0.75, 0.65]) { c.beginPath(); c.rect(dx, -0.55, 0.1, 0.55); f("#4a3a2c"); } break;
+    case "crate": c.beginPath(); c.rect(-0.45, -0.8, 0.9, 0.8); f("#8a6a45"); c.beginPath(); c.moveTo(-0.45, -0.8); c.lineTo(0.45, 0); c.moveTo(0.45, -0.8); c.lineTo(-0.45, 0); c.stroke(); break;
+    case "pillar": c.beginPath(); c.rect(-0.35, -3.2, 0.7, 3.2); f("#3a4256"); c.beginPath(); c.rect(-0.45, -3.3, 0.9, 0.18); f("#4a5268"); break;
+    case "bush": for (const [dx, dy, r] of [[0, -0.45, 0.5], [-0.45, -0.3, 0.38], [0.45, -0.3, 0.38]] as const) { c.beginPath(); c.arc(dx, dy, r, 0, Math.PI * 2); f("#3f7a4d"); } break;
+    case "plant": c.beginPath(); c.rect(-0.2, -0.45, 0.4, 0.45); f("#8a5a3c"); for (const a of [-0.6, 0, 0.6]) { c.beginPath(); c.ellipse(Math.sin(a) * 0.35, -0.9 - Math.cos(a) * 0.2, 0.18, 0.5, a, 0, Math.PI * 2); f("#3f7a4d"); } break;
+    default: c.restore(); drawProp(c, { id: e.id, kind: e.kind as PropSpec["kind"], x, y, scale: e.scale, visibleAtStart: true }, 1, ink, accent); return;
+  }
+  c.restore();
+}
+
+/** Capas personalizadas (PNG con profundidad) + elementos del escenario. Se llama tras el fondo procedural. */
+export function drawSetDetails(c: Ctx, set: SetSpec, v: View, images: Record<string, unknown>, ink: string) {
+  const tint = PAL[set.timeOfDay].mid, accent = set.accent ?? "#E9B949";
+  for (const L of [...(set.layers ?? [])].filter((l) => l.depth >= 0).sort((a, b) => b.depth - a.depth)) drawImageLayer(c, L, v, images);
+  const els = set.elements ?? defaultElements(set.preset, set.seed).elements;
+  for (const e of els) drawElement(c, e, v, ink, accent, tint);
+}
+export function drawForeground(c: Ctx, set: SetSpec, v: View, images: Record<string, unknown>, ink: string) {
+  const tint = PAL[set.timeOfDay].near, accent = set.accent ?? "#E9B949";
+  for (const L of [...(set.layers ?? [])].filter((l) => l.depth < 0).sort((a, b) => a.depth - b.depth)) drawImageLayer(c, L, v, images);
+  for (const e of set.foreground ?? defaultElements(set.preset, set.seed).foreground) drawElement(c, e, v, ink, accent, tint, true);
+}
+function drawImageLayer(c: Ctx, L: NonNullable<SetSpec["layers"]>[number], v: View, images: Record<string, unknown>) {
+  const img = images[L.image] as Img | undefined; if (!img) return;
+  const h = L.height ?? WORLD_H, w = h * (img.width / img.height), y = L.y ?? WORLD_H - h, shift = parShift(v, L.depth);
+  c.save(); c.globalAlpha *= L.alpha ?? 1;
+  if (L.tile) { const x0 = Math.floor((v.l - shift) / w) * w + shift; for (let x = x0; x < v.r + w; x += w) c.drawImage(img as never, x, y, w, h); }
+  else c.drawImage(img as never, WORLD_W / 2 - w / 2 + shift, y, w, h);
+  c.restore();
+}
+export function drawSet(c: Ctx, set: SetSpec, v: View, t: number, images: Record<string, unknown>, ink = "#0d0f14") { drawBase(c, set, v, t, images); drawSetDetails(c, set, v, images, ink); }

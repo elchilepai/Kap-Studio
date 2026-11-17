@@ -9,7 +9,10 @@ import { dimensions } from "@/server/render/presets";
 import type { ExecContext, ExecResult } from "@/server/render/queue";
 import { validateOutput } from "@/server/render/executor";
 import { parseBrief } from "./brief";
-import { parseScript, toScenes } from "./script";
+import { ruleInterpreter, irToScenes } from "./interpreter";
+import { validateIR } from "@/domain/screenplay";
+import { resolveSet } from "@/animation/director";
+import { defaultElements } from "@/animation/sets";
 import { assignAll } from "./visuals";
 import { DEFAULT_SUB_STYLE, buildSceneCues, toASS, toSRT, toVTT, type Cue, type SubStyle } from "./subtitles";
 import { pruneClipCache, renderSceneClip, type Visual } from "./clip";
@@ -31,11 +34,39 @@ export type ProduceDeps = { storage: Storage; mediaDir: string; cacheDir: string
 const now = () => new Date().toISOString();
 const LEAD = 0.3, TAIL = 0.5, MIN_SCENE = 2.5;
 
-/** Analiza el guion y planifica escenas (visuales incluidos). Conserva las escenas bloqueadas (corregidas a mano). */
-export async function planProduction(p: Production, st: Storage, brief: string) {
-  const [characters, assets, places] = await Promise.all([st.characters.list(), st.assets.list(), st.places.list()]);
+/** Intérprete activo. Hoy solo existe el de reglas; un LLM se enchufaría aquí devolviendo la misma IR (se valida igual). */
+export const activeInterpreter = () => ruleInterpreter;
+
+/** Crea (con diseño/escenario provisional) los personajes que hablan y los lugares nuevos de una IR, y los guarda en la biblia. */
+export async function ensureBible(st: Storage, p: Production, rep: { ir?: import("@/domain/screenplay").ScreenplayIR; newCharacters: string[]; newPlaces: string[] }) {
+  const created = { characters: [] as string[], places: [] as string[] };
+  if (rep.ir) {
+    const speakers = new Set(rep.ir.scenes.flatMap((sc) => sc.lines.map((l) => l.speaker).filter(Boolean) as string[]).map((n) => norm(n)));
+    for (const name of rep.newCharacters) if (speakers.has(norm(name))) {
+      const nice = name === name.toUpperCase() ? name[0] + name.slice(1).toLowerCase() : name;
+      await st.characters.save({ id: crypto.randomUUID(), name: nice, description: `Creado automáticamente desde el guion de «${p.title}»`, traits: [], voiceNotes: "", referenceAssetIds: [] }); created.characters.push(nice);
+    }
+    for (const name of rep.newPlaces) { const sp = resolveSet(name, [], rep.ir.scenes.find((sc) => sc.location === name)?.mood ?? ""); await st.places.save({ id: crypto.randomUUID(), name, description: "Creado automáticamente desde el guion", createdAt: now(), set: { preset: sp.preset, timeOfDay: sp.timeOfDay, ...defaultElements(sp.preset, sp.seed) } }); created.places.push(name); }   // el decorado se CONGELA con el lugar
+  }
+  return { created, characters: await st.characters.list(), places: await st.places.list() };
+}
+
+export type PlanResult = { scenes: Scene[]; hints: ReturnType<typeof parseBrief>; created: { characters: string[]; places: string[] }; warnings: string[] };
+
+/**
+ * GUION → IR validada → escenas → personajes y escenarios. Conserva las escenas bloqueadas (corregidas a mano).
+ * Los personajes que hablan y los lugares que aparecen por primera vez se CREAN con diseño/escenario provisional y se
+ * guardan en la biblia: en el siguiente episodio se reutilizan idénticos (continuidad).
+ */
+export async function planProduction(p: Production, st: Storage, brief: string, o: { autoCreate?: boolean } = {}): Promise<PlanResult> {
+  let [characters, assets, places] = await Promise.all([st.characters.list(), st.assets.list(), st.places.list()]);
   const hints = parseBrief(brief);
-  let scenes = toScenes(parseScript(p.script, characters), characters);
+  const raw = await activeInterpreter().interpret({ script: p.script, brief, characters, places });
+  const rep = validateIR(raw, { characters: characters.map((c) => c.name), places: places.map((x) => x.name) });
+  if (!rep.ir) throw new RenderError("La estructura del guion no es válida: " + rep.errors.join("; "), false);
+  let created = { characters: [] as string[], places: [] as string[] };
+  if (o.autoCreate !== false) { const r = await ensureBible(st, p, rep); created = r.created; characters = r.characters; places = r.places; }
+  let scenes = irToScenes(rep.ir, characters);
   const locked = new Map(p.scenes.filter((s) => s.locked).map((s) => [norm(s.title), s]));
   scenes = scenes.map((s) => locked.get(norm(s.title)) ?? s).map((s, i) => ({ ...s, order: i, mood: s.mood || hints.mood || "" }));
   const { scenes: assigned, remember } = assignAll(scenes, { assets, characters, places });
@@ -44,7 +75,7 @@ export async function planProduction(p: Production, st: Storage, brief: string) 
     if (ex) { if (!ex.visualAssetId) await st.places.save({ ...ex, visualAssetId: assetId }); }
     else await st.places.save({ id: crypto.randomUUID(), name, description: "Creado automáticamente al asignar su imagen", createdAt: now(), visualAssetId: assetId });
   }
-  return { scenes: assigned.map((s, i) => ({ ...s, order: i })), hints };
+  return { scenes: assigned.map((s, i) => ({ ...s, order: i })), hints, created, warnings: [...rep.ir.warnings, ...rep.warnings] };
 }
 
 export async function produce(job: RenderJob, ctx: ExecContext, d: ProduceDeps): Promise<ExecResult> {

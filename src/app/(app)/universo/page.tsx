@@ -8,6 +8,7 @@ import { saveStory } from "@/server/actions";
 import SubmitButton from "@/components/SubmitButton";
 import type { Character } from "@/domain/types";
 import CharacterDesigner from "@/components/CharacterDesigner";
+import RigImport from "@/components/RigImport";
 import { autoDesign } from "@/server/animation/design";
 import { saveStyleBible } from "@/server/animation-actions";
 import { Notice } from "@/components/ui";
@@ -40,6 +41,7 @@ export default async function Universo({ searchParams }: { searchParams: Promise
   const sp = await searchParams; const tab = sp.tab ?? "estado";
   const { storage } = getProviders();
   const styleDoc = await storage.style.get("style");
+  const rigImages = tab === "diseno" ? (await storage.assets.list()).filter((a) => a.kind === "image").map((a) => ({ id: a.id, name: a.name, w: a.width, h: a.height })) : [];
   const [chars, rels, events, places, evo, bible, story, prods] = await Promise.all([
     storage.characters.list(), storage.relationships.list(), storage.events.list(), storage.places.list(),
     storage.evolution.list(), storage.bible.list(), storage.story.get("story"), allProductions(),
@@ -69,6 +71,7 @@ export default async function Universo({ searchParams }: { searchParams: Promise
                 <div className="field"><label htmlFor="sl">Grosor de línea</label><input id="sl" name="lineWidth" type="number" step="any" min="0" max="0.12" defaultValue={styleDoc?.lineWidth ?? 0.045} inputMode="decimal" /></div>
                 <div className="field"><label htmlFor="sg">Gradación de color</label><select id="sg" name="grade" defaultValue={styleDoc?.grade ?? "none"}><option value="none">Ninguna</option><option value="dusk">Atardecer</option><option value="night">Noche</option><option value="warm">Cálida</option><option value="cold">Fría</option><option value="dark">Oscura</option></select></div>
                 <div className="field"><label htmlFor="sv">Viñeteado (0–0,8)</label><input id="sv" name="vignette" type="number" step="any" min="0" max="0.8" defaultValue={styleDoc?.vignette ?? 0.3} inputMode="decimal" /></div>
+                <div className="field"><label htmlFor="sb">Barras cinematográficas (0–0,14)</label><input id="sb" name="bars" type="number" step="any" min="0" max="0.14" defaultValue={styleDoc?.bars ?? 0} inputMode="decimal" /></div>
                 <div className="field wide"><label htmlFor="sr">Notas del canal de referencia (rasgos del estilo que quieres igualar)</label><textarea id="sr" name="referenceNotes" defaultValue={styleDoc?.referenceNotes ?? ""} style={{ minHeight: 90 }} placeholder="Paleta, tipo de personajes, ritmo, cámara, tipo de humor…" /></div>
               </div>
               <label className="row small"><input type="checkbox" name="shadow" defaultChecked={styleDoc?.shadow ?? true} style={{ width: 20, minHeight: 20 }} />Sombra bajo los personajes</label>
@@ -82,7 +85,8 @@ export default async function Universo({ searchParams }: { searchParams: Promise
                 <summary><span style={{ flex: 1 }}><div className="t" style={{ fontWeight: 600 }}>{c.name}</div><div className="s small muted">{c.design ? `Diseño v${c.design.version} · ${c.design.outfits.length} prenda(s)` : "Sin diseño: se usa un aspecto PROVISIONAL automático"}</div></span>
                   <span className={`badge ${c.design ? "ok" : "kap"}`}>{c.design ? "Diseñado" : "Provisional"}</span></summary>
                 <div className="body"><CharacterDesigner characterId={c.id} name={c.name} hasDesign={!!c.design} version={dd.version} log={dd.changeLog}
-                  initial={{ skin: dd.skin, hairStyle: dd.hairStyle, hairColor: dd.hairColor, eyeColor: dd.eyeColor, height: dd.height, build: dd.build, outfits: dd.outfits }} /></div>
+                  initial={{ skin: dd.skin, hairStyle: dd.hairStyle, hairColor: dd.hairColor, eyeColor: dd.eyeColor, height: dd.height, build: dd.build, body: dd.body, eyeStyle: dd.eyeStyle, outfits: dd.outfits }} />
+                  <details className="acc" style={{ marginTop: 14 }}><summary className="small">Importar personaje por capas (PNG) · rig propio</summary><div className="body"><RigImport characterId={c.id} name={c.name} current={c.design?.rig} images={rigImages} /></div></details></div>
               </details>);
           })}
         </div>

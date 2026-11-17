@@ -10,7 +10,9 @@ import { RenderQuality, type RenderJob } from "@/domain/render";
 import { Transition, type Scene } from "@/domain/types";
 import { getRenderQueue } from "./render";
 import { getCapabilities } from "./render/ffmpeg";
-import { planProduction } from "./studio/produce";
+import { ensureBible, planProduction } from "./studio/produce";
+import { irToScenes } from "./studio/interpreter";
+import { validateIR } from "@/domain/screenplay";
 import { parseBrief } from "./studio/brief";
 import { deriveShorts } from "./studio/after";
 import { textToLines } from "./studio/script";
@@ -200,5 +202,23 @@ export async function setAssetMeta(fd: FormData) {
     const tags = String(fd.get("tags") ?? "").split(",").map((t) => t.trim()).filter(Boolean).slice(0, 20);
     await storage.assets.save({ ...a, role, tags, license: license || a.license, attribution: attribution || undefined });
     await audit("biblioteca.metadatos", a.id, role, user.username); refresh(); back(fd, "/biblioteca");
+  });
+}
+
+/**
+ * Importa escenas ESTRUCTURADAS (JSON de la IR) sin pasar por el analizador de texto: es la costura por la que un LLM (o cualquier
+ * herramienta) entregará escenas. Se valida con el mismo esquema estricto; lo que no cumple se rechaza con el motivo.
+ */
+export async function importScreenplay(fd: FormData) {
+  return run(fd, "/render", async () => {
+    const user = await requireAdmin(); const p = await loadEpisode(fd.get("id")); const { storage } = getProviders();
+    let json: unknown; try { json = JSON.parse(String(fd.get("json") ?? "")); } catch { throw new UserError("El JSON no es válido"); }
+    const [chars, places] = await Promise.all([storage.characters.list(), storage.places.list()]);
+    const rep = validateIR(json, { characters: chars.map((c) => c.name), places: places.map((x) => x.name) });
+    if (!rep.ir) throw new UserError("Estructura de escenas no válida: " + rep.errors.join("; "));
+    const b = await ensureBible(storage, p, rep); const scenes = irToScenes(rep.ir, b.characters);
+    await storage.productions.save({ ...p, scenes, updatedAt: now() });
+    await audit("estudio.importar_ir", p.id, `${scenes.length} escenas · +${b.created.characters.length} personajes · +${b.created.places.length} lugares`, user.username);
+    refresh(); back(fd, `/episodios/${p.id}/escenas`);
   });
 }

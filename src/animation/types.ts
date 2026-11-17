@@ -4,18 +4,42 @@
  * Reglas para que Node pueda ejecutarlo sin compilar: imports relativos con extensión `.ts`, sin `enum`,
  * sin propiedades de parámetro en constructores y sin alias de ruta.
  */
+import type { PoseName } from "./beats.ts";
+export type { PoseName };
 export type Expression = "neutral" | "happy" | "sad" | "angry" | "surprised" | "worried" | "thinking";
 export type Gesture = "none" | "wave" | "point" | "shrug" | "nod" | "shake" | "think" | "raise";
 export type Ease = "linear" | "in" | "out" | "inOut";
 export type Side = "left" | "right";
-export type HairStyle = "short" | "long" | "bun" | "bald" | "cap" | "spiky";
-export type Accessory = "none" | "glasses" | "scarf" | "hat" | "backpack";
+export type HairStyle = "short" | "long" | "bun" | "bald" | "cap" | "spiky" | "ponytail" | "curly";
+export type Accessory = "none" | "glasses" | "scarf" | "hat" | "backpack" | "headphones" | "cape" | "tie";
+export type BodyType = "slim" | "regular" | "broad";
+export type EyeStyle = "round" | "narrow" | "big";
+/** Visemas (formas de boca): conjunto reducido tipo Preston Blair. La amplitud solo distingue reposo/E/A; un proveedor fonético los usaría todos. */
+export type Viseme = "rest" | "A" | "E" | "I" | "O" | "U" | "FV" | "MBP" | "L" | "WQ";
+export type Ctx = CanvasRenderingContext2D;
+
+/** Rig por CAPAS (personajes propios en PNG): partes con punto de giro, jerarquía y orden de dibujo. */
+export type LayerPart = {
+  id: string; role: string;                 // torso | head | armF | armB | legF | legB | hairBack | hairFront | extra…
+  image: string;                            // id del recurso (PNG) en la biblioteca
+  anchor: [number, number];                 // punto de giro en píxeles de la propia imagen
+  parent?: string; at?: [number, number];   // con padre: punto del padre (px) al que se fija; sin padre: desplazamiento respecto a los pies (px)
+  z: number; scale?: number;
+};
+export type LayeredRig = {
+  kind: "layered"; pxPerUnit: number; parts: LayerPart[];
+  face?: { parent: string; at: [number, number]; scale?: number; eyes?: Record<string, string>; mouths?: Record<string, string> };
+  animations?: string[];
+};
 
 /** Aspecto resuelto de un personaje (diseño base + prenda elegida). Es lo único que necesita el dibujante. */
 export type Appearance = {
   skin: string; hairStyle: HairStyle; hairColor: string; eyeColor: string;
   top: string; bottom: string; shoes: string; accent: string; accessory: Accessory;
   height: number; build: number;
+  body?: BodyType; eyeStyle?: EyeStyle;
+  /** Si existe y es «layered», el personaje se dibuja con sus propias capas en lugar del vector paramétrico. */
+  rig?: LayeredRig;
 };
 
 export type Cue =
@@ -23,10 +47,11 @@ export type Cue =
   | { t: number; type: "exit"; actor: string; to: Side | "fade"; dur?: number }
   | { t: number; type: "move"; actor: string; x: number; dur: number; run?: boolean }
   | { t: number; type: "face"; actor: string; dir: Side }
+  | { t: number; type: "pose"; actor: string; value: PoseName; dur?: number }
   | { t: number; type: "expression"; actor: string; value: Expression }
   | { t: number; type: "gesture"; actor: string; value: Gesture; dur: number }
-  | { t: number; type: "speak"; actor: string; dur: number; envelope: number[] }
-  | { t: number; type: "camera"; x?: number; y?: number; zoom?: number; rot?: number; focus?: string; dur: number; ease?: Ease }
+  | { t: number; type: "speak"; actor: string; dur: number; envelope: number[]; visemes?: Viseme[] }
+  | { t: number; type: "camera"; x?: number; y?: number; zoom?: number; rot?: number; focus?: string; lead?: number; dur: number; ease?: Ease }
   | { t: number; type: "shake"; amp: number; dur: number }
   | { t: number; type: "effect"; effect: EffectKind; dur: number; intensity?: number }
   | { t: number; type: "prop"; id: string; action: "show" | "hide" };
@@ -35,13 +60,18 @@ export type EffectKind = "rain" | "snow" | "fog" | "flash" | "darken" | "dust";
 export type PropKind = "lantern" | "box" | "door" | "sign" | "star" | "moon" | "tree" | "lamp";
 export type PropSpec = { id: string; kind: PropKind; x: number; y: number; scale: number; visibleAtStart: boolean };
 
+/** Capa de fondo con profundidad. depth: 0 = se mueve con el mundo; 0,8 = lejana (se desplaza poco); negativo = primer plano (se desplaza MÁS que la cámara). */
+export type SetLayer = { image: string; depth: number; y?: number; height?: number; tile?: boolean; alpha?: number };
+export type ElementKind = PropKind | "bench" | "pillar" | "bush" | "plant" | "crate";
+/** Elemento reutilizable del escenario (se guarda con el lugar: aparece igual en todos los episodios). */
+export type SetElement = { id: string; kind: ElementKind; x: number; y?: number; scale: number; depth: number; flip?: boolean };
 export type SetPreset = "room" | "street" | "city" | "forest" | "rooftop" | "abstract" | "image";
 export type TimeOfDay = "day" | "dusk" | "night";
-export type SetSpec = { preset: SetPreset; timeOfDay: TimeOfDay; seed: number; imageId?: string; accent?: string };
+export type SetSpec = { preset: SetPreset; timeOfDay: TimeOfDay; seed: number; imageId?: string; accent?: string; layers?: SetLayer[]; elements?: SetElement[]; foreground?: SetElement[] };
 
 export type ActorSpec = { id: string; name: string; appearance: Appearance; slot: number; facing: 1 | -1; presentAtStart: boolean };
 export type Grade = "none" | "dusk" | "night" | "warm" | "cold" | "dark";
-export type StyleParams = { ink: string; line: number; grade: Grade; vignette: number; shadow: boolean };
+export type StyleParams = { ink: string; line: number; grade: Grade; vignette: number; shadow: boolean; bars?: number };
 
 export type StageSpec = {
   v: 1; width: number; height: number; fps: number; duration: number; seed: number;
@@ -56,7 +86,7 @@ export const ANIM_VERSION = 1; // súbelo si cambia el aspecto del render: inval
 
 export type ActorState = {
   id: string; x: number; y: number; facing: 1 | -1; visible: boolean; alpha: number;
-  moving: number; walkPhase: number; expression: Expression; gesture: Gesture; gestureP: number; mouth: number; speaking: boolean;
+  moving: number; walkPhase: number; expression: Expression; gesture: Gesture; gestureP: number; mouth: number; viseme: Viseme; speaking: boolean; pose: PoseName; poseP: number;
 };
 export type CameraState = { x: number; y: number; zoom: number; rot: number };
 export type FrameState = {

@@ -4,7 +4,7 @@ import type { Production } from "@/domain/types";
 import { getProviders } from "@/server/providers";
 import { espeakProvider } from "@/server/studio/voice";
 import { parseBrief } from "@/server/studio/brief";
-import { generateEpisode, analyzeScript } from "@/server/studio-actions";
+import { generateEpisode, analyzeScript, importScreenplay } from "@/server/studio-actions";
 import SubmitButton from "./SubmitButton";
 import { Notice } from "./ui";
 import { RENDER_STATUS_LABEL } from "@/domain/render";
@@ -56,6 +56,12 @@ export default async function GenerateCard({ p }: { p: Production }) {
         <form action={analyzeScript}><input type="hidden" name="id" value={p.id} /><input type="hidden" name="_errorTo" value={`/episodios/${p.id}`} /><SubmitButton className="btn sm"><ListChecks className="i" />Solo analizar el guion</SubmitButton></form>
         {p.scenes.length > 0 && <Link href={`/episodios/${p.id}/escenas`} className="btn sm">Revisar / corregir escenas ({p.scenes.length})</Link>}
       </div>
+
+      <details className="acc"><summary className="small">Importar escenas estructuradas (JSON) · interfaz para un intérprete externo / LLM</summary>
+        <div className="body"><form action={importScreenplay} className="stack"><input type="hidden" name="id" value={p.id} /><input type="hidden" name="_errorTo" value={`/episodios/${p.id}`} />
+          <p className="small muted">Pega la estructura de escenas (esquema en <code>docs/ESCENAS-ESTRUCTURADAS.md</code>). Se valida con el mismo esquema estricto que usa el intérprete por reglas y sustituye el plan de escenas. No requiere el guion en texto.</p>
+          <div className="field wide"><label htmlFor="ir-json">Escenas (JSON)</label><textarea id="ir-json" name="json" spellCheck={false} style={{ minHeight: 140, fontFamily: "ui-monospace, monospace", fontSize: 13 }} placeholder={'{"v":1,"scenes":[{"title":"Refugio","location":"Refugio","lines":[{"text":"KAP despierta."}],"beats":[{"type":"enter","actor":"KAP","from":"left"}]}]}'} /></div>
+          <div className="row"><SubmitButton className="btn sm">Importar escenas</SubmitButton></div></form></div></details>
 
       {last && (
         <div className="card sub"><div className="row between"><span className="small"><b>Última generación</b></span>

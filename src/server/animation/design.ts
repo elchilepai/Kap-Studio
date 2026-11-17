@@ -8,7 +8,7 @@ export const DEFAULT_OUTFIT_ID = "base";
 /** Aspecto final = rasgos base del diseño + prenda elegida (o la primera). Es lo que se dibuja SIEMPRE: así un personaje no cambia solo. */
 export function resolveAppearance(d: CharacterDesign, outfitId?: string): Appearance {
   const o = d.outfits.find((x) => x.id === outfitId) ?? d.outfits[0];
-  return { skin: d.skin, hairStyle: d.hairStyle, hairColor: d.hairColor, eyeColor: d.eyeColor, top: o.top, bottom: o.bottom, shoes: o.shoes, accent: o.accent, accessory: o.accessory, height: d.height, build: d.build };
+  return { skin: d.skin, hairStyle: d.hairStyle, hairColor: d.hairColor, eyeColor: d.eyeColor, top: o.top, bottom: o.bottom, shoes: o.shoes, accent: o.accent, accessory: o.accessory, height: d.height, build: d.build, body: d.body, eyeStyle: d.eyeStyle, ...(d.rig ? { rig: d.rig } : {}) };
 }
 
 const SKINS = ["#f1c9a5", "#e0ac84", "#c68b62", "#a8714c", "#8a5a3c", "#f6d7c0"], HAIRS = ["#2b2a33", "#4a2a1f", "#7a4a2a", "#c9a24a", "#8a8d96", "#a0382b"], EYES = ["#3b6ea8", "#2f7d5b", "#6b4a2a", "#4a4f8a"];
@@ -23,15 +23,15 @@ export function autoDesign(name: string): CharacterDesign {
   const h = hash32(name.toLowerCase());
   return {
     archetype: "flat", skin: SKINS[h % SKINS.length], hairStyle: STYLES[(h >> 3) % STYLES.length], hairColor: HAIRS[(h >> 5) % HAIRS.length], eyeColor: EYES[(h >> 7) % EYES.length],
-    height: 1, build: 1, version: 1, changeLog: [],
+    height: 1, build: 1, body: "regular", eyeStyle: "round", version: 1, changeLog: [],
     outfits: [{ id: DEFAULT_OUTFIT_ID, name: "Base", top: TOPS[(h >> 9) % TOPS.length], bottom: BOTTOMS[(h >> 11) % BOTTOMS.length], shoes: "#1c1f27", accent: "#ffffff", accessory: ACCS[(h >> 13) % ACCS.length] }],
   };
 }
 
-const BASE_KEYS = ["skin", "hairStyle", "hairColor", "eyeColor", "height", "build"] as const;
+const BASE_KEYS = ["skin", "hairStyle", "hairColor", "eyeColor", "height", "build", "body", "eyeStyle"] as const;
 export type DesignDiff = { baseChanged: string[]; outfitsEdited: string[]; outfitsAdded: string[]; outfitsRemoved: string[] };
 export function diffDesign(a: CharacterDesign, b: CharacterDesign): DesignDiff {
-  const baseChanged = BASE_KEYS.filter((k) => a[k] !== b[k]) as string[];
+  const baseChanged = [...BASE_KEYS.filter((k) => a[k] !== b[k]), ...(JSON.stringify(a.rig ?? null) !== JSON.stringify(b.rig ?? null) ? ["rig"] : [])] as string[];
   const outfitsEdited: string[] = [], outfitsRemoved: string[] = [];
   for (const o of a.outfits) { const n = b.outfits.find((x) => x.id === o.id); if (!n) outfitsRemoved.push(o.name); else if (JSON.stringify(o) !== JSON.stringify(n)) outfitsEdited.push(o.name); }
   const outfitsAdded = b.outfits.filter((o) => !a.outfits.some((x) => x.id === o.id)).map((o) => o.name);

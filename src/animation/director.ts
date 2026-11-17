@@ -1,6 +1,9 @@
 import type { Appearance, Cue, EffectKind, Expression, Gesture, PropKind, PropSpec, SetPreset, SetSpec, Side, StageSpec, StyleParams, TimeOfDay } from "./types.ts";
 import { WORLD_W } from "./types.ts";
 import { hash32 } from "./util.ts";
+import { amplitudeProvider, syntheticEnvelope, type LipSyncProvider, type LipSyncTrack } from "./lipsync.ts";
+import { norm as bnorm, parseDirection, type Beat } from "./beats.ts";
+export type { Beat };
 
 /**
  * DIRECTOR 2D POR REGLAS (sin IA). Convierte una descripción estructurada de escena (líneas con su tiempo, personajes,
@@ -12,23 +15,19 @@ export type DirectorActor = { id: string; name: string; appearance: Appearance }
 export type DirectorInput = {
   duration: number; tail?: number; aspect: number; index: number; fps: number; width: number; height: number;
   location: string; mood: string; tags: string[]; narration: string;
-  characters: DirectorActor[]; lines: TimedLine[]; directions: string[];
-  set?: { preset?: SetPreset; timeOfDay?: TimeOfDay; imageId?: string; accent?: string };
+  characters: DirectorActor[]; lines: TimedLine[];
+  /** Acciones estructuradas (de un intérprete: reglas o LLM) y/o texto «clave: valor» editable; se combinan. */
+  beats?: Beat[]; directions: string[];
+  set?: { preset?: SetPreset; timeOfDay?: TimeOfDay; imageId?: string; accent?: string; layers?: SetSpec["layers"]; elements?: SetSpec["elements"]; foreground?: SetSpec["foreground"] };
   envelopes?: (number[] | undefined)[];          // envolvente real del audio por línea (si existe)
+  /** Proveedor de sincronización labial (por defecto: amplitud). Sustituible sin tocar nada más. */
+  lipsync?: LipSyncProvider;
   style: StyleParams;
 };
 
 export const norm = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
 
-/** Envolvente de boca sintética a partir del ritmo del texto (sílabas y pausas). Solo se usa si NO hay audio real. */
-export function syntheticEnvelope(text: string, dur: number, fps: number): number[] {
-  const n = Math.max(1, Math.round(dur * fps)); const w: { len: number; open: number }[] = [];
-  for (const m of text.matchAll(/[aeiouáéíóúü]+|[,.;:!?…]+/gi)) w.push(/[,.;:!?…]/.test(m[0]) ? { len: 1.1, open: 0 } : { len: 1, open: 0.35 + ((hash32(m[0] + w.length) % 100) / 100) * 0.65 });
-  if (!w.length) return new Array(n).fill(0);
-  const total = w.reduce((a, b) => a + b.len, 0), out: number[] = [];
-  for (let i = 0; i < n; i++) { let u = ((i + 0.5) / n) * total, k = 0; while (k < w.length - 1 && u > w[k].len) { u -= w[k].len; k++; } const p = u / w[k].len; out.push(w[k].open ? +(w[k].open * Math.pow(Math.sin(Math.PI * Math.min(1, p)), 0.7)).toFixed(2) : 0); }
-  return out;
-}
+export { syntheticEnvelope };
 
 const SET_RULES: [RegExp, SetPreset][] = [
   [/azotea|tejado|terraza/, "rooftop"], [/refugio|habitaci|cuarto|casa|interior|sala|cocina|taller|laboratorio|cabana|cueva|bunker/, "room"],
@@ -39,14 +38,10 @@ export function resolveSet(location: string, tags: string[], mood: string, given
   const key = norm(`${location} ${tags.join(" ")}`); let preset: SetPreset = given?.preset ?? "abstract";
   if (!given?.preset) for (const [re, p] of SET_RULES) if (re.test(key)) { preset = p; break; }
   const m = norm(mood); const tod: TimeOfDay = given?.timeOfDay ?? (/noche|nocturn/.test(key) || /oscur|tens|misteri|miedo/.test(m) ? "night" : /amanec|atardec|ocaso/.test(key) || /trist/.test(m) ? "dusk" : /dia|sol|aleg|diverti/.test(key + m) ? "day" : "dusk");
-  return { preset, timeOfDay: tod, seed: hash32(location || "kap") % 1000, imageId: given?.imageId, accent: given?.accent };
+  return { preset, timeOfDay: tod, seed: hash32(location || "kap") % 1000, imageId: given?.imageId, accent: given?.accent, ...(given?.layers ? { layers: given.layers } : {}), ...(given?.elements ? { elements: given.elements } : {}), ...(given?.foreground ? { foreground: given.foreground } : {}) };
 }
 
 const MOOD_EXPR: [RegExp, Expression][] = [[/oscur|tens|miedo|preocup/, "worried"], [/trist|melanc/, "sad"], [/aleg|diverti|feliz/, "happy"], [/misteri|intrig/, "thinking"], [/enfad|furi|ira/, "angry"]];
-const EXPR_WORDS: Record<string, Expression> = { triste: "sad", feliz: "happy", contento: "happy", alegre: "happy", enfadado: "angry", furioso: "angry", sorprendido: "surprised", asombrado: "surprised", preocupado: "worried", asustado: "worried", pensativo: "thinking", neutral: "neutral", serio: "neutral" };
-const GESTURE_WORDS: Record<string, Gesture> = { saluda: "wave", saludar: "wave", senala: "point", señala: "point", encoge: "shrug", asiente: "nod", niega: "shake", piensa: "think", levanta: "raise", celebra: "raise" };
-const PROPS: Record<string, PropKind> = { linterna: "lantern", caja: "box", puerta: "door", cartel: "sign", estrella: "star", luna: "moon", arbol: "tree", farola: "lamp" };
-const VFX: Record<string, EffectKind> = { lluvia: "rain", nieve: "snow", niebla: "fog", flash: "flash", oscurecer: "darken", polvo: "dust" };
 
 const slots = (n: number) => (n <= 1 ? [8] : n === 2 ? [5.8, 10.2] : n === 3 ? [4.4, 8, 11.6] : [3.4, 6, 10, 12.6]);
 
@@ -57,41 +52,37 @@ export function direct(inp: DirectorInput): StageSpec {
   const actors = chars.map((c, i) => ({ id: c.id, name: c.name, appearance: c.appearance, slot: sl[i], facing: (chars.length === 1 || i < chars.length / 2 ? 1 : -1) as 1 | -1, presentAtStart: true }));
   const props: PropSpec[] = []; const touched = new Set<string>();   // actores con movimiento dirigido a mano
 
-  // ---------- direcciones explícitas («clave: valor») ----------
-  const num = (s: string, re: RegExp) => { const m = re.exec(s); return m ? parseFloat(m[1].replace(",", ".")) : undefined; };
+  // ---------- acciones: beats estructurados + texto editable (ambos se convierten al mismo vocabulario) ----------
+  const beats: Beat[] = [...(inp.beats ?? [])];
+  for (const raw of inp.directions) { const r = parseDirection(raw); if (r.beat) beats.push(r.beat); else warnings.push(r.warning ?? `No entiendo «${raw}»`); }
   let explicitCamera = false;
-  for (const raw of inp.directions) {
-    const i = raw.indexOf(":"); if (i < 0) { warnings.push(`Dirección sin «clave: valor»: «${raw}»`); continue; }
-    const key = norm(raw.slice(0, i)), val = raw.slice(i + 1).trim(), nv = norm(val);
-    const at = num(nv, /\ben\s+(\d+(?:[.,]\d+)?)\s*s/) ?? 0.2, during = num(nv, /durante\s+(\d+(?:[.,]\d+)?)\s*s/);
-    const clean = nv.replace(/\ben\s+\d+(?:[.,]\d+)?\s*s/, "").replace(/durante\s+\d+(?:[.,]\d+)?\s*s/, "").trim();
-    const who = () => { const tok = val.split(/\s+/)[0]; return byName(tok); };
-    const side = (s: string): Side | "fade" | undefined => /izquierd/.test(s) ? "left" : /derech/.test(s) ? "right" : /fundid|fade/.test(s) ? "fade" : undefined;
-    if (key === "camara") {
-      explicitCamera = true; const z = num(clean, /zoom\s+(\d+(?:[.,]\d+)?)/) ?? (/acercar|primer plano/.test(clean) ? 1.3 : /alejar|plano general/.test(clean) ? 0.9 : undefined);
-      if (/temblor|tiembla/.test(clean)) cues.push({ t: at, type: "shake", amp: num(clean, /(\d+(?:[.,]\d+)?)/) ?? 0.25, dur: during ?? 1 });
-      else if (/paneo|panoram/.test(clean)) { const dir = /izquierd/.test(clean) ? -1 : 1; cues.push({ t: at, type: "camera", x: WORLD_W / 2 + dir * 3, dur: during ?? Math.max(1, D - at), ease: "inOut" }); }
-      else if (/segui|siguie/.test(clean)) { const a = byName(clean.replace(/segui\w*\s*/, "").split(" ")[0]); if (a) cues.push({ t: at, type: "camera", focus: a.id, zoom: z ?? 1.15, dur: during ?? 1, ease: "inOut" }); else warnings.push(`cámara: personaje no encontrado en «${raw}»`); }
-      else if (/centro/.test(clean)) cues.push({ t: at, type: "camera", x: WORLD_W / 2, zoom: 1, dur: during ?? 1 });
-      else if (z) cues.push({ t: at, type: "camera", zoom: z, dur: during ?? 1.5, ease: "inOut" });
-      else warnings.push(`cámara: no entiendo «${raw}»`);
-    } else if (key === "entra" || key === "sale") {
-      const a = who(); const sd = side(clean); if (!a || !sd) { warnings.push(`${key}: necesito «NOMBRE izquierda|derecha|fundido» en «${raw}»`); continue; }
-      touched.add(a.id); const act = actors.find((x) => x.id === a.id)!;
-      if (key === "entra") { act.presentAtStart = false; cues.push({ t: at, type: "enter", actor: a.id, from: sd, x: act.slot, dur: during ?? 1.8 }); } else cues.push({ t: at, type: "exit", actor: a.id, to: sd, dur: during ?? 1.8 });
-    } else if (key === "camina") {
-      const a = who(); if (!a) { warnings.push(`camina: personaje no encontrado en «${raw}»`); continue; } touched.add(a.id);
-      const dest = /izquierd/.test(clean) ? 3 : /derech/.test(clean) ? 13 : /centro/.test(clean) ? 8 : num(clean, /\ba\s+(\d+(?:[.,]\d+)?)/); if (dest === undefined) { warnings.push(`camina: destino no entendido en «${raw}»`); continue; }
-      cues.push({ t: at, type: "move", actor: a.id, x: Math.max(0.5, Math.min(WORLD_W - 0.5, dest)), dur: during ?? 2.2, run: /corre/.test(clean) });
-    } else if (key === "expresion") { const a = who(); const e = Object.entries(EXPR_WORDS).find(([w]) => clean.includes(w))?.[1]; if (a && e) cues.push({ t: at, type: "expression", actor: a.id, value: e }); else warnings.push(`expresión: no entiendo «${raw}»`); }
-    else if (key === "gesto") { const a = who(); const g = Object.entries(GESTURE_WORDS).find(([w]) => clean.includes(norm(w)))?.[1]; if (a && g) cues.push({ t: at, type: "gesture", actor: a.id, value: g, dur: during ?? 1.4 }); else warnings.push(`gesto: no entiendo «${raw}»`); }
-    else if (key === "mira") { const a = who(); const sd = side(clean); if (a && (sd === "left" || sd === "right")) cues.push({ t: at, type: "face", actor: a.id, dir: sd }); else warnings.push(`mira: necesito «NOMBRE izquierda|derecha» en «${raw}»`); }
-    else if (key === "vfx") { const e = Object.entries(VFX).find(([w]) => clean.includes(w))?.[1]; if (e) cues.push({ t: at, type: "effect", effect: e, dur: during ?? Math.max(1, D - at), intensity: num(clean, /(\d+(?:[.,]\d+)?)/) }); else warnings.push(`vfx: no conozco «${raw}»`); }
-    else if (key === "aparece" || key === "desaparece") {
-      const kind = Object.entries(PROPS).find(([w]) => clean.includes(w))?.[1]; if (!kind) { warnings.push(`${key}: objeto desconocido en «${raw}»`); continue; }
-      let pr = props.find((p) => p.kind === kind); if (!pr) { pr = { id: `p${props.length}`, kind, x: 2 + props.length * 4.5 + (hash32(kind) % 30) / 10, y: 7.55, scale: 1.3, visibleAtStart: key === "desaparece" }; props.push(pr); }
-      cues.push({ t: at, type: "prop", id: pr.id, action: key === "aparece" ? "show" : "hide" });
-    } else warnings.push(`Dirección desconocida: «${raw}»`);
+  const who = (name: string | undefined, ctx: string) => { const a = name ? byName(name) : undefined; if (!a) warnings.push(`${ctx}: personaje «${name ?? "?"}» no está en la escena`); return a; };
+  for (const b of beats) {
+    const at = b.at ?? 0.2;
+    switch (b.type) {
+      case "camera": {
+        explicitCamera = true;
+        if (b.mode === "shake") cues.push({ t: at, type: "shake", amp: b.amp ?? 0.25, dur: b.dur ?? 1 });
+        else if (b.mode === "pan") cues.push({ t: at, type: "camera", x: WORLD_W / 2 + (b.dir === "left" ? -3 : 3), dur: b.dur ?? Math.max(1, D - at), ease: "inOut" });
+        else if (b.mode === "follow") { const a = who(b.actor, "cámara"); if (a) cues.push({ t: at, type: "camera", focus: a.id, zoom: b.zoom ?? 1.15, dur: b.dur ?? 1, ease: "inOut" }); }
+        else if (b.mode === "reset") cues.push({ t: at, type: "camera", x: WORLD_W / 2, zoom: 1, dur: b.dur ?? 1 });
+        else cues.push({ t: at, type: "camera", zoom: b.zoom ?? 1.3, dur: b.dur ?? 1.5, ease: "inOut" });
+        break; }
+      case "shot": { explicitCamera = true; const z = b.size === "wide" ? 1 : b.size === "medium" ? 1.22 : 1.55; const a = b.actor ? who(b.actor, "plano") : undefined;
+        cues.push(a ? { t: at, type: "camera", focus: a.id, zoom: z, dur: b.cut ? 0.01 : 0.9, ease: "inOut" } : { t: at, type: "camera", x: WORLD_W / 2, zoom: z, dur: b.cut ? 0.01 : 0.9, ease: "inOut" }); break; }
+      case "enter": case "exit": { const a = who(b.actor, b.type === "enter" ? "entra" : "sale"); if (!a) break; touched.add(a.id); const act = actors.find((x) => x.id === a.id)!;
+        if (b.type === "enter") { act.presentAtStart = false; cues.push({ t: at, type: "enter", actor: a.id, from: b.from, x: act.slot, dur: b.dur ?? 1.8 }); } else cues.push({ t: at, type: "exit", actor: a.id, to: b.to, dur: b.dur ?? 1.8 });
+        break; }
+      case "walk": { const a = who(b.actor, "camina"); if (!a) break; touched.add(a.id);
+        const dest = b.to === "left" ? 3 : b.to === "right" ? 13 : b.to === "center" ? 8 : b.to; cues.push({ t: at, type: "move", actor: a.id, x: Math.max(0.5, Math.min(WORLD_W - 0.5, dest)), dur: b.dur ?? 2.2, run: !!b.run }); break; }
+      case "face": { const a = who(b.actor, "mira"); if (a) cues.push({ t: at, type: "face", actor: a.id, dir: b.dir }); break; }
+      case "expression": { const a = who(b.actor, "expresión"); if (a) cues.push({ t: at, type: "expression", actor: a.id, value: b.value }); break; }
+      case "gesture": { const a = who(b.actor, "gesto"); if (a) cues.push({ t: at, type: "gesture", actor: a.id, value: b.value, dur: b.dur ?? 1.4 }); break; }
+      case "pose": { const a = who(b.actor, "pose"); if (a) cues.push({ t: at, type: "pose", actor: a.id, value: b.value, dur: b.dur }); break; }
+      case "vfx": cues.push({ t: at, type: "effect", effect: b.effect, dur: b.dur ?? Math.max(1, D - at), intensity: b.intensity }); break;
+      case "prop": { let pr = props.find((p) => p.kind === b.kind); if (!pr) { pr = { id: `p${props.length}`, kind: b.kind, x: 2 + props.length * 4.5 + (hash32(b.kind) % 30) / 10, y: 7.55, scale: 1.3, visibleAtStart: b.action === "hide" }; props.push(pr); }
+        cues.push({ t: at, type: "prop", id: pr.id, action: b.action }); break; }
+    }
   }
 
   // ---------- ánimo por defecto ----------
@@ -99,11 +90,11 @@ export function direct(inp: DirectorInput): StageSpec {
   if (base) for (const a of actors) cues.push({ t: 0, type: "expression", actor: a.id, value: base });
 
   // ---------- diálogo: boca, mirada, gestos, cámara ----------
-  let dialogueCam = false;
+  let dialogueCam = false; let camSpeaker: string | undefined, camZoom = 0;
   inp.lines.forEach((l, li) => {
     const a = l.speaker ? byName(l.speaker) : undefined; const dur = Math.max(0.3, l.end - l.start); if (!a) return;
-    const env = inp.envelopes?.[li] ?? syntheticEnvelope(l.text, dur, inp.fps);
-    cues.push({ t: l.start, type: "speak", actor: a.id, dur, envelope: env });
+    const trk: LipSyncTrack = (inp.lipsync ?? amplitudeProvider).track({ text: l.text, durationSec: dur, fps: inp.fps, audioEnvelope: inp.envelopes?.[li] });
+    cues.push({ t: l.start, type: "speak", actor: a.id, dur, envelope: trk.envelope, ...(trk.visemes ? { visemes: trk.visemes } : {}) });
     const others = actors.filter((x) => x.id !== a.id), me = actors.find((x) => x.id === a.id)!;
     const target = others.sort((p, q) => Math.abs(p.slot - me.slot) - Math.abs(q.slot - me.slot))[0];
     if (target && !touched.has(a.id)) cues.push({ t: l.start, type: "face", actor: a.id, dir: target.slot >= me.slot ? "right" : "left" });
@@ -115,12 +106,16 @@ export function direct(inp: DirectorInput): StageSpec {
     if (target && dur > 1.5) cues.push({ t: l.start + dur * 0.45, type: "gesture", actor: target.id, value: "nod", dur: 0.9 });
     if (target && !touched.has(target.id)) cues.push({ t: l.start, type: "face", actor: target.id, dir: me.slot >= target.slot ? "right" : "left" });
     if (!explicitCamera && actors.length >= 1) {
-      dialogueCam = true;
-      if (inp.aspect < 1) cues.push({ t: Math.max(0, l.start - 0.1), type: "camera", focus: a.id, zoom: 1.12, dur: 0.6, ease: "inOut" });
-      else if (actors.length > 1) cues.push({ t: Math.max(0, l.start - 0.1), type: "camera", x: WORLD_W / 2 + (me.slot - WORLD_W / 2) * 0.3, zoom: 1.1, dur: 0.8, ease: "inOut" });
+      // Plano / contraplano: tras la primera intervención se CORTA entre quien habla (ritmo dinámico). El hablante se coloca en un
+      // tercio de la imagen mirando hacia el espacio libre (regla de tercios). Las frases emotivas piden un plano más cerrado.
+      dialogueCam = true; const portrait = inp.aspect < 1, emotional = q || ex, firstLine = camSpeaker === undefined;
+      const zoom = portrait ? 1.35 : emotional ? 1.55 : actors.length > 1 ? 1.25 : 1.18; const dirTo = target ? (target.slot >= me.slot ? 1 : -1) : 0;
+      // lead: la cámara va hacia donde mira el hablante → él queda en el tercio opuesto, con espacio para mirar
+      if (camSpeaker !== a.id || camZoom !== zoom) cues.push({ t: Math.max(0, l.start - 0.05), type: "camera", focus: a.id, zoom, lead: portrait ? 0 : dirTo * 0.17, dur: firstLine ? 0.7 : 0.01, ease: "inOut" });
+      camSpeaker = a.id; camZoom = zoom;
     }
   });
-  if (dialogueCam && inp.lines.length) cues.push({ t: Math.min(D, inp.lines[inp.lines.length - 1].end + 0.2), type: "camera", x: WORLD_W / 2, zoom: 1, dur: 1, ease: "inOut" });
+  if (dialogueCam && inp.lines.length) cues.push({ t: Math.min(D, inp.lines[inp.lines.length - 1].end + 0.2), type: "camera", x: WORLD_W / 2, zoom: 1, dur: 0.8, ease: "inOut" });   // vuelve al plano general
 
   // ---------- acciones sugeridas por la narración ----------
   const nar = norm(inp.narration); const lead = actors[0];

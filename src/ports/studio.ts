@@ -31,3 +31,13 @@ export interface ImageProvider extends ProviderInfo {
 }
 
 export type CapabilityRow = ProviderInfo & { area: "guion" | "voz" | "imagen" | "musica" | "video"; available: boolean; detail: string };
+
+/**
+ * CAPA DE INTERPRETACIÓN DEL GUION: convierte texto (formato documentado o lenguaje natural) en una representación intermedia
+ * estructurada (ver domain/screenplay.ts). Está SEPARADA de la capa de animación: el director solo consume la IR ya validada.
+ * Hoy: intérprete por reglas. Mañana: un LLM que devuelva la misma IR (se valida con el mismo esquema).
+ */
+export interface ScriptInterpreter extends ProviderInfo {
+  available(): Promise<boolean>;
+  interpret(input: { script: string; brief: string; characters: { name: string }[]; places: { name: string }[] }): Promise<unknown>;
+}

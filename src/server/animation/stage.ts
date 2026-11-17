@@ -5,10 +5,12 @@ import { direct } from "@/animation/director";
 import { buildSceneCues } from "@/server/studio/subtitles";
 import { autoDesign, resolveAppearance } from "./design";
 import { norm } from "@/server/studio/text";
+import { LIPSYNC_PROVIDERS } from "@/animation/lipsync";
+import { env } from "@/server/env";
 
 export const LEAD = 0.3, TAIL = 0.5;   // la narración arranca 0,3 s después del inicio de la escena (igual que el montaje)
 
-export const styleParams = (b?: StyleBible): StyleParams => ({ ink: b?.ink ?? "#0d0f14", line: b?.lineWidth ?? 0.045, grade: b?.grade ?? "none", vignette: b?.vignette ?? 0.3, shadow: b?.shadow ?? true });
+export const styleParams = (b?: StyleBible): StyleParams => ({ ink: b?.ink ?? "#0d0f14", line: b?.lineWidth ?? 0.045, grade: b?.grade ?? "none", vignette: b?.vignette ?? 0.3, shadow: b?.shadow ?? true, bars: b?.bars ?? 0 });
 
 export type StageCtx = {
   production: Production; characters: Character[]; places: Place[]; style?: StyleBible;
@@ -35,9 +37,12 @@ export async function buildSceneStage(scene: Scene, o: { durationSec: number; ta
     duration: o.durationSec, tail: o.tail, aspect: o.width / o.height, index: o.index, fps, width: o.width, height: o.height,
     location: scene.location || scene.title, mood: scene.mood, tags: scene.tags, narration: scene.narration, characters: actors,
     lines: timed.map((c) => ({ speaker: c.speaker, text: c.text, start: c.start, end: c.end })), directions: scene.directions,
-    set: { ...(place?.set ? { preset: place.set.preset, timeOfDay: place.set.timeOfDay, accent: place.set.accent } : {}), ...(useImage ? { preset: "image" as const, imageId: scene.visualAssetId && scene.visualSource !== "card" ? scene.visualAssetId : place?.set?.imageAssetId ?? place?.visualAssetId } : {}) },
-    envelopes, style: styleParams(ctx.style),
+    set: { ...(place?.set ? { preset: place.set.preset, timeOfDay: place.set.timeOfDay, accent: place.set.accent, layers: place.set.layers, elements: place.set.elements, foreground: place.set.foreground } : {}), ...(useImage ? { preset: "image" as const, imageId: scene.visualAssetId && scene.visualSource !== "card" ? scene.visualAssetId : place?.set?.imageAssetId ?? place?.visualAssetId } : {}) },
+    envelopes, lipsync: LIPSYNC_PROVIDERS[env().KAP_LIPSYNC], style: styleParams(ctx.style),
   });
   const images: Record<string, { path: string; sig: string }> = useImage && stage.set.imageId ? { [stage.set.imageId]: { path: useImage.path, sig: useImage.sig } } : {};
+  // imágenes de las capas del escenario y de los rigs por capas de los personajes
+  const need = [...(stage.set.layers ?? []).map((l) => l.image), ...stage.actors.flatMap((a) => (a.appearance.rig?.kind === "layered" ? [...a.appearance.rig.parts.map((p) => p.image), ...Object.values(a.appearance.rig.face?.eyes ?? {}), ...Object.values(a.appearance.rig.face?.mouths ?? {})] : []))];
+  for (const id of new Set(need)) { const info = await ctx.assetInfo(id); if (info && info.kind === "image") images[id] = { path: info.path, sig: info.sig }; }
   return { stage, images, provisional };
 }
