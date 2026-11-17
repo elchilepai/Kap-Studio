@@ -55,4 +55,15 @@ El `ContextPack` incluye, con presupuesto de tokens y por prioridad: formato de 
 **Todavía no hay IA conectada**: hoy el guion lo escribe el autor con las directivas; el contexto queda a la vista en la ficha del episodio.
 
 ## 8. Demostración con el pipeline real (`npm run demo:series`)
-`scripts/series-demo.mts` ejecuta episodios consecutivos de ≈ 5 min por el pipeline real (voz eSpeak, animación 2D, subtítulos) con la memoria en el bucle. Los textos de `scripts/fixtures/kap-demo/` son **material técnico de prueba, no canon ni guion de la serie**. Resultados en el informe de la fase.
+`scripts/series-demo.mts` ejecuta episodios consecutivos por el pipeline real (voz eSpeak, **animación 2D**, subtítulos, montaje por tramos) con la memoria en el bucle: canon inicial → petición → contexto → guion de demostración → render → propuesta → aprobación → confirmación → siguiente episodio. Los textos de `scripts/fixtures/kap-demo/` son **material técnico de prueba, no canon ni guion de la serie**.
+
+Resultado (3 episodios consecutivos, 480p, 4 vCPU / 16 GB, sin GPU):
+| Episodio | Duración | Escenas | Render | RAM pico | Contexto | Cambios propuestos | Continuidad |
+|---|---|---|---|---|---|---|---|
+| 1 | **4,54 min** | 20 | 131 s | 529 MB | 1.163 tokens | 25 (10 declarados + 15 deducidos) | 0 crítico · 0 avisos |
+| 2 | **4,99 min** | 23 | 147 s | 543 MB | 1.690 tokens | 25 | 0 crítico · 1 aviso* |
+| 3 | **4,61 min** | 19 | 131 s | 521 MB | 1.871 tokens | 15 | 0 crítico · 0 avisos |
+\* El episodio 1 termina en «Salón de noche» y el 2 arranca en «Puerta de casa» (en la práctica, el mismo sitio): la regla de arranque compara **nombres de lugar**. Se resuelve usando el mismo nombre o declarando `[ubicacion: …]`; el prompt del redactor lo pide.
+
+Tras los tres episodios la memoria responde: **4/17 hitos** (2 + 1 + 1), etapa «Niño», edad **8 → 9** con su historial, `situación escolar`, `sueños` y `habilidades iniciales` con su valor anterior («antes: …»), esfuerzo/disciplina/perseverancia, 5 conflictos abiertos, y «dónde terminó» con el último plano y el gancho del episodio 3. Todo el contexto del episodio N+1 cabe en < 2.000 tokens (presupuesto 3.500).
+**Fallo real que encontró esta demostración y ya está corregido:** crear personajes nuevos en el estudio al generar el episodio 2 cambiaba la firma de contenido del episodio 1 y lo sacaba del canon (hitos saltados, historia incompleta). La firma ahora solo depende de los personajes del propio episodio; hay test de regresión.

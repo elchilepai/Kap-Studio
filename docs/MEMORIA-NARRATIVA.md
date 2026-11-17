@@ -1,5 +1,7 @@
 # Memoria narrativa y continuidad (implementada)
 
+> **La serie de KAP** (canon inicial, arco de 17 hitos, evolución, estructura de episodio y las tres preguntas a la memoria) está en `docs/SERIE-KAP.md`.
+
 > **Estado: implementado y probado** (sin IA). Referencia de hardware del diseño: **16 GB de RAM, solo CPU, sin GPU dedicada**. No hay ningún modelo conectado ni descargado (`KAP_LLM=none`): todo funciona con reglas y formularios, y la IA futura se enchufa por puertos (§9).
 > Regla fundamental: **solo lo aprobado por el usuario se convierte en canon.** Un borrador o una generación fallida nunca lo modifican.
 

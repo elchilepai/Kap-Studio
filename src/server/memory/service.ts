@@ -192,8 +192,8 @@ async function packFor(storage: Storage, request: EpisodeRequest, valid: Episode
 }
 /** Paquete de contexto de un episodio ya creado que continúa de otro (para mostrarlo y para el futuro ScriptAuthor). */
 export async function contextForProduction(storage: Storage, prod: Production, budgetTokens?: number): Promise<ContextPack | undefined> {
-  if (prod.continuesFrom === undefined) return undefined;
-  const request: EpisodeRequest = { text: prod.brief || `Episodio ${prod.number}`, number: prod.number, season: prod.season, continuesFrom: prod.continuesFrom, exact: /exactamente|justo|donde\s+termin/i.test(prod.brief), cast: [], notes: prod.brief };
+  if (prod.continuesFrom === undefined && !(await kapCanonRegistered(storage))) return undefined;   // el primer episodio también lleva contexto (canon inicial, formato y arco) si la serie está registrada
+  const request: EpisodeRequest = { text: prod.brief || `Episodio ${prod.number}`, number: prod.number, season: prod.season, ...(prod.continuesFrom !== undefined ? { continuesFrom: prod.continuesFrom } : {}), exact: /exactamente|justo|donde\s+termin/i.test(prod.brief), cast: [], notes: prod.brief };
   const [chars, places, valid] = await Promise.all([storage.characters.list(), storage.places.list(), validEpisodes(storage)]);
   return packFor(storage, request, valid.filter((e) => e.order !== orderOf(prod.season, prod.number)), chars, places, budgetTokens);
 }
