@@ -1,0 +1,42 @@
+
+== Banco de IA local · qwen3:8b · fase tech · 4 vCPU / 16 GB · contexto 8192 ==
+
+[T1] Crear el primer episodio de la historia …
+   1287 s · RAM pico 11578 MB · IR válida · reintentos 1 · cumplimiento 85% · crit 0
+     ✗ directivas-validas — «acto: resolucion»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»
+     ✗ hito-inicial
+
+[T2] Continuar exactamente donde termina un episodio …
+   1791 s · RAM pico 12244 MB · IR válida · reintentos 1 · cumplimiento 73% · crit 0
+     ✗ estructura-6-actos — faltan: conflicto, desarrollo, emocional, resolucion
+     ✗ directivas-validas — «perfil: KAP, serio y responsable para su edad»: usa «Quién, rasgo = valor» | «perfil: KAP, serio y responsable para su edad»: usa «Quién, rasgo = valor»
+     ✗ diversidad-lexica — 0.23
+
+[T3] Mantener el estado del hermano …
+   1115 s · RAM pico 13151 MB · IR válida · reintentos 1 · cumplimiento 100% · crit 0
+
+[T4] Introducir un personaje nuevo …
+   1 s · RAM pico 21 MB · ERROR El modelo no devolvió un episodio válido tras 1 intento(s): El modelo no respondió: Ollama respondió 500: {"error":"model runner has unexpectedly stopped, this may be due to resource limitations or an internal error, check ollama server logs for details"}
+
+[T5] Continuar con un hilo abierto …
+   1076 s · RAM pico 6531 MB · IR válida · reintentos 1 · cumplimiento 83% · crit 0
+     ✗ gancho
+     ✗ declara-algo-del-hilo
+
+[T6] Proponer un cambio de etapa …
+   1335 s · RAM pico 7237 MB · IR válida · reintentos 1 · cumplimiento 58% · crit 0
+     ✗ estructura-6-actos — faltan: emocional, resolucion
+     ✗ directivas-validas — «etapa: K. Adolescente»: usa «Quién, etapa»
+     ✗ propone-etapa-adolescente
+     ✗ edad-progresiva-max-+2 — edades: —
+     ✗ avanza-hito-5
+
+[T8] Petición ambigua …
+   1116 s · RAM pico 8016 MB · IR válida · reintentos 1 · cumplimiento 91% · crit 0
+     ✗ gancho
+
+[T7] Detectar una contradicción con el canon …
+   132 s · RAM pico 8682 MB · detecta 3/4 · falsos+ 0 · reintentos 0 · cumplimiento 67% · crit -
+     ✗ el-modelo-detecta-las-4 — 3/4
+
+Total 130.9 min · modelo en memoria: {"sizeMb":6458,"context":8192} · guardado en docs/ia-bench/
