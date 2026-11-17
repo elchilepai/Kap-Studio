@@ -9,6 +9,7 @@ import { Notice, PageHeader, Pipeline, StatusBadge, Empty } from "./ui";
 import { deleteEntity, setParent } from "@/server/actions";
 import GenerateCard from "./GenerateCard";
 import ExportCard from "./ExportCard";
+import MemoryCard from "./MemoryCard";
 import { fmtBytes, fmtDate, fmtDuration } from "@/lib/format";
 
 export default async function ProductionDetail({ id, kind, error }: { id: string; kind: "episode" | "short"; error?: string }) {
@@ -67,6 +68,7 @@ export default async function ProductionDetail({ id, kind, error }: { id: string
             </form>
           </div>
 
+          {kind === "episode" && <MemoryCard p={p} />}
           <ExportCard p={p} />
 
           {kind === "episode" && (

@@ -11,6 +11,8 @@ import { Settings } from "@/domain/types";
 import { today } from "@/lib/format";
 import { safeLocalPath } from "@/lib/security";
 import { audit } from "./audit";
+import { proposeMemory } from "./memory/service";
+import { getAi } from "./ai/registry";
 import { requireAdmin } from "./auth/guard";
 
 const now = () => new Date().toISOString();
@@ -95,6 +97,9 @@ export async function transition(id: string, to: ProductionStatus, note = "") {
     });
   }
   await audit("produccion.transicion", id, `${p.status} → ${to}${note ? " · " + note : ""}`);
+  if (to === "APPROVED" && p.kind === "episode") {   // al aprobar se deja lista la propuesta de memoria (borrador): el canon solo cambia cuando el usuario la confirma
+    try { const ex = await storage.memoryProposals.get(id); if (!ex || ex.status === "pending") await proposeMemory({ storage, ai: getAi(), log: (a, t, d) => audit(a, t, d) }, id); } catch (e) { console.error("[memoria] propuesta:", (e as Error).message); }
+  }
   refresh();
 }
 export async function transitionForm(fd: FormData) {

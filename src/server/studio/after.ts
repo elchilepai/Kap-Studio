@@ -5,6 +5,8 @@ import type { RenderStore, Storage } from "@/ports";
 import { audit } from "@/server/audit";
 import { today } from "@/lib/format";
 import { planShorts } from "./shorts";
+import { proposeMemory } from "@/server/memory/service";
+import { getAi } from "@/server/ai/registry";
 import type { ProduceParams } from "./produce";
 
 const now = () => new Date().toISOString();
@@ -42,6 +44,9 @@ export async function afterRender(job: RenderJob, assetId: string, st: Storage, 
   await st.productions.save({ ...fresh, videoAssetId: assetId, durationSec: Math.round(dur), producedAt: today(), status: "REVIEW", updatedAt: now() });
   await audit("estudio.generado", prod.id, `${job.kind} ${job.format} ${job.quality} → en revisión`, "pipeline");
 
+  if (job.kind === "episode") {   // memoria narrativa: se PROPONE (borrador); jamás toca el canon. Un render fallido no llega aquí.
+    try { await proposeMemory({ storage: st, ai: getAi(), log: (a, t, d) => audit(a, t, d, "pipeline") }, prod.id); } catch (e) { console.error("[memoria] propuesta:", (e as Error).message); }
+  }
   if (job.kind === "episode" && (prm.shortsCount ?? 0) > 0)
     await deriveShorts(st, render, prod.id, prm.shortsCount!, { quality: job.quality, maxAttempts, voice: prm.voice, musicVolume: prm.musicVolume, animation: prm.animation }, mediaDir);
 }

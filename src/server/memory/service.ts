@@ -7,6 +7,7 @@
  */
 import type { Storage } from "@/ports";
 import type { EpisodeRequestInterpreter, EpisodeSummarizer, ScriptAuthor } from "@/ports/studio";
+import { contextBudget, getAi } from "@/server/ai/registry";
 import type { Character, Place, Production } from "@/domain/types";
 import { canExport } from "@/server/studio/export";
 import {
@@ -116,7 +117,9 @@ export async function saveDecisions(deps: MemoryDeps, productionId: string, inp:
     p = { ...p, changes: [...p.changes, ...extra] };
   }
   const changes = p.changes.map((c) => ({ ...c, decision: inp.all ?? inp.decisions?.[c.id] ?? c.decision }));
-  p = { ...p, changes, ...(inp.summary !== undefined ? { summary: inp.summary.slice(0, 2000), summaryEdited: true } : {}), ...(inp.logline !== undefined ? { logline: inp.logline.slice(0, 300), summaryEdited: true } : {}), ...(inp.endingNote !== undefined ? { endingNote: inp.endingNote.slice(0, 1000) } : {}), updatedAt: nowOf(deps) };
+  const editedSummary = inp.summary !== undefined && inp.summary !== p.summary, editedLogline = inp.logline !== undefined && inp.logline !== p.logline;   // solo cuenta como edición si el usuario cambió el texto
+  p = { ...p, changes, ...(editedSummary ? { summary: inp.summary!.slice(0, 2000) } : {}), ...(editedLogline ? { logline: inp.logline!.slice(0, 300) } : {}), ...(editedSummary || editedLogline ? { summaryEdited: true } : {}),
+    ...(inp.endingNote !== undefined ? { endingNote: inp.endingNote.slice(0, 1000) } : {}), updatedAt: nowOf(deps) };
   await storage.memoryProposals.save(p);
   return p;
 }
@@ -178,10 +181,20 @@ export async function requestContext(storage: Storage, text: string, o: { budget
     nextNumber: (eps.filter((p) => p.season === season).reduce((n, p) => Math.max(n, p.number), 0)) + 1, latestBefore: (s: number, n: number) => [...valid].reverse().find((e) => e.order < orderOf(s, n))?.order };
   let request = parseEpisodeRequest(text, rctx);
   if (o.interpreter && (await o.interpreter.available().catch(() => false))) { try { request = await o.interpreter.parse(text, rctx); } catch { /* si la IA falla, valen las reglas */ } }
-  const canon = await canonUpTo(storage, request.continuesFrom ?? Infinity, valid);
-  const pack = buildContextPack({ request, canon, episodes: valid.filter((e) => request.continuesFrom === undefined || e.order <= request.continuesFrom), budgetTokens: o.budgetTokens,
-    characters: chars.map((c) => ({ name: c.name, designVersion: c.design?.version, outfits: c.design?.outfits.map((x) => x.name), look: lookOf(c) })), places: places.map((p) => ({ name: p.name, look: lookOfPlace(p) })) });
+  const pack = await packFor(storage, request, valid, chars, places, o.budgetTokens);
   return { request, pack };
+}
+async function packFor(storage: Storage, request: EpisodeRequest, valid: EpisodeMemory[], chars: Character[], places: Place[], budgetTokens?: number): Promise<ContextPack> {
+  const canon = await canonUpTo(storage, request.continuesFrom ?? Infinity, valid);
+  return buildContextPack({ request, canon, episodes: valid.filter((e) => request.continuesFrom === undefined || e.order <= request.continuesFrom), budgetTokens: budgetTokens ?? contextBudget(getAi()),
+    characters: chars.map((c) => ({ name: c.name, designVersion: c.design?.version, outfits: c.design?.outfits.map((x) => x.name), look: lookOf(c) })), places: places.map((p) => ({ name: p.name, look: lookOfPlace(p) })) });
+}
+/** Paquete de contexto de un episodio ya creado que continúa de otro (para mostrarlo y para el futuro ScriptAuthor). */
+export async function contextForProduction(storage: Storage, prod: Production, budgetTokens?: number): Promise<ContextPack | undefined> {
+  if (prod.continuesFrom === undefined) return undefined;
+  const request: EpisodeRequest = { text: prod.brief || `Episodio ${prod.number}`, number: prod.number, season: prod.season, continuesFrom: prod.continuesFrom, exact: /exactamente|justo|donde\s+termin/i.test(prod.brief), cast: [], notes: prod.brief };
+  const [chars, places, valid] = await Promise.all([storage.characters.list(), storage.places.list(), validEpisodes(storage)]);
+  return packFor(storage, request, valid.filter((e) => e.order !== orderOf(prod.season, prod.number)), chars, places, budgetTokens);
 }
 const lookOf = (c: Character) => c.design ? [c.design.hairStyle ? `pelo ${c.design.hairStyle}` : "", c.design.body ? `cuerpo ${c.design.body}` : ""].filter(Boolean).join(", ") : undefined;
 const lookOfPlace = (p: Place) => p.set ? `${p.set.preset ?? "escenario"} (${p.set.timeOfDay ?? "—"})` : undefined;

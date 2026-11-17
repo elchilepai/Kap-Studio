@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BookMarked, Brush, Clock, Dna, Map as MapIcon, Network, Sparkles, Users, Zap } from "lucide-react";
+import { BookMarked, Brain, Brush, Clock, Dna, Map as MapIcon, Network, Sparkles, Users, Zap } from "lucide-react";
 import { getProviders } from "@/server/providers";
 import { allProductions, prodOptions } from "@/server/queries";
 import EntityPanel from "@/components/EntityPanel";
@@ -12,11 +12,12 @@ import RigImport from "@/components/RigImport";
 import { autoDesign } from "@/server/animation/design";
 import { saveStyleBible } from "@/server/animation-actions";
 import { Notice } from "@/components/ui";
+import MemoryTab from "@/components/MemoryTab";
 
 const TABS = [
   ["estado", "Estado actual", Sparkles], ["biblia", "Biblia narrativa", BookMarked], ["personajes", "Personajes", Users],
   ["relaciones", "Relaciones", Network], ["cronologia", "Cronología", Clock], ["acontecimientos", "Acontecimientos", Zap],
-  ["lugares", "Lugares", MapIcon], ["evolucion", "Evolución de KAP", Dna], ["diseno", "Diseño 2D", Brush],
+  ["lugares", "Lugares", MapIcon], ["evolucion", "Evolución de KAP", Dna], ["memoria", "Memoria", Brain], ["diseno", "Diseño 2D", Brush],
 ] as const;
 
 function Graph({ chars, rels }: { chars: Character[]; rels: { fromId: string; toId: string; kind: string }[] }) {
@@ -59,6 +60,7 @@ export default async function Universo({ searchParams }: { searchParams: Promise
       <div className="tabs">{TABS.map(([k, l, Icon]) => <Link key={k} href={`/universo?tab=${k}`} className={`tab${tab === k ? " active" : ""}`}><Icon className="i" />{l}</Link>)}</div>
 
       {sp.error && <Notice kind="err">{sp.error}</Notice>}
+      {tab === "memoria" && <MemoryTab />}
       {tab === "diseno" && (
         <div className="stack">
           <div className="card stack"><h2><Brush className="i" />Biblia de estilo visual</h2>
