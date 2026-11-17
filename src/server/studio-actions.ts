@@ -127,6 +127,7 @@ export async function saveScene(fd: FormData) {
       title: fd.get("title") ?? "", location: fd.get("location") ?? "", text: fd.get("text") ?? "", durationSec: fd.get("durationSec"),
       transition: fd.get("transition"), motion: fd.get("motion"), visualAssetId: String(fd.get("visualAssetId") ?? "") || undefined,
       narrationAssetId: String(fd.get("narrationAssetId") ?? "") || undefined, sfxAssetId: String(fd.get("sfxAssetId") ?? "") || undefined,
+      directions: String(fd.get("directions") ?? ""),
     });
     const chars = await getProviders().storage.characters.list();
     const lines = textToLines(f.text, chars);

@@ -139,3 +139,11 @@ describe("planificación de Shorts", () => {
   it("casos límite", () => { expect(planShorts(eps, 0)).toEqual([]); expect(planShorts([], 3)).toEqual([]); expect(planShorts(eps.slice(0, 2), 5).length).toBeLessThanOrEqual(1); });
 });
 describe("texto", () => { it("norm quita acentos", () => expect(norm("Ñandú Árbol")).toBe("nandu arbol")); });
+
+describe("direcciones de escena (cableado del analizador)", () => {
+  it("las directivas 2D del guion llegan a Scene.directions y no se mezclan con las de imagen/música", () => {
+    const sc = toScenes(parseScript(`# Refugio\n[entra: KAP izquierda]\n[camara: zoom 1.3]\n[vfx: lluvia]\n[imagen: refugio de noche]\n[musica: tenso]\nKAP despierta.`, chars), chars, id);
+    expect(sc[0].directions).toEqual(["entra: KAP izquierda", "camara: zoom 1.3", "vfx: lluvia"]);
+    expect(sc[0].visualHint).toBe("refugio de noche");
+  });
+});

@@ -145,6 +145,7 @@ export async function produce(job: RenderJob, ctx: ExecContext, d: ProduceDeps):
     const global = cuesAll.map(({ cue, at }) => ({ ...cue, start: cue.start + at, end: cue.end + at }));
     const cur = await st.productions.get(prod.id);
     for (const old of await st.assets.list()) if (old.origin === "generated" && old.role === "other" && old.name.startsWith(`subs-${prod.id}`)) { await fs.rm(path.join(d.mediaDir, path.basename(old.path)), { force: true }); await st.assets.remove(old.id); }
+    await fs.mkdir(/*turbopackIgnore: true*/ d.mediaDir, { recursive: true, mode: 0o700 });   // en una instalación limpia aún no existe
     const ids: string[] = [];
     for (const [ext, body, mime] of [["srt", toSRT(global), "text/plain"], ["vtt", toVTT(global), "text/vtt"]] as const) {
       const id = crypto.randomUUID(); await fs.writeFile(path.join(/*turbopackIgnore: true*/ d.mediaDir, `${id}.${ext}`), body, { mode: 0o600 });
