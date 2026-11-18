@@ -829,6 +829,833 @@
      }
     ]
    }
+  },
+  {
+   "id": "N2",
+   "title": "Situación nueva",
+   "request": "Crea el episodio 4, a continuación del episodio 3. En casa no queda comida y el hermano pequeño tiene hambre; no hay padres ni dinero. KAP tiene que decidir qué hace.",
+   "ms": 4021246,
+   "peakMb": 11596,
+   "sysPeakMb": 12284,
+   "contextTokens": 1883,
+   "ok": true,
+   "irValid": true,
+   "irValidFirstTry": false,
+   "json": {
+    "attempts": 15,
+    "retries": 2,
+    "jsonErrors": 0,
+    "schemaErrors": 0,
+    "lengthRetries": 0,
+    "memoryDirectiveErrors": 0
+   },
+   "irErrors": [],
+   "usage": {
+    "promptTokens": 70840,
+    "outputTokens": 5708,
+    "totalMs": 4021181.722889,
+    "loadMs": 8362.392850000002,
+    "promptMs": 487706.17699899996,
+    "evalMs": 3524085.5619999995
+   },
+   "tokensPerSec": 1.62,
+   "episode": {
+    "scenes": 12,
+    "estimatedSec": 267,
+    "words": 745,
+    "title": "Episodio 4: La Noche del Hambre",
+    "logline": "KAP enfrenta una difícil decisión cuando no hay comida en casa y su hermano pequeño tiene hambre, sin padres ni dinero para resolver la situación."
+   },
+   "continuity": {
+    "critical": [],
+    "warnings": [
+     "relacion-contradice: KAP y hermano de KAP ya se conocían (relación «hermanos» desde canon inicial); la escena 18 los presenta como si se conocieran ahora."
+    ],
+    "info": 9
+   },
+   "narrative": {
+    "error": 0,
+    "warning": 6,
+    "info": 0,
+    "rules": [
+     "dialogo-duplicado"
+    ],
+    "findings": [
+     {
+      "severity": "warning",
+      "rule": "narrativa-dialogo-duplicado",
+      "text": "La frase «No puedo dejarlo solo...» aparece 2 veces (escenas 4, 8).",
+      "scene": 3
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-dialogo-duplicado",
+      "text": "La frase «KAP camina con paso firme por la calle, llevando el bote de comida y …» aparece 2 veces (escenas 6, 7).",
+      "scene": 5
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-dialogo-duplicado",
+      "text": "La frase «No puedo permitir que pase hambre...» aparece 2 veces (escenas 6, 7).",
+      "scene": 5
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-dialogo-duplicado",
+      "text": "La frase «Al llegar a un puesto ambulante, KAP se detiene y mira con nerviosism…» aparece 2 veces (escenas 6, 7).",
+      "scene": 5
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-dialogo-duplicado",
+      "text": "La frase «El vendedor lo mira con desconfianza y niega con la cabeza.» aparece 2 veces (escenas 6, 7).",
+      "scene": 5
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-dialogo-duplicado",
+      "text": "La frase «¿Qué? ¿No tienes ni un centavo?» aparece 2 veces (escenas 9, 10).",
+      "scene": 8
+     }
+    ],
+    "taggedRules": [
+     "dialogo-duplicado",
+     "ayuda-externa",
+     "poca-variedad-visual"
+    ]
+   },
+   "mode": "arc",
+   "arc": {
+    "title": "Episodio 4: La Noche del Hambre",
+    "logline": "KAP enfrenta una difícil decisión cuando no hay comida en casa y su hermano pequeño tiene hambre, sin padres ni dinero para resolver la situación.",
+    "assumptions": [
+     "El episodio se desarrolla en la misma casa de KAP, con los recursos limitados que ya se han mostrado en episodios anteriores.",
+     "El hermano de KAP no aparece directamente en el desarrollo del episodio, pero su hambre es un motor para la historia.",
+     "KAP actúa solo en esta situación, sin ayuda externa ni resolución por parte de otros personajes."
+    ],
+    "problem": "No hay comida en casa, el hermano pequeño tiene hambre, no hay padres disponibles y no hay dinero para comprar nada.",
+    "kapWant": "Que su hermano no sufra hambre y que encuentre una solución con lo poco que tiene.",
+    "kapChoice": "KAP decide salir a la calle en busca de comida o ayuda, aunque sabe que eso podría exponerlo al bullying o al rechazo de los demás.",
+    "consequence": "KAP encuentra un lugar donde puede conseguir algo de comida, pero se enfrenta a una situación incómoda que lo pone en una difícil posición moral.",
+    "outcome": "sin-solucion",
+    "hook": "KAP consigue comida, pero al regresar a casa, descubre que su hermano no está allí. Ahora debe decidir si busca a su hermano o vuelve a intentar resolver la situación en la casa.",
+    "usedFromMemory": [
+     "Situación familiar de KAP (padres y drogas)",
+     "Cuidar y proteger a su hermano",
+     "KAP tiene un hermano pequeño",
+     "KAP no tiene dinero",
+     "Bullying hacia KAP",
+     "El sueño de KAP: ser millonario gracias a la música"
+    ],
+    "newCharacters": [],
+    "newPlaces": [],
+    "beats": [
+     {
+      "stage": "inicio",
+      "fn": "avanzar-historia",
+      "summary": "KAP entra en la casa y mira con tristeza el frigorífico vacío. Escucha a su hermano llorar por hambre en otro cuarto.",
+      "location": "Cocina",
+      "characters": [
+       "KAP"
+      ],
+      "time": "noche",
+      "interior": true,
+      "shot": "general",
+      "visual": "La cocina está oscura, el frigorífico está abierto y vacío. Se escucha el llanto del hermano de KAP en otro cuarto."
+     },
+     {
+      "stage": "inicio",
+      "fn": "avanzar-historia",
+      "summary": "KAP entra en la casa y mira a su alrededor, buscando a su hermano. Encuentra un papel en el suelo que lleva el nombre de la guardería.",
+      "location": "Casa",
+      "characters": [
+       "KAP"
+      ],
+      "time": "noche",
+      "interior": true,
+      "shot": "general",
+      "visual": "KAP se agacha para recoger un papel en el suelo. El papel dice: 'Guardería - 123 Calle Principal'."
+     },
+     {
+      "stage": "problema",
+      "fn": "conflicto",
+      "summary": "KAP se sienta en el suelo y mira al techo, pensando en cómo resolver la situación. Sabe que no puede pedir ayuda a sus padres, que están ausentes.",
+      "location": "Sala de estar",
+      "characters": [
+       "KAP"
+      ],
+      "time": "noche",
+      "interior": true,
+      "shot": "primer plano",
+      "visual": "KAP mira al suelo con el ceño fruncido, sus manos están cerradas como si estuvieran sosteniendo un peso invisible."
+     },
+     {
+      "stage": "problema",
+      "fn": "conflicto",
+      "summary": "KAP comprende que su hermano se ha ido a la guardería, posiblemente porque no tenía comida en casa. Ahora debe decidir si lo busca o regresa a la calle para intentar sobrevivir.",
+      "location": "Casa",
+      "characters": [
+       "KAP"
+      ],
+      "time": "noche",
+      "interior": true,
+      "shot": "medio",
+      "visual": "KAP mira fijamente el papel en su mano, con una expresión de determinación y miedo."
+     },
+     {
+      "stage": "escalada",
+      "fn": "preparar-consecuencia",
+      "summary": "KAP recuerda la lección de Ramiro sobre la honestidad y decide que no puede robar, pero tampoco puede dejar a su hermano sin comer.",
+      "location": "Sala de estar",
+      "characters": [
+       "KAP"
+      ],
+      "time": "noche",
+      "interior": true,
+      "shot": "medio",
+      "visual": "KAP camina lentamente hacia la puerta, mirando al suelo. La camiseta gris desgastada se ve claramente."
+     },
+     {
+      "stage": "escalada",
+      "fn": "preparar-consecuencia",
+      "summary": "KAP decide salir de nuevo a la calle, pero esta vez con una nueva determinación: no permitirá que su hermano pase hambre ni que se le robe lo poco que tiene.",
+      "location": "Calle",
+      "characters": [
+       "KAP"
+      ],
+      "time": "noche",
+      "interior": false,
+      "shot": "general",
+      "visual": "KAP sale de la casa, mirando al frente con una expresión firme. En su mano lleva el bote de comida y el papel con la dirección de la guardería."
+     },
+     {
+      "stage": "decision",
+      "fn": "arco-de-kap",
+      "summary": "KAP toma una decisión: saldrá a la calle para buscar comida, aunque sea en lugares donde antes lo humillaban.",
+      "location": "Calle",
+      "characters": [
+       "KAP"
+      ],
+      "time": "noche",
+      "interior": false,
+      "shot": "general",
+      "visual": "KAP sale de la casa, caminando lentamente por la calle oscura. Su silueta se ve pequeña en medio de la noche."
+     },
+     {
+      "stage": "decision",
+      "fn": "arco-de-kap",
+      "summary": "KAP toma una decisión: saldrá a buscar a su hermano, aunque eso lo exponga a más desafíos y peligros.",
+      "location": "Calle",
+      "characters": [
+       "KAP"
+      ],
+      "time": "noche",
+      "interior": false,
+      "shot": "medio",
+      "visual": "KAP camina con paso decidido por la calle, mirando al frente. Su silueta se ve pequeña y solitaria."
+     },
+     {
+      "stage": "consecuencia",
+      "fn": "conflicto",
+      "summary": "KAP llega a un puesto ambulante donde le ofrecen comida, pero debe pagar con algo que no tiene. Le pide ayuda, pero el vendedor lo rechaza.",
+      "location": "Calle",
+      "characters": [
+       "KAP",
+       "Vendedor ambulante"
+      ],
+      "time": "noche",
+      "interior": false,
+      "shot": "medio",
+      "visual": "El vendedor mira a KAP con desdén, mientras KAP se acerca con timidez, sosteniendo un trozo de papel vacío."
+     },
+     {
+      "stage": "resolucion",
+      "fn": "desarrollar-personaje",
+      "summary": "KAP logra convencer al vendedor de que le dé un poco de comida, ofreciendo su cuaderno como garantía. El vendedor acepta, pero advierte que no podrá recuperarlo.",
+      "location": "Calle",
+      "characters": [
+       "KAP",
+       "Vendedor ambulante"
+      ],
+      "time": "noche",
+      "interior": false,
+      "shot": "general",
+      "visual": "KAP entrega el cuaderno a cambio de un poco de comida. El vendedor lo mira con desdén, pero acepta."
+     },
+     {
+      "stage": "gancho",
+      "fn": "preparar-gancho",
+      "summary": "KAP regresa a casa con la comida, pero al llegar, descubre que su hermano no está. Ahora debe decidir si busca a su hermano o vuelve a intentar resolver la situación en la casa.",
+      "location": "Calle de noche (2)",
+      "characters": [
+       "KAP"
+      ],
+      "time": "noche",
+      "interior": false,
+      "shot": "primer plano",
+      "visual": "KAP mira hacia el interior de su casa, donde no hay luz. Lleva en la mano un pequeño bote con comida y el cuaderno en la otra."
+     },
+     {
+      "stage": "gancho",
+      "fn": "preparar-gancho",
+      "summary": "KAP llega a la guardería y entra. Ahora enfrentará una nueva situación: ¿qué hará si su hermano está allí, pero no quiere regresar a casa?",
+      "location": "Guardería",
+      "characters": [
+       "KAP"
+      ],
+      "time": "noche",
+      "interior": true,
+      "shot": "general",
+      "visual": "KAP entra en la guardería, donde ya están cerradas las puertas. Su silueta se ve en el umbral de la entrada."
+     }
+    ]
+   },
+   "checks": [
+    {
+     "id": "estructura-6-actos",
+     "ok": true,
+     "note": "faltan: —"
+    },
+    {
+     "id": "gancho",
+     "ok": true
+    },
+    {
+     "id": "protagonista",
+     "ok": true
+    },
+    {
+     "id": "sin-errores-criticos",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "sin-exito-prematuro",
+     "ok": true
+    },
+    {
+     "id": "directivas-validas",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "espanol",
+     "ok": true
+    },
+    {
+     "id": "diversidad-lexica",
+     "ok": true,
+     "note": "0.33"
+    }
+   ],
+   "compliance": 1,
+   "proxy": {
+    "score": 8,
+    "dialogueRatio": 0.46,
+    "locations": 6,
+    "repeatedSentences": 9
+   },
+   "warnings": [
+    "El modelo desordenó las etapas del arco; se han reordenado.",
+    "Narrativa (warning) · dialogo-duplicado: La frase «No puedo dejarlo solo...» aparece 2 veces (escenas 4, 8).",
+    "Narrativa (warning) · dialogo-duplicado: La frase «KAP camina con paso firme por la calle, llevando el bote de comida y …» aparece 2 veces (escenas 6, 7).",
+    "Narrativa (warning) · dialogo-duplicado: La frase «No puedo permitir que pase hambre...» aparece 2 veces (escenas 6, 7).",
+    "Narrativa (warning) · dialogo-duplicado: La frase «Al llegar a un puesto ambulante, KAP se detiene y mira con nerviosism…» aparece 2 veces (escenas 6, 7).",
+    "Narrativa (warning) · dialogo-duplicado: La frase «El vendedor lo mira con desconfianza y niega con la cabeza.» aparece 2 veces (escenas 6, 7)."
+   ],
+   "draft": {
+    "title": "Episodio 4: La Noche del Hambre",
+    "logline": "KAP enfrenta una difícil decisión cuando no hay comida en casa y su hermano pequeño tiene hambre, sin padres ni dinero para resolver la situación.",
+    "assumptions": [
+     "El episodio se desarrolla en la misma casa de KAP, con los recursos limitados que ya se han mostrado en episodios anteriores.",
+     "El hermano de KAP no aparece directamente en el desarrollo del episodio, pero su hambre es un motor para la historia.",
+     "KAP actúa solo en esta situación, sin ayuda externa ni resolución por parte de otros personajes."
+    ],
+    "scenes": [
+     {
+      "title": "Episodio 4: La Noche del Hambre",
+      "location": "Cocina",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP entra en la cocina con paso lento, mirando a su alrededor como si esperara que algo cambiara."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No hay nada..."
+       },
+       {
+        "speaker": "",
+        "text": "Se acerca al frigorífico y lo abre. Lo mira con tristeza, sin poder evitar un suspiro."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Qué hago ahora?"
+       },
+       {
+        "speaker": "",
+        "text": "De repente, escucha un llanto débil en otro cuarto. Se detiene, mira hacia la puerta y frunce el ceño con preocupación."
+       }
+      ],
+      "memory": [
+       "acto: inicio | KAP entra en la casa y mira con tristeza el frigorífico vacío. Escucha a su hermano llorar por hambre en otro cuarto."
+      ],
+      "fn": "avanzar-historia",
+      "stage": "inicio",
+      "shot": "general",
+      "time": "noche",
+      "interior": true,
+      "directions": [
+       "plano: general",
+       "expresion: KAP triste",
+       "camara: zoom 1.2",
+       "vfx: oscurecer"
+      ]
+     },
+     {
+      "title": "Episodio 4: La Noche del Hambre",
+      "location": "Casa",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP camina lentamente por el pasillo, mirando hacia los lados con preocupación."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Dónde estás...?"
+       },
+       {
+        "speaker": "",
+        "text": "KAP se detiene al ver un papel en el suelo. Se agacha y lo recoge."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Guardería... 123 Calle Principal."
+       }
+      ],
+      "memory": [
+       "conoce: KAP, Guardería",
+       "obtiene: KAP, papel"
+      ],
+      "fn": "avanzar-historia",
+      "stage": "inicio",
+      "shot": "general",
+      "time": "noche",
+      "interior": true,
+      "directions": [
+       "plano: general",
+       "expresion: KAP preocupado",
+       "mira: KAP izquierda",
+       "camara: zoom 1.2"
+      ]
+     },
+     {
+      "title": "Episodio 4: La Noche del Hambre",
+      "location": "Sala de estar",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se sienta en el suelo, mirando al techo con la cabeza entre las manos. Sus ojos están cerrados, pero no dormidos."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No puedo pedir ayuda… No tengo nadie."
+       },
+       {
+        "speaker": "",
+        "text": "Sus manos se aprietan con fuerza, como si intentaran agarrar algo que no está allí."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Qué hago…? No puedo dejarlo solo…"
+       }
+      ],
+      "memory": [
+       "acto: conflicto | KAP se sienta en el suelo y mira al techo, pensando en cómo resolver la situación. Sabe que no puede pedir ayuda a sus padres, que están au…"
+      ],
+      "fn": "conflicto",
+      "stage": "problema",
+      "shot": "primer plano",
+      "time": "noche",
+      "interior": true,
+      "directions": [
+       "plano: primer plano KAP",
+       "expresion: KAP triste",
+       "camara: zoom 1.2"
+      ]
+     },
+     {
+      "title": "Episodio 4: La Noche del Hambre",
+      "location": "Casa",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP mira fijamente el papel en su mano, con una expresión de determinación y miedo."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No puedo dejarlo solo..."
+       },
+       {
+        "speaker": "",
+        "text": "KAP se levanta lentamente, como si cada paso fuera un peso demasiado grande para soportar."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Tengo que encontrarlo..."
+       },
+       {
+        "speaker": "",
+        "text": "KAP mira hacia la puerta con una mirada de decisión, pero también de duda."
+       }
+      ],
+      "memory": [],
+      "fn": "conflicto",
+      "stage": "problema",
+      "shot": "medio",
+      "time": "noche",
+      "interior": true,
+      "directions": [
+       "plano: medio KAP",
+       "mira: KAP derecha",
+       "camara: seguir KAP"
+      ]
+     },
+     {
+      "title": "Episodio 4: La Noche del Hambre",
+      "location": "Sala de estar",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP camina lentamente hacia la puerta, mirando al suelo. La camiseta gris desgastada se ve claramente."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No puedo robar..."
+       },
+       {
+        "speaker": "",
+        "text": "KAP levanta la cabeza, mira a la puerta con determinación, pero sus ojos reflejan duda y tristeza."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Pero tampoco puedo dejarlo sin comer..."
+       },
+       {
+        "speaker": "",
+        "text": "KAP aprieta los puños, respira profundamente, como si estuviera luchando contra una decisión que no quiere tomar."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo | KAP recuerda la lección de Ramiro sobre la honestidad y decide que no puede robar, pero tampoco puede dejar a su hermano sin comer."
+      ],
+      "fn": "preparar-consecuencia",
+      "stage": "escalada",
+      "shot": "medio",
+      "time": "noche",
+      "interior": true,
+      "directions": [
+       "plano: medio KAP",
+       "expresion: KAP triste",
+       "gesto: KAP piensa",
+       "mira: KAP izquierda",
+       "camara: zoom 1.2"
+      ]
+     },
+     {
+      "title": "Episodio 4: La Noche del Hambre",
+      "location": "Calle",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP camina con paso firme por la calle, llevando el bote de comida y el papel en la mano. Su mirada está clavada en el suelo, pero sus hombros están más erguidos que antes."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No puedo permitir que pase hambre..."
+       },
+       {
+        "speaker": "",
+        "text": "Al llegar a un puesto ambulante, KAP se detiene y mira con nerviosismo al vendedor, que está ocupado atendiendo a otro cliente."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Perdón... ¿me podría dar algo?"
+       },
+       {
+        "speaker": "",
+        "text": "El vendedor lo mira con desconfianza y niega con la cabeza."
+       }
+      ],
+      "memory": [],
+      "fn": "preparar-consecuencia",
+      "stage": "escalada",
+      "shot": "general",
+      "time": "noche",
+      "interior": false,
+      "directions": [
+       "plano: general",
+       "mira: KAP izquierda",
+       "camara: seguir KAP"
+      ]
+     },
+     {
+      "title": "Episodio 4: La Noche del Hambre",
+      "location": "Calle",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP camina con paso firme por la calle, llevando el bote de comida y el papel en la mano. Su mirada está clavada en el suelo, pero sus hombros están más erguidos que antes."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No puedo permitir que pase hambre..."
+       },
+       {
+        "speaker": "",
+        "text": "Al llegar a un puesto ambulante, KAP se detiene y mira con nerviosismo al vendedor, que está ocupado atendiendo a otro cliente."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Perdón, señor... ¿me podría dar un poco de comida? No tengo dinero."
+       },
+       {
+        "speaker": "",
+        "text": "El vendedor lo mira con desconfianza y niega con la cabeza."
+       },
+       {
+        "speaker": "Vendedor",
+        "text": "No tengo tiempo para esto, chico."
+       },
+       {
+        "speaker": "",
+        "text": "KAP se queda quieto por un momento, pero luego levanta la mirada y saca su cuaderno de la mochila."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Este es mi cuaderno... ¿me lo puede prestar como garantía?"
+       },
+       {
+        "speaker": "",
+        "text": "El vendedor lo observa durante unos segundos, luego asiente con una expresión extraña."
+       },
+       {
+        "speaker": "Vendedor",
+        "text": "Está bien... pero no te lo devolveré."
+       }
+      ],
+      "memory": [
+       "acto: emocional | KAP toma una decisión: saldrá a la calle para buscar comida, aunque sea en lugares donde antes lo humillaban."
+      ],
+      "fn": "arco-de-kap",
+      "stage": "decision",
+      "shot": "general",
+      "time": "noche",
+      "interior": false,
+      "directions": [
+       "plano: general"
+      ]
+     },
+     {
+      "title": "Episodio 4: La Noche del Hambre",
+      "location": "Calle",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP camina con paso firme por la calle, mirando al frente. Su silueta se ve pequeña y solitaria."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No puedo dejarlo solo..."
+       },
+       {
+        "speaker": "",
+        "text": "Sus manos aprietan el papel con fuerza, como si fuera la única conexión que tiene con su hermano."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Tengo que encontrarlo..."
+       },
+       {
+        "speaker": "",
+        "text": "Un viento frío le golpea la cara, pero no se detiene. Sus ojos están fijos en el camino que lleva a la guardería."
+       }
+      ],
+      "memory": [],
+      "fn": "arco-de-kap",
+      "stage": "decision",
+      "shot": "medio",
+      "time": "noche",
+      "interior": false,
+      "directions": [
+       "plano: medio KAP",
+       "camina: KAP a izquierda"
+      ]
+     },
+     {
+      "title": "Episodio 4: La Noche del Hambre",
+      "location": "Calle",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se acerca al puesto ambulante con paso lento, mirando al suelo."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Por favor... solo un poco..."
+       },
+       {
+        "speaker": "",
+        "text": "El vendedor levanta la vista, frunciendo el ceño."
+       },
+       {
+        "speaker": "Vendedor ambulante",
+        "text": "¿Qué? ¿No tienes ni un centavo?"
+       }
+      ],
+      "memory": [],
+      "fn": "conflicto",
+      "stage": "consecuencia",
+      "shot": "medio",
+      "time": "noche",
+      "interior": false,
+      "directions": [
+       "plano: medio KAP",
+       "expresion: KAP, triste",
+       "gesto: KAP, encoge",
+       "mira: KAP, derecha",
+       "camara: seguir KAP"
+      ]
+     },
+     {
+      "title": "Episodio 4: La Noche del Hambre",
+      "location": "Calle",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se acerca al vendedor con paso lento, mirando al suelo. Por favor... solo un poco..."
+       },
+       {
+        "speaker": "Vendedor ambulante",
+        "text": "¿Qué? ¿No tienes ni un centavo?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "Tengo esto..."
+       },
+       {
+        "speaker": "",
+        "text": "KAP levanta el cuaderno con manos temblorosas y lo entrega al vendedor."
+       },
+       {
+        "speaker": "Vendedor ambulante",
+        "text": "¿Este es todo tu mundo?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "Sí..."
+       },
+       {
+        "speaker": "Vendedor ambulante",
+        "text": "Muy bien. Toma esto, pero no vuelvas aquí."
+       },
+       {
+        "speaker": "",
+        "text": "El vendedor le da un pequeño bote de comida. KAP lo recibe con manos temblorosas y lo guarda en su bolsillo."
+       }
+      ],
+      "memory": [
+       "acto: resolucion | KAP logra convencer al vendedor de que le dé un poco de comida, ofreciendo su cuaderno como garantía. El vendedor acepta, pero advierte que…"
+      ],
+      "fn": "desarrollar-personaje",
+      "stage": "resolucion",
+      "shot": "general",
+      "time": "noche",
+      "interior": false,
+      "directions": [
+       "plano: general",
+       "expresion: KAP, triste",
+       "camara: seguir KAP",
+       "vfx: lluvia"
+      ]
+     },
+     {
+      "title": "Episodio 4: La Noche del Hambre",
+      "location": "Calle de noche (2)",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP camina lentamente hacia la puerta de su casa, mirando hacia el interior con expresión tensa."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No... no puede ser..."
+       },
+       {
+        "speaker": "",
+        "text": "KAP se para frente a la puerta y mira dentro. No hay luz, ni movimiento, ni ruido. Solo silencio."
+       }
+      ],
+      "memory": [
+       "acto: gancho | KAP regresa a casa con la comida, pero al llegar, descubre que su hermano no está. Ahora debe decidir si busca a su hermano o vuelve a inte…",
+       "conoce: KAP, hermano de KAP",
+       "relacion: KAP, hermano de KAP, familiar, +2"
+      ],
+      "fn": "preparar-gancho",
+      "stage": "gancho",
+      "shot": "primer plano",
+      "time": "noche",
+      "interior": false,
+      "directions": [
+       "plano: primer plano KAP",
+       "mira: KAP izquierda",
+       "expresion: KAP preocupado",
+       "gesto: KAP encoge",
+       "vfx: oscurecer"
+      ]
+     },
+     {
+      "title": "Episodio 4: La Noche del Hambre",
+      "location": "Guardería",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se acerca a la puerta de la guardería, mirando con determinación. Sus manos tiemblan levemente, pero su paso es firme."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Tengo que encontrarlo..."
+       },
+       {
+        "speaker": "",
+        "text": "KAP intenta abrir la puerta, pero está cerrada. Mira a su alrededor con nerviosismo, buscando una manera de entrar."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Por favor... solo un momento..."
+       },
+       {
+        "speaker": "",
+        "text": "Un guardia aparece detrás de él y lo mira con desconfianza. KAP se congela, temiendo lo que pueda pasar."
+       }
+      ],
+      "memory": [
+       "gancho: KAP consigue comida, pero al regresar a casa, descubre que su hermano no está allí. Ahora debe decidir si busca a su hermano o vuelve a intentar resolver la situación en la casa."
+      ],
+      "fn": "preparar-gancho",
+      "stage": "gancho",
+      "shot": "general",
+      "time": "noche",
+      "interior": true,
+      "directions": [
+       "plano: general",
+       "expresion: KAP preocupado",
+       "mira: KAP izquierda",
+       "camara: seguir KAP"
+      ]
+     }
+    ]
+   }
   }
  ]
 }
