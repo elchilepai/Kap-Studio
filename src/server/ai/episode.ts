@@ -7,6 +7,7 @@
 import { z } from "zod";
 import type { AuthorStats, LlmClient, ScriptAuthor } from "@/ports/studio";
 import { ScreenplayIR } from "@/domain/screenplay";
+import { beatToDirection, parseDirection } from "@/animation/beats";
 import { isMemoryKey, parseMemoryDirectives } from "@/memory/directives";
 import { generateJson, sumUsage, type AttemptLog } from "./json";
 import { AUTHOR_JSON_SYSTEM, authorJsonPrompt, expandPrompt } from "./prompts";
@@ -16,6 +17,9 @@ const SceneDraft = z.object({
   title: z.string().min(1).max(100), location: z.string().min(1).max(80),
   lines: z.array(z.object({ speaker: z.string().max(40), text: z.string().min(1).max(700) })).min(1).max(16),   // speaker "" = narrador
   memory: z.array(z.string().max(320)).max(16),                                                                    // directivas de memoria de KAP: [acto: …] [gancho: …] [hito-logrado: …]…
+  // Solo el generador por arco las rellena: función de la escena, etapa del arco, plano, momento del día, interior/exterior y acciones 2D del vocabulario cerrado.
+  fn: z.string().max(40).optional(), stage: z.string().max(30).optional(), shot: z.string().max(20).optional(), time: z.string().max(30).optional(), interior: z.boolean().optional(),
+  directions: z.array(z.string().max(120)).max(8).optional(),
 });
 export const EpisodeDraft = z.object({
   title: z.string().min(1).max(100), logline: z.string().min(1).max(260),
@@ -24,12 +28,13 @@ export const EpisodeDraft = z.object({
 });
 export type EpisodeDraft = z.infer<typeof EpisodeDraft>;
 
-export const draftToIR = (d: EpisodeDraft): ScreenplayIR => ({ v: 1, warnings: [], scenes: d.scenes.map((s) => ({ title: s.title, location: s.location, mood: "", beats: [], hints: {}, memory: s.memory.map((m) => m.replace(/^\[|\]$/g, "").trim().replace(/^acto:\s*resoluci[oó]n\b/i, "acto: resolucion")).filter(Boolean),
+export const draftToIR = (d: EpisodeDraft): ScreenplayIR => ({ v: 1, warnings: [], scenes: d.scenes.map((s) => ({ title: s.title, location: s.location, mood: s.time ? `${s.time}, ${s.interior ? "interior" : "exterior"}` : "",
+  beats: (s.directions ?? []).map((x) => parseDirection(x).beat).filter((b): b is NonNullable<typeof b> => !!b), hints: {}, memory: s.memory.map((m) => m.replace(/^\[|\]$/g, "").trim().replace(/^acto:\s*resoluci[oó]n\b/i, "acto: resolucion")).filter(Boolean),
   lines: s.lines.filter((l) => l.text.trim()).map((l) => ({ ...(l.speaker.trim() ? { speaker: l.speaker.trim().toUpperCase() } : {}), text: l.text.trim() })) })) });
 
 /** IR → guion en el formato documentado (lo que verá y podrá corregir el usuario). `parseScript` lo reconstruye igual. */
 export function irToScript(ir: ScreenplayIR): string {
-  return ir.scenes.map((s) => [`# ${s.location || s.title}`, ...s.lines.map((l) => (l.speaker ? `${l.speaker}: ${l.text}` : l.text)), ...(s.memory ?? []).map((m) => `[${m}]`)].join("\n")).join("\n\n") + "\n";
+  return ir.scenes.map((s) => [`# ${s.location || s.title}`, ...(s.mood ? [`[mood: ${s.mood}]`] : []), ...(s.beats ?? []).map((b) => `[${beatToDirection(b)}]`), ...s.lines.map((l) => (l.speaker ? `${l.speaker}: ${l.text}` : l.text)), ...(s.memory ?? []).map((m) => `[${m}]`)].join("\n")).join("\n\n") + "\n";
 }
 export const draftWords = (d: EpisodeDraft) => d.scenes.reduce((n, s) => n + s.lines.reduce((m, l) => m + l.text.split(/\s+/).filter(Boolean).length, 0), 0);
 /** Duración estimada del episodio hablado (palabras ÷ ritmo medio de la voz sintética; ≈ 2,9 palabras/s medido en las demostraciones). */

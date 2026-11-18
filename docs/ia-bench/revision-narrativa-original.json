@@ -1,0 +1,644 @@
+[
+ {
+  "file": "qwen3-8b-narrative.json",
+  "id": "S1",
+  "scenes": 17,
+  "error": 0,
+  "warning": 2,
+  "info": 2,
+  "rules": [
+   "dialogo-duplicado",
+   "localizacion-estancada",
+   "personaje-sin-funcion",
+   "cierre-moralizante"
+  ],
+  "findings": [
+   {
+    "severity": "warning",
+    "rule": "narrativa-dialogo-duplicado",
+    "text": "La frase «No me hagas esto, Dani. No soy un fracasado.» aparece 3 veces (escenas 8, 12, 16).",
+    "scene": 7
+   },
+   {
+    "severity": "warning",
+    "rule": "narrativa-localizacion-estancada",
+    "text": "17 escenas seguidas (1-17) en «Calle de noche»: ¿hace falta cambiar de lugar, de momento o de plano?",
+    "scene": 0
+   },
+   {
+    "severity": "info",
+    "rule": "narrativa-personaje-sin-funcion",
+    "text": "«Hermano de KAP» (de la memoria) solo hace un cameo de una línea: ¿era necesario traerlo?",
+    "scene": 13
+   },
+   {
+    "severity": "info",
+    "rule": "narrativa-cierre-moralizante",
+    "text": "El cierre tiene tono de lección o superación. No todos los episodios deben terminar con KAP más fuerte: ¿encaja con lo que pasa?",
+    "scene": 16
+   }
+  ]
+ },
+ {
+  "file": "qwen3-8b-narrative.json",
+  "id": "S2",
+  "scenes": 19,
+  "error": 1,
+  "warning": 12,
+  "info": 0,
+  "rules": [
+   "escena-repetida",
+   "bucle",
+   "dialogo-duplicado",
+   "localizacion-estancada",
+   "sin-consecuencia",
+   "gancho-generico"
+  ],
+  "findings": [
+   {
+    "severity": "warning",
+    "rule": "narrativa-escena-repetida",
+    "text": "La escena 13 repite casi literalmente la escena 12.",
+    "scene": 12
+   },
+   {
+    "severity": "warning",
+    "rule": "narrativa-escena-repetida",
+    "text": "La escena 14 repite casi literalmente la escena 12.",
+    "scene": 13
+   },
+   {
+    "severity": "warning",
+    "rule": "narrativa-escena-repetida",
+    "text": "La escena 15 repite casi literalmente la escena 12.",
+    "scene": 14
+   },
+   {
+    "severity": "warning",
+    "rule": "narrativa-escena-repetida",
+    "text": "La escena 16 repite casi literalmente la escena 12.",
+    "scene": 15
+   },
+   {
+    "severity": "warning",
+    "rule": "narrativa-escena-repetida",
+    "text": "La escena 17 repite casi literalmente la escena 12.",
+    "scene": 16
+   },
+   {
+    "severity": "warning",
+    "rule": "narrativa-escena-repetida",
+    "text": "La escena 18 repite casi literalmente la escena 12.",
+    "scene": 17
+   },
+   {
+    "severity": "warning",
+    "rule": "narrativa-escena-repetida",
+    "text": "La escena 19 repite casi literalmente la escena 12.",
+    "scene": 18
+   },
+   {
+    "severity": "error",
+    "rule": "narrativa-bucle",
+    "text": "7 escenas son copias de otras anteriores (escenas 13, 14, 15, 16, 17, 18, 19): parece un bucle de relleno, no una historia."
+   },
+   {
+    "severity": "warning",
+    "rule": "narrativa-dialogo-duplicado",
+    "text": "La frase «No dejaré que nadie me robe lo que más quiero. Ni mi sueño ni mi herm…» aparece 2 veces (escenas 10, 12).",
+    "scene": 9
+   },
+   {
+    "severity": "warning",
+    "rule": "narrativa-localizacion-estancada",
+    "text": "10 escenas seguidas (10-19) en «Calle de noche» con poca información nueva: ¿hace falta cambiar de lugar, de momento o de plano?",
+    "scene": 9
+   },
+   {
+    "severity": "warning",
+    "rule": "narrativa-sin-consecuencia",
+    "text": "El final no muestra una consecuencia nueva de lo ocurrido (el último tercio repite lo anterior)."
+   },
+   {
+    "severity": "warning",
+    "rule": "narrativa-gancho-generico",
+    "text": "El episodio no declara gancho para el siguiente."
+   },
+   {
+    "severity": "warning",
+    "rule": "narrativa-gancho-generico",
+    "text": "La última escena cierra con una frase genérica («esto es solo el principio»…).",
+    "scene": 18
+   }
+  ]
+ },
+ {
+  "file": "qwen3-8b-narrative.json",
+  "id": "S3",
+  "scenes": 19,
+  "error": 0,
+  "warning": 2,
+  "info": 0,
+  "rules": [
+   "localizacion-estancada",
+   "escenas-fragmentadas"
+  ],
+  "findings": [
+   {
+    "severity": "warning",
+    "rule": "narrativa-localizacion-estancada",
+    "text": "10 escenas seguidas (7-16) en «Habitación»: ¿hace falta cambiar de lugar, de momento o de plano?",
+    "scene": 6
+   },
+   {
+    "severity": "warning",
+    "rule": "narrativa-escenas-fragmentadas",
+    "text": "19 escenas de ≈ 16 palabras de media: el episodio es una lista de instantes, no escenas con desarrollo."
+   }
+  ]
+ },
+ {
+  "file": "qwen3-14b-narrative.partial.json",
+  "id": "S1",
+  "scenes": 29,
+  "error": 0,
+  "warning": 3,
+  "info": 4,
+  "rules": [
+   "localizacion-estancada",
+   "escena-sin-aporte",
+   "escenas-fragmentadas",
+   "personaje-sin-funcion",
+   "protagonista-ausente"
+  ],
+  "findings": [
+   {
+    "severity": "warning",
+    "rule": "narrativa-localizacion-estancada",
+    "text": "29 escenas seguidas (1-29) en «Calle de noche»: ¿hace falta cambiar de lugar, de momento o de plano?",
+    "scene": 0
+   },
+   {
+    "severity": "info",
+    "rule": "narrativa-escena-sin-aporte",
+    "text": "La escena 21 es solo un desplazamiento sin diálogo ni cambio: ¿se puede fusionar con la siguiente?",
+    "scene": 20
+   },
+   {
+    "severity": "info",
+    "rule": "narrativa-escena-sin-aporte",
+    "text": "La escena 22 es solo un desplazamiento sin diálogo ni cambio: ¿se puede fusionar con la siguiente?",
+    "scene": 21
+   },
+   {
+    "severity": "info",
+    "rule": "narrativa-escena-sin-aporte",
+    "text": "La escena 28 es solo un desplazamiento sin diálogo ni cambio: ¿se puede fusionar con la siguiente?",
+    "scene": 27
+   },
+   {
+    "severity": "warning",
+    "rule": "narrativa-escenas-fragmentadas",
+    "text": "29 escenas de ≈ 14 palabras de media: el episodio es una lista de instantes, no escenas con desarrollo."
+   },
+   {
+    "severity": "warning",
+    "rule": "narrativa-personaje-sin-funcion",
+    "text": "«Niño 1» se introduce con una sola línea y no vuelve: ¿qué aporta a la historia?",
+    "scene": 3
+   },
+   {
+    "severity": "info",
+    "rule": "narrativa-protagonista-ausente",
+    "text": "KAP habla en solo 8 de 29 escenas."
+   }
+  ]
+ },
+ {
+  "file": "qwen3-14b-narrative.partial.json",
+  "id": "S2",
+  "scenes": 19,
+  "error": 0,
+  "warning": 0,
+  "info": 1,
+  "rules": [
+   "cierre-moralizante"
+  ],
+  "findings": [
+   {
+    "severity": "info",
+    "rule": "narrativa-cierre-moralizante",
+    "text": "El cierre tiene tono de lección o superación. No todos los episodios deben terminar con KAP más fuerte: ¿encaja con lo que pasa?",
+    "scene": 18
+   }
+  ]
+ },
+ {
+  "file": "qwen3-14b-narrative.partial.json",
+  "id": "S3",
+  "scenes": 18,
+  "error": 0,
+  "warning": 3,
+  "info": 2,
+  "rules": [
+   "localizacion-estancada",
+   "escenas-fragmentadas",
+   "personaje-sin-funcion",
+   "dialogo-motivacional",
+   "cierre-moralizante"
+  ],
+  "findings": [
+   {
+    "severity": "warning",
+    "rule": "narrativa-localizacion-estancada",
+    "text": "18 escenas seguidas (1-18) en «Calle de noche»: ¿hace falta cambiar de lugar, de momento o de plano?",
+    "scene": 0
+   },
+   {
+    "severity": "warning",
+    "rule": "narrativa-escenas-fragmentadas",
+    "text": "18 escenas de ≈ 22 palabras de media: el episodio es una lista de instantes, no escenas con desarrollo."
+   },
+   {
+    "severity": "info",
+    "rule": "narrativa-personaje-sin-funcion",
+    "text": "«Dani» (de la memoria) solo hace un cameo de una línea: ¿era necesario traerlo?",
+    "scene": 1
+   },
+   {
+    "severity": "warning",
+    "rule": "narrativa-dialogo-motivacional",
+    "text": "6 frases de tipo «no te rindas / cree en ti / solo es el principio» (escenas 8, 12, 14, 16, 18): suenan a eslogan, no a personajes."
+   },
+   {
+    "severity": "info",
+    "rule": "narrativa-cierre-moralizante",
+    "text": "El cierre tiene tono de lección o superación. No todos los episodios deben terminar con KAP más fuerte: ¿encaja con lo que pasa?",
+    "scene": 17
+   }
+  ]
+ },
+ {
+  "file": "qwen3-8b-tech.json",
+  "id": "T1",
+  "scenes": 6,
+  "error": 0,
+  "warning": 1,
+  "info": 1,
+  "rules": [
+   "sin-conflicto",
+   "gancho-generico"
+  ],
+  "findings": [
+   {
+    "severity": "warning",
+    "rule": "narrativa-sin-conflicto",
+    "text": "No se aprecia un conflicto claro (no hay un enfrentamiento entre personajes con oposición explícita). Heurística: revisa a mano."
+   },
+   {
+    "severity": "info",
+    "rule": "narrativa-gancho-generico",
+    "text": "El gancho no se apoya en nada de lo que ocurre en el episodio: «KAP, duda sobre su sueño»."
+   }
+  ]
+ },
+ {
+  "file": "qwen3-8b-tech.json",
+  "id": "T2",
+  "scenes": 19,
+  "error": 1,
+  "warning": 12,
+  "info": 1,
+  "rules": [
+   "escena-repetida",
+   "bucle",
+   "dialogo-duplicado",
+   "localizacion-estancada",
+   "personaje-sin-funcion",
+   "sin-consecuencia"
+  ],
+  "findings": [
+   {
+    "severity": "warning",
+    "rule": "narrativa-escena-repetida",
+    "text": "La escena 11 repite casi literalmente la escena 9.",
+    "scene": 10
+   },
+   {
+    "severity": "warning",
+    "rule": "narrativa-escena-repetida",
+    "text": "La escena 12 repite casi literalmente la escena 10.",
+    "scene": 11
+   },
+   {
+    "severity": "warning",
+    "rule": "narrativa-escena-repetida",
+    "text": "La escena 13 repite casi literalmente la escena 9.",
+    "scene": 12
+   },
+   {
+    "severity": "warning",
+    "rule": "narrativa-escena-repetida",
+    "text": "La escena 14 repite casi literalmente la escena 10.",
+    "scene": 13
+   },
+   {
+    "severity": "warning",
+    "rule": "narrativa-escena-repetida",
+    "text": "La escena 15 repite casi literalmente la escena 9.",
+    "scene": 14
+   },
+   {
+    "severity": "warning",
+    "rule": "narrativa-escena-repetida",
+    "text": "La escena 16 repite casi literalmente la escena 10.",
+    "scene": 15
+   },
+   {
+    "severity": "warning",
+    "rule": "narrativa-escena-repetida",
+    "text": "La escena 17 repite casi literalmente la escena 9.",
+    "scene": 16
+   },
+   {
+    "severity": "warning",
+    "rule": "narrativa-escena-repetida",
+    "text": "La escena 18 repite casi literalmente la escena 10.",
+    "scene": 17
+   },
+   {
+    "severity": "warning",
+    "rule": "narrativa-escena-repetida",
+    "text": "La escena 19 repite casi literalmente la escena 9.",
+    "scene": 18
+   },
+   {
+    "severity": "error",
+    "rule": "narrativa-bucle",
+    "text": "9 escenas son copias de otras anteriores (escenas 11, 12, 13, 14, 15, 16, 17, 18, 19): parece un bucle de relleno, no una historia."
+   },
+   {
+    "severity": "warning",
+    "rule": "narrativa-dialogo-duplicado",
+    "text": "La frase «No me dejes ir. No dejes que nadie me quite lo poco que tengo.» aparece 2 veces (escenas 5, 7).",
+    "scene": 4
+   },
+   {
+    "severity": "warning",
+    "rule": "narrativa-localizacion-estancada",
+    "text": "19 escenas seguidas (1-19) en «Calle de noche» con poca información nueva: ¿hace falta cambiar de lugar, de momento o de plano?",
+    "scene": 0
+   },
+   {
+    "severity": "info",
+    "rule": "narrativa-personaje-sin-funcion",
+    "text": "«Dani» (de la memoria) solo hace un cameo de una línea: ¿era necesario traerlo?",
+    "scene": 1
+   },
+   {
+    "severity": "warning",
+    "rule": "narrativa-sin-consecuencia",
+    "text": "El final no muestra una consecuencia nueva de lo ocurrido (el último tercio repite lo anterior)."
+   }
+  ]
+ },
+ {
+  "file": "qwen3-8b-tech.json",
+  "id": "T3",
+  "scenes": 6,
+  "error": 0,
+  "warning": 0,
+  "info": 2,
+  "rules": [
+   "personaje-sin-funcion"
+  ],
+  "findings": [
+   {
+    "severity": "info",
+    "rule": "narrativa-personaje-sin-funcion",
+    "text": "«Hermano de KAP» (de la memoria) solo hace un cameo de una línea: ¿era necesario traerlo?",
+    "scene": 1
+   },
+   {
+    "severity": "info",
+    "rule": "narrativa-personaje-sin-funcion",
+    "text": "«Dani» (de la memoria) solo hace un cameo de una línea: ¿era necesario traerlo?",
+    "scene": 3
+   }
+  ]
+ },
+ {
+  "file": "qwen3-8b-tech.json",
+  "id": "T5",
+  "scenes": 6,
+  "error": 0,
+  "warning": 1,
+  "info": 0,
+  "rules": [
+   "gancho-generico"
+  ],
+  "findings": [
+   {
+    "severity": "warning",
+    "rule": "narrativa-gancho-generico",
+    "text": "El episodio no declara gancho para el siguiente."
+   }
+  ]
+ },
+ {
+  "file": "qwen3-8b-tech.json",
+  "id": "T6",
+  "scenes": 10,
+  "error": 0,
+  "warning": 1,
+  "info": 0,
+  "rules": [
+   "localizacion-estancada"
+  ],
+  "findings": [
+   {
+    "severity": "warning",
+    "rule": "narrativa-localizacion-estancada",
+    "text": "10 escenas seguidas (1-10) en «Calle de noche»: ¿hace falta cambiar de lugar, de momento o de plano?",
+    "scene": 0
+   }
+  ]
+ },
+ {
+  "file": "qwen3-8b-tech.json",
+  "id": "T8",
+  "scenes": 6,
+  "error": 0,
+  "warning": 2,
+  "info": 0,
+  "rules": [
+   "sin-conflicto",
+   "gancho-generico"
+  ],
+  "findings": [
+   {
+    "severity": "warning",
+    "rule": "narrativa-sin-conflicto",
+    "text": "No se aprecia un conflicto claro (no hay un enfrentamiento entre personajes con oposición explícita). Heurística: revisa a mano."
+   },
+   {
+    "severity": "warning",
+    "rule": "narrativa-gancho-generico",
+    "text": "El episodio no declara gancho para el siguiente."
+   }
+  ]
+ },
+ {
+  "file": "qwen3-14b-tech.json",
+  "id": "T1",
+  "scenes": 6,
+  "error": 0,
+  "warning": 2,
+  "info": 0,
+  "rules": [
+   "personaje-sin-funcion"
+  ],
+  "findings": [
+   {
+    "severity": "warning",
+    "rule": "narrativa-personaje-sin-funcion",
+    "text": "«Padre de KAP» se introduce con una sola línea y no vuelve: ¿qué aporta a la historia?",
+    "scene": 1
+   },
+   {
+    "severity": "warning",
+    "rule": "narrativa-personaje-sin-funcion",
+    "text": "«Compañero de clase» se introduce con una sola línea y no vuelve: ¿qué aporta a la historia?",
+    "scene": 3
+   }
+  ]
+ },
+ {
+  "file": "qwen3-14b-tech.json",
+  "id": "T2",
+  "scenes": 6,
+  "error": 0,
+  "warning": 0,
+  "info": 0,
+  "rules": [],
+  "findings": []
+ },
+ {
+  "file": "qwen3-14b-tech.json",
+  "id": "T3",
+  "scenes": 6,
+  "error": 0,
+  "warning": 1,
+  "info": 1,
+  "rules": [
+   "personaje-sin-funcion"
+  ],
+  "findings": [
+   {
+    "severity": "info",
+    "rule": "narrativa-personaje-sin-funcion",
+    "text": "«Dani» (de la memoria) solo hace un cameo de una línea: ¿era necesario traerlo?",
+    "scene": 1
+   },
+   {
+    "severity": "warning",
+    "rule": "narrativa-personaje-sin-funcion",
+    "text": "«Guardián» se introduce con una sola línea y no vuelve: ¿qué aporta a la historia?",
+    "scene": 3
+   }
+  ]
+ },
+ {
+  "file": "qwen3-14b-tech.json",
+  "id": "T4",
+  "scenes": 6,
+  "error": 0,
+  "warning": 1,
+  "info": 0,
+  "rules": [
+   "sin-conflicto"
+  ],
+  "findings": [
+   {
+    "severity": "warning",
+    "rule": "narrativa-sin-conflicto",
+    "text": "No se aprecia un conflicto claro (no hay un enfrentamiento entre personajes con oposición explícita). Heurística: revisa a mano."
+   }
+  ]
+ },
+ {
+  "file": "qwen3-14b-tech.json",
+  "id": "T5",
+  "scenes": 6,
+  "error": 0,
+  "warning": 0,
+  "info": 2,
+  "rules": [
+   "personaje-sin-funcion"
+  ],
+  "findings": [
+   {
+    "severity": "info",
+    "rule": "narrativa-personaje-sin-funcion",
+    "text": "«Hermano de KAP» (de la memoria) solo hace un cameo de una línea: ¿era necesario traerlo?",
+    "scene": 3
+   },
+   {
+    "severity": "info",
+    "rule": "narrativa-personaje-sin-funcion",
+    "text": "«Ramiro» (de la memoria) solo hace un cameo de una línea: ¿era necesario traerlo?",
+    "scene": 4
+   }
+  ]
+ },
+ {
+  "file": "qwen3-14b-tech.json",
+  "id": "T6",
+  "scenes": 7,
+  "error": 0,
+  "warning": 1,
+  "info": 1,
+  "rules": [
+   "personaje-sin-funcion",
+   "sin-conflicto"
+  ],
+  "findings": [
+   {
+    "severity": "info",
+    "rule": "narrativa-personaje-sin-funcion",
+    "text": "«Ramiro» (de la memoria) solo hace un cameo de una línea: ¿era necesario traerlo?",
+    "scene": 4
+   },
+   {
+    "severity": "warning",
+    "rule": "narrativa-sin-conflicto",
+    "text": "No se aprecia un conflicto claro (no hay un enfrentamiento entre personajes con oposición explícita). Heurística: revisa a mano."
+   }
+  ]
+ },
+ {
+  "file": "qwen3-14b-tech.json",
+  "id": "T8",
+  "scenes": 6,
+  "error": 0,
+  "warning": 1,
+  "info": 1,
+  "rules": [
+   "personaje-sin-funcion",
+   "gancho-generico"
+  ],
+  "findings": [
+   {
+    "severity": "info",
+    "rule": "narrativa-personaje-sin-funcion",
+    "text": "«Dani» (de la memoria) solo hace un cameo de una línea: ¿era necesario traerlo?",
+    "scene": 1
+   },
+   {
+    "severity": "warning",
+    "rule": "narrativa-gancho-generico",
+    "text": "El episodio no declara gancho para el siguiente."
+   }
+  ]
+ }
+]

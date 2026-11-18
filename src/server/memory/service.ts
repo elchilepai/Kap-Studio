@@ -8,11 +8,12 @@
 import type { Storage } from "@/ports";
 import type { EpisodeRequestInterpreter, EpisodeSummarizer, ScriptAuthor } from "@/ports/studio";
 import { contextBudget, getAi } from "@/server/ai/registry";
+import { reviewNarrative } from "@/narrative/review";
 import type { Character, Place, Production } from "@/domain/types";
 import { canExport } from "@/server/studio/export";
 import {
   kapCanonChanges, beforeNext, lifeSoFar, whereEnded, arcProgress, continuityChecklist,
-  applyChanges, buildContextPack, buildProposal, contentSig, deriveEnding, emptyCanon, markPresent, orderOf, parseEpisodeRequest, parseManual, parseScenes, slug, validateContinuity,
+  applyChanges, buildContextPack, buildProposal, contentSig, deriveEnding, emptyCanon, hash, markPresent, orderOf, parseEpisodeRequest, parseManual, parseScenes, slug, validateContinuity,
   asProposed, epLabel,
   type CanonBase, type CanonState, type ContextPack, type Decision, type EpisodeInput, type EpisodeMemory, type EpisodeRequest, type Finding, type MemoryProposal, type ProposedChange,
 } from "@/memory";
@@ -87,7 +88,7 @@ export async function proposeMemory(deps: MemoryDeps, productionId: string, o: {
 }
 
 export type MemoryStatus = {
-  production: Production; proposal?: MemoryProposal; committed?: EpisodeMemory; findings: Finding[]; parseErrors: string[];
+  production: Production; proposal?: MemoryProposal; committed?: EpisodeMemory; findings: Finding[]; /** Revisión narrativa heurística (aparte de la continuidad): avisa, no bloquea. */ narrative: Finding[]; parseErrors: string[];
   stale: boolean;            // la propuesta/confirmación no corresponde al contenido actual
   approved: boolean; pendingDecisions: number; accepted: number; rejected: number;
 };
@@ -102,7 +103,10 @@ export async function memoryStatus(storage: Storage, productionId: string): Prom
   const manual = { changes: changes.filter((c) => c.origin === "manual").map((c) => c.change), uses: [], acts: [], errors: [] };   // lo que el usuario añadió a mano también se valida
   const prevMem = ep.continuesFrom !== undefined ? (await validEpisodes(storage)).find((e) => e.order === ep.continuesFrom) : undefined;
   const findings = validateContinuity({ episode: ep, canon: before, perScene, changes, manual, previousLastShot: prevMem ? { characters: prevMem.lastShot.characters, location: prevMem.lastShot.location } : undefined, previousHook: prevMem?.hook });
-  return { production, proposal, committed, findings, parseErrors: perScene.flatMap((p) => p.parsed.errors), stale: stale || (!!committed && committed.contentSig !== sig), approved: canExport(production.status),
+    // Revisión narrativa (heurística, sin IA): calidad del guion. Se muestra aparte de la continuidad; informa, nunca bloquea ni toca el canon.
+  const narrative: Finding[] = reviewNarrative({ scenes: ep.scenes.map((sc) => ({ location: sc.location, title: sc.title, lines: sc.lines.map((l) => ({ speaker: l.speaker, text: l.text })) })), hook: perScene.map((p) => p.parsed.hook).filter(Boolean).pop(), knownCharacters: ep.characters.map((c) => c.name), acts: perScene.flatMap((p) => p.parsed.acts.map((a) => a.kind)) })
+    .map((f) => ({ id: `f_${hash(`${f.rule}|${f.scene ?? ""}|${f.text}`)}`, severity: f.severity, rule: f.rule, text: f.text, ...(f.scene !== undefined ? { scene: f.scene, sceneTitle: ep.scenes[f.scene]?.title } : {}) }));
+  return { production, proposal, committed, findings, narrative, parseErrors: perScene.flatMap((p) => p.parsed.errors), stale: stale || (!!committed && committed.contentSig !== sig), approved: canExport(production.status),
     pendingDecisions: changes.filter((c) => c.decision === "pending").length, accepted: changes.filter((c) => c.decision === "accepted").length, rejected: changes.filter((c) => c.decision === "rejected").length };
 }
 

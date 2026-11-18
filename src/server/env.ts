@@ -18,6 +18,7 @@ const Schema = z.object({
   KAP_OLLAMA_URL: z.string().default("http://127.0.0.1:11434"),   // solo loopback salvo KAP_LLM_ALLOW_REMOTE=true
   KAP_LLM_MODEL: z.string().default("qwen3:8b"),                  // cambiar de modelo = cambiar esto; nada más del sistema depende de él
   KAP_LLM_CONTEXT: z.coerce.number().int().min(2048).max(131072).default(8192),   // tokens de contexto que se piden al motor (más contexto = más RAM)
+  KAP_AUTHOR_MODE: z.enum(["arc", "json", "text"]).default("arc"),               // arc = arco → escenas (recomendado); json = borrador de una pasada; text = texto libre
   KAP_LLM_TIMEOUT_S: z.coerce.number().int().min(10).max(7200).default(1800),     // en CPU un episodio completo tarda minutos
   KAP_LLM_ALLOW_REMOTE: z.enum(["true", "false"]).default("false").transform((v) => v === "true"),
   KAP_CONTEXT_TOKENS: z.coerce.number().int().min(500).max(32000).default(3500), // presupuesto del paquete de contexto de la memoria narrativa

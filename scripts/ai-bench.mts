@@ -14,11 +14,13 @@ import { execFileSync } from "node:child_process";
 
 const root = await fs.mkdtemp(path.join(os.tmpdir(), "kap-aibench-"));
 process.env.KAP_DATA_DIR = root;   // todo en un directorio temporal: no se toca el canon ni los datos de nadie
-const MODEL = process.env.AI_MODEL ?? "qwen3:8b", PHASE = process.env.AI_PHASE ?? "tech", ONLY = (process.env.AI_ONLY ?? "").split(",").filter(Boolean), SCENES = Number(process.env.AI_SCENES ?? 6);
+const MODE = process.env.AI_MODE === "arc" ? "arc" : "json", MODEL = process.env.AI_MODEL ?? "qwen3:8b", PHASE = process.env.AI_PHASE ?? "tech", ONLY = (process.env.AI_ONLY ?? "").split(",").filter(Boolean), SCENES = Number(process.env.AI_SCENES ?? 6);
 const OUT = path.resolve(import.meta.dirname, "..", "docs", "ia-bench"), SLUG = MODEL.replace(/[^a-z0-9]+/gi, "-");
 const { createSqliteStorage } = await import("../src/adapters/local/sqlite-storage");
 const { createOllamaClient } = await import("../src/server/ai/ollama");
 const { llmEpisodeAuthor, EpisodeDraft, draftSeconds } = await import("../src/server/ai/episode");
+const { llmArcAuthor } = await import("../src/server/ai/arc");
+const { reviewNarrative, countBySeverity } = await import("../src/narrative/review");
 const { generateJson } = await import("../src/server/ai/json");
 const { validateIR } = await import("../src/domain/screenplay");
 const { irToScenes, parsedToIR } = await import("../src/server/studio/interpreter");
@@ -137,10 +139,12 @@ async function runReview(w: World) {
 
 async function runAuthor(t: Task, requestText: string, scenes: number, w: World) {
   const { request, pack } = await M.requestContext(w.storage, requestText);
-  const author = llmEpisodeAuthor(llm, { scenes }); const m = await measured(async () => { try { return { ok: true as const, out: await author.write({ request, context: pack }) }; } catch (e) { return { ok: false as const, error: (e as Error).message }; } });
+  const author: any = MODE === "arc" ? llmArcAuthor(llm) : llmEpisodeAuthor(llm, { scenes }); const m = await measured(async () => { try { return { ok: true as const, out: await author.write({ request, context: pack }) }; } catch (e) { return { ok: false as const, error: (e as Error).message }; } });
   const base = { id: t.id, title: t.title, request: requestText, ms: m.ms, peakMb: m.peakMb, sysPeakMb: m.sysPeakMb, contextTokens: pack.usedTokens };
   if (!m.value.ok) return { ...base, error: m.value.error, ok: false };
   const { out } = m.value, draft = author.lastDraft!, st = out.stats!;
+  const kapNames = w.chars.map((c) => c.name), hookText = draft.scenes.flatMap((s: any) => s.memory).map((x: string) => /^gancho:\s*(.+)$/i.exec(x)?.[1]).filter(Boolean).pop();
+  const plain = reviewNarrative({ scenes: draft.scenes.map((s: any) => ({ location: s.location, lines: s.lines })), hook: hookText, knownCharacters: kapNames }), tagged = reviewNarrative({ scenes: draft.scenes.map((s: any) => ({ location: s.location, lines: s.lines, fn: s.fn, stage: s.stage, shot: s.shot, time: s.time, interior: s.interior })), hook: hookText, knownCharacters: kapNames });
   const r = validateIR(parsedToIR(parseScript(out.script, w.chars.map((c, i) => ({ id: String(i), name: c.name })))), w.bible);   // IR tras el intérprete por reglas (lo que ve el pipeline)
   await w.mk("probe", request.number, out.script, "REVIEW", { continuesFrom: request.continuesFrom, brief: requestText }); await M.proposeMemory(w.deps, "probe");
   const ms = (await M.memoryStatus(w.storage, "probe"))!, f = ms.findings, lastLoc = (await M.answerStory(w.storage, "terminado")).sections.find((s) => /Último plano/.test(s.title))?.lines[0]?.match(/en ([^;]+);/)?.[1];
@@ -151,7 +155,7 @@ async function runAuthor(t: Task, requestText: string, scenes: number, w: World)
     json: { attempts: st.attempts, retries: st.retries, jsonErrors: st.jsonErrors, schemaErrors: st.schemaErrors, lengthRetries: st.lengthRetries, memoryDirectiveErrors: st.memoryDirectiveErrors }, irErrors: r.errors, usage: st.usage, tokensPerSec: +tps.toFixed(2),
     episode: { scenes: draft.scenes.length, estimatedSec: secs, words: draft.scenes.reduce((n: number, s: any) => n + s.lines.reduce((k: number, l: any) => k + words(l.text).length, 0), 0), title: draft.title, logline: draft.logline },
     continuity: { critical: f.filter((x) => x.severity === "error").map((x) => `${x.rule}: ${x.text.slice(0, 140)}`), warnings: f.filter((x) => x.severity === "warning").map((x) => `${x.rule}: ${x.text.slice(0, 140)}`), info: f.filter((x) => x.severity === "info").length },
-    checks, compliance: +(checks.filter((c) => c.ok).length / checks.length).toFixed(2), proxy: proxy(draft, secs), warnings: out.warnings.slice(0, 6), draft };
+    narrative: { ...countBySeverity(plain), rules: [...new Set(plain.map((f) => f.rule.replace("narrativa-", "")))], findings: plain, taggedRules: [...new Set(tagged.map((f) => f.rule.replace("narrativa-", "")))] }, mode: MODE, arc: author.lastArc, checks, compliance: +(checks.filter((c) => c.ok).length / checks.length).toFixed(2), proxy: proxy(draft, secs), warnings: out.warnings.slice(0, 6), draft };
 }
 
 // ---------------------------------------------------------------- fases
@@ -161,7 +165,7 @@ console.log(`\n== Banco de IA local · ${MODEL} · fase ${PHASE} · ${meta.cpus}
 if (!(await llm.available())) { console.error(`El modelo ${MODEL} no está disponible en Ollama`); process.exit(2); }
 const results: any[] = [];
 /** Guardado incremental: un reinicio del contenedor no debe perder las tareas ya terminadas. */
-const save = () => fs.writeFile(path.join(OUT, `${SLUG}-${PHASE}${ONLY.length ? "-" + ONLY.join("") : ""}.partial.json`), JSON.stringify({ meta, partial: true, results }, null, 1));
+const save = () => fs.writeFile(path.join(OUT, `${SLUG}-${PHASE}${PHASE === "blind2" ? "-" + MODE : ""}${ONLY.length ? "-" + ONLY.join("") : ""}.partial.json`), JSON.stringify({ meta, partial: true, results }, null, 1));
 if (PHASE === "tech" || PHASE === "all") {
   const worlds: Partial<Record<"fresh" | "after3", World>> = {};
   for (const t of TASKS.concat([{ id: "T7", title: "", world: "after3", request: "", kind: "review" }]).filter((x) => !ONLY.length || ONLY.includes(x.id))) {
@@ -170,6 +174,18 @@ if (PHASE === "tech" || PHASE === "all") {
     const r = t.kind === "review" ? await runReview(w) : await runAuthor(t, t.request, SCENES, w); results.push(r); await save();
     console.log(`   ${(r.ms / 1000).toFixed(0)} s · RAM pico ${r.peakMb} MB · ${"error" in r ? "ERROR " + r.error : `${r.id === "T7" ? `detecta ${(r as any).review.found}/4 · falsos+ ${(r as any).review.falsePositives}` : `IR ${(r as any).irValid ? "válida" : "inválida"}${(r as any).irValidFirstTry ? " a la primera" : ""}`} · reintentos ${(r as any).json.retries} · cumplimiento ${Math.round((((r as any).compliance ?? ((r as any).checks.filter((c: Check) => c.ok).length / (r as any).checks.length)) ) * 100)}% · crit ${(r as any).continuity?.critical.length ?? "-"}`}`);
     for (const c of ((r as any).checks ?? []).filter((c: Check) => !c.ok)) console.log(`     ✗ ${c.id}${c.note ? ` — ${c.note}` : ""}`);
+  }
+}
+if (PHASE === "blind2") {
+  const N = [
+    { id: "N1", request: `${EXACT(4)}. Los compañeros se burlan de la ropa de KAP y él, para defenderse, suelta una rima improvisada por primera vez.` },
+    { id: "N2", request: "Crea el episodio 4, a continuación del episodio 3. En casa no queda comida y el hermano pequeño tiene hambre; no hay padres ni dinero. KAP tiene que decidir qué hace." },
+    { id: "N3", request: "Crea el episodio 4, a continuación del episodio 3. KAP se escapa a ensayar rimas en vez de cuidar a su hermano pequeño, y esa decisión tiene consecuencias." },
+  ].filter((x) => !ONLY.length || ONLY.includes(x.id));
+  const w = await world("after3");
+  for (const s of N) {
+    await unload(); console.log(`\n[${s.id}] (${MODE}) episodio completo …`); const r = await runAuthor({ id: s.id, title: "Situación nueva", world: "after3", request: s.request }, s.request, 18, w); results.push(r); await save();
+    console.log(`   ${(r.ms / 60000).toFixed(1)} min · ${"error" in r ? "ERROR " + r.error : `${(r as any).episode.scenes} escenas · ≈ ${((r as any).episode.estimatedSec / 60).toFixed(1)} min · IR ${(r as any).irValid ? "válida" : "inválida"} · reintentos ${(r as any).json.retries} · crit ${(r as any).continuity.critical.length} · narrativa crit ${(r as any).narrative.error} aviso ${(r as any).narrative.warning} info ${(r as any).narrative.info}`}`);
   }
 }
 if (PHASE === "narrative" || PHASE === "all") {
@@ -185,6 +201,6 @@ if (PHASE === "narrative" || PHASE === "all") {
   }
 }
 const loadedInfo = await loaded();
-await fs.writeFile(path.join(OUT, `${SLUG}-${PHASE}${ONLY.length ? "-" + ONLY.join("") : ""}.json`), JSON.stringify({ meta, loaded: loadedInfo, totalMin: +((Date.now() - t0) / 60000).toFixed(1), results }, null, 1));
+await fs.writeFile(path.join(OUT, `${SLUG}-${PHASE}${PHASE === "blind2" ? "-" + MODE : ""}${ONLY.length ? "-" + ONLY.join("") : ""}.json`), JSON.stringify({ meta, loaded: loadedInfo, totalMin: +((Date.now() - t0) / 60000).toFixed(1), results }, null, 1));
 console.log(`\nTotal ${((Date.now() - t0) / 60000).toFixed(1)} min · modelo en memoria: ${JSON.stringify(loadedInfo)} · guardado en docs/ia-bench/`);
 await fs.rm(root, { recursive: true, force: true });

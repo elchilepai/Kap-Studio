@@ -45,6 +45,7 @@ export default async function MemoryCard({ p }: { p: Production }) {
 
       <div><h3 style={{ marginBottom: 6 }}>Continuidad {errs ? <span className="badge err">{errs} crítico(s)</span> : null} {warns ? <span className="badge kap">{warns} aviso(s)</span> : null}</h3>
         <FindingsList findings={findings} />
+        {st.narrative.length > 0 && (<div className="stack" style={{ gap: 4 }}><b className="small">Revisión narrativa <span className="muted">(heurística: avisos para revisar, no bloquean)</span></b><FindingsList findings={st.narrative} /></div>)}
         {errs > 0 && <p className="small" style={{ color: "var(--err)" }}>Hay errores críticos. No bloquean la aprobación: decides tú, pero conviene corregirlos o declarar la razón en el guion.</p>}
         {st.parseErrors.length > 0 && <Notice kind="err"><span>Directivas de memoria no entendidas: {st.parseErrors.join(" · ")}</span></Notice>}</div>
 
