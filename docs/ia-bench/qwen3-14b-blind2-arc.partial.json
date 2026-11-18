@@ -1,0 +1,834 @@
+{
+ "meta": {
+  "model": "qwen3:14b",
+  "phase": "blind2",
+  "ctx": 8192,
+  "date": "2026-11-18T08:29:43.215Z",
+  "cpus": 4,
+  "ramGb": 16,
+  "host": "CPU sin GPU"
+ },
+ "partial": true,
+ "results": [
+  {
+   "id": "N1",
+   "title": "Situación nueva",
+   "request": "Crea el episodio 4 continuando exactamente donde terminó el episodio 3. Los compañeros se burlan de la ropa de KAP y él, para defenderse, suelta una rima improvisada por primera vez.",
+   "ms": 3914419,
+   "peakMb": 11577,
+   "sysPeakMb": 12268,
+   "contextTokens": 1910,
+   "ok": true,
+   "irValid": true,
+   "irValidFirstTry": false,
+   "json": {
+    "attempts": 17,
+    "retries": 4,
+    "jsonErrors": 0,
+    "schemaErrors": 0,
+    "lengthRetries": 0,
+    "memoryDirectiveErrors": 0
+   },
+   "irErrors": [],
+   "usage": {
+    "promptTokens": 78616,
+    "outputTokens": 5488,
+    "totalMs": 3914334.425986,
+    "loadMs": 9146.495701,
+    "promptMs": 500610.74299999996,
+    "evalMs": 3403516.215999999
+   },
+   "tokensPerSec": 1.61,
+   "episode": {
+    "scenes": 12,
+    "estimatedSec": 208,
+    "words": 575,
+    "title": "Episodio 4: La primera rima",
+    "logline": "KAP se enfrenta al bullying en la calle, y por primera vez improvisa una rima para defenderse, marcando un punto de inflexión en su evolución como artista."
+   },
+   "continuity": {
+    "critical": [],
+    "warnings": [
+     "relacion-contradice: KAP y Hermano de KAP ya se conocían (relación «hermanos» desde canon inicial); la escena 4 los presenta como si se conocieran ahora.",
+     "duracion: El episodio dura ≈ 4 min y el formato es ≈ 5 min (4–6 min)."
+    ],
+    "info": 4
+   },
+   "narrative": {
+    "error": 0,
+    "warning": 6,
+    "info": 0,
+    "rules": [
+     "dialogo-duplicado",
+     "escena-sin-aporte"
+    ],
+    "findings": [
+     {
+      "severity": "warning",
+      "rule": "narrativa-dialogo-duplicado",
+      "text": "La frase «Sí... por la música.» aparece 3 veces (escenas 6, 9, 12).",
+      "scene": 5
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-dialogo-duplicado",
+      "text": "La frase «No me ven, pero mi voz va más allá...» aparece 2 veces (escenas 7, 10).",
+      "scene": 6
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-dialogo-duplicado",
+      "text": "La frase «Soy un niño de camiseta gris, pero mis sueños brillan como el sol.» aparece 2 veces (escenas 7, 9).",
+      "scene": 6
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-dialogo-duplicado",
+      "text": "La frase «Aunque el mundo me burla, no dejo de escribir mi historia.» aparece 2 veces (escenas 7, 9).",
+      "scene": 6
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-dialogo-duplicado",
+      "text": "La frase «¿Tú también quieres ser millonario, como en el cuaderno?» aparece 2 veces (escenas 8, 12).",
+      "scene": 7
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-escena-sin-aporte",
+      "text": "La escena 9 no aporta información nueva respecto a las anteriores.",
+      "scene": 8
+     }
+    ],
+    "taggedRules": [
+     "dialogo-duplicado",
+     "escena-sin-aporte",
+     "poca-variedad-visual"
+    ]
+   },
+   "mode": "arc",
+   "arc": {
+    "title": "Episodio 4: La primera rima",
+    "logline": "KAP se enfrenta al bullying en la calle, y por primera vez improvisa una rima para defenderse, marcando un punto de inflexión en su evolución como artista.",
+    "assumptions": [
+     "El episodio comienza con KAP solo, tal como terminó el episodio anterior, y se desarrolla en la misma calle de noche."
+    ],
+    "problem": "Los compañeros de KAP lo burlan por su ropa, y Dani aparece para mostrar públicamente el cuaderno de KAP, humillándolo.",
+    "kapWant": "Proteger su dignidad y defender su sueño sin recurrir a la violencia o al llanto.",
+    "kapChoice": "KAP improvisa una rima en respuesta al bullying, usando sus palabras para expresar su dolor y su fuerza interior.",
+    "consequence": "La reacción de los demás es mixta: algunos se quedan sorprendidos, otros siguen riendo, pero el acto de KAP deja una huella que no se puede ignorar.",
+    "outcome": "amargo",
+    "hook": "Aunque KAP logra defenderse con su rima, Dani lo amenaza con hacer pública su música en Internet si no le cede su cuaderno.",
+    "usedFromMemory": [
+     "Bullying hacia KAP",
+     "El sueño de KAP: ser millonario gracias a la música",
+     "Cuidar y proteger a su hermano",
+     "Dani acosa a KAP",
+     "KAP ↔ Dani: acoso",
+     "KAP ↔ Ramiro: mentor"
+    ],
+    "newCharacters": [],
+    "newPlaces": [],
+    "beats": [
+     {
+      "stage": "inicio",
+      "fn": "preparar-gancho",
+      "summary": "KAP está en la calle de noche, con el cuaderno abierto. Sonríe despacio y lo levanta para que alguien lo vea.",
+      "location": "Calle de noche",
+      "characters": [
+       "KAP"
+      ],
+      "time": "noche",
+      "interior": false,
+      "shot": "general",
+      "visual": "KAP mira el cuaderno con determinación, la luz de la luna lo ilumina."
+     },
+     {
+      "stage": "inicio",
+      "fn": "preparar-gancho",
+      "summary": "KAP llega a la guardería donde su hermano está esperándolo. Lo ve desde lejos, sonriente y esperanzado.",
+      "location": "Guardería",
+      "characters": [
+       "KAP",
+       "Hermano de KAP"
+      ],
+      "time": "noche",
+      "interior": true,
+      "shot": "general",
+      "visual": "KAP entra en la guardería, el hermano lo ve y le sonríe con cariño."
+     },
+     {
+      "stage": "problema",
+      "fn": "avanzar-historia",
+      "summary": "Dani aparece detrás de KAP, le arrebata el cuaderno y lo muestra a otros chicos que se reúnen alrededor.",
+      "location": "Calle de noche",
+      "characters": [
+       "KAP",
+       "Dani"
+      ],
+      "time": "noche",
+      "interior": false,
+      "shot": "medio",
+      "visual": "Dani sostiene el cuaderno con una sonrisa burlona, otros niños se reúnen alrededor."
+     },
+     {
+      "stage": "problema",
+      "fn": "avanzar-historia",
+      "summary": "El hermano de KAP corre hacia él y le abraza. KAP, por un momento, olvida el bullying y se siente protegido.",
+      "location": "Guardería",
+      "characters": [
+       "KAP",
+       "Hermano de KAP"
+      ],
+      "time": "noche",
+      "interior": true,
+      "shot": "medio",
+      "visual": "El hermano abraza a KAP, que se queda un momento inmóvil y luego le devuelve el abrazo."
+     },
+     {
+      "stage": "escalada",
+      "fn": "conflicto",
+      "summary": "Los niños ríen y se burlan de KAP por su ropa y por la letra del cuaderno. Uno de ellos lo llama 'el pobretón'.",
+      "location": "Calle de noche",
+      "characters": [
+       "KAP",
+       "Dani",
+       "otros niños"
+      ],
+      "time": "noche",
+      "interior": false,
+      "shot": "general",
+      "visual": "KAP se queda callado, mirando al suelo, mientras los otros niños ríen."
+     },
+     {
+      "stage": "escalada",
+      "fn": "desarrollar-personaje",
+      "summary": "KAP le muestra al hermano una página del cuaderno. El niño la mira con curiosidad, sin entender, pero con interés.",
+      "location": "Guardería",
+      "characters": [
+       "KAP",
+       "Hermano de KAP"
+      ],
+      "time": "noche",
+      "interior": true,
+      "shot": "primer plano",
+      "visual": "KAP le muestra una línea de su cuaderno al hermano, quien lo mira con curiosidad."
+     },
+     {
+      "stage": "decision",
+      "fn": "arco-de-kap",
+      "summary": "KAP inspira profundamente y, con voz firme, comienza a recitar una rima improvisada sobre su vida y sus sueños.",
+      "location": "Calle de noche",
+      "characters": [
+       "KAP",
+       "Dani",
+       "otros niños"
+      ],
+      "time": "noche",
+      "interior": false,
+      "shot": "primer plano",
+      "visual": "KAP mira a los ojos de los demás mientras recita, con una expresión serena pero firme."
+     },
+     {
+      "stage": "decision",
+      "fn": "arco-de-kap",
+      "summary": "KAP decide guardar el cuaderno y no dejar que Dani lo robe. Lo guarda en su mochila con cuidado.",
+      "location": "Guardería",
+      "characters": [
+       "KAP",
+       "Hermano de KAP"
+      ],
+      "time": "noche",
+      "interior": true,
+      "shot": "general",
+      "visual": "KAP cierra la mochila con cuidado, mira al hermano y le sonríe."
+     },
+     {
+      "stage": "consecuencia",
+      "fn": "revelar-informacion",
+      "summary": "La rima impacta a algunos de los niños, que se quedan callados. Dani, sin embargo, sigue riendo y amenaza a KAP.",
+      "location": "Calle de noche",
+      "characters": [
+       "KAP",
+       "Dani",
+       "otros niños"
+      ],
+      "time": "noche",
+      "interior": false,
+      "shot": "general",
+      "visual": "Algunos de los niños se quedan mirando a KAP, otros aún ríen. Dani sonríe con superioridad."
+     },
+     {
+      "stage": "resolucion",
+      "fn": "desarrollar-personaje",
+      "summary": "KAP termina su rima y baja la mirada, mostrando que aunque se defendió, aún siente vergüenza y vulnerabilidad.",
+      "location": "Calle de noche",
+      "characters": [
+       "KAP"
+      ],
+      "time": "noche",
+      "interior": false,
+      "shot": "primer plano",
+      "visual": "KAP suspira, mira el suelo, y se da la vuelta para irse."
+     },
+     {
+      "stage": "gancho",
+      "fn": "preparar-gancho",
+      "summary": "Dani grita tras él: '¡Esa letra va a ser mía! ¡La haré pública si no me das el cuaderno!'",
+      "location": "Calle de noche",
+      "characters": [
+       "KAP",
+       "Dani"
+      ],
+      "time": "noche",
+      "interior": false,
+      "shot": "general",
+      "visual": "KAP se detiene por un instante, mira a Dani con tristeza, y luego continúa caminando."
+     },
+     {
+      "stage": "gancho",
+      "fn": "preparar-gancho",
+      "summary": "El hermano le pregunta: '¿Tú también quieres ser millonario, como en el cuaderno?' KAP lo mira y asiente con la cabeza.",
+      "location": "Guardería",
+      "characters": [
+       "KAP",
+       "Hermano de KAP"
+      ],
+      "time": "noche",
+      "interior": true,
+      "shot": "medio",
+      "visual": "El hermano pregunta con curiosidad, KAP lo mira y asiente con una sonrisa pequeña."
+     }
+    ]
+   },
+   "checks": [
+    {
+     "id": "estructura-6-actos",
+     "ok": true,
+     "note": "faltan: —"
+    },
+    {
+     "id": "gancho",
+     "ok": true
+    },
+    {
+     "id": "protagonista",
+     "ok": true
+    },
+    {
+     "id": "sin-errores-criticos",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "sin-exito-prematuro",
+     "ok": true
+    },
+    {
+     "id": "directivas-validas",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "espanol",
+     "ok": true
+    },
+    {
+     "id": "arranca-donde-termino",
+     "ok": true,
+     "note": "1.ª escena en «Calle de noche», terminó en «Calle de noche»"
+    },
+    {
+     "id": "diversidad-lexica",
+     "ok": true,
+     "note": "0.37"
+    }
+   ],
+   "compliance": 1,
+   "proxy": {
+    "score": 7,
+    "dialogueRatio": 0.69,
+    "locations": 2,
+    "repeatedSentences": 5
+   },
+   "warnings": [
+    "El modelo desordenó las etapas del arco; se han reordenado.",
+    "Episodio corto (≈ 3.5 min): no se ha rellenado; la duración sale de la historia. Revisa si el arco necesita más desarrollo.",
+    "Narrativa (warning) · dialogo-duplicado: La frase «Sí... por la música.» aparece 3 veces (escenas 6, 9, 12).",
+    "Narrativa (warning) · dialogo-duplicado: La frase «No me ven, pero mi voz va más allá...» aparece 2 veces (escenas 7, 10).",
+    "Narrativa (warning) · dialogo-duplicado: La frase «Soy un niño de camiseta gris, pero mis sueños brillan como el sol.» aparece 2 veces (escenas 7, 9).",
+    "Narrativa (warning) · dialogo-duplicado: La frase «Aunque el mundo me burla, no dejo de escribir mi historia.» aparece 2 veces (escenas 7, 9)."
+   ],
+   "draft": {
+    "title": "Episodio 4: La primera rima",
+    "logline": "KAP se enfrenta al bullying en la calle, y por primera vez improvisa una rima para defenderse, marcando un punto de inflexión en su evolución como artista.",
+    "assumptions": [
+     "El episodio comienza con KAP solo, tal como terminó el episodio anterior, y se desarrolla en la misma calle de noche."
+    ],
+    "scenes": [
+     {
+      "title": "Episodio 4: La primera rima",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP mira el cuaderno con determinación, la luz de la luna lo ilumina."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Ya casi lo tengo..."
+       }
+      ],
+      "memory": [
+       "acto: inicio | KAP está en la calle de noche, con el cuaderno abierto. Sonríe despacio y lo levanta para que alguien lo vea."
+      ],
+      "fn": "preparar-gancho",
+      "stage": "inicio",
+      "shot": "general",
+      "time": "noche",
+      "interior": false,
+      "directions": [
+       "plano: general"
+      ]
+     },
+     {
+      "title": "Episodio 4: La primera rima",
+      "location": "Guardería",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP entra en la guardería. El hermano lo ve desde lejos y le sonríe con cariño."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¡Kap!"
+       },
+       {
+        "speaker": "",
+        "text": "KAP se detiene un momento, mira a su hermano con una mezcla de ternura y responsabilidad."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Estás bien?"
+       }
+      ],
+      "memory": [],
+      "fn": "preparar-gancho",
+      "stage": "inicio",
+      "shot": "general",
+      "time": "noche",
+      "interior": true,
+      "directions": [
+       "plano: general",
+       "expresion: Hermano de KAP feliz",
+       "camina: KAP a derecha",
+       "gesto: Hermano de KAP saluda"
+      ]
+     },
+     {
+      "title": "Episodio 4: La primera rima",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Dani aparece detrás de KAP, le arrebata el cuaderno y lo muestra a otros chicos que se reúnen alrededor."
+       },
+       {
+        "speaker": "Dani",
+        "text": "¿Y esto? ¿Qué es esto, KAP?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "¡No te atrevas a tocarlo!"
+       },
+       {
+        "speaker": "Dani",
+        "text": "¡Vaya, vaya! ¡Tienes un cuaderno lleno de palabras!"
+       },
+       {
+        "speaker": "Dani",
+        "text": "¿Qué pasa, KAP? ¿Te da vergüenza que te vean?"
+       }
+      ],
+      "memory": [
+       "acto: conflicto | Dani aparece detrás de KAP, le arrebata el cuaderno y lo muestra a otros chicos que se reúnen alrededor."
+      ],
+      "fn": "avanzar-historia",
+      "stage": "problema",
+      "shot": "medio",
+      "time": "noche",
+      "interior": false,
+      "directions": [
+       "plano: medio KAP",
+       "mira: KAP derecha",
+       "gesto: Dani senala",
+       "camara: seguir Dani",
+       "expresion: KAP enfadado"
+      ]
+     },
+     {
+      "title": "Episodio 4: La primera rima",
+      "location": "Guardería",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "El hermano corre hacia KAP con los brazos abiertos y lo abraza con fuerza."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¡Kap!"
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Estás bien?"
+       },
+       {
+        "speaker": "",
+        "text": "KAP se queda inmóvil durante un momento, luego le devuelve el abrazo con cuidado."
+       }
+      ],
+      "memory": [
+       "conoce: KAP, Hermano de KAP",
+       "relacion: KAP, Hermano de KAP, hermanos, +2"
+      ],
+      "fn": "avanzar-historia",
+      "stage": "problema",
+      "shot": "medio",
+      "time": "noche",
+      "interior": true,
+      "directions": [
+       "plano: medio KAP",
+       "mira: Hermano de KAP derecha",
+       "camina: KAP a izquierda",
+       "entra: Hermano de KAP derecha",
+       "gesto: KAP encoge",
+       "expresion: KAP preocupado"
+      ]
+     },
+     {
+      "title": "Episodio 4: La primera rima",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Los niños ríen y se burlan de KAP por su ropa y por la letra del cuaderno. Uno de ellos lo llama 'el pobretón'."
+       },
+       {
+        "speaker": "Dani",
+        "text": "¡Mira, mira! ¡El pobretón tiene un cuaderno lleno de rimas!"
+       },
+       {
+        "speaker": "otro niño",
+        "text": "¡Vaya, vaya! ¿Y esto es lo que hace con su vida? ¡Hasta el pobretón quiere ser artista!"
+       },
+       {
+        "speaker": "KAP",
+        "text": "No es por eso... No es por eso..."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo | Los niños ríen y se burlan de KAP por su ropa y por la letra del cuaderno. Uno de ellos lo llama 'el pobretón'."
+      ],
+      "fn": "conflicto",
+      "stage": "escalada",
+      "shot": "general",
+      "time": "noche",
+      "interior": false,
+      "directions": [
+       "plano: general"
+      ]
+     },
+     {
+      "title": "Episodio 4: La primera rima",
+      "location": "Guardería",
+      "lines": [
+       {
+        "speaker": "KAP",
+        "text": "Mira... esto es lo que escribo."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¿Qué dice?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "Dijo que algún día seré millonario."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¿Millonario?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "Sí... por la música."
+       }
+      ],
+      "memory": [],
+      "fn": "desarrollar-personaje",
+      "stage": "escalada",
+      "shot": "primer plano",
+      "time": "noche",
+      "interior": true,
+      "directions": [
+       "plano: primer plano KAP",
+       "expresion: KAP, pensativo",
+       "gesto: KAP, senala",
+       "mira: KAP, derecha",
+       "camara: zoom 1.2"
+      ]
+     },
+     {
+      "title": "Episodio 4: La primera rima",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP inspira profundamente, mira a los ojos de los demás y comienza a recitar con voz firme."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No me ven, pero mi voz va más allá..."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Soy un niño de camiseta gris, pero mis sueños brillan como el sol."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Aunque el mundo me burla, no dejo de escribir mi historia."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Un día seré el que todos escuchen, aunque ahora me rían."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Y hasta el pobretón puede soñar con el cielo."
+       }
+      ],
+      "memory": [
+       "acto: emocional | KAP inspira profundamente y, con voz firme, comienza a recitar una rima improvisada sobre su vida y sus sueños.",
+       "obtiene: KAP, confianza +1",
+       "relacion: KAP, Dani, rival, -1"
+      ],
+      "fn": "arco-de-kap",
+      "stage": "decision",
+      "shot": "primer plano",
+      "time": "noche",
+      "interior": false,
+      "directions": [
+       "plano: primer plano KAP",
+       "camara: zoom 1.2",
+       "vfx: lluvia suave"
+      ]
+     },
+     {
+      "title": "Episodio 4: La primera rima",
+      "location": "Guardería",
+      "lines": [
+       {
+        "speaker": "KAP",
+        "text": "No me lo vas a quitar, Dani. Este cuaderno es mío."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¿Tú también quieres ser millonario, como en el cuaderno?"
+       }
+      ],
+      "memory": [],
+      "fn": "arco-de-kap",
+      "stage": "decision",
+      "shot": "general",
+      "time": "noche",
+      "interior": true,
+      "directions": [
+       "plano: general",
+       "mira: KAP izquierda"
+      ]
+     },
+     {
+      "title": "Episodio 4: La primera rima",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "KAP",
+        "text": "Soy un niño de camiseta gris, pero mis sueños brillan como el sol."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Aunque el mundo me burla, no dejo de escribir mi historia."
+       },
+       {
+        "speaker": "Dani",
+        "text": "¡Vaya! ¿Y esto es lo que hace con su vida?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "Sí... por la música."
+       },
+       {
+        "speaker": "otro niño",
+        "text": "…"
+       },
+       {
+        "speaker": "Dani",
+        "text": "¡Esa letra va a ser mía! ¡La haré pública si no me das el cuaderno!"
+       }
+      ],
+      "memory": [
+       "relacion: KAP, Dani, rival, -1",
+       "obtiene: KAP, autoconfianza"
+      ],
+      "fn": "revelar-informacion",
+      "stage": "consecuencia",
+      "shot": "general",
+      "time": "noche",
+      "interior": false,
+      "directions": [
+       "plano: general",
+       "expresion: KAP, pensativo",
+       "mira: KAP, derecha",
+       "camara: seguir KAP",
+       "expresion: otro niño, sorprendido",
+       "gesto: Dani, encoge"
+      ]
+     },
+     {
+      "title": "Episodio 4: La primera rima",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP termina su rima con una última palabra que se queda suspendida en el aire."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No me ven, pero mi voz va más allá..."
+       },
+       {
+        "speaker": "",
+        "text": "KAP baja la mirada, sus ojos se llenan de una mezcla de orgullo y tristeza."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Aunque el mundo me burla..."
+       },
+       {
+        "speaker": "",
+        "text": "Sus hombros se encogen levemente, como si el peso del rechazo lo estuviera apretando."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No dejo de escribir mi historia."
+       }
+      ],
+      "memory": [
+       "acto: resolucion | KAP termina su rima y baja la mirada, mostrando que aunque se defendió, aún siente vergüenza y vulnerabilidad."
+      ],
+      "fn": "desarrollar-personaje",
+      "stage": "resolucion",
+      "shot": "primer plano",
+      "time": "noche",
+      "interior": false,
+      "directions": [
+       "plano: primer plano KAP",
+       "expresion: KAP triste",
+       "camina: KAP a izquierda",
+       "vfx: lluvia suave"
+      ]
+     },
+     {
+      "title": "Episodio 4: La primera rima",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Dani grita tras él: '¡Esa letra va a ser mía! ¡La haré pública si no me das el cuaderno!'"
+       },
+       {
+        "speaker": "KAP",
+        "text": "No... no te atrevas."
+       },
+       {
+        "speaker": "",
+        "text": "KAP se detiene por un instante, mira a Dani con tristeza, y luego continúa caminando."
+       },
+       {
+        "speaker": "",
+        "text": "Dani lo sigue con la mirada, sonriendo con malicia, mientras los otros niños murmuran entre sí."
+       },
+       {
+        "speaker": "",
+        "text": "KAP baja la mirada, aprieta el cuaderno contra su pecho y camina con paso firme, aunque titubeante, hacia la guardería."
+       }
+      ],
+      "memory": [
+       "acto: gancho | Dani grita tras él: '¡Esa letra va a ser mía! ¡La haré pública si no me das el cuaderno!'"
+      ],
+      "fn": "preparar-gancho",
+      "stage": "gancho",
+      "shot": "general",
+      "time": "noche",
+      "interior": false,
+      "directions": [
+       "plano: general"
+      ]
+     },
+     {
+      "title": "Episodio 4: La primera rima",
+      "location": "Guardería",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "El hermano de KAP se acerca a él con curiosidad, mirando la página del cuaderno que KAP le mostró antes."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¿Tú también quieres ser millonario, como en el cuaderno?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "Sí... por la música."
+       },
+       {
+        "speaker": "",
+        "text": "KAP sonríe levemente, mirando a su hermano con ternura y determinación."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¿Y cómo se hace?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "Escribir, practicar... y no dejar que nadie quite lo que es tuyo."
+       },
+       {
+        "speaker": "",
+        "text": "El hermano asiente con entusiasmo, mientras KAP cierra el cuaderno con cuidado y lo guarda en su mochila."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "Entonces... ¡vamos a ser millonarios juntos!"
+       },
+       {
+        "speaker": "KAP",
+        "text": "Sí. Juntos."
+       }
+      ],
+      "memory": [
+       "gancho: Aunque KAP logra defenderse con su rima, Dani lo amenaza con hacer pública su música en Internet si no le cede su cuaderno."
+      ],
+      "fn": "preparar-gancho",
+      "stage": "gancho",
+      "shot": "medio",
+      "time": "noche",
+      "interior": true,
+      "directions": [
+       "plano: medio KAP"
+      ]
+     }
+    ]
+   }
+  }
+ ]
+}
