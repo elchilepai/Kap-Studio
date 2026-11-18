@@ -1,0 +1,1487 @@
+{
+ "meta": {
+  "model": "qwen3:14b",
+  "phase": "blind3",
+  "ctx": 8192,
+  "date": "2026-11-18T20:24:30.317Z",
+  "cpus": 4,
+  "ramGb": 16,
+  "host": "CPU sin GPU"
+ },
+ "loaded": {
+  "sizeMb": 10609,
+  "context": 8192
+ },
+ "totalMin": 135.7,
+ "results": [
+  {
+   "id": "E4",
+   "title": "Episodio 4",
+   "request": "Crea el episodio 4, a continuación del episodio 3. Dani sigue teniendo el cuaderno de KAP y, en el colegio, los compañeros se burlan de su ropa; KAP reacciona y, bajo presión, suelta una rima improvisada por primera vez.",
+   "ms": 2453685,
+   "peakMb": 10676,
+   "sysPeakMb": 11466,
+   "contextTokens": 1898,
+   "ok": true,
+   "irValid": true,
+   "irValidFirstTry": false,
+   "json": {
+    "attempts": 2,
+    "retries": 1,
+    "jsonErrors": 0,
+    "schemaErrors": 0,
+    "lengthRetries": 1,
+    "memoryDirectiveErrors": 39
+   },
+   "irErrors": [],
+   "usage": {
+    "promptTokens": 7139,
+    "outputTokens": 3829,
+    "totalMs": 2453664.178441,
+    "loadMs": 12904.384765,
+    "promptMs": 176793.547,
+    "evalMs": 2263904.767
+   },
+   "tokensPerSec": 1.69,
+   "episode": {
+    "scenes": 23,
+    "estimatedSec": 128,
+    "words": 318,
+    "title": "Episodio 4: La primera rima",
+    "logline": "KAP enfrenta el bullying en el colegio y, bajo presión, improvisa su primera rima, marcando un hito en su evolución."
+   },
+   "continuity": {
+    "critical": [],
+    "warnings": [
+     "directiva: Directiva de memoria no entendida: «acto: inicio»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "hito: Hito desconocido «Primer momento de inspiración»: no está en el arco de la serie.",
+     "directiva: Directiva de memoria no entendida: «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "hito: Hito desconocido «KAP confronta a Dani»: no está en el arco de la serie.",
+     "directiva: Directiva de memoria no entendida: «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: resolucion»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "hito: Hito desconocido «KAP improvisa su primera rima»: no está en el arco de la serie.",
+     "directiva: Directiva de memoria no entendida: «acto: resolucion»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "hito: Hito desconocido «KAP sufre bullying en el colegio»: no está en el arco de la serie.",
+     "directiva: Directiva de memoria no entendida: «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: resolucion»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "hito: Hito desconocido «KAP improvisa su primera rima en público»: no está en el arco de la serie.",
+     "directiva: Directiva de memoria no entendida: «acto: gancho»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "estructura: Al episodio le faltan: Inicio, Conflicto, Desarrollo, Punto emocional o de tensión, Resolución parcial. Decláralo en el guion con [acto: tip",
+     "duracion: El episodio dura ≈ 2.4 min y el formato es ≈ 5 min (4–6 min)."
+    ],
+    "info": 4
+   },
+   "narrative": {
+    "error": 0,
+    "warning": 5,
+    "info": 0,
+    "rules": [
+     "localizacion-estancada",
+     "escena-sin-aporte",
+     "escenas-fragmentadas",
+     "personaje-sin-funcion"
+    ],
+    "findings": [
+     {
+      "severity": "warning",
+      "rule": "narrativa-localizacion-estancada",
+      "text": "16 escenas seguidas (1-16) en «Calle de noche»: ¿hace falta cambiar de lugar, de momento o de plano?",
+      "scene": 0
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-escena-sin-aporte",
+      "text": "La escena 22 no aporta información nueva respecto a las anteriores.",
+      "scene": 21
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-escenas-fragmentadas",
+      "text": "23 escenas de ≈ 14 palabras de media: el episodio es una lista de instantes, no escenas con desarrollo."
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-personaje-sin-funcion",
+      "text": "«Compañero 1» se introduce con una sola línea y no vuelve: ¿qué aporta a la historia?",
+      "scene": 17
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-personaje-sin-funcion",
+      "text": "«Compañero 2» se introduce con una sola línea y no vuelve: ¿qué aporta a la historia?",
+      "scene": 18
+     }
+    ],
+    "taggedRules": [
+     "localizacion-estancada",
+     "escena-sin-aporte",
+     "escenas-fragmentadas",
+     "personaje-sin-funcion"
+    ]
+   },
+   "mode": "json",
+   "script": "# Calle de noche\nKAP camina por la calle bajo la luz tenue de las farolas. La sonrisa de Dani se refleja en su cara al mostrarle el cuaderno robado.\n[acto: inicio]\n[hito-logrado: Primer momento de inspiración | KAP]\n[abre-hilo: el cuaderno robado | KAP, Dani]\n\n# Calle de noche\nDANI: ¿Sabes qué? Me gustaría que esto fuera tuyo. Pero ya no es así.\n[acto: conflicto]\n[uso: Dani, cuaderno de KAP]\n\n# Calle de noche\nKAP: No es tuyo. Nunca lo será.\n[acto: conflicto]\n[uso: KAP, cuaderno de KAP]\n\n# Calle de noche\nKAP se acerca a Dani y lo mira con intensidad. La tensión crece entre ambos.\n[acto: conflicto]\n[hito-logrado: KAP confronta a Dani | KAP, Dani]\n\n# Calle de noche\nDANI: ¿Y qué vas a hacer? ¿Vas a gritar como un loco?\n[acto: conflicto]\n[uso: Dani, cuaderno de KAP]\n\n# Calle de noche\nKAP: No. Pero puedo decir algo que te haga callar.\n[acto: desarrollo]\n[uso: KAP, cuaderno de KAP]\n\n# Calle de noche\nKAP cierra los ojos un momento. Siente la presión en su pecho y se prepara para algo que nunca antes ha hecho.\n[acto: desarrollo]\n[perfil: KAP, sueños = ser millonario gracias a la música]\n\n# Calle de noche\nKAP: Puedo cantar. Y no es por nada, pero...\n[acto: desarrollo]\n[uso: KAP, cuaderno de KAP]\n\n# Calle de noche\nKAP: Soy un niño que sueña con ser grande, pero hoy...\n[acto: desarrollo]\n[uso: KAP, cuaderno de KAP]\n\n# Calle de noche\nKAP: Hoy, bajo el cielo y la luz de las farolas, voy a hacerlo.\n[acto: desarrollo]\n[uso: KAP, cuaderno de KAP]\n\n# Calle de noche\nKAP: ¿Sabes qué? Hoy no me importa lo que digas, Dani. Porque ya tengo algo mejor.\n[acto: desarrollo]\n[uso: KAP, cuaderno de KAP]\n\n# Calle de noche\nKAP: Hoy, por primera vez, voy a decir algo que no me perturbe.\n[acto: desarrollo]\n[uso: KAP, cuaderno de KAP]\n\n# Calle de noche\nKAP: Hoy, por primera vez, voy a cantar algo que no me pida nada.\n[acto: desarrollo]\n[uso: KAP, cuaderno de KAP]\n\n# Calle de noche\nKAP: Y así lo haré. Por mí, por mi hermano y por todos los niños que no tienen voz.\n[acto: desarrollo]\n[uso: KAP, cuaderno de KAP]\n\n# Calle de noche\nKAP: Hoy, mi voz es mía. Y nadie me la va a quitar.\n[acto: resolucion]\n[hito-logrado: KAP improvisa su primera rima | KAP]\n\n# Calle de noche\nKAP cierra los ojos y, con una voz firme, comienza a cantar su primera rima. Dani lo observa, sorprendido.\n[acto: resolucion]\n[uso: KAP, cuaderno de KAP]\n\n# Colegio\nKAP entra en el colegio. Sus compañeros lo rodean y se burlan de su ropa.\n[acto: conflicto]\n[hito-logrado: KAP sufre bullying en el colegio | KAP]\n\n# Colegio\nCOMPAÑERO 1: ¡Mira esa camiseta! ¡Es tan vieja que se le va a caer pronto!\n[acto: conflicto]\n[uso: Compañero 1, bullying]\n\n# Colegio\nCOMPAÑERO 2: ¡Vaya, parece que KAP no tiene ni un centavo para comprarse una ropa decente!\n[acto: conflicto]\n[uso: Compañero 2, bullying]\n\n# Colegio\nKAP: No necesito vuestra ropa para sentirme bien. Lo que sí necesito es...\n[acto: desarrollo]\n[uso: KAP, cuaderno de KAP]\n\n# Colegio\nKAP: Una oportunidad para mostrar quién soy.\n[acto: desarrollo]\n[uso: KAP, cuaderno de KAP]\n\n# Colegio\nKAP cierra los ojos y, con una voz firme, comienza a cantar su primera rima en el colegio. Los compañeros lo escuchan, sorprendidos.\n[acto: resolucion]\n[hito-logrado: KAP improvisa su primera rima en público | KAP]\n\n# Colegio\nKAP: Esta es mi primera rima. Y ya no me importa lo que digan.\n[acto: gancho]\n[gancho: La primera rima de KAP ha cambiado su vida para siempre]\n",
+   "gate": {
+    "regenerated": 0,
+    "dropped": 0,
+    "issues": {}
+   },
+   "checks": [
+    {
+     "id": "estructura-6-actos",
+     "ok": false,
+     "note": "faltan: inicio, conflicto, desarrollo, emocional, resolucion"
+    },
+    {
+     "id": "gancho",
+     "ok": true
+    },
+    {
+     "id": "protagonista",
+     "ok": true
+    },
+    {
+     "id": "sin-errores-criticos",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "sin-exito-prematuro",
+     "ok": true
+    },
+    {
+     "id": "directivas-validas",
+     "ok": false,
+     "note": "«acto: inicio»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto» | «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»"
+    },
+    {
+     "id": "espanol",
+     "ok": true
+    },
+    {
+     "id": "diversidad-lexica",
+     "ok": true,
+     "note": "0.45"
+    }
+   ],
+   "compliance": 0.75,
+   "proxy": {
+    "score": 8,
+    "dialogueRatio": 0.74,
+    "locations": 2,
+    "repeatedSentences": 0
+   },
+   "warnings": [
+    "Directiva de memoria inválida del modelo: «acto: inicio»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+    "Directiva de memoria inválida del modelo: «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+    "Directiva de memoria inválida del modelo: «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+    "Directiva de memoria inválida del modelo: «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+    "Directiva de memoria inválida del modelo: «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+    "Directiva de memoria inválida del modelo: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»"
+   ],
+   "draft": {
+    "title": "Episodio 4: La primera rima",
+    "logline": "KAP enfrenta el bullying en el colegio y, bajo presión, improvisa su primera rima, marcando un hito en su evolución.",
+    "assumptions": [],
+    "scenes": [
+     {
+      "title": "Calle de noche (2)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP camina por la calle bajo la luz tenue de las farolas. La sonrisa de Dani se refleja en su cara al mostrarle el cuaderno robado."
+       }
+      ],
+      "memory": [
+       "acto: inicio",
+       "hito-logrado: Primer momento de inspiración | KAP",
+       "abre-hilo: el cuaderno robado | KAP, Dani"
+      ]
+     },
+     {
+      "title": "Calle de noche (3)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "Dani",
+        "text": "¿Sabes qué? Me gustaría que esto fuera tuyo. Pero ya no es así."
+       }
+      ],
+      "memory": [
+       "acto: conflicto",
+       "uso: Dani, cuaderno de KAP"
+      ]
+     },
+     {
+      "title": "Calle de noche (4)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "KAP",
+        "text": "No es tuyo. Nunca lo será."
+       }
+      ],
+      "memory": [
+       "acto: conflicto",
+       "uso: KAP, cuaderno de KAP"
+      ]
+     },
+     {
+      "title": "Calle de noche (5)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se acerca a Dani y lo mira con intensidad. La tensión crece entre ambos."
+       }
+      ],
+      "memory": [
+       "acto: conflicto",
+       "hito-logrado: KAP confronta a Dani | KAP, Dani"
+      ]
+     },
+     {
+      "title": "Calle de noche (6)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "Dani",
+        "text": "¿Y qué vas a hacer? ¿Vas a gritar como un loco?"
+       }
+      ],
+      "memory": [
+       "acto: conflicto",
+       "uso: Dani, cuaderno de KAP"
+      ]
+     },
+     {
+      "title": "Calle de noche (7)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "KAP",
+        "text": "No. Pero puedo decir algo que te haga callar."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo",
+       "uso: KAP, cuaderno de KAP"
+      ]
+     },
+     {
+      "title": "Calle de noche (8)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP cierra los ojos un momento. Siente la presión en su pecho y se prepara para algo que nunca antes ha hecho."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo",
+       "perfil: KAP, sueños = ser millonario gracias a la música"
+      ]
+     },
+     {
+      "title": "Calle de noche (9)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "KAP",
+        "text": "Puedo cantar. Y no es por nada, pero..."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo",
+       "uso: KAP, cuaderno de KAP"
+      ]
+     },
+     {
+      "title": "Calle de noche (10)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "KAP",
+        "text": "Soy un niño que sueña con ser grande, pero hoy..."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo",
+       "uso: KAP, cuaderno de KAP"
+      ]
+     },
+     {
+      "title": "Calle de noche (11)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "KAP",
+        "text": "Hoy, bajo el cielo y la luz de las farolas, voy a hacerlo."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo",
+       "uso: KAP, cuaderno de KAP"
+      ]
+     },
+     {
+      "title": "Calle de noche (12)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "KAP",
+        "text": "¿Sabes qué? Hoy no me importa lo que digas, Dani. Porque ya tengo algo mejor."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo",
+       "uso: KAP, cuaderno de KAP"
+      ]
+     },
+     {
+      "title": "Calle de noche (13)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "KAP",
+        "text": "Hoy, por primera vez, voy a decir algo que no me perturbe."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo",
+       "uso: KAP, cuaderno de KAP"
+      ]
+     },
+     {
+      "title": "Calle de noche (14)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "KAP",
+        "text": "Hoy, por primera vez, voy a cantar algo que no me pida nada."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo",
+       "uso: KAP, cuaderno de KAP"
+      ]
+     },
+     {
+      "title": "Calle de noche (15)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "KAP",
+        "text": "Y así lo haré. Por mí, por mi hermano y por todos los niños que no tienen voz."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo",
+       "uso: KAP, cuaderno de KAP"
+      ]
+     },
+     {
+      "title": "Calle de noche (16)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "KAP",
+        "text": "Hoy, mi voz es mía. Y nadie me la va a quitar."
+       }
+      ],
+      "memory": [
+       "acto: resolucion",
+       "hito-logrado: KAP improvisa su primera rima | KAP"
+      ]
+     },
+     {
+      "title": "Calle de noche (17)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP cierra los ojos y, con una voz firme, comienza a cantar su primera rima. Dani lo observa, sorprendido."
+       }
+      ],
+      "memory": [
+       "acto: resolucion",
+       "uso: KAP, cuaderno de KAP"
+      ]
+     },
+     {
+      "title": "Colegio (1)",
+      "location": "Colegio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP entra en el colegio. Sus compañeros lo rodean y se burlan de su ropa."
+       }
+      ],
+      "memory": [
+       "acto: conflicto",
+       "hito-logrado: KAP sufre bullying en el colegio | KAP"
+      ]
+     },
+     {
+      "title": "Colegio (2)",
+      "location": "Colegio",
+      "lines": [
+       {
+        "speaker": "Compañero 1",
+        "text": "¡Mira esa camiseta! ¡Es tan vieja que se le va a caer pronto!"
+       }
+      ],
+      "memory": [
+       "acto: conflicto",
+       "uso: Compañero 1, bullying"
+      ]
+     },
+     {
+      "title": "Colegio (3)",
+      "location": "Colegio",
+      "lines": [
+       {
+        "speaker": "Compañero 2",
+        "text": "¡Vaya, parece que KAP no tiene ni un centavo para comprarse una ropa decente!"
+       }
+      ],
+      "memory": [
+       "acto: conflicto",
+       "uso: Compañero 2, bullying"
+      ]
+     },
+     {
+      "title": "Colegio (4)",
+      "location": "Colegio",
+      "lines": [
+       {
+        "speaker": "KAP",
+        "text": "No necesito vuestra ropa para sentirme bien. Lo que sí necesito es..."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo",
+       "uso: KAP, cuaderno de KAP"
+      ]
+     },
+     {
+      "title": "Colegio (5)",
+      "location": "Colegio",
+      "lines": [
+       {
+        "speaker": "KAP",
+        "text": "Una oportunidad para mostrar quién soy."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo",
+       "uso: KAP, cuaderno de KAP"
+      ]
+     },
+     {
+      "title": "Colegio (6)",
+      "location": "Colegio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP cierra los ojos y, con una voz firme, comienza a cantar su primera rima en el colegio. Los compañeros lo escuchan, sorprendidos."
+       }
+      ],
+      "memory": [
+       "acto: resolucion",
+       "hito-logrado: KAP improvisa su primera rima en público | KAP"
+      ]
+     },
+     {
+      "title": "Colegio (7)",
+      "location": "Colegio",
+      "lines": [
+       {
+        "speaker": "KAP",
+        "text": "Esta es mi primera rima. Y ya no me importa lo que digan."
+       }
+      ],
+      "memory": [
+       "acto: gancho",
+       "gancho: La primera rima de KAP ha cambiado su vida para siempre"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "E5",
+   "title": "Episodio 5",
+   "request": "Crea el episodio 5, continuando el episodio 4. Lo que hizo KAP en el episodio 4 trae consecuencias que llegan a casa y afectan a su hermano pequeño; KAP tiene que decidir qué hace.",
+   "ms": 2950955,
+   "peakMb": 10678,
+   "sysPeakMb": 11528,
+   "contextTokens": 1957,
+   "ok": true,
+   "irValid": true,
+   "irValidFirstTry": false,
+   "json": {
+    "attempts": 2,
+    "retries": 1,
+    "jsonErrors": 0,
+    "schemaErrors": 0,
+    "lengthRetries": 1,
+    "memoryDirectiveErrors": 25
+   },
+   "irErrors": [],
+   "usage": {
+    "promptTokens": 8130,
+    "outputTokens": 4596,
+    "totalMs": 2950936.952993,
+    "loadMs": 9367.715130999999,
+    "promptMs": 215164.715,
+    "evalMs": 2726323.1229999997
+   },
+   "tokensPerSec": 1.69,
+   "episode": {
+    "scenes": 18,
+    "estimatedSec": 208,
+    "words": 561,
+    "title": "Episodio 5: La primera rima",
+    "logline": "La primera rima de KAP resuena más allá del colegio, llegando a su casa y poniendo a prueba su responsabilidad como hermano mayor."
+   },
+   "continuity": {
+    "critical": [],
+    "warnings": [
+     "relacion-contradice: Hermano de KAP y KAP ya se conocían (relación «hermanos» desde canon inicial); la escena 4 los presenta como si se conocieran ahora.",
+     "relacion-contradice: Hermano de KAP y KAP ya se conocían (relación «conocidos» desde canon inicial); la escena 6 los presenta como si se conocieran ahora.",
+     "relacion-contradice: Ramiro y KAP ya se conocían (relación «mentor» desde ep. 3); la escena 9 los presenta como si se conocieran ahora.",
+     "relacion-contradice: Hermano de KAP y KAP ya se conocían (relación «conocidos» desde canon inicial); la escena 13 los presenta como si se conocieran ahora.",
+     "relacion-contradice: COMPAÑERO 1 y KAP ya se conocían (relación «conocidos» desde ep. 5); la escena 15 los presenta como si se conocieran ahora.",
+     "estructura: Al episodio le faltan: Conflicto, Desarrollo, Punto emocional o de tensión, Resolución parcial. Decláralo en el guion con [acto: tipo | text",
+     "duracion: El episodio dura ≈ 3.9 min y el formato es ≈ 5 min (4–6 min)."
+    ],
+    "info": 7
+   },
+   "narrative": {
+    "error": 0,
+    "warning": 6,
+    "info": 2,
+    "rules": [
+     "localizacion-estancada",
+     "personaje-sin-funcion",
+     "memoria-no-pedida"
+    ],
+    "findings": [
+     {
+      "severity": "warning",
+      "rule": "narrativa-localizacion-estancada",
+      "text": "11 escenas seguidas (4-14) en «Casa de KAP»: ¿hace falta cambiar de lugar, de momento o de plano?",
+      "scene": 3
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-personaje-sin-funcion",
+      "text": "«COMPAÑERO 2» se introduce con una sola línea y no vuelve: ¿qué aporta a la historia?",
+      "scene": 2
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-personaje-sin-funcion",
+      "text": "«Padre de KAP» se introduce con una sola línea y no vuelve: ¿qué aporta a la historia?",
+      "scene": 4
+     },
+     {
+      "severity": "info",
+      "rule": "narrativa-personaje-sin-funcion",
+      "text": "«Ramiro» (de la memoria) solo hace un cameo de una línea: ¿era necesario traerlo?",
+      "scene": 8
+     },
+     {
+      "severity": "info",
+      "rule": "narrativa-personaje-sin-funcion",
+      "text": "«Profesora» (de la memoria) solo hace un cameo de una línea: ¿era necesario traerlo?",
+      "scene": 16
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-memoria-no-pedida",
+      "text": "«Hermano de KAP» (de la memoria) aparece en 3 escenas sin que la petición lo pidiera: la memoria sirve para mantener la continuidad, no para reutilizarlo todo.",
+      "scene": 3
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-memoria-no-pedida",
+      "text": "«Ramiro» (de la memoria) aparece en 1 escena sin que la petición lo pidiera: la memoria sirve para mantener la continuidad, no para reutilizarlo todo.",
+      "scene": 8
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-memoria-no-pedida",
+      "text": "«Profesora» (de la memoria) aparece en 1 escena sin que la petición lo pidiera: la memoria sirve para mantener la continuidad, no para reutilizarlo todo.",
+      "scene": 16
+     }
+    ],
+    "taggedRules": [
+     "localizacion-estancada",
+     "personaje-sin-funcion"
+    ]
+   },
+   "mode": "json",
+   "script": "# Colegio\nLa luz del amanecer entra por las ventanas del colegio, iluminando el aula vacía. KAP camina por los pasillos, la camiseta gris desgastada aún en su cuerpo, pero ahora con una mirada más firme.\nKAP: Esta es mi primera rima. Y ya no me importa lo que digan.\n[acto: inicio | KAP declara su resolución]\n[uso: KAP, camiseta gris desgastada]\n[etapa: KAP, Niño]\n\n# Colegio\nEn el colegio, la noticia de la rima de KAP se extiende entre los compañeros. Algunos lo miran con respeto, otros con desdén.\nCOMPAÑERO 1: ¿Ya la escucharon? KAP hizo una rima... en la calle.\n[desarrollo: La rima se difunde]\n[conoce: COMPAÑERO 1, KAP]\n\n# Colegio\nCOMPAÑERO 2 y otros estudiantes se reúnen en el pasillo. Su actitud hacia KAP no cambia, aunque ahora lo observan con mayor atención.\nCOMPAÑERO 2: ¿Y qué? ¿Crees que eso te hace diferente?\n[conflicto: Desprecio por la rima]\n[conoce: COMPAÑERO 2, KAP]\n\n# Casa de KAP\nKAP entra en su casa, cansado. Su hermano pequeño lo espera en el sofá, observándolo con curiosidad.\nHERMANO DE KAP: ¿Qué pasó? ¿Te metiste en problemas?\n[desarrollo: La noticia llega a casa]\n[conoce: Hermano de KAP, KAP]\n\n# Casa de KAP\nKAP entra en la sala donde sus padres están. El ambiente es tenso, pero el silencio los domina. Sus padres, ocupados con sus propios problemas, apenas lo miran.\nPADRE DE KAP: ¿Ya terminaste? No te entretengas tanto.\n[conflicto: Desatención parental]\n[conoce: Padre de KAP, KAP]\n\n# Casa de KAP\nKAP se sienta junto a su hermano. El niño lo mira con preocupación, como si entendiera que algo no está bien.\nHERMANO DE KAP: ¿Por qué te miran así en el colegio? ¿Tú también me vas a abandonar?\n[emocional: El hermano se siente abandonado]\n[conoce: Hermano de KAP, KAP]\n\n# Casa de KAP\nKAP mira a su hermano con tristeza. No puede decirle todo lo que siente, pero intenta consolarlo.\nKAP: No te voy a abandonar. Prometo cuidarte siempre.\n[desarrollo: KAP se compromete]\n[uso: KAP, promesa]\n\n# Casa de KAP\nMientras su hermano duerme, KAP se queda despierto. En su mente, la música sigue resonando. Su sueño de ser millonario gracias a la música no se borra.\nKAP: Un día… seré grande. Seré alguien que no me ignoren.\n[desarrollo: El sueño persiste]\n[uso: KAP, sueño]\n\n# Casa de KAP\nEl teléfono suena. KAP lo contesta con nerviosismo. Es Ramiro, su mentor.\nRAMIRO: KAP, escuché lo que escribiste. Eres talentoso. No dejes que nadie te quite eso.\n[desarrollo: Ramiro reconoce el talento]\n[conoce: Ramiro, KAP]\n\n# Casa de KAP\nKAP coloca el teléfono y mira a su hermano. El ambiente en casa se siente más tenso que nunca, pero ahora tiene un nuevo impulso.\nKAP: No me importa lo que digan. Mi hermano es lo más importante.\n[conflicto: Presión familiar]\n[uso: KAP, decisión]\n\n# Casa de KAP\nKAP decide no rendirse. Aunque su familia no lo apoya, su hermano lo necesita y él se compromete a cuidarlo.\nKAP: No dejaré que nada me quite mi sueño... ni mi responsabilidad.\n[resolucion: KAP elige su camino]\n[uso: KAP, responsabilidad]\n\n# Casa de KAP\nKAP se retira a su habitación y abre el cuaderno. Escribir sus rimas se convierte en su forma de luchar contra el mundo exterior.\nKAP: La música es mi refugio. Mi forma de luchar.\n[desarrollo: La música como refugio]\n[uso: KAP, cuaderno]\n\n# Casa de KAP\nAl día siguiente, el hermano de KAP entra en su habitación y lo mira con admiración.\nHERMANO DE KAP: ¿Tú también puedes ser grande? ¿Yo puedo ser como tú?\n[desarrollo: El hermano se inspira]\n[conoce: Hermano de KAP, KAP]\n\n# Casa de KAP\nKAP sonríe con ternura. Su hermano es su inspiración y su motivación.\nKAP: Sí, puedes ser como yo. Pero no olvides quién eres.\n[desarrollo: KAP comparte sus sueños]\n[uso: KAP, hermano]\n\n# Colegio\nEn el colegio, los compañeros siguen burlándose de KAP. Ahora, sin embargo, su actitud hacia él cambia ligeramente.\nCOMPAÑERO 1: ¿Ya te vas a ir? ¿O vas a seguir escribiendo rimas?\n[conflicto: El colegio no lo acepta]\n[conoce: COMPAÑERO 1, KAP]\n\n# Colegio\nKAP entra en el aula con determinación. Su camiseta gris desgastada sigue siendo su identidad, pero ahora lleva un mensaje diferente.\nKAP: La vida no me dará nada por gratis. Pero me lo ganaré.\n[resolucion: KAP se prepara para luchar]\n[uso: KAP, camiseta gris desgastada]\n\n# Colegio\nLa profesora lo mira con interés. Por primera vez, parece notar su potencial.\nPROFESORA: KAP... ¿has pensado en participar en el concurso de poesía del colegio?\n[desarrollo: La profesora lo reconoce]\n[conoce: Profesora, KAP]\n\n# Colegio\nKAP mira a la profesora con sorpresa. La idea lo emociona, pero también le da miedo. ¿Podrá enfrentar el mundo que lo rechaza?\nKAP: ¿Y si me meto en problemas? ¿Y si no soy lo suficiente?\n[gancho: KAP está a punto de dar su primer paso en el camino musical]\n[uso: KAP, duda]\n",
+   "gate": {
+    "regenerated": 0,
+    "dropped": 0,
+    "issues": {}
+   },
+   "checks": [
+    {
+     "id": "estructura-6-actos",
+     "ok": false,
+     "note": "faltan: conflicto, desarrollo, emocional, resolucion"
+    },
+    {
+     "id": "gancho",
+     "ok": true
+    },
+    {
+     "id": "protagonista",
+     "ok": true
+    },
+    {
+     "id": "sin-errores-criticos",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "sin-exito-prematuro",
+     "ok": true
+    },
+    {
+     "id": "directivas-validas",
+     "ok": false,
+     "note": ""
+    },
+    {
+     "id": "espanol",
+     "ok": true
+    },
+    {
+     "id": "diversidad-lexica",
+     "ok": true,
+     "note": "0.44"
+    }
+   ],
+   "compliance": 0.75,
+   "proxy": {
+    "score": 8,
+    "dialogueRatio": 0.5,
+    "locations": 2,
+    "repeatedSentences": 0
+   },
+   "warnings": [
+    "Directiva de memoria inválida del modelo: «uso: KAP, camiseta gris desgastada»: directiva de memoria desconocida",
+    "Directiva de memoria inválida del modelo: «desarrollo: La rima se difunde»: directiva de memoria desconocida",
+    "Directiva de memoria inválida del modelo: «conflicto: Desprecio por la rima»: directiva de memoria desconocida",
+    "Directiva de memoria inválida del modelo: «desarrollo: La noticia llega a casa»: directiva de memoria desconocida",
+    "Directiva de memoria inválida del modelo: «conflicto: Desatención parental»: directiva de memoria desconocida",
+    "Directiva de memoria inválida del modelo: «emocional: El hermano se siente abandonado»: directiva de memoria desconocida"
+   ],
+   "draft": {
+    "title": "Episodio 5: La primera rima",
+    "logline": "La primera rima de KAP resuena más allá del colegio, llegando a su casa y poniendo a prueba su responsabilidad como hermano mayor.",
+    "assumptions": [],
+    "scenes": [
+     {
+      "title": "Inicio: La primera rima",
+      "location": "Colegio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "La luz del amanecer entra por las ventanas del colegio, iluminando el aula vacía. KAP camina por los pasillos, la camiseta gris desgastada aún en su cuerpo, pero ahora con una mirada más firme."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Esta es mi primera rima. Y ya no me importa lo que digan."
+       }
+      ],
+      "memory": [
+       "acto: inicio | KAP declara su resolución",
+       "uso: KAP, camiseta gris desgastada",
+       "etapa: KAP, Niño"
+      ]
+     },
+     {
+      "title": "La noticia se propaga",
+      "location": "Colegio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "En el colegio, la noticia de la rima de KAP se extiende entre los compañeros. Algunos lo miran con respeto, otros con desdén."
+       },
+       {
+        "speaker": "COMPAÑERO 1",
+        "text": "¿Ya la escucharon? KAP hizo una rima... en la calle."
+       }
+      ],
+      "memory": [
+       "desarrollo: La rima se difunde",
+       "conoce: COMPAÑERO 1, KAP"
+      ]
+     },
+     {
+      "title": "El rechazo de los demás",
+      "location": "Colegio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "COMPAÑERO 2 y otros estudiantes se reúnen en el pasillo. Su actitud hacia KAP no cambia, aunque ahora lo observan con mayor atención."
+       },
+       {
+        "speaker": "COMPAÑERO 2",
+        "text": "¿Y qué? ¿Crees que eso te hace diferente?"
+       }
+      ],
+      "memory": [
+       "conflicto: Desprecio por la rima",
+       "conoce: COMPAÑERO 2, KAP"
+      ]
+     },
+     {
+      "title": "La noticia llega a casa",
+      "location": "Casa de KAP",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP entra en su casa, cansado. Su hermano pequeño lo espera en el sofá, observándolo con curiosidad."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¿Qué pasó? ¿Te metiste en problemas?"
+       }
+      ],
+      "memory": [
+       "desarrollo: La noticia llega a casa",
+       "conoce: Hermano de KAP, KAP"
+      ]
+     },
+     {
+      "title": "La reacción de los padres",
+      "location": "Casa de KAP",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP entra en la sala donde sus padres están. El ambiente es tenso, pero el silencio los domina. Sus padres, ocupados con sus propios problemas, apenas lo miran."
+       },
+       {
+        "speaker": "Padre de KAP",
+        "text": "¿Ya terminaste? No te entretengas tanto."
+       }
+      ],
+      "memory": [
+       "conflicto: Desatención parental",
+       "conoce: Padre de KAP, KAP"
+      ]
+     },
+     {
+      "title": "El hermano se siente afectado",
+      "location": "Casa de KAP",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se sienta junto a su hermano. El niño lo mira con preocupación, como si entendiera que algo no está bien."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¿Por qué te miran así en el colegio? ¿Tú también me vas a abandonar?"
+       }
+      ],
+      "memory": [
+       "emocional: El hermano se siente abandonado",
+       "conoce: Hermano de KAP, KAP"
+      ]
+     },
+     {
+      "title": "KAP intenta explicar",
+      "location": "Casa de KAP",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP mira a su hermano con tristeza. No puede decirle todo lo que siente, pero intenta consolarlo."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No te voy a abandonar. Prometo cuidarte siempre."
+       }
+      ],
+      "memory": [
+       "desarrollo: KAP se compromete",
+       "uso: KAP, promesa"
+      ]
+     },
+     {
+      "title": "El sueño de KAP",
+      "location": "Casa de KAP",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Mientras su hermano duerme, KAP se queda despierto. En su mente, la música sigue resonando. Su sueño de ser millonario gracias a la música no se borra."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Un día… seré grande. Seré alguien que no me ignoren."
+       }
+      ],
+      "memory": [
+       "desarrollo: El sueño persiste",
+       "uso: KAP, sueño"
+      ]
+     },
+     {
+      "title": "La llamada de Ramiro",
+      "location": "Casa de KAP",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "El teléfono suena. KAP lo contesta con nerviosismo. Es Ramiro, su mentor."
+       },
+       {
+        "speaker": "Ramiro",
+        "text": "KAP, escuché lo que escribiste. Eres talentoso. No dejes que nadie te quite eso."
+       }
+      ],
+      "memory": [
+       "desarrollo: Ramiro reconoce el talento",
+       "conoce: Ramiro, KAP"
+      ]
+     },
+     {
+      "title": "La tensión en casa",
+      "location": "Casa de KAP",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP coloca el teléfono y mira a su hermano. El ambiente en casa se siente más tenso que nunca, pero ahora tiene un nuevo impulso."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No me importa lo que digan. Mi hermano es lo más importante."
+       }
+      ],
+      "memory": [
+       "conflicto: Presión familiar",
+       "uso: KAP, decisión"
+      ]
+     },
+     {
+      "title": "KAP toma una decisión",
+      "location": "Casa de KAP",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP decide no rendirse. Aunque su familia no lo apoya, su hermano lo necesita y él se compromete a cuidarlo."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No dejaré que nada me quite mi sueño... ni mi responsabilidad."
+       }
+      ],
+      "memory": [
+       "resolucion: KAP elige su camino",
+       "uso: KAP, responsabilidad"
+      ]
+     },
+     {
+      "title": "La música como refugio",
+      "location": "Casa de KAP",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se retira a su habitación y abre el cuaderno. Escribir sus rimas se convierte en su forma de luchar contra el mundo exterior."
+       },
+       {
+        "speaker": "KAP",
+        "text": "La música es mi refugio. Mi forma de luchar."
+       }
+      ],
+      "memory": [
+       "desarrollo: La música como refugio",
+       "uso: KAP, cuaderno"
+      ]
+     },
+     {
+      "title": "El hermano lo apoya",
+      "location": "Casa de KAP",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Al día siguiente, el hermano de KAP entra en su habitación y lo mira con admiración."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¿Tú también puedes ser grande? ¿Yo puedo ser como tú?"
+       }
+      ],
+      "memory": [
+       "desarrollo: El hermano se inspira",
+       "conoce: Hermano de KAP, KAP"
+      ]
+     },
+     {
+      "title": "KAP lo anima",
+      "location": "Casa de KAP",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP sonríe con ternura. Su hermano es su inspiración y su motivación."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Sí, puedes ser como yo. Pero no olvides quién eres."
+       }
+      ],
+      "memory": [
+       "desarrollo: KAP comparte sus sueños",
+       "uso: KAP, hermano"
+      ]
+     },
+     {
+      "title": "La presión del colegio",
+      "location": "Colegio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "En el colegio, los compañeros siguen burlándose de KAP. Ahora, sin embargo, su actitud hacia él cambia ligeramente."
+       },
+       {
+        "speaker": "COMPAÑERO 1",
+        "text": "¿Ya te vas a ir? ¿O vas a seguir escribiendo rimas?"
+       }
+      ],
+      "memory": [
+       "conflicto: El colegio no lo acepta",
+       "conoce: COMPAÑERO 1, KAP"
+      ]
+     },
+     {
+      "title": "KAP se prepara para la próxima batalla",
+      "location": "Colegio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP entra en el aula con determinación. Su camiseta gris desgastada sigue siendo su identidad, pero ahora lleva un mensaje diferente."
+       },
+       {
+        "speaker": "KAP",
+        "text": "La vida no me dará nada por gratis. Pero me lo ganaré."
+       }
+      ],
+      "memory": [
+       "resolucion: KAP se prepara para luchar",
+       "uso: KAP, camiseta gris desgastada"
+      ]
+     },
+     {
+      "title": "El camino continúa",
+      "location": "Colegio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "La profesora lo mira con interés. Por primera vez, parece notar su potencial."
+       },
+       {
+        "speaker": "Profesora",
+        "text": "KAP... ¿has pensado en participar en el concurso de poesía del colegio?"
+       }
+      ],
+      "memory": [
+       "desarrollo: La profesora lo reconoce",
+       "conoce: Profesora, KAP"
+      ]
+     },
+     {
+      "title": "Gancho: El primer paso",
+      "location": "Colegio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP mira a la profesora con sorpresa. La idea lo emociona, pero también le da miedo. ¿Podrá enfrentar el mundo que lo rechaza?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Y si me meto en problemas? ¿Y si no soy lo suficiente?"
+       }
+      ],
+      "memory": [
+       "gancho: KAP está a punto de dar su primer paso en el camino musical",
+       "uso: KAP, duda"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "E6",
+   "title": "Episodio 6",
+   "request": "Crea el episodio 6, continuando el episodio 5. KAP intenta avanzar con la música a pesar de lo ocurrido, pero algo sale mal. Deja un problema abierto para el siguiente episodio.",
+   "ms": 2725636,
+   "peakMb": 10677,
+   "sysPeakMb": 11444,
+   "contextTokens": 2119,
+   "ok": true,
+   "irValid": true,
+   "irValidFirstTry": false,
+   "json": {
+    "attempts": 2,
+    "retries": 1,
+    "jsonErrors": 0,
+    "schemaErrors": 0,
+    "lengthRetries": 1,
+    "memoryDirectiveErrors": 0
+   },
+   "irErrors": [],
+   "usage": {
+    "promptTokens": 8211,
+    "outputTokens": 4324,
+    "totalMs": 2725622.159028,
+    "loadMs": 9066.701744999998,
+    "promptMs": 208416.59600000002,
+    "evalMs": 2508084.6550000003
+   },
+   "tokensPerSec": 1.72,
+   "episode": {
+    "scenes": 18,
+    "estimatedSec": 183,
+    "words": 489,
+    "title": "Episodio 6: El primer paso",
+    "logline": "KAP intenta avanzar con su música, pero una nueva dificultad lo detiene y deja un misterio para el siguiente episodio."
+   },
+   "continuity": {
+    "critical": [],
+    "warnings": [
+     "sin-aporte: El episodio no declara nada nuevo para la historia (acontecimiento, hito, hilo, evolución, relación u objeto): cada episodio debe aportar al",
+     "duracion: El episodio dura ≈ 3.4 min y el formato es ≈ 5 min (4–6 min)."
+    ],
+    "info": 1
+   },
+   "narrative": {
+    "error": 0,
+    "warning": 4,
+    "info": 0,
+    "rules": [
+     "localizacion-estancada",
+     "personaje-sin-funcion"
+    ],
+    "findings": [
+     {
+      "severity": "warning",
+      "rule": "narrativa-localizacion-estancada",
+      "text": "11 escenas seguidas (8-18) en «Casa de KAP»: ¿hace falta cambiar de lugar, de momento o de plano?",
+      "scene": 7
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-personaje-sin-funcion",
+      "text": "«COMPAÑERO 1» se introduce con una sola línea y no vuelve: ¿qué aporta a la historia?",
+      "scene": 2
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-personaje-sin-funcion",
+      "text": "«COMPAÑERO 2» se introduce con una sola línea y no vuelve: ¿qué aporta a la historia?",
+      "scene": 3
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-personaje-sin-funcion",
+      "text": "«PADRE DE KAP» se introduce con una sola línea y no vuelve: ¿qué aporta a la historia?",
+      "scene": 8
+     }
+    ],
+    "taggedRules": [
+     "localizacion-estancada",
+     "personaje-sin-funcion"
+    ]
+   },
+   "mode": "json",
+   "script": "# Colegio\nLa luz del amanecer entra por las ventanas del colegio, iluminando el aula vacía. KAP se sienta frente a su escritorio, con una hoja de papel y una pluma en la mano. La idea de la profesora lo ha inspirado, pero ahora siente miedo.\nKAP: ¿Podré hacerlo? ¿Vale la pena intentarlo?\n[acto: inicio | KAP, primer paso en música]\n\n# Colegio\nKAP comienza a escribir líneas en el papel, intentando expresar sus emociones y sueños. Cada palabra es un esfuerzo, pero también una esperanza.\nKAP: Voy a cantar. Voy a hacerlo, aunque me rían.\n[acto: desarrollo | KAP, canción en proceso]\n\n# Colegio\nEn la clase, los compañeros comienzan a llegar. Algunos lo miran con curiosidad, otros con desprecio. La tensión en el aire es palpable.\nCOMPAÑERO 1: ¿Qué haces, KAP? ¿Vas a hacer un show?\n[acto: conflicto | KAP, bullying]\n\n# Colegio\nCOMPAÑERO 2 y otros estudiantes se ríen de KAP, insultándolo por su ropa y su intento de escribir canciones. KAP siente el peso de sus palabras.\nCOMPAÑERO 2: ¡Vaya, ¿ya empezaste a hacer música? ¡Qué triste!\n[acto: conflicto | KAP, bullying]\n\n# Colegio\nKAP se levanta de su asiento, mira a los compañeros y siente que el miedo vuelve. ¿Valdrá la pena seguir adelante?\nKAP: ¿Y si no sirvo para esto?\n[acto: emocional | KAP, duda]\n\n# Colegio\nDe repente, recuerda a Ramiro y sus palabras. Se siente fortalecido, aunque apenas un poco.\nKAP: Ramiro me enseñó que la música no es solo para los ricos.\n[acto: desarrollo | KAP, recuerdo de Ramiro]\n\n# Colegio\nKAP vuelve a sentarse y continúa escribiendo, aunque sus manos tiemblan. Su mente está dividida entre la duda y el sueño.\nKAP: No me dejaré intimidar.\n[acto: desarrollo | KAP, determinación]\n\n# Casa de KAP\nAl llegar a casa, KAP se sienta junto a su hermano. Lo mira con tristeza y siente una responsabilidad mayor.\nKAP: Tengo que hacerlo bien. Por él.\n[acto: desarrollo | KAP, cuidado del hermano]\n\n# Casa de KAP\nKAP escucha a sus padres en otra habitación. Su voz está distante, como si ya no estuvieran allí. Siente que no tiene a nadie más que a su hermano.\nPADRE DE KAP: ¡Vamos, ya es tarde!\n[acto: desarrollo | KAP, familia]\n\n# Casa de KAP\nKAP se sienta en el suelo con su hermano, intentando encontrar consuelo. La idea de ser millonario vuelve a su mente.\nKAP: Un día seré famoso. Lo prometo.\n[acto: desarrollo | KAP, sueño]\n\n# Casa de KAP\nKAP encuentra una vieja grabadora en un cajón y la enciende. Comienza a grabar su primera canción, aunque su voz temblorosa lo delata.\nKAP: Esto es solo el comienzo.\n[acto: desarrollo | KAP, grabación]\n\n# Casa de KAP\nDe repente, la grabadora se apaga. KAP intenta encenderla de nuevo, pero no funciona. La canción está perdida.\nKAP: ¡No! ¡No puede ser!\n[acto: conflicto | KAP, pérdida]\n\n# Casa de KAP\nKAP se sienta en el suelo, abrumado por la frustración. Su sueño parece alejarse más cada día.\nKAP: ¿Qué hago ahora?\n[acto: emocional | KAP, frustración]\n\n# Casa de KAP\nKAP mira a su hermano y se levanta. Aunque la grabación se perdió, aún tiene el sueño.\nKAP: No me rendiré. Lo intentaré de nuevo.\n[acto: resolucion | KAP, esperanza]\n\n# Casa de KAP\nKAP camina por la casa, mirando a su alrededor. Siente que algo se mueve en el fondo de su mente.\nKAP: ¿Qué más me oculta?\n[acto: desarrollo | KAP, misterio]\n\n# Casa de KAP\nKAP mira un viejo cuaderno en la mesa. Lo reconoce: es el que robó Dani.\nKAP: ¿Qué hay aquí?\n[acto: desarrollo | KAP, cuaderno robado]\n\n# Casa de KAP\nKAP abre el cuaderno y encuentra una página escrita a mano. Las palabras lo congelan.\nKAP: ¿Esto es... mi canción?\n[acto: conflicto | KAP, cuaderno robado]\n\n# Casa de KAP\nKAP siente que algo más está pasando. El cuaderno robado no es solo un objeto: es una pista.\nKAP: ¿Quién me robó mi canción?\n[gancho: KAP, misterio del cuaderno robado]\n",
+   "gate": {
+    "regenerated": 0,
+    "dropped": 0,
+    "issues": {}
+   },
+   "checks": [
+    {
+     "id": "estructura-6-actos",
+     "ok": true,
+     "note": "faltan: —"
+    },
+    {
+     "id": "gancho",
+     "ok": true
+    },
+    {
+     "id": "protagonista",
+     "ok": true
+    },
+    {
+     "id": "sin-errores-criticos",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "sin-exito-prematuro",
+     "ok": true
+    },
+    {
+     "id": "directivas-validas",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "espanol",
+     "ok": true
+    },
+    {
+     "id": "diversidad-lexica",
+     "ok": true,
+     "note": "0.44"
+    }
+   ],
+   "compliance": 1,
+   "proxy": {
+    "score": 8,
+    "dialogueRatio": 0.5,
+    "locations": 2,
+    "repeatedSentences": 0
+   },
+   "warnings": [
+    "El episodio dura ≈ 3.0 min: queda por debajo del formato (≈ 5 min)."
+   ],
+   "draft": {
+    "title": "Episodio 6: El primer paso",
+    "logline": "KAP intenta avanzar con su música, pero una nueva dificultad lo detiene y deja un misterio para el siguiente episodio.",
+    "assumptions": [],
+    "scenes": [
+     {
+      "title": "La idea",
+      "location": "Colegio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "La luz del amanecer entra por las ventanas del colegio, iluminando el aula vacía. KAP se sienta frente a su escritorio, con una hoja de papel y una pluma en la mano. La idea de la profesora lo ha inspirado, pero ahora siente miedo."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Podré hacerlo? ¿Vale la pena intentarlo?"
+       }
+      ],
+      "memory": [
+       "acto: inicio | KAP, primer paso en música"
+      ]
+     },
+     {
+      "title": "La canción",
+      "location": "Colegio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP comienza a escribir líneas en el papel, intentando expresar sus emociones y sueños. Cada palabra es un esfuerzo, pero también una esperanza."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Voy a cantar. Voy a hacerlo, aunque me rían."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo | KAP, canción en proceso"
+      ]
+     },
+     {
+      "title": "La clase",
+      "location": "Colegio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "En la clase, los compañeros comienzan a llegar. Algunos lo miran con curiosidad, otros con desprecio. La tensión en el aire es palpable."
+       },
+       {
+        "speaker": "COMPAÑERO 1",
+        "text": "¿Qué haces, KAP? ¿Vas a hacer un show?"
+       }
+      ],
+      "memory": [
+       "acto: conflicto | KAP, bullying"
+      ]
+     },
+     {
+      "title": "La burla",
+      "location": "Colegio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "COMPAÑERO 2 y otros estudiantes se ríen de KAP, insultándolo por su ropa y su intento de escribir canciones. KAP siente el peso de sus palabras."
+       },
+       {
+        "speaker": "COMPAÑERO 2",
+        "text": "¡Vaya, ¿ya empezaste a hacer música? ¡Qué triste!"
+       }
+      ],
+      "memory": [
+       "acto: conflicto | KAP, bullying"
+      ]
+     },
+     {
+      "title": "La duda",
+      "location": "Colegio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se levanta de su asiento, mira a los compañeros y siente que el miedo vuelve. ¿Valdrá la pena seguir adelante?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Y si no sirvo para esto?"
+       }
+      ],
+      "memory": [
+       "acto: emocional | KAP, duda"
+      ]
+     },
+     {
+      "title": "La inspiración",
+      "location": "Colegio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "De repente, recuerda a Ramiro y sus palabras. Se siente fortalecido, aunque apenas un poco."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Ramiro me enseñó que la música no es solo para los ricos."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo | KAP, recuerdo de Ramiro"
+      ]
+     },
+     {
+      "title": "La determinación",
+      "location": "Colegio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP vuelve a sentarse y continúa escribiendo, aunque sus manos tiemblan. Su mente está dividida entre la duda y el sueño."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No me dejaré intimidar."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo | KAP, determinación"
+      ]
+     },
+     {
+      "title": "El hermano",
+      "location": "Casa de KAP",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Al llegar a casa, KAP se sienta junto a su hermano. Lo mira con tristeza y siente una responsabilidad mayor."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Tengo que hacerlo bien. Por él."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo | KAP, cuidado del hermano"
+      ]
+     },
+     {
+      "title": "La situación familiar",
+      "location": "Casa de KAP",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP escucha a sus padres en otra habitación. Su voz está distante, como si ya no estuvieran allí. Siente que no tiene a nadie más que a su hermano."
+       },
+       {
+        "speaker": "PADRE DE KAP",
+        "text": "¡Vamos, ya es tarde!"
+       }
+      ],
+      "memory": [
+       "acto: desarrollo | KAP, familia"
+      ]
+     },
+     {
+      "title": "La inspiración",
+      "location": "Casa de KAP",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se sienta en el suelo con su hermano, intentando encontrar consuelo. La idea de ser millonario vuelve a su mente."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Un día seré famoso. Lo prometo."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo | KAP, sueño"
+      ]
+     },
+     {
+      "title": "La grabación",
+      "location": "Casa de KAP",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP encuentra una vieja grabadora en un cajón y la enciende. Comienza a grabar su primera canción, aunque su voz temblorosa lo delata."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Esto es solo el comienzo."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo | KAP, grabación"
+      ]
+     },
+     {
+      "title": "El error",
+      "location": "Casa de KAP",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "De repente, la grabadora se apaga. KAP intenta encenderla de nuevo, pero no funciona. La canción está perdida."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¡No! ¡No puede ser!"
+       }
+      ],
+      "memory": [
+       "acto: conflicto | KAP, pérdida"
+      ]
+     },
+     {
+      "title": "La frustración",
+      "location": "Casa de KAP",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se sienta en el suelo, abrumado por la frustración. Su sueño parece alejarse más cada día."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Qué hago ahora?"
+       }
+      ],
+      "memory": [
+       "acto: emocional | KAP, frustración"
+      ]
+     },
+     {
+      "title": "La esperanza",
+      "location": "Casa de KAP",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP mira a su hermano y se levanta. Aunque la grabación se perdió, aún tiene el sueño."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No me rendiré. Lo intentaré de nuevo."
+       }
+      ],
+      "memory": [
+       "acto: resolucion | KAP, esperanza"
+      ]
+     },
+     {
+      "title": "La duda",
+      "location": "Casa de KAP",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP camina por la casa, mirando a su alrededor. Siente que algo se mueve en el fondo de su mente."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Qué más me oculta?"
+       }
+      ],
+      "memory": [
+       "acto: desarrollo | KAP, misterio"
+      ]
+     },
+     {
+      "title": "El recuerdo",
+      "location": "Casa de KAP",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP mira un viejo cuaderno en la mesa. Lo reconoce: es el que robó Dani."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Qué hay aquí?"
+       }
+      ],
+      "memory": [
+       "acto: desarrollo | KAP, cuaderno robado"
+      ]
+     },
+     {
+      "title": "La página",
+      "location": "Casa de KAP",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP abre el cuaderno y encuentra una página escrita a mano. Las palabras lo congelan."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Esto es... mi canción?"
+       }
+      ],
+      "memory": [
+       "acto: conflicto | KAP, cuaderno robado"
+      ]
+     },
+     {
+      "title": "El misterio",
+      "location": "Casa de KAP",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP siente que algo más está pasando. El cuaderno robado no es solo un objeto: es una pista."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Quién me robó mi canción?"
+       }
+      ],
+      "memory": [
+       "gancho: KAP, misterio del cuaderno robado"
+      ]
+     }
+    ]
+   }
+  }
+ ]
+}
