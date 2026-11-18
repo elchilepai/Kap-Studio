@@ -1,0 +1,2 @@
+sha256(sal+clave)=a21baa4b15b975d57c4fa154165c0618466a85e2954c374a26202c317a4bf971
+(La clave se revela solo después de tu valoración.)

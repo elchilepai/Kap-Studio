@@ -1060,6 +1060,397 @@
      }
     ]
    }
+  },
+  {
+   "id": "N3",
+   "title": "Situación nueva",
+   "request": "Crea el episodio 4, a continuación del episodio 3. KAP se escapa a ensayar rimas en vez de cuidar a su hermano pequeño, y esa decisión tiene consecuencias.",
+   "ms": 2265149,
+   "peakMb": 10688,
+   "sysPeakMb": 11463,
+   "contextTokens": 1880,
+   "ok": true,
+   "irValid": true,
+   "irValidFirstTry": false,
+   "json": {
+    "attempts": 2,
+    "retries": 1,
+    "jsonErrors": 0,
+    "schemaErrors": 0,
+    "lengthRetries": 1,
+    "memoryDirectiveErrors": 2
+   },
+   "irErrors": [],
+   "usage": {
+    "promptTokens": 7079,
+    "outputTokens": 2976,
+    "totalMs": 2265138.8287420003,
+    "loadMs": 183261.79390000002,
+    "promptMs": 185542.309,
+    "evalMs": 1896278.276
+   },
+   "tokensPerSec": 1.57,
+   "episode": {
+    "scenes": 18,
+    "estimatedSec": 103,
+    "words": 257,
+    "title": "Episodio 4: El costo de la inspiración",
+    "logline": "KAP elige ensayar rimas en lugar de cuidar a su hermano, y las consecuencias de su decisión empiezan a hacerse sentir."
+   },
+   "continuity": {
+    "critical": [],
+    "warnings": [
+     "directiva: Directiva de memoria no entendida: «acto: inicio»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "hito: El hito «Víctima de bullying» ya estaba logrado en ep. 2.",
+     "relacion-contradice: KAP y Dani ya se conocían (relación «acoso» desde ep. 2); la escena 6 los presenta como si se conocieran ahora.",
+     "hito: El hito «Víctima de bullying» ya estaba logrado en ep. 4.",
+     "directiva: Directiva de memoria no entendida: «acto: gancho»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "estructura: Al episodio le faltan: Inicio, Conflicto, Desarrollo, Punto emocional o de tensión, Resolución parcial. Decláralo en el guion con [acto: tip",
+     "duracion: El episodio dura ≈ 1.9 min y el formato es ≈ 5 min (4–6 min)."
+    ],
+    "info": 2
+   },
+   "narrative": {
+    "error": 0,
+    "warning": 3,
+    "info": 1,
+    "rules": [
+     "dialogo-duplicado",
+     "localizacion-estancada",
+     "escena-sin-aporte",
+     "escenas-fragmentadas"
+    ],
+    "findings": [
+     {
+      "severity": "warning",
+      "rule": "narrativa-dialogo-duplicado",
+      "text": "La frase «No me importa. Mi música es lo único que me importa ahora.» aparece 3 veces (escenas 15, 17, 18).",
+      "scene": 14
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-localizacion-estancada",
+      "text": "7 escenas seguidas (12-18) en «Calle de noche» con poca información nueva: ¿hace falta cambiar de lugar, de momento o de plano?",
+      "scene": 11
+     },
+     {
+      "severity": "info",
+      "rule": "narrativa-escena-sin-aporte",
+      "text": "La escena 3 es solo un desplazamiento sin diálogo ni cambio: ¿se puede fusionar con la siguiente?",
+      "scene": 2
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-escenas-fragmentadas",
+      "text": "18 escenas de ≈ 14 palabras de media: el episodio es una lista de instantes, no escenas con desarrollo."
+     }
+    ],
+    "taggedRules": [
+     "dialogo-duplicado",
+     "localizacion-estancada",
+     "escena-sin-aporte",
+     "escenas-fragmentadas"
+    ]
+   },
+   "mode": "json",
+   "checks": [
+    {
+     "id": "estructura-6-actos",
+     "ok": false,
+     "note": "faltan: inicio, conflicto, desarrollo, emocional, resolucion"
+    },
+    {
+     "id": "gancho",
+     "ok": true
+    },
+    {
+     "id": "protagonista",
+     "ok": true
+    },
+    {
+     "id": "sin-errores-criticos",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "sin-exito-prematuro",
+     "ok": true
+    },
+    {
+     "id": "directivas-validas",
+     "ok": false,
+     "note": "«acto: inicio»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto» | «acto: gancho»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»"
+    },
+    {
+     "id": "espanol",
+     "ok": true
+    },
+    {
+     "id": "diversidad-lexica",
+     "ok": true,
+     "note": "0.43"
+    }
+   ],
+   "compliance": 0.75,
+   "proxy": {
+    "score": 5,
+    "dialogueRatio": 0.72,
+    "locations": 2,
+    "repeatedSentences": 2
+   },
+   "warnings": [
+    "Directiva de memoria inválida del modelo: «acto: inicio»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+    "Directiva de memoria inválida del modelo: «acto: gancho»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+    "El episodio dura ≈ 1.7 min: queda por debajo del formato (≈ 5 min)."
+   ],
+   "draft": {
+    "title": "Episodio 4: El costo de la inspiración",
+    "logline": "KAP elige ensayar rimas en lugar de cuidar a su hermano, y las consecuencias de su decisión empiezan a hacerse sentir.",
+    "assumptions": [],
+    "scenes": [
+     {
+      "title": "Inicio: Calle de noche (2)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se encuentra en la calle, bajo la luz tenue de una farola. Sonríe despacio y levanta el cuaderno para que KAP lo vea."
+       }
+      ],
+      "memory": [
+       "acto: inicio",
+       "ubicacion: KAP, Calle de noche",
+       "abre-hilo: el cuaderno robado | KAP, Dani"
+      ]
+     },
+     {
+      "title": "Calle de noche (3)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "KAP",
+        "text": "Voy a ensayar un poco. Siempre digo que la inspiración no se espera."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "Guardería (1)",
+      "location": "Guardería",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "El hermano de KAP está sentado en un rincón, mirando a la puerta con expresión preocupada. No entiende por qué su hermano no regresa."
+       }
+      ],
+      "memory": [
+       "ubicacion: Hermano de KAP, Guardería",
+       "hito-logrado: Víctima de bullying | KAP, Hermano de KAP"
+      ]
+     },
+     {
+      "title": "Calle de noche (4)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "KAP",
+        "text": "Esta rima no me convence... ¿cómo hago para que suene mejor?"
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "Guardería (2)",
+      "location": "Guardería",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "El hermano de KAP empieza a llorar en silencio. El personal se acerca con preocupación, pero no sabe qué hacer."
+       }
+      ],
+      "memory": [
+       "ubicacion: Hermano de KAP, Guardería"
+      ]
+     },
+     {
+      "title": "Calle de noche (5)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "Dani",
+        "text": "¿Qué haces aquí, KAP? ¿No deberías estar cuidando a tu hermano?"
+       }
+      ],
+      "memory": [
+       "ubicacion: Dani, Calle de noche",
+       "conoce: KAP, Dani"
+      ]
+     },
+     {
+      "title": "Calle de noche (6)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "KAP",
+        "text": "¿Y qué? No puedo dejar de escribir. Es lo único que me mantiene a flote."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "Guardería (3)",
+      "location": "Guardería",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "El personal llama a la casa de KAP para informar que su hermano no ha comido y está muy inquieto."
+       }
+      ],
+      "memory": [
+       "ubicacion: Hermano de KAP, Guardería"
+      ]
+     },
+     {
+      "title": "Calle de noche (7)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "Dani",
+        "text": "¿Y si alguien llega a la guardería y lo encuentra solo? ¿No te importa?"
+       }
+      ],
+      "memory": [
+       "ubicacion: Dani, Calle de noche"
+      ]
+     },
+     {
+      "title": "Calle de noche (8)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "KAP",
+        "text": "No me importa. Mi hermano es fuerte. Además, no puedo dejar de escribir."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "Guardería (4)",
+      "location": "Guardería",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "El hermano de KAP se queda dormido en una silla, cansado y triste. La guardería llama a la casa de KAP."
+       }
+      ],
+      "memory": [
+       "ubicacion: Hermano de KAP, Guardería",
+       "hito-logrado: Víctima de bullying | KAP, Hermano de KAP"
+      ]
+     },
+     {
+      "title": "Calle de noche (9)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "KAP",
+        "text": "¡Maldita sea! ¡No puedo dejar que esto me detenga!"
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "Calle de noche (10)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "KAP",
+        "text": "Esta rima... sí. Esta me gusta. La voy a usar."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "Calle de noche (11)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "Dani",
+        "text": "¿Y si tu hermano se lastima? ¿No te importa?"
+       }
+      ],
+      "memory": [
+       "ubicacion: Dani, Calle de noche"
+      ]
+     },
+     {
+      "title": "Calle de noche (12)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "KAP",
+        "text": "No me importa. Mi música es lo único que me importa ahora."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "Calle de noche (13)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "Dani",
+        "text": "Esto no termina bien, KAP. Lo sabes."
+       }
+      ],
+      "memory": [
+       "ubicacion: Dani, Calle de noche"
+      ]
+     },
+     {
+      "title": "Calle de noche (14)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "KAP",
+        "text": "No me importa. Mi música es lo único que me importa ahora."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "Gancho: Calle de noche (15)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "KAP",
+        "text": "No me importa. Mi música es lo único que me importa ahora."
+       }
+      ],
+      "memory": [
+       "acto: gancho",
+       "gancho: KAP elige su música sobre su hermano, y eso empieza a cambiarlo",
+       "ubicacion: KAP, Calle de noche"
+      ]
+     }
+    ]
+   }
   }
  ]
 }
