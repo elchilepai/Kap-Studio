@@ -183,7 +183,9 @@ if (PHASE === "blind2") {
     { id: "N3", request: "Crea el episodio 4, a continuación del episodio 3. KAP se escapa a ensayar rimas en vez de cuidar a su hermano pequeño, y esa decisión tiene consecuencias." },
   ].filter((x) => !ONLY.length || ONLY.includes(x.id));
   const w = await world("after3");
-  for (const s of N) {
+  // reanudación: si el contenedor se reinició, se conservan las situaciones ya terminadas (fichero parcial)
+  try { const prev = JSON.parse(await fs.readFile(path.join(OUT, `${SLUG}-${PHASE}-${MODE}${ONLY.length ? "-" + ONLY.join("") : ""}.partial.json`), "utf8")); for (const r of prev.results ?? []) if (!("error" in r)) { results.push(r); console.log(`[${r.id}] recuperada del parcial`); } } catch { /* primera ejecución */ }
+  for (const s of N.filter((x) => !results.some((r) => r.id === x.id))) {
     await unload(); console.log(`\n[${s.id}] (${MODE}) episodio completo …`); const r = await runAuthor({ id: s.id, title: "Situación nueva", world: "after3", request: s.request }, s.request, 18, w); results.push(r); await save();
     console.log(`   ${(r.ms / 60000).toFixed(1)} min · ${"error" in r ? "ERROR " + r.error : `${(r as any).episode.scenes} escenas · ≈ ${((r as any).episode.estimatedSec / 60).toFixed(1)} min · IR ${(r as any).irValid ? "válida" : "inválida"} · reintentos ${(r as any).json.retries} · crit ${(r as any).continuity.critical.length} · narrativa crit ${(r as any).narrative.error} aviso ${(r as any).narrative.warning} info ${(r as any).narrative.info}`}`);
   }
