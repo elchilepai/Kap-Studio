@@ -95,11 +95,12 @@ export type MemoryStatus = {
 
 /** Estado de memoria de un episodio: propuesta, hallazgos de continuidad frente al canon anterior y si se puede confirmar. */
 /** Escenarios de los dos episodios (válidos) inmediatamente anteriores: sirven para que la serie no repita el mismo sitio sin motivo. */
-export async function previousEpisodesHints(storage: Storage, beforeOrder?: number): Promise<{ locations: string[]; settings: string[] }[]> {
-  const valid = (await validEpisodes(storage)).filter((e) => beforeOrder === undefined || e.order < beforeOrder).sort((a, b) => b.order - a.order).slice(0, 2), out: { locations: string[]; settings: string[] }[] = [];
+export async function previousEpisodesHints(storage: Storage, beforeOrder?: number): Promise<{ locations: string[]; settings: string[]; hook?: string; ending?: string }[]> {
+  const valid = (await validEpisodes(storage)).filter((e) => beforeOrder === undefined || e.order < beforeOrder).sort((a, b) => b.order - a.order).slice(0, 2), out: { locations: string[]; settings: string[]; hook?: string; ending?: string }[] = [];
   for (const e of valid) { const p = await storage.productions.get(e.id); if (!p) continue; const counts = new Map<string, number>(), locations = p.scenes.map((s) => s.location).filter(Boolean);
     p.scenes.forEach((s) => { if (s.location) { const k = `${s.location}${s.mood ? ` (${s.mood})` : ""}`; counts.set(k, (counts.get(k) ?? 0) + 1); } });
-    out.push({ locations, settings: [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 3).map(([k, n]) => `${k} ×${n}`) }); }
+    const last = p.scenes.at(-1), ending = last ? last.lines.slice(-3).map((l) => l.text).join(" ") : undefined;   // cómo terminó: lo último que se dice
+    out.push({ locations, settings: [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 3).map(([k, n]) => `${k} ×${n}`), ...(e.hook ? { hook: e.hook } : {}), ...(ending ? { ending } : {}) }); }
   return out;
 }
 

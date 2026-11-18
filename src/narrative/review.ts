@@ -5,6 +5,7 @@
  * para que el usuario revise. Son HEURÍSTICAS léxicas y estructurales: avisan de sospechas, no juzgan la calidad literaria.
  */
 import { norm } from "../memory/text.ts";
+import { closingProblem } from "./closing.ts";
 
 export type Severity = "error" | "warning" | "info";
 export type NarrativeFinding = { severity: Severity; rule: string; text: string; scene?: number };
@@ -139,7 +140,8 @@ export function reviewNarrative(inp: NarrativeInput): NarrativeFinding[] {
   // 14) SERIE: el mismo escenario dominante en varios episodios seguidos
   if (inp.previousEpisodes?.length) { const dom = (ls: string[]) => { const m = new Map<string, number>(); ls.forEach((l) => m.set(norm(l), (m.get(norm(l)) ?? 0) + 1)); const [k, v] = [...m.entries()].sort((a, b) => b[1] - a[1])[0] ?? ["", 0]; return { k, share: ls.length ? v / ls.length : 0 }; };
     const cur = dom(S.map((s) => s.location)), prev = inp.previousEpisodes.map((e) => dom(e.locations));
-    if (cur.share >= 0.5 && prev.length >= 2 && prev.every((p) => p.k === cur.k && p.share >= 0.5)) add("warning", "narrativa-serie-repite-escenario", `Este episodio y los ${prev.length} anteriores ocurren sobre todo en «${cur.k}»: ¿hay motivo narrativo para no cambiar de espacio?`); }
+    if (cur.share >= 0.7 && prev.some((p) => p.k === cur.k && p.share >= 0.5)) add("warning", "narrativa-serie-repite-escenario", `Este episodio y alguno de los anteriores ocurren sobre todo en «${cur.k}»: ¿hay motivo narrativo para no cambiar de espacio?`); }
+  const cl = closingProblem(S[n - 1].lines.map((l) => ({ speaker: l.speaker, text: l.text })), inp.protagonist); if (cl) add("warning", "narrativa-cierre-reflexivo", `${cl.reason}: el cierre debería ser un gag, una reacción, una sorpresa o una consecuencia, no una reflexión.`, n - 1);
   return out;
 }
 

@@ -52,8 +52,9 @@ export interface ScriptInterpreter extends ProviderInfo {
  */
 export type LlmRequest = { system?: string; prompt: string; /** JSON Schema que debe cumplir la salida (salida estructurada del motor). */ jsonSchema?: object; temperature?: number; maxTokens?: number; signal?: AbortSignal };
 /** Medidas agregadas de una redacción (para el banco de pruebas): intentos, reintentos por tipo y uso del modelo. */
-export type AuthorHints = { previousEpisodes?: { locations: string[]; settings?: string[] }[]; previousOutcomes?: string[] };
-export type AuthorStats = { /** Solo el generador por arco: escenas regeneradas / eliminadas por la puerta de calidad y motivos. */ scenesRegenerated?: number; scenesDropped?: number; gateIssues?: Record<string, number>; attempts: number; retries: number; jsonErrors: number; schemaErrors: number; lengthRetries: number; memoryDirectiveErrors: number; usage: LlmUsage; estimatedSec: number };
+/** Pistas de variedad: de los episodios anteriores, dónde ocurrieron y CÓMO TERMINARON (desenlace, gancho y último cierre), para no repetirlos. */
+export type AuthorHints = { previousEpisodes?: { locations: string[]; settings?: string[]; outcome?: string; hook?: string; ending?: string }[]; previousOutcomes?: string[] };
+export type AuthorStats = { /** Solo el generador por arco: escenas regeneradas / eliminadas por la puerta de calidad y motivos. */ scenesRegenerated?: number; scenesDropped?: number; gateIssues?: Record<string, number>; /** Llamadas pequeñas que reescriben solo unas líneas (rima, voz, cierre…), reparaciones en código y revisiones del arco. */ localPatches?: number; codeRepairs?: number; arcRevisions?: number; rhymeValid?: boolean; attempts: number; retries: number; jsonErrors: number; schemaErrors: number; lengthRetries: number; memoryDirectiveErrors: number; usage: LlmUsage; estimatedSec: number };
 /** Medidas de una llamada (si el motor las da): sirven para el banco de pruebas y para ajustar el presupuesto de contexto. */
 export type LlmUsage = { promptTokens: number; outputTokens: number; totalMs: number; loadMs: number; promptMs: number; evalMs: number };
 export interface LlmClient extends ProviderInfo {

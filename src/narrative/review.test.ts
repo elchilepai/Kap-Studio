@@ -55,4 +55,9 @@ describe("revisión narrativa (heurística, avisa y no bloquea)", () => {
     expect(rs).toEqual(expect.arrayContaining(["personaje-reactivo", "serie-repite-escenario"])); expect(r.some((f) => f.rule === "narrativa-voz-adulta")).toBe(false);   // solo 2 líneas de KAP: aún no es patrón
     const more = [...S, sc("Casa", ["KAP", "Mis sueños son más grandes que el mundo, para siempre"])]; expect(rules(reviewNarrative({ scenes: more }))).toContain("voz-adulta");
   });
+  it("cierre reflexivo en cualquier guion (no solo en el generador) y escenario repetido respecto a UN episodio anterior", () => {
+    const S = [sc("Casa", ["KAP", "Ya es tarde y hay que cenar con lo que haya"], ["HERMANO", "Yo quiero pan con tomate, por favor"]), sc("Casa", ["KAP", "Se acabó el tomate, lo lamento"], ["HERMANO", "Pues voy a buscar a la vecina"]), sc("Casa", ["KAP", "¿Y si algún día no me rindo y todo cambia para siempre?"])];
+    const r = reviewNarrative({ scenes: S, previousEpisodes: [{ locations: ["Casa", "Casa", "Calle"] }, { locations: ["Calle", "Colegio"] }] }); const rs = rules(r);
+    expect(rs).toEqual(expect.arrayContaining(["cierre-reflexivo", "serie-repite-escenario"])); expect(rules(reviewNarrative({ scenes: S.slice(0, 2), previousEpisodes: [{ locations: ["Calle"] }] }))).not.toContain("cierre-reflexivo");
+  });
 });
