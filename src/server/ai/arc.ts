@@ -41,7 +41,7 @@ export type EpisodeArc = z.infer<typeof EpisodeArc>;
 
 const SceneOut = z.object({
   title: z.string().min(1).max(100),
-  lines: z.array(z.object({ speaker: z.string().max(40), text: z.string().min(1).max(500) })).min(3).max(10), change: z.string().min(1).max(260),
+  lines: z.array(z.object({ speaker: z.string().max(40), text: z.string().min(8).max(500) })).min(5).max(10), change: z.string().min(1).max(260),
   directions: z.array(z.string().max(120)).max(5), memory: z.array(z.string().max(300)).max(5),
 });
 const ACT_OF: Record<(typeof BEAT_STAGES)[number], string> = { inicio: "inicio", problema: "conflicto", escalada: "desarrollo", decision: "emocional", consecuencia: "desarrollo", resolucion: "resolucion", gancho: "gancho" };
