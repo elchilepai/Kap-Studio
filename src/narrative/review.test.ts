@@ -44,4 +44,9 @@ describe("revisión narrativa (heurística, avisa y no bloquea)", () => {
       sc("Casa", ["", "Vuelve con las manos vacías y el hermano no pregunta más."])];
     expect(reviewNarrative({ scenes: S, hook: "Mañana el tendero cobrará la deuda delante de todo el barrio.", knownCharacters: ["Dani"] }).filter((f) => f.severity === "error")).toEqual([]);
   });
+  it("avisa de personajes de la memoria que aparecen sin que la petición los pidiera", () => {
+    const S = [sc("Casa", ["KAP", "Tengo hambre"], ["HERMANO DE KAP", "Yo también"]), sc("Calle", ["KAP", "Voy a pedir ayuda"], ["RAMIRO", "Pasa, yo me encargo"]), sc("Casa", ["RAMIRO", "Toma, ya está resuelto"])];
+    const r = reviewNarrative({ scenes: S, knownCharacters: ["Ramiro", "Hermano de KAP"], allowedCharacters: ["KAP", "Hermano de KAP"] });
+    expect(r.find((f) => f.rule === "narrativa-memoria-no-pedida")?.text).toMatch(/Ramiro.*2 escenas/); expect(r.some((f) => f.rule === "narrativa-memoria-no-pedida" && /HERMANO/i.test(f.text))).toBe(false);
+  });
 });

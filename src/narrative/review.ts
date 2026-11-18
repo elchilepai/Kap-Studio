@@ -20,6 +20,8 @@ export type NarrativeInput = {
   scenes: NarrativeScene[]; hook?: string;
   /** Personajes que ya existen en la memoria/reparto (el resto, si habla, se considera «introducido» en este episodio). */
   knownCharacters?: string[]; protagonist?: string;
+  /** Reparto que pedía la petición (+ último plano si continúa exactamente). Si se da, avisa de personajes de la memoria que aparecen sin haberlo pedido. */
+  allowedCharacters?: string[];
   /** Tipos de acto declarados con directivas (inicio, conflicto…). */
   acts?: string[];
 };
@@ -79,6 +81,10 @@ export function reviewNarrative(inp: NarrativeInput): NarrativeFinding[] {
   for (const [k, e] of bySpeaker) { if (k === kap || e.lines > 1 || e.scenes.size > 1) continue;
     if (!known.has(k)) add("warning", "narrativa-personaje-sin-funcion", `«${e.name}» se introduce con una sola línea y no vuelve: ¿qué aporta a la historia?`, [...e.scenes][0]);
     else add("info", "narrativa-personaje-sin-funcion", `«${e.name}» (de la memoria) solo hace un cameo de una línea: ¿era necesario traerlo?`, [...e.scenes][0]); }
+
+  // 5b) MEMORIA NO PEDIDA: personajes de episodios anteriores que aparecen sin que la petición los pidiera
+  if (inp.allowedCharacters) { const ok = new Set(inp.allowedCharacters.map(norm).concat(kap));
+    for (const [k, e] of bySpeaker) if (!ok.has(k) && known.has(k)) add("warning", "narrativa-memoria-no-pedida", `«${e.name}» (de la memoria) aparece en ${e.scenes.size} escena${e.scenes.size > 1 ? "s" : ""} sin que la petición lo pidiera: la memoria sirve para mantener la continuidad, no para reutilizarlo todo.`, [...e.scenes][0]); }
 
   // 6) SIN CONFLICTO CLARO (heurística: escenas con ≥ 2 voces y lenguaje de oposición; con arco, funciones declaradas)
   const tagged = S.some((s) => s.fn);

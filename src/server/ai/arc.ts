@@ -55,8 +55,12 @@ export function llmArcAuthor(llm: LlmClient, opts: ArcAuthorOptions = {}): ArcAu
       if (!(await llm.available())) throw new Error("El modelo de IA no está disponible");
       const logs: AttemptLog[] = [], usages: (LlmUsage | undefined)[] = []; let calls = 0, sceneRetries = 0, droppedDirectives = 0, droppedDirections = 0; const warnings: string[] = [];
 
+      // reparto por defecto: KAP + quien pide la petición + quien salía en el último plano (si continúa «exactamente»)
+      const lastCast = request.exact ? (/personajes:\s*(.+)$/.exec(context.sections.find((s) => s.id === "lastshot")?.text ?? "")?.[1] ?? "").split(/[,;]/).map((x) => x.trim()).filter(Boolean) : [];
+      const defaultCast = [...new Set(["KAP", ...request.cast, ...lastCast])];
+
       // 1) EL ARCO
-      const a = await generateJson(llm, EpisodeArc, { system: ARC_SYSTEM, prompt: arcPrompt(context), temperature: opts.temperature ?? 0.8, maxTokens: 2600, signal }, { retries: opts.arcRetries ?? 2 });
+      const a = await generateJson(llm, EpisodeArc, { system: ARC_SYSTEM, prompt: arcPrompt(context, defaultCast), temperature: opts.temperature ?? 0.8, maxTokens: 2600, signal }, { retries: opts.arcRetries ?? 2 });
       logs.push(...a.log); usages.push(a.usage); calls += a.attempts;
       if (!a.ok) throw new Error(`El modelo no devolvió un arco válido tras ${a.attempts} intento(s): ${a.errors.join("; ")} · inicio de la respuesta: ${clip(a.raw ?? "", 500)}`);
       const arc = { ...a.data, beats: a.data.beats.map((b, i) => ({ b, i })).sort((x, y) => BEAT_STAGES.indexOf(x.b.stage) - BEAT_STAGES.indexOf(y.b.stage) || x.i - y.i).map((x) => x.b) };   // orden de etapas reparado en código
@@ -103,7 +107,7 @@ export function llmArcAuthor(llm: LlmClient, opts: ArcAuthorOptions = {}): ArcAu
       const secs = draftSeconds(parsedDraft.data);
       if (secs < 240) warnings.push(`Episodio corto (≈ ${(secs / 60).toFixed(1)} min): no se ha rellenado; la duración sale de la historia. Revisa si el arco necesita más desarrollo.`);
       // revisión narrativa: avisa, no bloquea
-      const review = reviewNarrative({ scenes: scenes.map((s) => ({ location: s.location, title: s.title, lines: s.lines.map((l) => ({ speaker: l.speaker, text: l.text })), fn: s.fn, stage: s.stage, shot: s.shot, time: s.time, interior: s.interior })), hook: arc.hook, knownCharacters: context.relevantCharacters, acts: [...actSeen] });
+      const review = reviewNarrative({ scenes: scenes.map((s) => ({ location: s.location, title: s.title, lines: s.lines.map((l) => ({ speaker: l.speaker, text: l.text })), fn: s.fn, stage: s.stage, shot: s.shot, time: s.time, interior: s.interior })), hook: arc.hook, knownCharacters: context.relevantCharacters, allowedCharacters: defaultCast, acts: [...actSeen] });
       self.lastReview = review; for (const f of review) warnings.push(`Narrativa (${f.severity}) · ${f.rule.replace("narrativa-", "")}: ${f.text}`);
       const stats: AuthorStats = { attempts: calls, retries: Math.max(0, calls - (1 + arc.beats.length)), jsonErrors: logs.filter((l) => l.kind === "json").length, schemaErrors: logs.filter((l) => l.kind === "schema").length, lengthRetries: 0, memoryDirectiveErrors: droppedDirectives, usage: sumUsage(usages), estimatedSec: secs };
       void sceneRetries; void droppedDirections;

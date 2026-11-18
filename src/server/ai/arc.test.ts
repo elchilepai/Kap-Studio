@@ -55,5 +55,9 @@ describe("generador por arco (arco → escenas)", () => {
     const llm = new Scripted(replies); const author = llmArcAuthor(llm); const out = await author.write({ request: ctx().request, context: ctx() });
     expect(llm.calls).toHaveLength(1 + 8 + 1); expect(out.stats!.estimatedSec).toBeLessThan(240); expect(out.warnings.some((w) => /Episodio corto.*no se ha rellenado/.test(w))).toBe(true); expect(llm.calls.some((c) => /Ampliación/.test(c.prompt))).toBe(false);
   });
+  it("el prompt del arco fija el reparto por defecto (KAP + petición + último plano) y prohíbe retomar lo no pedido", async () => {
+    const a = arc(), llm = new Scripted([JSON.stringify(a), ...a.beats.map((_, i) => JSON.stringify(scene(i)))]); const c = ctx({ exact: true, cast: ["Hermano de KAP"] }); c.sections[0].text = "Escena «Fin» en Calle de noche; personajes: KAP, Dani";
+    await llmArcAuthor(llm).write({ request: c.request, context: c }); expect(llm.calls[0].prompt).toMatch(/REPARTO POR DEFECTO: KAP, Hermano de KAP, Dani\./); expect(llm.calls[0].prompt).toMatch(/un objeto perdido sigue perdido/);
+  });
   it("el esquema del arco rechaza menos de 8 beats", () => { expect(EpisodeArc.safeParse(arc({ beats: arc().beats.slice(0, 5) })).success).toBe(false); });
 });
