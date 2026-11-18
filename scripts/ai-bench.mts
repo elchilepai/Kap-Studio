@@ -137,14 +137,15 @@ async function runReview(w: World) {
     checks: [{ id: "el-modelo-detecta-las-4", ok: hit.length === 4, note: `${hit.length}/4` }, { id: "sin-falsos-positivos", ok: fp.length === 0, note: `${fp.length}` }, { id: "las-reglas-del-sistema-detectan-edad-etapa-exito", ok: ["salto-de-años", "etapa-saltada"].every((r) => sys.some((f) => f.rule === r && f.severity === "error")) }] as Check[] };
 }
 
-async function runAuthor(t: Task, requestText: string, scenes: number, w: World) {
+async function runAuthor(t: Task, requestText: string, scenes: number, w: World, extra: { hints?: any } = {}) {
   const { request, pack } = await M.requestContext(w.storage, requestText);
-  const author: any = MODE === "arc" ? llmArcAuthor(llm) : llmEpisodeAuthor(llm, { scenes }); const m = await measured(async () => { try { return { ok: true as const, out: await author.write({ request, context: pack }) }; } catch (e) { return { ok: false as const, error: (e as Error).message }; } });
+  const author: any = MODE === "arc" ? llmArcAuthor(llm) : llmEpisodeAuthor(llm, { scenes }); const m = await measured(async () => { try { return { ok: true as const, out: await author.write({ hints: extra.hints, request, context: pack }) }; } catch (e) { return { ok: false as const, error: (e as Error).message }; } });
   const base = { id: t.id, title: t.title, request: requestText, ms: m.ms, peakMb: m.peakMb, sysPeakMb: m.sysPeakMb, contextTokens: pack.usedTokens };
   if (!m.value.ok) return { ...base, error: m.value.error, ok: false };
   const { out } = m.value, draft = author.lastDraft!, st = out.stats!;
   const kapNames = w.chars.map((c) => c.name), hookText = draft.scenes.flatMap((s: any) => s.memory).map((x: string) => /^gancho:\s*(.+)$/i.exec(x)?.[1]).filter(Boolean).pop();
-  const plain = reviewNarrative({ scenes: draft.scenes.map((s: any) => ({ location: s.location, lines: s.lines })), hook: hookText, knownCharacters: kapNames }), tagged = reviewNarrative({ scenes: draft.scenes.map((s: any) => ({ location: s.location, lines: s.lines, fn: s.fn, stage: s.stage, shot: s.shot, time: s.time, interior: s.interior })), hook: hookText, knownCharacters: kapNames });
+  const lastCast = request.exact ? (/personajes:\s*(.+)$/.exec(pack.sections.find((x: any) => x.id === "lastshot")?.text ?? "")?.[1] ?? "").split(/[,;]/).map((x: string) => x.trim()).filter(Boolean) : [], allowed = ["KAP", ...request.cast, ...lastCast, ...(author.lastArc?.newCharacters ?? []).map((c: any) => c.name), ...(author.lastArc?.extraCharacters ?? []).map((c: any) => c.name)];
+  const plain = reviewNarrative({ scenes: draft.scenes.map((s: any) => ({ location: s.location, lines: s.lines })), hook: hookText, knownCharacters: kapNames, allowedCharacters: allowed, previousEpisodes: extra.hints?.previousEpisodes }), tagged = reviewNarrative({ scenes: draft.scenes.map((s: any) => ({ location: s.location, lines: s.lines, fn: s.fn, stage: s.stage, shot: s.shot, time: s.time, interior: s.interior })), hook: hookText, knownCharacters: kapNames });
   const r = validateIR(parsedToIR(parseScript(out.script, w.chars.map((c, i) => ({ id: String(i), name: c.name })))), w.bible);   // IR tras el intérprete por reglas (lo que ve el pipeline)
   await w.mk("probe", request.number, out.script, "REVIEW", { continuesFrom: request.continuesFrom, brief: requestText }); await M.proposeMemory(w.deps, "probe");
   const ms = (await M.memoryStatus(w.storage, "probe"))!, f = ms.findings, lastLoc = (await M.answerStory(w.storage, "terminado")).sections.find((s) => /Último plano/.test(s.title))?.lines[0]?.match(/en ([^;]+);/)?.[1];
@@ -155,7 +156,7 @@ async function runAuthor(t: Task, requestText: string, scenes: number, w: World)
     json: { attempts: st.attempts, retries: st.retries, jsonErrors: st.jsonErrors, schemaErrors: st.schemaErrors, lengthRetries: st.lengthRetries, memoryDirectiveErrors: st.memoryDirectiveErrors }, irErrors: r.errors, usage: st.usage, tokensPerSec: +tps.toFixed(2),
     episode: { scenes: draft.scenes.length, estimatedSec: secs, words: draft.scenes.reduce((n: number, s: any) => n + s.lines.reduce((k: number, l: any) => k + words(l.text).length, 0), 0), title: draft.title, logline: draft.logline },
     continuity: { critical: f.filter((x) => x.severity === "error").map((x) => `${x.rule}: ${x.text.slice(0, 140)}`), warnings: f.filter((x) => x.severity === "warning").map((x) => `${x.rule}: ${x.text.slice(0, 140)}`), info: f.filter((x) => x.severity === "info").length },
-    narrative: { ...countBySeverity(plain), rules: [...new Set(plain.map((f) => f.rule.replace("narrativa-", "")))], findings: plain, taggedRules: [...new Set(tagged.map((f) => f.rule.replace("narrativa-", "")))] }, mode: MODE, arc: author.lastArc, checks, compliance: +(checks.filter((c) => c.ok).length / checks.length).toFixed(2), proxy: proxy(draft, secs), warnings: out.warnings.slice(0, 6), draft };
+    narrative: { ...countBySeverity(plain), rules: [...new Set(plain.map((f) => f.rule.replace("narrativa-", "")))], findings: plain, taggedRules: [...new Set(tagged.map((f) => f.rule.replace("narrativa-", "")))] }, mode: MODE, arc: author.lastArc, script: out.script, gate: { regenerated: st.scenesRegenerated ?? 0, dropped: st.scenesDropped ?? 0, issues: st.gateIssues ?? {} }, outcome: author.lastArc?.outcome, checks, compliance: +(checks.filter((c) => c.ok).length / checks.length).toFixed(2), proxy: proxy(draft, secs), warnings: out.warnings.slice(0, 6), draft };
 }
 
 // ---------------------------------------------------------------- fases
@@ -165,7 +166,7 @@ console.log(`\n== Banco de IA local · ${MODEL} · fase ${PHASE} · ${meta.cpus}
 if (!(await llm.available())) { console.error(`El modelo ${MODEL} no está disponible en Ollama`); process.exit(2); }
 const results: any[] = [];
 /** Guardado incremental: un reinicio del contenedor no debe perder las tareas ya terminadas. */
-const save = () => fs.writeFile(path.join(OUT, `${SLUG}-${PHASE}${PHASE === "blind2" ? "-" + MODE : ""}${ONLY.length ? "-" + ONLY.join("") : ""}.partial.json`), JSON.stringify({ meta, partial: true, results }, null, 1));
+const save = () => fs.writeFile(path.join(OUT, `${SLUG}-${PHASE}${PHASE === "blind2" || PHASE === "blind3" ? "-" + MODE : ""}${ONLY.length ? "-" + ONLY.join("") : ""}.partial.json`), JSON.stringify({ meta, partial: true, results }, null, 1));
 if (PHASE === "tech" || PHASE === "all") {
   const worlds: Partial<Record<"fresh" | "after3", World>> = {};
   for (const t of TASKS.concat([{ id: "T7", title: "", world: "after3", request: "", kind: "review" }]).filter((x) => !ONLY.length || ONLY.includes(x.id))) {
@@ -174,6 +175,27 @@ if (PHASE === "tech" || PHASE === "all") {
     const r = t.kind === "review" ? await runReview(w) : await runAuthor(t, t.request, SCENES, w); results.push(r); await save();
     console.log(`   ${(r.ms / 1000).toFixed(0)} s · RAM pico ${r.peakMb} MB · ${"error" in r ? "ERROR " + r.error : `${r.id === "T7" ? `detecta ${(r as any).review.found}/4 · falsos+ ${(r as any).review.falsePositives}` : `IR ${(r as any).irValid ? "válida" : "inválida"}${(r as any).irValidFirstTry ? " a la primera" : ""}`} · reintentos ${(r as any).json.retries} · cumplimiento ${Math.round((((r as any).compliance ?? ((r as any).checks.filter((c: Check) => c.ok).length / (r as any).checks.length)) ) * 100)}% · crit ${(r as any).continuity?.critical.length ?? "-"}`}`);
     for (const c of ((r as any).checks ?? []).filter((c: Check) => !c.ok)) console.log(`     ✗ ${c.id}${c.note ? ` — ${c.note}` : ""}`);
+  }
+}
+if (PHASE === "blind3") {
+  const E = [
+    { id: "E4", n: 4, request: "Crea el episodio 4, a continuación del episodio 3. Dani sigue teniendo el cuaderno de KAP y, en el colegio, los compañeros se burlan de su ropa; KAP reacciona y, bajo presión, suelta una rima improvisada por primera vez." },
+    { id: "E5", n: 5, request: "Crea el episodio 5, continuando el episodio 4. Lo que hizo KAP en el episodio 4 trae consecuencias que llegan a casa y afectan a su hermano pequeño; KAP tiene que decidir qué hace." },
+    { id: "E6", n: 6, request: "Crea el episodio 6, continuando el episodio 5. KAP intenta avanzar con la música a pesar de lo ocurrido, pero algo sale mal. Deja un problema abierto para el siguiente episodio." },
+  ];
+  const w = await world("after3");
+  // Cada episodio se aprueba SOLO en la base temporal de esta prueba (nunca en el canon real) para que el siguiente parta de él.
+  const commitEp = async (n: number, script: string) => { try { await w.mk(`chain${n}`, n, script, "REVIEW", { continuesFrom: 1000 + n - 1 }); await M.proposeMemory(w.deps, `chain${n}`); await M.saveDecisions(w.deps, `chain${n}`, { all: "accepted" }); await w.storage.productions.save({ ...(await w.storage.productions.get(`chain${n}`))!, status: "APPROVED" }); await M.commitMemory(w.deps, `chain${n}`); return undefined; } catch (e) { return (e as Error).message; } };
+  const outcomes: string[] = [];
+  try { const prev = JSON.parse(await fs.readFile(path.join(OUT, `${SLUG}-${PHASE}-${MODE}.partial.json`), "utf8")); for (const r of prev.results ?? []) if (!("error" in r) && r.script) { const e = E.find((x) => x.id === r.id)!; const ce = await commitEp(e.n, r.script); results.push(r); if (r.outcome) outcomes.push(r.outcome); console.log(`[${r.id}] recuperado del parcial${ce ? ` (no se pudo aprobar en la base temporal: ${ce})` : ""}`); } } catch { /* primera ejecución */ }
+  for (const e of E.filter((x) => !results.some((r) => r.id === x.id) && (!ONLY.length || ONLY.includes(x.id)))) {
+    await unload(); console.log(`\n[${e.id}] (${MODE}) episodio ${e.n} …`);
+    const hints = { previousEpisodes: await M.previousEpisodesHints(w.storage, 1000 + e.n), previousOutcomes: outcomes.slice(-2) };
+    const r: any = await runAuthor({ id: e.id, title: `Episodio ${e.n}`, world: "after3", request: e.request }, e.request, 18, w, { hints });
+    if (r.ok) { r.commitError = await commitEp(e.n, r.script); if (r.outcome) outcomes.push(r.outcome); }
+    results.push(r); await save();
+    console.log(`   ${(r.ms / 60000).toFixed(1)} min · ${"error" in r ? "ERROR " + r.error : `${r.episode.scenes} escenas · ≈ ${(r.episode.estimatedSec / 60).toFixed(1)} min · IR ${r.irValid ? "válida" : "inválida"} · regeneradas ${r.gate.regenerated} · eliminadas ${r.gate.dropped} · crit ${r.continuity.critical.length} · narrativa crit ${r.narrative.error} aviso ${r.narrative.warning} info ${r.narrative.info}${r.commitError ? " · (no aprobado en la base temporal)" : ""}`}`);
+    if ("error" in r) break;
   }
 }
 if (PHASE === "blind2") {
@@ -203,6 +225,6 @@ if (PHASE === "narrative" || PHASE === "all") {
   }
 }
 const loadedInfo = await loaded();
-await fs.writeFile(path.join(OUT, `${SLUG}-${PHASE}${PHASE === "blind2" ? "-" + MODE : ""}${ONLY.length ? "-" + ONLY.join("") : ""}.json`), JSON.stringify({ meta, loaded: loadedInfo, totalMin: +((Date.now() - t0) / 60000).toFixed(1), results }, null, 1));
+await fs.writeFile(path.join(OUT, `${SLUG}-${PHASE}${PHASE === "blind2" || PHASE === "blind3" ? "-" + MODE : ""}${ONLY.length ? "-" + ONLY.join("") : ""}.json`), JSON.stringify({ meta, loaded: loadedInfo, totalMin: +((Date.now() - t0) / 60000).toFixed(1), results }, null, 1));
 console.log(`\nTotal ${((Date.now() - t0) / 60000).toFixed(1)} min · modelo en memoria: ${JSON.stringify(loadedInfo)} · guardado en docs/ia-bench/`);
 await fs.rm(root, { recursive: true, force: true });

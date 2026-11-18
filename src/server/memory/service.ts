@@ -94,6 +94,15 @@ export type MemoryStatus = {
 };
 
 /** Estado de memoria de un episodio: propuesta, hallazgos de continuidad frente al canon anterior y si se puede confirmar. */
+/** Escenarios de los dos episodios (válidos) inmediatamente anteriores: sirven para que la serie no repita el mismo sitio sin motivo. */
+export async function previousEpisodesHints(storage: Storage, beforeOrder?: number): Promise<{ locations: string[]; settings: string[] }[]> {
+  const valid = (await validEpisodes(storage)).filter((e) => beforeOrder === undefined || e.order < beforeOrder).sort((a, b) => b.order - a.order).slice(0, 2), out: { locations: string[]; settings: string[] }[] = [];
+  for (const e of valid) { const p = await storage.productions.get(e.id); if (!p) continue; const counts = new Map<string, number>(), locations = p.scenes.map((s) => s.location).filter(Boolean);
+    p.scenes.forEach((s) => { if (s.location) { const k = `${s.location}${s.mood ? ` (${s.mood})` : ""}`; counts.set(k, (counts.get(k) ?? 0) + 1); } });
+    out.push({ locations, settings: [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 3).map(([k, n]) => `${k} ×${n}`) }); }
+  return out;
+}
+
 export async function memoryStatus(storage: Storage, productionId: string): Promise<MemoryStatus | undefined> {
   const production = await storage.productions.get(productionId); if (!production || production.kind !== "episode") return undefined;
   const [proposal, committed, ep] = [await storage.memoryProposals.get(productionId), await storage.memoryEpisodes.get(productionId), await episodeInput(storage, production)];
@@ -104,7 +113,7 @@ export async function memoryStatus(storage: Storage, productionId: string): Prom
   const prevMem = ep.continuesFrom !== undefined ? (await validEpisodes(storage)).find((e) => e.order === ep.continuesFrom) : undefined;
   const findings = validateContinuity({ episode: ep, canon: before, perScene, changes, manual, previousLastShot: prevMem ? { characters: prevMem.lastShot.characters, location: prevMem.lastShot.location } : undefined, previousHook: prevMem?.hook });
     // Revisión narrativa (heurística, sin IA): calidad del guion. Se muestra aparte de la continuidad; informa, nunca bloquea ni toca el canon.
-  const narrative: Finding[] = reviewNarrative({ scenes: ep.scenes.map((sc) => ({ location: sc.location, title: sc.title, lines: sc.lines.map((l) => ({ speaker: l.speaker, text: l.text })) })), hook: perScene.map((p) => p.parsed.hook).filter(Boolean).pop(), knownCharacters: ep.characters.map((c) => c.name), acts: perScene.flatMap((p) => p.parsed.acts.map((a) => a.kind)) })
+  const narrative: Finding[] = reviewNarrative({ scenes: ep.scenes.map((sc) => ({ location: sc.location, title: sc.title, lines: sc.lines.map((l) => ({ speaker: l.speaker, text: l.text })) })), hook: perScene.map((p) => p.parsed.hook).filter(Boolean).pop(), knownCharacters: ep.characters.map((c) => c.name), previousEpisodes: await previousEpisodesHints(storage, order), acts: perScene.flatMap((p) => p.parsed.acts.map((a) => a.kind)) })
     .map((f) => ({ id: `f_${hash(`${f.rule}|${f.scene ?? ""}|${f.text}`)}`, severity: f.severity, rule: f.rule, text: f.text, ...(f.scene !== undefined ? { scene: f.scene, sceneTitle: ep.scenes[f.scene]?.title } : {}) }));
   return { production, proposal, committed, findings, narrative, parseErrors: perScene.flatMap((p) => p.parsed.errors), stale: stale || (!!committed && committed.contentSig !== sig), approved: canExport(production.status),
     pendingDecisions: changes.filter((c) => c.decision === "pending").length, accepted: changes.filter((c) => c.decision === "accepted").length, rejected: changes.filter((c) => c.decision === "rejected").length };
@@ -215,7 +224,7 @@ export async function createEpisodeFromRequest(deps: MemoryDeps, text: string): 
   const warnings: string[] = []; let authored = false, saved = production;
   const au = deps.ai?.author;   // si hay IA, redacta el guion con el contexto; si no, el usuario lo escribe (el contexto queda a la vista)
   if (au && (await au.available().catch(() => false))) {
-    try { const r = await au.write({ request, context: pack }); saved = { ...production, script: r.script }; warnings.push(...r.warnings); authored = true; } catch (e) { warnings.push(`La IA no pudo redactar el guion: ${(e as Error).message}`); }
+    try { const r = await au.write({ request, context: pack, hints: { previousEpisodes: await previousEpisodesHints(storage, orderOf(request.season, request.number)) } }); saved = { ...production, script: r.script }; warnings.push(...r.warnings); authored = true; } catch (e) { warnings.push(`La IA no pudo redactar el guion: ${(e as Error).message}`); }
   }
   await storage.productions.save(saved);
   await log(deps, "memoria.episodio", saved.id, `Pedido: «${request.text.slice(0, 200)}»${authored ? " · guion redactado por IA (pendiente de revisión)" : ""}`);

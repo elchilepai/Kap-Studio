@@ -19,7 +19,7 @@ const SceneDraft = z.object({
   memory: z.array(z.string().max(320)).max(16),                                                                    // directivas de memoria de KAP: [acto: …] [gancho: …] [hito-logrado: …]…
   // Solo el generador por arco las rellena: función de la escena, etapa del arco, plano, momento del día, interior/exterior y acciones 2D del vocabulario cerrado.
   fn: z.string().max(40).optional(), stage: z.string().max(30).optional(), shot: z.string().max(20).optional(), time: z.string().max(30).optional(), interior: z.boolean().optional(),
-  directions: z.array(z.string().max(120)).max(8).optional(),
+  directions: z.array(z.string().max(120)).max(8).optional(), change: z.string().max(300).optional(),   // qué cambia al terminar la escena
 });
 export const EpisodeDraft = z.object({
   title: z.string().min(1).max(100), logline: z.string().min(1).max(260),

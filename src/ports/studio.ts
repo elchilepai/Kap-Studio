@@ -17,7 +17,7 @@ export interface ScriptAnalyzer extends ProviderInfo {
 export interface ScriptAuthor extends ProviderInfo {
   available(): Promise<boolean>;
   /** Recibe la petición ya interpretada y el PAQUETE DE CONTEXTO de la memoria narrativa (no la historia entera). Devuelve el guion en el formato documentado de KAP (con directivas de memoria). */
-  write(input: { request: EpisodeRequest; context: ContextPack; signal?: AbortSignal }): Promise<{ script: string; warnings: string[]; /** IR validada (si el autor devuelve estructura): el pipeline la re-valida igualmente. */ ir?: unknown; stats?: AuthorStats }>;
+  write(input: { request: EpisodeRequest; context: ContextPack; signal?: AbortSignal; /** Pistas de variedad de la serie (opcionales): escenarios y desenlaces recientes. */ hints?: AuthorHints }): Promise<{ script: string; warnings: string[]; /** IR validada (si el autor devuelve estructura): el pipeline la re-valida igualmente. */ ir?: unknown; stats?: AuthorStats }>;
 }
 
 /** Sintetiza voz a un archivo de audio. Hoy: audio subido por el usuario o espeak-ng local si está instalado. */
@@ -52,7 +52,8 @@ export interface ScriptInterpreter extends ProviderInfo {
  */
 export type LlmRequest = { system?: string; prompt: string; /** JSON Schema que debe cumplir la salida (salida estructurada del motor). */ jsonSchema?: object; temperature?: number; maxTokens?: number; signal?: AbortSignal };
 /** Medidas agregadas de una redacción (para el banco de pruebas): intentos, reintentos por tipo y uso del modelo. */
-export type AuthorStats = { attempts: number; retries: number; jsonErrors: number; schemaErrors: number; lengthRetries: number; memoryDirectiveErrors: number; usage: LlmUsage; estimatedSec: number };
+export type AuthorHints = { previousEpisodes?: { locations: string[]; settings?: string[] }[]; previousOutcomes?: string[] };
+export type AuthorStats = { /** Solo el generador por arco: escenas regeneradas / eliminadas por la puerta de calidad y motivos. */ scenesRegenerated?: number; scenesDropped?: number; gateIssues?: Record<string, number>; attempts: number; retries: number; jsonErrors: number; schemaErrors: number; lengthRetries: number; memoryDirectiveErrors: number; usage: LlmUsage; estimatedSec: number };
 /** Medidas de una llamada (si el motor las da): sirven para el banco de pruebas y para ajustar el presupuesto de contexto. */
 export type LlmUsage = { promptTokens: number; outputTokens: number; totalMs: number; loadMs: number; promptMs: number; evalMs: number };
 export interface LlmClient extends ProviderInfo {

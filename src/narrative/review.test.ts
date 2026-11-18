@@ -49,4 +49,10 @@ describe("revisión narrativa (heurística, avisa y no bloquea)", () => {
     const r = reviewNarrative({ scenes: S, knownCharacters: ["Ramiro", "Hermano de KAP"], allowedCharacters: ["KAP", "Hermano de KAP"] });
     expect(r.find((f) => f.rule === "narrativa-memoria-no-pedida")?.text).toMatch(/ramiro.*2 escenas/i); expect(r.some((f) => f.rule === "narrativa-memoria-no-pedida" && /HERMANO/i.test(f.text))).toBe(false);
   });
+  it("personaje reactivo, voz de adulto y mismo escenario en varios episodios seguidos", () => {
+    const S = [sc("Casa", ["KAP", "Tengo hambre de verdad en esta casa vacía"], ["HERMANO", "Kap..."]), sc("Casa", ["HERMANO", "¿Estás bien?"], ["KAP", "Mi voz va más allá del mundo y mis sueños brillan"]), sc("Casa", ["HERMANO", "Duele"], ["KAP", "No te rindas nunca, el futuro es mío para siempre"])];
+    const r = reviewNarrative({ scenes: S, previousEpisodes: [{ locations: ["Casa", "Casa", "Calle"] }, { locations: ["Casa", "Casa"] }] }); const rs = rules(r);
+    expect(rs).toEqual(expect.arrayContaining(["personaje-reactivo", "serie-repite-escenario"])); expect(r.some((f) => f.rule === "narrativa-voz-adulta")).toBe(false);   // solo 2 líneas de KAP: aún no es patrón
+    const more = [...S, sc("Casa", ["KAP", "Mis sueños son más grandes que el mundo, para siempre"])]; expect(rules(reviewNarrative({ scenes: more }))).toContain("voz-adulta");
+  });
 });

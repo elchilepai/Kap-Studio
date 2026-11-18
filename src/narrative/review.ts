@@ -22,23 +22,27 @@ export type NarrativeInput = {
   knownCharacters?: string[]; protagonist?: string;
   /** Reparto que pedía la petición (+ último plano si continúa exactamente). Si se da, avisa de personajes de la memoria que aparecen sin haberlo pedido. */
   allowedCharacters?: string[];
+  /** Escenarios de los episodios inmediatamente anteriores (para avisar si la serie repite el mismo sitio sin motivo). */
+  previousEpisodes?: { locations: string[] }[];
   /** Tipos de acto declarados con directivas (inicio, conflicto…). */
   acts?: string[];
 };
 
 const STOP = new Set("para como pero porque cuando donde aunque entre sobre desde hasta esto esta este estos estas ellos ellas ella algo alguien nada todo todos toda todas tiene tienen tengo tener puede puedo puedes quiero quieres hacer hace haces voy vas van sido ser son era eran esta estoy estas estan hay muy mas menos solo sola una unos unas del los las que con sin por ese esa eso ahi aqui asi ya no si le lo la el se me te mi tu su nos".split(" "));
-const words = (s: string) => norm(s).replace(/[^a-z0-9ñ\s]/g, " ").split(/\s+/).filter(Boolean);
-const content = (s: string) => words(s).filter((w) => w.length > 3 && !STOP.has(w));
-const jac = (a: Set<string>, b: Set<string>) => { if (!a.size || !b.size) return 0; let n = 0; for (const x of a) if (b.has(x)) n++; return n / (a.size + b.size - n); };
+export const words = (s: string) => norm(s).replace(/[^a-z0-9ñ\s]/g, " ").split(/\s+/).filter(Boolean);
+export const content = (s: string) => words(s).filter((w) => w.length > 3 && !STOP.has(w));
+export const jac = (a: Set<string>, b: Set<string>) => { if (!a.size || !b.size) return 0; let n = 0; for (const x of a) if (b.has(x)) n++; return n / (a.size + b.size - n); };
 const sceneText = (s: NarrativeScene) => s.lines.map((l) => l.text).join(" ");
 const clip = (s: string, n = 70) => (s.length > n ? `${s.slice(0, n - 1)}…` : s);
 
 /** Frases de manual de autoayuda: cuando abundan, el diálogo suena a eslogan y no a persona. */
-export const MOTIVATIONAL = /no te rindas|no me (?:voy a|pienso) rendir|nunca te rindas|no (?:voy a|pienso) rendirme|cree(?:r)? en ti|conf[ií]a en ti|tu puedes|tú puedes|puedes (?:lograrlo|hacerlo)|solo (?:es|fue) el principio|esto es solo el principio|eres m[aá]s que|sigue adelante|seguir adelante|no te detengas|no me voy a detener|todo se aprende|el camino (?:apenas|recien)|nada (?:volver[aá]|ser[aá]) igual|mi sue[ñn]o (?:no|sigue)|lo importante es (?:que )?(?:lo )?intent/i;
+export const MOTIVATIONAL = /no te rindas|no me rendir[eé]|no me dejar[eé] vencer|no me (?:voy a|pienso) rendir|nunca te rindas|no (?:voy a|pienso) rendirme|cree(?:r)? en ti|conf[ií]a en ti|tu puedes|tú puedes|puedes (?:lograrlo|hacerlo)|solo (?:es|fue) el principio|esto es solo el principio|eres m[aá]s que|sigue adelante|seguir adelante|no te detengas|no me voy a detener|todo se aprende|el camino (?:apenas|recien)|nada (?:volver[aá]|ser[aá]) igual|mi sue[ñn]o (?:no|sigue)|lo importante es (?:que )?(?:lo )?intent/i;
 /** Ganchos vacíos que valen para cualquier episodio. */
 export const GENERIC_HOOK = /(?:esto|eso) es solo el (?:principio|comienzo)|el camino (?:apenas )?(?:comienza|empieza)|nada volver[aá] a ser igual|el futuro (?:le )?(?:espera|aguarda)|(?:una )?nueva (?:aventura|etapa) (?:comienza|empieza)|seguir[aá] (?:adelante|luchando)|no se rendir[aá]|continuar[aá] (?:su|el) (?:camino|sue[ñn]o)|su sue[ñn]o (?:sigue|contin[uú]a) vivo|la historia contin[uú]a/i;
 const MORAL = /aprendi[oó]|aprend[ií]|lecci[oó]n|ahora (?:s[eé]|entiendo|comprendo)|m[aá]s fuerte|ya no es el mismo|ya no (?:era|es) el mismo ni[ñn]o|hab[ií]a cambiado|valor (?:de|del)|nunca (?:volver[aá]|m[aá]s)/i;
 const OPPOSITION = /\b(no|nunca|pero|dame|devu[eé]lve|suelta|mentira|mentiroso|d[eé]jame|vete|c[aá]llate|ladr[oó]n|robaste|robado|quita|prohib|castig|culpa|por qu[eé]|c[oó]mo te atreves)\b|[!¡]/i;
+/** Abstracciones de adulto/eslogan que un niño no diría así: «mi voz va más allá», «mis sueños brillan como el sol»… */
+export const ADULT_VOICE = /\bmi (?:m[uú]sica|sue[ñn]o|voz|historia|destino)\b|\bmis sue[ñn]os\b|\bel mundo\b|\bla vida\b|\bel futuro\b|\bpara siempre\b|\bbrillan?\b|\bnadie (?:podr[aá]|puede) detener/i;
 const WALK = /\b(camina|caminando|camin[oó]|avanza|se aleja|regresa|vuelve a casa|recorre)\b/i;
 
 export function reviewNarrative(inp: NarrativeInput): NarrativeFinding[] {
@@ -123,6 +127,19 @@ export function reviewNarrative(inp: NarrativeInput): NarrativeFinding[] {
     if (frac(S.map((s) => norm(s.location))) > 0.7) add("info", "narrativa-poca-variedad-visual", "Más del 70 % de las escenas ocurren en el mismo lugar.");
     if (S.every((s) => s.time) && frac(S.map((s) => norm(s.time!))) === 1) add("info", "narrativa-poca-variedad-visual", "Todo el episodio ocurre en el mismo momento del día.");
     if (S.every((s) => s.shot) && frac(S.map((s) => norm(s.shot!))) > 0.7) add("info", "narrativa-poca-variedad-visual", "Más del 70 % de las escenas usan el mismo tipo de plano."); }
+
+  // 12) PERSONAJE REACTIVO: habla solo con interjecciones/preguntas cortas y no hace nada propio
+  for (const [k, e] of bySpeaker) { if (k === kap || e.lines < 3) continue;
+    const mine = S.flatMap((s) => s.lines.filter((l) => norm(l.speaker ?? "") === k)); if (mine.every((l) => words(l.text).length <= 5)) add("warning", "narrativa-personaje-reactivo", `«${e.name}» habla ${e.lines} veces con frases de ≤ 5 palabras y no decide ni hace nada propio: ¿es solo un espejo de KAP?`, [...e.scenes][0]); }
+
+  // 13) VOZ DE ADULTO: KAP suena a eslogan o a adulto que conoce su futuro
+  const kapLines = S.flatMap((s, i) => s.lines.filter((l) => norm(l.speaker ?? "") === kap).map((l) => ({ i, t: l.text }))), adult = kapLines.filter((l) => ADULT_VOICE.test(l.t) || MOTIVATIONAL.test(l.t));
+  if (adult.length >= 3) add("warning", "narrativa-voz-adulta", `${adult.length} líneas de KAP suenan a eslogan o a adulto («mi voz», «mis sueños», «el futuro»…; escenas ${[...new Set(adult.map((x) => x.i + 1))].join(", ")}): ¿habla como un niño de su etapa?`);
+
+  // 14) SERIE: el mismo escenario dominante en varios episodios seguidos
+  if (inp.previousEpisodes?.length) { const dom = (ls: string[]) => { const m = new Map<string, number>(); ls.forEach((l) => m.set(norm(l), (m.get(norm(l)) ?? 0) + 1)); const [k, v] = [...m.entries()].sort((a, b) => b[1] - a[1])[0] ?? ["", 0]; return { k, share: ls.length ? v / ls.length : 0 }; };
+    const cur = dom(S.map((s) => s.location)), prev = inp.previousEpisodes.map((e) => dom(e.locations));
+    if (cur.share >= 0.5 && prev.length >= 2 && prev.every((p) => p.k === cur.k && p.share >= 0.5)) add("warning", "narrativa-serie-repite-escenario", `Este episodio y los ${prev.length} anteriores ocurren sobre todo en «${cur.k}»: ¿hay motivo narrativo para no cambiar de espacio?`); }
   return out;
 }
 
