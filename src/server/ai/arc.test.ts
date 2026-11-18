@@ -36,10 +36,15 @@ describe("generador por arco (arco → escenas)", () => {
     const r = validateIR(parsedToIR(parseScript(out.script, [{ id: "1", name: "KAP" }, { id: "2", name: "Hermano de KAP" }])), { characters: ["KAP", "Hermano de KAP"], places: [] }); expect(r.errors).toEqual([]);   // el pipeline normal lo acepta
     expect(out.script).toMatch(/\[mood: mañana, interior\]/); expect(out.script).toMatch(/\[plano: general\]/);
   });
-  it("si el arco viola el orden o repite un gancho genérico, el modelo recibe el motivo y corrige", async () => {
-    const wrong = arc({ hook: "Esto es solo el principio de todo lo que viene.", beats: [1, 0, 2, 3, 4, 5, 6, 6].map((i, k) => beat(k, STAGES[i])) }), good = arc();
-    const llm = new Scripted([JSON.stringify(wrong), JSON.stringify(good), ...good.beats.map((_, i) => JSON.stringify(scene(i)))]); const author = llmArcAuthor(llm);
-    const out = await author.write({ request: ctx().request, context: ctx() }); expect(llm.calls[1].prompt).toMatch(/orden|genérico|inicio/); expect(out.stats!.schemaErrors).toBe(1); expect(author.lastArc!.hook).toMatch(/tendero/);
+  it("un arco con las etapas desordenadas se repara en código; si falta una etapa, el modelo recibe el motivo y corrige", async () => {
+    const shuffled = arc({ beats: [1, 0, 2, 3, 4, 5, 6, 6].map((i, k) => beat(k, STAGES[i])) }), missing = arc({ beats: [0, 1, 2, 3, 4, 5, 6, 6].map((i, k) => beat(k, STAGES[i === 3 ? 2 : i])) }), good = arc();
+    const llm = new Scripted([JSON.stringify(missing), JSON.stringify(shuffled), ...good.beats.map((_, i) => JSON.stringify(scene(i)))]); const author = llmArcAuthor(llm);
+    const out = await author.write({ request: ctx().request, context: ctx() }); expect(llm.calls[1].prompt).toMatch(/falta la etapa «decision»/); expect(out.stats!.schemaErrors).toBe(1);
+    expect(author.lastArc!.beats.map((b) => b.stage)).toEqual([...author.lastArc!.beats.map((b) => b.stage)].sort((a, b) => STAGES.indexOf(a) - STAGES.indexOf(b))); expect(out.warnings.some((w) => /reordenado/.test(w))).toBe(true);
+  });
+  it("un gancho genérico no tumba el arco: se avisa", async () => {
+    const a = arc({ hook: "Esto es solo el principio de todo lo que viene después." }), llm = new Scripted([JSON.stringify(a), ...a.beats.map((_, i) => JSON.stringify(scene(i)))]); const out = await llmArcAuthor(llm).write({ request: ctx().request, context: ctx() });
+    expect(out.warnings.some((w) => /gancho del arco es genérico/.test(w))).toBe(true); expect(out.warnings.some((w) => /gancho-generico/.test(w))).toBe(true);
   });
   it("«continuando exactamente»: la primera escena usa el lugar del último plano", async () => {
     const a = arc(), llm = new Scripted([JSON.stringify(a), ...a.beats.map((_, i) => JSON.stringify(scene(i)))]); const author = llmArcAuthor(llm); const c = ctx({ exact: true });

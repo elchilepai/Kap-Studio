@@ -29,14 +29,9 @@ export const EpisodeArc = z.object({
   usedFromMemory: z.array(z.string().max(120)).max(6), newCharacters: z.array(z.object({ name: z.string().min(1).max(40), function: z.string().max(200) })).max(2), newPlaces: z.array(z.string().max(80)).max(2),
   beats: z.array(Beat).min(8).max(12),
 }).superRefine((a, ctx) => {
-  const bad = (message: string) => ctx.addIssue({ code: "custom", message });
-  const idx = a.beats.map((b) => BEAT_STAGES.indexOf(b.stage));
-  if (idx.some((v, i) => i > 0 && v < idx[i - 1])) bad("beats: las etapas deben ir en orden inicio → problema → escalada → decision → consecuencia → resolucion → gancho");
-  for (const s of BEAT_STAGES) if (!a.beats.some((b) => b.stage === s)) bad(`beats: falta la etapa «${s}»`);
-  if (a.beats[0] && a.beats[0].stage !== "inicio") bad("beats: el primer beat debe ser «inicio»");
-  if (a.beats.at(-1) && a.beats.at(-1)!.stage !== "gancho") bad("beats: el último beat debe ser «gancho»");
-  if (GENERIC_HOOK.test(a.hook)) bad("hook: es genérico; debe ser una consecuencia, pregunta, descubrimiento o decisión concretos de este episodio");
-  if (new Set(a.beats.map((b) => b.location.toLowerCase())).size < 2) bad("beats: el episodio ocurre en un solo lugar; varía el espacio si la historia lo permite");
+  // Solo lo estructuralmente imposible rechaza el arco (cada reintento cuesta minutos en CPU). El orden se REPARA en código y el resto
+  // (gancho genérico, un solo lugar…) lo señala la revisión narrativa como aviso.
+  for (const s of BEAT_STAGES) if (!a.beats.some((b) => b.stage === s)) ctx.addIssue({ code: "custom", message: `beats: falta la etapa «${s}»` });
 });
 export type EpisodeArc = z.infer<typeof EpisodeArc>;
 
@@ -63,8 +58,10 @@ export function llmArcAuthor(llm: LlmClient, opts: ArcAuthorOptions = {}): ArcAu
       // 1) EL ARCO
       const a = await generateJson(llm, EpisodeArc, { system: ARC_SYSTEM, prompt: arcPrompt(context), temperature: opts.temperature ?? 0.8, maxTokens: 2600, signal }, { retries: opts.arcRetries ?? 2 });
       logs.push(...a.log); usages.push(a.usage); calls += a.attempts;
-      if (!a.ok) throw new Error(`El modelo no devolvió un arco válido tras ${a.attempts} intento(s): ${a.errors.join("; ")}`);
-      const arc = a.data;
+      if (!a.ok) throw new Error(`El modelo no devolvió un arco válido tras ${a.attempts} intento(s): ${a.errors.join("; ")} · inicio de la respuesta: ${clip(a.raw ?? "", 500)}`);
+      const arc = { ...a.data, beats: a.data.beats.map((b, i) => ({ b, i })).sort((x, y) => BEAT_STAGES.indexOf(x.b.stage) - BEAT_STAGES.indexOf(y.b.stage) || x.i - y.i).map((x) => x.b) };   // orden de etapas reparado en código
+      if (arc.beats.some((b, i) => b !== a.data.beats[i])) warnings.push("El modelo desordenó las etapas del arco; se han reordenado.");
+      if (GENERIC_HOOK.test(arc.hook)) warnings.push("El gancho del arco es genérico; revísalo.");
       const lastLoc = /\ben ([^;]+);/.exec(context.sections.find((s) => s.id === "lastshot")?.text ?? "")?.[1]?.trim();
       if (request.exact && lastLoc && arc.beats[0].location.toLowerCase() !== lastLoc.toLowerCase()) { warnings.push(`El arco empezaba en «${arc.beats[0].location}»; se corrige a «${lastLoc}» (último plano del episodio anterior).`); arc.beats[0].location = lastLoc; }
       self.lastArc = arc;

@@ -1,0 +1,25 @@
+{
+ "meta": {
+  "model": "qwen3:14b",
+  "phase": "blind2",
+  "ctx": 8192,
+  "date": "2026-11-18T04:29:59.405Z",
+  "cpus": 4,
+  "ramGb": 16,
+  "host": "CPU sin GPU"
+ },
+ "partial": true,
+ "results": [
+  {
+   "id": "N1",
+   "title": "Situación nueva",
+   "request": "Crea el episodio 4 continuando exactamente donde terminó el episodio 3. Los compañeros se burlan de la ropa de KAP y él, para defenderse, suelta una rima improvisada por primera vez.",
+   "ms": 2923812,
+   "peakMb": 10696,
+   "sysPeakMb": 12612,
+   "contextTokens": 1910,
+   "error": "El modelo no devolvió un arco válido tras 3 intento(s): (raíz): beats: las etapas deben ir en orden inicio → problema → escalada → decision → consecuencia → resolucion → gancho; (raíz): beats: el último beat debe ser «gancho»; (raíz): beats: el episodio ocurre en un solo lugar; varía el espacio si la historia lo permite",
+   "ok": false
+  }
+ ]
+}
