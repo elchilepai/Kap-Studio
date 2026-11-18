@@ -1,0 +1,1561 @@
+{
+ "meta": {
+  "model": "qwen3:14b",
+  "phase": "narrative",
+  "ctx": 8192,
+  "date": "2026-11-18T01:32:37.448Z",
+  "cpus": 4,
+  "ramGb": 16,
+  "host": "CPU sin GPU"
+ },
+ "loaded": {
+  "sizeMb": 10609,
+  "context": 8192
+ },
+ "totalMin": 148.8,
+ "results": [
+  {
+   "id": "S1",
+   "title": "Escenario narrativo",
+   "request": "Crea el episodio 4 continuando exactamente donde terminó el episodio 3. Dani tiene el cuaderno de KAP: quiero un episodio sobre la humillación pública y cómo KAP reacciona sin perder la dignidad.",
+   "ms": 2718417,
+   "peakMb": 10692,
+   "sysPeakMb": 11587,
+   "contextTokens": 1914,
+   "ok": true,
+   "irValid": true,
+   "irValidFirstTry": false,
+   "json": {
+    "attempts": 2,
+    "retries": 1,
+    "jsonErrors": 0,
+    "schemaErrors": 0,
+    "lengthRetries": 1,
+    "memoryDirectiveErrors": 21
+   },
+   "irErrors": [],
+   "usage": {
+    "promptTokens": 7241,
+    "outputTokens": 3903,
+    "totalMs": 2718391.7728540003,
+    "loadMs": 273823.411762,
+    "promptMs": 207389.522,
+    "evalMs": 2237118.762
+   },
+   "tokensPerSec": 1.74,
+   "episode": {
+    "scenes": 29,
+    "estimatedSec": 164,
+    "words": 407,
+    "title": "Episodio 4: El Cuaderno en la Calle",
+    "logline": "KAP enfrenta una humillación pública cuando Dani le roba su cuaderno y lo muestra a todos, pero reacciona con dignidad y fuerza."
+   },
+   "continuity": {
+    "critical": [],
+    "warnings": [
+     "directiva: Directiva de memoria no entendida: «acto: inicio»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "relacion-contradice: KAP y Dani ya se conocían (relación «acoso» desde ep. 2); la escena 1 los presenta como si se conocieran ahora.",
+     "directiva: Directiva de memoria no entendida: «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "hito: El hito «Víctima de bullying» ya estaba logrado en ep. 2.",
+     "directiva: Directiva de memoria no entendida: «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "hito: Hito desconocido «Bullying hacia KAP»: no está en el arco de la serie.",
+     "directiva: Directiva de memoria no entendida: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "hito: Hito desconocido «KAP defiende su sueño»: no está en el arco de la serie.",
+     "directiva: Directiva de memoria no entendida: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "hito: Hito desconocido «Dani desprecia el talento de KAP»: no está en el arco de la serie.",
+     "directiva: Directiva de memoria no entendida: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: emocional»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "hito: Hito desconocido «KAP se levanta por su dignidad»: no está en el arco de la serie.",
+     "directiva: Directiva de memoria no entendida: «acto: emocional»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: emocional»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "hito: Hito desconocido «Dani desafía a KAP»: no está en el arco de la serie.",
+     "directiva: Directiva de memoria no entendida: «acto: resolucion»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "hito: Hito desconocido «KAP mantiene su dignidad»: no está en el arco de la serie.",
+     "directiva: Directiva de memoria no entendida: «acto: resolucion»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "hito: Hito desconocido «KAP gana respeto»: no está en el arco de la serie.",
+     "directiva: Directiva de memoria no entendida: «acto: resolucion»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: resolucion»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "hito: Hito desconocido «Dani cede»: no está en el arco de la serie.",
+     "directiva: Directiva de memoria no entendida: «acto: resolucion»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: gancho»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "hito: Hito desconocido «KAP afirma su determinación»: no está en el arco de la serie.",
+     "hito: Hito desconocido «KAP imagina su primer tema»: no está en el arco de la serie.",
+     "hito: Hito desconocido «KAP declara su propósito»: no está en el arco de la serie.",
+     "relacion-contradice: KAP y Hermano de KAP ya se conocían (relación «hermanos» desde canon inicial); la escena 26 los presenta como si se conocieran ahora.",
+     "hito: Hito desconocido «KAP piensa en su hermano»: no está en el arco de la serie.",
+     "hito: Hito desconocido «KAP se levanta tras el episodio»: no está en el arco de la serie.",
+     "estructura: Al episodio le faltan: Inicio, Conflicto, Desarrollo, Punto emocional o de tensión, Resolución parcial. Decláralo en el guion con [acto: tip",
+     "duracion: El episodio dura ≈ 3.1 min y el formato es ≈ 5 min (4–6 min)."
+    ],
+    "info": 3
+   },
+   "checks": [
+    {
+     "id": "estructura-6-actos",
+     "ok": false,
+     "note": "faltan: inicio, conflicto, desarrollo, emocional, resolucion"
+    },
+    {
+     "id": "gancho",
+     "ok": true
+    },
+    {
+     "id": "protagonista",
+     "ok": true
+    },
+    {
+     "id": "sin-errores-criticos",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "sin-exito-prematuro",
+     "ok": true
+    },
+    {
+     "id": "directivas-validas",
+     "ok": false,
+     "note": "«acto: inicio»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto» | «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»"
+    },
+    {
+     "id": "espanol",
+     "ok": true
+    },
+    {
+     "id": "arranca-donde-termino",
+     "ok": true,
+     "note": "1.ª escena en «Calle de noche», terminó en «Calle de noche»"
+    },
+    {
+     "id": "diversidad-lexica",
+     "ok": true,
+     "note": "0.46"
+    }
+   ],
+   "compliance": 0.78,
+   "proxy": {
+    "score": 8,
+    "dialogueRatio": 0.45,
+    "locations": 1,
+    "repeatedSentences": 0
+   },
+   "warnings": [
+    "Directiva de memoria inválida del modelo: «acto: inicio»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+    "Directiva de memoria inválida del modelo: «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+    "Directiva de memoria inválida del modelo: «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+    "Directiva de memoria inválida del modelo: «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+    "Directiva de memoria inválida del modelo: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+    "Directiva de memoria inválida del modelo: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»"
+   ],
+   "draft": {
+    "title": "Episodio 4: El Cuaderno en la Calle",
+    "logline": "KAP enfrenta una humillación pública cuando Dani le roba su cuaderno y lo muestra a todos, pero reacciona con dignidad y fuerza.",
+    "assumptions": [],
+    "scenes": [
+     {
+      "title": "Calle de noche (2)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se queda paralizado al ver a Dani con su cuaderno. Las risas de los otros niños ecoan en la calle vacía."
+       }
+      ],
+      "memory": [
+       "acto: inicio",
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Dani",
+       "abre-hilo: el cuaderno robado | KAP, Dani"
+      ]
+     },
+     {
+      "title": "Calle de noche (3)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "Dani",
+        "text": "¡Mira lo que encontré! ¡Este pobre tipo no tiene ni siquiera un cuaderno decente!"
+       }
+      ],
+      "memory": [
+       "acto: conflicto",
+       "hito-logrado: Víctima de bullying | KAP",
+       "uso: Dani, cuaderno de KAP"
+      ]
+     },
+     {
+      "title": "Calle de noche (4)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP mira a Dani con una mezcla de tristeza y furia, pero no dice nada. Sus manos se aprietan en sus bolsillos."
+       }
+      ],
+      "memory": [
+       "acto: conflicto",
+       "perfil: KAP, dignidad = alta"
+      ]
+     },
+     {
+      "title": "Calle de noche (5)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "Niño 1",
+        "text": "¡Es un perdedor! ¡Nadie le quiere!"
+       }
+      ],
+      "memory": [
+       "acto: conflicto",
+       "hito-logrado: Bullying hacia KAP | KAP"
+      ]
+     },
+     {
+      "title": "Calle de noche (6)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "KAP",
+        "text": "No es un perdedor. Es... es un artista."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo",
+       "hito-logrado: KAP defiende su sueño | KAP"
+      ]
+     },
+     {
+      "title": "Calle de noche (7)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Los niños se quedan en silencio. La voz de KAP es clara, pero suena más como una promesa que como una amenaza."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo",
+       "perfil: KAP, sueños = ser millonario gracias a la música"
+      ]
+     },
+     {
+      "title": "Calle de noche (8)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "Dani",
+        "text": "¿Artista? ¡Él ni siquiera puede escribir bien!"
+       }
+      ],
+      "memory": [
+       "acto: desarrollo",
+       "hito-logrado: Dani desprecia el talento de KAP | KAP, Dani"
+      ]
+     },
+     {
+      "title": "Calle de noche (9)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "KAP",
+        "text": "Tú no entiendes lo que es tener un sueño."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo",
+       "perfil: KAP, perseverancia = baja"
+      ]
+     },
+     {
+      "title": "Calle de noche (10)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se acerca con paso firme a Dani, quien levanta el cuaderno para que todos lo vean."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo",
+       "uso: Dani, cuaderno de KAP"
+      ]
+     },
+     {
+      "title": "Calle de noche (11)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "KAP",
+        "text": "Ese cuaderno no es tuyo. Devuélvelo."
+       }
+      ],
+      "memory": [
+       "acto: emocional",
+       "hito-logrado: KAP se levanta por su dignidad | KAP"
+      ]
+     },
+     {
+      "title": "Calle de noche (12)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Los niños se ríen, pero algo en la mirada de KAP los hace dudar. La tensión se siente en el aire."
+       }
+      ],
+      "memory": [
+       "acto: emocional",
+       "perfil: KAP, orgullo = alto"
+      ]
+     },
+     {
+      "title": "Calle de noche (13)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "Dani",
+        "text": "¿Y si no lo devuelvo? ¿Qué vas a hacer?"
+       }
+      ],
+      "memory": [
+       "acto: emocional",
+       "hito-logrado: Dani desafía a KAP | KAP, Dani"
+      ]
+     },
+     {
+      "title": "Calle de noche (14)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "KAP",
+        "text": "No necesito hacer nada. Solo quiero que lo devuelvas."
+       }
+      ],
+      "memory": [
+       "acto: resolucion",
+       "hito-logrado: KAP mantiene su dignidad | KAP"
+      ]
+     },
+     {
+      "title": "Calle de noche (15)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Dani baja la mirada. No parece tener fuerzas para seguir burlándose."
+       }
+      ],
+      "memory": [
+       "acto: resolucion",
+       "hito-logrado: KAP gana respeto | KAP"
+      ]
+     },
+     {
+      "title": "Calle de noche (16)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "KAP",
+        "text": "Si no lo haces, te lo diré a todos. Que no es un cuaderno cualquiera."
+       }
+      ],
+      "memory": [
+       "acto: resolucion",
+       "uso: KAP, cuaderno"
+      ]
+     },
+     {
+      "title": "Calle de noche (17)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "Dani",
+        "text": "¡No me hagas hacer eso!"
+       }
+      ],
+      "memory": [
+       "acto: resolucion",
+       "hito-logrado: Dani cede | KAP, Dani"
+      ]
+     },
+     {
+      "title": "Calle de noche (18)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Dani le devuelve el cuaderno a KAP. Los niños se dispersan lentamente, como si no quisieran seguir viendo."
+       }
+      ],
+      "memory": [
+       "acto: resolucion",
+       "cierra-hilo: el cuaderno robado"
+      ]
+     },
+     {
+      "title": "Calle de noche (19)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "KAP",
+        "text": "Gracias. Pero no olvides que algún día podrías entender lo que es tener un sueño."
+       }
+      ],
+      "memory": [
+       "acto: gancho",
+       "gancho: Dani podría entender el valor del sueño de KAP | KAP, Dani"
+      ]
+     },
+     {
+      "title": "Calle de noche (20)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP mira al suelo por un momento, como si estuviera recordando algo. Luego levanta la cabeza y sonríe levemente."
+       }
+      ],
+      "memory": [
+       "perfil: KAP, esfuerzo = 3/10"
+      ]
+     },
+     {
+      "title": "Calle de noche (21)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "KAP",
+        "text": "No me importa lo que digan. Mi música no se acaba aquí."
+       }
+      ],
+      "memory": [
+       "hito-logrado: KAP afirma su determinación | KAP"
+      ]
+     },
+     {
+      "title": "Calle de noche (22)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP camina con paso firme, el cuaderno en sus manos. Por primera vez, parece no temer a nada."
+       }
+      ],
+      "memory": [
+       "perfil: KAP, disciplina = 2/10"
+      ]
+     },
+     {
+      "title": "Calle de noche (23)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Mientras camina, escucha una canción en su mente. Es la primera vez que se atreve a soñar con ella."
+       }
+      ],
+      "memory": [
+       "hito-logrado: KAP imagina su primer tema | KAP"
+      ]
+     },
+     {
+      "title": "Calle de noche (24)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "El viento le lleva el sonido de sus palabras, aunque nadie más las escuche."
+       }
+      ],
+      "memory": [
+       "perfil: KAP, perseverancia = 2/10"
+      ]
+     },
+     {
+      "title": "Calle de noche (25)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "KAP",
+        "text": "Un día, seré el que escriba la historia."
+       }
+      ],
+      "memory": [
+       "hito-logrado: KAP declara su propósito | KAP"
+      ]
+     },
+     {
+      "title": "Calle de noche (26)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "La luna ilumina su silueta. Ya no es el mismo niño que entró a esa calle."
+       }
+      ],
+      "memory": [
+       "perfil: KAP, evolución = +1"
+      ]
+     },
+     {
+      "title": "Calle de noche (27)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se detiene por un momento y mira hacia la guardería, donde su hermano está esperándolo."
+       }
+      ],
+      "memory": [
+       "conoce: KAP, Hermano de KAP"
+      ]
+     },
+     {
+      "title": "Calle de noche (28)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "En sus ojos hay una determinación nueva. No solo por él, sino por todos los que lo han apoyado."
+       }
+      ],
+      "memory": [
+       "hito-logrado: KAP piensa en su hermano | KAP"
+      ]
+     },
+     {
+      "title": "Calle de noche (29)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se aleja de la calle, pero el cuaderno ya no es un peso. Es una promesa."
+       }
+      ],
+      "memory": [
+       "perfil: KAP, sueños = más definidos"
+      ]
+     },
+     {
+      "title": "Calle de noche (30)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "La noche se cierra sobre él, pero su espíritu ya no se doblega."
+       }
+      ],
+      "memory": [
+       "hito-logrado: KAP se levanta tras el episodio | KAP"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "S2",
+   "title": "Escenario narrativo",
+   "request": "Crea el episodio 4 continuando exactamente donde terminó el episodio 3. Un día su hermano pequeño se pone enfermo y no hay dinero ni padres presentes: KAP tiene que decidir qué hace.",
+   "ms": 3077303,
+   "peakMb": 11701,
+   "sysPeakMb": 12428,
+   "contextTokens": 1910,
+   "ok": true,
+   "irValid": true,
+   "irValidFirstTry": false,
+   "json": {
+    "attempts": 2,
+    "retries": 1,
+    "jsonErrors": 0,
+    "schemaErrors": 0,
+    "lengthRetries": 1,
+    "memoryDirectiveErrors": 21
+   },
+   "irErrors": [],
+   "usage": {
+    "promptTokens": 7964,
+    "outputTokens": 4748,
+    "totalMs": 3077289.943298,
+    "loadMs": 2.59664,
+    "promptMs": 224997.191,
+    "evalMs": 2851504.534
+   },
+   "tokensPerSec": 1.67,
+   "episode": {
+    "scenes": 19,
+    "estimatedSec": 195,
+    "words": 522,
+    "title": "Episodio 4: La decisión",
+    "logline": "KAP debe tomar una decisión difícil cuando su hermano se enferma y no hay nadie más para ayudarlo."
+   },
+   "continuity": {
+    "critical": [],
+    "warnings": [
+     "directiva: Directiva de memoria no entendida: «acto: inicio»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "relacion-contradice: KAP y Dani ya se conocían (relación «acoso» desde ep. 2); la escena 1 los presenta como si se conocieran ahora.",
+     "directiva: Directiva de memoria no entendida: «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "relacion-contradice: KAP y Dani ya se conocían (relación «conocidos» desde ep. 2); la escena 2 los presenta como si se conocieran ahora.",
+     "hito: El hito «Víctima de bullying» ya estaba logrado en ep. 2.",
+     "directiva: Directiva de memoria no entendida: «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "hito: El hito «Víctima de bullying» ya estaba logrado en ep. 4.",
+     "directiva: Directiva de memoria no entendida: «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "hito: El hito «Víctima de bullying» ya estaba logrado en ep. 4.",
+     "directiva: Directiva de memoria no entendida: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "relacion-contradice: KAP y Hermano de KAP ya se conocían (relación «hermanos» desde canon inicial); la escena 5 los presenta como si se conocieran ahora.",
+     "directiva: Directiva de memoria no entendida: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "relacion-contradice: KAP y Hermano de KAP ya se conocían (relación «conocidos» desde canon inicial); la escena 6 los presenta como si se conocieran ahora.",
+     "directiva: Directiva de memoria no entendida: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "relacion-contradice: KAP y Hermano de KAP ya se conocían (relación «conocidos» desde canon inicial); la escena 7 los presenta como si se conocieran ahora.",
+     "directiva: Directiva de memoria no entendida: «acto: emocional»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "relacion-contradice: KAP y Hermano de KAP ya se conocían (relación «conocidos» desde canon inicial); la escena 8 los presenta como si se conocieran ahora.",
+     "directiva: Directiva de memoria no entendida: «acto: emocional»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "relacion-contradice: KAP y Hermano de KAP ya se conocían (relación «conocidos» desde canon inicial); la escena 9 los presenta como si se conocieran ahora.",
+     "directiva: Directiva de memoria no entendida: «acto: emocional»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "relacion-contradice: KAP y Hermano de KAP ya se conocían (relación «conocidos» desde canon inicial); la escena 10 los presenta como si se conocieran ahora.",
+     "directiva: Directiva de memoria no entendida: «acto: resolucion»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "relacion-contradice: KAP y Hermano de KAP ya se conocían (relación «conocidos» desde canon inicial); la escena 11 los presenta como si se conocieran ahora.",
+     "directiva: Directiva de memoria no entendida: «acto: resolucion»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "relacion-contradice: KAP y Hermano de KAP ya se conocían (relación «conocidos» desde canon inicial); la escena 12 los presenta como si se conocieran ahora.",
+     "directiva: Directiva de memoria no entendida: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "relacion-contradice: KAP y Ramiro ya se conocían (relación «mentor» desde ep. 3); la escena 14 los presenta como si se conocieran ahora.",
+     "directiva: Directiva de memoria no entendida: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "relacion-contradice: KAP y Ramiro ya se conocían (relación «conocidos» desde ep. 3); la escena 15 los presenta como si se conocieran ahora.",
+     "directiva: Directiva de memoria no entendida: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "relacion-contradice: KAP y Ramiro ya se conocían (relación «conocidos» desde ep. 3); la escena 16 los presenta como si se conocieran ahora.",
+     "directiva: Directiva de memoria no entendida: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "relacion-contradice: KAP y Ramiro ya se conocían (relación «conocidos» desde ep. 3); la escena 17 los presenta como si se conocieran ahora.",
+     "directiva: Directiva de memoria no entendida: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "relacion-contradice: KAP y Ramiro ya se conocían (relación «conocidos» desde ep. 3); la escena 18 los presenta como si se conocieran ahora.",
+     "directiva: Directiva de memoria no entendida: «acto: gancho»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "hito: Hito desconocido «Primeros pasos musicales»: no está en el arco de la serie.",
+     "estructura: Al episodio le faltan: Inicio, Conflicto, Desarrollo, Punto emocional o de tensión, Resolución parcial. Decláralo en el guion con [acto: tip",
+     "duracion: El episodio dura ≈ 3.7 min y el formato es ≈ 5 min (4–6 min)."
+    ],
+    "info": 2
+   },
+   "checks": [
+    {
+     "id": "estructura-6-actos",
+     "ok": false,
+     "note": "faltan: inicio, conflicto, desarrollo, emocional, resolucion"
+    },
+    {
+     "id": "gancho",
+     "ok": true
+    },
+    {
+     "id": "protagonista",
+     "ok": true
+    },
+    {
+     "id": "sin-errores-criticos",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "sin-exito-prematuro",
+     "ok": true
+    },
+    {
+     "id": "directivas-validas",
+     "ok": false,
+     "note": "«acto: inicio»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto» | «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»"
+    },
+    {
+     "id": "espanol",
+     "ok": true
+    },
+    {
+     "id": "arranca-donde-termino",
+     "ok": true,
+     "note": "1.ª escena en «Calle de noche», terminó en «Calle de noche»"
+    },
+    {
+     "id": "diversidad-lexica",
+     "ok": true,
+     "note": "0.45"
+    }
+   ],
+   "compliance": 0.78,
+   "proxy": {
+    "score": 8,
+    "dialogueRatio": 0.5,
+    "locations": 2,
+    "repeatedSentences": 0
+   },
+   "warnings": [
+    "Directiva de memoria inválida del modelo: «acto: inicio»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+    "Directiva de memoria inválida del modelo: «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+    "Directiva de memoria inválida del modelo: «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+    "Directiva de memoria inválida del modelo: «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+    "Directiva de memoria inválida del modelo: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+    "Directiva de memoria inválida del modelo: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»"
+   ],
+   "draft": {
+    "title": "Episodio 4: La decisión",
+    "logline": "KAP debe tomar una decisión difícil cuando su hermano se enferma y no hay nadie más para ayudarlo.",
+    "assumptions": [],
+    "scenes": [
+     {
+      "title": "Calle de noche (2)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP camina lentamente por la calle, con el cuaderno en las manos. La luz de la luna lo ilumina suavemente. A lo lejos, escucha risas y pasos acercándose."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No puedo perderlo... No ahora."
+       }
+      ],
+      "memory": [
+       "acto: inicio",
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Dani",
+       "abre-hilo: el cuaderno robado | KAP, Dani"
+      ]
+     },
+     {
+      "title": "Calle de noche (3)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Dani aparece detrás de él, sosteniendo el cuaderno de KAP con una sonrisa burlona. Las risas de otros chicos se escuchan a lo lejos."
+       },
+       {
+        "speaker": "Dani",
+        "text": "¿Qué vamos a hacer con esto, KAP? ¿Vas a seguir soñando con ser millonario?"
+       }
+      ],
+      "memory": [
+       "acto: conflicto",
+       "conoce: KAP, Dani",
+       "hito-logrado: Víctima de bullying | KAP, Dani"
+      ]
+     },
+     {
+      "title": "Calle de noche (4)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se detiene, mira a Dani con seriedad y luego al cuaderno. Sus manos temblaban, pero no lo dejó caer."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Ese cuaderno no es tuyo. No lo entenderías."
+       }
+      ],
+      "memory": [
+       "acto: conflicto",
+       "hito-logrado: Víctima de bullying | KAP, Dani",
+       "uso: KAP, cuaderno"
+      ]
+     },
+     {
+      "title": "Calle de noche (5)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Dani se acerca más, con una mirada retadora. KAP siente la tensión crecer entre ellos."
+       },
+       {
+        "speaker": "Dani",
+        "text": "¿Y qué haces si no te lo devuelvo? ¿Vas a hacer algo al respecto?"
+       }
+      ],
+      "memory": [
+       "acto: conflicto",
+       "hito-logrado: Víctima de bullying | KAP, Dani"
+      ]
+     },
+     {
+      "title": "Calle de noche (6)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se aleja lentamente, sin dejar de mirar a Dani. Su mente se divide entre el conflicto con Dani y la urgencia que siente en su corazón."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Tengo que irme. Mi hermano necesita ayuda."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo",
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Hermano de KAP"
+      ]
+     },
+     {
+      "title": "Guardería (1)",
+      "location": "Guardería",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP llega a la guardería. Su hermano está tumbado en una cama, con la cara pálida y el cuerpo frío."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¡Hermano! ¡Despierta!"
+       }
+      ],
+      "memory": [
+       "acto: desarrollo",
+       "ubicacion: KAP, Guardería",
+       "conoce: KAP, Hermano de KAP"
+      ]
+     },
+     {
+      "title": "Guardería (2)",
+      "location": "Guardería",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "El hermano de KAP abre los ojos con dificultad y le sonríe débilmente. Su respiración es entrecortada."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "Kap... ¿dónde están mamá y papá?"
+       }
+      ],
+      "memory": [
+       "acto: desarrollo",
+       "ubicacion: KAP, Guardería",
+       "conoce: KAP, Hermano de KAP"
+      ]
+     },
+     {
+      "title": "Guardería (3)",
+      "location": "Guardería",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP baja la mirada, con el corazón roto. No tenía palabras para explicar la situación."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No están aquí... Pero yo sí estoy."
+       }
+      ],
+      "memory": [
+       "acto: emocional",
+       "ubicacion: KAP, Guardería",
+       "conoce: KAP, Hermano de KAP"
+      ]
+     },
+     {
+      "title": "Guardería (4)",
+      "location": "Guardería",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "El hermano de KAP intenta sonreír, pero su cuerpo se debilita. KAP lo abraza con fuerza, sintiendo el peso de la responsabilidad."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¿Vas a cuidar de mí, Kap?"
+       }
+      ],
+      "memory": [
+       "acto: emocional",
+       "ubicacion: KAP, Guardería",
+       "conoce: KAP, Hermano de KAP"
+      ]
+     },
+     {
+      "title": "Guardería (5)",
+      "location": "Guardería",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP asiente con la cabeza, con los ojos llenos de lágrimas. Sabía que un día tendría que hacerlo, pero no esperaba que fuera tan pronto."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Sí... Prometo cuidarte siempre."
+       }
+      ],
+      "memory": [
+       "acto: emocional",
+       "ubicacion: KAP, Guardería",
+       "conoce: KAP, Hermano de KAP"
+      ]
+     },
+     {
+      "title": "Guardería (6)",
+      "location": "Guardería",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "El hermano de KAP cierra los ojos y se queda dormido. KAP lo mira con una mezcla de miedo, amor y determinación."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No me voy a rendir. No ahora."
+       }
+      ],
+      "memory": [
+       "acto: resolucion",
+       "ubicacion: KAP, Guardería",
+       "conoce: KAP, Hermano de KAP"
+      ]
+     },
+     {
+      "title": "Guardería (7)",
+      "location": "Guardería",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP sale de la guardería con paso firme, aunque su corazón latía con nerviosismo. Sabe que ahora es su turno de ser fuerte."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Voy a encontrar una manera de ayudarte."
+       }
+      ],
+      "memory": [
+       "acto: resolucion",
+       "ubicacion: KAP, Guardería",
+       "conoce: KAP, Hermano de KAP"
+      ]
+     },
+     {
+      "title": "Calle de noche (7)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP camina por la calle, con el cuaderno en la mochila. Su mente trabajaba a toda velocidad, buscando una solución."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Tengo que encontrar dinero... Pero ¿cómo?"
+       }
+      ],
+      "memory": [
+       "acto: desarrollo",
+       "ubicacion: KAP, Calle de noche",
+       "uso: KAP, cuaderno"
+      ]
+     },
+     {
+      "title": "Calle de noche (8)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "De repente, una voz lo llama desde la oscuridad. Era Ramiro, que lo observaba con preocupación."
+       },
+       {
+        "speaker": "Ramiro",
+        "text": "¿KAP? ¿Qué te pasa?"
+       }
+      ],
+      "memory": [
+       "acto: desarrollo",
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Ramiro"
+      ]
+     },
+     {
+      "title": "Calle de noche (9)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se acerca a Ramiro, con el rostro serio. No tenía tiempo para explicaciones."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Necesito tu ayuda, Ramiro. Mi hermano está enfermo y no tengo dinero."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo",
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Ramiro"
+      ]
+     },
+     {
+      "title": "Calle de noche (10)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Ramiro lo mira con preocupación y asentimiento. No era la primera vez que KAP necesitaba su ayuda."
+       },
+       {
+        "speaker": "Ramiro",
+        "text": "Lo sé. Pero no te preocupes... Voy a ayudarte."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo",
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Ramiro"
+      ]
+     },
+     {
+      "title": "Calle de noche (11)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP y Ramiro caminan juntos, con la mirada fija en el horizonte. Ambos sabían que el camino sería difícil."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Tienes alguna idea de cómo conseguir dinero?"
+       }
+      ],
+      "memory": [
+       "acto: desarrollo",
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Ramiro"
+      ]
+     },
+     {
+      "title": "Calle de noche (12)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Ramiro se detiene y mira a KAP con seriedad. Su voz era firme, pero comprensiva."
+       },
+       {
+        "speaker": "Ramiro",
+        "text": "Tienes que seguir creyendo en ti, KAP. Tu música puede ser tu salida."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo",
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Ramiro"
+      ]
+     },
+     {
+      "title": "Calle de noche (13)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP mira al cielo y sonríe con determinación. Sabía que su música era su único camino hacia el futuro."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Entonces, no me voy a detener."
+       }
+      ],
+      "memory": [
+       "acto: gancho",
+       "ubicacion: KAP, Calle de noche",
+       "hito-logrado: Primeros pasos musicales | KAP",
+       "gancho: KAP empieza a grabar canciones en la calle"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "S3",
+   "title": "Escenario narrativo",
+   "request": "Crea el episodio 4 continuando exactamente donde terminó el episodio 3. Ramiro le propone grabar su primera maqueta con un micrófono prestado, pero KAP falla en el intento y se frustra.",
+   "ms": 3133375,
+   "peakMb": 12823,
+   "sysPeakMb": 13497,
+   "contextTokens": 1911,
+   "ok": true,
+   "irValid": true,
+   "irValidFirstTry": false,
+   "json": {
+    "attempts": 2,
+    "retries": 1,
+    "jsonErrors": 0,
+    "schemaErrors": 0,
+    "lengthRetries": 1,
+    "memoryDirectiveErrors": 3
+   },
+   "irErrors": [],
+   "usage": {
+    "promptTokens": 7864,
+    "outputTokens": 4801,
+    "totalMs": 3133363.65952,
+    "loadMs": 2.622637,
+    "promptMs": 225536.033,
+    "evalMs": 2906794.7189999996
+   },
+   "tokensPerSec": 1.65,
+   "episode": {
+    "scenes": 18,
+    "estimatedSec": 152,
+    "words": 399,
+    "title": "Episodio 4: El primer intento",
+    "logline": "KAP intenta grabar su primera maqueta con un micrófono prestado, pero falla y se siente frustrado."
+   },
+   "continuity": {
+    "critical": [],
+    "warnings": [
+     "directiva: Directiva de memoria no entendida: «acto: inicio»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "relacion-contradice: KAP y Dani ya se conocían (relación «acoso» desde ep. 2); la escena 1 los presenta como si se conocieran ahora.",
+     "relacion-contradice: KAP y Dani ya se conocían (relación «conocidos» desde ep. 2); la escena 2 los presenta como si se conocieran ahora.",
+     "relacion-contradice: KAP y Dani ya se conocían (relación «conocidos» desde ep. 2); la escena 3 los presenta como si se conocieran ahora.",
+     "relacion-contradice: KAP y Ramiro ya se conocían (relación «mentor» desde ep. 3); la escena 4 los presenta como si se conocieran ahora.",
+     "objeto-sin-introducir: «micrófono» se usa en la escena 5 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "relacion-contradice: KAP y Ramiro ya se conocían (relación «conocidos» desde ep. 3); la escena 5 los presenta como si se conocieran ahora.",
+     "objeto-sin-introducir: «micrófono» se usa en la escena 6 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "relacion-contradice: KAP y Ramiro ya se conocían (relación «conocidos» desde ep. 3); la escena 6 los presenta como si se conocieran ahora.",
+     "objeto-sin-introducir: «micrófono» se usa en la escena 7 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "relacion-contradice: KAP y Ramiro ya se conocían (relación «conocidos» desde ep. 3); la escena 7 los presenta como si se conocieran ahora.",
+     "objeto-sin-introducir: «micrófono» se usa en la escena 8 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "relacion-contradice: KAP y Ramiro ya se conocían (relación «conocidos» desde ep. 3); la escena 8 los presenta como si se conocieran ahora.",
+     "objeto-sin-introducir: «micrófono» se usa en la escena 9 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "relacion-contradice: KAP y Ramiro ya se conocían (relación «conocidos» desde ep. 3); la escena 9 los presenta como si se conocieran ahora.",
+     "hito: El hito «Víctima de bullying» ya estaba logrado en ep. 2.",
+     "objeto-sin-introducir: «micrófono» se usa en la escena 10 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "relacion-contradice: KAP y Ramiro ya se conocían (relación «conocidos» desde ep. 3); la escena 10 los presenta como si se conocieran ahora.",
+     "objeto-sin-introducir: «micrófono» se usa en la escena 11 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "relacion-contradice: KAP y Ramiro ya se conocían (relación «conocidos» desde ep. 3); la escena 11 los presenta como si se conocieran ahora.",
+     "objeto-sin-introducir: «micrófono» se usa en la escena 12 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "relacion-contradice: KAP y Ramiro ya se conocían (relación «conocidos» desde ep. 3); la escena 12 los presenta como si se conocieran ahora.",
+     "objeto-sin-introducir: «micrófono» se usa en la escena 13 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "relacion-contradice: KAP y Ramiro ya se conocían (relación «conocidos» desde ep. 3); la escena 13 los presenta como si se conocieran ahora.",
+     "objeto-sin-introducir: «micrófono» se usa en la escena 14 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "relacion-contradice: KAP y Ramiro ya se conocían (relación «conocidos» desde ep. 3); la escena 14 los presenta como si se conocieran ahora.",
+     "objeto-sin-introducir: «micrófono» se usa en la escena 15 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "relacion-contradice: KAP y Ramiro ya se conocían (relación «conocidos» desde ep. 3); la escena 15 los presenta como si se conocieran ahora.",
+     "hito: El hito «Víctima de bullying» ya estaba logrado en ep. 4.",
+     "objeto-sin-introducir: «micrófono» se usa en la escena 16 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "relacion-contradice: KAP y Ramiro ya se conocían (relación «conocidos» desde ep. 3); la escena 16 los presenta como si se conocieran ahora.",
+     "directiva: Directiva de memoria no entendida: «acto: resolucion»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "objeto-sin-introducir: «micrófono» se usa en la escena 17 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "relacion-contradice: KAP y Ramiro ya se conocían (relación «conocidos» desde ep. 3); la escena 17 los presenta como si se conocieran ahora.",
+     "directiva: Directiva de memoria no entendida: «acto: gancho»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "objeto-sin-introducir: «micrófono» se usa en la escena 18 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "relacion-contradice: KAP y Ramiro ya se conocían (relación «conocidos» desde ep. 3); la escena 18 los presenta como si se conocieran ahora.",
+     "estructura: Al episodio le faltan: Inicio, Conflicto, Desarrollo, Punto emocional o de tensión, Resolución parcial. Decláralo en el guion con [acto: tip",
+     "duracion: El episodio dura ≈ 2.9 min y el formato es ≈ 5 min (4–6 min)."
+    ],
+    "info": 2
+   },
+   "checks": [
+    {
+     "id": "estructura-6-actos",
+     "ok": false,
+     "note": "faltan: inicio, conflicto, desarrollo, emocional, resolucion"
+    },
+    {
+     "id": "gancho",
+     "ok": true
+    },
+    {
+     "id": "protagonista",
+     "ok": true
+    },
+    {
+     "id": "sin-errores-criticos",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "sin-exito-prematuro",
+     "ok": true
+    },
+    {
+     "id": "directivas-validas",
+     "ok": false,
+     "note": "«acto: inicio»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto» | «acto: resolucion»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»"
+    },
+    {
+     "id": "espanol",
+     "ok": true
+    },
+    {
+     "id": "arranca-donde-termino",
+     "ok": true,
+     "note": "1.ª escena en «Calle de noche», terminó en «Calle de noche»"
+    },
+    {
+     "id": "diversidad-lexica",
+     "ok": true,
+     "note": "0.45"
+    }
+   ],
+   "compliance": 0.78,
+   "proxy": {
+    "score": 8,
+    "dialogueRatio": 0.5,
+    "locations": 1,
+    "repeatedSentences": 0
+   },
+   "warnings": [
+    "Directiva de memoria inválida del modelo: «acto: inicio»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+    "Directiva de memoria inválida del modelo: «acto: resolucion»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+    "Directiva de memoria inválida del modelo: «acto: gancho»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+    "El episodio dura ≈ 2.5 min: queda por debajo del formato (≈ 5 min)."
+   ],
+   "draft": {
+    "title": "Episodio 4: El primer intento",
+    "logline": "KAP intenta grabar su primera maqueta con un micrófono prestado, pero falla y se siente frustrado.",
+    "assumptions": [],
+    "scenes": [
+     {
+      "title": "Calle de noche (2)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP mira hacia la calle, donde Dani le sonríe burlonamente mientras sostiene el cuaderno de KAP. Las luces de la ciudad reflejan en su camiseta gris desgastada."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Por qué no me dejas en paz?"
+       }
+      ],
+      "memory": [
+       "acto: inicio",
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Dani",
+       "abre-hilo: el cuaderno robado | KAP, Dani"
+      ]
+     },
+     {
+      "title": "Calle de noche (3)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Dani se acerca lentamente, sosteniendo el cuaderno con una sonrisa desafiante. KAP se tensa, mirando alrededor como si buscara ayuda."
+       },
+       {
+        "speaker": "Dani",
+        "text": "¿Sabes qué? Me encantaría ver cómo te sale la música, pero primero tendrías que aprender a no llorar cuando te humillan."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Dani"
+      ]
+     },
+     {
+      "title": "Calle de noche (4)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se acerca a Dani, con la mirada firme. La tensión entre ellos es palpable."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No te atrevas a tocarlo otra vez."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Dani"
+      ]
+     },
+     {
+      "title": "Calle de noche (5)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Dani se ríe, pero antes de que puedan decir algo más, una voz familiar interrumpe la escena."
+       },
+       {
+        "speaker": "Ramiro",
+        "text": "¿Qué pasa aquí?"
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Ramiro"
+      ]
+     },
+     {
+      "title": "Calle de noche (6)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Ramiro se acerca a KAP y le ofrece una sonrisa reconfortante. Lleva un micrófono en la mano."
+       },
+       {
+        "speaker": "Ramiro",
+        "text": "¿Quieres intentar grabar algo?"
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Ramiro",
+       "usa: KAP, micrófono"
+      ]
+     },
+     {
+      "title": "Calle de noche (7)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP mira el micrófono con una mezcla de nerviosismo y esperanza. Ramiro le da un empujón amistoso."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Y si no salgo bien?"
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Ramiro",
+       "usa: KAP, micrófono"
+      ]
+     },
+     {
+      "title": "Calle de noche (8)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Ramiro le sonríe con confianza. «No te preocupes. Lo primero es empezar.»"
+       },
+       {
+        "speaker": "Ramiro",
+        "text": "Solo intenta."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Ramiro",
+       "usa: KAP, micrófono"
+      ]
+     },
+     {
+      "title": "Calle de noche (9)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se pone el micrófono y respira hondo. Cierra los ojos un momento, como si estuviera preparándose para algo importante."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Esto es solo el principio."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Ramiro",
+       "usa: KAP, micrófono"
+      ]
+     },
+     {
+      "title": "Calle de noche (10)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP intenta grabar una línea. Su voz suena titubeante al principio, pero poco a poco se estabiliza."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Soy KAP, y mi sueño es ser millonario con la música."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Ramiro",
+       "usa: KAP, micrófono",
+       "hito-logrado: Víctima de bullying | KAP, su primer intento de grabación"
+      ]
+     },
+     {
+      "title": "Calle de noche (11)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Ramiro escucha atentamente. Su expresión se vuelve más seria, pero no pierde la sonrisa."
+       },
+       {
+        "speaker": "Ramiro",
+        "text": "Está bien, pero puedes mejorar."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Ramiro",
+       "usa: KAP, micrófono"
+      ]
+     },
+     {
+      "title": "Calle de noche (12)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP intenta de nuevo. Esta vez su voz es más firme, pero se detiene abruptamente."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No me sale bien."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Ramiro",
+       "usa: KAP, micrófono"
+      ]
+     },
+     {
+      "title": "Calle de noche (13)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Ramiro se acerca a KAP y le da una palmadita en la espalda."
+       },
+       {
+        "speaker": "Ramiro",
+        "text": "No te rindas. Todo se aprende con el tiempo."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Ramiro",
+       "usa: KAP, micrófono"
+      ]
+     },
+     {
+      "title": "Calle de noche (14)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP mira a Ramiro con una mezcla de frustración y determinación."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No quiero fracasar."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Ramiro",
+       "usa: KAP, micrófono"
+      ]
+     },
+     {
+      "title": "Calle de noche (15)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Ramiro le sonríe con calma. «Lo primero es aprender a no temer al fracaso.»"
+       },
+       {
+        "speaker": "Ramiro",
+        "text": "Confía en ti mismo."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Ramiro",
+       "usa: KAP, micrófono"
+      ]
+     },
+     {
+      "title": "Calle de noche (16)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP intenta una tercera vez. Esta vez, aunque no es perfecta, su voz suena más segura y auténtica."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Soy KAP, y quiero ser más que un niño pobre."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Ramiro",
+       "usa: KAP, micrófono",
+       "hito-logrado: Víctima de bullying | KAP, su primer intento de grabación"
+      ]
+     },
+     {
+      "title": "Calle de noche (17)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Ramiro escucha con atención y luego le sonríe. «Está bien, pero aún tienes que mejorar.»"
+       },
+       {
+        "speaker": "Ramiro",
+        "text": "No te rindas."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Ramiro",
+       "usa: KAP, micrófono"
+      ]
+     },
+     {
+      "title": "Calle de noche (18)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se quita el micrófono y lo mira con tristeza. Su frustración es palpable."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No puedo hacerlo bien."
+       }
+      ],
+      "memory": [
+       "acto: resolucion",
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Ramiro",
+       "usa: KAP, micrófono",
+       "gancho: KAP se siente frustrado y duda de sí mismo, pero Ramiro le recuerda que no es el fin"
+      ]
+     },
+     {
+      "title": "Calle de noche (19)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Ramiro le ofrece una sonrisa reconfortante. «No te rindas, KAP. Solo es el principio.»"
+       },
+       {
+        "speaker": "Ramiro",
+        "text": "Tú puedes."
+       }
+      ],
+      "memory": [
+       "acto: gancho",
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Ramiro",
+       "usa: KAP, micrófono",
+       "gancho: Ramiro le recuerda que no es el fin, y KAP se prepara para seguir intentando"
+      ]
+     }
+    ]
+   }
+  }
+ ]
+}

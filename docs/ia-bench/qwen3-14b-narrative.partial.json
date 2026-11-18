@@ -1061,6 +1061,497 @@
      }
     ]
    }
+  },
+  {
+   "id": "S3",
+   "title": "Escenario narrativo",
+   "request": "Crea el episodio 4 continuando exactamente donde terminó el episodio 3. Ramiro le propone grabar su primera maqueta con un micrófono prestado, pero KAP falla en el intento y se frustra.",
+   "ms": 3133375,
+   "peakMb": 12823,
+   "sysPeakMb": 13497,
+   "contextTokens": 1911,
+   "ok": true,
+   "irValid": true,
+   "irValidFirstTry": false,
+   "json": {
+    "attempts": 2,
+    "retries": 1,
+    "jsonErrors": 0,
+    "schemaErrors": 0,
+    "lengthRetries": 1,
+    "memoryDirectiveErrors": 3
+   },
+   "irErrors": [],
+   "usage": {
+    "promptTokens": 7864,
+    "outputTokens": 4801,
+    "totalMs": 3133363.65952,
+    "loadMs": 2.622637,
+    "promptMs": 225536.033,
+    "evalMs": 2906794.7189999996
+   },
+   "tokensPerSec": 1.65,
+   "episode": {
+    "scenes": 18,
+    "estimatedSec": 152,
+    "words": 399,
+    "title": "Episodio 4: El primer intento",
+    "logline": "KAP intenta grabar su primera maqueta con un micrófono prestado, pero falla y se siente frustrado."
+   },
+   "continuity": {
+    "critical": [],
+    "warnings": [
+     "directiva: Directiva de memoria no entendida: «acto: inicio»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "relacion-contradice: KAP y Dani ya se conocían (relación «acoso» desde ep. 2); la escena 1 los presenta como si se conocieran ahora.",
+     "relacion-contradice: KAP y Dani ya se conocían (relación «conocidos» desde ep. 2); la escena 2 los presenta como si se conocieran ahora.",
+     "relacion-contradice: KAP y Dani ya se conocían (relación «conocidos» desde ep. 2); la escena 3 los presenta como si se conocieran ahora.",
+     "relacion-contradice: KAP y Ramiro ya se conocían (relación «mentor» desde ep. 3); la escena 4 los presenta como si se conocieran ahora.",
+     "objeto-sin-introducir: «micrófono» se usa en la escena 5 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "relacion-contradice: KAP y Ramiro ya se conocían (relación «conocidos» desde ep. 3); la escena 5 los presenta como si se conocieran ahora.",
+     "objeto-sin-introducir: «micrófono» se usa en la escena 6 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "relacion-contradice: KAP y Ramiro ya se conocían (relación «conocidos» desde ep. 3); la escena 6 los presenta como si se conocieran ahora.",
+     "objeto-sin-introducir: «micrófono» se usa en la escena 7 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "relacion-contradice: KAP y Ramiro ya se conocían (relación «conocidos» desde ep. 3); la escena 7 los presenta como si se conocieran ahora.",
+     "objeto-sin-introducir: «micrófono» se usa en la escena 8 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "relacion-contradice: KAP y Ramiro ya se conocían (relación «conocidos» desde ep. 3); la escena 8 los presenta como si se conocieran ahora.",
+     "objeto-sin-introducir: «micrófono» se usa en la escena 9 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "relacion-contradice: KAP y Ramiro ya se conocían (relación «conocidos» desde ep. 3); la escena 9 los presenta como si se conocieran ahora.",
+     "hito: El hito «Víctima de bullying» ya estaba logrado en ep. 2.",
+     "objeto-sin-introducir: «micrófono» se usa en la escena 10 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "relacion-contradice: KAP y Ramiro ya se conocían (relación «conocidos» desde ep. 3); la escena 10 los presenta como si se conocieran ahora.",
+     "objeto-sin-introducir: «micrófono» se usa en la escena 11 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "relacion-contradice: KAP y Ramiro ya se conocían (relación «conocidos» desde ep. 3); la escena 11 los presenta como si se conocieran ahora.",
+     "objeto-sin-introducir: «micrófono» se usa en la escena 12 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "relacion-contradice: KAP y Ramiro ya se conocían (relación «conocidos» desde ep. 3); la escena 12 los presenta como si se conocieran ahora.",
+     "objeto-sin-introducir: «micrófono» se usa en la escena 13 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "relacion-contradice: KAP y Ramiro ya se conocían (relación «conocidos» desde ep. 3); la escena 13 los presenta como si se conocieran ahora.",
+     "objeto-sin-introducir: «micrófono» se usa en la escena 14 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "relacion-contradice: KAP y Ramiro ya se conocían (relación «conocidos» desde ep. 3); la escena 14 los presenta como si se conocieran ahora.",
+     "objeto-sin-introducir: «micrófono» se usa en la escena 15 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "relacion-contradice: KAP y Ramiro ya se conocían (relación «conocidos» desde ep. 3); la escena 15 los presenta como si se conocieran ahora.",
+     "hito: El hito «Víctima de bullying» ya estaba logrado en ep. 4.",
+     "objeto-sin-introducir: «micrófono» se usa en la escena 16 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "relacion-contradice: KAP y Ramiro ya se conocían (relación «conocidos» desde ep. 3); la escena 16 los presenta como si se conocieran ahora.",
+     "directiva: Directiva de memoria no entendida: «acto: resolucion»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "objeto-sin-introducir: «micrófono» se usa en la escena 17 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "relacion-contradice: KAP y Ramiro ya se conocían (relación «conocidos» desde ep. 3); la escena 17 los presenta como si se conocieran ahora.",
+     "directiva: Directiva de memoria no entendida: «acto: gancho»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "objeto-sin-introducir: «micrófono» se usa en la escena 18 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "relacion-contradice: KAP y Ramiro ya se conocían (relación «conocidos» desde ep. 3); la escena 18 los presenta como si se conocieran ahora.",
+     "estructura: Al episodio le faltan: Inicio, Conflicto, Desarrollo, Punto emocional o de tensión, Resolución parcial. Decláralo en el guion con [acto: tip",
+     "duracion: El episodio dura ≈ 2.9 min y el formato es ≈ 5 min (4–6 min)."
+    ],
+    "info": 2
+   },
+   "checks": [
+    {
+     "id": "estructura-6-actos",
+     "ok": false,
+     "note": "faltan: inicio, conflicto, desarrollo, emocional, resolucion"
+    },
+    {
+     "id": "gancho",
+     "ok": true
+    },
+    {
+     "id": "protagonista",
+     "ok": true
+    },
+    {
+     "id": "sin-errores-criticos",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "sin-exito-prematuro",
+     "ok": true
+    },
+    {
+     "id": "directivas-validas",
+     "ok": false,
+     "note": "«acto: inicio»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto» | «acto: resolucion»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»"
+    },
+    {
+     "id": "espanol",
+     "ok": true
+    },
+    {
+     "id": "arranca-donde-termino",
+     "ok": true,
+     "note": "1.ª escena en «Calle de noche», terminó en «Calle de noche»"
+    },
+    {
+     "id": "diversidad-lexica",
+     "ok": true,
+     "note": "0.45"
+    }
+   ],
+   "compliance": 0.78,
+   "proxy": {
+    "score": 8,
+    "dialogueRatio": 0.5,
+    "locations": 1,
+    "repeatedSentences": 0
+   },
+   "warnings": [
+    "Directiva de memoria inválida del modelo: «acto: inicio»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+    "Directiva de memoria inválida del modelo: «acto: resolucion»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+    "Directiva de memoria inválida del modelo: «acto: gancho»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+    "El episodio dura ≈ 2.5 min: queda por debajo del formato (≈ 5 min)."
+   ],
+   "draft": {
+    "title": "Episodio 4: El primer intento",
+    "logline": "KAP intenta grabar su primera maqueta con un micrófono prestado, pero falla y se siente frustrado.",
+    "assumptions": [],
+    "scenes": [
+     {
+      "title": "Calle de noche (2)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP mira hacia la calle, donde Dani le sonríe burlonamente mientras sostiene el cuaderno de KAP. Las luces de la ciudad reflejan en su camiseta gris desgastada."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Por qué no me dejas en paz?"
+       }
+      ],
+      "memory": [
+       "acto: inicio",
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Dani",
+       "abre-hilo: el cuaderno robado | KAP, Dani"
+      ]
+     },
+     {
+      "title": "Calle de noche (3)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Dani se acerca lentamente, sosteniendo el cuaderno con una sonrisa desafiante. KAP se tensa, mirando alrededor como si buscara ayuda."
+       },
+       {
+        "speaker": "Dani",
+        "text": "¿Sabes qué? Me encantaría ver cómo te sale la música, pero primero tendrías que aprender a no llorar cuando te humillan."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Dani"
+      ]
+     },
+     {
+      "title": "Calle de noche (4)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se acerca a Dani, con la mirada firme. La tensión entre ellos es palpable."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No te atrevas a tocarlo otra vez."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Dani"
+      ]
+     },
+     {
+      "title": "Calle de noche (5)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Dani se ríe, pero antes de que puedan decir algo más, una voz familiar interrumpe la escena."
+       },
+       {
+        "speaker": "Ramiro",
+        "text": "¿Qué pasa aquí?"
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Ramiro"
+      ]
+     },
+     {
+      "title": "Calle de noche (6)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Ramiro se acerca a KAP y le ofrece una sonrisa reconfortante. Lleva un micrófono en la mano."
+       },
+       {
+        "speaker": "Ramiro",
+        "text": "¿Quieres intentar grabar algo?"
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Ramiro",
+       "usa: KAP, micrófono"
+      ]
+     },
+     {
+      "title": "Calle de noche (7)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP mira el micrófono con una mezcla de nerviosismo y esperanza. Ramiro le da un empujón amistoso."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Y si no salgo bien?"
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Ramiro",
+       "usa: KAP, micrófono"
+      ]
+     },
+     {
+      "title": "Calle de noche (8)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Ramiro le sonríe con confianza. «No te preocupes. Lo primero es empezar.»"
+       },
+       {
+        "speaker": "Ramiro",
+        "text": "Solo intenta."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Ramiro",
+       "usa: KAP, micrófono"
+      ]
+     },
+     {
+      "title": "Calle de noche (9)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se pone el micrófono y respira hondo. Cierra los ojos un momento, como si estuviera preparándose para algo importante."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Esto es solo el principio."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Ramiro",
+       "usa: KAP, micrófono"
+      ]
+     },
+     {
+      "title": "Calle de noche (10)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP intenta grabar una línea. Su voz suena titubeante al principio, pero poco a poco se estabiliza."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Soy KAP, y mi sueño es ser millonario con la música."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Ramiro",
+       "usa: KAP, micrófono",
+       "hito-logrado: Víctima de bullying | KAP, su primer intento de grabación"
+      ]
+     },
+     {
+      "title": "Calle de noche (11)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Ramiro escucha atentamente. Su expresión se vuelve más seria, pero no pierde la sonrisa."
+       },
+       {
+        "speaker": "Ramiro",
+        "text": "Está bien, pero puedes mejorar."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Ramiro",
+       "usa: KAP, micrófono"
+      ]
+     },
+     {
+      "title": "Calle de noche (12)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP intenta de nuevo. Esta vez su voz es más firme, pero se detiene abruptamente."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No me sale bien."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Ramiro",
+       "usa: KAP, micrófono"
+      ]
+     },
+     {
+      "title": "Calle de noche (13)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Ramiro se acerca a KAP y le da una palmadita en la espalda."
+       },
+       {
+        "speaker": "Ramiro",
+        "text": "No te rindas. Todo se aprende con el tiempo."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Ramiro",
+       "usa: KAP, micrófono"
+      ]
+     },
+     {
+      "title": "Calle de noche (14)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP mira a Ramiro con una mezcla de frustración y determinación."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No quiero fracasar."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Ramiro",
+       "usa: KAP, micrófono"
+      ]
+     },
+     {
+      "title": "Calle de noche (15)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Ramiro le sonríe con calma. «Lo primero es aprender a no temer al fracaso.»"
+       },
+       {
+        "speaker": "Ramiro",
+        "text": "Confía en ti mismo."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Ramiro",
+       "usa: KAP, micrófono"
+      ]
+     },
+     {
+      "title": "Calle de noche (16)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP intenta una tercera vez. Esta vez, aunque no es perfecta, su voz suena más segura y auténtica."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Soy KAP, y quiero ser más que un niño pobre."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Ramiro",
+       "usa: KAP, micrófono",
+       "hito-logrado: Víctima de bullying | KAP, su primer intento de grabación"
+      ]
+     },
+     {
+      "title": "Calle de noche (17)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Ramiro escucha con atención y luego le sonríe. «Está bien, pero aún tienes que mejorar.»"
+       },
+       {
+        "speaker": "Ramiro",
+        "text": "No te rindas."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Ramiro",
+       "usa: KAP, micrófono"
+      ]
+     },
+     {
+      "title": "Calle de noche (18)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se quita el micrófono y lo mira con tristeza. Su frustración es palpable."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No puedo hacerlo bien."
+       }
+      ],
+      "memory": [
+       "acto: resolucion",
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Ramiro",
+       "usa: KAP, micrófono",
+       "gancho: KAP se siente frustrado y duda de sí mismo, pero Ramiro le recuerda que no es el fin"
+      ]
+     },
+     {
+      "title": "Calle de noche (19)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Ramiro le ofrece una sonrisa reconfortante. «No te rindas, KAP. Solo es el principio.»"
+       },
+       {
+        "speaker": "Ramiro",
+        "text": "Tú puedes."
+       }
+      ],
+      "memory": [
+       "acto: gancho",
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Ramiro",
+       "usa: KAP, micrófono",
+       "gancho: Ramiro le recuerda que no es el fin, y KAP se prepara para seguir intentando"
+      ]
+     }
+    ]
+   }
   }
  ]
 }
