@@ -160,12 +160,14 @@ const t0 = Date.now(); const meta = { model: MODEL, phase: PHASE, ctx: llm.conte
 console.log(`\n== Banco de IA local · ${MODEL} · fase ${PHASE} · ${meta.cpus} vCPU / ${meta.ramGb} GB · contexto ${meta.ctx} ==`);
 if (!(await llm.available())) { console.error(`El modelo ${MODEL} no está disponible en Ollama`); process.exit(2); }
 const results: any[] = [];
+/** Guardado incremental: un reinicio del contenedor no debe perder las tareas ya terminadas. */
+const save = () => fs.writeFile(path.join(OUT, `${SLUG}-${PHASE}${ONLY.length ? "-" + ONLY.join("") : ""}.partial.json`), JSON.stringify({ meta, partial: true, results }, null, 1));
 if (PHASE === "tech" || PHASE === "all") {
   const worlds: Partial<Record<"fresh" | "after3", World>> = {};
   for (const t of TASKS.concat([{ id: "T7", title: "", world: "after3", request: "", kind: "review" }]).filter((x) => !ONLY.length || ONLY.includes(x.id))) {
     const w = (worlds[t.world] ??= await world(t.world)); console.log(`\n[${t.id}] ${t.title || "Detectar una contradicción con el canon"} …`);
     await unload();   // el runner de Ollama acumula RSS entre tareas (≈ +1,5 GB/episodio): se descarga para medir cada tarea desde un estado limpio y no agotar la RAM
-    const r = t.kind === "review" ? await runReview(w) : await runAuthor(t, t.request, SCENES, w); results.push(r);
+    const r = t.kind === "review" ? await runReview(w) : await runAuthor(t, t.request, SCENES, w); results.push(r); await save();
     console.log(`   ${(r.ms / 1000).toFixed(0)} s · RAM pico ${r.peakMb} MB · ${"error" in r ? "ERROR " + r.error : `${r.id === "T7" ? `detecta ${(r as any).review.found}/4 · falsos+ ${(r as any).review.falsePositives}` : `IR ${(r as any).irValid ? "válida" : "inválida"}${(r as any).irValidFirstTry ? " a la primera" : ""}`} · reintentos ${(r as any).json.retries} · cumplimiento ${Math.round((((r as any).compliance ?? ((r as any).checks.filter((c: Check) => c.ok).length / (r as any).checks.length)) ) * 100)}% · crit ${(r as any).continuity?.critical.length ?? "-"}`}`);
     for (const c of ((r as any).checks ?? []).filter((c: Check) => !c.ok)) console.log(`     ✗ ${c.id}${c.note ? ` — ${c.note}` : ""}`);
   }
@@ -178,7 +180,7 @@ if (PHASE === "narrative" || PHASE === "all") {
   ].filter((x) => !ONLY.length || ONLY.includes(x.id));
   const w = await world("after3");
   for (const s of S) {
-    console.log(`\n[${s.id}] episodio completo (≈ 5 min) …`); const r = await runAuthor({ id: s.id, title: "Escenario narrativo", world: "after3", request: s.request }, s.request, 18, w); results.push(r);
+    console.log(`\n[${s.id}] episodio completo (≈ 5 min) …`); const r = await runAuthor({ id: s.id, title: "Escenario narrativo", world: "after3", request: s.request }, s.request, 18, w); results.push(r); await save();
     console.log(`   ${(r.ms / 60000).toFixed(1)} min · ${"error" in r ? "ERROR " + r.error : `${(r as any).episode.scenes} escenas · ≈ ${((r as any).episode.estimatedSec / 60).toFixed(1)} min · IR ${(r as any).irValid ? "válida" : "inválida"} · reintentos ${(r as any).json.retries} · crit ${(r as any).continuity.critical.length}`}`);
   }
 }
