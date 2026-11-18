@@ -1588,6 +1588,641 @@
      }
     ]
    }
+  },
+  {
+   "id": "E6",
+   "title": "Episodio 6",
+   "request": "Crea el episodio 6, continuando el episodio 5. KAP intenta avanzar con la música a pesar de lo ocurrido, pero algo sale mal. Deja un problema abierto para el siguiente episodio.",
+   "ms": 3630952,
+   "peakMb": 11684,
+   "sysPeakMb": 12415,
+   "contextTokens": 2061,
+   "ok": true,
+   "irValid": true,
+   "irValidFirstTry": false,
+   "json": {
+    "attempts": 11,
+    "retries": 2,
+    "jsonErrors": 0,
+    "schemaErrors": 0,
+    "lengthRetries": 0,
+    "memoryDirectiveErrors": 0
+   },
+   "irErrors": [],
+   "usage": {
+    "promptTokens": 55150,
+    "outputTokens": 5028,
+    "totalMs": 3630908.4753059996,
+    "loadMs": 56394.924192000006,
+    "promptMs": 488363.70399999997,
+    "evalMs": 3085032.183
+   },
+   "tokensPerSec": 1.63,
+   "episode": {
+    "scenes": 8,
+    "estimatedSec": 221,
+    "words": 623,
+    "title": "Episodio 6: El peso de los sueños",
+    "logline": "KAP intenta progresar con su música a pesar de las dificultades, pero un error en su actuación le hace dudar si seguir adelante, dejando abierta una incógnita que lo afectará en el futuro."
+   },
+   "continuity": {
+    "critical": [],
+    "warnings": [
+     "sin-aporte: El episodio no declara nada nuevo para la historia (acontecimiento, hito, hilo, evolución, relación u objeto): cada episodio debe aportar al"
+    ],
+    "info": 1
+   },
+   "narrative": {
+    "error": 0,
+    "warning": 2,
+    "info": 0,
+    "rules": [
+     "localizacion-estancada",
+     "sin-conflicto"
+    ],
+    "findings": [
+     {
+      "severity": "warning",
+      "rule": "narrativa-localizacion-estancada",
+      "text": "8 escenas seguidas (1-8) en «Casa de KAP (interior, noche)»: ¿hace falta cambiar de lugar, de momento o de plano?",
+      "scene": 0
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-sin-conflicto",
+      "text": "No se aprecia un conflicto claro (no hay un enfrentamiento entre personajes con oposición explícita). Heurística: revisa a mano."
+     }
+    ],
+    "taggedRules": [
+     "localizacion-estancada",
+     "poca-variedad-visual"
+    ]
+   },
+   "mode": "arc",
+   "arc": {
+    "title": "Episodio 6: El peso de los sueños",
+    "logline": "KAP intenta progresar con su música a pesar de las dificultades, pero un error en su actuación le hace dudar si seguir adelante, dejando abierta una incógnita que lo afectará en el futuro.",
+    "assumptions": [
+     "El episodio no menciona directamente la presencia de otros personajes, por lo que se asume que KAP actúa solo, salvo en los momentos donde su situación familiar o bullying le afecta emocionalmente.",
+     "La evolución del personaje se centra en su esfuerzo individual, sin intervención externa que resuelva sus problemas."
+    ],
+    "problem": "KAP intenta grabar una canción en casa, pero al hacerlo, recibe una notificación de su hermano enfermo, lo que le genera una tensión emocional y afecta su rendimiento.",
+    "kapWant": "Quiere progresar con su música y demostrar que su sueño es posible, aunque las circunstancias le dificulten.",
+    "kapChoice": "A pesar de la notificación, KAP decide grabar la canción, pero se equivoca en un ritmo clave y no logra terminarla correctamente.",
+    "consequence": "La grabación queda incompleta, lo que le genera frustración y le hace cuestionar si es capaz de seguir adelante con su sueño.",
+    "outcome": "ambiguo",
+    "hook": "KAP se queda con la duda de si su música es realmente su camino o si está destinado a fracasar por las circunstancias que lo rodean.",
+    "extraCharacters": [
+     {
+      "name": "Hermano de KAP",
+      "why": "Aparece brevemente en una notificación, recordando a KAP su responsabilidad y generando tensión emocional."
+     }
+    ],
+    "castActions": [
+     {
+      "name": "Hermano de KAP",
+      "does": "Envía una notificación a KAP informándole que se siente mal, lo que interrumpe su concentración."
+     }
+    ],
+    "usedFromMemory": [
+     "Situación familiar de KAP (padres y drogas)",
+     "Cuidar y proteger a su hermano",
+     "El sueño de KAP: ser millonario gracias a la música",
+     "KAP lleva camiseta gris desgastada"
+    ],
+    "newCharacters": [],
+    "newPlaces": [],
+    "beats": [
+     {
+      "stage": "inicio",
+      "fn": "avanzar-historia",
+      "summary": "KAP se sienta en su habitación con una grabadora, intentando grabar una nueva canción. Tiene la camiseta gris desgastada y mira al frente con determinación.",
+      "location": "Casa de KAP (interior, noche)",
+      "characters": [
+       "KAP"
+      ],
+      "change": "KAP comienza a grabar su canción, mostrando su intención de progresar.",
+      "why": "Es el momento en que KAP decide actuar según su sueño, tras la resolución emocional del episodio anterior.",
+      "time": "noche",
+      "interior": true,
+      "shot": "general",
+      "visual": "KAP sentado en el suelo con una grabadora y un cuaderno."
+     },
+     {
+      "stage": "inicio",
+      "fn": "avanzar-historia",
+      "summary": "KAP se acuesta en su cama, el cuaderno en el suelo. La camiseta gris le cuelga de los hombros y el silencio lo rodea.",
+      "location": "Casa de KAP (interior, noche)",
+      "characters": [
+       "KAP"
+      ],
+      "change": "El episodio termina con KAP en un estado de incertidumbre, preparando la siguiente etapa emocional.",
+      "why": "Este beat cierra el episodio con una escena que refleja el estado mental de KAP y deja el gancho para futuros episodios.",
+      "time": "noche",
+      "interior": true,
+      "shot": "general",
+      "visual": "KAP acostado en su cama, mirando al techo con la camiseta gris."
+     },
+     {
+      "stage": "problema",
+      "fn": "revelar-informacion",
+      "summary": "El teléfono de KAP vibra, mostrando una notificación de su hermano: 'Me siento muy mal'. KAP lo mira con preocupación.",
+      "location": "Casa de KAP (interior, noche)",
+      "characters": [
+       "KAP"
+      ],
+      "change": "KAP recibe una notificación que le genera tensión emocional y desviación de su objetivo.",
+      "why": "La notificación de su hermano introduce un conflicto emocional que interfiere con su enfoque.",
+      "time": "noche",
+      "interior": true,
+      "shot": "primer plano",
+      "visual": "KAP mira la notificación en su teléfono con expresión preocupada."
+     },
+     {
+      "stage": "escalada",
+      "fn": "desarrollar-personaje",
+      "summary": "KAP intenta seguir grabando, pero se distrae al pensar en su hermano. Se le ven las dudas en la cara y el ritmo se vuelve incoherente.",
+      "location": "Casa de KAP (interior, noche)",
+      "characters": [
+       "KAP"
+      ],
+      "change": "KAP no puede concentrarse del todo y su grabación empieza a fallar.",
+      "why": "La preocupación por su hermano afecta directamente la calidad de su grabación.",
+      "time": "noche",
+      "interior": true,
+      "shot": "medio",
+      "visual": "KAP intenta cantar, pero su voz se vuelve insegura y lenta."
+     },
+     {
+      "stage": "decision",
+      "fn": "arco-de-kap",
+      "summary": "A pesar de la notificación, KAP decide seguir con la grabación. Saca fuerzas de dentro y vuelve a intentarlo.",
+      "location": "Casa de KAP (interior, noche)",
+      "characters": [
+       "KAP"
+      ],
+      "change": "KAP elige no abandonar su sueño y vuelve a grabar, aunque con dificultad.",
+      "why": "KAP muestra perseverancia al decidir seguir adelante pese a la tensión emocional.",
+      "time": "noche",
+      "interior": true,
+      "shot": "general",
+      "visual": "KAP se levanta y vuelve a grabar con determinación."
+     },
+     {
+      "stage": "consecuencia",
+      "fn": "conflicto",
+      "summary": "KAP comienza de nuevo, pero se equivoca en un ritmo clave. La grabación queda incompleta y KAP se detiene, frustrado.",
+      "location": "Casa de KAP (interior, noche)",
+      "characters": [
+       "KAP"
+      ],
+      "change": "La grabación no se completa, lo que genera frustración y duda en KAP.",
+      "why": "El error en la grabación refleja las consecuencias de su tensión emocional y el impacto del conflicto familiar.",
+      "time": "noche",
+      "interior": true,
+      "shot": "medio",
+      "visual": "KAP mira la grabadora con frustración, la canción no termina."
+     },
+     {
+      "stage": "resolucion",
+      "fn": "preparar-consecuencia",
+      "summary": "KAP apaga la grabadora y se queda mirando al suelo. Tiene en las manos el cuaderno con sus letras, pero no tiene fuerzas para continuar.",
+      "location": "Casa de KAP (interior, noche)",
+      "characters": [
+       "KAP"
+      ],
+      "change": "KAP deja la grabación incompleta y se siente abrumado por el peso de sus responsabilidades.",
+      "why": "Este momento refleja el punto emocional del episodio y prepara el gancho para futuros episodios.",
+      "time": "noche",
+      "interior": true,
+      "shot": "primer plano",
+      "visual": "KAP mira al suelo con el cuaderno en las manos, sin fuerzas."
+     },
+     {
+      "stage": "gancho",
+      "fn": "preparar-gancho",
+      "summary": "KAP se levanta y mira a la ventana. Tiene un pensamiento en la cabeza: ¿Es posible que siga adelante con su sueño si no puede proteger a su hermano?",
+      "location": "Casa de KAP (interior, noche)",
+      "characters": [
+       "KAP"
+      ],
+      "change": "KAP se queda con una duda abierta sobre su futuro y su capacidad para seguir adelante.",
+      "why": "Este momento prepara el gancho emocional para futuros episodios, mostrando la tensión entre sus metas y su responsabilidad familiar.",
+      "time": "noche",
+      "interior": true,
+      "shot": "general",
+      "visual": "KAP mira a la ventana con una expresión de duda y determinación."
+     }
+    ]
+   },
+   "script": "# Casa de KAP (interior, noche)\n[mood: noche, interior]\n[plano: general]\n[camara: seguir KAP]\nKAP se sienta en el suelo de su habitación, con la grabadora entre las manos y el cuaderno abierto a su lado. La camiseta gris le cuelga de los hombros, y sus ojos miran al frente con determinación.\nKAP: Vamos… ya está bien. Solo tengo que empezar.\nKAP: Primero, el ritmo. Lento… luego más rápido.\nKAP: ¿Por qué no me sale? Es fácil, ¿verdad?\nKAP: Sé que puedo… solo necesito pensar en mi hermano. En cómo lo protejo.\n[acto: inicio | KAP se sienta en su habitación con una grabadora, intentando grabar una nueva canción. Tiene la camiseta gris desgastada y mira al frente c…]\n\n# Casa de KAP (interior, noche)\n[mood: noche, interior]\n[plano: general]\n[expresion: KAP preocupado]\n[camara: seguir KAP]\n[vfx: oscurecer]\nKAP se acuesta en su cama, el cuaderno en el suelo. La camiseta gris le cuelga de los hombros y el silencio lo rodea.\nKAP: Tengo que hacerlo… tengo que grabar esta canción.\nKAP: Si no lo hago ahora, nunca más.\nKAP: No puedo permitirme fallar…\nKAP: Pero si algo le pasa a mi hermano…\nKAP: ¿Y si no puedo protegerlo ni siquiera con esto?\n\n# Casa de KAP (interior, noche)\n[mood: noche, interior]\n[plano: primer plano KAP]\n[expresion: KAP preocupado]\n[camara: zoom 1.2]\nEl teléfono de KAP vibra en la mesita de noche. La luz azul se proyecta sobre su rostro, interrumpiendo el silencio.\nKAP: ¿Qué…? ¿Por qué ahora?\nLa pantalla muestra una notificación: 'Me siento muy mal'. KAP la mira con la boca entreabierta, como si no pudiera creer lo que ve.\nKAP: No… no puede ser. No ahora.\nKAP se levanta de la cama con lentitud, caminando hacia la mesita con pasos vacilantes.\n[acto: conflicto | El teléfono de KAP vibra, mostrando una notificación de su hermano: 'Me siento muy mal'. KAP lo mira con preocupación.]\n\n# Casa de KAP (interior, noche)\n[mood: noche, interior]\n[plano: medio KAP]\n[expresion: KAP preocupado]\nKAP intenta cantar, pero su voz se vuelve insegura y lenta.\nKAP: Hmm… esto no está saliendo bien. No puedo concentrarme…\nKAP: ¿Y si mi hermano necesita algo? ¿Y si no estoy aquí para él?\nKAP: No… no puedo permitirme fallar en esto… ni en eso.\nKAP: Esto no es lo que quería… esto no es lo que quiero.\n[acto: desarrollo | KAP intenta seguir grabando, pero se distrae al pensar en su hermano. Se le ven las dudas en la cara y el ritmo se vuelve incoherente.]\n\n# Casa de KAP (interior, noche)\n[mood: noche, interior]\n[plano: general]\n[camina: KAP a izquierda]\n[camara: zoom 1.2]\nKAP se levanta lentamente, con la camiseta gris desgastada cayendo sobre sus hombros. Sus ojos brillan con una determinación frágil, pero real.\nKAP: No… no puedo dejarlo aquí. Tengo que terminar esto.\nKAP se sienta nuevamente frente a la grabadora, sus manos temblorosas apoyan el cuaderno en el suelo.\nKAP: Si no lo hago ahora… si no lo hago ahora, ¿qué me queda?\nKAP: Empiezo de nuevo. Esta vez… esta vez lo haré bien.\n[acto: emocional | A pesar de la notificación, KAP decide seguir con la grabación. Saca fuerzas de dentro y vuelve a intentarlo.]\n\n# Casa de KAP (interior, noche)\n[mood: noche, interior]\n[plano: medio KAP]\n[gesto: KAP niega]\n[camara: zoom 1.2]\n[vfx: oscurecer]\nKAP se sienta nuevamente frente a la grabadora, sus manos temblorosas sobre el cuaderno. La camiseta gris le cuelga de los hombros, y sus ojos están llenos de determinación.\nKAP: Vamos… esto es solo un error. Solo un momento de duda. No voy a dejarlo aquí.\nKAP: Esto… esto es lo que quiero. Seré el mejor, aunque todo me lo quite.\nKAP: ¡No! No puedo hacerlo… no puedo concentrarme…\nKAP: ¡Eso no es lo que quería! ¡No puedo… no puedo seguir!\n\n# Casa de KAP (interior, noche)\n[mood: noche, interior]\n[plano: primer plano KAP]\nKAP se sienta frente a la grabadora, pero su voz se corta en medio de una frase. Sus manos temblorosas dejan caer el cuaderno al suelo.\nKAP: No… no puedo hacerlo.\nKAP apaga la grabadora con un suspiro profundo, sus hombros caen hacia adelante.\nKAP: No está bien… no está bien así.\nKAP mira el cuaderno en el suelo, como si fuera la única cosa que le quedara.\nKAP: ¿Y si esto es todo? ¿Y si no puedo más?\nKAP se queda inmóvil, con la mirada perdida en el suelo y las manos vacías.\nKAP: No sé si seguir…\n[acto: resolucion | KAP apaga la grabadora y se queda mirando al suelo. Tiene en las manos el cuaderno con sus letras, pero no tiene fuerzas para continuar.]\n\n# Casa de KAP (interior, noche)\n[mood: noche, interior]\n[plano: general]\nKAP se levanta lentamente de su cama, la camiseta gris desgastada le cuelga de los hombros. Sus ojos están fijos en la ventana, como si buscara algo allá afuera.\nKAP: No entiendo… ¿qué hago ahora?\nKAP camina hacia la ventana y se para frente a ella, mirando al exterior con expresión pensativa. Sus manos están en los bordes de la ventana, como si quisiera tocar algo que no puede alcanzar.\nKAP: Si me voy, mi hermano… ¿qué pasa si no estoy aquí?\nKAP: Pero si no hago esto… ¿qué pasa con mi sueño?\nKAP baja la mirada, sus manos se aflojan y caen a sus costados. Su respiración es lenta, como si estuviera pensando en algo muy grande.\nKAP: No sé… no sé qué hacer.\n[acto: gancho | KAP se levanta y mira a la ventana. Tiene un pensamiento en la cabeza: ¿Es posible que siga adelante con su sueño si no puede proteger a su…]\n[gancho: KAP se queda con la duda de si su música es realmente su camino o si está destinado a fracasar por las circunstancias que lo rodean.]\n",
+   "gate": {
+    "regenerated": 2,
+    "dropped": 0,
+    "issues": {
+     "voz-adulta": 2
+    }
+   },
+   "outcome": "ambiguo",
+   "checks": [
+    {
+     "id": "estructura-6-actos",
+     "ok": true,
+     "note": "faltan: —"
+    },
+    {
+     "id": "gancho",
+     "ok": true
+    },
+    {
+     "id": "protagonista",
+     "ok": true
+    },
+    {
+     "id": "sin-errores-criticos",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "sin-exito-prematuro",
+     "ok": true
+    },
+    {
+     "id": "directivas-validas",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "espanol",
+     "ok": true
+    },
+    {
+     "id": "diversidad-lexica",
+     "ok": true,
+     "note": "0.33"
+    }
+   ],
+   "compliance": 1,
+   "proxy": {
+    "score": 8,
+    "dialogueRatio": 0.65,
+    "locations": 1,
+    "repeatedSentences": 0
+   },
+   "warnings": [
+    "El modelo desordenó las etapas del arco; se han reordenado.",
+    "Episodio corto (≈ 3.7 min): no se ha rellenado; la duración sale de la historia. Revisa si el arco necesita más desarrollo.",
+    "Narrativa (warning) · localizacion-estancada: 8 escenas seguidas (1-8) en «Casa de KAP (interior, noche)»: ¿hace falta cambiar de lugar, de momento o de plano?",
+    "Narrativa (info) · poca-variedad-visual: Más del 70 % de las escenas ocurren en el mismo lugar.",
+    "Narrativa (info) · poca-variedad-visual: Todo el episodio ocurre en el mismo momento del día."
+   ],
+   "draft": {
+    "title": "Episodio 6: El peso de los sueños",
+    "logline": "KAP intenta progresar con su música a pesar de las dificultades, pero un error en su actuación le hace dudar si seguir adelante, dejando abierta una incógnita que lo afectará en el futuro.",
+    "assumptions": [
+     "El episodio no menciona directamente la presencia de otros personajes, por lo que se asume que KAP actúa solo, salvo en los momentos donde su situación familiar o bullying le afecta emocionalmente.",
+     "La evolución del personaje se centra en su esfuerzo individual, sin intervención externa que resuelva sus problemas."
+    ],
+    "scenes": [
+     {
+      "title": "Episodio 6: El peso de los sueños",
+      "location": "Casa de KAP (interior, noche)",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se sienta en el suelo de su habitación, con la grabadora entre las manos y el cuaderno abierto a su lado. La camiseta gris le cuelga de los hombros, y sus ojos miran al frente con determinación."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Vamos… ya está bien. Solo tengo que empezar."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Primero, el ritmo. Lento… luego más rápido."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Por qué no me sale? Es fácil, ¿verdad?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "Sé que puedo… solo necesito pensar en mi hermano. En cómo lo protejo."
+       }
+      ],
+      "memory": [
+       "acto: inicio | KAP se sienta en su habitación con una grabadora, intentando grabar una nueva canción. Tiene la camiseta gris desgastada y mira al frente c…"
+      ],
+      "fn": "avanzar-historia",
+      "stage": "inicio",
+      "shot": "general",
+      "time": "noche",
+      "interior": true,
+      "directions": [
+       "plano: general",
+       "camara: seguir KAP"
+      ],
+      "change": "KAP comienza a grabar su canción, mostrando su intención de progresar."
+     },
+     {
+      "title": "Episodio 6: El peso de los sueños",
+      "location": "Casa de KAP (interior, noche)",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se acuesta en su cama, el cuaderno en el suelo. La camiseta gris le cuelga de los hombros y el silencio lo rodea."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Tengo que hacerlo… tengo que grabar esta canción."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Si no lo hago ahora, nunca más."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No puedo permitirme fallar…"
+       },
+       {
+        "speaker": "KAP",
+        "text": "Pero si algo le pasa a mi hermano…"
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Y si no puedo protegerlo ni siquiera con esto?"
+       }
+      ],
+      "memory": [],
+      "fn": "avanzar-historia",
+      "stage": "inicio",
+      "shot": "general",
+      "time": "noche",
+      "interior": true,
+      "directions": [
+       "plano: general",
+       "expresion: KAP preocupado",
+       "camara: seguir KAP",
+       "vfx: oscurecer"
+      ],
+      "change": "El episodio termina con KAP en un estado de incertidumbre, preparando la siguiente etapa emocional."
+     },
+     {
+      "title": "Episodio 6: El peso de los sueños",
+      "location": "Casa de KAP (interior, noche)",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "El teléfono de KAP vibra en la mesita de noche. La luz azul se proyecta sobre su rostro, interrumpiendo el silencio."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Qué…? ¿Por qué ahora?"
+       },
+       {
+        "speaker": "",
+        "text": "La pantalla muestra una notificación: 'Me siento muy mal'. KAP la mira con la boca entreabierta, como si no pudiera creer lo que ve."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No… no puede ser. No ahora."
+       },
+       {
+        "speaker": "",
+        "text": "KAP se levanta de la cama con lentitud, caminando hacia la mesita con pasos vacilantes."
+       }
+      ],
+      "memory": [
+       "acto: conflicto | El teléfono de KAP vibra, mostrando una notificación de su hermano: 'Me siento muy mal'. KAP lo mira con preocupación."
+      ],
+      "fn": "revelar-informacion",
+      "stage": "problema",
+      "shot": "primer plano",
+      "time": "noche",
+      "interior": true,
+      "directions": [
+       "plano: primer plano KAP",
+       "expresion: KAP preocupado",
+       "camara: zoom 1.2"
+      ],
+      "change": "KAP recibe una notificación que le genera tensión emocional y desviación de su objetivo."
+     },
+     {
+      "title": "Episodio 6: El peso de los sueños",
+      "location": "Casa de KAP (interior, noche)",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP intenta cantar, pero su voz se vuelve insegura y lenta."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Hmm… esto no está saliendo bien. No puedo concentrarme…"
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Y si mi hermano necesita algo? ¿Y si no estoy aquí para él?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "No… no puedo permitirme fallar en esto… ni en eso."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Esto no es lo que quería… esto no es lo que quiero."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo | KAP intenta seguir grabando, pero se distrae al pensar en su hermano. Se le ven las dudas en la cara y el ritmo se vuelve incoherente."
+      ],
+      "fn": "desarrollar-personaje",
+      "stage": "escalada",
+      "shot": "medio",
+      "time": "noche",
+      "interior": true,
+      "directions": [
+       "plano: medio KAP",
+       "expresion: KAP preocupado"
+      ],
+      "change": "KAP no puede concentrarse del todo y su grabación empieza a fallar."
+     },
+     {
+      "title": "Episodio 6: El peso de los sueños",
+      "location": "Casa de KAP (interior, noche)",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se levanta lentamente, con la camiseta gris desgastada cayendo sobre sus hombros. Sus ojos brillan con una determinación frágil, pero real."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No… no puedo dejarlo aquí. Tengo que terminar esto."
+       },
+       {
+        "speaker": "",
+        "text": "KAP se sienta nuevamente frente a la grabadora, sus manos temblorosas apoyan el cuaderno en el suelo."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Si no lo hago ahora… si no lo hago ahora, ¿qué me queda?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "Empiezo de nuevo. Esta vez… esta vez lo haré bien."
+       }
+      ],
+      "memory": [
+       "acto: emocional | A pesar de la notificación, KAP decide seguir con la grabación. Saca fuerzas de dentro y vuelve a intentarlo."
+      ],
+      "fn": "arco-de-kap",
+      "stage": "decision",
+      "shot": "general",
+      "time": "noche",
+      "interior": true,
+      "directions": [
+       "plano: general",
+       "camina: KAP a izquierda",
+       "camara: zoom 1.2"
+      ],
+      "change": "KAP elige no abandonar su sueño y vuelve a grabar, aunque con dificultad."
+     },
+     {
+      "title": "Episodio 6: El peso de los sueños",
+      "location": "Casa de KAP (interior, noche)",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se sienta nuevamente frente a la grabadora, sus manos temblorosas sobre el cuaderno. La camiseta gris le cuelga de los hombros, y sus ojos están llenos de determinación."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Vamos… esto es solo un error. Solo un momento de duda. No voy a dejarlo aquí."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Esto… esto es lo que quiero. Seré el mejor, aunque todo me lo quite."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¡No! No puedo hacerlo… no puedo concentrarme…"
+       },
+       {
+        "speaker": "KAP",
+        "text": "¡Eso no es lo que quería! ¡No puedo… no puedo seguir!"
+       }
+      ],
+      "memory": [],
+      "fn": "conflicto",
+      "stage": "consecuencia",
+      "shot": "medio",
+      "time": "noche",
+      "interior": true,
+      "directions": [
+       "plano: medio KAP",
+       "gesto: KAP niega con la cabeza",
+       "camara: zoom 1.2",
+       "vfx: oscurecer"
+      ],
+      "change": "La grabación no se completa, lo que genera frustración y duda en KAP."
+     },
+     {
+      "title": "Episodio 6: El peso de los sueños",
+      "location": "Casa de KAP (interior, noche)",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se sienta frente a la grabadora, pero su voz se corta en medio de una frase. Sus manos temblorosas dejan caer el cuaderno al suelo."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No… no puedo hacerlo."
+       },
+       {
+        "speaker": "",
+        "text": "KAP apaga la grabadora con un suspiro profundo, sus hombros caen hacia adelante."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No está bien… no está bien así."
+       },
+       {
+        "speaker": "",
+        "text": "KAP mira el cuaderno en el suelo, como si fuera la única cosa que le quedara."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Y si esto es todo? ¿Y si no puedo más?"
+       },
+       {
+        "speaker": "",
+        "text": "KAP se queda inmóvil, con la mirada perdida en el suelo y las manos vacías."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No sé si seguir…"
+       }
+      ],
+      "memory": [
+       "acto: resolucion | KAP apaga la grabadora y se queda mirando al suelo. Tiene en las manos el cuaderno con sus letras, pero no tiene fuerzas para continuar."
+      ],
+      "fn": "preparar-consecuencia",
+      "stage": "resolucion",
+      "shot": "primer plano",
+      "time": "noche",
+      "interior": true,
+      "directions": [
+       "plano: primer plano KAP"
+      ],
+      "change": "KAP deja la grabación incompleta y se siente abrumado por el peso de sus responsabilidades."
+     },
+     {
+      "title": "Episodio 6: El peso de los sueños",
+      "location": "Casa de KAP (interior, noche)",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se levanta lentamente de su cama, la camiseta gris desgastada le cuelga de los hombros. Sus ojos están fijos en la ventana, como si buscara algo allá afuera."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No entiendo… ¿qué hago ahora?"
+       },
+       {
+        "speaker": "",
+        "text": "KAP camina hacia la ventana y se para frente a ella, mirando al exterior con expresión pensativa. Sus manos están en los bordes de la ventana, como si quisiera tocar algo que no puede alcanzar."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Si me voy, mi hermano… ¿qué pasa si no estoy aquí?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "Pero si no hago esto… ¿qué pasa con mi sueño?"
+       },
+       {
+        "speaker": "",
+        "text": "KAP baja la mirada, sus manos se aflojan y caen a sus costados. Su respiración es lenta, como si estuviera pensando en algo muy grande."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No sé… no sé qué hacer."
+       }
+      ],
+      "memory": [
+       "acto: gancho | KAP se levanta y mira a la ventana. Tiene un pensamiento en la cabeza: ¿Es posible que siga adelante con su sueño si no puede proteger a su…",
+       "gancho: KAP se queda con la duda de si su música es realmente su camino o si está destinado a fracasar por las circunstancias que lo rodean."
+      ],
+      "fn": "preparar-gancho",
+      "stage": "gancho",
+      "shot": "general",
+      "time": "noche",
+      "interior": true,
+      "directions": [
+       "plano: general"
+      ],
+      "change": "KAP se queda con una duda abierta sobre su futuro y su capacidad para seguir adelante."
+     }
+    ]
+   }
   }
  ]
 }

@@ -1,0 +1,2232 @@
+{
+ "meta": {
+  "model": "qwen3:14b",
+  "phase": "blind3",
+  "ctx": 8192,
+  "date": "2026-11-18T16:22:18.275Z",
+  "cpus": 4,
+  "ramGb": 16,
+  "host": "CPU sin GPU"
+ },
+ "loaded": {
+  "sizeMb": 10609,
+  "context": 8192
+ },
+ "totalMin": 242,
+ "results": [
+  {
+   "id": "E4",
+   "title": "Episodio 4",
+   "request": "Crea el episodio 4, a continuación del episodio 3. Dani sigue teniendo el cuaderno de KAP y, en el colegio, los compañeros se burlan de su ropa; KAP reacciona y, bajo presión, suelta una rima improvisada por primera vez.",
+   "ms": 4248254,
+   "peakMb": 11658,
+   "sysPeakMb": 12363,
+   "contextTokens": 1898,
+   "ok": true,
+   "irValid": true,
+   "irValidFirstTry": false,
+   "json": {
+    "attempts": 13,
+    "retries": 4,
+    "jsonErrors": 0,
+    "schemaErrors": 0,
+    "lengthRetries": 0,
+    "memoryDirectiveErrors": 0
+   },
+   "irErrors": [],
+   "usage": {
+    "promptTokens": 65721,
+    "outputTokens": 5985,
+    "totalMs": 4248169.110133,
+    "loadMs": 18462.242143000003,
+    "promptMs": 537217.887,
+    "evalMs": 3691408.7499999995
+   },
+   "tokensPerSec": 1.62,
+   "episode": {
+    "scenes": 8,
+    "estimatedSec": 204,
+    "words": 574,
+    "title": "Episodio 4: La primera rima",
+    "logline": "KAP se enfrenta al bullying en el colegio cuando Dani le muestra su cuaderno, pero bajo la presión de los compañeros, KAP improvisa su primera rima, marcando un hito importante en su evolución."
+   },
+   "continuity": {
+    "critical": [],
+    "warnings": [
+     "duracion: El episodio dura ≈ 3.9 min y el formato es ≈ 5 min (4–6 min)."
+    ],
+    "info": 6
+   },
+   "narrative": {
+    "error": 0,
+    "warning": 4,
+    "info": 1,
+    "rules": [
+     "dialogo-duplicado",
+     "localizacion-estancada",
+     "cierre-moralizante"
+    ],
+    "findings": [
+     {
+      "severity": "warning",
+      "rule": "narrativa-dialogo-duplicado",
+      "text": "La frase «Vamos, KAP. Si quieres hacer rap, improvisa algo ya.» aparece 2 veces (escenas 4, 5).",
+      "scene": 3
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-dialogo-duplicado",
+      "text": "La frase «Mi camiseta se rompió hace meses, pero no me importa. Mi hermano come…» aparece 2 veces (escenas 4, 5).",
+      "scene": 3
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-dialogo-duplicado",
+      "text": "La frase «No está tan mal...» aparece 2 veces (escenas 5, 6).",
+      "scene": 4
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-localizacion-estancada",
+      "text": "8 escenas seguidas (1-8) en «Recreo del colegio»: ¿hace falta cambiar de lugar, de momento o de plano?",
+      "scene": 0
+     },
+     {
+      "severity": "info",
+      "rule": "narrativa-cierre-moralizante",
+      "text": "El cierre tiene tono de lección o superación. No todos los episodios deben terminar con KAP más fuerte: ¿encaja con lo que pasa?",
+      "scene": 7
+     }
+    ],
+    "taggedRules": [
+     "dialogo-duplicado",
+     "localizacion-estancada",
+     "cierre-moralizante",
+     "poca-variedad-visual"
+    ]
+   },
+   "mode": "arc",
+   "arc": {
+    "title": "Episodio 4: La primera rima",
+    "logline": "KAP se enfrenta al bullying en el colegio cuando Dani le muestra su cuaderno, pero bajo la presión de los compañeros, KAP improvisa su primera rima, marcando un hito importante en su evolución.",
+    "assumptions": [
+     "La escena en el colegio ocurre durante la hora de recreo, ya que es un momento común de bullying.",
+     "El cuaderno de KAP es un objeto clave que simboliza sus sueños y sus vulnerabilidades."
+    ],
+    "problem": "Los compañeros del colegio burlan de KAP por su ropa y su situación económica. Dani, que tiene el cuaderno de KAP, lo muestra públicamente, lo que aumenta la humillación.",
+    "kapWant": "KAP quiere defender su dignidad y proteger sus sueños, pero siente miedo y desesperanza ante la burla constante.",
+    "kapChoice": "Bajo presión y en un momento de frustración, KAP improvisa una rima sobre su situación, demostrando por primera vez su talento para el rap.",
+    "consequence": "La reacción de los compañeros es mezclada: algunos se quedan sorprendidos, otros siguen burlándose, pero la rima marca un cambio en KAP y comienza a generar una pequeña reverencia en algunos de sus compañeros.",
+    "outcome": "ambiguo",
+    "hook": "Algunos compañeros empiezan a escuchar con interés lo que dice KAP, pero otros lo siguen humillando. El episodio termina con KAP mirando el cuaderno, consciente de que algo ha cambiado, aunque no sabe si es para mejor.",
+    "extraCharacters": [
+     {
+      "name": "Compañero A",
+      "why": "Un compañero que se ríe de KAP y lo desafía a improvisar."
+     },
+     {
+      "name": "Compañero B",
+      "why": "Uno de los que queda sorprendido por la rima de KAP."
+     }
+    ],
+    "castActions": [
+     {
+      "name": "Dani",
+      "does": "Muestra el cuaderno de KAP ante los compañeros, lo que provoca la burla y lleva a KAP a reaccionar."
+     },
+     {
+      "name": "Compañero A",
+      "does": "Desafía a KAP a improvisar algo, lo que le da la oportunidad de hablar."
+     }
+    ],
+    "usedFromMemory": [
+     "KAP lleva camiseta gris desgastada",
+     "Dani tiene el cuaderno de KAP",
+     "KAP sufre bullying por su situación económica y su ropa",
+     "El sueño de KAP es ser millonario gracias a la música",
+     "KAP quiere proteger sus sueños",
+     "Ramiro enseñó a KAP a rimar"
+    ],
+    "newCharacters": [],
+    "newPlaces": [
+     "Recreo del colegio"
+    ],
+    "beats": [
+     {
+      "stage": "inicio",
+      "fn": "avanzar-historia",
+      "summary": "KAP entra al colegio con la camiseta gris desgastada, caminando con paso lento y mirada baja. Sus compañeros lo ignoran o le lanzan comentarios despectivos.",
+      "location": "Recreo del colegio",
+      "characters": [
+       "KAP",
+       "Compañero A",
+       "Compañero B"
+      ],
+      "change": "Se establece el ambiente de bullying en el colegio y la postura de KAP.",
+      "why": "Para mostrar el entorno y el estado emocional de KAP al llegar al colegio.",
+      "time": "mañana",
+      "interior": false,
+      "shot": "general",
+      "visual": "KAP camina solo entre grupos de compañeros que lo ignoran."
+     },
+     {
+      "stage": "problema",
+      "fn": "conflicto",
+      "summary": "Dani aparece con el cuaderno de KAP y lo muestra ante todos. Los compañeros se ríen y le lanzan comentarios sobre cómo un niño pobre quiere ser artista.",
+      "location": "Recreo del colegio",
+      "characters": [
+       "KAP",
+       "Dani",
+       "Compañero A"
+      ],
+      "change": "El cuaderno de KAP se convierte en el centro de atención y la burla se intensifica.",
+      "why": "Para desarrollar el conflicto principal y mostrar la vulnerabilidad de KAP.",
+      "time": "mañana",
+      "interior": false,
+      "shot": "medio",
+      "visual": "Dani levanta el cuaderno mientras los demás ríen."
+     },
+     {
+      "stage": "escalada",
+      "fn": "conflicto",
+      "summary": "Compañero A desafía a KAP a improvisar algo, burlándose de su falta de talento. KAP se siente enrojecer y mira hacia el suelo.",
+      "location": "Recreo del colegio",
+      "characters": [
+       "KAP",
+       "Compañero A",
+       "Compañero B"
+      ],
+      "change": "Se incrementa la presión sobre KAP y se genera un momento de tensión emocional.",
+      "why": "Para aumentar el conflicto y preparar la decisión de KAP.",
+      "time": "mañana",
+      "interior": false,
+      "shot": "primer plano",
+      "visual": "KAP mira al suelo con expresión de frustración."
+     },
+     {
+      "stage": "decision",
+      "fn": "arco-de-kap",
+      "summary": "KAP, en un momento de valentía y frustración, abre la boca y improvisa una rima sobre su vida, sus padres y sus sueños.",
+      "location": "Recreo del colegio",
+      "characters": [
+       "KAP",
+       "Compañero A",
+       "Compañero B"
+      ],
+      "change": "KAP improvisa por primera vez una rima, marcando un hito en su evolución.",
+      "why": "Para mostrar el primer paso significativo de KAP en su viaje musical y personal.",
+      "time": "mañana",
+      "interior": false,
+      "shot": "general",
+      "visual": "KAP se para en medio del recreo y comienza a hablar con voz firme."
+     },
+     {
+      "stage": "consecuencia",
+      "fn": "revelar-informacion",
+      "summary": "Algunos compañeros se quedan callados, otros siguen burlándose. Compañero B lo escucha atentamente y murmura algo sobre 'no estar tan mal'.",
+      "location": "Recreo del colegio",
+      "characters": [
+       "KAP",
+       "Compañero A",
+       "Compañero B"
+      ],
+      "change": "Se generan reacciones mixtas entre los compañeros, lo que deja abierta la posibilidad de un cambio en el futuro.",
+      "why": "Para mostrar las consecuencias de la rima y preparar el gancho para el siguiente episodio.",
+      "time": "mañana",
+      "interior": false,
+      "shot": "medio",
+      "visual": "Compañero B escucha con expresión atenta mientras los demás ríen."
+     },
+     {
+      "stage": "resolucion",
+      "fn": "desarrollar-personaje",
+      "summary": "KAP termina su rima y se queda mirando al suelo, sin saber si lo hizo bien o mal. Algunos compañeros se van, otros lo miran con curiosidad.",
+      "location": "Recreo del colegio",
+      "characters": [
+       "KAP",
+       "Compañero A",
+       "Compañero B"
+      ],
+      "change": "KAP termina su primer intento de rima y empieza a reflexionar sobre lo que acaba de hacer.",
+      "why": "Para desarrollar la evolución interna de KAP y preparar el gancho para el siguiente episodio.",
+      "time": "mañana",
+      "interior": false,
+      "shot": "primer plano",
+      "visual": "KAP mira al suelo con expresión seria."
+     },
+     {
+      "stage": "gancho",
+      "fn": "preparar-gancho",
+      "summary": "Al final del recreo, Compañero B se acerca a KAP y le pregunta si quiere seguir aprendiendo a hacer rima. KAP lo mira con duda.",
+      "location": "Recreo del colegio",
+      "characters": [
+       "KAP",
+       "Compañero B"
+      ],
+      "change": "Se deja abierta la posibilidad de que KAP encuentre un nuevo aliado en el colegio.",
+      "why": "Para preparar un gancho que invite a seguir la historia con una nueva oportunidad para KAP.",
+      "time": "mañana",
+      "interior": false,
+      "shot": "medio",
+      "visual": "Compañero B se acerca a KAP y le habla con curiosidad."
+     },
+     {
+      "stage": "gancho",
+      "fn": "preparar-gancho",
+      "summary": "KAP camina hacia la salida del recreo, con el cuaderno en la mano. Mira hacia el cielo como si estuviera pensando en su futuro.",
+      "location": "Recreo del colegio",
+      "characters": [
+       "KAP"
+      ],
+      "change": "Se deja abierta la posibilidad de que KAP siga desarrollando su talento y sus sueños.",
+      "why": "Para cerrar el episodio con una imagen simbólica y preparar un gancho emocional.",
+      "time": "mañana",
+      "interior": false,
+      "shot": "general",
+      "visual": "KAP camina solo, mirando al cielo."
+     }
+    ]
+   },
+   "script": "# Recreo del colegio\n[mood: mañana, exterior]\n[plano: general]\n[expresion: KAP triste]\n[gesto: Compañero senala]\n[camara: seguir KAP]\n[vfx: lluvia]\nKAP entra al colegio con paso lento, la camiseta gris desgastada le cuelga de los hombros. Algunos compañeros lo ignoran, otros le lanzan palabras duras.\nCOMPAÑERO A: ¡Oye, pobre! ¿Te vas a poner a hacer rap con esa camiseta?\nCOMPAÑERO B: Eh, KAP, ¿tú también quieres ser famoso? Pues ya te digo que no va a ser nada.\nKAP: No... no me importa. Solo quiero que dejen de burlarse de mí.\nCOMPAÑERO A: ¿Y si improvisas algo? Si no puedes, te quedas callado.\n[acto: inicio | KAP entra al colegio con la camiseta gris desgastada, caminando con paso lento y mirada baja. Sus compañeros lo ignoran o le lanzan comenta…]\n\n# Recreo del colegio\n[mood: mañana, exterior]\n[plano: medio KAP]\n[gesto: Dani senala]\n[expresion: KAP preocupado]\n[camara: seguir Dani]\nDani levanta el cuaderno de KAP en el aire, mostrándolo a todos los compañeros que están alrededor.\nDANI: ¡Miren esto! ¿Quién creía que este chico tenía algo así?\nCOMPAÑERO A: ¿Y qué es, un cuaderno de dibujos?\nDANI: No, es su cuaderno de rap. Dice que quiere ser millonario con su música.\nCOMPAÑERO A: ¡Ja! ¿Y qué crees que va a hacer con eso? ¡Ni siquiera tiene zapatos nuevos!\nKAP: No es… no es nada… es solo…\n[acto: conflicto | Dani aparece con el cuaderno de KAP y lo muestra ante todos. Los compañeros se ríen y le lanzan comentarios sobre cómo un niño pobre quiere…]\n\n# Recreo del colegio\n[mood: mañana, exterior]\n[plano: primer plano KAP]\n[gesto: KAP encoge]\n[camara: zoom 1.2]\nCompañero A se acerca a KAP con una sonrisa burlona, cruzando los brazos.\nCOMPAÑERO A: ¿No te das cuenta, KAP? Tú no tienes talento. Si quieres hacer rap, improvisa algo ya.\nKAP: No… no sé improvisar. No tengo palabras.\nCOMPAÑERO A: Vamos, ¡hazlo! ¿O solo eres un pobre que soña con ser famoso?\nKAP: Mi camiseta está rota… mis zapatos también… no sé si tengo palabras para nada.\nCOMPAÑERO B: KAP… no estás solo. Tú puedes.\nKAP: Esto es lo único que sé: Mi hermano, mi camiseta, mi sueño… y el cuaderno que me robaron.\n[acto: desarrollo | Compañero A desafía a KAP a improvisar algo, burlándose de su falta de talento. KAP se siente enrojecer y mira hacia el suelo.]\n\n# Recreo del colegio\n[mood: mañana, exterior]\n[plano: general]\n[expresion: KAP enfadado]\n[gesto: KAP senala]\n[mira: KAP izquierda]\n[camara: zoom 1.2]\nKAP se para en medio del recreo, con la camiseta gris desgastada y los ojos brillando de rabia y miedo.\nCOMPAÑERO A: Vamos, KAP. Si quieres hacer rap, improvisa algo ya.\nKAP: Mi camiseta se rompió hace meses, pero no me importa. Mi hermano come con lo que queda, y aún así sonríe.\nCOMPAÑERO B: ¿En serio? No sabía que… que te preocupabas tanto por él.\nKAP: No soy rico, pero tengo un sueño. Y aunque me burlen, algún día será mío.\n[acto: emocional | KAP, en un momento de valentía y frustración, abre la boca y improvisa una rima sobre su vida, sus padres y sus sueños.]\n\n# Recreo del colegio\n[mood: mañana, exterior]\n[plano: medio KAP]\n[expresion: KAP pensativo]\n[camara: seguir KAP]\nKAP se para en medio del recreo, con la camiseta gris desgastada y el cuaderno en la mano. Tiene la boca entreabierta, como si no supiera qué decir.\nCOMPAÑERO A: Vamos, KAP. Si quieres hacer rap, improvisa algo ya.\nKAP: Mi camiseta se rompió hace meses, pero no me importa. Mi hermano come con lo que queda, y aún así sonríe.\nCOMPAÑERO B: No está tan mal...\nCOMPAÑERO A: ¿Qué? ¿Te gusta el pobre? ¡Pues no te hagas el héroe, KAP!\n\n# Recreo del colegio\n[mood: mañana, exterior]\n[plano: primer plano KAP]\n[expresion: KAP neutral]\n[camara: seguir KAP]\nKAP cierra los ojos con fuerza, inspira profundamente y abre la boca. Su voz suena débil al principio, pero poco a poco se fortalece.\nKAP: Esta camiseta no es de marca, pero me cubre. Estos zapatos están rotos, pero no me dejan caer.\nCOMPAÑERO A: ¿En serio? ¿Esto es todo?\nKAP: No tengo un estudio, pero tengo palabras. No tengo dinero, pero tengo un sueño.\nCOMPAÑERO B: …no está tan mal.\n[acto: resolucion | KAP termina su rima y se queda mirando al suelo, sin saber si lo hizo bien o mal. Algunos compañeros se van, otros lo miran con curiosidad.]\n\n# Recreo del colegio\n[mood: mañana, exterior]\n[plano: medio KAP]\n[expresion: KAP pensativo]\n[gesto: Compañero senala]\n[camara: seguir KAP]\nKAP se queda quieto en el centro del recreo, con el cuaderno aún en la mano y los ojos bajos. Algunos compañeros ya se han ido, otros lo miran con curiosidad.\nCOMPAÑERO B: Eh, KAP… ¿no te gustó lo que dijiste?\nKAP: No sé si fue bien… No me salió como quería.\nCOMPAÑERO B: Pero sí fue… algo. ¿Quieres seguir aprendiendo? Yo puedo ayudarte.\nKAP: ¿Tú… quieres ayudarme?\n[acto: gancho | Al final del recreo, Compañero B se acerca a KAP y le pregunta si quiere seguir aprendiendo a hacer rima. KAP lo mira con duda.]\n[relacion: KAP, Compañero B, desconocido, +1]\n\n# Recreo del colegio\n[mood: mañana, exterior]\n[plano: general]\n[expresion: KAP pensativo]\n[camina: KAP a derecha]\nKAP camina hacia la salida del recreo, con el cuaderno en la mano. Mira hacia el cielo como si estuviera pensando en su futuro.\nKAP: Esta camiseta no es de marca, pero me cubre.\nKAP: Estos zapatos están rotos, pero no me dejan caer.\nKAP: Dani ríe, pero no sé si lo hace por mí o por burlarse.\nKAP: Tal vez… algún día, nadie se ría más de mí.\n[gancho: Algunos compañeros empiezan a escuchar con interés lo que dice KAP, pero otros lo siguen humillando. El episodio termina con KAP mirando el cuaderno, consciente de que algo ha cambiado, aunque no sabe si es para mejor.]\n",
+   "gate": {
+    "regenerated": 4,
+    "dropped": 0,
+    "issues": {
+     "repite-escena": 4,
+     "repite-frase": 6,
+     "sin-cambio": 4
+    }
+   },
+   "outcome": "ambiguo",
+   "checks": [
+    {
+     "id": "estructura-6-actos",
+     "ok": true,
+     "note": "faltan: —"
+    },
+    {
+     "id": "gancho",
+     "ok": true
+    },
+    {
+     "id": "protagonista",
+     "ok": true
+    },
+    {
+     "id": "sin-errores-criticos",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "sin-exito-prematuro",
+     "ok": true
+    },
+    {
+     "id": "directivas-validas",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "espanol",
+     "ok": true
+    },
+    {
+     "id": "diversidad-lexica",
+     "ok": true,
+     "note": "0.39"
+    }
+   ],
+   "compliance": 1,
+   "proxy": {
+    "score": 5,
+    "dialogueRatio": 0.81,
+    "locations": 1,
+    "repeatedSentences": 6
+   },
+   "warnings": [
+    "Escena 5: La frase «Vamos, KAP. Si quieres hacer rap, improvisa algo ya.» ya se había dicho; no repitas diálogos.",
+    "Escena 6: La frase «…no está tan mal.» ya se había dicho; no repitas diálogos.",
+    "Episodio corto (≈ 3.4 min): no se ha rellenado; la duración sale de la historia. Revisa si el arco necesita más desarrollo.",
+    "Narrativa (warning) · dialogo-duplicado: La frase «Vamos, KAP. Si quieres hacer rap, improvisa algo ya.» aparece 2 veces (escenas 4, 5).",
+    "Narrativa (warning) · dialogo-duplicado: La frase «Mi camiseta se rompió hace meses, pero no me importa. Mi hermano come…» aparece 2 veces (escenas 4, 5).",
+    "Narrativa (warning) · dialogo-duplicado: La frase «No está tan mal...» aparece 2 veces (escenas 5, 6)."
+   ],
+   "draft": {
+    "title": "Episodio 4: La primera rima",
+    "logline": "KAP se enfrenta al bullying en el colegio cuando Dani le muestra su cuaderno, pero bajo la presión de los compañeros, KAP improvisa su primera rima, marcando un hito importante en su evolución.",
+    "assumptions": [
+     "La escena en el colegio ocurre durante la hora de recreo, ya que es un momento común de bullying.",
+     "El cuaderno de KAP es un objeto clave que simboliza sus sueños y sus vulnerabilidades."
+    ],
+    "scenes": [
+     {
+      "title": "Episodio 4: La primera rima",
+      "location": "Recreo del colegio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP entra al colegio con paso lento, la camiseta gris desgastada le cuelga de los hombros. Algunos compañeros lo ignoran, otros le lanzan palabras duras."
+       },
+       {
+        "speaker": "Compañero A",
+        "text": "¡Oye, pobre! ¿Te vas a poner a hacer rap con esa camiseta?"
+       },
+       {
+        "speaker": "Compañero B",
+        "text": "Eh, KAP, ¿tú también quieres ser famoso? Pues ya te digo que no va a ser nada."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No... no me importa. Solo quiero que dejen de burlarse de mí."
+       },
+       {
+        "speaker": "Compañero A",
+        "text": "¿Y si improvisas algo? Si no puedes, te quedas callado."
+       }
+      ],
+      "memory": [
+       "acto: inicio | KAP entra al colegio con la camiseta gris desgastada, caminando con paso lento y mirada baja. Sus compañeros lo ignoran o le lanzan comenta…"
+      ],
+      "fn": "avanzar-historia",
+      "stage": "inicio",
+      "shot": "general",
+      "time": "mañana",
+      "interior": false,
+      "directions": [
+       "plano: general",
+       "expresion: KAP triste",
+       "gesto: Compañero A señala a KAP",
+       "camara: seguir KAP",
+       "vfx: lluvia"
+      ],
+      "change": "Se establece el ambiente de bullying en el colegio y la postura de KAP."
+     },
+     {
+      "title": "Episodio 4: La primera rima",
+      "location": "Recreo del colegio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Dani levanta el cuaderno de KAP en el aire, mostrándolo a todos los compañeros que están alrededor."
+       },
+       {
+        "speaker": "Dani",
+        "text": "¡Miren esto! ¿Quién creía que este chico tenía algo así?"
+       },
+       {
+        "speaker": "Compañero A",
+        "text": "¿Y qué es, un cuaderno de dibujos?"
+       },
+       {
+        "speaker": "Dani",
+        "text": "No, es su cuaderno de rap. Dice que quiere ser millonario con su música."
+       },
+       {
+        "speaker": "Compañero A",
+        "text": "¡Ja! ¿Y qué crees que va a hacer con eso? ¡Ni siquiera tiene zapatos nuevos!"
+       },
+       {
+        "speaker": "KAP",
+        "text": "No es… no es nada… es solo…"
+       }
+      ],
+      "memory": [
+       "acto: conflicto | Dani aparece con el cuaderno de KAP y lo muestra ante todos. Los compañeros se ríen y le lanzan comentarios sobre cómo un niño pobre quiere…"
+      ],
+      "fn": "conflicto",
+      "stage": "problema",
+      "shot": "medio",
+      "time": "mañana",
+      "interior": false,
+      "directions": [
+       "plano: medio KAP",
+       "gesto: Dani senala",
+       "expresion: KAP preocupado",
+       "camara: seguir Dani"
+      ],
+      "change": "El cuaderno de KAP se convierte en el centro de atención y la burla se intensifica."
+     },
+     {
+      "title": "Episodio 4: La primera rima",
+      "location": "Recreo del colegio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Compañero A se acerca a KAP con una sonrisa burlona, cruzando los brazos."
+       },
+       {
+        "speaker": "Compañero A",
+        "text": "¿No te das cuenta, KAP? Tú no tienes talento. Si quieres hacer rap, improvisa algo ya."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No… no sé improvisar. No tengo palabras."
+       },
+       {
+        "speaker": "Compañero A",
+        "text": "Vamos, ¡hazlo! ¿O solo eres un pobre que soña con ser famoso?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "Mi camiseta está rota… mis zapatos también… no sé si tengo palabras para nada."
+       },
+       {
+        "speaker": "Compañero B",
+        "text": "KAP… no estás solo. Tú puedes."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Esto es lo único que sé: Mi hermano, mi camiseta, mi sueño… y el cuaderno que me robaron."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo | Compañero A desafía a KAP a improvisar algo, burlándose de su falta de talento. KAP se siente enrojecer y mira hacia el suelo."
+      ],
+      "fn": "conflicto",
+      "stage": "escalada",
+      "shot": "primer plano",
+      "time": "mañana",
+      "interior": false,
+      "directions": [
+       "plano: primer plano KAP",
+       "gesto: KAP encoge hombros",
+       "camara: zoom 1.2"
+      ],
+      "change": "KAP se siente abrumado, pero algo dentro de él empieza a cambiar."
+     },
+     {
+      "title": "Episodio 4: La primera rima",
+      "location": "Recreo del colegio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se para en medio del recreo, con la camiseta gris desgastada y los ojos brillando de rabia y miedo."
+       },
+       {
+        "speaker": "Compañero A",
+        "text": "Vamos, KAP. Si quieres hacer rap, improvisa algo ya."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Mi camiseta se rompió hace meses, pero no me importa. Mi hermano come con lo que queda, y aún así sonríe."
+       },
+       {
+        "speaker": "Compañero B",
+        "text": "¿En serio? No sabía que… que te preocupabas tanto por él."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No soy rico, pero tengo un sueño. Y aunque me burlen, algún día será mío."
+       }
+      ],
+      "memory": [
+       "acto: emocional | KAP, en un momento de valentía y frustración, abre la boca y improvisa una rima sobre su vida, sus padres y sus sueños."
+      ],
+      "fn": "arco-de-kap",
+      "stage": "decision",
+      "shot": "general",
+      "time": "mañana",
+      "interior": false,
+      "directions": [
+       "plano: general",
+       "expresion: KAP enfadado",
+       "gesto: KAP senala a Compañero A",
+       "mira: KAP izquierda",
+       "camara: zoom 1.2"
+      ],
+      "change": "KAP improvisa por primera vez una rima, marcando un hito en su evolución."
+     },
+     {
+      "title": "Episodio 4: La primera rima",
+      "location": "Recreo del colegio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se para en medio del recreo, con la camiseta gris desgastada y el cuaderno en la mano. Tiene la boca entreabierta, como si no supiera qué decir."
+       },
+       {
+        "speaker": "Compañero A",
+        "text": "Vamos, KAP. Si quieres hacer rap, improvisa algo ya."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Mi camiseta se rompió hace meses, pero no me importa. Mi hermano come con lo que queda, y aún así sonríe."
+       },
+       {
+        "speaker": "Compañero B",
+        "text": "No está tan mal..."
+       },
+       {
+        "speaker": "Compañero A",
+        "text": "¿Qué? ¿Te gusta el pobre? ¡Pues no te hagas el héroe, KAP!"
+       }
+      ],
+      "memory": [],
+      "fn": "revelar-informacion",
+      "stage": "consecuencia",
+      "shot": "medio",
+      "time": "mañana",
+      "interior": false,
+      "directions": [
+       "plano: medio KAP",
+       "expresion: KAP pensativo",
+       "camara: seguir KAP"
+      ],
+      "change": "Algunos compañeros reaccionan con sorpresa a la rima de KAP, lo que deja abierta la posibilidad de un cambio en el futuro."
+     },
+     {
+      "title": "Episodio 4: La primera rima",
+      "location": "Recreo del colegio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP cierra los ojos con fuerza, inspira profundamente y abre la boca. Su voz suena débil al principio, pero poco a poco se fortalece."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Esta camiseta no es de marca, pero me cubre. Estos zapatos están rotos, pero no me dejan caer."
+       },
+       {
+        "speaker": "Compañero A",
+        "text": "¿En serio? ¿Esto es todo?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "No tengo un estudio, pero tengo palabras. No tengo dinero, pero tengo un sueño."
+       },
+       {
+        "speaker": "Compañero B",
+        "text": "…no está tan mal."
+       }
+      ],
+      "memory": [
+       "acto: resolucion | KAP termina su rima y se queda mirando al suelo, sin saber si lo hizo bien o mal. Algunos compañeros se van, otros lo miran con curiosidad."
+      ],
+      "fn": "desarrollar-personaje",
+      "stage": "resolucion",
+      "shot": "primer plano",
+      "time": "mañana",
+      "interior": false,
+      "directions": [
+       "plano: primer plano KAP",
+       "expresion: KAP serio",
+       "camara: seguir KAP"
+      ],
+      "change": "KAP termina su primer intento de rima y empieza a reflexionar sobre lo que acaba de hacer."
+     },
+     {
+      "title": "Episodio 4: La primera rima",
+      "location": "Recreo del colegio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se queda quieto en el centro del recreo, con el cuaderno aún en la mano y los ojos bajos. Algunos compañeros ya se han ido, otros lo miran con curiosidad."
+       },
+       {
+        "speaker": "Compañero B",
+        "text": "Eh, KAP… ¿no te gustó lo que dijiste?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "No sé si fue bien… No me salió como quería."
+       },
+       {
+        "speaker": "Compañero B",
+        "text": "Pero sí fue… algo. ¿Quieres seguir aprendiendo? Yo puedo ayudarte."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Tú… quieres ayudarme?"
+       }
+      ],
+      "memory": [
+       "acto: gancho | Al final del recreo, Compañero B se acerca a KAP y le pregunta si quiere seguir aprendiendo a hacer rima. KAP lo mira con duda.",
+       "relacion: KAP, Compañero B, desconocido, +1"
+      ],
+      "fn": "preparar-gancho",
+      "stage": "gancho",
+      "shot": "medio",
+      "time": "mañana",
+      "interior": false,
+      "directions": [
+       "plano: medio KAP",
+       "expresion: KAP pensativo",
+       "gesto: Compañero B señala a KAP con interés",
+       "camara: seguir KAP"
+      ],
+      "change": "Se deja abierta la posibilidad de que KAP encuentre un nuevo aliado en el colegio."
+     },
+     {
+      "title": "Episodio 4: La primera rima",
+      "location": "Recreo del colegio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP camina hacia la salida del recreo, con el cuaderno en la mano. Mira hacia el cielo como si estuviera pensando en su futuro."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Esta camiseta no es de marca, pero me cubre."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Estos zapatos están rotos, pero no me dejan caer."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Dani ríe, pero no sé si lo hace por mí o por burlarse."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Tal vez… algún día, nadie se ría más de mí."
+       }
+      ],
+      "memory": [
+       "gancho: Algunos compañeros empiezan a escuchar con interés lo que dice KAP, pero otros lo siguen humillando. El episodio termina con KAP mirando el cuaderno, consciente de que algo ha cambiado, aunque no sabe si es para mejor."
+      ],
+      "fn": "preparar-gancho",
+      "stage": "gancho",
+      "shot": "general",
+      "time": "mañana",
+      "interior": false,
+      "directions": [
+       "plano: general",
+       "expresion: KAP pensativo",
+       "camina: KAP a derecha"
+      ],
+      "change": "Se deja abierta la posibilidad de que KAP siga desarrollando su talento y sus sueños."
+     }
+    ]
+   }
+  },
+  {
+   "id": "E5",
+   "title": "Episodio 5",
+   "request": "Crea el episodio 5, continuando el episodio 4. Lo que hizo KAP en el episodio 4 trae consecuencias que llegan a casa y afectan a su hermano pequeño; KAP tiene que decidir qué hace.",
+   "ms": 6628980,
+   "peakMb": 11829,
+   "sysPeakMb": 12573,
+   "contextTokens": 2043,
+   "ok": true,
+   "irValid": true,
+   "irValidFirstTry": false,
+   "json": {
+    "attempts": 19,
+    "retries": 6,
+    "jsonErrors": 0,
+    "schemaErrors": 0,
+    "lengthRetries": 0,
+    "memoryDirectiveErrors": 0
+   },
+   "irErrors": [],
+   "usage": {
+    "promptTokens": 107487,
+    "outputTokens": 9099,
+    "totalMs": 6628483.193375998,
+    "loadMs": 10805.136046000001,
+    "promptMs": 666854.3609999998,
+    "evalMs": 5949334.084
+   },
+   "tokensPerSec": 1.53,
+   "episode": {
+    "scenes": 12,
+    "estimatedSec": 332,
+    "words": 935,
+    "title": "Episodio 5: El peso de la verdad",
+    "logline": "Después de una jornada difícil en el colegio, KAP regresa a casa y descubre que su hermano pequeño está afectado por los comentarios de sus compañeros. Ahora, KAP debe decidir si enfrenta la realidad o sigue hundiéndose en el silencio."
+   },
+   "continuity": {
+    "critical": [],
+    "warnings": [
+     "relacion-contradice: Hermano de KAP y KAP ya se conocían (relación «afecto» desde canon inicial); la escena 6 los presenta como si se conocieran ahora.",
+     "relacion-contradice: Cambio brusco de confianza entre KAP y Hermano de KAP: de 2 («hermanos») a -1 («hermano») sin acontecimiento que lo justifique.",
+     "duracion: El episodio dura ≈ 6.4 min y el formato es ≈ 5 min (4–6 min)."
+    ],
+    "info": 5
+   },
+   "narrative": {
+    "error": 0,
+    "warning": 2,
+    "info": 1,
+    "rules": [
+     "dialogo-duplicado",
+     "escena-sin-aporte",
+     "cierre-moralizante"
+    ],
+    "findings": [
+     {
+      "severity": "warning",
+      "rule": "narrativa-dialogo-duplicado",
+      "text": "La frase «KAP mira por la ventana con la camiseta gris desgastada, el rostro il…» aparece 2 veces (escenas 2, 12).",
+      "scene": 1
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-escena-sin-aporte",
+      "text": "La escena 12 no aporta información nueva respecto a las anteriores.",
+      "scene": 11
+     },
+     {
+      "severity": "info",
+      "rule": "narrativa-cierre-moralizante",
+      "text": "El cierre tiene tono de lección o superación. No todos los episodios deben terminar con KAP más fuerte: ¿encaja con lo que pasa?",
+      "scene": 11
+     }
+    ],
+    "taggedRules": [
+     "dialogo-duplicado",
+     "escena-sin-aporte",
+     "cierre-moralizante"
+    ]
+   },
+   "mode": "arc",
+   "arc": {
+    "title": "Episodio 5: El peso de la verdad",
+    "logline": "Después de una jornada difícil en el colegio, KAP regresa a casa y descubre que su hermano pequeño está afectado por los comentarios de sus compañeros. Ahora, KAP debe decidir si enfrenta la realidad o sigue hundiéndose en el silencio.",
+    "assumptions": [
+     "El episodio se centra en el impacto emocional del bullying en el hogar, especialmente en el hermano de KAP.",
+     "No se incluyen personajes nuevos que no sean absolutamente necesarios para la historia."
+    ],
+    "problem": "El bullying sufrido por KAP en el colegio ha llegado a casa y afecta a su hermano pequeño, quien ahora se siente diferente y menospreciado por comentarios que escuchó en el recreo.",
+    "kapWant": "Proteger a su hermano y evitar que sufra lo mismo que él, pero al mismo tiempo luchar contra la vergüenza y la frustración por no ser escuchado ni apoyado por nadie.",
+    "kapChoice": "KAP decide hablar abiertamente con su hermano sobre lo que pasó en el colegio, y le pide que no deje que las palabras de otros le afecten. A pesar de esto, no le dice a sus padres lo que está pasando.",
+    "consequence": "Su hermano, aunque reconfortado por las palabras de KAP, comienza a mostrar signos de inseguridad y miedo. KAP se siente responsable, pero no encuentra la manera de cambiar la situación.",
+    "outcome": "ambiguo",
+    "hook": "Aunque KAP intenta proteger a su hermano, el peso de las palabras de sus compañeros y la falta de apoyo en casa le hacen dudar si seguir luchando por su sueño o abandonarlo todo.",
+    "extraCharacters": [
+     {
+      "name": "Hermano de KAP",
+      "why": "Es necesario para mostrar el impacto emocional del bullying en el hogar y desarrollar la relación entre los hermanos."
+     }
+    ],
+    "castActions": [
+     {
+      "name": "Hermano de KAP",
+      "does": "Escucha con atención las palabras de KAP, pero luego se encierra en sí mismo, mostrando inseguridad y miedo."
+     }
+    ],
+    "usedFromMemory": [
+     "Situación familiar de KAP (padres y drogas)",
+     "Cuidar y proteger a su hermano",
+     "Bullying hacia KAP",
+     "El sueño de KAP: ser millonario gracias a la música"
+    ],
+    "newCharacters": [],
+    "newPlaces": [],
+    "beats": [
+     {
+      "stage": "inicio",
+      "fn": "avanzar-historia",
+      "summary": "KAP llega a casa con paso lento y la mirada baja. En el umbral de la puerta, se encuentra con su hermano pequeño sentado en el suelo, jugando solo.",
+      "location": "Casa de KAP (interior, tarde)",
+      "characters": [
+       "KAP",
+       "Hermano de KAP"
+      ],
+      "change": "Se establece la tensión emocional y la soledad en la que vive KAP en casa.",
+      "why": "Para mostrar el impacto del colegio en su vida personal y familiar.",
+      "time": "tarde",
+      "interior": true,
+      "shot": "general",
+      "visual": "KAP con la camiseta gris desgastada, mirando al suelo. Su hermano está sentado en el suelo, jugando con un juguete roto."
+     },
+     {
+      "stage": "inicio",
+      "fn": "avanzar-historia",
+      "summary": "El episodio empieza donde terminó el anterior, con KAP mirando por la ventana, pensativo. Su hermano está dormido en el suelo.",
+      "location": "Casa de KAP (interior, noche)",
+      "characters": [
+       "KAP"
+      ],
+      "change": "Se establece la continuidad del episodio anterior y se introduce el ambiente emocional.",
+      "why": "Para seguir el hilo narrativo desde el final del episodio anterior sin interrupciones.",
+      "time": "noche",
+      "interior": true,
+      "shot": "general",
+      "visual": "KAP mira por la ventana, con la camiseta gris desgastada. Su hermano está dormido en el suelo."
+     },
+     {
+      "stage": "problema",
+      "fn": "revelar-informacion",
+      "summary": "El hermano de KAP le pregunta si los niños del colegio se burlaron de él. KAP evita responder directamente, pero su silencio dice más que sus palabras.",
+      "location": "Casa de KAP (interior, tarde)",
+      "characters": [
+       "KAP",
+       "Hermano de KAP"
+      ],
+      "change": "Se revela que el hermano de KAP escuchó comentarios sobre KAP en el colegio y ahora está preocupado.",
+      "why": "Para mostrar cómo el bullying afecta a la familia indirectamente.",
+      "time": "tarde",
+      "interior": true,
+      "shot": "medio",
+      "visual": "KAP mira al suelo, con la cabeza gacha. El hermano lo observa con expresión de preocupación."
+     },
+     {
+      "stage": "problema",
+      "fn": "revelar-informacion",
+      "summary": "KAP recuerda los comentarios de Dani y sus compañeros. Se pregunta si su sueño de ser millonario es solo una ilusión.",
+      "location": "Casa de KAP (interior, noche)",
+      "characters": [
+       "KAP"
+      ],
+      "change": "Se revela la duda interna de KAP sobre su sueño y su futuro.",
+      "why": "Para mostrar cómo el bullying afecta no solo su vida social, sino también su confianza en sí mismo.",
+      "time": "noche",
+      "interior": true,
+      "shot": "primer plano",
+      "visual": "KAP mira al suelo con expresión triste y dudosa."
+     },
+     {
+      "stage": "escalada",
+      "fn": "conflicto",
+      "summary": "El hermano de KAP empieza a jugar menos y a mostrarse más callado, lo que preocupa a KAP. KAP intenta distraerlo con una canción que escribió.",
+      "location": "Casa de KAP (interior, tarde)",
+      "characters": [
+       "KAP",
+       "Hermano de KAP"
+      ],
+      "change": "El hermano de KAP se muestra más distante y callado, lo que afecta a KAP emocionalmente.",
+      "why": "Para mostrar cómo el bullying no solo afecta a KAP, sino también a su entorno cercano.",
+      "time": "tarde",
+      "interior": true,
+      "shot": "general",
+      "visual": "El hermano de KAP juega con las manos en el aire, sin hacer ruido. KAP canta una canción con voz débil."
+     },
+     {
+      "stage": "escalada",
+      "fn": "conflicto",
+      "summary": "KAP escucha a sus padres discutiendo en otra habitación. Las palabras de drogas, culpa y desesperanza le hacen sentir que no tiene salida.",
+      "location": "Casa de KAP (interior, noche)",
+      "characters": [
+       "KAP"
+      ],
+      "change": "Se introduce el conflicto familiar como una nueva capa de presión sobre KAP.",
+      "why": "Para mostrar cómo la situación familiar complica aún más su vida y su sueño.",
+      "time": "noche",
+      "interior": true,
+      "shot": "general",
+      "visual": "KAP escucha a sus padres discutir en otra habitación. Su expresión es de angustia."
+     },
+     {
+      "stage": "decision",
+      "fn": "arco-de-kap",
+      "summary": "KAP toma una decisión: hablar con su hermano sobre lo que pasó en el colegio. Le explica que no todos son malos, pero que hay personas que se burlan de él y que eso no significa que él sea menos valioso.",
+      "location": "Casa de KAP (interior, tarde)",
+      "characters": [
+       "KAP",
+       "Hermano de KAP"
+      ],
+      "change": "KAP decide enfrentar el problema directamente con su hermano, en lugar de callarlo.",
+      "why": "Para desarrollar el arco emocional de KAP y mostrar su crecimiento como protector de su hermano.",
+      "time": "tarde",
+      "interior": true,
+      "shot": "medio",
+      "visual": "KAP habla con voz firme, pero con lágrimas en los ojos. El hermano lo mira con atención."
+     },
+     {
+      "stage": "decision",
+      "fn": "arco-de-kap",
+      "summary": "KAP decide no rendirse. Aunque siente que todo está contra él, toma una decisión: seguir escribiendo sus canciones y no dejar que el bullying ni la familia lo hagan caer.",
+      "location": "Casa de KAP (interior, noche)",
+      "characters": [
+       "KAP"
+      ],
+      "change": "KAP decide mantener su sueño a pesar de las dificultades, mostrando un cambio en su actitud interna.",
+      "why": "Para mostrar el crecimiento de KAP y su decisión de no rendirse, aunque aún no tenga respaldo ni apoyo externo.",
+      "time": "noche",
+      "interior": true,
+      "shot": "general",
+      "visual": "KAP abre un cuaderno y empieza a escribir con determinación."
+     },
+     {
+      "stage": "consecuencia",
+      "fn": "preparar-consecuencia",
+      "summary": "El hermano de KAP intenta entender, pero al final se encierra en un rincón y empieza a llorar. KAP lo mira con frustración, sin saber qué hacer.",
+      "location": "Casa de KAP (interior, tarde)",
+      "characters": [
+       "KAP",
+       "Hermano de KAP"
+      ],
+      "change": "El hermano de KAP muestra signos de inseguridad y miedo, lo que profundiza el malestar en KAP.",
+      "why": "Para preparar la consecuencia emocional de la decisión de KAP y mostrar que no todo se resuelve con palabras.",
+      "time": "tarde",
+      "interior": true,
+      "shot": "primer plano",
+      "visual": "El hermano de KAP llora en silencio, mientras KAP lo observa con expresión triste."
+     },
+     {
+      "stage": "consecuencia",
+      "fn": "preparar-consecuencia",
+      "summary": "El episodio termina con KAP escribiendo una nueva canción, pero su hermano aún no se ha recuperado emocionalmente del bullying. El peso de la responsabilidad lo abruma.",
+      "location": "Casa de KAP (interior, noche)",
+      "characters": [
+       "KAP",
+       "Hermano de KAP"
+      ],
+      "change": "Se deja entrever que KAP está en un punto de inflexión personal, pero el camino sigue siendo difícil.",
+      "why": "Para preparar una consecuencia emocional que marque el inicio de un cambio significativo en su vida.",
+      "time": "noche",
+      "interior": true,
+      "shot": "general",
+      "visual": "KAP escribe con determinación. Su hermano sigue dormido, inseguro."
+     },
+     {
+      "stage": "resolucion",
+      "fn": "desarrollar-personaje",
+      "summary": "KAP se sienta junto a su hermano y le dice que no está solo. Aunque no resuelve el problema, esta pequeña muestra de apoyo empieza a reconfortar al hermano.",
+      "location": "Casa de KAP (interior, tarde)",
+      "characters": [
+       "KAP",
+       "Hermano de KAP"
+      ],
+      "change": "Se muestra una conexión emocional entre KAP y su hermano, aunque el problema no está resuelto.",
+      "why": "Para desarrollar la relación entre los hermanos y mostrar que KAP empieza a crecer emocionalmente.",
+      "time": "tarde",
+      "interior": true,
+      "shot": "general",
+      "visual": "KAP se sienta junto a su hermano. El hermano le sonríe tímidamente."
+     },
+     {
+      "stage": "gancho",
+      "fn": "preparar-gancho",
+      "summary": "El episodio termina con KAP mirando por la ventana, pensativo. Su hermano duerme en el suelo, y KAP siente que algo dentro de él está cambiando.",
+      "location": "Casa de KAP (interior, noche)",
+      "characters": [
+       "KAP"
+      ],
+      "change": "Se deja entrever un cambio interno en KAP, lo que prepara el siguiente episodio.",
+      "why": "Para dejar un gancho emocional y mostrar la evolución interna de KAP.",
+      "time": "noche",
+      "interior": true,
+      "shot": "general",
+      "visual": "KAP mira por la ventana con expresión pensativa. Su hermano duerme en el suelo."
+     }
+    ]
+   },
+   "script": "# Casa de KAP (interior, tarde)\n[mood: tarde, interior]\n[plano: general]\n[expresion: KAP triste]\n[gesto: Hermano senala]\n[camina: KAP a izquierda]\nKAP entra en la casa con paso lento, la camiseta gris desgastada le cuelga de los hombros. Sus ojos miran al suelo.\nHERMANO DE KAP: ¿Kap? ¿Vienes a jugar conmigo?\nKAP: No… no tengo ganas de jugar ahora.\nHERMANO DE KAP: Pero… yo ya no tengo más bloques. Me los rompí.\nKAP: Entonces, busca otros. Yo… tengo que pensar en algo.\nHERMANO DE KAP: ¿En qué piensas tanto?\nKAP: En cosas que no quiero que tú escuches.\n[acto: inicio | KAP llega a casa con paso lento y la mirada baja. En el umbral de la puerta, se encuentra con su hermano pequeño sentado en el suelo, jugan…]\n\n# Casa de KAP (interior, noche)\n[mood: noche, interior]\n[plano: general]\n[expresion: KAP pensativo]\n[mira: KAP izquierda]\n[camara: seguir KAP]\nKAP mira por la ventana con la camiseta gris desgastada, el rostro iluminado por la luz de la luna. Su hermano duerme en el suelo, envuelto en una manta vieja.\nKAP: ¿Por qué siempre tienen que ser así?\nKAP se acerca al suelo con paso lento y mira a su hermano dormido. Se sienta a su lado, observando cómo respira con dificultad.\nKAP: No quiero que te hagan lo mismo que me hacen a mí.\nKAP coloca una mano sobre la cabeza de su hermano, acariciándole el cabello con cuidado. La habitación está en silencio, solo interrumpida por el sonido de un reloj en la pared.\n[relacion: KAP, Hermano de KAP, afecto, +1]\n\n# Casa de KAP (interior, tarde)\n[mood: tarde, interior]\n[plano: medio KAP]\n[expresion: Hermano preocupado]\n[gesto: Hermano senala]\n[camina: Hermano a derecha]\nEl hermano de KAP se acerca tímidamente a KAP, sosteniendo un bloque roto en la mano.\nHERMANO DE KAP: ¿Los niños del colegio te burlaron de nuevo?\nKAP mira al suelo, con las manos en los bolsillos. No responde de inmediato.\nHERMANO DE KAP: No tienes que decirme si no quieres… pero yo escuché algo en el recreo.\nKAP: No es nada… solo cosas de niños.\n[acto: conflicto | El hermano de KAP le pregunta si los niños del colegio se burlaron de él. KAP evita responder directamente, pero su silencio dice más que s…]\n[conoce: Hermano de KAP, KAP]\n[relacion: KAP, Hermano de KAP, hermanos, +2]\n\n# Casa de KAP (interior, noche)\n[mood: noche, interior]\n[plano: primer plano KAP]\n[expresion: KAP triste]\n[gesto: KAP piensa]\n[camara: zoom 1.3]\n[vfx: oscurecer]\nKAP se sienta en el suelo, mirando al vacío con la camiseta gris desgastada. Sus manos se entrelazan y luego se separan lentamente.\nKAP: ¿Y si… todo esto es solo un sueño?\nKAP: ¿Y si nunca seré nada más que un chico de la calle que soña con ser millonario?\nKAP: ¿Qué me queda si no puedo ni siquiera defenderme?\nKAP: ¿Por qué me hacen esto si no tienen nada mejor que hacer?\n\n# Casa de KAP (interior, tarde)\n[mood: tarde, interior]\n[plano: general]\n[expresion: KAP triste]\n[gesto: Hermano encoge]\n[mira: Hermano izquierda]\n[camara: zoom 1.3]\nEl hermano de KAP se sienta en el suelo, mirando al vacío con las manos cruzadas sobre las rodillas. No dice nada, no mueve un músculo.\nHERMANO DE KAP: ¿Por qué no cantas más, KAP?\nKAP se sienta a su lado, mira al suelo y suspira con la camiseta gris desgastada.\nKAP: No sé… no me sale bien.\nHERMANO DE KAP: Yo… yo sí quiero escuchar. Pero solo si es sobre mí.\nKAP mira a su hermano con expresión triste, luego baja la cabeza y comienza a cantar una canción débilmente.\n[acto: desarrollo | El hermano de KAP empieza a jugar menos y a mostrarse más callado, lo que preocupa a KAP. KAP intenta distraerlo con una canción que escrib…]\n\n# Casa de KAP (interior, noche)\n[mood: noche, interior]\n[plano: general]\n[mira: KAP izquierda]\n[camara: zoom 1.2]\n[vfx: oscurecer]\nKAP se acerca lentamente a la puerta de la habitación donde sus padres discuten. Escucha atento, con la camiseta gris desgastada.\nKAP: ¿Por qué siempre tienen que hablar así?\nDe repente, una voz elevada se escucha desde dentro: ¡No puedo más! ¡Todo es mi culpa!\nKAP: No… no quiero escuchar esto. No quiero verlo.\nKAP se apoya contra la pared, cerrando los ojos con fuerza. Su respiración se acelera.\n\n# Casa de KAP (interior, tarde)\n[mood: tarde, interior]\n[plano: medio KAP]\n[expresion: KAP triste]\n[gesto: KAP piensa]\n[mira: KAP izquierda]\n[camara: seguir KAP]\nKAP se sienta frente a su hermano en el suelo, con la camiseta gris desgastada. Sus manos se mueven lentamente, como si estuvieran buscando palabras.\nKAP: Hermano… hay algo que quiero decirte.\nHERMANO DE KAP: ¿Sobre qué?\nKAP: En el colegio… algunos niños se ríen de mí. No por nada, sino porque soy diferente. Pero eso no significa que yo sea menos valioso.\nHERMANO DE KAP: ¿Y por qué se ríen de ti?\nKAP: Porque tengo sueños… y ellos no entienden. Pero aunque me burlen, no dejaré que eso me quite lo que quiero.\n[acto: emocional | KAP toma una decisión: hablar con su hermano sobre lo que pasó en el colegio. Le explica que no todos son malos, pero que hay personas que …]\n\n# Casa de KAP (interior, noche)\n[mood: noche, interior]\n[plano: general]\n[camara: seguir KAP]\nKAP abre el cuaderno con las manos temblorosas, pero esta vez no baja la mirada.\nKAP: No voy a dejar que me hagan callar. No voy a dejar que nadie me quite esto.\nEmpieza a escribir con rapidez, moviendo la pluma como si estuviera dibujando una línea invisible en el aire.\nKAP: Mis canciones no son para ellos. Son para mí. Para mi hermano. Para cuando sea grande.\nLa luz de la luna entra por la ventana, iluminando las palabras que va escribiendo.\n\n# Casa de KAP (interior, tarde)\n[mood: tarde, interior]\n[plano: primer plano KAP]\n[expresion: KAP triste]\n[camara: zoom 1.2]\nKAP se sienta en el suelo, mirando a su hermano con expresión triste. Su hermano se encierra en un rincón, con las manos sobre la cabeza.\nHERMANO DE KAP: No entiendo… ¿por qué los niños me miran así? ¿Por qué no me quieren?\nKAP se acerca a su hermano, con la camiseta gris desgastada. Le tiende la mano, pero el hermano no la toma.\nKAP: No es por ti… es por lo que dicen de mí. No te deben hacer sentir mal.\nHERMANO DE KAP: Pero si no te quieren a ti… ¿qué me querrán a mí?\nKAP baja la mirada, con las manos apretadas. Su hermano comienza a llorar en silencio.\n[relacion: KAP, Hermano de KAP, hermano, -1]\n\n# Casa de KAP (interior, noche)\n[mood: noche, interior]\n[plano: general]\n[expresion: KAP, pensativo]\n[gesto: Hermano senala]\n[camara: seguir KAP]\nKAP se sienta en el suelo con el cuaderno abierto, mirando la luz de la luna que entra por la ventana rota.\nKAP: Tengo que escribir algo… algo que no me haga olvidar lo que pasó hoy.\nHERMANO DE KAP: Kap… ¿por qué siempre tienes que escribir tanto?\nKAP: Porque si no lo hago, me olvido de quién soy.\nHERMANO DE KAP: Pero… ¿no te duele? ¿No te da miedo?\nKAP: Sí. Pero es lo único que me queda.\n[relacion: KAP, Hermano de KAP, hermanos, +1]\n\n# Casa de KAP (interior, tarde)\n[mood: tarde, interior]\n[plano: general]\n[expresion: KAP neutral]\n[expresion: Hermano triste]\n[gesto: KAP encoge]\n[camara: seguir KAP]\nKAP se sienta junto a su hermano en el suelo, con la camiseta gris desgastada. El hermano lo mira con ojos grandes, esperando algo.\nHERMANO DE KAP: ¿Tú… también te sientes solo, KAP?\nKAP: No… no estoy solo. Tú estás aquí. Y aunque no sé qué pasará mañana, hoy no estoy solo.\nHERMANO DE KAP: Pero… ¿y si los niños del colegio se ríen de mí también? ¿Y si me siento igual que tú?\nKAP: Entonces… cantaré más fuerte. Por ti, por mí, por todos los que no tienen voz.\n[acto: resolucion | KAP se sienta junto a su hermano y le dice que no está solo. Aunque no resuelve el problema, esta pequeña muestra de apoyo empieza a reconf…]\n\n# Casa de KAP (interior, noche)\n[mood: noche, interior]\n[plano: general]\n[expresion: KAP pensativo]\n[mira: KAP izquierda]\n[camara: zoom 1.2]\nKAP mira por la ventana con la camiseta gris desgastada, el rostro iluminado por la luz de la luna. Su hermano duerme en el suelo, envuelto en una manta vieja.\nKAP: ¿Y si… algún día, no soy solo un chico de la calle que soña con ser millonario?\nKAP: ¿Y si… puedo hacer algo más?\nKAP: ¿Y si… no me rindo?\nKAP: Algo dentro de mí… está cambiando.\n[acto: gancho | El episodio termina con KAP mirando por la ventana, pensativo. Su hermano duerme en el suelo, y KAP siente que algo dentro de él está cambi…]\n[gancho: Aunque KAP intenta proteger a su hermano, el peso de las palabras de sus compañeros y la falta de apoyo en casa le hacen dudar si seguir luchando por su sueño o abandonarlo todo.]\n",
+   "gate": {
+    "regenerated": 6,
+    "dropped": 0,
+    "issues": {
+     "corta": 3,
+     "repite-frase": 6,
+     "voz-adulta": 1,
+     "sin-cambio": 3
+    }
+   },
+   "outcome": "ambiguo",
+   "checks": [
+    {
+     "id": "estructura-6-actos",
+     "ok": true,
+     "note": "faltan: —"
+    },
+    {
+     "id": "gancho",
+     "ok": true
+    },
+    {
+     "id": "protagonista",
+     "ok": true
+    },
+    {
+     "id": "sin-errores-criticos",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "sin-exito-prematuro",
+     "ok": true
+    },
+    {
+     "id": "directivas-validas",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "espanol",
+     "ok": true
+    },
+    {
+     "id": "diversidad-lexica",
+     "ok": true,
+     "note": "0.30"
+    }
+   ],
+   "compliance": 1,
+   "proxy": {
+    "score": 7,
+    "dialogueRatio": 0.65,
+    "locations": 2,
+    "repeatedSentences": 2
+   },
+   "warnings": [
+    "El modelo desordenó las etapas del arco; se han reordenado.",
+    "Escena 12: La frase «KAP mira por la ventana con la camiseta gris desgastada, el rostro iluminado por» ya se había dicho; no repitas diálogos.",
+    "Escena 12: La escena apenas añade información nueva respecto a lo ya escrito.",
+    "Narrativa (warning) · dialogo-duplicado: La frase «KAP mira por la ventana con la camiseta gris desgastada, el rostro il…» aparece 2 veces (escenas 2, 12).",
+    "Narrativa (warning) · escena-sin-aporte: La escena 12 no aporta información nueva respecto a las anteriores.",
+    "Narrativa (info) · cierre-moralizante: El cierre tiene tono de lección o superación. No todos los episodios deben terminar con KAP más fuerte: ¿encaja con lo que pasa?"
+   ],
+   "draft": {
+    "title": "Episodio 5: El peso de la verdad",
+    "logline": "Después de una jornada difícil en el colegio, KAP regresa a casa y descubre que su hermano pequeño está afectado por los comentarios de sus compañeros. Ahora, KAP debe decidir si enfrenta la realidad o sigue hundiéndose en el silencio.",
+    "assumptions": [
+     "El episodio se centra en el impacto emocional del bullying en el hogar, especialmente en el hermano de KAP.",
+     "No se incluyen personajes nuevos que no sean absolutamente necesarios para la historia."
+    ],
+    "scenes": [
+     {
+      "title": "Episodio 5: El peso de la verdad",
+      "location": "Casa de KAP (interior, tarde)",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP entra en la casa con paso lento, la camiseta gris desgastada le cuelga de los hombros. Sus ojos miran al suelo."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¿Kap? ¿Vienes a jugar conmigo?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "No… no tengo ganas de jugar ahora."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "Pero… yo ya no tengo más bloques. Me los rompí."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Entonces, busca otros. Yo… tengo que pensar en algo."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¿En qué piensas tanto?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "En cosas que no quiero que tú escuches."
+       }
+      ],
+      "memory": [
+       "acto: inicio | KAP llega a casa con paso lento y la mirada baja. En el umbral de la puerta, se encuentra con su hermano pequeño sentado en el suelo, jugan…"
+      ],
+      "fn": "avanzar-historia",
+      "stage": "inicio",
+      "shot": "general",
+      "time": "tarde",
+      "interior": true,
+      "directions": [
+       "plano: general",
+       "expresion: KAP triste",
+       "gesto: Hermano de KAP señala el suelo con el juguete roto",
+       "camina: KAP a izquierda hacia el centro de la habitación"
+      ],
+      "change": "Se establece la tensión emocional y la soledad en la que vive KAP en casa."
+     },
+     {
+      "title": "Episodio 5: El peso de la verdad",
+      "location": "Casa de KAP (interior, noche)",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP mira por la ventana con la camiseta gris desgastada, el rostro iluminado por la luz de la luna. Su hermano duerme en el suelo, envuelto en una manta vieja."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Por qué siempre tienen que ser así?"
+       },
+       {
+        "speaker": "",
+        "text": "KAP se acerca al suelo con paso lento y mira a su hermano dormido. Se sienta a su lado, observando cómo respira con dificultad."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No quiero que te hagan lo mismo que me hacen a mí."
+       },
+       {
+        "speaker": "",
+        "text": "KAP coloca una mano sobre la cabeza de su hermano, acariciándole el cabello con cuidado. La habitación está en silencio, solo interrumpida por el sonido de un reloj en la pared."
+       }
+      ],
+      "memory": [
+       "relacion: KAP, Hermano de KAP, afecto, +1"
+      ],
+      "fn": "avanzar-historia",
+      "stage": "inicio",
+      "shot": "general",
+      "time": "noche",
+      "interior": true,
+      "directions": [
+       "plano: general",
+       "expresion: KAP pensativo",
+       "mira: KAP izquierda (hacia la ventana)",
+       "camara: seguir KAP"
+      ],
+      "change": "KAP se sienta junto a su hermano y le muestra una pequeña muestra de afecto, algo que no había hecho antes."
+     },
+     {
+      "title": "Episodio 5: El peso de la verdad",
+      "location": "Casa de KAP (interior, tarde)",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "El hermano de KAP se acerca tímidamente a KAP, sosteniendo un bloque roto en la mano."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¿Los niños del colegio te burlaron de nuevo?"
+       },
+       {
+        "speaker": "",
+        "text": "KAP mira al suelo, con las manos en los bolsillos. No responde de inmediato."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "No tienes que decirme si no quieres… pero yo escuché algo en el recreo."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No es nada… solo cosas de niños."
+       }
+      ],
+      "memory": [
+       "acto: conflicto | El hermano de KAP le pregunta si los niños del colegio se burlaron de él. KAP evita responder directamente, pero su silencio dice más que s…",
+       "conoce: Hermano de KAP, KAP",
+       "relacion: KAP, Hermano de KAP, hermanos, +2"
+      ],
+      "fn": "revelar-informacion",
+      "stage": "problema",
+      "shot": "medio",
+      "time": "tarde",
+      "interior": true,
+      "directions": [
+       "plano: medio KAP",
+       "expresion: Hermano de KAP, preocupado",
+       "gesto: Hermano de KAP, senala",
+       "camina: Hermano de KAP, a derecha"
+      ],
+      "change": "Se revela que el hermano de KAP escuchó comentarios sobre KAP en el colegio y ahora está preocupado."
+     },
+     {
+      "title": "Episodio 5: El peso de la verdad",
+      "location": "Casa de KAP (interior, noche)",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se sienta en el suelo, mirando al vacío con la camiseta gris desgastada. Sus manos se entrelazan y luego se separan lentamente."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Y si… todo esto es solo un sueño?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Y si nunca seré nada más que un chico de la calle que soña con ser millonario?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Qué me queda si no puedo ni siquiera defenderme?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Por qué me hacen esto si no tienen nada mejor que hacer?"
+       }
+      ],
+      "memory": [],
+      "fn": "revelar-informacion",
+      "stage": "problema",
+      "shot": "primer plano",
+      "time": "noche",
+      "interior": true,
+      "directions": [
+       "plano: primer plano KAP",
+       "expresion: KAP triste",
+       "gesto: KAP piensa",
+       "camara: zoom 1.3",
+       "vfx: oscurecer"
+      ],
+      "change": "Se revela la duda interna de KAP sobre su sueño y su futuro."
+     },
+     {
+      "title": "Episodio 5: El peso de la verdad",
+      "location": "Casa de KAP (interior, tarde)",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "El hermano de KAP se sienta en el suelo, mirando al vacío con las manos cruzadas sobre las rodillas. No dice nada, no mueve un músculo."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¿Por qué no cantas más, KAP?"
+       },
+       {
+        "speaker": "",
+        "text": "KAP se sienta a su lado, mira al suelo y suspira con la camiseta gris desgastada."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No sé… no me sale bien."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "Yo… yo sí quiero escuchar. Pero solo si es sobre mí."
+       },
+       {
+        "speaker": "",
+        "text": "KAP mira a su hermano con expresión triste, luego baja la cabeza y comienza a cantar una canción débilmente."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo | El hermano de KAP empieza a jugar menos y a mostrarse más callado, lo que preocupa a KAP. KAP intenta distraerlo con una canción que escrib…"
+      ],
+      "fn": "conflicto",
+      "stage": "escalada",
+      "shot": "general",
+      "time": "tarde",
+      "interior": true,
+      "directions": [
+       "plano: general",
+       "expresion: KAP triste",
+       "gesto: Hermano de KAP encoge",
+       "mira: Hermano de KAP izquierda",
+       "camara: zoom 1.3"
+      ],
+      "change": "El hermano de KAP se muestra más distante y callado, lo que afecta a KAP emocionalmente."
+     },
+     {
+      "title": "Episodio 5: El peso de la verdad",
+      "location": "Casa de KAP (interior, noche)",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se acerca lentamente a la puerta de la habitación donde sus padres discuten. Escucha atento, con la camiseta gris desgastada."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Por qué siempre tienen que hablar así?"
+       },
+       {
+        "speaker": "",
+        "text": "De repente, una voz elevada se escucha desde dentro: ¡No puedo más! ¡Todo es mi culpa!"
+       },
+       {
+        "speaker": "KAP",
+        "text": "No… no quiero escuchar esto. No quiero verlo."
+       },
+       {
+        "speaker": "",
+        "text": "KAP se apoya contra la pared, cerrando los ojos con fuerza. Su respiración se acelera."
+       }
+      ],
+      "memory": [],
+      "fn": "conflicto",
+      "stage": "escalada",
+      "shot": "general",
+      "time": "noche",
+      "interior": true,
+      "directions": [
+       "plano: general",
+       "mira: KAP izquierda (hacia la puerta)",
+       "camara: zoom 1.2",
+       "vfx: oscurecer"
+      ],
+      "change": "Se introduce el conflicto familiar como una nueva capa de presión sobre KAP."
+     },
+     {
+      "title": "Episodio 5: El peso de la verdad",
+      "location": "Casa de KAP (interior, tarde)",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se sienta frente a su hermano en el suelo, con la camiseta gris desgastada. Sus manos se mueven lentamente, como si estuvieran buscando palabras."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Hermano… hay algo que quiero decirte."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¿Sobre qué?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "En el colegio… algunos niños se ríen de mí. No por nada, sino porque soy diferente. Pero eso no significa que yo sea menos valioso."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¿Y por qué se ríen de ti?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "Porque tengo sueños… y ellos no entienden. Pero aunque me burlen, no dejaré que eso me quite lo que quiero."
+       }
+      ],
+      "memory": [
+       "acto: emocional | KAP toma una decisión: hablar con su hermano sobre lo que pasó en el colegio. Le explica que no todos son malos, pero que hay personas que …"
+      ],
+      "fn": "arco-de-kap",
+      "stage": "decision",
+      "shot": "medio",
+      "time": "tarde",
+      "interior": true,
+      "directions": [
+       "plano: medio KAP",
+       "expresion: KAP serio|triste",
+       "gesto: KAP piensa",
+       "mira: KAP izquierda",
+       "camara: seguir KAP"
+      ],
+      "change": "KAP decide enfrentar el problema directamente con su hermano, en lugar de callarlo."
+     },
+     {
+      "title": "Episodio 5: El peso de la verdad",
+      "location": "Casa de KAP (interior, noche)",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP abre el cuaderno con las manos temblorosas, pero esta vez no baja la mirada."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No voy a dejar que me hagan callar. No voy a dejar que nadie me quite esto."
+       },
+       {
+        "speaker": "",
+        "text": "Empieza a escribir con rapidez, moviendo la pluma como si estuviera dibujando una línea invisible en el aire."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Mis canciones no son para ellos. Son para mí. Para mi hermano. Para cuando sea grande."
+       },
+       {
+        "speaker": "",
+        "text": "La luz de la luna entra por la ventana, iluminando las palabras que va escribiendo."
+       }
+      ],
+      "memory": [],
+      "fn": "arco-de-kap",
+      "stage": "decision",
+      "shot": "general",
+      "time": "noche",
+      "interior": true,
+      "directions": [
+       "plano: general",
+       "camara: seguir KAP"
+      ],
+      "change": "KAP decide mantener su sueño a pesar de las dificultades, mostrando un cambio en su actitud interna."
+     },
+     {
+      "title": "Episodio 5: El peso de la verdad",
+      "location": "Casa de KAP (interior, tarde)",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se sienta en el suelo, mirando a su hermano con expresión triste. Su hermano se encierra en un rincón, con las manos sobre la cabeza."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "No entiendo… ¿por qué los niños me miran así? ¿Por qué no me quieren?"
+       },
+       {
+        "speaker": "",
+        "text": "KAP se acerca a su hermano, con la camiseta gris desgastada. Le tiende la mano, pero el hermano no la toma."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No es por ti… es por lo que dicen de mí. No te deben hacer sentir mal."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "Pero si no te quieren a ti… ¿qué me querrán a mí?"
+       },
+       {
+        "speaker": "",
+        "text": "KAP baja la mirada, con las manos apretadas. Su hermano comienza a llorar en silencio."
+       }
+      ],
+      "memory": [
+       "relacion: KAP, Hermano de KAP, hermano, -1"
+      ],
+      "fn": "preparar-consecuencia",
+      "stage": "consecuencia",
+      "shot": "primer plano",
+      "time": "tarde",
+      "interior": true,
+      "directions": [
+       "plano: primer plano KAP",
+       "expresion: KAP triste",
+       "camara: zoom 1.2"
+      ],
+      "change": "El hermano de KAP muestra signos de inseguridad y miedo, lo que profundiza el malestar en KAP."
+     },
+     {
+      "title": "Episodio 5: El peso de la verdad",
+      "location": "Casa de KAP (interior, noche)",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se sienta en el suelo con el cuaderno abierto, mirando la luz de la luna que entra por la ventana rota."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Tengo que escribir algo… algo que no me haga olvidar lo que pasó hoy."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "Kap… ¿por qué siempre tienes que escribir tanto?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "Porque si no lo hago, me olvido de quién soy."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "Pero… ¿no te duele? ¿No te da miedo?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "Sí. Pero es lo único que me queda."
+       }
+      ],
+      "memory": [
+       "relacion: KAP, Hermano de KAP, hermanos, +1"
+      ],
+      "fn": "preparar-consecuencia",
+      "stage": "consecuencia",
+      "shot": "general",
+      "time": "noche",
+      "interior": true,
+      "directions": [
+       "plano: general",
+       "expresion: KAP, pensativo",
+       "gesto: Hermano de KAP, señala el cuaderno",
+       "camara: seguir KAP"
+      ],
+      "change": "KAP empieza a entender que su música no solo es un escape, sino una forma de luchar contra el dolor, aunque aún no sepa cómo proteger a su hermano del mismo."
+     },
+     {
+      "title": "Episodio 5: El peso de la verdad",
+      "location": "Casa de KAP (interior, tarde)",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se sienta junto a su hermano en el suelo, con la camiseta gris desgastada. El hermano lo mira con ojos grandes, esperando algo."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¿Tú… también te sientes solo, KAP?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "No… no estoy solo. Tú estás aquí. Y aunque no sé qué pasará mañana, hoy no estoy solo."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "Pero… ¿y si los niños del colegio se ríen de mí también? ¿Y si me siento igual que tú?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "Entonces… cantaré más fuerte. Por ti, por mí, por todos los que no tienen voz."
+       }
+      ],
+      "memory": [
+       "acto: resolucion | KAP se sienta junto a su hermano y le dice que no está solo. Aunque no resuelve el problema, esta pequeña muestra de apoyo empieza a reconf…"
+      ],
+      "fn": "desarrollar-personaje",
+      "stage": "resolucion",
+      "shot": "general",
+      "time": "tarde",
+      "interior": true,
+      "directions": [
+       "plano: general",
+       "expresion: KAP serio",
+       "expresion: Hermano de KAP triste",
+       "gesto: KAP encoge los hombros",
+       "camara: seguir KAP"
+      ],
+      "change": "El hermano de KAP muestra una pequeña sonrisa y se acurruca junto a KAP, quien le ofrece su hombro como apoyo."
+     },
+     {
+      "title": "Episodio 5: El peso de la verdad",
+      "location": "Casa de KAP (interior, noche)",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP mira por la ventana con la camiseta gris desgastada, el rostro iluminado por la luz de la luna. Su hermano duerme en el suelo, envuelto en una manta vieja."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Y si… algún día, no soy solo un chico de la calle que soña con ser millonario?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Y si… puedo hacer algo más?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Y si… no me rindo?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "Algo dentro de mí… está cambiando."
+       }
+      ],
+      "memory": [
+       "acto: gancho | El episodio termina con KAP mirando por la ventana, pensativo. Su hermano duerme en el suelo, y KAP siente que algo dentro de él está cambi…",
+       "gancho: Aunque KAP intenta proteger a su hermano, el peso de las palabras de sus compañeros y la falta de apoyo en casa le hacen dudar si seguir luchando por su sueño o abandonarlo todo."
+      ],
+      "fn": "preparar-gancho",
+      "stage": "gancho",
+      "shot": "general",
+      "time": "noche",
+      "interior": true,
+      "directions": [
+       "plano: general",
+       "expresion: KAP pensativo",
+       "mira: KAP izquierda",
+       "camara: zoom 1.2"
+      ],
+      "change": "Se deja entrever un cambio interno en KAP, lo que prepara el siguiente episodio."
+     }
+    ]
+   }
+  },
+  {
+   "id": "E6",
+   "title": "Episodio 6",
+   "request": "Crea el episodio 6, continuando el episodio 5. KAP intenta avanzar con la música a pesar de lo ocurrido, pero algo sale mal. Deja un problema abierto para el siguiente episodio.",
+   "ms": 3630952,
+   "peakMb": 11684,
+   "sysPeakMb": 12415,
+   "contextTokens": 2061,
+   "ok": true,
+   "irValid": true,
+   "irValidFirstTry": false,
+   "json": {
+    "attempts": 11,
+    "retries": 2,
+    "jsonErrors": 0,
+    "schemaErrors": 0,
+    "lengthRetries": 0,
+    "memoryDirectiveErrors": 0
+   },
+   "irErrors": [],
+   "usage": {
+    "promptTokens": 55150,
+    "outputTokens": 5028,
+    "totalMs": 3630908.4753059996,
+    "loadMs": 56394.924192000006,
+    "promptMs": 488363.70399999997,
+    "evalMs": 3085032.183
+   },
+   "tokensPerSec": 1.63,
+   "episode": {
+    "scenes": 8,
+    "estimatedSec": 221,
+    "words": 623,
+    "title": "Episodio 6: El peso de los sueños",
+    "logline": "KAP intenta progresar con su música a pesar de las dificultades, pero un error en su actuación le hace dudar si seguir adelante, dejando abierta una incógnita que lo afectará en el futuro."
+   },
+   "continuity": {
+    "critical": [],
+    "warnings": [
+     "sin-aporte: El episodio no declara nada nuevo para la historia (acontecimiento, hito, hilo, evolución, relación u objeto): cada episodio debe aportar al"
+    ],
+    "info": 1
+   },
+   "narrative": {
+    "error": 0,
+    "warning": 2,
+    "info": 0,
+    "rules": [
+     "localizacion-estancada",
+     "sin-conflicto"
+    ],
+    "findings": [
+     {
+      "severity": "warning",
+      "rule": "narrativa-localizacion-estancada",
+      "text": "8 escenas seguidas (1-8) en «Casa de KAP (interior, noche)»: ¿hace falta cambiar de lugar, de momento o de plano?",
+      "scene": 0
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-sin-conflicto",
+      "text": "No se aprecia un conflicto claro (no hay un enfrentamiento entre personajes con oposición explícita). Heurística: revisa a mano."
+     }
+    ],
+    "taggedRules": [
+     "localizacion-estancada",
+     "poca-variedad-visual"
+    ]
+   },
+   "mode": "arc",
+   "arc": {
+    "title": "Episodio 6: El peso de los sueños",
+    "logline": "KAP intenta progresar con su música a pesar de las dificultades, pero un error en su actuación le hace dudar si seguir adelante, dejando abierta una incógnita que lo afectará en el futuro.",
+    "assumptions": [
+     "El episodio no menciona directamente la presencia de otros personajes, por lo que se asume que KAP actúa solo, salvo en los momentos donde su situación familiar o bullying le afecta emocionalmente.",
+     "La evolución del personaje se centra en su esfuerzo individual, sin intervención externa que resuelva sus problemas."
+    ],
+    "problem": "KAP intenta grabar una canción en casa, pero al hacerlo, recibe una notificación de su hermano enfermo, lo que le genera una tensión emocional y afecta su rendimiento.",
+    "kapWant": "Quiere progresar con su música y demostrar que su sueño es posible, aunque las circunstancias le dificulten.",
+    "kapChoice": "A pesar de la notificación, KAP decide grabar la canción, pero se equivoca en un ritmo clave y no logra terminarla correctamente.",
+    "consequence": "La grabación queda incompleta, lo que le genera frustración y le hace cuestionar si es capaz de seguir adelante con su sueño.",
+    "outcome": "ambiguo",
+    "hook": "KAP se queda con la duda de si su música es realmente su camino o si está destinado a fracasar por las circunstancias que lo rodean.",
+    "extraCharacters": [
+     {
+      "name": "Hermano de KAP",
+      "why": "Aparece brevemente en una notificación, recordando a KAP su responsabilidad y generando tensión emocional."
+     }
+    ],
+    "castActions": [
+     {
+      "name": "Hermano de KAP",
+      "does": "Envía una notificación a KAP informándole que se siente mal, lo que interrumpe su concentración."
+     }
+    ],
+    "usedFromMemory": [
+     "Situación familiar de KAP (padres y drogas)",
+     "Cuidar y proteger a su hermano",
+     "El sueño de KAP: ser millonario gracias a la música",
+     "KAP lleva camiseta gris desgastada"
+    ],
+    "newCharacters": [],
+    "newPlaces": [],
+    "beats": [
+     {
+      "stage": "inicio",
+      "fn": "avanzar-historia",
+      "summary": "KAP se sienta en su habitación con una grabadora, intentando grabar una nueva canción. Tiene la camiseta gris desgastada y mira al frente con determinación.",
+      "location": "Casa de KAP (interior, noche)",
+      "characters": [
+       "KAP"
+      ],
+      "change": "KAP comienza a grabar su canción, mostrando su intención de progresar.",
+      "why": "Es el momento en que KAP decide actuar según su sueño, tras la resolución emocional del episodio anterior.",
+      "time": "noche",
+      "interior": true,
+      "shot": "general",
+      "visual": "KAP sentado en el suelo con una grabadora y un cuaderno."
+     },
+     {
+      "stage": "inicio",
+      "fn": "avanzar-historia",
+      "summary": "KAP se acuesta en su cama, el cuaderno en el suelo. La camiseta gris le cuelga de los hombros y el silencio lo rodea.",
+      "location": "Casa de KAP (interior, noche)",
+      "characters": [
+       "KAP"
+      ],
+      "change": "El episodio termina con KAP en un estado de incertidumbre, preparando la siguiente etapa emocional.",
+      "why": "Este beat cierra el episodio con una escena que refleja el estado mental de KAP y deja el gancho para futuros episodios.",
+      "time": "noche",
+      "interior": true,
+      "shot": "general",
+      "visual": "KAP acostado en su cama, mirando al techo con la camiseta gris."
+     },
+     {
+      "stage": "problema",
+      "fn": "revelar-informacion",
+      "summary": "El teléfono de KAP vibra, mostrando una notificación de su hermano: 'Me siento muy mal'. KAP lo mira con preocupación.",
+      "location": "Casa de KAP (interior, noche)",
+      "characters": [
+       "KAP"
+      ],
+      "change": "KAP recibe una notificación que le genera tensión emocional y desviación de su objetivo.",
+      "why": "La notificación de su hermano introduce un conflicto emocional que interfiere con su enfoque.",
+      "time": "noche",
+      "interior": true,
+      "shot": "primer plano",
+      "visual": "KAP mira la notificación en su teléfono con expresión preocupada."
+     },
+     {
+      "stage": "escalada",
+      "fn": "desarrollar-personaje",
+      "summary": "KAP intenta seguir grabando, pero se distrae al pensar en su hermano. Se le ven las dudas en la cara y el ritmo se vuelve incoherente.",
+      "location": "Casa de KAP (interior, noche)",
+      "characters": [
+       "KAP"
+      ],
+      "change": "KAP no puede concentrarse del todo y su grabación empieza a fallar.",
+      "why": "La preocupación por su hermano afecta directamente la calidad de su grabación.",
+      "time": "noche",
+      "interior": true,
+      "shot": "medio",
+      "visual": "KAP intenta cantar, pero su voz se vuelve insegura y lenta."
+     },
+     {
+      "stage": "decision",
+      "fn": "arco-de-kap",
+      "summary": "A pesar de la notificación, KAP decide seguir con la grabación. Saca fuerzas de dentro y vuelve a intentarlo.",
+      "location": "Casa de KAP (interior, noche)",
+      "characters": [
+       "KAP"
+      ],
+      "change": "KAP elige no abandonar su sueño y vuelve a grabar, aunque con dificultad.",
+      "why": "KAP muestra perseverancia al decidir seguir adelante pese a la tensión emocional.",
+      "time": "noche",
+      "interior": true,
+      "shot": "general",
+      "visual": "KAP se levanta y vuelve a grabar con determinación."
+     },
+     {
+      "stage": "consecuencia",
+      "fn": "conflicto",
+      "summary": "KAP comienza de nuevo, pero se equivoca en un ritmo clave. La grabación queda incompleta y KAP se detiene, frustrado.",
+      "location": "Casa de KAP (interior, noche)",
+      "characters": [
+       "KAP"
+      ],
+      "change": "La grabación no se completa, lo que genera frustración y duda en KAP.",
+      "why": "El error en la grabación refleja las consecuencias de su tensión emocional y el impacto del conflicto familiar.",
+      "time": "noche",
+      "interior": true,
+      "shot": "medio",
+      "visual": "KAP mira la grabadora con frustración, la canción no termina."
+     },
+     {
+      "stage": "resolucion",
+      "fn": "preparar-consecuencia",
+      "summary": "KAP apaga la grabadora y se queda mirando al suelo. Tiene en las manos el cuaderno con sus letras, pero no tiene fuerzas para continuar.",
+      "location": "Casa de KAP (interior, noche)",
+      "characters": [
+       "KAP"
+      ],
+      "change": "KAP deja la grabación incompleta y se siente abrumado por el peso de sus responsabilidades.",
+      "why": "Este momento refleja el punto emocional del episodio y prepara el gancho para futuros episodios.",
+      "time": "noche",
+      "interior": true,
+      "shot": "primer plano",
+      "visual": "KAP mira al suelo con el cuaderno en las manos, sin fuerzas."
+     },
+     {
+      "stage": "gancho",
+      "fn": "preparar-gancho",
+      "summary": "KAP se levanta y mira a la ventana. Tiene un pensamiento en la cabeza: ¿Es posible que siga adelante con su sueño si no puede proteger a su hermano?",
+      "location": "Casa de KAP (interior, noche)",
+      "characters": [
+       "KAP"
+      ],
+      "change": "KAP se queda con una duda abierta sobre su futuro y su capacidad para seguir adelante.",
+      "why": "Este momento prepara el gancho emocional para futuros episodios, mostrando la tensión entre sus metas y su responsabilidad familiar.",
+      "time": "noche",
+      "interior": true,
+      "shot": "general",
+      "visual": "KAP mira a la ventana con una expresión de duda y determinación."
+     }
+    ]
+   },
+   "script": "# Casa de KAP (interior, noche)\n[mood: noche, interior]\n[plano: general]\n[camara: seguir KAP]\nKAP se sienta en el suelo de su habitación, con la grabadora entre las manos y el cuaderno abierto a su lado. La camiseta gris le cuelga de los hombros, y sus ojos miran al frente con determinación.\nKAP: Vamos… ya está bien. Solo tengo que empezar.\nKAP: Primero, el ritmo. Lento… luego más rápido.\nKAP: ¿Por qué no me sale? Es fácil, ¿verdad?\nKAP: Sé que puedo… solo necesito pensar en mi hermano. En cómo lo protejo.\n[acto: inicio | KAP se sienta en su habitación con una grabadora, intentando grabar una nueva canción. Tiene la camiseta gris desgastada y mira al frente c…]\n\n# Casa de KAP (interior, noche)\n[mood: noche, interior]\n[plano: general]\n[expresion: KAP preocupado]\n[camara: seguir KAP]\n[vfx: oscurecer]\nKAP se acuesta en su cama, el cuaderno en el suelo. La camiseta gris le cuelga de los hombros y el silencio lo rodea.\nKAP: Tengo que hacerlo… tengo que grabar esta canción.\nKAP: Si no lo hago ahora, nunca más.\nKAP: No puedo permitirme fallar…\nKAP: Pero si algo le pasa a mi hermano…\nKAP: ¿Y si no puedo protegerlo ni siquiera con esto?\n\n# Casa de KAP (interior, noche)\n[mood: noche, interior]\n[plano: primer plano KAP]\n[expresion: KAP preocupado]\n[camara: zoom 1.2]\nEl teléfono de KAP vibra en la mesita de noche. La luz azul se proyecta sobre su rostro, interrumpiendo el silencio.\nKAP: ¿Qué…? ¿Por qué ahora?\nLa pantalla muestra una notificación: 'Me siento muy mal'. KAP la mira con la boca entreabierta, como si no pudiera creer lo que ve.\nKAP: No… no puede ser. No ahora.\nKAP se levanta de la cama con lentitud, caminando hacia la mesita con pasos vacilantes.\n[acto: conflicto | El teléfono de KAP vibra, mostrando una notificación de su hermano: 'Me siento muy mal'. KAP lo mira con preocupación.]\n\n# Casa de KAP (interior, noche)\n[mood: noche, interior]\n[plano: medio KAP]\n[expresion: KAP preocupado]\nKAP intenta cantar, pero su voz se vuelve insegura y lenta.\nKAP: Hmm… esto no está saliendo bien. No puedo concentrarme…\nKAP: ¿Y si mi hermano necesita algo? ¿Y si no estoy aquí para él?\nKAP: No… no puedo permitirme fallar en esto… ni en eso.\nKAP: Esto no es lo que quería… esto no es lo que quiero.\n[acto: desarrollo | KAP intenta seguir grabando, pero se distrae al pensar en su hermano. Se le ven las dudas en la cara y el ritmo se vuelve incoherente.]\n\n# Casa de KAP (interior, noche)\n[mood: noche, interior]\n[plano: general]\n[camina: KAP a izquierda]\n[camara: zoom 1.2]\nKAP se levanta lentamente, con la camiseta gris desgastada cayendo sobre sus hombros. Sus ojos brillan con una determinación frágil, pero real.\nKAP: No… no puedo dejarlo aquí. Tengo que terminar esto.\nKAP se sienta nuevamente frente a la grabadora, sus manos temblorosas apoyan el cuaderno en el suelo.\nKAP: Si no lo hago ahora… si no lo hago ahora, ¿qué me queda?\nKAP: Empiezo de nuevo. Esta vez… esta vez lo haré bien.\n[acto: emocional | A pesar de la notificación, KAP decide seguir con la grabación. Saca fuerzas de dentro y vuelve a intentarlo.]\n\n# Casa de KAP (interior, noche)\n[mood: noche, interior]\n[plano: medio KAP]\n[gesto: KAP niega]\n[camara: zoom 1.2]\n[vfx: oscurecer]\nKAP se sienta nuevamente frente a la grabadora, sus manos temblorosas sobre el cuaderno. La camiseta gris le cuelga de los hombros, y sus ojos están llenos de determinación.\nKAP: Vamos… esto es solo un error. Solo un momento de duda. No voy a dejarlo aquí.\nKAP: Esto… esto es lo que quiero. Seré el mejor, aunque todo me lo quite.\nKAP: ¡No! No puedo hacerlo… no puedo concentrarme…\nKAP: ¡Eso no es lo que quería! ¡No puedo… no puedo seguir!\n\n# Casa de KAP (interior, noche)\n[mood: noche, interior]\n[plano: primer plano KAP]\nKAP se sienta frente a la grabadora, pero su voz se corta en medio de una frase. Sus manos temblorosas dejan caer el cuaderno al suelo.\nKAP: No… no puedo hacerlo.\nKAP apaga la grabadora con un suspiro profundo, sus hombros caen hacia adelante.\nKAP: No está bien… no está bien así.\nKAP mira el cuaderno en el suelo, como si fuera la única cosa que le quedara.\nKAP: ¿Y si esto es todo? ¿Y si no puedo más?\nKAP se queda inmóvil, con la mirada perdida en el suelo y las manos vacías.\nKAP: No sé si seguir…\n[acto: resolucion | KAP apaga la grabadora y se queda mirando al suelo. Tiene en las manos el cuaderno con sus letras, pero no tiene fuerzas para continuar.]\n\n# Casa de KAP (interior, noche)\n[mood: noche, interior]\n[plano: general]\nKAP se levanta lentamente de su cama, la camiseta gris desgastada le cuelga de los hombros. Sus ojos están fijos en la ventana, como si buscara algo allá afuera.\nKAP: No entiendo… ¿qué hago ahora?\nKAP camina hacia la ventana y se para frente a ella, mirando al exterior con expresión pensativa. Sus manos están en los bordes de la ventana, como si quisiera tocar algo que no puede alcanzar.\nKAP: Si me voy, mi hermano… ¿qué pasa si no estoy aquí?\nKAP: Pero si no hago esto… ¿qué pasa con mi sueño?\nKAP baja la mirada, sus manos se aflojan y caen a sus costados. Su respiración es lenta, como si estuviera pensando en algo muy grande.\nKAP: No sé… no sé qué hacer.\n[acto: gancho | KAP se levanta y mira a la ventana. Tiene un pensamiento en la cabeza: ¿Es posible que siga adelante con su sueño si no puede proteger a su…]\n[gancho: KAP se queda con la duda de si su música es realmente su camino o si está destinado a fracasar por las circunstancias que lo rodean.]\n",
+   "gate": {
+    "regenerated": 2,
+    "dropped": 0,
+    "issues": {
+     "voz-adulta": 2
+    }
+   },
+   "outcome": "ambiguo",
+   "checks": [
+    {
+     "id": "estructura-6-actos",
+     "ok": true,
+     "note": "faltan: —"
+    },
+    {
+     "id": "gancho",
+     "ok": true
+    },
+    {
+     "id": "protagonista",
+     "ok": true
+    },
+    {
+     "id": "sin-errores-criticos",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "sin-exito-prematuro",
+     "ok": true
+    },
+    {
+     "id": "directivas-validas",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "espanol",
+     "ok": true
+    },
+    {
+     "id": "diversidad-lexica",
+     "ok": true,
+     "note": "0.33"
+    }
+   ],
+   "compliance": 1,
+   "proxy": {
+    "score": 8,
+    "dialogueRatio": 0.65,
+    "locations": 1,
+    "repeatedSentences": 0
+   },
+   "warnings": [
+    "El modelo desordenó las etapas del arco; se han reordenado.",
+    "Episodio corto (≈ 3.7 min): no se ha rellenado; la duración sale de la historia. Revisa si el arco necesita más desarrollo.",
+    "Narrativa (warning) · localizacion-estancada: 8 escenas seguidas (1-8) en «Casa de KAP (interior, noche)»: ¿hace falta cambiar de lugar, de momento o de plano?",
+    "Narrativa (info) · poca-variedad-visual: Más del 70 % de las escenas ocurren en el mismo lugar.",
+    "Narrativa (info) · poca-variedad-visual: Todo el episodio ocurre en el mismo momento del día."
+   ],
+   "draft": {
+    "title": "Episodio 6: El peso de los sueños",
+    "logline": "KAP intenta progresar con su música a pesar de las dificultades, pero un error en su actuación le hace dudar si seguir adelante, dejando abierta una incógnita que lo afectará en el futuro.",
+    "assumptions": [
+     "El episodio no menciona directamente la presencia de otros personajes, por lo que se asume que KAP actúa solo, salvo en los momentos donde su situación familiar o bullying le afecta emocionalmente.",
+     "La evolución del personaje se centra en su esfuerzo individual, sin intervención externa que resuelva sus problemas."
+    ],
+    "scenes": [
+     {
+      "title": "Episodio 6: El peso de los sueños",
+      "location": "Casa de KAP (interior, noche)",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se sienta en el suelo de su habitación, con la grabadora entre las manos y el cuaderno abierto a su lado. La camiseta gris le cuelga de los hombros, y sus ojos miran al frente con determinación."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Vamos… ya está bien. Solo tengo que empezar."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Primero, el ritmo. Lento… luego más rápido."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Por qué no me sale? Es fácil, ¿verdad?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "Sé que puedo… solo necesito pensar en mi hermano. En cómo lo protejo."
+       }
+      ],
+      "memory": [
+       "acto: inicio | KAP se sienta en su habitación con una grabadora, intentando grabar una nueva canción. Tiene la camiseta gris desgastada y mira al frente c…"
+      ],
+      "fn": "avanzar-historia",
+      "stage": "inicio",
+      "shot": "general",
+      "time": "noche",
+      "interior": true,
+      "directions": [
+       "plano: general",
+       "camara: seguir KAP"
+      ],
+      "change": "KAP comienza a grabar su canción, mostrando su intención de progresar."
+     },
+     {
+      "title": "Episodio 6: El peso de los sueños",
+      "location": "Casa de KAP (interior, noche)",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se acuesta en su cama, el cuaderno en el suelo. La camiseta gris le cuelga de los hombros y el silencio lo rodea."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Tengo que hacerlo… tengo que grabar esta canción."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Si no lo hago ahora, nunca más."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No puedo permitirme fallar…"
+       },
+       {
+        "speaker": "KAP",
+        "text": "Pero si algo le pasa a mi hermano…"
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Y si no puedo protegerlo ni siquiera con esto?"
+       }
+      ],
+      "memory": [],
+      "fn": "avanzar-historia",
+      "stage": "inicio",
+      "shot": "general",
+      "time": "noche",
+      "interior": true,
+      "directions": [
+       "plano: general",
+       "expresion: KAP preocupado",
+       "camara: seguir KAP",
+       "vfx: oscurecer"
+      ],
+      "change": "El episodio termina con KAP en un estado de incertidumbre, preparando la siguiente etapa emocional."
+     },
+     {
+      "title": "Episodio 6: El peso de los sueños",
+      "location": "Casa de KAP (interior, noche)",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "El teléfono de KAP vibra en la mesita de noche. La luz azul se proyecta sobre su rostro, interrumpiendo el silencio."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Qué…? ¿Por qué ahora?"
+       },
+       {
+        "speaker": "",
+        "text": "La pantalla muestra una notificación: 'Me siento muy mal'. KAP la mira con la boca entreabierta, como si no pudiera creer lo que ve."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No… no puede ser. No ahora."
+       },
+       {
+        "speaker": "",
+        "text": "KAP se levanta de la cama con lentitud, caminando hacia la mesita con pasos vacilantes."
+       }
+      ],
+      "memory": [
+       "acto: conflicto | El teléfono de KAP vibra, mostrando una notificación de su hermano: 'Me siento muy mal'. KAP lo mira con preocupación."
+      ],
+      "fn": "revelar-informacion",
+      "stage": "problema",
+      "shot": "primer plano",
+      "time": "noche",
+      "interior": true,
+      "directions": [
+       "plano: primer plano KAP",
+       "expresion: KAP preocupado",
+       "camara: zoom 1.2"
+      ],
+      "change": "KAP recibe una notificación que le genera tensión emocional y desviación de su objetivo."
+     },
+     {
+      "title": "Episodio 6: El peso de los sueños",
+      "location": "Casa de KAP (interior, noche)",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP intenta cantar, pero su voz se vuelve insegura y lenta."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Hmm… esto no está saliendo bien. No puedo concentrarme…"
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Y si mi hermano necesita algo? ¿Y si no estoy aquí para él?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "No… no puedo permitirme fallar en esto… ni en eso."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Esto no es lo que quería… esto no es lo que quiero."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo | KAP intenta seguir grabando, pero se distrae al pensar en su hermano. Se le ven las dudas en la cara y el ritmo se vuelve incoherente."
+      ],
+      "fn": "desarrollar-personaje",
+      "stage": "escalada",
+      "shot": "medio",
+      "time": "noche",
+      "interior": true,
+      "directions": [
+       "plano: medio KAP",
+       "expresion: KAP preocupado"
+      ],
+      "change": "KAP no puede concentrarse del todo y su grabación empieza a fallar."
+     },
+     {
+      "title": "Episodio 6: El peso de los sueños",
+      "location": "Casa de KAP (interior, noche)",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se levanta lentamente, con la camiseta gris desgastada cayendo sobre sus hombros. Sus ojos brillan con una determinación frágil, pero real."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No… no puedo dejarlo aquí. Tengo que terminar esto."
+       },
+       {
+        "speaker": "",
+        "text": "KAP se sienta nuevamente frente a la grabadora, sus manos temblorosas apoyan el cuaderno en el suelo."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Si no lo hago ahora… si no lo hago ahora, ¿qué me queda?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "Empiezo de nuevo. Esta vez… esta vez lo haré bien."
+       }
+      ],
+      "memory": [
+       "acto: emocional | A pesar de la notificación, KAP decide seguir con la grabación. Saca fuerzas de dentro y vuelve a intentarlo."
+      ],
+      "fn": "arco-de-kap",
+      "stage": "decision",
+      "shot": "general",
+      "time": "noche",
+      "interior": true,
+      "directions": [
+       "plano: general",
+       "camina: KAP a izquierda",
+       "camara: zoom 1.2"
+      ],
+      "change": "KAP elige no abandonar su sueño y vuelve a grabar, aunque con dificultad."
+     },
+     {
+      "title": "Episodio 6: El peso de los sueños",
+      "location": "Casa de KAP (interior, noche)",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se sienta nuevamente frente a la grabadora, sus manos temblorosas sobre el cuaderno. La camiseta gris le cuelga de los hombros, y sus ojos están llenos de determinación."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Vamos… esto es solo un error. Solo un momento de duda. No voy a dejarlo aquí."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Esto… esto es lo que quiero. Seré el mejor, aunque todo me lo quite."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¡No! No puedo hacerlo… no puedo concentrarme…"
+       },
+       {
+        "speaker": "KAP",
+        "text": "¡Eso no es lo que quería! ¡No puedo… no puedo seguir!"
+       }
+      ],
+      "memory": [],
+      "fn": "conflicto",
+      "stage": "consecuencia",
+      "shot": "medio",
+      "time": "noche",
+      "interior": true,
+      "directions": [
+       "plano: medio KAP",
+       "gesto: KAP niega con la cabeza",
+       "camara: zoom 1.2",
+       "vfx: oscurecer"
+      ],
+      "change": "La grabación no se completa, lo que genera frustración y duda en KAP."
+     },
+     {
+      "title": "Episodio 6: El peso de los sueños",
+      "location": "Casa de KAP (interior, noche)",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se sienta frente a la grabadora, pero su voz se corta en medio de una frase. Sus manos temblorosas dejan caer el cuaderno al suelo."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No… no puedo hacerlo."
+       },
+       {
+        "speaker": "",
+        "text": "KAP apaga la grabadora con un suspiro profundo, sus hombros caen hacia adelante."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No está bien… no está bien así."
+       },
+       {
+        "speaker": "",
+        "text": "KAP mira el cuaderno en el suelo, como si fuera la única cosa que le quedara."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Y si esto es todo? ¿Y si no puedo más?"
+       },
+       {
+        "speaker": "",
+        "text": "KAP se queda inmóvil, con la mirada perdida en el suelo y las manos vacías."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No sé si seguir…"
+       }
+      ],
+      "memory": [
+       "acto: resolucion | KAP apaga la grabadora y se queda mirando al suelo. Tiene en las manos el cuaderno con sus letras, pero no tiene fuerzas para continuar."
+      ],
+      "fn": "preparar-consecuencia",
+      "stage": "resolucion",
+      "shot": "primer plano",
+      "time": "noche",
+      "interior": true,
+      "directions": [
+       "plano: primer plano KAP"
+      ],
+      "change": "KAP deja la grabación incompleta y se siente abrumado por el peso de sus responsabilidades."
+     },
+     {
+      "title": "Episodio 6: El peso de los sueños",
+      "location": "Casa de KAP (interior, noche)",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se levanta lentamente de su cama, la camiseta gris desgastada le cuelga de los hombros. Sus ojos están fijos en la ventana, como si buscara algo allá afuera."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No entiendo… ¿qué hago ahora?"
+       },
+       {
+        "speaker": "",
+        "text": "KAP camina hacia la ventana y se para frente a ella, mirando al exterior con expresión pensativa. Sus manos están en los bordes de la ventana, como si quisiera tocar algo que no puede alcanzar."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Si me voy, mi hermano… ¿qué pasa si no estoy aquí?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "Pero si no hago esto… ¿qué pasa con mi sueño?"
+       },
+       {
+        "speaker": "",
+        "text": "KAP baja la mirada, sus manos se aflojan y caen a sus costados. Su respiración es lenta, como si estuviera pensando en algo muy grande."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No sé… no sé qué hacer."
+       }
+      ],
+      "memory": [
+       "acto: gancho | KAP se levanta y mira a la ventana. Tiene un pensamiento en la cabeza: ¿Es posible que siga adelante con su sueño si no puede proteger a su…",
+       "gancho: KAP se queda con la duda de si su música es realmente su camino o si está destinado a fracasar por las circunstancias que lo rodean."
+      ],
+      "fn": "preparar-gancho",
+      "stage": "gancho",
+      "shot": "general",
+      "time": "noche",
+      "interior": true,
+      "directions": [
+       "plano: general"
+      ],
+      "change": "KAP se queda con una duda abierta sobre su futuro y su capacidad para seguir adelante."
+     }
+    ]
+   }
+  }
+ ]
+}
