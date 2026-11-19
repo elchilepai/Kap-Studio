@@ -68,7 +68,7 @@ export function llmArcAuthor(llm: LlmClient, opts: ArcAuthorOptions = {}): ArcAu
     async write({ request, context, signal, hints }) {
       if (!(await llm.available())) throw new Error("El modelo de IA no está disponible");
       const logs: AttemptLog[] = [], usages: (LlmUsage | undefined)[] = []; let calls = 0, droppedDirectives = 0; const warnings: string[] = [], gateIssues: Record<string, number> = {};
-      let regenerated = 0, dropped = 0, localPatches = 0, codeRepairs = 0, arcRevisions = 0, rhymeValid: boolean | undefined;
+      let regenerated = 0, dropped = 0, localPatches = 0, codeRepairs = 0, arcRevisions = 0, endingRevisions = 0, varietyRevisions = 0, rhymeValid: boolean | undefined; const patchKinds: Record<string, number> = {};
       const temp = opts.temperature ?? 0.8, sceneOpts = (extra: number) => ({ system: SCENE_SYSTEM, temperature: temp + extra, maxTokens: opts.sceneTokens ?? 800, signal });
       const count = (kind: string) => { gateIssues[kind] = (gateIssues[kind] ?? 0) + 1; };
       const call = async <T>(schema: z.ZodType<T>, req: { system: string; prompt: string; temperature?: number; maxTokens?: number }, retries = 1) => { const r = await generateJson(llm, schema, { ...req, signal }, { retries }); logs.push(...r.log); usages.push(r.usage); calls += r.attempts; return r; };
@@ -95,7 +95,7 @@ export function llmArcAuthor(llm: LlmClient, opts: ArcAuthorOptions = {}): ArcAu
       const candEnding = () => ({ hook: arc.hook, consequence: arc.consequence, closing: arc.beats.at(-1)!.summary, outcome: arc.outcome });
       for (let t = 0; t < B.ending; t++) { const same = endingInterchangeable(candEnding(), prevEnd); if (!same) break;
         count("desenlace-repetido"); const r = await call(EndingPatch, { system: ENDING_SYSTEM, prompt: endingPrompt({ problem: arc.problem, kapChoice: arc.kapChoice, consequence: arc.consequence, outcome: arc.outcome, hook: arc.hook, closing: arc.beats.at(-1)!.summary }, same.reason, prevEnd.map((e) => [e.outcome && `desenlace «${e.outcome}»`, e.hook && `gancho «${e.hook.slice(0, 120)}»`, e.closing && `cierre «${e.closing.slice(0, 140)}»`].filter(Boolean).join("; "))), temperature: temp + 0.1, maxTokens: 700 });
-        if (!r.ok) break; arcRevisions++; Object.assign(arc, { outcome: r.data.outcome, consequence: r.data.consequence, hook: r.data.hook }); Object.assign(arc.beats.at(-1)!, { summary: r.data.closingSummary, change: r.data.closingChange }); }
+        if (!r.ok) break; arcRevisions++; endingRevisions++; Object.assign(arc, { outcome: r.data.outcome, consequence: r.data.consequence, hook: r.data.hook }); Object.assign(arc.beats.at(-1)!, { summary: r.data.closingSummary, change: r.data.closingChange }); }
       { const left = endingInterchangeable(candEnding(), prevEnd); if (left) warnings.push(`Desenlace parecido al de un episodio anterior: ${left.reason}.`); }
       if (GENERIC_HOOK.test(arc.hook)) warnings.push("El gancho del arco es genérico; revísalo.");
 
@@ -103,7 +103,7 @@ export function llmArcAuthor(llm: LlmClient, opts: ArcAuthorOptions = {}): ArcAu
       const vr = episodeVariety(arc.beats, arc.setting);
       if (vr.beatsToMove.length && B.variety > 0) { count("episodio-plano");
         const r = await call(VarietyPatch, { system: VARIETY_SYSTEM, prompt: varietyPrompt({ problem: arc.problem, setting: arc.setting }, vr.beatsToMove.map((i) => ({ index: i, summary: arc.beats[i].summary, location: arc.beats[i].location, time: arc.beats[i].time })), arc.beats.map((b, i) => `${i}: ${clip(b.summary, 70)}`)), temperature: temp + 0.1, maxTokens: 700 });
-        if (r.ok) { arcRevisions++; for (const p of r.data.beats) if (vr.beatsToMove.includes(p.index)) Object.assign(arc.beats[p.index], { location: p.location, time: p.time, interior: p.interior, why: p.why, ...(p.summary ? { summary: p.summary } : {}) }); } }
+        if (r.ok) { arcRevisions++; varietyRevisions++; for (const p of r.data.beats) if (vr.beatsToMove.includes(p.index)) Object.assign(arc.beats[p.index], { location: p.location, time: p.time, interior: p.interior, why: p.why, ...(p.summary ? { summary: p.summary } : {}) }); } }
       { const v2 = episodeVariety(arc.beats, arc.setting); if (v2.flat) warnings.push(`Variedad: ${v2.reason}.`); }
 
       // la memoria NO entra por defecto: solo el reparto pedido, los nuevos declarados y los extras JUSTIFICADOS por el arco
@@ -150,7 +150,7 @@ export function llmArcAuthor(llm: LlmClient, opts: ArcAuthorOptions = {}): ArcAu
           if (!targets.size) break;
           const idx = [...targets.keys()].sort((p, q) => p - q), withRhyme = kinds.includes("rima-invalida");
           const r = await call(LinePatch, { system: PATCH_SYSTEM, prompt: patchPrompt({ location: beat.location, summary: beat.summary, change: keep.out.change || beat.change, characters: beat.characters }, lines, idx.map((index) => ({ index, reason: targets.get(index)!.join(" ") })), contextTerms.filter(Boolean), withRhyme ? RIMA_RULES : ""), temperature: temp + 0.1, maxTokens: 500 });
-          localPatches++; if (!r.ok || r.data.lines.length !== idx.length) break;
+          localPatches++; for (const k of new Set(kinds)) patchKinds[k] = (patchKinds[k] ?? 0) + 1; if (!r.ok || r.data.lines.length !== idx.length) break;
           idx.forEach((index, k) => { lines[index] = { ...lines[index], text: r.data.lines[k].trim() }; }); for (const k of new Set(kinds)) used[budget(k)[0]]++;
           issues = check(lines, keep.out.change);
         }
@@ -185,7 +185,7 @@ export function llmArcAuthor(llm: LlmClient, opts: ArcAuthorOptions = {}): ArcAu
       // revisión narrativa: avisa, no bloquea
       const review = reviewNarrative({ scenes: scenes.map((s) => ({ location: s.location, title: s.title, lines: s.lines.map((l) => ({ speaker: l.speaker, text: l.text })), fn: s.fn, stage: s.stage, shot: s.shot, time: s.time, interior: s.interior })), hook: arc.hook, knownCharacters: context.relevantCharacters, allowedCharacters: [...permitted].map((n) => defaultCast.concat(arc.newCharacters.map((c) => c.name), arc.extraCharacters.map((c) => c.name)).find((x) => norm(x) === n) ?? n), previousEpisodes: hints?.previousEpisodes, acts: [...actSeen] });
       self.lastReview = review; self.lastGate = { regenerated, dropped, localPatches, codeRepairs, arcRevisions, issues: gateIssues, rhyme_valid: rhymeValid }; for (const f of review) warnings.push(`Narrativa (${f.severity}) · ${f.rule.replace("narrativa-", "")}: ${f.text}`);
-      const stats: AuthorStats = { attempts: calls, retries: Math.max(0, calls - (1 + arc.beats.length)), jsonErrors: logs.filter((l) => l.kind === "json").length, schemaErrors: logs.filter((l) => l.kind === "schema").length, lengthRetries: 0, memoryDirectiveErrors: droppedDirectives, usage: sumUsage(usages), estimatedSec: secs, scenesRegenerated: regenerated, scenesDropped: dropped, gateIssues, localPatches, codeRepairs, arcRevisions, rhymeValid };
+      const stats: AuthorStats = { attempts: calls, retries: Math.max(0, calls - (1 + arc.beats.length)), jsonErrors: logs.filter((l) => l.kind === "json").length, schemaErrors: logs.filter((l) => l.kind === "schema").length, lengthRetries: 0, memoryDirectiveErrors: droppedDirectives, usage: sumUsage(usages), estimatedSec: secs, scenesRegenerated: regenerated, scenesDropped: dropped, gateIssues, localPatches, codeRepairs, arcRevisions, rhymeValid, patchKinds, endingRevisions, varietyRevisions };
       return { script: irToScript(ir.data), warnings, ir: ir.data, stats };
     },
   };

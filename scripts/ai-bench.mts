@@ -137,6 +137,15 @@ async function runReview(w: World) {
     checks: [{ id: "el-modelo-detecta-las-4", ok: hit.length === 4, note: `${hit.length}/4` }, { id: "sin-falsos-positivos", ok: fp.length === 0, note: `${fp.length}` }, { id: "las-reglas-del-sistema-detectan-edad-etapa-exito", ok: ["salto-de-años", "etapa-saltada"].every((r) => sys.some((f) => f.rule === r && f.severity === "error")) }] as Check[] };
 }
 
+const TIMEWORDS = /(amanec|madrugada|mañana|manana|mediod[ií]a|tarde|atardec|anochec|noche|medianoche)/i;
+/** Variedad espacial/temporal medida igual para los dos métodos (momentos: el declarado en el arco o, si no existe, palabras de momento del día en la escena). */
+function varietyOf(draft: any) { const locs = draft.scenes.map((s: any) => norm(s.location)), counts = new Map<string, number>(); locs.forEach((l: string) => counts.set(l, (counts.get(l) ?? 0) + 1));
+  const times = new Set(draft.scenes.map((s: any) => s.time ? norm(s.time) : (TIMEWORDS.exec(norm(s.lines.map((l: any) => l.text).join(" ")))?.[1] ?? "").replace(/^manana$/, "mañana")).filter(Boolean));
+  return { locations: counts.size, dominantShare: +(Math.max(...counts.values()) / locs.length).toFixed(2), times: times.size, timeSource: draft.scenes.some((s: any) => s.time) ? "declarado" : "texto" }; }
+const { checkRhyme, firstInterventionOf } = await import("../src/narrative/rhyme");
+/** Rima de la primera intervención de KAP del episodio, medida igual para los dos métodos (no se usa para decidir nada). */
+function openingRhymeOf(draft: any, request: string) { const iv = firstInterventionOf(draft.scenes.flatMap((s: any) => s.lines.map((l: any) => ({ speaker: l.speaker, text: l.text })))), c = checkRhyme({ lines: iv.texts, contextTerms: [request, draft.scenes[0].location, draft.scenes.slice(0, 2).flatMap((s: any) => s.lines.map((l: any) => l.text)).join(" ")] });
+  return { present: iv.texts.length > 0, rhyme_valid: c.rhyme_valid, natural: c.natural, contextual: c.contextual, rhythm: c.rhythm, level: c.level }; }
 async function runAuthor(t: Task, requestText: string, scenes: number, w: World, extra: { hints?: any } = {}) {
   const { request, pack } = await M.requestContext(w.storage, requestText);
   const author: any = MODE === "arc" ? llmArcAuthor(llm) : llmEpisodeAuthor(llm, { scenes }); const m = await measured(async () => { try { return { ok: true as const, out: await author.write({ hints: extra.hints, request, context: pack }) }; } catch (e) { return { ok: false as const, error: (e as Error).message }; } });
@@ -156,7 +165,7 @@ async function runAuthor(t: Task, requestText: string, scenes: number, w: World,
     json: { attempts: st.attempts, retries: st.retries, jsonErrors: st.jsonErrors, schemaErrors: st.schemaErrors, lengthRetries: st.lengthRetries, memoryDirectiveErrors: st.memoryDirectiveErrors }, irErrors: r.errors, usage: st.usage, tokensPerSec: +tps.toFixed(2),
     episode: { scenes: draft.scenes.length, estimatedSec: secs, words: draft.scenes.reduce((n: number, s: any) => n + s.lines.reduce((k: number, l: any) => k + words(l.text).length, 0), 0), title: draft.title, logline: draft.logline },
     continuity: { critical: f.filter((x) => x.severity === "error").map((x) => `${x.rule}: ${x.text.slice(0, 140)}`), warnings: f.filter((x) => x.severity === "warning").map((x) => `${x.rule}: ${x.text.slice(0, 140)}`), info: f.filter((x) => x.severity === "info").length },
-    narrative: { ...countBySeverity(plain), rules: [...new Set(plain.map((f) => f.rule.replace("narrativa-", "")))], findings: plain, taggedRules: [...new Set(tagged.map((f) => f.rule.replace("narrativa-", "")))] }, mode: MODE, arc: author.lastArc, script: out.script, gate: { regenerated: st.scenesRegenerated ?? 0, dropped: st.scenesDropped ?? 0, localPatches: st.localPatches ?? 0, codeRepairs: st.codeRepairs ?? 0, arcRevisions: st.arcRevisions ?? 0, rhymeValid: st.rhymeValid, calls: st.attempts, outputTokens: st.usage.outputTokens, promptTokens: st.usage.promptTokens, issues: st.gateIssues ?? {} }, outcome: author.lastArc?.outcome, checks, compliance: +(checks.filter((c) => c.ok).length / checks.length).toFixed(2), proxy: proxy(draft, secs), warnings: out.warnings.slice(0, 6), draft };
+    narrative: { ...countBySeverity(plain), rules: [...new Set(plain.map((f) => f.rule.replace("narrativa-", "")))], findings: plain, taggedRules: [...new Set(tagged.map((f) => f.rule.replace("narrativa-", "")))] }, mode: MODE, arc: author.lastArc, variety: varietyOf(draft), openingRhymeCheck: openingRhymeOf(draft, requestText), script: out.script, gate: { regenerated: st.scenesRegenerated ?? 0, dropped: st.scenesDropped ?? 0, localPatches: st.localPatches ?? 0, patchKinds: st.patchKinds ?? {}, endingRevisions: st.endingRevisions ?? 0, varietyRevisions: st.varietyRevisions ?? 0, codeRepairs: st.codeRepairs ?? 0, arcRevisions: st.arcRevisions ?? 0, rhymeValid: st.rhymeValid, calls: st.attempts, outputTokens: st.usage.outputTokens, promptTokens: st.usage.promptTokens, issues: st.gateIssues ?? {} }, outcome: author.lastArc?.outcome, checks, compliance: +(checks.filter((c) => c.ok).length / checks.length).toFixed(2), proxy: proxy(draft, secs), warnings: out.warnings.slice(0, 6), draft };
 }
 
 // ---------------------------------------------------------------- fases
@@ -166,7 +175,7 @@ console.log(`\n== Banco de IA local · ${MODEL} · fase ${PHASE} · ${meta.cpus}
 if (!(await llm.available())) { console.error(`El modelo ${MODEL} no está disponible en Ollama`); process.exit(2); }
 const results: any[] = [];
 /** Guardado incremental: un reinicio del contenedor no debe perder las tareas ya terminadas. */
-const save = () => fs.writeFile(path.join(OUT, `${SLUG}-${PHASE}${PHASE === "blind2" || PHASE === "blind3" ? "-" + MODE : ""}${ONLY.length ? "-" + ONLY.join("") : ""}.partial.json`), JSON.stringify({ meta, partial: true, results }, null, 1));
+const save = () => fs.writeFile(path.join(OUT, `${SLUG}-${PHASE}${PHASE === "blind2" || PHASE === "blind3" || PHASE === "blind4" ? "-" + MODE : ""}${ONLY.length ? "-" + ONLY.join("") : ""}.partial.json`), JSON.stringify({ meta, partial: true, results }, null, 1));
 if (PHASE === "tech" || PHASE === "all") {
   const worlds: Partial<Record<"fresh" | "after3", World>> = {};
   for (const t of TASKS.concat([{ id: "T7", title: "", world: "after3", request: "", kind: "review" }]).filter((x) => !ONLY.length || ONLY.includes(x.id))) {
@@ -175,6 +184,28 @@ if (PHASE === "tech" || PHASE === "all") {
     const r = t.kind === "review" ? await runReview(w) : await runAuthor(t, t.request, SCENES, w); results.push(r); await save();
     console.log(`   ${(r.ms / 1000).toFixed(0)} s · RAM pico ${r.peakMb} MB · ${"error" in r ? "ERROR " + r.error : `${r.id === "T7" ? `detecta ${(r as any).review.found}/4 · falsos+ ${(r as any).review.falsePositives}` : `IR ${(r as any).irValid ? "válida" : "inválida"}${(r as any).irValidFirstTry ? " a la primera" : ""}`} · reintentos ${(r as any).json.retries} · cumplimiento ${Math.round((((r as any).compliance ?? ((r as any).checks.filter((c: Check) => c.ok).length / (r as any).checks.length)) ) * 100)}% · crit ${(r as any).continuity?.critical.length ?? "-"}`}`);
     for (const c of ((r as any).checks ?? []).filter((c: Check) => !c.ok)) console.log(`     ✗ ${c.id}${c.note ? ` — ${c.note}` : ""}`);
+  }
+}
+if (PHASE === "blind4") {
+  // Episodios 7, 8 y 9 encadenados sobre la memoria disponible (episodios 1-3 de demostración); cada uno se aprueba SOLO en la base temporal de esta prueba.
+  const E = [
+    { id: "E7", n: 7, from: 1003, request: "Crea el episodio 7, a continuación del episodio 3. KAP se entera de que en el barrio alguien paga unas monedas por escuchar música en directo y decide intentar ganarse algo rapeando, aunque no tiene micrófono ni permiso." },
+    { id: "E8", n: 8, from: 1007, request: "Crea el episodio 8, continuando el episodio 7. Lo que hizo KAP en el episodio 7 se sabe en el colegio y en casa, y alguien reacciona de una forma que KAP no esperaba." },
+    { id: "E9", n: 9, from: 1008, request: "Crea el episodio 9, continuando el episodio 8. KAP tiene que elegir entre lo que quiere para su música y lo que necesita su hermano pequeño ese día; la elección le sale cara." },
+  ];
+  const w = await world("after3");
+  const commitEp = async (n: number, from: number, script: string) => { try { await w.mk(`chain${n}`, n, script, "REVIEW", { continuesFrom: from }); await M.proposeMemory(w.deps, `chain${n}`); await M.saveDecisions(w.deps, `chain${n}`, { all: "accepted" }); await w.storage.productions.save({ ...(await w.storage.productions.get(`chain${n}`))!, status: "APPROVED" }); await M.commitMemory(w.deps, `chain${n}`); return undefined; } catch (e) { return (e as Error).message; } };
+  const outcomeByEp: Record<number, string> = {}, doneNums: number[] = [];
+  try { const prev = JSON.parse(await fs.readFile(path.join(OUT, `${SLUG}-${PHASE}-${MODE}.partial.json`), "utf8")); for (const r of prev.results ?? []) if (!("error" in r) && r.script) { const e = E.find((x) => x.id === r.id)!; const ce = await commitEp(e.n, e.from, r.script); results.push(r); doneNums.unshift(e.n); if (r.outcome) outcomeByEp[e.n] = r.outcome; console.log(`[${r.id}] recuperado del parcial${ce ? ` (no se pudo aprobar en la base temporal: ${ce})` : ""}`); } } catch { /* primera ejecución */ }
+  for (const e of E.filter((x) => !results.some((r) => r.id === x.id) && (!ONLY.length || ONLY.includes(x.id)))) {
+    await unload(); console.log(`\n[${e.id}] (${MODE}) episodio ${e.n} …`);
+    const nums = [...doneNums, 3, 2, 1].slice(0, 2), svc = await M.previousEpisodesHints(w.storage, 1000 + e.n);
+    const hints = { previousEpisodes: svc.map((h, k) => ({ ...h, outcome: outcomeByEp[nums[k]] })) };
+    const r: any = await runAuthor({ id: e.id, title: `Episodio ${e.n}`, world: "after3", request: e.request }, e.request, 18, w, { hints });
+    if (r.ok) { r.commitError = await commitEp(e.n, e.from, r.script); if (r.outcome) outcomeByEp[e.n] = r.outcome; doneNums.unshift(e.n); }
+    results.push(r); await save();
+    console.log(`   ${(r.ms / 60000).toFixed(1)} min · ${"error" in r ? "ERROR " + r.error : `${r.episode.scenes} escenas · ≈ ${(r.episode.estimatedSec / 60).toFixed(1)} min · IR ${r.irValid ? "válida" : "inválida"} · regeneradas ${r.gate.regenerated} · locales ${r.gate.localPatches} · eliminadas ${r.gate.dropped} · crit ${r.continuity.critical.length} · narrativa crit ${r.narrative.error} aviso ${r.narrative.warning}${r.commitError ? " · (no aprobado en la base temporal)" : ""}`}`);
+    if ("error" in r) break;
   }
 }
 if (PHASE === "blind3") {
@@ -225,6 +256,6 @@ if (PHASE === "narrative" || PHASE === "all") {
   }
 }
 const loadedInfo = await loaded();
-await fs.writeFile(path.join(OUT, `${SLUG}-${PHASE}${PHASE === "blind2" || PHASE === "blind3" ? "-" + MODE : ""}${ONLY.length ? "-" + ONLY.join("") : ""}.json`), JSON.stringify({ meta, loaded: loadedInfo, totalMin: +((Date.now() - t0) / 60000).toFixed(1), results }, null, 1));
+await fs.writeFile(path.join(OUT, `${SLUG}-${PHASE}${PHASE === "blind2" || PHASE === "blind3" || PHASE === "blind4" ? "-" + MODE : ""}${ONLY.length ? "-" + ONLY.join("") : ""}.json`), JSON.stringify({ meta, loaded: loadedInfo, totalMin: +((Date.now() - t0) / 60000).toFixed(1), results }, null, 1));
 console.log(`\nTotal ${((Date.now() - t0) / 60000).toFixed(1)} min · modelo en memoria: ${JSON.stringify(loadedInfo)} · guardado en docs/ia-bench/`);
 await fs.rm(root, { recursive: true, force: true });

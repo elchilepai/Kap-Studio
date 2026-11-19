@@ -185,4 +185,9 @@ describe("generador por arco (arco → escenas) con puerta de calidad", () => {
     const { llm, author, out } = await run([a, poem, patch(natural), ...a.beats.slice(1).map((_, i) => scene(i + 1))], ctx(), undefined, { openingRhyme: true });
     expect(llm.calls.filter(isPatch)).toHaveLength(1); expect(llm.calls.find(isPatch)!.prompt).toMatch(/suena a poema de adulto/); expect(author.lastDraft!.scenes[0].lines[1].text).toBe(natural); expect(out.stats!.rhymeValid).toBe(true); expect(out.stats!.scenesRegenerated).toBe(0);
   });
+  it("métricas: las reescrituras locales, el desenlace y la variedad se cuentan por separado", async () => {
+    const flat = arc({ beats: arc().beats.map((b) => ({ ...b, location: "Casa de KAP", time: "noche" })) }), moved = { beats: [4, 5, 6].map((index) => ({ index, location: "Calle", time: "mañana", interior: false, why: "al día siguiente el problema se traslada a la calle" })) };
+    const bad = withKap(scene(0), "Tengo hambre y no hay pan en la mesa hoy"), { out } = await run([flat, moved, bad, patch(RHYME), ...flat.beats.slice(1).map((_, i) => scene(i + 1))], ctx(), undefined, { openingRhyme: true });
+    expect(out.stats!.patchKinds).toEqual({ "rima-invalida": 1 }); expect(out.stats!.varietyRevisions).toBe(1); expect(out.stats!.endingRevisions).toBe(0); expect(out.stats!.arcRevisions).toBe(1); expect(out.stats!.localPatches).toBe(1);
+  });
 });
