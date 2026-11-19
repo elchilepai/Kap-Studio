@@ -1,0 +1,704 @@
+{
+ "meta": {
+  "model": "qwen3:14b",
+  "phase": "blind5",
+  "ctx": 8192,
+  "date": "2026-11-19T12:56:22.576Z",
+  "cpus": 4,
+  "ramGb": 16,
+  "host": "CPU sin GPU"
+ },
+ "partial": true,
+ "results": [
+  {
+   "id": "E10",
+   "title": "Episodio 10",
+   "request": "Crea el episodio 10, a continuación del episodio 3. Hoy es el cumpleaños del hermano pequeño de KAP y KAP prometió llevarle un regalo, pero con las pocas monedas que tiene solo puede elegir una de dos cosas razonables: comprarle un regalo pequeño o pagar la entrada para ver ensayar a unos raperos del barrio. Su hermano quiere algo distinto de las dos.",
+   "ms": 4708403,
+   "peakMb": 13103,
+   "sysPeakMb": 13757,
+   "contextTokens": 1935,
+   "ok": true,
+   "irValid": true,
+   "irValidFirstTry": false,
+   "json": {
+    "attempts": 12,
+    "retries": 3,
+    "jsonErrors": 0,
+    "schemaErrors": 0,
+    "lengthRetries": 0,
+    "memoryDirectiveErrors": 0
+   },
+   "irErrors": [],
+   "usage": {
+    "promptTokens": 60296,
+    "outputTokens": 4762,
+    "totalMs": 4708235.150739,
+    "loadMs": 20255.468661,
+    "promptMs": 968728.7290000002,
+    "evalMs": 3715231.859
+   },
+   "tokensPerSec": 1.28,
+   "episode": {
+    "scenes": 8,
+    "estimatedSec": 219,
+    "words": 617,
+    "title": "El regalo que no quería",
+    "logline": "KAP se enfrenta a una difícil elección: entre cumplir su promesa de regalo para su hermano o ir a ver ensayar a unos raperos del barrio, pero su hermano pide algo distinto de ambos."
+   },
+   "continuity": {
+    "critical": [],
+    "warnings": [],
+    "info": 6
+   },
+   "narrative": {
+    "error": 0,
+    "warning": 1,
+    "info": 0,
+    "rules": [
+     "cierre-reflexivo"
+    ],
+    "findings": [
+     {
+      "severity": "warning",
+      "rule": "narrativa-cierre-reflexivo",
+      "text": "El cierre de KAP es una pregunta retórica: «Sí… mi hermano. ¿Lo viste salir? ¡Tengo que encontrarlo antes de que se vaya sin»: el cierre debería ser un gag, una reacción, una sorpresa o una consecuencia, no una reflexión.",
+      "scene": 7
+     }
+    ],
+    "taggedRules": [
+     "cierre-reflexivo"
+    ]
+   },
+   "mode": "arc",
+   "arc": {
+    "title": "El regalo que no quería",
+    "logline": "KAP se enfrenta a una difícil elección: entre cumplir su promesa de regalo para su hermano o ir a ver ensayar a unos raperos del barrio, pero su hermano pide algo distinto de ambos.",
+    "assumptions": [
+     "El hermano pequeño de KAP tiene alrededor de 5 años y no entiende aún la complejidad de las decisiones de KAP.",
+     "KAP tiene un total de 4 monedas, lo suficiente para pagar una entrada o comprar algo pequeño."
+    ],
+    "problem": "KAP prometió a su hermano un regalo de cumpleaños, pero solo puede elegir entre dos opciones: comprar algo pequeño con sus monedas o usarlas para ver ensayar a unos raperos del barrio. Su hermano, sin embargo, quiere algo que no es ninguna de las dos opciones.",
+    "kapWant": "Cumplir su promesa con su hermano y seguir aprendiendo sobre música.",
+    "kapChoice": "Decide ir a ver ensayar a los raperos del barrio, creyendo que podría inspirarse y luego improvisar algo para su hermano.",
+    "cost": "Perder la oportunidad de comprar algo tangible para su hermano, y sufrir una reacción de frustración por parte de este al no recibir lo que esperaba.",
+    "consequence": "El hermano de KAP se siente decepcionado y se aleja de él, dejando a KAP solo con la duda de si hizo lo correcto.",
+    "outcome": "KAP se queda sin regalo físico para su hermano, pero logra capturar una idea musical que tal vez podría ser útil másadel",
+    "setting": {
+     "main": "Calle del barrio",
+     "secondary": [
+      "Guardería",
+      "Casa de KAP"
+     ],
+     "timeOfDay": "Mañana",
+     "transitions": [
+      "más tarde ese día"
+     ]
+    },
+    "hook": "El hermano de KAP mira con tristeza la bolsa vacía de KAP, mientras este se pregunta si lo que hizo fue suficiente.",
+    "extraCharacters": [
+     {
+      "name": "Hermano de KAP",
+      "why": "Es fundamental para el conflicto del episodio: su reacción define la consecuencia de la decisión de KAP."
+     }
+    ],
+    "castActions": [
+     {
+      "name": "Hermano de KAP",
+      "does": "Expresa con palabras simples pero claras lo que quiere: un juguete, no una canción ni un concierto. Su frustración y tristeza al no recibirlo."
+     }
+    ],
+    "usedFromMemory": [
+     "KAP cuida y protege a su hermano",
+     "Situación económica precaria de KAP",
+     "El sueño de KAP: ser millonario gracias a la música"
+    ],
+    "newCharacters": [],
+    "newPlaces": [],
+    "beats": [
+     {
+      "stage": "inicio",
+      "fn": "avanzar-historia",
+      "summary": "KAP camina por la calle con una bolsa pequeña en la mano, mirando a los pies. El hermano de KAP corre hacia él, emocionado, esperando el regalo.",
+      "location": "Calle del barrio",
+      "characters": [
+       "KAP",
+       "Hermano de KAP"
+      ],
+      "change": "Se establece el contexto emocional y la tensión entre los dos hermanos.",
+      "why": "Para introducir el conflicto central del episodio, mostrando la expectativa del hermano.",
+      "time": "Mañana",
+      "interior": false,
+      "shot": "general",
+      "visual": "KAP camina con paso lento, mirando al suelo; el hermano corre hacia él con una sonrisa."
+     },
+     {
+      "stage": "problema",
+      "fn": "conflicto",
+      "summary": "El hermano de KAP le pregunta qué trae en la bolsa, pero KAP se queda callado. Finalmente, le dice que no es un juguete.",
+      "location": "Calle del barrio",
+      "characters": [
+       "KAP",
+       "Hermano de KAP"
+      ],
+      "change": "Se revela el conflicto: el regalo no es lo que el hermano esperaba.",
+      "why": "Para mostrar la tensión y la expectativa que KAP no puede cumplir directamente.",
+      "time": "Mañana",
+      "interior": false,
+      "shot": "medio",
+      "visual": "El hermano mira la bolsa con desilusión, mientras KAP evita su mirada."
+     },
+     {
+      "stage": "escalada",
+      "fn": "preparar-consecuencia",
+      "summary": "KAP le explica que usó el dinero para ver a unos raperos ensayar, y tal vez podría hacer algo con eso para su hermano.",
+      "location": "Calle del barrio",
+      "characters": [
+       "KAP",
+       "Hermano de KAP"
+      ],
+      "change": "Se revela la decisión que KAP toma: usar el dinero para una experiencia en lugar de un regalo físico.",
+      "why": "Para preparar la consecuencia emocional que sigue.",
+      "time": "Mañana",
+      "interior": false,
+      "shot": "primer plano",
+      "visual": "KAP habla con voz baja, mirando a su hermano con esperanza."
+     },
+     {
+      "stage": "decision",
+      "fn": "arco-de-kap",
+      "summary": "KAP toma la bolsa y se aleja, diciendo que va a ver a los raperos. El hermano lo sigue con tristeza.",
+      "location": "Calle del barrio",
+      "characters": [
+       "KAP",
+       "Hermano de KAP"
+      ],
+      "change": "Se lleva a cabo la decisión de KAP: ir a ver el ensayo, dejando al hermano atrás.",
+      "why": "Para mostrar la consecuencia directa de su elección.",
+      "time": "Mañana",
+      "interior": false,
+      "shot": "general",
+      "visual": "KAP camina hacia el lugar del ensayo; el hermano se queda mirándolo con tristeza."
+     },
+     {
+      "stage": "consecuencia",
+      "fn": "desarrollar-personaje",
+      "summary": "El hermano de KAP vuelve a la guardería solo, sentándose en un banco y mirando al suelo. KAP, desde lejos, observa cómo se aleja.",
+      "location": "Guardería",
+      "characters": [
+       "Hermano de KAP"
+      ],
+      "change": "El hermano de KAP siente la decepción, lo que refleja el costo emocional de la decisión de KAP.",
+      "why": "Para mostrar la consecuencia emocional del episodio.",
+      "time": "Mañana",
+      "interior": true,
+      "shot": "medio",
+      "visual": "El hermano está sentado solo en el banco, con los brazos cruzados y la mirada baja."
+     },
+     {
+      "stage": "resolucion",
+      "fn": "preparar-gancho",
+      "summary": "KAP llega al lugar del ensayo, pero al escuchar a los raperos, se queda pensativo. Al final, se da cuenta de que no ha hecho nada para su hermano.",
+      "location": "Lugar del ensayo",
+      "characters": [
+       "KAP"
+      ],
+      "change": "KAP reflexiona sobre su decisión y empieza a dudar de si fue correcta.",
+      "why": "Para preparar el gancho emocional que lleva al final del episodio.",
+      "time": "Mañana",
+      "interior": false,
+      "shot": "primer plano",
+      "visual": "KAP se queda mirando al suelo, con una expresión de duda en el rostro."
+     },
+     {
+      "stage": "resolucion",
+      "fn": "desarrollar-personaje",
+      "summary": "KAP camina por la calle, pensativo. Al final, saca una hoja de papel y escribe una línea de rap, aunque no está seguro si será suficiente para su hermano.",
+      "location": "Calle del barrio",
+      "characters": [
+       "KAP"
+      ],
+      "change": "KAP empieza a explorar una nueva forma de expresión, aunque aún no sabe si es lo que su hermano necesita.",
+      "why": "Para mostrar el primer paso en la evolución musical de KAP y preparar el siguiente episodio.",
+      "time": "Más tarde ese día",
+      "interior": false,
+      "shot": "primer plano",
+      "visual": "KAP escribe con una expresión seria, mirando hacia el suelo."
+     },
+     {
+      "stage": "gancho",
+      "fn": "preparar-gancho",
+      "summary": "KAP regresa a la guardería, pero al llegar, ve que su hermano ya no está allí. Un guardián le dice que se fue con un niño desconocido.",
+      "location": "Guardería",
+      "characters": [
+       "KAP",
+       "Guardián"
+      ],
+      "change": "Se introduce una nueva incógnita: ¿dónde está el hermano de KAP? ¿Qué hizo el niño desconocido?",
+      "why": "Para crear un gancho que lleva al siguiente episodio.",
+      "time": "Más tarde ese día",
+      "interior": true,
+      "shot": "general",
+      "visual": "KAP mira al guardián con preocupación, mientras el niño desconocido se aleja con su hermano."
+     }
+    ]
+   },
+   "variety": {
+    "locations": 3,
+    "dominantShare": 0.63,
+    "times": 2,
+    "timeSource": "declarado"
+   },
+   "show": {
+    "realism": {
+     "passed": 6,
+     "total": 9,
+     "failed": [
+      "decision-real",
+      "decision-con-consecuencia",
+      "final-nace-de-la-accion"
+     ]
+    },
+    "explainLinesKap": 0,
+    "kapLines": 15,
+    "validationLinesSecondary": 0,
+    "secondaryLines": 15,
+    "costVisible": false,
+    "closing": {
+     "problem": true,
+     "reason": "El cierre de KAP es una pregunta retórica: «Sí… mi hermano. ¿Lo viste salir? ¡Tengo que encontrarlo antes de que se vaya sin»"
+    }
+   },
+   "realismGenerador": {
+    "passed": 6,
+    "total": 9,
+    "failed": [
+     "decision-real",
+     "decision-con-consecuencia",
+     "final-nace-de-la-accion"
+    ]
+   },
+   "openingRhymeCheck": {
+    "present": true,
+    "rhyme_valid": false,
+    "natural": true,
+    "contextual": true,
+    "rhythm": true,
+    "level": "ninguna"
+   },
+   "script": "# Calle del barrio\n[mood: Mañana, exterior]\n[plano: general]\nKAP camina por la calle con una bolsa pequeña en la mano, mirando al suelo. Su hermano corre hacia él, emocionado, esperando el regalo.\nHERMANO DE KAP: ¡Kap! ¿Qué traes? ¿Es un juguete? ¡Por favor, que sea un juguete!\nKAP: Ay, no… no es un juguete. Es… es algo más…\nHERMANO DE KAP: ¿No es un juguete? ¿Entonces qué es?\nKAP: Es… es una idea. O… o un sueño.\nHERMANO DE KAP: ¿Un sueño? ¡Eso no se come, Kap! Yo quiero un juguete, no un sueño.\nKAP: No te enojes, hermanito… solo que… solo que no tengo mucho dinero. Solo… solo tengo cuatro monedas.\nHERMANO DE KAP: ¿Cuatro monedas? ¿Y no puedes comprarme ni un muñeco?\nKAP: No… no puedo. Pero… pero tal vez… tal vez te hago una canción.\nHERMANO DE KAP: ¿Una canción? ¡Eso no se juega, Kap! ¡Yo quiero un juguete!\n[acto: inicio | KAP camina por la calle con una bolsa pequeña en la mano, mirando a los pies. El hermano de KAP corre hacia él, emocionado, esperando el re…]\n\n# Calle del barrio\n[mood: Mañana, exterior]\n[plano: medio KAP]\nEl hermano de KAP corre hacia KAP con los brazos abiertos, emocionado. Se detiene frente a él, mirando la bolsa con expectativa.\nHERMANO DE KAP: ¿Qué es? ¿Qué traes? ¿Es un juguete?\nKAP: No… no es un juguete.\nHERMANO DE KAP: Entonces… ¿qué es?\nKAP: No sé si será útil… pero es algo que quizás puede ayudarme a hacer algo para ti.\nHERMANO DE KAP: ¿No es un juguete? ¿No es nada?\nKAP: No es nada… es algo más.\nHERMANO DE KAP: No entiendo.\nEl hermano de KAP baja la mirada, frunciendo el ceño. KAP evita mirarlo a los ojos y se ajusta la camiseta con nerviosismo.\n[acto: conflicto | El hermano de KAP le pregunta qué trae en la bolsa, pero KAP se queda callado. Finalmente, le dice que no es un juguete.]\n\n# Calle del barrio\n[mood: Mañana, exterior]\n[plano: primer plano KAP]\nKAP: Usé el dinero para ver a unos raperos ensayar. Tal vez… tal vez pueda hacer algo con eso para ti.\nHERMANO DE KAP: ¿Raperos? ¿Como los del colegio? ¿Y qué me va a dar eso?\nKAP: No sé… pero es algo que quizás puede ayudarte. O tal vez no.\n[acto: desarrollo | KAP le explica que usó el dinero para ver a unos raperos ensayar, y tal vez podría hacer algo con eso para su hermano.]\n\n# Calle del barrio\n[mood: Mañana, exterior]\n[plano: general]\nKAP camina hacia el lugar del ensayo; el hermano se queda mirándolo con tristeza.\nHERMANO DE KAP: ¿Por qué no me das el juguete? ¿No te importa mi cumpleaños?\nKAP: Es por tu bien, hermano. Tal vez esto me ayude a hacer algo mejor para ti más adelante.\nHERMANO DE KAP: No entiendo… solo quería un juguete.\n[acto: emocional | KAP toma la bolsa y se aleja, diciendo que va a ver a los raperos. El hermano lo sigue con tristeza.]\n\n# Guardería\n[mood: Mañana, interior]\n[plano: medio Hermano]\n[expresion: Hermano triste]\n[mira: Hermano izquierda]\n[camara: seguir Hermano]\n[gesto: Hermano encoge]\nEl hermano de KAP se sienta solo en un banco de la guardería, con los brazos cruzados y mirando al suelo.\nHERMANO DE KAP: No quería un juguete… solo quería que me dieras algo. ¿Por qué no me diste nada?\nKAP se queda parado en la puerta de la guardería, mirando a su hermano con expresión triste y confundida.\n\n# Lugar del ensayo\n[mood: Mañana, exterior]\n[plano: primer plano KAP]\n[expresion: KAP pensativo]\n[mira: KAP izquierda]\n[camara: zoom 1.2]\nKAP se queda parado frente al lugar del ensayo, mirando hacia la entrada con expresión dudosa.\nKAP: ¿Enserio… esto es lo mejor que puedo hacer?\nEscucha atentamente los primeros compases de una canción, pero su mirada se vuelve triste y distante.\n[acto: resolucion | KAP llega al lugar del ensayo, pero al escuchar a los raperos, se queda pensativo. Al final, se da cuenta de que no ha hecho nada para su h…]\n\n# Calle del barrio\n[mood: Más tarde ese día, exterior]\n[plano: primer plano KAP]\nKAP camina por la calle con la cabeza gacha, las manos en los bolsillos. La bolsa ya no tiene nada dentro. Camina despacio, como si estuviera pensando en algo muy grande.\nKAP: Yo solo quería hacerlo bien… pero no sé si esto es lo que necesitas.\nSacude un poco las manos y mira al suelo. De repente, saca una hoja de papel del bolsillo. La mira un momento, como si dudara, y luego comienza a escribir con un lápiz que encontró en la calle.\nKAP: Papá, mamá… ¿qué harían si vieran esto? Solo espero que sea lo suficiente.\nEscribe una línea, la mira, y luego otra. Su expresión va cambiando: de tristeza a algo más… indescifrable.\nKAP: Rap… no es solo para ser grande. Es para decir lo que no se puede decir en voz alta.\nLa hoja se mueve con su mano, y la escritura crece poco a poco. KAP mira hacia el horizonte, como si estuviera mirando algo que aún no existe.\n\n# Guardería\n[mood: Más tarde ese día, interior]\n[plano: general]\n[expresion: KAP preocupado]\n[mira: KAP izquierda]\n[camina: KAP a centro]\n[vfx: niebla]\nKAP llega a la guardería con pasos lentos, mirando hacia el suelo. Su cara muestra preocupación y duda.\nGUARDIÁN: ¿Buscas a alguien, chico?\nKAP: Sí… mi hermano. ¿Lo viste salir? ¡Tengo que encontrarlo antes de que se vaya sin su regalo!\nGUARDIÁN: Hace un rato. Se fue con un niño desconocido.\n[acto: gancho | KAP regresa a la guardería, pero al llegar, ve que su hermano ya no está allí. Un guardián le dice que se fue con un niño desconocido.]\n[gancho: El hermano de KAP mira con tristeza la bolsa vacía de KAP, mientras este se pregunta si lo que hizo fue suficiente.]\n[relacion: KAP, Hermano de KAP, -1]\n",
+   "gate": {
+    "regenerated": 1,
+    "dropped": 0,
+    "localPatches": 2,
+    "patchKinds": {
+     "rima-invalida": 1,
+     "cierre-reflexivo": 1
+    },
+    "endingRevisions": 0,
+    "varietyRevisions": 0,
+    "codeRepairs": 0,
+    "arcRevisions": 0,
+    "rhymeValid": true,
+    "calls": 12,
+    "outputTokens": 4762,
+    "promptTokens": 60296,
+    "issues": {
+     "rima-invalida": 1,
+     "repite-frase": 1,
+     "corta": 5,
+     "cierre-reflexivo": 1
+    }
+   },
+   "outcome": "KAP se queda sin regalo físico para su hermano, pero logra capturar una idea musical que tal vez podría ser útil másadel",
+   "checks": [
+    {
+     "id": "estructura-6-actos",
+     "ok": true,
+     "note": "faltan: —"
+    },
+    {
+     "id": "gancho",
+     "ok": true
+    },
+    {
+     "id": "protagonista",
+     "ok": true
+    },
+    {
+     "id": "sin-errores-criticos",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "sin-exito-prematuro",
+     "ok": true
+    },
+    {
+     "id": "directivas-validas",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "espanol",
+     "ok": true
+    },
+    {
+     "id": "diversidad-lexica",
+     "ok": true,
+     "note": "0.35"
+    }
+   ],
+   "compliance": 1,
+   "proxy": {
+    "score": 10,
+    "dialogueRatio": 0.7,
+    "locations": 3,
+    "repeatedSentences": 0
+   },
+   "warnings": [
+    "El modelo desordenó las etapas del arco; se han reordenado.",
+    "Escena 1: La rima de KAP no vale: la rima no menciona nada concreto de la escena; los finales de los versos no riman ni de forma aproximada (juguete, más).",
+    "Escena 3: Escena corta (45 palabras): puede ser correcto si la acción y la consecuencia están claras.",
+    "Escena 4: Escena corta (50 palabras): puede ser correcto si la acción y la consecuencia están claras.",
+    "Escena 6: Escena corta (40 palabras): puede ser correcto si la acción y la consecuencia están claras.",
+    "Escena 8: Escena corta (48 palabras): puede ser correcto si la acción y la consecuencia están claras."
+   ],
+   "draft": {
+    "title": "El regalo que no quería",
+    "logline": "KAP se enfrenta a una difícil elección: entre cumplir su promesa de regalo para su hermano o ir a ver ensayar a unos raperos del barrio, pero su hermano pide algo distinto de ambos.",
+    "assumptions": [
+     "El hermano pequeño de KAP tiene alrededor de 5 años y no entiende aún la complejidad de las decisiones de KAP.",
+     "KAP tiene un total de 4 monedas, lo suficiente para pagar una entrada o comprar algo pequeño."
+    ],
+    "scenes": [
+     {
+      "title": "El regalo que no quería",
+      "location": "Calle del barrio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP camina por la calle con una bolsa pequeña en la mano, mirando al suelo. Su hermano corre hacia él, emocionado, esperando el regalo."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¡Kap! ¿Qué traes? ¿Es un juguete? ¡Por favor, que sea un juguete!"
+       },
+       {
+        "speaker": "KAP",
+        "text": "Ay, no… no es un juguete. Es… es algo más…"
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¿No es un juguete? ¿Entonces qué es?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "Es… es una idea. O… o un sueño."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¿Un sueño? ¡Eso no se come, Kap! Yo quiero un juguete, no un sueño."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No te enojes, hermanito… solo que… solo que no tengo mucho dinero. Solo… solo tengo cuatro monedas."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¿Cuatro monedas? ¿Y no puedes comprarme ni un muñeco?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "No… no puedo. Pero… pero tal vez… tal vez te hago una canción."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¿Una canción? ¡Eso no se juega, Kap! ¡Yo quiero un juguete!"
+       }
+      ],
+      "memory": [
+       "acto: inicio | KAP camina por la calle con una bolsa pequeña en la mano, mirando a los pies. El hermano de KAP corre hacia él, emocionado, esperando el re…"
+      ],
+      "fn": "avanzar-historia",
+      "stage": "inicio",
+      "shot": "general",
+      "time": "Mañana",
+      "interior": false,
+      "directions": [
+       "plano: general"
+      ],
+      "change": "El hermano de KAP se siente decepcionado y frustrado al no recibir lo que esperaba."
+     },
+     {
+      "title": "El regalo que no quería",
+      "location": "Calle del barrio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "El hermano de KAP corre hacia KAP con los brazos abiertos, emocionado. Se detiene frente a él, mirando la bolsa con expectativa."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¿Qué es? ¿Qué traes? ¿Es un juguete?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "No… no es un juguete."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "Entonces… ¿qué es?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "No sé si será útil… pero es algo que quizás puede ayudarme a hacer algo para ti."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¿No es un juguete? ¿No es nada?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "No es nada… es algo más."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "No entiendo."
+       },
+       {
+        "speaker": "",
+        "text": "El hermano de KAP baja la mirada, frunciendo el ceño. KAP evita mirarlo a los ojos y se ajusta la camiseta con nerviosismo."
+       }
+      ],
+      "memory": [
+       "acto: conflicto | El hermano de KAP le pregunta qué trae en la bolsa, pero KAP se queda callado. Finalmente, le dice que no es un juguete."
+      ],
+      "fn": "conflicto",
+      "stage": "problema",
+      "shot": "medio",
+      "time": "Mañana",
+      "interior": false,
+      "directions": [
+       "plano: medio KAP"
+      ],
+      "change": "Se revela el conflicto: el regalo no es lo que el hermano esperaba."
+     },
+     {
+      "title": "El regalo que no quería",
+      "location": "Calle del barrio",
+      "lines": [
+       {
+        "speaker": "KAP",
+        "text": "Usé el dinero para ver a unos raperos ensayar. Tal vez… tal vez pueda hacer algo con eso para ti."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¿Raperos? ¿Como los del colegio? ¿Y qué me va a dar eso?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "No sé… pero es algo que quizás puede ayudarte. O tal vez no."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo | KAP le explica que usó el dinero para ver a unos raperos ensayar, y tal vez podría hacer algo con eso para su hermano."
+      ],
+      "fn": "preparar-consecuencia",
+      "stage": "escalada",
+      "shot": "primer plano",
+      "time": "Mañana",
+      "interior": false,
+      "directions": [
+       "plano: primer plano KAP"
+      ],
+      "change": "Se revela la decisión que KAP toma: usar el dinero para una experiencia en lugar de un regalo físico."
+     },
+     {
+      "title": "El regalo que no quería",
+      "location": "Calle del barrio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP camina hacia el lugar del ensayo; el hermano se queda mirándolo con tristeza."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¿Por qué no me das el juguete? ¿No te importa mi cumpleaños?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "Es por tu bien, hermano. Tal vez esto me ayude a hacer algo mejor para ti más adelante."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "No entiendo… solo quería un juguete."
+       }
+      ],
+      "memory": [
+       "acto: emocional | KAP toma la bolsa y se aleja, diciendo que va a ver a los raperos. El hermano lo sigue con tristeza."
+      ],
+      "fn": "arco-de-kap",
+      "stage": "decision",
+      "shot": "general",
+      "time": "Mañana",
+      "interior": false,
+      "directions": [
+       "plano: general"
+      ],
+      "change": "Se lleva a cabo la decisión de KAP: ir a ver el ensayo, dejando al hermano atrás."
+     },
+     {
+      "title": "El regalo que no quería",
+      "location": "Guardería",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "El hermano de KAP se sienta solo en un banco de la guardería, con los brazos cruzados y mirando al suelo."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "No quería un juguete… solo quería que me dieras algo. ¿Por qué no me diste nada?"
+       },
+       {
+        "speaker": "",
+        "text": "KAP se queda parado en la puerta de la guardería, mirando a su hermano con expresión triste y confundida."
+       }
+      ],
+      "memory": [],
+      "fn": "desarrollar-personaje",
+      "stage": "consecuencia",
+      "shot": "medio",
+      "time": "Mañana",
+      "interior": true,
+      "directions": [
+       "plano: medio Hermano de KAP",
+       "expresion: Hermano de KAP triste",
+       "mira: Hermano de KAP izquierda",
+       "camara: seguir Hermano de KAP",
+       "gesto: Hermano de KAP encoge"
+      ],
+      "change": "El hermano de KAP siente la decepción, lo que refleja el costo emocional de la decisión de KAP."
+     },
+     {
+      "title": "El regalo que no quería",
+      "location": "Lugar del ensayo",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se queda parado frente al lugar del ensayo, mirando hacia la entrada con expresión dudosa."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Enserio… esto es lo mejor que puedo hacer?"
+       },
+       {
+        "speaker": "",
+        "text": "Escucha atentamente los primeros compases de una canción, pero su mirada se vuelve triste y distante."
+       }
+      ],
+      "memory": [
+       "acto: resolucion | KAP llega al lugar del ensayo, pero al escuchar a los raperos, se queda pensativo. Al final, se da cuenta de que no ha hecho nada para su h…"
+      ],
+      "fn": "preparar-gancho",
+      "stage": "resolucion",
+      "shot": "primer plano",
+      "time": "Mañana",
+      "interior": false,
+      "directions": [
+       "plano: primer plano KAP",
+       "expresion: KAP pensativo",
+       "mira: KAP izquierda",
+       "camara: zoom 1.2"
+      ],
+      "change": "KAP reflexiona sobre su decisión y empieza a dudar de si fue correcta."
+     },
+     {
+      "title": "El regalo que no quería",
+      "location": "Calle del barrio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP camina por la calle con la cabeza gacha, las manos en los bolsillos. La bolsa ya no tiene nada dentro. Camina despacio, como si estuviera pensando en algo muy grande."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Yo solo quería hacerlo bien… pero no sé si esto es lo que necesitas."
+       },
+       {
+        "speaker": "",
+        "text": "Sacude un poco las manos y mira al suelo. De repente, saca una hoja de papel del bolsillo. La mira un momento, como si dudara, y luego comienza a escribir con un lápiz que encontró en la calle."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Papá, mamá… ¿qué harían si vieran esto? Solo espero que sea lo suficiente."
+       },
+       {
+        "speaker": "",
+        "text": "Escribe una línea, la mira, y luego otra. Su expresión va cambiando: de tristeza a algo más… indescifrable."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Rap… no es solo para ser grande. Es para decir lo que no se puede decir en voz alta."
+       },
+       {
+        "speaker": "",
+        "text": "La hoja se mueve con su mano, y la escritura crece poco a poco. KAP mira hacia el horizonte, como si estuviera mirando algo que aún no existe."
+       }
+      ],
+      "memory": [],
+      "fn": "desarrollar-personaje",
+      "stage": "resolucion",
+      "shot": "primer plano",
+      "time": "Más tarde ese día",
+      "interior": false,
+      "directions": [
+       "plano: primer plano KAP"
+      ],
+      "change": "KAP empieza a explorar una nueva forma de expresión, aunque aún no sabe si es lo que su hermano necesita."
+     },
+     {
+      "title": "El regalo que no quería",
+      "location": "Guardería",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP llega a la guardería con pasos lentos, mirando hacia el suelo. Su cara muestra preocupación y duda."
+       },
+       {
+        "speaker": "Guardián",
+        "text": "¿Buscas a alguien, chico?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "Sí… mi hermano. ¿Lo viste salir? ¡Tengo que encontrarlo antes de que se vaya sin su regalo!"
+       },
+       {
+        "speaker": "Guardián",
+        "text": "Hace un rato. Se fue con un niño desconocido."
+       }
+      ],
+      "memory": [
+       "acto: gancho | KAP regresa a la guardería, pero al llegar, ve que su hermano ya no está allí. Un guardián le dice que se fue con un niño desconocido.",
+       "gancho: El hermano de KAP mira con tristeza la bolsa vacía de KAP, mientras este se pregunta si lo que hizo fue suficiente.",
+       "relacion: KAP, Hermano de KAP, -1"
+      ],
+      "fn": "preparar-gancho",
+      "stage": "gancho",
+      "shot": "general",
+      "time": "Más tarde ese día",
+      "interior": true,
+      "directions": [
+       "plano: general",
+       "expresion: KAP preocupado",
+       "mira: KAP izquierda",
+       "camina: KAP a centro",
+       "vfx: niebla"
+      ],
+      "change": "Se introduce una nueva incógnita: ¿dónde está el hermano de KAP? ¿Qué hizo el niño desconocido?"
+     }
+    ]
+   }
+  }
+ ]
+}
