@@ -1,0 +1,381 @@
+{
+ "nota": "Métricas para el análisis posterior; NO deciden el ganador. No abrir antes del veredicto ciego.",
+ "porMetodoYEpisodio": {
+  "mejorado": {
+   "E10": {
+    "min": 78.5,
+    "escenas": 8,
+    "palabras": 617,
+    "duracionMin": 3.6,
+    "regeneracionesCompletas": 1,
+    "reparacionesLocales": 2,
+    "motivosLocales": {
+     "rima-invalida": 1,
+     "cierre-reflexivo": 1
+    },
+    "reparacionesEnCodigo": 0,
+    "revisionesArco": {
+     "desenlace": 0,
+     "variedad": 0
+    },
+    "detecciones": {
+     "rima-invalida": 1,
+     "repite-frase": 1,
+     "corta": 5,
+     "cierre-reflexivo": 1
+    },
+    "escenasEliminadas": 0,
+    "erroresJSONoEsquema": 0,
+    "irValida": true,
+    "erroresMemoria": 0,
+    "criticosContinuidad": 0,
+    "avisosContinuidad": 0,
+    "avisosNarrativos": 1,
+    "kapRealismCheck": {
+     "passed": 6,
+     "total": 9,
+     "failed": [
+      "decision-real",
+      "decision-con-consecuencia",
+      "final-nace-de-la-accion"
+     ]
+    },
+    "explicaKap": 0,
+    "lineasKap": 15,
+    "validacionSecundarios": 0,
+    "lineasSecundarios": 15,
+    "costeVisible": false,
+    "cierre": {
+     "problem": true,
+     "reason": "El cierre de KAP es una pregunta retórica: «Sí… mi hermano. ¿Lo viste salir? ¡Tengo que encontrarlo antes de que se vaya sin»"
+    },
+    "rhyme_valid_generador": true,
+    "openingRhymeObligatoria": true,
+    "rimaApertura": {
+     "present": true,
+     "rhyme_valid": false,
+     "natural": true,
+     "contextual": true,
+     "rhythm": true,
+     "level": "ninguna"
+    },
+    "variedad": {
+     "locations": 3,
+     "dominantShare": 0.63,
+     "times": 2,
+     "timeSource": "declarado"
+    },
+    "llamadas": 12,
+    "commitError": null
+   },
+   "E11": {
+    "min": 70.9,
+    "escenas": 8,
+    "palabras": 469,
+    "duracionMin": 2.8,
+    "regeneracionesCompletas": 2,
+    "reparacionesLocales": 1,
+    "motivosLocales": {
+     "cierre-reflexivo": 1
+    },
+    "reparacionesEnCodigo": 1,
+    "revisionesArco": {
+     "desenlace": 0,
+     "variedad": 0
+    },
+    "detecciones": {
+     "corta": 5,
+     "personaje-no-previsto": 3,
+     "menciona-memoria": 1,
+     "repite-frase": 1,
+     "cierre-reflexivo": 1
+    },
+    "escenasEliminadas": 0,
+    "erroresJSONoEsquema": 0,
+    "irValida": true,
+    "erroresMemoria": 0,
+    "criticosContinuidad": 0,
+    "avisosContinuidad": 1,
+    "avisosNarrativos": 2,
+    "kapRealismCheck": {
+     "passed": 6,
+     "total": 9,
+     "failed": [
+      "decision-real",
+      "decision-con-consecuencia",
+      "final-nace-de-la-accion"
+     ]
+    },
+    "explicaKap": 0,
+    "lineasKap": 9,
+    "validacionSecundarios": 0,
+    "lineasSecundarios": 6,
+    "costeVisible": false,
+    "cierre": {
+     "problem": true,
+     "reason": "El cierre de KAP es una pregunta retórica: «¿Ese… es un micrófono real? ¿De verdad?»"
+    },
+    "rhyme_valid_generador": true,
+    "openingRhymeObligatoria": true,
+    "rimaApertura": {
+     "present": true,
+     "rhyme_valid": true,
+     "natural": true,
+     "contextual": true,
+     "rhythm": true,
+     "level": "asonante"
+    },
+    "variedad": {
+     "locations": 2,
+     "dominantShare": 0.5,
+     "times": 1,
+     "timeSource": "declarado"
+    },
+    "llamadas": 12,
+    "commitError": null
+   },
+   "E12": {
+    "min": 75.9,
+    "escenas": 8,
+    "palabras": 541,
+    "duracionMin": 3.2,
+    "regeneracionesCompletas": 0,
+    "reparacionesLocales": 3,
+    "motivosLocales": {
+     "rima-invalida": 2,
+     "cierre-reflexivo": 1
+    },
+    "reparacionesEnCodigo": 1,
+    "revisionesArco": {
+     "desenlace": 0,
+     "variedad": 0
+    },
+    "detecciones": {
+     "rima-invalida": 1,
+     "corta": 4,
+     "repite-frase": 1,
+     "cierre-reflexivo": 1
+    },
+    "escenasEliminadas": 0,
+    "erroresJSONoEsquema": 0,
+    "irValida": true,
+    "erroresMemoria": 0,
+    "criticosContinuidad": 0,
+    "avisosContinuidad": 2,
+    "avisosNarrativos": 4,
+    "kapRealismCheck": {
+     "passed": 5,
+     "total": 9,
+     "failed": [
+      "decision-real",
+      "decision-con-consecuencia",
+      "sin-frases-de-adulto",
+      "final-nace-de-la-accion"
+     ]
+    },
+    "explicaKap": 0,
+    "lineasKap": 13,
+    "validacionSecundarios": 0,
+    "lineasSecundarios": 8,
+    "costeVisible": false,
+    "cierre": {
+     "problem": true,
+     "reason": "El cierre de KAP es una pregunta retórica: «¿Por qué no me quieres escuchar? ¿No entiendes que quiero salir de esto?»"
+    },
+    "rhyme_valid_generador": false,
+    "openingRhymeObligatoria": true,
+    "rimaApertura": {
+     "present": true,
+     "rhyme_valid": false,
+     "natural": true,
+     "contextual": true,
+     "rhythm": false,
+     "level": "cercana"
+    },
+    "variedad": {
+     "locations": 4,
+     "dominantShare": 0.5,
+     "times": 1,
+     "timeSource": "declarado"
+    },
+    "llamadas": 12,
+    "commitError": null
+   }
+  },
+  "anterior": {
+   "E10": {
+    "min": 66.5,
+    "escenas": 18,
+    "palabras": 549,
+    "duracionMin": 3.4,
+    "regeneracionesCompletas": 0,
+    "reparacionesLocales": 0,
+    "motivosLocales": {},
+    "reparacionesEnCodigo": 0,
+    "revisionesArco": {
+     "desenlace": 0,
+     "variedad": 0
+    },
+    "detecciones": {},
+    "escenasEliminadas": 0,
+    "erroresJSONoEsquema": 0,
+    "irValida": true,
+    "erroresMemoria": 8,
+    "criticosContinuidad": 0,
+    "avisosContinuidad": 23,
+    "avisosNarrativos": 2,
+    "kapRealismCheck": {
+     "passed": 5,
+     "total": 9,
+     "failed": [
+      "decision-real",
+      "decision-con-consecuencia",
+      "interaccion-sin-validacion",
+      "final-nace-de-la-accion"
+     ]
+    },
+    "explicaKap": 0,
+    "lineasKap": 12,
+    "validacionSecundarios": 0,
+    "lineasSecundarios": 6,
+    "costeVisible": false,
+    "cierre": {
+     "problem": true,
+     "reason": "El cierre es una frase de tráiler que valdría para cualquier episodio: «KAP mira hacia el cielo, con una sonrisa. Su camino no será fácil, pero ahora ti»"
+    },
+    "rhyme_valid_generador": null,
+    "openingRhymeObligatoria": false,
+    "rimaApertura": {
+     "present": true,
+     "rhyme_valid": false,
+     "natural": true,
+     "contextual": true,
+     "rhythm": false,
+     "level": "asonante"
+    },
+    "variedad": {
+     "locations": 5,
+     "dominantShare": 0.39,
+     "times": 0,
+     "timeSource": "texto"
+    },
+    "llamadas": 2,
+    "commitError": null
+   },
+   "E11": {
+    "min": 60.4,
+    "escenas": 18,
+    "palabras": 517,
+    "duracionMin": 3.2,
+    "regeneracionesCompletas": 0,
+    "reparacionesLocales": 0,
+    "motivosLocales": {},
+    "reparacionesEnCodigo": 0,
+    "revisionesArco": {
+     "desenlace": 0,
+     "variedad": 0
+    },
+    "detecciones": {},
+    "escenasEliminadas": 0,
+    "erroresJSONoEsquema": 0,
+    "irValida": true,
+    "erroresMemoria": 18,
+    "criticosContinuidad": 0,
+    "avisosContinuidad": 32,
+    "avisosNarrativos": 2,
+    "kapRealismCheck": {
+     "passed": 7,
+     "total": 9,
+     "failed": [
+      "sin-frases-de-adulto",
+      "interaccion-sin-validacion"
+     ]
+    },
+    "explicaKap": 0,
+    "lineasKap": 12,
+    "validacionSecundarios": 1,
+    "lineasSecundarios": 6,
+    "costeVisible": true,
+    "cierre": {
+     "problem": false,
+     "reason": null
+    },
+    "rhyme_valid_generador": null,
+    "openingRhymeObligatoria": false,
+    "rimaApertura": {
+     "present": true,
+     "rhyme_valid": false,
+     "natural": true,
+     "contextual": true,
+     "rhythm": true,
+     "level": "ninguna"
+    },
+    "variedad": {
+     "locations": 3,
+     "dominantShare": 0.5,
+     "times": 0,
+     "timeSource": "texto"
+    },
+    "llamadas": 2,
+    "commitError": null
+   },
+   "E12": {
+    "min": 49.6,
+    "escenas": 18,
+    "palabras": 470,
+    "duracionMin": 2.9,
+    "regeneracionesCompletas": 0,
+    "reparacionesLocales": 0,
+    "motivosLocales": {},
+    "reparacionesEnCodigo": 0,
+    "revisionesArco": {
+     "desenlace": 0,
+     "variedad": 0
+    },
+    "detecciones": {},
+    "escenasEliminadas": 0,
+    "erroresJSONoEsquema": 0,
+    "irValida": true,
+    "erroresMemoria": 11,
+    "criticosContinuidad": 0,
+    "avisosContinuidad": 11,
+    "avisosNarrativos": 6,
+    "kapRealismCheck": {
+     "passed": 7,
+     "total": 9,
+     "failed": [
+      "interaccion-sin-validacion",
+      "final-nace-de-la-accion"
+     ]
+    },
+    "explicaKap": 0,
+    "lineasKap": 10,
+    "validacionSecundarios": 1,
+    "lineasSecundarios": 8,
+    "costeVisible": true,
+    "cierre": {
+     "problem": true,
+     "reason": "El cierre de KAP es una pregunta retórica: «¿Qué más me espera?»"
+    },
+    "rhyme_valid_generador": null,
+    "openingRhymeObligatoria": false,
+    "rimaApertura": {
+     "present": true,
+     "rhyme_valid": false,
+     "natural": true,
+     "contextual": true,
+     "rhythm": false,
+     "level": "ninguna"
+    },
+    "variedad": {
+     "locations": 4,
+     "dominantShare": 0.33,
+     "times": 0,
+     "timeSource": "texto"
+    },
+    "llamadas": 2,
+    "commitError": null
+   }
+  }
+ }
+}
