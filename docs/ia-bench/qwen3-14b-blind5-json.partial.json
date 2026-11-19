@@ -1,0 +1,540 @@
+{
+ "meta": {
+  "model": "qwen3:14b",
+  "phase": "blind5",
+  "ctx": 8192,
+  "date": "2026-11-19T16:42:11.469Z",
+  "cpus": 4,
+  "ramGb": 16,
+  "host": "CPU sin GPU"
+ },
+ "partial": true,
+ "results": [
+  {
+   "id": "E10",
+   "title": "Episodio 10",
+   "request": "Crea el episodio 10, a continuación del episodio 3. Hoy es el cumpleaños del hermano pequeño de KAP y KAP prometió llevarle un regalo, pero con las pocas monedas que tiene solo puede elegir una de dos cosas razonables: comprarle un regalo pequeño o pagar la entrada para ver ensayar a unos raperos del barrio. Su hermano quiere algo distinto de las dos.",
+   "ms": 3991396,
+   "peakMb": 10678,
+   "sysPeakMb": 11413,
+   "contextTokens": 1935,
+   "ok": true,
+   "irValid": true,
+   "irValidFirstTry": false,
+   "json": {
+    "attempts": 2,
+    "retries": 1,
+    "jsonErrors": 0,
+    "schemaErrors": 0,
+    "lengthRetries": 1,
+    "memoryDirectiveErrors": 8
+   },
+   "irErrors": [],
+   "usage": {
+    "promptTokens": 8066,
+    "outputTokens": 5057,
+    "totalMs": 3991365.1126840003,
+    "loadMs": 11154.418006,
+    "promptMs": 278203.083,
+    "evalMs": 3701926.909
+   },
+   "tokensPerSec": 1.37,
+   "episode": {
+    "scenes": 18,
+    "estimatedSec": 204,
+    "words": 549,
+    "title": "Episodio 10: La Elección",
+    "logline": "KAP debe decidir entre comprar un regalo para su hermano o ver ensayar a unos raperos del barrio, pero su hermano quiere algo distinto de ambas opciones."
+   },
+   "continuity": {
+    "critical": [],
+    "warnings": [
+     "directiva: Directiva de memoria no entendida: «acto: inicio»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "hito: Hito desconocido «KAP, promesa al hermano»: no está en el arco de la serie.",
+     "hito: Hito desconocido «KAP, compra un regalo pequeño»: no está en el arco de la serie.",
+     "ubicacion-incoherente: Se declara a KAP en «estudio de grabación» pero la escena 4 transcurre en «Estudio de grabación del barrio».",
+     "directiva: Directiva de memoria no entendida: «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "hito: Hito desconocido «KAP, duda entre opciones»: no está en el arco de la serie.",
+     "relacion-contradice: KAP y hermano ya se conocían (relación «conocidos» desde ep. 10); la escena 6 los presenta como si se conocieran ahora.",
+     "hito: Hito desconocido «KAP, llega a la guardería»: no está en el arco de la serie.",
+     "directiva: Directiva de memoria no entendida: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "hito: Hito desconocido «KAP, regalo no suficiente»: no está en el arco de la serie.",
+     "hito: Hito desconocido «KAP, tristeza por no cumplir expectativas»: no está en el arco de la serie.",
+     "directiva: Directiva de memoria no entendida: «acto: emocional»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "hito: Hito desconocido «KAP, momento de conexión con su hermano»: no está en el arco de la serie.",
+     "hito: Hito desconocido «KAP, descubre el verdadero deseo del hermano»: no está en el arco de la serie.",
+     "hito: Hito desconocido «KAP, se acerca a los raperos»: no está en el arco de la serie.",
+     "hito: Hito desconocido «KAP, acepta una oportunidad musical»: no está en el arco de la serie.",
+     "hito: Hito desconocido «KAP, regalo simbólico al hermano»: no está en el arco de la serie.",
+     "hito: Hito desconocido «KAP, conexión con el hermano»: no está en el arco de la serie.",
+     "hito: Hito desconocido «KAP, comienza a desarrollar su talento»: no está en el arco de la serie.",
+     "hito: Hito desconocido «KAP, comienza su aprendizaje musical»: no está en el arco de la serie.",
+     "hito: Hito desconocido «KAP, comienza a tomar la música en serio»: no está en el arco de la serie.",
+     "estructura: Al episodio le faltan: Inicio, Conflicto, Desarrollo, Punto emocional o de tensión, Resolución parcial. Decláralo en el guion con [acto: tip",
+     "duracion: El episodio dura ≈ 3.8 min y el formato es ≈ 5 min (4–6 min)."
+    ],
+    "info": 9
+   },
+   "narrative": {
+    "error": 0,
+    "warning": 2,
+    "info": 0,
+    "rules": [
+     "memoria-no-pedida",
+     "cierre-reflexivo"
+    ],
+    "findings": [
+     {
+      "severity": "warning",
+      "rule": "narrativa-memoria-no-pedida",
+      "text": "«Hermano de KAP» (de la memoria) aparece en 4 escenas sin que la petición lo pidiera: la memoria sirve para mantener la continuidad, no para reutilizarlo todo.",
+      "scene": 5
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-cierre-reflexivo",
+      "text": "El cierre es una frase de tráiler que valdría para cualquier episodio: «KAP mira hacia el cielo, con una sonrisa. Su camino no será fácil, pero ahora ti»: el cierre debería ser un gag, una reacción, una sorpresa o una consecuencia, no una reflexión.",
+      "scene": 17
+     }
+    ],
+    "taggedRules": [
+     "cierre-reflexivo"
+    ]
+   },
+   "mode": "json",
+   "variety": {
+    "locations": 5,
+    "dominantShare": 0.39,
+    "times": 0,
+    "timeSource": "texto"
+   },
+   "show": {
+    "realism": {
+     "passed": 5,
+     "total": 9,
+     "failed": [
+      "decision-real",
+      "decision-con-consecuencia",
+      "interaccion-sin-validacion",
+      "final-nace-de-la-accion"
+     ]
+    },
+    "explainLinesKap": 0,
+    "kapLines": 12,
+    "validationLinesSecondary": 0,
+    "secondaryLines": 6,
+    "costVisible": false,
+    "closing": {
+     "problem": true,
+     "reason": "El cierre es una frase de tráiler que valdría para cualquier episodio: «KAP mira hacia el cielo, con una sonrisa. Su camino no será fácil, pero ahora ti»"
+    }
+   },
+   "openingRhymeCheck": {
+    "present": true,
+    "rhyme_valid": false,
+    "natural": true,
+    "contextual": true,
+    "rhythm": false,
+    "level": "asonante"
+   },
+   "script": "# Calle de noche\nKAP camina por la calle con una moneda en la mano, mirando hacia el suelo. Hoy es el cumpleaños de su hermano y prometió traerle algo especial, pero solo tiene un poco de dinero.\nKAP: ¿Qué hago? ¿Le compro algo pequeño o le llevo a ver a esos raperos del barrio?\n[acto: inicio]\n[situación: KAP, dilema entre regalo y música]\n[conoce: KAP, hermano]\n[etapa: KAP, Niño]\n[perfil: KAP, sueños = ser millonario gracias a la música]\n[ubicacion: KAP, Calle de noche]\n\n# Calle de noche (2)\nKAP recuerda la promesa que le hizo a su hermano: 'Te traeré algo que te haga feliz.' Pero ahora, con sus limitaciones, no está seguro de qué puede ofrecer.\nKAP: No puedo fallarle. Pero tampoco puedo perder esta oportunidad.\n[hito-logrado: KAP, promesa al hermano]\n[abre-hilo: el dilema del regalo | KAP, hermano]\n\n# Tienda de barrio\nKAP entra en una pequeña tienda donde compra un juguete barato, esperando que su hermano lo disfrute.\nKAP: Es poco, pero es lo que puedo hacer. Ojalá le guste.\n[uso: KAP, monedas]\n[hito-logrado: KAP, compra un regalo pequeño]\n\n# Estudio de grabación del barrio\nKAP se acerca a una puerta abierta donde unos raperos ensayan. El sonido lo atrapa, recordándole su sueño de ser millonario gracias a la música.\nKAP: Quiero verlos. Quiero aprender.\n[ubicacion: KAP, estudio de grabación]\n[conoce: KAP, raperos del barrio]\n\n# Calle de noche\nKAP se sienta en un banco, confundido. ¿Qué hacer? Su hermano quiere algo que no es ni un juguete ni una entrada a un ensayo.\nKAP: ¿Qué podría ser? No tengo más dinero…\n[acto: conflicto]\n[hito-logrado: KAP, duda entre opciones]\n\n# Guardería\nKAP llega a la guardería y encuentra a su hermano esperándolo. El niño lo mira con una sonrisa, pero también con un poco de desilusión.\nHERMANO DE KAP: ¿Trajiste algo?\n[conoce: KAP, hermano]\n[hito-logrado: KAP, llega a la guardería]\n\n# Guardería\nEl hermano de KAP mira el regalo que le trae KAP y luego lo mira a él, con una expresión triste.\nHERMANO DE KAP: No es lo que quería.\n[acto: desarrollo]\n[hito-logrado: KAP, regalo no suficiente]\n\n# Guardería\nKAP se sienta al lado de su hermano y suspira. Sabe que no es fácil, pero quiere hacer lo mejor que puede.\nKAP: Lo siento. Solo quería hacer algo especial para ti.\n[perfil: KAP, sueños = ser millonario gracias a la música]\n[hito-logrado: KAP, tristeza por no cumplir expectativas]\n\n# Guardería\nEl hermano de KAP se abraza a KAP, buscando consuelo. Es la primera vez que siente que no puede ayudar lo suficiente.\nHERMANO DE KAP: No es tu culpa. Solo… me gustaría algo más.\n[acto: emocional]\n[hito-logrado: KAP, momento de conexión con su hermano]\n\n# Guardería\nKAP mira a su hermano y entiende: no es el regalo ni la música, sino lo que le hace sentir especial.\nKAP: ¿Y si te traigo algo que nos haga felices a los dos?\n[hito-logrado: KAP, descubre el verdadero deseo del hermano]\n\n# Calle de noche\nKAP regresa a la calle y se acerca a la puerta del estudio de grabación. Esta vez, no entra para ver el ensayo, sino para aprender.\nKAP: Quiero ser como ellos. Quiero hacer música que nos haga felices.\n[resolucion: KAP, decide seguir su sueño]\n[uso: KAP, estudio de grabación]\n\n# Estudio de grabación del barrio\nKAP entra al estudio y ve a los raperos. Uno lo mira con curiosidad, como si ya lo conociera.\nRAPERO: ¿Eres KAP? ¿El que quiere ser millonario?\n[hito-logrado: KAP, se acerca a los raperos]\n[conoce: KAP, rapero]\n\n# Estudio de grabación del barrio\nEl rapero le ofrece una oportunidad: aprender con él. KAP se siente emocionado y aliviado.\nKAP: Quiero aprender. Quiero hacer algo que nos haga felices a los dos.\n[hito-logrado: KAP, acepta una oportunidad musical]\n\n# Guardería\nKAP regresa a la guardería con un nuevo propósito. No trae un juguete ni una entrada, sino algo mucho más importante.\nKAP: Te prometo que haré algo especial para ti.\n[hito-logrado: KAP, regalo simbólico al hermano]\n\n# Guardería\nEl hermano de KAP sonríe. Ahora entiende que su hermano no solo quiere darle un regalo, sino construir algo juntos.\nHERMANO DE KAP: Entonces, vamos a hacerlo juntos.\n[hito-logrado: KAP, conexión con el hermano]\n[etapa: KAP, Niño]\n\n# Calle de noche\nKAP camina por la calle con su hermano, mirando hacia el futuro. Su sueño ya no es solo suyo, sino compartido.\nKAP: Seremos grandes. Juntos.\n[hito-logrado: KAP, comienza a desarrollar su talento]\n\n# Estudio de grabación del barrio\nKAP entra al estudio por segunda vez, esta vez con más determinación. El rapero lo espera para enseñarle.\nRAPERO: Vamos a empezar. ¿Estás listo?\n[hito-logrado: KAP, comienza su aprendizaje musical]\n\n# Calle de noche\nKAP mira hacia el cielo, con una sonrisa. Su camino no será fácil, pero ahora tiene un propósito: su hermano y su música.\nKAP: El futuro está en nuestras manos. Solo tenemos que creer.\n[gancho: El futuro de KAP y su hermano depende de su esfuerzo y talento]\n[hito-logrado: KAP, comienza a tomar la música en serio]\n",
+   "gate": {
+    "regenerated": 0,
+    "dropped": 0,
+    "localPatches": 0,
+    "patchKinds": {},
+    "endingRevisions": 0,
+    "varietyRevisions": 0,
+    "codeRepairs": 0,
+    "arcRevisions": 0,
+    "calls": 2,
+    "outputTokens": 5057,
+    "promptTokens": 8066,
+    "issues": {}
+   },
+   "checks": [
+    {
+     "id": "estructura-6-actos",
+     "ok": false,
+     "note": "faltan: inicio, conflicto, desarrollo, emocional, resolucion"
+    },
+    {
+     "id": "gancho",
+     "ok": true
+    },
+    {
+     "id": "protagonista",
+     "ok": true
+    },
+    {
+     "id": "sin-errores-criticos",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "sin-exito-prematuro",
+     "ok": true
+    },
+    {
+     "id": "directivas-validas",
+     "ok": false,
+     "note": "«acto: inicio»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto» | «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»"
+    },
+    {
+     "id": "espanol",
+     "ok": true
+    },
+    {
+     "id": "diversidad-lexica",
+     "ok": true,
+     "note": "0.37"
+    }
+   ],
+   "compliance": 0.75,
+   "proxy": {
+    "score": 10,
+    "dialogueRatio": 0.5,
+    "locations": 5,
+    "repeatedSentences": 0
+   },
+   "warnings": [
+    "Directiva de memoria inválida del modelo: «acto: inicio»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+    "Directiva de memoria inválida del modelo: «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+    "Directiva de memoria inválida del modelo: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+    "Directiva de memoria inválida del modelo: «acto: emocional»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+    "Directiva de memoria inválida del modelo: «situación: KAP, dilema entre regalo y música»: directiva de memoria desconocida",
+    "Directiva de memoria inválida del modelo: «uso: KAP, monedas»: directiva de memoria desconocida"
+   ],
+   "draft": {
+    "title": "Episodio 10: La Elección",
+    "logline": "KAP debe decidir entre comprar un regalo para su hermano o ver ensayar a unos raperos del barrio, pero su hermano quiere algo distinto de ambas opciones.",
+    "assumptions": [],
+    "scenes": [
+     {
+      "title": "Inicio: El Dilema",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP camina por la calle con una moneda en la mano, mirando hacia el suelo. Hoy es el cumpleaños de su hermano y prometió traerle algo especial, pero solo tiene un poco de dinero."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Qué hago? ¿Le compro algo pequeño o le llevo a ver a esos raperos del barrio?"
+       }
+      ],
+      "memory": [
+       "acto: inicio",
+       "situación: KAP, dilema entre regalo y música",
+       "conoce: KAP, hermano",
+       "etapa: KAP, Niño",
+       "perfil: KAP, sueños = ser millonario gracias a la música",
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "Hilando el Pasado",
+      "location": "Calle de noche (2)",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP recuerda la promesa que le hizo a su hermano: 'Te traeré algo que te haga feliz.' Pero ahora, con sus limitaciones, no está seguro de qué puede ofrecer."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No puedo fallarle. Pero tampoco puedo perder esta oportunidad."
+       }
+      ],
+      "memory": [
+       "hito-logrado: KAP, promesa al hermano",
+       "abre-hilo: el dilema del regalo | KAP, hermano"
+      ]
+     },
+     {
+      "title": "La Opción 1: El Regalo",
+      "location": "Tienda de barrio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP entra en una pequeña tienda donde compra un juguete barato, esperando que su hermano lo disfrute."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Es poco, pero es lo que puedo hacer. Ojalá le guste."
+       }
+      ],
+      "memory": [
+       "uso: KAP, monedas",
+       "hito-logrado: KAP, compra un regalo pequeño"
+      ]
+     },
+     {
+      "title": "La Opción 2: La Música",
+      "location": "Estudio de grabación del barrio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se acerca a una puerta abierta donde unos raperos ensayan. El sonido lo atrapa, recordándole su sueño de ser millonario gracias a la música."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Quiero verlos. Quiero aprender."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, estudio de grabación",
+       "conoce: KAP, raperos del barrio"
+      ]
+     },
+     {
+      "title": "El Conflicto",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se sienta en un banco, confundido. ¿Qué hacer? Su hermano quiere algo que no es ni un juguete ni una entrada a un ensayo."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Qué podría ser? No tengo más dinero…"
+       }
+      ],
+      "memory": [
+       "acto: conflicto",
+       "hito-logrado: KAP, duda entre opciones"
+      ]
+     },
+     {
+      "title": "El Hermano",
+      "location": "Guardería",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP llega a la guardería y encuentra a su hermano esperándolo. El niño lo mira con una sonrisa, pero también con un poco de desilusión."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¿Trajiste algo?"
+       }
+      ],
+      "memory": [
+       "conoce: KAP, hermano",
+       "hito-logrado: KAP, llega a la guardería"
+      ]
+     },
+     {
+      "title": "La Desilusión",
+      "location": "Guardería",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "El hermano de KAP mira el regalo que le trae KAP y luego lo mira a él, con una expresión triste."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "No es lo que quería."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo",
+       "hito-logrado: KAP, regalo no suficiente"
+      ]
+     },
+     {
+      "title": "El Lamento",
+      "location": "Guardería",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se sienta al lado de su hermano y suspira. Sabe que no es fácil, pero quiere hacer lo mejor que puede."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Lo siento. Solo quería hacer algo especial para ti."
+       }
+      ],
+      "memory": [
+       "perfil: KAP, sueños = ser millonario gracias a la música",
+       "hito-logrado: KAP, tristeza por no cumplir expectativas"
+      ]
+     },
+     {
+      "title": "El Punto Emocional",
+      "location": "Guardería",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "El hermano de KAP se abraza a KAP, buscando consuelo. Es la primera vez que siente que no puede ayudar lo suficiente."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "No es tu culpa. Solo… me gustaría algo más."
+       }
+      ],
+      "memory": [
+       "acto: emocional",
+       "hito-logrado: KAP, momento de conexión con su hermano"
+      ]
+     },
+     {
+      "title": "La Revelación",
+      "location": "Guardería",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP mira a su hermano y entiende: no es el regalo ni la música, sino lo que le hace sentir especial."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Y si te traigo algo que nos haga felices a los dos?"
+       }
+      ],
+      "memory": [
+       "hito-logrado: KAP, descubre el verdadero deseo del hermano"
+      ]
+     },
+     {
+      "title": "La Solución",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP regresa a la calle y se acerca a la puerta del estudio de grabación. Esta vez, no entra para ver el ensayo, sino para aprender."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Quiero ser como ellos. Quiero hacer música que nos haga felices."
+       }
+      ],
+      "memory": [
+       "resolucion: KAP, decide seguir su sueño",
+       "uso: KAP, estudio de grabación"
+      ]
+     },
+     {
+      "title": "El Aprendizaje",
+      "location": "Estudio de grabación del barrio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP entra al estudio y ve a los raperos. Uno lo mira con curiosidad, como si ya lo conociera."
+       },
+       {
+        "speaker": "Rapero",
+        "text": "¿Eres KAP? ¿El que quiere ser millonario?"
+       }
+      ],
+      "memory": [
+       "hito-logrado: KAP, se acerca a los raperos",
+       "conoce: KAP, rapero"
+      ]
+     },
+     {
+      "title": "La Promesa",
+      "location": "Estudio de grabación del barrio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "El rapero le ofrece una oportunidad: aprender con él. KAP se siente emocionado y aliviado."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Quiero aprender. Quiero hacer algo que nos haga felices a los dos."
+       }
+      ],
+      "memory": [
+       "hito-logrado: KAP, acepta una oportunidad musical"
+      ]
+     },
+     {
+      "title": "El Regalo Final",
+      "location": "Guardería",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP regresa a la guardería con un nuevo propósito. No trae un juguete ni una entrada, sino algo mucho más importante."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Te prometo que haré algo especial para ti."
+       }
+      ],
+      "memory": [
+       "hito-logrado: KAP, regalo simbólico al hermano"
+      ]
+     },
+     {
+      "title": "El Sueño Compartido",
+      "location": "Guardería",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "El hermano de KAP sonríe. Ahora entiende que su hermano no solo quiere darle un regalo, sino construir algo juntos."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "Entonces, vamos a hacerlo juntos."
+       }
+      ],
+      "memory": [
+       "hito-logrado: KAP, conexión con el hermano",
+       "etapa: KAP, Niño"
+      ]
+     },
+     {
+      "title": "El Futuro",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP camina por la calle con su hermano, mirando hacia el futuro. Su sueño ya no es solo suyo, sino compartido."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Seremos grandes. Juntos."
+       }
+      ],
+      "memory": [
+       "hito-logrado: KAP, comienza a desarrollar su talento"
+      ]
+     },
+     {
+      "title": "El Aprendizaje Continuo",
+      "location": "Estudio de grabación del barrio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP entra al estudio por segunda vez, esta vez con más determinación. El rapero lo espera para enseñarle."
+       },
+       {
+        "speaker": "Rapero",
+        "text": "Vamos a empezar. ¿Estás listo?"
+       }
+      ],
+      "memory": [
+       "hito-logrado: KAP, comienza su aprendizaje musical"
+      ]
+     },
+     {
+      "title": "El Gancho",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP mira hacia el cielo, con una sonrisa. Su camino no será fácil, pero ahora tiene un propósito: su hermano y su música."
+       },
+       {
+        "speaker": "KAP",
+        "text": "El futuro está en nuestras manos. Solo tenemos que creer."
+       }
+      ],
+      "memory": [
+       "gancho: El futuro de KAP y su hermano depende de su esfuerzo y talento",
+       "hito-logrado: KAP, comienza a tomar la música en serio"
+      ]
+     }
+    ]
+   }
+  }
+ ]
+}
