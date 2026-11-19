@@ -184,7 +184,7 @@ console.log(`\n== Banco de IA local · ${MODEL} · fase ${PHASE} · ${meta.cpus}
 if (!(await llm.available())) { console.error(`El modelo ${MODEL} no está disponible en Ollama`); process.exit(2); }
 const results: any[] = [];
 /** Guardado incremental: un reinicio del contenedor no debe perder las tareas ya terminadas. */
-const save = () => fs.writeFile(path.join(OUT, `${SLUG}-${PHASE}${PHASE === "blind2" || PHASE === "blind3" || PHASE === "blind4" || PHASE === "blind5" ? "-" + MODE : ""}${ONLY.length ? "-" + ONLY.join("") : ""}.partial.json`), JSON.stringify({ meta, partial: true, results }, null, 1));
+const save = () => fs.writeFile(path.join(OUT, `${SLUG}-${PHASE}${PHASE === "blind2" || PHASE === "blind3" || PHASE === "blind4" || PHASE === "blind5" || PHASE === "blind6" ? "-" + MODE : ""}${ONLY.length ? "-" + ONLY.join("") : ""}.partial.json`), JSON.stringify({ meta, partial: true, results }, null, 1));
 if (PHASE === "tech" || PHASE === "all") {
   const worlds: Partial<Record<"fresh" | "after3", World>> = {};
   for (const t of TASKS.concat([{ id: "T7", title: "", world: "after3", request: "", kind: "review" }]).filter((x) => !ONLY.length || ONLY.includes(x.id))) {
@@ -193,6 +193,28 @@ if (PHASE === "tech" || PHASE === "all") {
     const r = t.kind === "review" ? await runReview(w) : await runAuthor(t, t.request, SCENES, w); results.push(r); await save();
     console.log(`   ${(r.ms / 1000).toFixed(0)} s · RAM pico ${r.peakMb} MB · ${"error" in r ? "ERROR " + r.error : `${r.id === "T7" ? `detecta ${(r as any).review.found}/4 · falsos+ ${(r as any).review.falsePositives}` : `IR ${(r as any).irValid ? "válida" : "inválida"}${(r as any).irValidFirstTry ? " a la primera" : ""}`} · reintentos ${(r as any).json.retries} · cumplimiento ${Math.round((((r as any).compliance ?? ((r as any).checks.filter((c: Check) => c.ok).length / (r as any).checks.length)) ) * 100)}% · crit ${(r as any).continuity?.critical.length ?? "-"}`}`);
     for (const c of ((r as any).checks ?? []).filter((c: Check) => !c.ok)) console.log(`     ✗ ${c.id}${c.note ? ` — ${c.note}` : ""}`);
+  }
+}
+if (PHASE === "blind6") {
+  // Episodios 13, 14 y 15 encadenados sobre la memoria disponible (episodios 1-3 de demostración); cada uno se aprueba SOLO en la base temporal de esta prueba.
+  const E = [
+    { id: "E13", n: 13, from: 1003, request: "Crea el episodio 13, a continuación del episodio 3. KAP encuentra en la calle un teléfono móvil que alguien ha perdido y, mientras lo tiene en la mano, empieza a sonar con la llamada de alguien que parece muy preocupado. KAP no sabe si contestar, devolverlo o esperar a pensar qué hacer, y Dani, que lo ha visto, quiere quedarse con el teléfono." },
+    { id: "E14", n: 14, from: 1013, request: "Crea el episodio 14, continuando el episodio 13. Lo que KAP hizo con el teléfono tiene consecuencias que no esperaba: alguien cree que KAP hizo algo que no hizo. A la vez, su hermano pequeño necesita que KAP vaya a buscarlo a otro sitio, justo cuando KAP tendría que aclarar el problema." },
+    { id: "E15", n: 15, from: 1014, request: "Crea el episodio 15, continuando el episodio 14. KAP intenta arreglar lo que provocó con una idea suya, pero la persona a la que quiere ayudar no quiere que se lo arregle a su manera, y la idea de KAP sale distinta de lo que esperaba." },
+  ];
+  const w = await world("after3");
+  const commitEp = async (n: number, from: number, script: string) => { try { await w.mk(`chain${n}`, n, script, "REVIEW", { continuesFrom: from }); await M.proposeMemory(w.deps, `chain${n}`); await M.saveDecisions(w.deps, `chain${n}`, { all: "accepted" }); await w.storage.productions.save({ ...(await w.storage.productions.get(`chain${n}`))!, status: "APPROVED" }); await M.commitMemory(w.deps, `chain${n}`); return undefined; } catch (e) { return (e as Error).message; } };
+  const outcomeByEp: Record<number, string> = {}, doneNums: number[] = [];
+  try { const prev = JSON.parse(await fs.readFile(path.join(OUT, `${SLUG}-${PHASE}-${MODE}.partial.json`), "utf8")); for (const r of prev.results ?? []) if (!("error" in r) && r.script) { const e = E.find((x) => x.id === r.id)!; const ce = await commitEp(e.n, e.from, r.script); results.push(r); doneNums.unshift(e.n); if (r.outcome) outcomeByEp[e.n] = r.outcome; console.log(`[${r.id}] recuperado del parcial${ce ? ` (no se pudo aprobar en la base temporal: ${ce})` : ""}`); } } catch { /* primera ejecución */ }
+  for (const e of E.filter((x) => !results.some((r) => r.id === x.id) && (!ONLY.length || ONLY.includes(x.id)))) {
+    await unload(); console.log(`\n[${e.id}] (${MODE}) episodio ${e.n} …`);
+    const nums = [...doneNums, 3, 2, 1].slice(0, 2), svc = await M.previousEpisodesHints(w.storage, 1000 + e.n);
+    const hints = { previousEpisodes: svc.map((h, k) => ({ ...h, outcome: outcomeByEp[nums[k]] })) };
+    const r: any = await runAuthor({ id: e.id, title: `Episodio ${e.n}`, world: "after3", request: e.request }, e.request, 18, w, { hints });
+    if (r.ok) { r.commitError = await commitEp(e.n, e.from, r.script); if (r.outcome) outcomeByEp[e.n] = r.outcome; doneNums.unshift(e.n); }
+    results.push(r); await save();
+    console.log(`   ${(r.ms / 60000).toFixed(1)} min · ${"error" in r ? "ERROR " + r.error : `${r.episode.scenes} escenas · ≈ ${(r.episode.estimatedSec / 60).toFixed(1)} min · IR ${r.irValid ? "válida" : "inválida"} · regeneradas ${r.gate.regenerated} · locales ${r.gate.localPatches} · eliminadas ${r.gate.dropped} · crit ${r.continuity.critical.length} · narrativa crit ${r.narrative.error} aviso ${r.narrative.warning}${r.commitError ? " · (no aprobado en la base temporal)" : ""}`}`);
+    if ("error" in r) break;
   }
 }
 if (PHASE === "blind5") {
@@ -287,6 +309,6 @@ if (PHASE === "narrative" || PHASE === "all") {
   }
 }
 const loadedInfo = await loaded();
-await fs.writeFile(path.join(OUT, `${SLUG}-${PHASE}${PHASE === "blind2" || PHASE === "blind3" || PHASE === "blind4" || PHASE === "blind5" ? "-" + MODE : ""}${ONLY.length ? "-" + ONLY.join("") : ""}.json`), JSON.stringify({ meta, loaded: loadedInfo, totalMin: +((Date.now() - t0) / 60000).toFixed(1), results }, null, 1));
+await fs.writeFile(path.join(OUT, `${SLUG}-${PHASE}${PHASE === "blind2" || PHASE === "blind3" || PHASE === "blind4" || PHASE === "blind5" || PHASE === "blind6" ? "-" + MODE : ""}${ONLY.length ? "-" + ONLY.join("") : ""}.json`), JSON.stringify({ meta, loaded: loadedInfo, totalMin: +((Date.now() - t0) / 60000).toFixed(1), results }, null, 1));
 console.log(`\nTotal ${((Date.now() - t0) / 60000).toFixed(1)} min · modelo en memoria: ${JSON.stringify(loadedInfo)} · guardado en docs/ia-bench/`);
 await fs.rm(root, { recursive: true, force: true });
