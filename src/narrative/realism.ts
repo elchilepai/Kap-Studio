@@ -7,11 +7,11 @@ import { norm } from "../memory/text.ts";
 import { STOCK_CLOSE, closingProblem } from "./closing.ts";
 import { checkRhyme, firstInterventionOf } from "./rhyme.ts";
 import { ADULT_VOICE, MOTIVATIONAL, OPPOSITION, content, jac, reviewNarrative } from "./review.ts";
-import { explainsTheme, isValidation } from "./show.ts";
+import { explainsTheme, isThoughtOnly, isValidation } from "./show.ts";
 
-export type RealismScene = { location: string; title?: string; lines: { speaker?: string; text: string }[]; fn?: string; stage?: string };
+export type RealismScene = { location: string; title?: string; lines: { speaker?: string; text: string }[]; fn?: string; stage?: string; /** Lo que KAP hace en la escena y cómo queda (si el generador los declara; si no, esas tres comprobaciones no se hacen). */ kapDoes?: string; kapState?: string };
 export type RealismInput = { scenes: RealismScene[]; protagonist?: string; /** Textos de la escena de apertura de los que debe nacer la rima (petición, lugar…). */ contextTerms?: string[] };
-export type RealismId = "decision-real" | "decision-con-consecuencia" | "kap-no-explica-de-mas" | "sin-frases-de-adulto" | "interaccion-sin-validacion" | "conflicto-cambia-algo" | "final-nace-de-la-accion" | "primera-rima-espontanea" | "ninguna-escena-eliminable";
+export type RealismId = "decision-real" | "decision-con-consecuencia" | "kap-no-explica-de-mas" | "sin-frases-de-adulto" | "interaccion-sin-validacion" | "conflicto-cambia-algo" | "final-nace-de-la-accion" | "primera-rima-espontanea" | "ninguna-escena-eliminable" | "kap-actua" | "estados-variados" | "no-demasiado-reflexivo";
 export type RealismCheck = { id: RealismId; ok: boolean; note?: string };
 export type RealismResult = { checks: RealismCheck[]; failed: RealismId[]; passed: number; total: number };
 
@@ -48,6 +48,12 @@ export function kapRealismCheck(inp: RealismInput): RealismResult {
   if (iv.texts.length) { const c = checkRhyme({ lines: iv.texts, contextTerms: inp.contextTerms ?? [S[0] ? text(S[0]) : "", S[0]?.location ?? ""] }); if (c.exists) { rhymeOk = c.natural && c.contextual; if (!rhymeOk) rnote = c.reasons.slice(0, 2).join("; "); } else rnote = "el episodio no rima en la primera intervención de KAP"; }
   add("primera-rima-espontanea", rhymeOk, rnote);
   add("ninguna-escena-eliminable", !rules.has("narrativa-escena-sin-aporte") && !rules.has("narrativa-escena-repetida") && !rules.has("narrativa-bucle"), rules.has("narrativa-escena-sin-aporte") || rules.has("narrativa-escena-repetida") ? "hay escenas que no cambian nada o repiten otra" : undefined);
+  // Conducta (solo si las escenas declaran lo que KAP hace y su estado): ¿KAP actúa?, ¿el estado emocional varía?, ¿el episodio no es demasiado reflexivo?
+  if (S.some((x) => x.kapDoes !== undefined)) { const withKap = S.filter((x) => x.lines.some(isKap)), thought = withKap.filter((x) => isThoughtOnly(x.kapDoes ?? "")).length, share = withKap.length ? thought / withKap.length : 0;
+    add("kap-actua", share < 0.4, share >= 0.4 ? `en ${thought} de ${withKap.length} escenas con KAP, lo que «hace» es solo pensar, recordar o dudar` : undefined);
+    const st = S.map((x) => norm(x.kapState ?? "")); let run = 1, maxRun = 1; for (let i = 1; i < st.length; i++) { run = st[i] && st[i] === st[i - 1] ? run + 1 : 1; maxRun = Math.max(maxRun, run); }
+    add("estados-variados", maxRun < 3 && (S.length < 6 || new Set(st.filter(Boolean)).size >= 2), maxRun >= 3 ? `KAP está en el mismo estado durante ${maxRun} escenas seguidas` : S.length >= 6 && new Set(st.filter(Boolean)).size < 2 ? "KAP no cambia de estado en todo el episodio" : undefined);
+    add("no-demasiado-reflexivo", share < 0.35, share >= 0.35 ? "el episodio es demasiado reflexivo: pocas escenas en las que KAP haga algo" : undefined); }
   const failed = checks.filter((c) => !c.ok).map((c) => c.id); void jac;
   return { checks, failed, passed: checks.length - failed.length, total: checks.length };
 }

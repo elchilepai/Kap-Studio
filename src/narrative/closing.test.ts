@@ -39,4 +39,10 @@ describe("cierres de tráiler: el final nace de lo que acaba de ocurrir", () => 
   it("un final con consecuencia, objeto, llamada o gag no se marca", () => {
     for (const t of ["Suena el teléfono: es el tendero y pregunta por la radio.", "Se le cae el pan al charco y el perro se lo lleva.", "La profesora guarda el cuaderno mojado en el cajón con llave."]) expect(closingProblem([L2("KAP", "¡No!"), L2("", t)]), t).toBeUndefined();
   });
+  it("las moralejas explícitas se detectan como cierre de manual", () => {
+    for (const t of ["Hoy aprendí que lo importante es la familia.", "El futuro está en nuestras manos.", "Solo tenemos que creer.", "A veces, el corazón nos guía mejor.", "Todo sueño requiere esfuerzo."]) expect(closingProblem([L2("", "Se queda un rato."), L2("KAP", t)])?.reason, t).toBeTruthy();
+  });
+  it("«consecuencia concreta → reacción de KAP → nuevo problema o pregunta → corte» no se marca", () => {
+    expect(closingProblem([L2("", "El tendero cierra la reja con la radio dentro."), L2("KAP", "¡Eh, esa radio era de mi hermano!"), L2("", "Suena el teléfono de la tienda y nadie lo coge.")])).toBeUndefined();
+  });
 });

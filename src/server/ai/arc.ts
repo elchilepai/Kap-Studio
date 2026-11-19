@@ -25,6 +25,9 @@ const Beat = z.object({
   stage: z.enum(BEAT_STAGES), fn: z.enum(SCENE_FUNCTIONS), summary: z.string().min(12).max(280), location: z.string().min(1).max(80),
   characters: z.array(z.string().min(1).max(40)).min(1).max(3), change: z.string().min(12).max(220), why: z.string().min(8).max(200), time: z.string().min(2).max(30), interior: z.boolean(), shot: z.enum(["general", "medio", "primer plano"]), visual: z.string().max(200),
 });
+/** Momentos de CONDUCTA de KAP: hace algo → provoca algo → tiene que reaccionar. Pocos, naturales y opcionales: no es una plantilla. */
+const BEHAVIOR_KINDS = ["impulso", "error", "malentendido", "improvisacion", "cambio-de-opinion", "esconder", "exageracion", "interrupcion", "tonteria", "egoismo-puntual"] as const;
+const Behavior = z.object({ beat: z.number().int().min(0).max(11), kind: z.enum(BEHAVIOR_KINDS), does: z.string().min(8).max(200), provokes: z.string().min(8).max(200) });
 /** El arco entero; las comprobaciones de orden/cobertura producen mensajes que el modelo ve al reintentar. */
 export const EpisodeArc = z.object({
   title: z.string().min(1).max(100), logline: z.string().min(1).max(260), assumptions: z.array(z.string().max(300)).max(8),
@@ -32,6 +35,8 @@ export const EpisodeArc = z.object({
   openingRhymeReason: z.string().max(300).optional(), outcome: z.string().min(3).max(120), setting: z.object({ main: z.string().max(80), secondary: z.array(z.string().max(80)).max(3), timeOfDay: z.string().max(40), transitions: z.array(z.string().max(160)).max(3) }), hook: z.string().min(20).max(300),
   extraCharacters: z.array(z.object({ name: z.string().min(1).max(40), why: z.string().max(200) })).max(2), castActions: z.array(z.object({ name: z.string().min(1).max(40), does: z.string().max(200) })).max(4),
   usedFromMemory: z.array(z.string().max(120)).max(6), newCharacters: z.array(z.object({ name: z.string().min(1).max(40), function: z.string().max(200) })).max(2), newPlaces: z.array(z.string().max(80)).max(2),
+  behaviorBeats: z.array(Behavior).max(4),   // vacío si la historia no lo pide
+  mistake: z.object({ misread: z.string().max(200), actsOn: z.string().max(200), reaction: z.string().max(200), discovery: z.string().max(200), fix: z.string().max(200) }).optional(),   // el error de KAP MUEVE la historia: malinterpreta → actúa → reacción ajena → lo descubre → tiene que arreglarlo
   beats: z.array(Beat).min(8).max(12),
 }).superRefine((a, ctx) => {
   // Solo lo estructuralmente imposible rechaza el arco (cada reintento cuesta minutos en CPU). El orden se REPARA en código y el resto
@@ -43,7 +48,7 @@ export type EpisodeArc = z.infer<typeof EpisodeArc>;
 
 const SceneOut = z.object({
   title: z.string().min(1).max(100),
-  lines: z.array(z.object({ speaker: z.string().max(40), text: z.string().min(8).max(500) })).min(3).max(10), change: z.string().min(1).max(260),
+  lines: z.array(z.object({ speaker: z.string().max(40), text: z.string().min(8).max(500) })).min(3).max(10), change: z.string().min(1).max(260), kapDoes: z.string().max(160), kapState: z.string().max(40),
   directions: z.array(z.string().max(120)).max(5), memory: z.array(z.string().max(300)).max(5),
 });
 const ACT_OF: Record<(typeof BEAT_STAGES)[number], string> = { inicio: "inicio", problema: "conflicto", escalada: "desarrollo", decision: "emocional", consecuencia: "desarrollo", resolucion: "resolucion", gancho: "gancho" };
@@ -112,28 +117,30 @@ export function llmArcAuthor(llm: LlmClient, opts: ArcAuthorOptions = {}): ArcAu
       const memoryOutside = context.relevantCharacters.filter((n) => !permitted.has(norm(n)));
       for (const b of arc.beats) { const kept = b.characters.filter((c) => !memoryOutside.some((m) => norm(m) === norm(c))); if (kept.length !== b.characters.length) warnings.push(`El arco incluía a ${b.characters.filter((c) => !kept.includes(c)).join(", ")} en un beat sin justificarlo: se ha quitado (la memoria no obliga a reutilizarlo).`); b.characters = kept.length ? kept : ["KAP"]; }
       self.lastArc = arc;
-      const arcView = { ...arc, beats: arc.beats.map((b, k) => `${k + 1}. [${b.stage}] ${b.summary}`) };
+      // los behaviorBeats apuntan al beat por su posición ORIGINAL: se resuelven por referencia (el orden de etapas puede haberse reparado)
+      const behaviorOf = new Map<number, { kind: string; does: string; provokes: string }>(); for (const bb of a.data.behaviorBeats) { const ref = a.data.beats[bb.beat], idx = ref ? arc.beats.indexOf(ref) : -1; if (idx >= 0 && !behaviorOf.has(idx)) behaviorOf.set(idx, { kind: bb.kind, does: bb.does, provokes: bb.provokes }); }
+      const arcView = { ...arc, behaviorBeats: [...behaviorOf.entries()].map(([i, b]) => ({ beat: i + 1, ...b })), beats: arc.beats.map((b, k) => `${k + 1}. [${b.stage}] ${b.summary}`) };
       const siblingOf = (names: string[]) => names.find((n) => /herman/i.test(n));
       // la escena de la PRIMERA RIMA: el primer beat que habla de rimar/improvisar (o, si la petición lo pide, el de la decisión)
       let rhymeBeat = arc.beats.findIndex((b) => RIMA.test(`${b.summary} ${b.change} ${b.visual}`)); if (rhymeBeat < 0 && RIMA.test(request.notes)) rhymeBeat = arc.beats.findIndex((b) => b.stage === "decision");
 
       // 2) LAS ESCENAS, una por beat, con puerta de calidad. Regla de coste: lo local se arregla en local (código o una llamada pequeña), no regenerando la escena.
       type Out = z.infer<typeof SceneOut>; type Acc = { beat: (typeof arc.beats)[number]; out: Out; lines: GateLine[]; issues: GateIssue[] };
-      const accepted: Acc[] = [], done: { n: number; title: string; location: string; text: string }[] = [], prev: { text: string; change: string; lines: string[]; speakers: string[] }[] = []; let kapSpoke = false;
+      const accepted: Acc[] = [], done: { n: number; title: string; location: string; text: string }[] = [], prev: { text: string; change: string; lines: string[]; speakers: string[]; state?: string; does?: string }[] = []; let kapSpoke = false;
       for (let i = 0; i < arc.beats.length; i++) {
-        const beat = arc.beats[i], brief = { stage: beat.stage, fn: beat.fn, summary: beat.summary, change: beat.change, why: beat.why, location: beat.location, characters: beat.characters, time: beat.time, interior: beat.interior, shot: beat.shot, visual: beat.visual, ...(beat.stage === "consecuencia" ? { costeQueSeDebeVer: arc.cost } : {}) };
+        const beat = arc.beats[i], brief = { stage: beat.stage, fn: beat.fn, summary: beat.summary, change: beat.change, why: beat.why, location: beat.location, characters: beat.characters, time: beat.time, interior: beat.interior, shot: beat.shot, visual: beat.visual, ...(beat.stage === "consecuencia" ? { costeQueSeDebeVer: arc.cost } : {}), ...(behaviorOf.get(i) ? { comportamientoDeKAP: behaviorOf.get(i) } : {}) };
         const sibling = siblingOf(beat.characters), hasKap = beat.characters.some((c) => norm(c) === "kap");
         const mode = i === rhymeBeat ? "first-rhyme" as const : !kapSpoke && hasKap && !skipOpening ? "opening" as const : undefined;
         const contextTerms = [beat.summary, beat.change, beat.visual, beat.location, ...beat.characters, request.notes, i === rhymeBeat ? arc.problem : ""], base = `${mode ? RIMA_RULES : ""}${sibling ? SIBLING_RULES : ""}`;
-        const check = (lines: GateLine[], change: string) => checkScene({ scene: { lines, change }, previous: prev, speakers: beat.characters, memoryOutside, siblingName: sibling, rhyme: mode ? { mode, contextTerms } : undefined, isLast: i === arc.beats.length - 1, cost: beat.stage === "consecuencia" ? arc.cost : undefined });
+        const check = (lines: GateLine[], change: string, decl?: { kapDoes: string; kapState: string }) => checkScene({ kapDoes: decl?.kapDoes, kapState: decl?.kapState, scene: { lines, change }, previous: prev, speakers: beat.characters, memoryOutside, siblingName: sibling, rhyme: mode ? { mode, contextTerms } : undefined, isLast: i === arc.beats.length - 1, cost: beat.stage === "consecuencia" ? arc.cost : undefined });
         const gen = async (extra: string, n: number) => call(SceneOut, { ...sceneOpts(n * 0.05), prompt: scenePrompt(context, arcView, done, i, arc.beats.length, brief, base + extra) });
         // (a) generar; (b) reparar EN CÓDIGO lo que se pueda; (c) solo si queda un problema de toda la escena, regenerarla (máx. B.general veces, con TODAS las razones agrupadas)
         let best: Acc | undefined, regens = 0, res = await gen("", 0);
         for (;;) {
           if (!res.ok) { if (best) break; throw new Error(`El modelo no devolvió la escena ${i + 1} válida tras ${res.attempts} intento(s): ${res.errors.join("; ")}`); }
-          let lines: GateLine[] = res.data.lines.map((l) => ({ speaker: l.speaker, text: l.text })), issues = check(lines, res.data.change);
+          let lines: GateLine[] = res.data.lines.map((l) => ({ speaker: l.speaker, text: l.text })), issues = check(lines, res.data.change, res.data);
           for (const x of issues) count(x.kind);   // se cuentan los detectados (aunque luego se reparen en código)
-          const rep = repairLines(lines, issues); if (rep.repaired.length) { codeRepairs++; lines = rep.lines; issues = check(lines, res.data.change); }
+          const rep = repairLines(lines, issues); if (rep.repaired.length) { codeRepairs++; lines = rep.lines; issues = check(lines, res.data.change, res.data); }
           const cand: Acc = { beat, out: res.data, lines, issues }, score = (x: Acc) => [x.issues.filter((k) => k.scope === "scene" || k.scope === "repair").length, x.issues.filter((k) => k.scope === "local").length];
           if (!best || score(cand)[0] < score(best)[0] || (score(cand)[0] === score(best)[0] && score(cand)[1] < score(best)[1])) best = cand;
           const heavy = issues.filter((k) => k.scope === "scene" || k.scope === "repair"), cap = heavy.every((k) => k.kind === "monologo-relleno") ? B.monologue : B.general;
@@ -153,13 +160,13 @@ export function llmArcAuthor(llm: LlmClient, opts: ArcAuthorOptions = {}): ArcAu
           const r = await call(LinePatch, { system: PATCH_SYSTEM, prompt: patchPrompt({ location: beat.location, summary: beat.summary, change: keep.out.change || beat.change, characters: beat.characters }, lines, idx.map((index) => ({ index, reason: targets.get(index)!.join(" ") })), contextTerms.filter(Boolean), withRhyme ? RIMA_RULES : ""), temperature: temp + 0.1, maxTokens: 500 });
           localPatches++; for (const k of new Set(kinds)) patchKinds[k] = (patchKinds[k] ?? 0) + 1; if (!r.ok || r.data.lines.length !== idx.length) break;
           idx.forEach((index, k) => { lines[index] = { ...lines[index], text: r.data.lines[k].trim() }; }); for (const k of new Set(kinds)) used[budget(k)[0]]++;
-          issues = check(lines, keep.out.change);
+          issues = check(lines, keep.out.change, keep.out);
         }
         for (const x of issues) warnings.push(`Escena ${accepted.length + 1}: ${x.text}`);
         if (mode) { const rv = sceneRhyme(lines, { mode, contextTerms }).check.rhyme_valid; if (mode === "first-rhyme" || rhymeValid === undefined) rhymeValid = rv; }
         if (lines.some((l) => norm(l.speaker ?? "") === "kap")) kapSpoke = true;
         accepted.push({ ...keep, lines, issues }); const text = lines.map((l) => l.text).join(" ");
-        done.push({ n: accepted.length, title: keep.out.title, location: beat.location, text: clip(text, 260) }); prev.push({ text, change: keep.out.change, lines: lines.map((l) => l.text), speakers: lines.map((l) => l.speaker ?? "") });
+        done.push({ n: accepted.length, title: keep.out.title, location: beat.location, text: `${clip(text, 240)} · KAP: ${keep.out.kapDoes || "—"} (${keep.out.kapState || "—"})` }); prev.push({ text, change: keep.out.change, lines: lines.map((l) => l.text), speakers: lines.map((l) => l.speaker ?? ""), state: keep.out.kapState, does: keep.out.kapDoes });
       }
 
       // 3) MEMORIA: actos y gancho los fija el código sobre las escenas FINALES; lo del modelo solo pasa si es una directiva válida
@@ -185,7 +192,8 @@ export function llmArcAuthor(llm: LlmClient, opts: ArcAuthorOptions = {}): ArcAu
       if (secs < 240) warnings.push(`Episodio corto (≈ ${(secs / 60).toFixed(1)} min): no se ha rellenado; la duración sale de la historia. Revisa si el arco necesita más desarrollo.`);
       // revisión narrativa: avisa, no bloquea
       const review = reviewNarrative({ scenes: scenes.map((s) => ({ location: s.location, title: s.title, lines: s.lines.map((l) => ({ speaker: l.speaker, text: l.text })), fn: s.fn, stage: s.stage, shot: s.shot, time: s.time, interior: s.interior })), hook: arc.hook, knownCharacters: context.relevantCharacters, allowedCharacters: [...permitted].map((n) => defaultCast.concat(arc.newCharacters.map((c) => c.name), arc.extraCharacters.map((c) => c.name)).find((x) => norm(x) === n) ?? n), previousEpisodes: hints?.previousEpisodes, acts: [...actSeen] });
-      const realism = kapRealismCheck({ scenes: scenes.map((s) => ({ location: s.location, title: s.title, lines: s.lines.map((l) => ({ speaker: l.speaker, text: l.text })), fn: s.fn, stage: s.stage })), contextTerms: [request.notes, scenes[0]?.location ?? "", scenes.slice(0, 2).flatMap((s) => s.lines.map((l) => l.text)).join(" ")] });
+      const idxOf = (sc: (typeof scenes)[number]) => scenes.indexOf(sc);
+      const realism = kapRealismCheck({ scenes: scenes.map((s) => ({ location: s.location, title: s.title, lines: s.lines.map((l) => ({ speaker: l.speaker, text: l.text })), fn: s.fn, stage: s.stage, kapDoes: accepted[idxOf(s)]?.out.kapDoes, kapState: accepted[idxOf(s)]?.out.kapState })), contextTerms: [request.notes, scenes[0]?.location ?? "", scenes.slice(0, 2).flatMap((s) => s.lines.map((l) => l.text)).join(" ")] });
       self.lastRealism = realism; for (const c of realism.checks.filter((x) => !x.ok)) warnings.push(`KAP_REALISM_CHECK · ${c.id}${c.note ? `: ${c.note}` : ""}`);
       self.lastReview = review; self.lastGate = { regenerated, dropped, localPatches, codeRepairs, arcRevisions, issues: gateIssues, rhyme_valid: rhymeValid }; for (const f of review) warnings.push(`Narrativa (${f.severity}) · ${f.rule.replace("narrativa-", "")}: ${f.text}`);
       const stats: AuthorStats = { attempts: calls, retries: Math.max(0, calls - (1 + arc.beats.length)), jsonErrors: logs.filter((l) => l.kind === "json").length, schemaErrors: logs.filter((l) => l.kind === "schema").length, lengthRetries: 0, memoryDirectiveErrors: droppedDirectives, usage: sumUsage(usages), estimatedSec: secs, scenesRegenerated: regenerated, scenesDropped: dropped, gateIssues, localPatches, codeRepairs, arcRevisions, rhymeValid, patchKinds, endingRevisions, varietyRevisions, realism: { passed: realism.passed, total: realism.total, failed: realism.failed } };

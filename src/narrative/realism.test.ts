@@ -47,4 +47,18 @@ describe("KAP_REALISM_CHECK (revisión ligera tras generar)", () => {
   it("9 · ¿hay escenas que se pueden eliminar sin cambiar nada? Sí si una escena repite otra", () => {
     const s = good(); s.splice(3, 0, { ...s[2] }); expect(ids(kapRealismCheck({ scenes: s }))).toContain("ninguna-escena-eliminable");
   });
+  describe("conducta de KAP (si las escenas declaran lo que hace y su estado)", () => {
+    const withBehavior = (doing: string[], states: string[]) => good().map((x, i) => ({ ...x, kapDoes: doing[i], kapState: states[i] }));
+    const acts = ["Esconde el cuaderno", "Intenta arrancárselo a Dani", "Se sube a un banco y grita", "Sale corriendo al baño", "Intenta secarlo con la camiseta", "Esconde el cuaderno mojado"], states = ["nervioso", "enfadado", "impulsivo", "asustado", "avergonzado", "culpable"];
+    it("sin lo declarado por las escenas no se hacen estas tres comprobaciones (el total sigue siendo 9)", () => { expect(kapRealismCheck({ scenes: good() }).total).toBe(9); });
+    it("con conducta variada superan las tres (total 12)", () => { const r = kapRealismCheck({ scenes: withBehavior(acts, states), contextTerms: ["cuaderno de rimas", "Clase"] }); expect(r.total).toBe(12); expect(r.failed).toEqual([]); });
+    it("¿KAP actúa? No si en la mayoría de las escenas solo piensa, recuerda o duda", () => {
+      const r = kapRealismCheck({ scenes: withBehavior(["Piensa en el cuaderno", "Recuerda a su hermano", "Duda un rato", "Sale corriendo", "Suspira", "Piensa"], states) }); expect(r.failed).toEqual(expect.arrayContaining(["kap-actua", "no-demasiado-reflexivo"]));
+    });
+    it("¿demasiadas escenas con el mismo estado emocional? Sí si KAP está igual tres escenas seguidas", () => {
+      const r = kapRealismCheck({ scenes: withBehavior(acts, ["confuso", "confuso", "confuso", "asustado", "avergonzado", "culpable"]) }); expect(r.checks.find((c) => c.id === "estados-variados")).toMatchObject({ ok: false }); expect(r.checks.find((c) => c.id === "estados-variados")!.note).toMatch(/3 escenas seguidas/);
+      expect(kapRealismCheck({ scenes: withBehavior(acts, ["igual", "igual", "distinto", "igual", "igual", "distinto"]) }).checks.find((c) => c.id === "estados-variados")!.ok).toBe(true);   // repetir de a dos no cuenta
+    });
+    it("un episodio sin ningún cambio de estado también falla", () => { expect(kapRealismCheck({ scenes: withBehavior(acts, Array(6).fill("tranquilo")) }).failed).toContain("estados-variados"); });
+  });
 });

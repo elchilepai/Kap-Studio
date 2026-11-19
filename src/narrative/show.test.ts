@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { FEELING_TELL, THEME_LINES, VALIDATION, explainsTheme, isValidation } from "./show.ts";
+import { FEELING_TELL, THEME_LINES, VALIDATION, explainsTheme, isThoughtOnly, isValidation } from "./show.ts";
 
 describe("KAP muestra más y explica menos", () => {
   it("detecta las frases con las que KAP explica el tema del episodio", () => {
@@ -15,5 +15,13 @@ describe("KAP muestra más y explica menos", () => {
   it("detecta al secundario que solo valida o enseña", () => {
     for (const t of ["KAP, tienes algo especial.", "Tu música no es solo un sueño, KAP. Es una realidad que puedes construir.", "No permitas que te hagan sentir inferior.", "Yo te apoyo, KAP.", "Voy a ayudarte, KAP.", "Confío en ti.", "No te rindas."]) expect(isValidation(t), t).toBe(true);
     for (const t of ["¿Y esa camiseta, Kap? Es de mi primo.", "Dame el cuaderno o se lo cuento a todos", "No sé qué hacer con esto, de verdad", "Yo quería jugar a las canicas, no a esto"]) expect(VALIDATION.test(t), t).toBe(false);
+  });
+  it("KAP no es un filósofo pequeño: sentencias de manual se marcan como explicación del tema", () => {
+    for (const t of ["A veces, el corazón nos guía mejor que el talento.", "El futuro está en nuestras manos.", "Solo tenemos que creer.", "Todo sueño requiere esfuerzo.", "Hoy aprendí que la familia es lo primero."]) expect(explainsTheme(t), t).toBe(true);
+    for (const t of ["Mañana vuelvo a por el cuaderno, que se me quedó en el banco", "A veces me da por rimar cuando tengo hambre, pasa"]) expect(explainsTheme(t), t).toBe(false);
+  });
+  it("lo que KAP «hace» puede ser solo pensar: pensar, recordar o dudar no es una acción visible", () => {
+    for (const d of ["Piensa en su hermano", "Recuerda lo que dijo el rapero", "Duda sin saber qué hacer", "Suspira y mira al cielo", ""]) expect(isThoughtOnly(d), d).toBe(true);
+    for (const d of ["Esconde el cuaderno bajo la mochila", "Interrumpe al tendero a mitad de frase", "Prueba a arreglar la cuerda con un chicle y se le pega en el dedo"]) expect(isThoughtOnly(d), d).toBe(false);
   });
 });

@@ -108,3 +108,27 @@ describe("mostrar más y explicar menos: reparación LOCAL de líneas", () => {
     expect(kinds(inp(with0, { speakers: ["KAP", "Hermano de KAP"] }))).not.toContain("coste-ausente");   // solo se comprueba en las escenas de consecuencia
   });
 });
+
+describe("conducta infantil: KAP actúa y una emoción establecida no se repite", () => {
+  const mk = (lines: { speaker: string; text: string }[]): GateInput["scene"] => ({ lines, change: `Pasa ${w(8, 5, 120)}` });
+  const talk = mk([{ speaker: "", text: w(8, 20) }, { speaker: "KAP", text: w(8, 12, 40) }, { speaker: "Dani", text: w(8, 12, 60) }, { speaker: "KAP", text: w(8, 10, 80) }]);
+  it("KAP que solo habla o piensa (lo que «hace» es pensar, recordar o dudar) se marca: se repara la línea narrada, no la escena", () => {
+    for (const does of ["Piensa en lo que ha pasado", "Recuerda a su hermano y suspira", "Duda sin saber qué hacer", ""]) { const r = checkScene(inp(talk, { kapDoes: does, kapState: "confuso" })); expect(r.find((x) => x.kind === "kap-no-actua"), does).toMatchObject({ scope: "local", blocking: false, lines: [0] }); expect(needsSceneRegen(r)).toBe(false); }
+    expect(checkScene(inp(talk, { kapDoes: "Piensa", kapState: "x" })).find((x) => x.kind === "kap-no-actua")!.text).toMatch(/impulsivo[\s\S]*esconder[\s\S]*arreglar algo y empeorarlo[\s\S]*improvisada/);
+  });
+  it("una acción visible no se marca; tampoco una escena donde KAP casi no habla", () => {
+    expect(kinds(inp(talk, { kapDoes: "Esconde el cuaderno bajo la mochila cuando entra la profesora", kapState: "nervioso" }))).not.toContain("kap-no-actua");
+    expect(kinds(inp(mk([{ speaker: "", text: w(8, 20) }, { speaker: "KAP", text: w(8, 12, 40) }, { speaker: "Dani", text: w(8, 12, 60) }]), { kapDoes: "Piensa", kapState: "x" }))).not.toContain("kap-no-actua");   // una sola línea de KAP
+    expect(kinds(inp(talk))).not.toContain("kap-no-actua");   // sin lo declarado por la escena no se juzga
+  });
+  it("MENOS REPETICIÓN EMOCIONAL: mismo estado que la escena anterior sin avanzar (solo pensar o repetir lo mismo) se marca; pasar a otra acción no", () => {
+    const before = { ...prevOf(base(0)), state: "confundido", does: "Mira el teléfono sin saber qué hacer" };
+    const stuck = checkScene(inp(talk, { previous: [before], kapDoes: "Sigue pensando en qué hacer", kapState: "Confundido" })); expect(stuck.find((x) => x.kind === "emocion-repetida")).toMatchObject({ scope: "local", lines: [0] }); expect(stuck.find((x) => x.kind === "emocion-repetida")!.text).toMatch(/ya estaba establecida/);
+    expect(kinds(inp(talk, { previous: [before], kapDoes: "Mira el teléfono sin saber qué hacer", kapState: "confundido" }))).toContain("emocion-repetida");   // misma «acción» que antes: tampoco avanza
+    expect(kinds(inp(talk, { previous: [before], kapDoes: "Marca el número del tendero y cuelga de golpe", kapState: "confundido" }))).not.toContain("emocion-repetida");   // mismo estado pero HACE algo distinto
+    expect(kinds(inp(talk, { previous: [before], kapDoes: "Sigue pensando", kapState: "impulsivo" }))).not.toContain("emocion-repetida");   // otro estado
+  });
+  it("las dos comprobaciones nuevas comparten una sola llamada local: no añaden una regeneración de escena", () => {
+    const r = checkScene(inp(talk, { previous: [{ ...prevOf(base(0)), state: "confuso", does: "Duda" }], kapDoes: "Piensa", kapState: "confuso" })); const local = r.filter((x) => x.scope === "local"); expect(local.map((x) => x.kind)).toEqual(expect.arrayContaining(["kap-no-actua", "emocion-repetida"])); expect(needsSceneRegen(r)).toBe(false); expect(local.every((x) => x.lines!.join() === "0")).toBe(true);
+  });
+});
