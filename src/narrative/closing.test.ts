@@ -30,3 +30,13 @@ describe("variedad espacial/temporal subordinada a la historia", () => {
     expect(episodeVariety(flat.map((b, i) => (i > 3 ? { ...b, time: "mañana" } : b)), { secondary: ["Calle"] }).flat).toBe(false); expect(episodeVariety(flat.map((b, i) => (i > 5 ? { ...b, location: "Calle" } : b)), { secondary: ["Calle"] }).flat).toBe(false); expect(episodeVariety(flat.slice(0, 4), { secondary: ["Calle"] }).flat).toBe(false);
   });
 });
+
+describe("cierres de tráiler: el final nace de lo que acaba de ocurrir", () => {
+  const L2 = (speaker: string, text: string) => ({ speaker, text });
+  it("las frases de cierre de manual se detectan dichas por KAP, por otro personaje o por el narrador", () => {
+    for (const [sp, t] of [["KAP", "Este es mi camino…"], ["KAP", "Nunca me rendiré."], ["", "Tu camino no será fácil."], ["Ramiro", "No será fácil, KAP."], ["", "Un nuevo desafío está a punto de comenzar."], ["KAP", "¿Qué pasará ahora?"], ["", "Su sueño acaba de comenzar."], ["", "Esto es solo el principio."]] as const) expect(closingProblem([L2("", "Se queda un rato."), L2(sp, t)])?.reason, t).toMatch(/tráiler|reflexión|pregunta|superación/);
+  });
+  it("un final con consecuencia, objeto, llamada o gag no se marca", () => {
+    for (const t of ["Suena el teléfono: es el tendero y pregunta por la radio.", "Se le cae el pan al charco y el perro se lo lleva.", "La profesora guarda el cuaderno mojado en el cajón con llave."]) expect(closingProblem([L2("KAP", "¡No!"), L2("", t)]), t).toBeUndefined();
+  });
+});

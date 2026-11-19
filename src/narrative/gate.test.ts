@@ -78,3 +78,33 @@ describe("rima de la escena y cierre en la puerta", () => {
     expect(r.map((x) => x.kind)).toEqual(expect.arrayContaining(["sin-cambio", "personaje-no-previsto", "voz-adulta", "rima-invalida"])); const fb = gateFeedback(r); expect(fb.match(/^- /gm)!.length).toBe(r.filter((x) => x.scope !== "info").length); expect(fb).toMatch(/Ramiro[\s\S]*eslogan[\s\S]*rima/);
   });
 });
+
+describe("mostrar más y explicar menos: reparación LOCAL de líneas", () => {
+  const sc = (lines: { speaker: string; text: string }[], change = `Pasa ${w(9, 5, 120)}`): GateInput["scene"] => ({ lines, change });
+  it("KAP que explica el tema o sus emociones: se marca la línea (local), no la escena; una frase concreta no", () => {
+    const bad = sc([{ speaker: "", text: w(9, 25) }, { speaker: "KAP", text: "No voy a rendirme, este es mi sueño y estoy nervioso" }, { speaker: "Dani", text: w(9, 20, 40) }]);
+    const r = checkScene(inp(bad)); expect(r.find((x) => x.kind === "explica-emocion")).toMatchObject({ scope: "local", blocking: false, lines: [1] }); expect(needsSceneRegen(r)).toBe(false); expect(r.find((x) => x.kind === "explica-emocion")!.text).toMatch(/esconder el cuaderno[\s\S]*broma/);
+    const ok = sc([{ speaker: "", text: w(9, 25) }, { speaker: "KAP", text: "¿Dónde dejaste mi cuaderno, Dani? Dámelo ya, pesado" }, { speaker: "Dani", text: w(9, 20, 40) }]); expect(kinds(inp(ok))).not.toContain("explica-emocion");
+  });
+  it("el secundario que solo valida o enseña: se marca su línea; si lo dice KAP no cuenta como validación", () => {
+    const val = sc([{ speaker: "Ramiro", text: "Tu música no es solo un sueño, KAP. Es una realidad que puedes construir." }, { speaker: "KAP", text: w(9, 20, 40) }, { speaker: "", text: w(9, 25, 70) }]);
+    expect(checkScene(inp(val, { speakers: ["KAP", "Ramiro"] })).find((x) => x.kind === "validacion-moraleja")).toMatchObject({ scope: "local", lines: [0] });
+    const kapSays = sc([{ speaker: "KAP", text: "Yo te apoyo, Dani, de verdad" }, { speaker: "Dani", text: w(9, 20, 40) }, { speaker: "", text: w(9, 25, 70) }]); expect(kinds(inp(kapSays))).not.toContain("validacion-moraleja");
+  });
+  it("el cierre de manual se marca en la última escena aunque lo diga otro personaje o el narrador", () => {
+    const end = (who: string, t: string) => sc([{ speaker: "KAP", text: w(9, 15, 40) }, { speaker: "Dani", text: w(9, 15, 70) }, { speaker: who, text: t }]);
+    for (const [who, t] of [["", "Tu camino no será fácil."], ["Ramiro", "No será fácil, KAP."], ["KAP", "Este es mi camino."]] as const) expect(checkScene(inp(end(who, t), { isLast: true })).find((x) => x.kind === "cierre-reflexivo"), t).toMatchObject({ scope: "local" });
+    expect(kinds(inp(end("", "Tu camino no será fácil."), { isLast: false }))).not.toContain("cierre-reflexivo");
+  });
+  it("el final debe nacer de lo que acaba de ocurrir: un cierre sin relación con nada de lo anterior se marca (local)", () => {
+    const prev = [prevOf(sc([{ speaker: "KAP", text: "Escondo el cuaderno dentro de la mochila del hermano" }, { speaker: "", text: "Dani busca el cuaderno por toda la clase" }]))];
+    const unrelated = sc([{ speaker: "KAP", text: "Corro hacia la puerta con la mochila" }, { speaker: "", text: "Una paloma azul cruza volando sobre el estadio lejano esta tarde" }]), related = sc([{ speaker: "KAP", text: "Corro hacia la puerta con la mochila" }, { speaker: "", text: "Dani abre la mochila del hermano y encuentra el cuaderno mojado" }]);
+    expect(checkScene(inp(unrelated, { isLast: true, previous: prev })).find((x) => x.kind === "cierre-desconectado")).toMatchObject({ scope: "local", lines: [1] }); expect(kinds(inp(related, { isLast: true, previous: prev }))).not.toContain("cierre-desconectado");
+  });
+  it("la consecuencia debe MOSTRAR el coste de la decisión, no solo contarlo (local: se reescribe la acción narrada)", () => {
+    const cost = "Pierde la radio y se queda sin pan", with0 = sc([{ speaker: "", text: "KAP vuelve a casa con la cabeza baja y el hermano lo mira desde la cama" }, { speaker: "KAP", text: "Perdón, se me complicó el día" }, { speaker: "Hermano de KAP", text: "¿Y mi cena entonces?" }]);
+    expect(checkScene(inp(with0, { cost, speakers: ["KAP", "Hermano de KAP"] })).find((x) => x.kind === "coste-ausente")).toMatchObject({ scope: "local", lines: [0] });
+    const shown = sc([{ speaker: "", text: "El tendero guarda la radio bajo el mostrador y le tiende una bolsa vacía de pan" }, { speaker: "KAP", text: "Esa radio era mía" }, { speaker: "Tendero", text: "Era. Vuelve mañana" }]); expect(kinds(inp(shown, { cost, speakers: ["KAP", "Tendero"] }))).not.toContain("coste-ausente");
+    expect(kinds(inp(with0, { speakers: ["KAP", "Hermano de KAP"] }))).not.toContain("coste-ausente");   // solo se comprueba en las escenas de consecuencia
+  });
+});

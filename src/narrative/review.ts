@@ -41,7 +41,7 @@ export const MOTIVATIONAL = /no te rindas|no me rendir[eé]|no me dejar[eé] ven
 /** Ganchos vacíos que valen para cualquier episodio. */
 export const GENERIC_HOOK = /(?:esto|eso) es solo el (?:principio|comienzo)|el camino (?:apenas )?(?:comienza|empieza)|nada volver[aá] a ser igual|el futuro (?:le )?(?:espera|aguarda)|(?:una )?nueva (?:aventura|etapa) (?:comienza|empieza)|seguir[aá] (?:adelante|luchando)|no se rendir[aá]|continuar[aá] (?:su|el) (?:camino|sue[ñn]o)|su sue[ñn]o (?:sigue|contin[uú]a) vivo|la historia contin[uú]a/i;
 const MORAL = /aprendi[oó]|aprend[ií]|lecci[oó]n|ahora (?:s[eé]|entiendo|comprendo)|m[aá]s fuerte|ya no es el mismo|ya no (?:era|es) el mismo ni[ñn]o|hab[ií]a cambiado|valor (?:de|del)|nunca (?:volver[aá]|m[aá]s)/i;
-const OPPOSITION = /\b(no|nunca|pero|dame|devu[eé]lve|suelta|mentira|mentiroso|d[eé]jame|vete|c[aá]llate|ladr[oó]n|robaste|robado|quita|prohib|castig|culpa|por qu[eé]|c[oó]mo te atreves)\b|[!¡]/i;
+export const OPPOSITION = /\b(no|nunca|pero|dame|devu[eé]lve|suelta|mentira|mentiroso|d[eé]jame|vete|c[aá]llate|ladr[oó]n|robaste|robado|quita|prohib|castig|culpa|por qu[eé]|c[oó]mo te atreves)\b|[!¡]/i;
 /** Abstracciones de adulto/eslogan que un niño no diría así: «mi voz va más allá», «mis sueños brillan como el sol»… */
 export const ADULT_VOICE = /\bmi (?:m[uú]sica|sue[ñn]o|voz|historia|destino)\b|\bmis sue[ñn]os\b|\bel mundo\b|\bla vida\b|\bel futuro\b|\bpara siempre\b|\bbrillan?\b|\bnadie (?:podr[aá]|puede) detener/i;
 const WALK = /\b(camina|caminando|camin[oó]|avanza|se aleja|regresa|vuelve a casa|recorre)\b/i;
