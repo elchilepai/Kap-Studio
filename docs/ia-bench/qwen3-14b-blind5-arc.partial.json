@@ -699,6 +699,666 @@
      }
     ]
    }
+  },
+  {
+   "id": "E11",
+   "title": "Episodio 11",
+   "request": "Crea el episodio 11, continuando el episodio 10. Lo que KAP decidió en el episodio 10 tiene consecuencias. Alguien le pide que arregle lo que salió mal, pero a la vez le surge algo que no puede esperar, y no puede hacer las dos cosas.",
+   "ms": 4251972,
+   "peakMb": 12894,
+   "sysPeakMb": 13633,
+   "contextTokens": 2042,
+   "ok": true,
+   "irValid": true,
+   "irValidFirstTry": false,
+   "json": {
+    "attempts": 12,
+    "retries": 3,
+    "jsonErrors": 0,
+    "schemaErrors": 0,
+    "lengthRetries": 0,
+    "memoryDirectiveErrors": 0
+   },
+   "irErrors": [],
+   "usage": {
+    "promptTokens": 65086,
+    "outputTokens": 4622,
+    "totalMs": 4251850.73482,
+    "loadMs": 13922.370539,
+    "promptMs": 823573.6649999999,
+    "evalMs": 3411615.4200000004
+   },
+   "tokensPerSec": 1.35,
+   "episode": {
+    "scenes": 8,
+    "estimatedSec": 168,
+    "words": 469,
+    "title": "Episodio 11: El Regalo Perdido",
+    "logline": "KAP debe elegir entre arreglar el regalo para su hermano o aprovechar una oportunidad musical que no puede dejar pasar, pero no puede hacer ambas cosas al mismo tiempo."
+   },
+   "continuity": {
+    "critical": [],
+    "warnings": [
+     "duracion: El episodio dura ≈ 3.2 min y el formato es ≈ 5 min (4–6 min)."
+    ],
+    "info": 3
+   },
+   "narrative": {
+    "error": 0,
+    "warning": 2,
+    "info": 0,
+    "rules": [
+     "personaje-sin-funcion",
+     "cierre-reflexivo"
+    ],
+    "findings": [
+     {
+      "severity": "warning",
+      "rule": "narrativa-personaje-sin-funcion",
+      "text": "«GUARDIÁN» se introduce con una sola línea y no vuelve: ¿qué aporta a la historia?",
+      "scene": 2
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-cierre-reflexivo",
+      "text": "El cierre de KAP es una pregunta retórica: «¿Ese… es un micrófono real? ¿De verdad?»: el cierre debería ser un gag, una reacción, una sorpresa o una consecuencia, no una reflexión.",
+      "scene": 7
+     }
+    ],
+    "taggedRules": [
+     "personaje-sin-funcion",
+     "ayuda-externa",
+     "poca-variedad-visual",
+     "cierre-reflexivo"
+    ]
+   },
+   "mode": "arc",
+   "arc": {
+    "title": "Episodio 11: El Regalo Perdido",
+    "logline": "KAP debe elegir entre arreglar el regalo para su hermano o aprovechar una oportunidad musical que no puede dejar pasar, pero no puede hacer ambas cosas al mismo tiempo.",
+    "assumptions": [
+     "El hermano de KAP aún no entiende por qué KAP no pudo darle el regalo físico, pero se siente afectado emocionalmente.",
+     "La guardería es un lugar donde KAP se siente seguro, pero también con limitaciones."
+    ],
+    "problem": "KAP no logró entregar el regalo a su hermano porque se fue con otro niño, y ahora debe enfrentar la consecuencia de esa decisión. Además, tiene una oportunidad musical que no puede ignorar.",
+    "kapWant": "Querer hacer lo correcto por su hermano y no perder la única oportunidad que tiene para probarse como artista.",
+    "kapChoice": "KAP decide ir a buscar al hermano para intentar arreglar lo que salió mal, pero justo en ese momento se le presenta una oportunidad musical inesperada que no puede dejar pasar.",
+    "cost": "Perder la oportunidad de grabar una canción importante y no poder reconciliarse con su hermano a tiempo.",
+    "consequence": "KAP se queda con la frustración de no haber podido arreglar la situación con su hermano, y la oportunidad musical se va sin él.",
+    "outcome": "KAP se siente dividido entre su responsabilidad como hermano mayor y su sueño de ser artista. No logra nada de lo que qu",
+    "setting": {
+     "main": "Guardería",
+     "secondary": [
+      "Calle del barrio"
+     ],
+     "timeOfDay": "Tarde",
+     "transitions": [
+      "más tarde ese día",
+      "al final del episodio en la calle"
+     ]
+    },
+    "hook": "KAP se queda solo en la guardería, mirando hacia la calle donde se fue su hermano. En la distancia, ve a alguien que parece conocer su música.",
+    "extraCharacters": [
+     {
+      "name": "Hermano de KAP",
+      "why": "Influye emocionalmente en KAP y le recuerda su responsabilidad."
+     }
+    ],
+    "castActions": [
+     {
+      "name": "Hermano de KAP",
+      "does": "Se siente triste por no haber recibido el regalo, pero al mismo tiempo entiende que KAP está intentando hacer lo mejor que puede."
+     }
+    ],
+    "usedFromMemory": [
+     "KAP en Guardería",
+     "Hermano de KAP en Guardería",
+     "Situación familiar de KAP (padres y drogas)",
+     "Cuidar y proteger a su hermano",
+     "El sueño de KAP: ser millonario gracias a la música"
+    ],
+    "newCharacters": [],
+    "newPlaces": [],
+    "beats": [
+     {
+      "stage": "inicio",
+      "fn": "avanzar-historia",
+      "summary": "KAP llega a la guardería con pasos lentos, mirando hacia el suelo. Su cara muestra preocupación y duda.",
+      "location": "Guardería",
+      "characters": [
+       "KAP"
+      ],
+      "change": "KAP está de vuelta en la guardería, pero con un peso emocional adicional.",
+      "why": "Es el lugar donde se quedó al final del episodio anterior y donde empieza el conflicto de este episodio.",
+      "time": "Tarde",
+      "interior": true,
+      "shot": "general",
+      "visual": "KAP lleva la camiseta gris desgastada, y su expresión es tensa."
+     },
+     {
+      "stage": "inicio",
+      "fn": "avanzar-historia",
+      "summary": "KAP se queda en la calle, mirando hacia el cielo. Sus ojos reflejan una mezcla de frustración y determinación.",
+      "location": "Calle del barrio",
+      "characters": [
+       "KAP"
+      ],
+      "change": "Se establece el final emocional del episodio, con KAP en un momento de reflexión.",
+      "why": "Este beat cierra el episodio con una imagen poderosa que refleja su estado interno.",
+      "time": "Tarde",
+      "interior": false,
+      "shot": "general",
+      "visual": "KAP mira al cielo, con la camiseta gris desgastada."
+     },
+     {
+      "stage": "problema",
+      "fn": "revelar-informacion",
+      "summary": "El GUARDIÁN le dice que su hermano se fue con un niño desconocido. KAP se queda en silencio, pensando.",
+      "location": "Guardería",
+      "characters": [
+       "KAP"
+      ],
+      "change": "KAP comprende que no podrá ver a su hermano antes de que se vaya, lo que le genera ansiedad.",
+      "why": "La información del GUARDIÁN le da un nuevo problema emocional.",
+      "time": "Tarde",
+      "interior": true,
+      "shot": "medio",
+      "visual": "KAP mira hacia la puerta con expresión triste."
+     },
+     {
+      "stage": "escalada",
+      "fn": "desarrollar-personaje",
+      "summary": "KAP corre por la guardería, buscando a su hermano. Mientras tanto, se le acerca un niño de la guardería que le ofrece participar en una grabación espontánea.",
+      "location": "Guardería",
+      "characters": [
+       "KAP",
+       "niño desconocido"
+      ],
+      "change": "KAP se enfrenta a una decisión urgente entre su hermano y una oportunidad musical.",
+      "why": "La oferta musical aparece justo cuando KAP necesita resolver algo emocional.",
+      "time": "Tarde",
+      "interior": true,
+      "shot": "general",
+      "visual": "El niño le muestra un micrófono de juguete."
+     },
+     {
+      "stage": "decision",
+      "fn": "arco-de-kap",
+      "summary": "KAP se queda en el centro del aula, mirando hacia la puerta y luego hacia el niño. Al final, decide ir a buscar a su hermano.",
+      "location": "Guardería",
+      "characters": [
+       "KAP",
+       "niño desconocido"
+      ],
+      "change": "KAP elige su responsabilidad familiar sobre la oportunidad musical, aunque con un peso en el corazón.",
+      "why": "Refleja la lucha interna de KAP entre sus metas y sus obligaciones.",
+      "time": "Tarde",
+      "interior": true,
+      "shot": "primer plano",
+      "visual": "KAP suelta el micrófono y se va."
+     },
+     {
+      "stage": "consecuencia",
+      "fn": "preparar-consecuencia",
+      "summary": "KAP corre por la calle, buscando a su hermano. En la distancia, ve al niño desconocido con un equipo de grabación real.",
+      "location": "Calle del barrio",
+      "characters": [
+       "KAP",
+       "niño desconocido"
+      ],
+      "change": "KAP pierde la oportunidad musical por no haberla tomado a tiempo.",
+      "why": "La consecuencia emocional y física de su decisión se hace presente en la calle.",
+      "time": "Tarde",
+      "interior": false,
+      "shot": "general",
+      "visual": "KAP mira hacia el niño con expresión de frustración."
+     },
+     {
+      "stage": "resolucion",
+      "fn": "conflicto",
+      "summary": "KAP encuentra a su hermano, pero este ya se va con un niño desconocido. KAP se queda solo en la calle.",
+      "location": "Calle del barrio",
+      "characters": [
+       "KAP",
+       "Hermano de KAP",
+       "niño desconocido"
+      ],
+      "change": "KAP no logra reconciliarse con su hermano ni aprovechar la oportunidad musical.",
+      "why": "El conflicto emocional y la pérdida de una oportunidad se consolidan en este momento.",
+      "time": "Tarde",
+      "interior": false,
+      "shot": "medio",
+      "visual": "KAP mira hacia el suelo, triste."
+     },
+     {
+      "stage": "gancho",
+      "fn": "preparar-gancho",
+      "summary": "En la distancia, el niño desconocido le hace una señal con el micrófono. KAP lo ve y se queda mirando.",
+      "location": "Calle del barrio",
+      "characters": [
+       "KAP",
+       "niño desconocido"
+      ],
+      "change": "Se deja un gatillo emocional para el siguiente episodio: KAP no puede dejar pasar la oportunidad musical aunque sea tarde.",
+      "why": "El gancho introduce una posibilidad futura de reconciliación con su sueño musical.",
+      "time": "Tarde",
+      "interior": false,
+      "shot": "general",
+      "visual": "KAP observa al niño con expresión pensativa."
+     }
+    ]
+   },
+   "variety": {
+    "locations": 2,
+    "dominantShare": 0.5,
+    "times": 1,
+    "timeSource": "declarado"
+   },
+   "show": {
+    "realism": {
+     "passed": 6,
+     "total": 9,
+     "failed": [
+      "decision-real",
+      "decision-con-consecuencia",
+      "final-nace-de-la-accion"
+     ]
+    },
+    "explainLinesKap": 0,
+    "kapLines": 9,
+    "validationLinesSecondary": 0,
+    "secondaryLines": 6,
+    "costVisible": false,
+    "closing": {
+     "problem": true,
+     "reason": "El cierre de KAP es una pregunta retórica: «¿Ese… es un micrófono real? ¿De verdad?»"
+    }
+   },
+   "realismGenerador": {
+    "passed": 6,
+    "total": 9,
+    "failed": [
+     "decision-real",
+     "decision-con-consecuencia",
+     "final-nace-de-la-accion"
+    ]
+   },
+   "openingRhymeCheck": {
+    "present": true,
+    "rhyme_valid": true,
+    "natural": true,
+    "contextual": true,
+    "rhythm": true,
+    "level": "asonante"
+   },
+   "script": "# Guardería\n[mood: Tarde, interior]\n[plano: general]\n[expresion: KAP preocupado]\n[mira: KAP izquierda]\n[camina: KAP a centro]\n[vfx: niebla]\nKAP llega a la guardería con pasos lentos, mirando hacia el suelo. Su cara muestra preocupación y duda.\nKAP: En la bolsa no cabía el regalo… pero tampoco cabía la culpa.\nKAP: Ahora tengo que arreglarlo, aunque me duela la cabeza.\n[acto: inicio | KAP llega a la guardería con pasos lentos, mirando hacia el suelo. Su cara muestra preocupación y duda.]\n\n# Calle del barrio\n[mood: Tarde, exterior]\n[plano: general]\n[expresion: KAP pensativo]\n[camara: zoom 1.2]\n[vfx: lluvia]\nKAP se queda parado en la calle, mirando hacia el cielo con una expresión seria. Sus manos están en los bolsillos de su camiseta gris desgastada.\nKAP: No sé si hice lo correcto… pero no puedo dejar pasar esto.\nSus ojos se llenan de determinación, pero también de tristeza. Un viento frío le hace temblar un poco, pero no se mueve.\n\n# Guardería\n[mood: Tarde, interior]\n[plano: medio KAP]\n[expresion: KAP triste]\n[mira: KAP izquierda]\n[camina: KAP a centro]\n[camara: seguir KAP]\nKAP se para frente a la puerta de la guardería, mirando hacia afuera con una expresión triste. Sus manos están en los bolsillos, y su respiración es lenta.\nGUARDIÁN: Hace un rato. Se fue con un niño desconocido.\nKAP: ¿Un niño... desconocido? ¿Y no me lo dijo? ¡Joder!\n[acto: conflicto | El GUARDIÁN le dice que su hermano se fue con un niño desconocido. KAP se queda en silencio, pensando.]\n\n# Guardería\n[mood: Tarde, interior]\n[plano: general]\n[camina: KAP a izquierda]\n[expresion: niño sorprendido]\n[gesto: niño senala]\nKAP corre por los pasillos de la guardería, mirando a todos lados con preocupación. Sus zapatos suenan contra el suelo de madera.\nNIÑO DESCONOCIDO: ¡Eh, KAP! ¿Quieres grabar algo rápido? Tenemos un micrófono.\nKAP: ¿Qué? ¡No tengo tiempo para esto!\n[acto: desarrollo | KAP corre por la guardería, buscando a su hermano. Mientras tanto, se le acerca un niño de la guardería que le ofrece participar en una gra…]\n\n# Guardería\n[mood: Tarde, interior]\n[plano: primer plano KAP]\n[expresion: KAP pensativo]\n[gesto: KAP niega]\n[mira: KAP derecha]\n[camara: zoom 1.2]\n[vfx: niebla]\nKAP se queda en el centro del aula, mirando hacia la puerta y luego hacia el niño. Sus ojos reflejan una lucha interna.\nNIÑO DESCONOCIDO: ¿No vas a grabar nada? Nosotros tenemos un equipo, ¿sabes? Puedes hacer un rap rápido, si quieres.\nKAP: No… no tengo tiempo. Tengo que encontrar a mi hermano. Ya se fue con alguien, y no sé si lo va a volver a ver.\n[acto: emocional | KAP se queda en el centro del aula, mirando hacia la puerta y luego hacia el niño. Al final, decide ir a buscar a su hermano.]\n\n# Calle del barrio\n[mood: Tarde, exterior]\n[plano: general]\n[camara: seguir KAP]\n[vfx: lluvia]\nKAP corre por la calle, mirando hacia todos lados con urgencia. Sus zapatos suenan contra el suelo de tierra y piedras.\nKAP: ¡Hermano! ¡Espera! ¿Dónde estás? ¡No te vayas sin decirme nada!\nEn la distancia, KAP ve al niño desconocido parado frente a una camioneta con un letrero que dice: 'Grabación en vivo'. El niño sostiene un micrófono y una tableta.\n[pierde: KAP, oportunidad musical]\n[relacion: KAP, Hermano de KAP, -1]\n\n# Calle del barrio\n[mood: Tarde, exterior]\n[plano: medio KAP]\nHERMANO DE KAP: Ya me fui, KAP. No te preocupes, ya está bien.\nKAP se detiene en seco, mirando al suelo con la boca entreabierta. El hermano pequeño camina hacia el niño desconocido, quien le ofrece una bolsa de dulces.\nHERMANO DE KAP: ¿Tú eres el que me dio el regalo? ¡Gracias!\nKAP mira hacia el suelo, triste. Su mano se cierra en un puño, pero no dice nada.\nNIÑO DESCONOCIDO: ¡Vamos! Tienes que probar esto. Es muy rico.\nEl hermano de KAP acepta la bolsa con una sonrisa y camina junto al niño desconocido, alejándose de KAP.\nKAP: ...No te vayas sin decirme nada.\n[acto: resolucion | KAP encuentra a su hermano, pero este ya se va con un niño desconocido. KAP se queda solo en la calle.]\n\n# Calle del barrio\n[mood: Tarde, exterior]\n[plano: general]\n[expresion: KAP pensativo]\n[mira: KAP derecha]\n[vfx: niebla]\nEn la distancia, el niño desconocido se para frente a una camioneta con luces parpadeantes. En su mano, sostiene un micrófono. Hace una señal con él, como si estuviera llamando a alguien.\nKAP: ¿Ese… es un micrófono real? ¿De verdad?\nKAP se queda parado en el medio de la calle, mirando al niño con una expresión entre sorpresa y duda. Sus ojos no se despegan del micrófono.\n[acto: gancho | En la distancia, el niño desconocido le hace una señal con el micrófono. KAP lo ve y se queda mirando.]\n[gancho: KAP se queda solo en la guardería, mirando hacia la calle donde se fue su hermano. En la distancia, ve a alguien que parece conocer su música.]\n",
+   "gate": {
+    "regenerated": 2,
+    "dropped": 0,
+    "localPatches": 1,
+    "patchKinds": {
+     "cierre-reflexivo": 1
+    },
+    "endingRevisions": 0,
+    "varietyRevisions": 0,
+    "codeRepairs": 1,
+    "arcRevisions": 0,
+    "rhymeValid": true,
+    "calls": 12,
+    "outputTokens": 4622,
+    "promptTokens": 65086,
+    "issues": {
+     "corta": 5,
+     "personaje-no-previsto": 3,
+     "menciona-memoria": 1,
+     "repite-frase": 1,
+     "cierre-reflexivo": 1
+    }
+   },
+   "outcome": "KAP se siente dividido entre su responsabilidad como hermano mayor y su sueño de ser artista. No logra nada de lo que qu",
+   "checks": [
+    {
+     "id": "estructura-6-actos",
+     "ok": true,
+     "note": "faltan: —"
+    },
+    {
+     "id": "gancho",
+     "ok": true
+    },
+    {
+     "id": "protagonista",
+     "ok": true
+    },
+    {
+     "id": "sin-errores-criticos",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "sin-exito-prematuro",
+     "ok": true
+    },
+    {
+     "id": "directivas-validas",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "espanol",
+     "ok": true
+    },
+    {
+     "id": "diversidad-lexica",
+     "ok": true,
+     "note": "0.41"
+    }
+   ],
+   "compliance": 1,
+   "proxy": {
+    "score": 8,
+    "dialogueRatio": 0.54,
+    "locations": 2,
+    "repeatedSentences": 0
+   },
+   "warnings": [
+    "El modelo desordenó las etapas del arco; se han reordenado.",
+    "El arco incluía a GUARDIÁN en un beat sin justificarlo: se ha quitado (la memoria no obliga a reutilizarlo).",
+    "El arco incluía a GUARDIÁN en un beat sin justificarlo: se ha quitado (la memoria no obliga a reutilizarlo).",
+    "Escena 1: Escena corta (39 palabras): puede ser correcto si la acción y la consecuencia están claras.",
+    "Escena 3: «GUARDIÁN» (de la memoria) habla en esta escena sin estar en su reparto: la memoria no obliga a usarlo.",
+    "Escena 3: Escena corta (46 palabras): puede ser correcto si la acción y la consecuencia están claras."
+   ],
+   "draft": {
+    "title": "Episodio 11: El Regalo Perdido",
+    "logline": "KAP debe elegir entre arreglar el regalo para su hermano o aprovechar una oportunidad musical que no puede dejar pasar, pero no puede hacer ambas cosas al mismo tiempo.",
+    "assumptions": [
+     "El hermano de KAP aún no entiende por qué KAP no pudo darle el regalo físico, pero se siente afectado emocionalmente.",
+     "La guardería es un lugar donde KAP se siente seguro, pero también con limitaciones."
+    ],
+    "scenes": [
+     {
+      "title": "Episodio 11: El Regalo Perdido",
+      "location": "Guardería",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP llega a la guardería con pasos lentos, mirando hacia el suelo. Su cara muestra preocupación y duda."
+       },
+       {
+        "speaker": "KAP",
+        "text": "En la bolsa no cabía el regalo… pero tampoco cabía la culpa."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Ahora tengo que arreglarlo, aunque me duela la cabeza."
+       }
+      ],
+      "memory": [
+       "acto: inicio | KAP llega a la guardería con pasos lentos, mirando hacia el suelo. Su cara muestra preocupación y duda."
+      ],
+      "fn": "avanzar-historia",
+      "stage": "inicio",
+      "shot": "general",
+      "time": "Tarde",
+      "interior": true,
+      "directions": [
+       "plano: general",
+       "expresion: KAP preocupado",
+       "mira: KAP izquierda",
+       "camina: KAP a centro",
+       "vfx: niebla"
+      ],
+      "change": "KAP está de vuelta en la guardería, pero con un peso emocional adicional."
+     },
+     {
+      "title": "Episodio 11: El Regalo Perdido",
+      "location": "Calle del barrio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se queda parado en la calle, mirando hacia el cielo con una expresión seria. Sus manos están en los bolsillos de su camiseta gris desgastada."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No sé si hice lo correcto… pero no puedo dejar pasar esto."
+       },
+       {
+        "speaker": "",
+        "text": "Sus ojos se llenan de determinación, pero también de tristeza. Un viento frío le hace temblar un poco, pero no se mueve."
+       }
+      ],
+      "memory": [],
+      "fn": "avanzar-historia",
+      "stage": "inicio",
+      "shot": "general",
+      "time": "Tarde",
+      "interior": false,
+      "directions": [
+       "plano: general",
+       "expresion: KAP pensativo",
+       "camara: zoom 1.2",
+       "vfx: lluvia ligera"
+      ],
+      "change": "Se establece el final emocional del episodio, con KAP en un momento de reflexión."
+     },
+     {
+      "title": "Episodio 11: El Regalo Perdido",
+      "location": "Guardería",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se para frente a la puerta de la guardería, mirando hacia afuera con una expresión triste. Sus manos están en los bolsillos, y su respiración es lenta."
+       },
+       {
+        "speaker": "GUARDIÁN",
+        "text": "Hace un rato. Se fue con un niño desconocido."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Un niño... desconocido? ¿Y no me lo dijo? ¡Joder!"
+       }
+      ],
+      "memory": [
+       "acto: conflicto | El GUARDIÁN le dice que su hermano se fue con un niño desconocido. KAP se queda en silencio, pensando."
+      ],
+      "fn": "revelar-informacion",
+      "stage": "problema",
+      "shot": "medio",
+      "time": "Tarde",
+      "interior": true,
+      "directions": [
+       "plano: medio KAP",
+       "expresion: KAP triste",
+       "mira: KAP izquierda",
+       "camina: KAP a centro",
+       "camara: seguir KAP"
+      ],
+      "change": "KAP comprende que no podrá ver a su hermano antes de que se vaya, lo que le genera ansiedad."
+     },
+     {
+      "title": "Episodio 11: El Regalo Perdido",
+      "location": "Guardería",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP corre por los pasillos de la guardería, mirando a todos lados con preocupación. Sus zapatos suenan contra el suelo de madera."
+       },
+       {
+        "speaker": "niño desconocido",
+        "text": "¡Eh, KAP! ¿Quieres grabar algo rápido? Tenemos un micrófono."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Qué? ¡No tengo tiempo para esto!"
+       }
+      ],
+      "memory": [
+       "acto: desarrollo | KAP corre por la guardería, buscando a su hermano. Mientras tanto, se le acerca un niño de la guardería que le ofrece participar en una gra…"
+      ],
+      "fn": "desarrollar-personaje",
+      "stage": "escalada",
+      "shot": "general",
+      "time": "Tarde",
+      "interior": true,
+      "directions": [
+       "plano: general",
+       "camina: KAP a izquierda",
+       "expresion: niño desconocido sorprendido",
+       "gesto: niño desconocido señala"
+      ],
+      "change": "KAP se enfrenta a una decisión urgente entre su hermano y una oportunidad musical."
+     },
+     {
+      "title": "Episodio 11: El Regalo Perdido",
+      "location": "Guardería",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se queda en el centro del aula, mirando hacia la puerta y luego hacia el niño. Sus ojos reflejan una lucha interna."
+       },
+       {
+        "speaker": "niño desconocido",
+        "text": "¿No vas a grabar nada? Nosotros tenemos un equipo, ¿sabes? Puedes hacer un rap rápido, si quieres."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No… no tengo tiempo. Tengo que encontrar a mi hermano. Ya se fue con alguien, y no sé si lo va a volver a ver."
+       }
+      ],
+      "memory": [
+       "acto: emocional | KAP se queda en el centro del aula, mirando hacia la puerta y luego hacia el niño. Al final, decide ir a buscar a su hermano."
+      ],
+      "fn": "arco-de-kap",
+      "stage": "decision",
+      "shot": "primer plano",
+      "time": "Tarde",
+      "interior": true,
+      "directions": [
+       "plano: primer plano KAP",
+       "expresion: KAP pensativo",
+       "gesto: KAP niega con la cabeza",
+       "mira: KAP derecha",
+       "camara: zoom 1.2",
+       "vfx: niebla"
+      ],
+      "change": "KAP elige su responsabilidad familiar sobre la oportunidad musical, aunque con un peso en el corazón."
+     },
+     {
+      "title": "Episodio 11: El Regalo Perdido",
+      "location": "Calle del barrio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP corre por la calle, mirando hacia todos lados con urgencia. Sus zapatos suenan contra el suelo de tierra y piedras."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¡Hermano! ¡Espera! ¿Dónde estás? ¡No te vayas sin decirme nada!"
+       },
+       {
+        "speaker": "",
+        "text": "En la distancia, KAP ve al niño desconocido parado frente a una camioneta con un letrero que dice: 'Grabación en vivo'. El niño sostiene un micrófono y una tableta."
+       }
+      ],
+      "memory": [
+       "pierde: KAP, oportunidad musical",
+       "relacion: KAP, Hermano de KAP, -1"
+      ],
+      "fn": "preparar-consecuencia",
+      "stage": "consecuencia",
+      "shot": "general",
+      "time": "Tarde",
+      "interior": false,
+      "directions": [
+       "plano: general",
+       "camara: seguir KAP",
+       "vfx: lluvia ligera"
+      ],
+      "change": "KAP pierde la oportunidad musical por no haberla tomado a tiempo."
+     },
+     {
+      "title": "Episodio 11: El Regalo Perdido",
+      "location": "Calle del barrio",
+      "lines": [
+       {
+        "speaker": "Hermano de KAP",
+        "text": "Ya me fui, KAP. No te preocupes, ya está bien."
+       },
+       {
+        "speaker": "",
+        "text": "KAP se detiene en seco, mirando al suelo con la boca entreabierta. El hermano pequeño camina hacia el niño desconocido, quien le ofrece una bolsa de dulces."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¿Tú eres el que me dio el regalo? ¡Gracias!"
+       },
+       {
+        "speaker": "",
+        "text": "KAP mira hacia el suelo, triste. Su mano se cierra en un puño, pero no dice nada."
+       },
+       {
+        "speaker": "niño desconocido",
+        "text": "¡Vamos! Tienes que probar esto. Es muy rico."
+       },
+       {
+        "speaker": "",
+        "text": "El hermano de KAP acepta la bolsa con una sonrisa y camina junto al niño desconocido, alejándose de KAP."
+       },
+       {
+        "speaker": "KAP",
+        "text": "...No te vayas sin decirme nada."
+       }
+      ],
+      "memory": [
+       "acto: resolucion | KAP encuentra a su hermano, pero este ya se va con un niño desconocido. KAP se queda solo en la calle."
+      ],
+      "fn": "conflicto",
+      "stage": "resolucion",
+      "shot": "medio",
+      "time": "Tarde",
+      "interior": false,
+      "directions": [
+       "plano: medio KAP"
+      ],
+      "change": "KAP no logra reconciliarse con su hermano ni aprovechar la oportunidad musical."
+     },
+     {
+      "title": "Episodio 11: El Regalo Perdido",
+      "location": "Calle del barrio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "En la distancia, el niño desconocido se para frente a una camioneta con luces parpadeantes. En su mano, sostiene un micrófono. Hace una señal con él, como si estuviera llamando a alguien."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Ese… es un micrófono real? ¿De verdad?"
+       },
+       {
+        "speaker": "",
+        "text": "KAP se queda parado en el medio de la calle, mirando al niño con una expresión entre sorpresa y duda. Sus ojos no se despegan del micrófono."
+       }
+      ],
+      "memory": [
+       "acto: gancho | En la distancia, el niño desconocido le hace una señal con el micrófono. KAP lo ve y se queda mirando.",
+       "gancho: KAP se queda solo en la guardería, mirando hacia la calle donde se fue su hermano. En la distancia, ve a alguien que parece conocer su música."
+      ],
+      "fn": "preparar-gancho",
+      "stage": "gancho",
+      "shot": "general",
+      "time": "Tarde",
+      "interior": false,
+      "directions": [
+       "plano: general",
+       "expresion: KAP pensativo",
+       "mira: KAP derecha",
+       "vfx: niebla"
+      ],
+      "change": "Se deja un gatillo emocional para el siguiente episodio: KAP no puede dejar pasar la oportunidad musical aunque sea tarde."
+     }
+    ]
+   }
   }
  ]
 }
