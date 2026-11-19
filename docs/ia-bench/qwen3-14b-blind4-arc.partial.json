@@ -1,0 +1,642 @@
+{
+ "meta": {
+  "model": "qwen3:14b",
+  "phase": "blind4",
+  "ctx": 8192,
+  "date": "2026-11-19T02:28:12.484Z",
+  "cpus": 4,
+  "ramGb": 16,
+  "host": "CPU sin GPU"
+ },
+ "partial": true,
+ "results": [
+  {
+   "id": "E7",
+   "title": "Episodio 7",
+   "request": "Crea el episodio 7, a continuación del episodio 3. KAP se entera de que en el barrio alguien paga unas monedas por escuchar música en directo y decide intentar ganarse algo rapeando, aunque no tiene micrófono ni permiso.",
+   "ms": 3652911,
+   "peakMb": 12886,
+   "sysPeakMb": 13549,
+   "contextTokens": 1898,
+   "ok": true,
+   "irValid": true,
+   "irValidFirstTry": false,
+   "json": {
+    "attempts": 16,
+    "retries": 6,
+    "jsonErrors": 0,
+    "schemaErrors": 0,
+    "lengthRetries": 0,
+    "memoryDirectiveErrors": 1
+   },
+   "irErrors": [],
+   "usage": {
+    "promptTokens": 66243,
+    "outputTokens": 5122,
+    "totalMs": 3652805.22243,
+    "loadMs": 297124.57205399993,
+    "promptMs": 590868.576,
+    "evalMs": 2761719.7250000006
+   },
+   "tokensPerSec": 1.85,
+   "episode": {
+    "scenes": 9,
+    "estimatedSec": 172,
+    "words": 479,
+    "title": "Episodio 7: El cuaderno de KAP",
+    "logline": "KAP descubre que en el barrio hay quien paga por escuchar música en directo, y decide aprovechar la oportunidad, aunque no tiene ni micrófono ni permiso."
+   },
+   "continuity": {
+    "critical": [],
+    "warnings": [
+     "relacion-contradice: KAP y Ramiro ya se conocían (relación «mentor» desde ep. 3); la escena 1 los presenta como si se conocieran ahora.",
+     "duracion: El episodio dura ≈ 3.3 min y el formato es ≈ 5 min (4–6 min)."
+    ],
+    "info": 7
+   },
+   "narrative": {
+    "error": 0,
+    "warning": 0,
+    "info": 0,
+    "rules": [],
+    "findings": [],
+    "taggedRules": [
+     "ayuda-externa"
+    ]
+   },
+   "mode": "arc",
+   "arc": {
+    "title": "Episodio 7: El cuaderno de KAP",
+    "logline": "KAP descubre que en el barrio hay quien paga por escuchar música en directo, y decide aprovechar la oportunidad, aunque no tiene ni micrófono ni permiso.",
+    "assumptions": [
+     "El lugar donde KAP intenta tocar es un espacio público del barrio.",
+     "El suceso con el cuaderno de Dani es la causa que impulsa a KAP a actuar."
+    ],
+    "problem": "KAP se entera de que en el barrio hay personas que pagan monedas por escuchar música en directo, y decide intentar ganarse algo con su talento, aunque no tiene ni micrófono ni permiso.",
+    "kapWant": "Demostrar que su música vale algo, incluso si es solo por unas monedas.",
+    "kapChoice": "Decide tocar una canción en la calle sin permiso, usando el cuaderno como base y su voz como instrumento.",
+    "consequence": "KAP es interrumpido por un adulto que le advierte sobre las normas de la zona, y su acto se vuelve viral en redes sociales, atrayendo tanto atención como críticas.",
+    "outcome": "KAP logra llamar la atención, pero también recibe una advertencia. Su acto no resuelve su situación, pero le da un nuevo",
+    "setting": {
+     "main": "Calle de noche",
+     "secondary": [
+      "Barrio",
+      "Puerta de casa"
+     ],
+     "timeOfDay": "Noche",
+     "transitions": [
+      "más tarde ese día",
+      "al día siguiente"
+     ]
+    },
+    "hook": "Un video de KAP en la calle se comparte en redes, y Ramiro lo ve en su teléfono. Lo llama, pero KAP no responde.",
+    "extraCharacters": [],
+    "castActions": [],
+    "usedFromMemory": [
+     "KAP",
+     "Dani",
+     "Hermano de KAP",
+     "Ramiro"
+    ],
+    "newCharacters": [],
+    "newPlaces": [],
+    "beats": [
+     {
+      "stage": "inicio",
+      "fn": "avanzar-historia",
+      "summary": "KAP está en la calle de noche, revisando el cuaderno que le enseñó Ramiro. Escucha un rumor sobre un hombre que paga monedas por escuchar música en directo.",
+      "location": "Calle de noche",
+      "characters": [
+       "KAP"
+      ],
+      "change": "KAP se entera del lugar donde puede tocar y decidir actuar.",
+      "why": "El cuaderno de KAP lo conecta con el sueño que lleva dentro.",
+      "time": "Noche",
+      "interior": false,
+      "shot": "general",
+      "visual": "KAP mira el cuaderno bajo la luz de la calle."
+     },
+     {
+      "stage": "problema",
+      "fn": "conflicto",
+      "summary": "KAP intenta localizar al hombre que paga por escuchar música, pero no encuentra información clara. Decide actuar sin esperar.",
+      "location": "Barrio",
+      "characters": [
+       "KAP"
+      ],
+      "change": "KAP toma la decisión de actuar por su cuenta.",
+      "why": "No tiene recursos ni permisos, pero no quiere perder más tiempo.",
+      "time": "Noche",
+      "interior": false,
+      "shot": "medio",
+      "visual": "KAP camina con determinación por el barrio."
+     },
+     {
+      "stage": "escalada",
+      "fn": "avanzar-historia",
+      "summary": "KAP llega a un espacio público y comienza a cantar una de sus canciones, usando el cuaderno como guía y su voz como único instrumento.",
+      "location": "Espacio público del barrio",
+      "characters": [
+       "KAP"
+      ],
+      "change": "KAP empieza a tocar en la calle sin permiso.",
+      "why": "Siente que es su única oportunidad de ser escuchado.",
+      "time": "Noche",
+      "interior": false,
+      "shot": "primer plano",
+      "visual": "KAP canta con pasión, aunque hay pocos espectadores."
+     },
+     {
+      "stage": "escalada",
+      "fn": "revelar-informacion",
+      "summary": "Una persona que pasa por ahí graba el acto de KAP y lo sube a una red social. Pronto, más personas se reúnen a escucharlo.",
+      "location": "Espacio público del barrio",
+      "characters": [
+       "KAP"
+      ],
+      "change": "El video se vuelve viral en redes sociales, atrayendo a más espectadores.",
+      "why": "La grabación es compartida de forma espontánea.",
+      "time": "Noche",
+      "interior": false,
+      "shot": "general",
+      "visual": "Un grupo de personas comienza a escuchar a KAP."
+     },
+     {
+      "stage": "decision",
+      "fn": "arco-de-kap",
+      "summary": "KAP, animado por la atención, sigue con su canción, ignorando las miradas de desaprobación de algunos espectadores.",
+      "location": "Espacio público del barrio",
+      "characters": [
+       "KAP"
+      ],
+      "change": "KAP elige seguir adelante a pesar de las críticas.",
+      "why": "Su determinación lo impulsa a no rendirse.",
+      "time": "Noche",
+      "interior": false,
+      "shot": "medio",
+      "visual": "KAP canta mientras algunos espectadores se alejan."
+     },
+     {
+      "stage": "consecuencia",
+      "fn": "conflicto",
+      "summary": "Un hombre adulto aparece y le advierte a KAP que no puede tocar allí sin permiso. Le pide que deje de actuar inmediatamente.",
+      "location": "Espacio público del barrio",
+      "characters": [
+       "KAP",
+       "Hombre adulto"
+      ],
+      "change": "KAP es interrumpido y recibida una advertencia.",
+      "why": "El hombre ve su actuación como una infracción.",
+      "time": "Noche",
+      "interior": false,
+      "shot": "general",
+      "visual": "El hombre se acerca a KAP mientras toca."
+     },
+     {
+      "stage": "consecuencia",
+      "fn": "preparar-consecuencia",
+      "summary": "KAP intenta explicar que solo quiere ganarse algo, pero el hombre lo interrumpe y le dice que debe irse. KAP se va, molesto y frustrado.",
+      "location": "Espacio público del barrio",
+      "characters": [
+       "KAP",
+       "Hombre adulto"
+      ],
+      "change": "KAP se siente frustrado por no haber podido terminar su actuación.",
+      "why": "La interrupción lo deja sin una conclusión positiva.",
+      "time": "Noche",
+      "interior": false,
+      "shot": "primer plano",
+      "visual": "KAP camina con la cabeza baja, molesto."
+     },
+     {
+      "stage": "resolucion",
+      "fn": "desarrollar-personaje",
+      "summary": "De vuelta a casa, KAP revisa el cuaderno y empieza a escribir una nueva canción, esta vez más decidido que nunca.",
+      "location": "Calle de noche (2)",
+      "characters": [
+       "KAP"
+      ],
+      "change": "KAP se siente motivado para seguir adelante, aunque con frustración.",
+      "why": "La experiencia lo ha marcado y le da una nueva perspectiva.",
+      "time": "Noche",
+      "interior": false,
+      "shot": "general",
+      "visual": "KAP escribe en el cuaderno mientras camina."
+     },
+     {
+      "stage": "gancho",
+      "fn": "preparar-gancho",
+      "summary": "Al día siguiente, Ramiro recibe un mensaje de un amigo que le muestra el video de KAP. Lo llama, pero KAP no responde.",
+      "location": "Habitación de Ramiro",
+      "characters": [
+       "KAP"
+      ],
+      "change": "Ramiro se entera del acto de KAP y decide contactarlo.",
+      "why": "El video le da una nueva perspectiva sobre el talento de KAP.",
+      "time": "Mañana",
+      "interior": true,
+      "shot": "general",
+      "visual": "Ramiro mira el video en su teléfono."
+     }
+    ]
+   },
+   "variety": {
+    "locations": 5,
+    "dominantShare": 0.56,
+    "times": 2,
+    "timeSource": "declarado"
+   },
+   "openingRhymeCheck": {
+    "present": true,
+    "rhyme_valid": false,
+    "natural": false,
+    "contextual": true,
+    "rhythm": false,
+    "level": "ninguna"
+   },
+   "script": "# Calle de noche\n[mood: Noche, exterior]\n[plano: general]\n[expresion: KAP pensativo]\n[mira: KAP izquierda]\n[camara: zoom 1.2]\nKAP se sienta en un banco de la calle, abriendo el cuaderno que le dio Ramiro. La luz de una farola lo ilumina desde arriba, proyectando sombras en las páginas.\nKAP: A veces me pregunto si la vida es un ritmo, y si yo puedo hacerla bailar…\nKAP: Pero si no tengo micrófono, ya me entiendo con el cuaderno…\nKAP mira alrededor, como si estuviera escuchando algo que acaba de decirle alguien.\n[acto: inicio | KAP está en la calle de noche, revisando el cuaderno que le enseñó Ramiro. Escucha un rumor sobre un hombre que paga monedas por escuchar m…]\n[conoce: KAP, Ramiro]\n\n# Barrio\n[mood: Noche, exterior]\n[plano: medio KAP]\n[mira: KAP derecha]\n[camina: KAP a izquierda]\nKAP camina con determinación por el barrio, mirando a su alrededor como si estuviera buscando algo.\nKAP: No sé dónde está ese tipo… Pero si no lo encuentro, tendré que hacerlo yo.\nSe para frente a un cartel de 'Espacio Público' y lo mira con una expresión pensativa.\n[acto: conflicto | KAP intenta localizar al hombre que paga por escuchar música, pero no encuentra información clara. Decide actuar sin esperar.]\n\n# Espacio público del barrio\n[mood: Noche, exterior]\n[plano: primer plano KAP]\n[gesto: KAP senala]\n[camina: KAP a centro]\n[mira: KAP izquierda]\n[camara: zoom 1.2]\nKAP se para frente al espacio público, mira a su alrededor y, con un suspiro, abre el cuaderno de Ramiro. Sus manos tiemblan un poco, pero se mantiene firme.\nKAP: No tengo micrófono… ni permiso… pero tengo esto.\nEmpieza a cantar con la voz más clara que puede, apoyándose en las palabras escritas en el cuaderno. Poco a poco, su canción se eleva por la calle vacía.\n[acto: desarrollo | KAP llega a un espacio público y comienza a cantar una de sus canciones, usando el cuaderno como guía y su voz como único instrumento.]\n\n# Espacio público del barrio\n[mood: Noche, exterior]\n[plano: general]\n[camara: seguir KAP]\n[vfx: lluvia]\nKAP canta con voz firme, mirando al horizonte. Algunas personas pasan y se detienen a escuchar.\nKAP: No soy rico, no tengo nada… Pero esto es lo que tengo. Y lo voy a usar.\nUna persona con un teléfono graba el momento. Luego, más personas se acercan, algunos asombrados, otros burlándose.\n\n# Espacio público del barrio\n[mood: Noche, exterior]\n[plano: medio KAP]\n[gesto: KAP senala]\n[mira: KAP izquierda]\n[vfx: lluvia]\nKAP se siente más animado al ver que más personas se acercan.\nKAP: No me importa lo que piensen… Esta canción es mía, y la voy a cantar hasta el final.\nAlgunos espectadores lo miran con desaprobación, pero otros asienten con la cabeza.\n[acto: emocional | KAP, animado por la atención, sigue con su canción, ignorando las miradas de desaprobación de algunos espectadores.]\n\n# Espacio público del barrio\n[mood: Noche, exterior]\n[plano: general]\n[camara: seguir KAP]\nUn hombre adulto camina con paso firme hacia donde está KAP, deteniéndose a pocos metros de él.\nHOMBRE ADULTO: ¡Eh, chico! ¿Qué haces aquí?\nKAP: Estoy… estoy tocando. Solo quiero ganar algo.\n\n# Espacio público del barrio\n[mood: Noche, exterior]\n[plano: primer plano KAP]\n[gesto: KAP niega]\n[camara: zoom 1.2]\nKAP: Esto es lo único que tengo… No quiero nada más, solo que me dejen terminar.\nHOMBRE ADULTO: ¡Ya te dije que no puedes tocar aquí!\nKAP: No tengo dinero, ni ropa, ni nada… Solo esto. Y no me importa lo que piensen.\n\n# Calle de noche (2)\n[mood: Noche, exterior]\n[plano: general]\n[expresion: KAP pensativo]\n[camina: KAP a izquierda]\n[vfx: lluvia]\nKAP camina lentamente por la calle, con el cuaderno en las manos. Sus ojos están bajos, pero su paso es más firme que antes.\nKAP: No me importa lo que digan… Esta canción es mía, y la voy a escribir otra vez.\nSe detiene frente a una farola apagada y se sienta en el suelo. Abre el cuaderno y empieza a escribir con un lápiz que encuentra en su bolsillo.\n[acto: resolucion | De vuelta a casa, KAP revisa el cuaderno y empieza a escribir una nueva canción, esta vez más decidido que nunca.]\n\n# Habitación de Ramiro\n[mood: Mañana, interior]\n[plano: general]\n[expresion: Ramiro sorprendido]\n[camara: seguir Ramiro]\nSe sienta en su cama, mirando fijamente la pantalla de su teléfono. Una notificación parpadea en la esquina: 'Video viral'.\nPasa el dedo por la pantalla, y aparece un video grabado en la calle. KAP está allí, con el cuaderno en las manos, cantando con voz firme.\nSe queda mirando la pantalla, con una expresión entre sorpresa y admiración. No lo creía… Pero está ahí, de verdad.\n[acto: gancho | Al día siguiente, Ramiro recibe un mensaje de un amigo que le muestra el video de KAP. Lo llama, pero KAP no responde.]\n[gancho: Un video de KAP en la calle se comparte en redes, y Ramiro lo ve en su teléfono. Lo llama, pero KAP no responde.]\n",
+   "gate": {
+    "regenerated": 3,
+    "dropped": 0,
+    "localPatches": 3,
+    "patchKinds": {
+     "menciona-memoria": 3,
+     "rima-invalida": 1
+    },
+    "endingRevisions": 0,
+    "varietyRevisions": 0,
+    "codeRepairs": 0,
+    "arcRevisions": 0,
+    "rhymeValid": false,
+    "calls": 16,
+    "outputTokens": 5122,
+    "promptTokens": 66243,
+    "issues": {
+     "menciona-memoria": 4,
+     "rima-invalida": 1,
+     "corta": 7,
+     "repite-frase": 2,
+     "repite-escena": 1,
+     "sin-cambio": 1,
+     "personaje-no-previsto": 1
+    }
+   },
+   "outcome": "KAP logra llamar la atención, pero también recibe una advertencia. Su acto no resuelve su situación, pero le da un nuevo",
+   "checks": [
+    {
+     "id": "estructura-6-actos",
+     "ok": true,
+     "note": "faltan: —"
+    },
+    {
+     "id": "gancho",
+     "ok": true
+    },
+    {
+     "id": "protagonista",
+     "ok": true
+    },
+    {
+     "id": "sin-errores-criticos",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "sin-exito-prematuro",
+     "ok": true
+    },
+    {
+     "id": "directivas-validas",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "espanol",
+     "ok": true
+    },
+    {
+     "id": "diversidad-lexica",
+     "ok": true,
+     "note": "0.42"
+    }
+   ],
+   "compliance": 1,
+   "proxy": {
+    "score": 10,
+    "dialogueRatio": 0.43,
+    "locations": 5,
+    "repeatedSentences": 0
+   },
+   "warnings": [
+    "El arco incluía a Ramiro en un beat sin justificarlo: se ha quitado (la memoria no obliga a reutilizarlo).",
+    "Escena 1: Menciona a «Ramiro» sin que esta escena lo necesite: quita esa mención.",
+    "Escena 1: La rima de KAP no vale: suena a lema o a reflexión de adulto («mi música», «mi sueño», «no me rendiré», «el futuro»…): KAP habla como un niño; los versos son largos o desiguales; hazlos cortos y parejos, fáciles de decir en voz alta; los finales de los versos no riman ni de forma aproximada (ritmo, bailar, micrófono, cuaderno).",
+    "Escena 2: Escena corta (47 palabras): puede ser correcto si la acción y la consecuencia están claras.",
+    "Escena 3: Menciona a «Ramiro» sin que esta escena lo necesite: quita esa mención.",
+    "Escena 4: Escena corta (50 palabras): puede ser correcto si la acción y la consecuencia están claras."
+   ],
+   "draft": {
+    "title": "Episodio 7: El cuaderno de KAP",
+    "logline": "KAP descubre que en el barrio hay quien paga por escuchar música en directo, y decide aprovechar la oportunidad, aunque no tiene ni micrófono ni permiso.",
+    "assumptions": [
+     "El lugar donde KAP intenta tocar es un espacio público del barrio.",
+     "El suceso con el cuaderno de Dani es la causa que impulsa a KAP a actuar."
+    ],
+    "scenes": [
+     {
+      "title": "Episodio 7: El cuaderno de KAP",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se sienta en un banco de la calle, abriendo el cuaderno que le dio Ramiro. La luz de una farola lo ilumina desde arriba, proyectando sombras en las páginas."
+       },
+       {
+        "speaker": "KAP",
+        "text": "A veces me pregunto si la vida es un ritmo, y si yo puedo hacerla bailar…"
+       },
+       {
+        "speaker": "KAP",
+        "text": "Pero si no tengo micrófono, ya me entiendo con el cuaderno…"
+       },
+       {
+        "speaker": "",
+        "text": "KAP mira alrededor, como si estuviera escuchando algo que acaba de decirle alguien."
+       }
+      ],
+      "memory": [
+       "acto: inicio | KAP está en la calle de noche, revisando el cuaderno que le enseñó Ramiro. Escucha un rumor sobre un hombre que paga monedas por escuchar m…",
+       "conoce: KAP, Ramiro"
+      ],
+      "fn": "avanzar-historia",
+      "stage": "inicio",
+      "shot": "general",
+      "time": "Noche",
+      "interior": false,
+      "directions": [
+       "plano: general",
+       "expresion: KAP pensativo",
+       "mira: KAP izquierda",
+       "camara: zoom 1.2"
+      ],
+      "change": "KAP se entera del lugar donde puede tocar y decide actuar."
+     },
+     {
+      "title": "Episodio 7: El cuaderno de KAP",
+      "location": "Barrio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP camina con determinación por el barrio, mirando a su alrededor como si estuviera buscando algo."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No sé dónde está ese tipo… Pero si no lo encuentro, tendré que hacerlo yo."
+       },
+       {
+        "speaker": "",
+        "text": "Se para frente a un cartel de 'Espacio Público' y lo mira con una expresión pensativa."
+       }
+      ],
+      "memory": [
+       "acto: conflicto | KAP intenta localizar al hombre que paga por escuchar música, pero no encuentra información clara. Decide actuar sin esperar."
+      ],
+      "fn": "conflicto",
+      "stage": "problema",
+      "shot": "medio",
+      "time": "Noche",
+      "interior": false,
+      "directions": [
+       "plano: medio KAP",
+       "mira: KAP derecha",
+       "camina: KAP a izquierda"
+      ],
+      "change": "KAP toma la decisión de actuar por su cuenta."
+     },
+     {
+      "title": "Episodio 7: El cuaderno de KAP",
+      "location": "Espacio público del barrio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se para frente al espacio público, mira a su alrededor y, con un suspiro, abre el cuaderno de Ramiro. Sus manos tiemblan un poco, pero se mantiene firme."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No tengo micrófono… ni permiso… pero tengo esto."
+       },
+       {
+        "speaker": "",
+        "text": "Empieza a cantar con la voz más clara que puede, apoyándose en las palabras escritas en el cuaderno. Poco a poco, su canción se eleva por la calle vacía."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo | KAP llega a un espacio público y comienza a cantar una de sus canciones, usando el cuaderno como guía y su voz como único instrumento."
+      ],
+      "fn": "avanzar-historia",
+      "stage": "escalada",
+      "shot": "primer plano",
+      "time": "Noche",
+      "interior": false,
+      "directions": [
+       "plano: primer plano KAP",
+       "gesto: KAP señala el cuaderno",
+       "camina: KAP a centro",
+       "mira: KAP izquierda",
+       "camara: zoom 1.2"
+      ],
+      "change": "KAP empieza a tocar en la calle sin permiso."
+     },
+     {
+      "title": "Episodio 7: El cuaderno de KAP",
+      "location": "Espacio público del barrio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP canta con voz firme, mirando al horizonte. Algunas personas pasan y se detienen a escuchar."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No soy rico, no tengo nada… Pero esto es lo que tengo. Y lo voy a usar."
+       },
+       {
+        "speaker": "",
+        "text": "Una persona con un teléfono graba el momento. Luego, más personas se acercan, algunos asombrados, otros burlándose."
+       }
+      ],
+      "memory": [],
+      "fn": "revelar-informacion",
+      "stage": "escalada",
+      "shot": "general",
+      "time": "Noche",
+      "interior": false,
+      "directions": [
+       "plano: general",
+       "camara: seguir KAP",
+       "vfx: lluvia ligera"
+      ],
+      "change": "El video se vuelve viral en redes sociales, atrayendo a más espectadores."
+     },
+     {
+      "title": "Episodio 7: El cuaderno de KAP",
+      "location": "Espacio público del barrio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se siente más animado al ver que más personas se acercan."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No me importa lo que piensen… Esta canción es mía, y la voy a cantar hasta el final."
+       },
+       {
+        "speaker": "",
+        "text": "Algunos espectadores lo miran con desaprobación, pero otros asienten con la cabeza."
+       }
+      ],
+      "memory": [
+       "acto: emocional | KAP, animado por la atención, sigue con su canción, ignorando las miradas de desaprobación de algunos espectadores."
+      ],
+      "fn": "arco-de-kap",
+      "stage": "decision",
+      "shot": "medio",
+      "time": "Noche",
+      "interior": false,
+      "directions": [
+       "plano: medio KAP",
+       "gesto: KAP señala al horizonte",
+       "mira: KAP izquierda",
+       "vfx: lluvia ligera"
+      ],
+      "change": "KAP elige seguir adelante a pesar de las críticas."
+     },
+     {
+      "title": "Episodio 7: El cuaderno de KAP",
+      "location": "Espacio público del barrio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Un hombre adulto camina con paso firme hacia donde está KAP, deteniéndose a pocos metros de él."
+       },
+       {
+        "speaker": "Hombre adulto",
+        "text": "¡Eh, chico! ¿Qué haces aquí?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "Estoy… estoy tocando. Solo quiero ganar algo."
+       }
+      ],
+      "memory": [],
+      "fn": "conflicto",
+      "stage": "consecuencia",
+      "shot": "general",
+      "time": "Noche",
+      "interior": false,
+      "directions": [
+       "plano: general",
+       "camara: seguir KAP"
+      ],
+      "change": "KAP es interrumpido y recibida una advertencia."
+     },
+     {
+      "title": "Episodio 7: El cuaderno de KAP",
+      "location": "Espacio público del barrio",
+      "lines": [
+       {
+        "speaker": "KAP",
+        "text": "Esto es lo único que tengo… No quiero nada más, solo que me dejen terminar."
+       },
+       {
+        "speaker": "Hombre adulto",
+        "text": "¡Ya te dije que no puedes tocar aquí!"
+       },
+       {
+        "speaker": "KAP",
+        "text": "No tengo dinero, ni ropa, ni nada… Solo esto. Y no me importa lo que piensen."
+       }
+      ],
+      "memory": [],
+      "fn": "preparar-consecuencia",
+      "stage": "consecuencia",
+      "shot": "primer plano",
+      "time": "Noche",
+      "interior": false,
+      "directions": [
+       "plano: primer plano KAP",
+       "gesto: KAP niega con la cabeza",
+       "camara: zoom 1.2"
+      ],
+      "change": "KAP se siente frustrado por no haber podido terminar su actuación."
+     },
+     {
+      "title": "Episodio 7: El cuaderno de KAP",
+      "location": "Calle de noche (2)",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP camina lentamente por la calle, con el cuaderno en las manos. Sus ojos están bajos, pero su paso es más firme que antes."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No me importa lo que digan… Esta canción es mía, y la voy a escribir otra vez."
+       },
+       {
+        "speaker": "",
+        "text": "Se detiene frente a una farola apagada y se sienta en el suelo. Abre el cuaderno y empieza a escribir con un lápiz que encuentra en su bolsillo."
+       }
+      ],
+      "memory": [
+       "acto: resolucion | De vuelta a casa, KAP revisa el cuaderno y empieza a escribir una nueva canción, esta vez más decidido que nunca."
+      ],
+      "fn": "desarrollar-personaje",
+      "stage": "resolucion",
+      "shot": "general",
+      "time": "Noche",
+      "interior": false,
+      "directions": [
+       "plano: general",
+       "expresion: KAP pensativo",
+       "camina: KAP a izquierda",
+       "vfx: lluvia"
+      ],
+      "change": "KAP se siente motivado para seguir adelante, aunque con frustración."
+     },
+     {
+      "title": "Episodio 7: El cuaderno de KAP",
+      "location": "Habitación de Ramiro",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Se sienta en su cama, mirando fijamente la pantalla de su teléfono. Una notificación parpadea en la esquina: 'Video viral'."
+       },
+       {
+        "speaker": "",
+        "text": "Pasa el dedo por la pantalla, y aparece un video grabado en la calle. KAP está allí, con el cuaderno en las manos, cantando con voz firme."
+       },
+       {
+        "speaker": "",
+        "text": "Se queda mirando la pantalla, con una expresión entre sorpresa y admiración. No lo creía… Pero está ahí, de verdad."
+       }
+      ],
+      "memory": [
+       "acto: gancho | Al día siguiente, Ramiro recibe un mensaje de un amigo que le muestra el video de KAP. Lo llama, pero KAP no responde.",
+       "gancho: Un video de KAP en la calle se comparte en redes, y Ramiro lo ve en su teléfono. Lo llama, pero KAP no responde."
+      ],
+      "fn": "preparar-gancho",
+      "stage": "gancho",
+      "shot": "general",
+      "time": "Mañana",
+      "interior": true,
+      "directions": [
+       "plano: general",
+       "expresion: Ramiro sorprendido",
+       "camara: seguir Ramiro"
+      ],
+      "change": "Ramiro se entera del acto de KAP y decide contactarlo."
+     }
+    ]
+   }
+  }
+ ]
+}
