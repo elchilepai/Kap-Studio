@@ -28,7 +28,7 @@ const Beat = z.object({
 export const EpisodeArc = z.object({
   title: z.string().min(1).max(100), logline: z.string().min(1).max(260), assumptions: z.array(z.string().max(300)).max(8),
   problem: z.string().min(12).max(300), kapWant: z.string().min(5).max(240), kapChoice: z.string().min(12).max(300), consequence: z.string().min(12).max(300),
-  outcome: z.string().min(3).max(120), setting: z.object({ main: z.string().max(80), secondary: z.array(z.string().max(80)).max(3), timeOfDay: z.string().max(40), transitions: z.array(z.string().max(160)).max(3) }), hook: z.string().min(20).max(300),
+  openingRhymeReason: z.string().max(300).optional(), outcome: z.string().min(3).max(120), setting: z.object({ main: z.string().max(80), secondary: z.array(z.string().max(80)).max(3), timeOfDay: z.string().max(40), transitions: z.array(z.string().max(160)).max(3) }), hook: z.string().min(20).max(300),
   extraCharacters: z.array(z.object({ name: z.string().min(1).max(40), why: z.string().max(200) })).max(2), castActions: z.array(z.object({ name: z.string().min(1).max(40), does: z.string().max(200) })).max(4),
   usedFromMemory: z.array(z.string().max(120)).max(6), newCharacters: z.array(z.object({ name: z.string().min(1).max(40), function: z.string().max(200) })).max(2), newPlaces: z.array(z.string().max(80)).max(2),
   beats: z.array(Beat).min(8).max(12),
@@ -53,7 +53,7 @@ const clip = (s: string, n: number) => (s.length > n ? `${s.slice(0, n - 1)}…`
 /** Topes de regeneración por motivo (el coste total es lo que más pesa en CPU: una escena completa ≈ 5 min, una reparación local ≈ 1 min o menos, una reparación en código = 0). */
 export type ArcBudgets = { general: number; rhyme: number; closing: number; voice: number; monologue: number; variety: number; ending: number };
 const DEFAULT_BUDGETS: ArcBudgets = { general: 2, rhyme: 2, closing: 1, voice: 1, monologue: 1, variety: 1, ending: 2 };
-export type ArcAuthorOptions = { temperature?: number; arcRetries?: number; sceneTokens?: number; budgets?: Partial<ArcBudgets>; /** La primera intervención de KAP del episodio lleva una rima breve de contexto (por defecto sí). */ openingRhyme?: boolean };
+export type ArcAuthorOptions = { temperature?: number; arcRetries?: number; sceneTokens?: number; budgets?: Partial<ArcBudgets>; /** La primera intervención de KAP lleva una rima breve de contexto: OBLIGATORIA por defecto (true). `false` solo se respeta si el arco declara en `openingRhymeReason` una razón narrativa explícita (≥ 20 caracteres); nunca sirve para esquivar una rima difícil. */ openingRhyme?: boolean };
 export type ArcAuthor = ScriptAuthor & { lastDraft?: EpisodeDraft; lastArc?: EpisodeArc; lastReview?: NarrativeFinding[]; lastGate?: { regenerated: number; dropped: number; localPatches: number; codeRepairs: number; arcRevisions: number; issues: Record<string, number>; rhyme_valid?: boolean } };
 const RIMA = /\b(rima|rimas|rimar|rap|rapea|rapear|improvis\w*|verso|versos)\b/i;
 const SIBLING_RULES = `\n\nEl hermano pequeño no es un espejo emocional de KAP: tiene acciones, preguntas y decisiones propias de su edad (pide algo concreto, esconde o trae un objeto, desobedece, va a buscar a alguien), con palabras simples.`;
@@ -78,12 +78,17 @@ export function llmArcAuthor(llm: LlmClient, opts: ArcAuthorOptions = {}): ArcAu
       const defaultCast = [...new Set(["KAP", ...request.cast, ...lastCast])];
 
       // 1) EL ARCO
-      const a = await call(EpisodeArc, { system: ARC_SYSTEM, prompt: arcPrompt(context, defaultCast, hints), temperature: temp, maxTokens: 3400 }, opts.arcRetries ?? 2);
+      const a = await call(EpisodeArc, { system: ARC_SYSTEM, prompt: arcPrompt(context, defaultCast, hints, opts.openingRhyme === false), temperature: temp, maxTokens: 3400 }, opts.arcRetries ?? 2);
       if (!a.ok) throw new Error(`El modelo no devolvió un arco válido tras ${a.attempts} intento(s): ${a.errors.join("; ")} · inicio de la respuesta: ${clip(a.raw ?? "", 500)}`);
       const arc = { ...a.data, beats: a.data.beats.map((b, i) => ({ b, i })).sort((x, y) => BEAT_STAGES.indexOf(x.b.stage) - BEAT_STAGES.indexOf(y.b.stage) || x.i - y.i).map((x) => x.b) };   // orden de etapas reparado en código
       if (arc.beats.some((b, i) => b !== a.data.beats[i])) warnings.push("El modelo desordenó las etapas del arco; se han reordenado.");
       const lastLoc = /\ben ([^;]+);/.exec(context.sections.find((s) => s.id === "lastshot")?.text ?? "")?.[1]?.trim();
       if (request.exact && lastLoc && arc.beats[0].location.toLowerCase() !== lastLoc.toLowerCase()) { warnings.push(`El arco empezaba en «${arc.beats[0].location}»; se corrige a «${lastLoc}» (último plano del episodio anterior).`); arc.beats[0].location = lastLoc; }
+
+      // rima de apertura: obligatoria. Solo se omite si la configuración lo permite (openingRhyme:false) Y el arco declara una razón narrativa explícita.
+      const reason = (arc.openingRhymeReason ?? "").trim(), skipOpening = opts.openingRhyme === false && reason.length >= 20;
+      if (opts.openingRhyme === false && !skipOpening) warnings.push("openingRhyme:false ignorado: el arco no declara una razón narrativa explícita (openingRhymeReason); la rima de apertura sigue siendo obligatoria.");
+      if (skipOpening) warnings.push(`Rima de apertura omitida por razón narrativa del arco: ${clip(reason, 160)}`);
 
       // 1b) DESENLACE: ¿podría intercambiarse por el de uno de los dos episodios anteriores sin cambiar prácticamente nada? → se revisa SOLO el final del arco (≤ 2 veces)
       const prevEnd = (hints?.previousEpisodes ?? []).map((e) => ({ hook: e.hook, closing: e.ending, outcome: e.outcome })).filter((e) => e.hook || e.closing || e.outcome);
@@ -117,7 +122,7 @@ export function llmArcAuthor(llm: LlmClient, opts: ArcAuthorOptions = {}): ArcAu
       for (let i = 0; i < arc.beats.length; i++) {
         const beat = arc.beats[i], brief = { stage: beat.stage, fn: beat.fn, summary: beat.summary, change: beat.change, why: beat.why, location: beat.location, characters: beat.characters, time: beat.time, interior: beat.interior, shot: beat.shot, visual: beat.visual };
         const sibling = siblingOf(beat.characters), hasKap = beat.characters.some((c) => norm(c) === "kap");
-        const mode = i === rhymeBeat ? "first-rhyme" as const : !kapSpoke && hasKap && opts.openingRhyme !== false ? "opening" as const : undefined;
+        const mode = i === rhymeBeat ? "first-rhyme" as const : !kapSpoke && hasKap && !skipOpening ? "opening" as const : undefined;
         const contextTerms = [beat.summary, beat.change, beat.visual, beat.location, ...beat.characters, request.notes, i === rhymeBeat ? arc.problem : ""], base = `${mode ? RIMA_RULES : ""}${sibling ? SIBLING_RULES : ""}`;
         const check = (lines: GateLine[], change: string) => checkScene({ scene: { lines, change }, previous: prev, speakers: beat.characters, memoryOutside, siblingName: sibling, rhyme: mode ? { mode, contextTerms } : undefined, isLast: i === arc.beats.length - 1 });
         const gen = async (extra: string, n: number) => call(SceneOut, { ...sceneOpts(n * 0.05), prompt: scenePrompt(context, arcView, done, i, arc.beats.length, brief, base + extra) });

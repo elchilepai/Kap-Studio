@@ -17,7 +17,7 @@ const L = (n: number) => String.fromCharCode(97 + (n % 26)) + String.fromCharCod
 const STAGES = ["inicio", "problema", "escalada", "decision", "consecuencia", "resolucion", "gancho"], PLACES = ["Casa de KAP", "Calle", "Tienda", "Casa de KAP"];
 const beat = (i: number, stage = STAGES[Math.min(i, 6)], characters = ["KAP"]) => ({ stage, fn: stage === "problema" ? "conflicto" : "avanzar-historia", summary: `Ocurre algo distinto número ${text(i, 4, 200)} con consecuencias`, change: `Cambia ${text(i, 5, 300)} de forma visible`, why: `Porque ${text(i, 3, 400)} lo exige`, location: PLACES[i % 4], characters, time: i % 2 ? "noche" : "mañana", interior: i % 2 === 0, shot: ["general", "medio", "primer plano"][i % 3], visual: "KAP mira la puerta" });
 const arc = (over: Record<string, unknown> = {}) => ({ title: "El fiado", logline: "KAP pide fiado y la tienda se lo niega.", assumptions: [], problem: "No hay comida para el hermano", kapWant: "Conseguir pan", kapChoice: "Vende su radio sin pensarlo bien", consequence: "Pierde su radio y sigue sin pan", outcome: "amargo", hook: "El tendero guarda la radio de KAP bajo el mostrador y pide el resto del dinero mañana.",
-  setting: { main: "Casa de KAP", secondary: ["Calle", "Tienda"], timeOfDay: "noche", transitions: ["más tarde ese día"] }, extraCharacters: [{ name: "Hermano de KAP", why: "está en casa sin comer" }], castActions: [{ name: "Hermano de KAP", does: "esconde el último pan" }], usedFromMemory: ["Hermano de KAP"], newCharacters: [], newPlaces: [], beats: [0, 1, 2, 3, 4, 5, 5, 6].map((i, k) => beat(k, STAGES[i], k % 2 ? ["KAP", "Hermano de KAP"] : ["KAP"])), ...over });
+  setting: { main: "Casa de KAP", secondary: ["Calle", "Tienda"], timeOfDay: "noche", transitions: ["más tarde ese día"] }, extraCharacters: [{ name: "Hermano de KAP", why: "está en casa sin comer" }], castActions: [{ name: "Hermano de KAP", does: "esconde el último pan" }], openingRhymeReason: "KAP abre el episodio en silencio, escondiéndose del tendero, y hablar rimando delataría su posición", usedFromMemory: ["Hermano de KAP"], newCharacters: [], newPlaces: [], beats: [0, 1, 2, 3, 4, 5, 5, 6].map((i, k) => beat(k, STAGES[i], k % 2 ? ["KAP", "Hermano de KAP"] : ["KAP"])), ...over });
 /** Escena válida de ≈ 70 palabras con otro personaje y un cambio propio. */
 const scene = (n: number, o: { words?: number; speaker?: string; same?: string; change?: string; sib?: string } = {}) => ({ title: `Escena ${n}`, lines: [{ speaker: "", text: o.same ?? text(n, o.words ?? 20) }, { speaker: "KAP", text: `${text(n, 12, 40)}` }, { speaker: o.speaker ?? "Hermano de KAP", text: o.sib ?? `${text(n, 12, 70)}` }, { speaker: "KAP", text: text(n, 10, 90) }, { speaker: o.speaker ?? "Hermano de KAP", text: o.sib ?? text(n, 10, 110) }], change: o.change ?? `Pasa ${text(n, 6, 120)}`, directions: ["expresion: KAP triste", "baila: KAP por la luna"], memory: ["acto: inicio | no debería pasar", "inventa: algo raro", "obtiene: KAP, radio"] });
 const ctx = (over: Partial<ContextPack["request"]> = {}): ContextPack => ({ request: { text: "x", number: 4, season: 1, exact: false, cast: [], notes: "Crea el episodio 4", ...over }, budgetTokens: 1000, usedTokens: 10, sections: [{ id: "lastshot", title: "Último plano", text: "Escena «Fin» en Calle de noche; personajes: KAP", tokens: 5, itemsTotal: 1, itemsIncluded: 1 }], dropped: [], relevantCharacters: ["KAP", "Hermano de KAP", "Ramiro"], text: "# Contexto\n- KAP, 9 años" });
@@ -154,4 +154,35 @@ describe("generador por arco (arco → escenas) con puerta de calidad", () => {
     expect(out.warnings.some((w) => /gancho del arco es genérico/.test(w))).toBe(true); expect(llm.calls.some((c) => /Ampliación/.test(c.prompt))).toBe(false); expect(out.stats!.estimatedSec).toBeLessThan(240);
   });
   it("el esquema del arco rechaza menos de 8 beats; el desenlace es texto libre, no una lista", () => { expect(EpisodeArc.safeParse(arc({ beats: arc().beats.slice(0, 5) })).success).toBe(false); expect(EpisodeArc.safeParse(arc({ outcome: "un fracaso divertido con la radio" })).success).toBe(true); });
+  it("rima de apertura OBLIGATORIA por defecto: sin opciones se exige aunque el arco diga que no hace falta", async () => {
+    const a = arc(), flat = withKap(scene(0), "Tengo hambre y no hay pan en la mesa hoy");   // el arco trae una razón para no rimar, pero la configuración por defecto (openingRhyme:true) manda
+    const { llm, author, out } = await run([a, flat, patch(RHYME), ...a.beats.slice(1).map((_, i) => scene(i + 1))], ctx(), undefined, {});   // sin opciones: openingRhyme por defecto = true
+    expect(llm.calls.filter(isPatch)).toHaveLength(1); expect(author.lastDraft!.scenes[0].lines[1].text).toBe(RHYME); expect(out.stats!.rhymeValid).toBe(true); expect(out.warnings.some((w) => /omitida/.test(w))).toBe(false);
+  });
+  it("openingRhyme:true explícito exige la rima aunque el arco declare una razón", async () => {
+    const a = arc(), flat = withKap(scene(0), "Tengo hambre y no hay pan en la mesa hoy"), { llm } = await run([a, flat, patch(RHYME), ...a.beats.slice(1).map((_, i) => scene(i + 1))], ctx(), undefined, { openingRhyme: true });
+    expect(llm.calls.filter(isPatch)).toHaveLength(1);
+  });
+  it("openingRhyme:false SOLO se respeta con una razón narrativa explícita del arco; entonces se omite y queda constancia", async () => {
+    const a = arc(), flat = withKap(scene(0), "Tengo hambre y no hay pan en la mesa hoy"), { llm, out } = await run([a, flat, ...a.beats.slice(1).map((_, i) => scene(i + 1))], ctx(), undefined, { openingRhyme: false });
+    expect(llm.calls.filter(isPatch)).toHaveLength(0); expect(out.warnings.some((w) => /Rima de apertura omitida por razón narrativa del arco: KAP abre el episodio en silencio/.test(w))).toBe(true); expect(llm.calls[0].prompt).toMatch(/openingRhymeReason/);
+  });
+  it("openingRhyme:false SIN razón (o con una razón vacía o floja) se ignora: no sirve para esquivar una rima difícil", async () => {
+    for (const reason of [undefined, "", "no pega", "   "]) {
+      const a = arc({ openingRhymeReason: reason }), flat = withKap(scene(0), "Tengo hambre y no hay pan en la mesa hoy"), { llm, out } = await run([a, flat, patch(RHYME), ...a.beats.slice(1).map((_, i) => scene(i + 1))], ctx(), undefined, { openingRhyme: false });
+      expect(llm.calls.filter(isPatch), String(reason)).toHaveLength(1); expect(out.warnings.some((w) => /openingRhyme:false ignorado/.test(w))).toBe(true); expect(out.stats!.rhymeValid).toBe(true);
+    }
+  });
+  it("el prompt del arco solo ofrece declarar «openingRhymeReason» cuando la configuración permite openingRhyme:false", async () => {
+    const a = arc(), on = await run([a, withKap(scene(0), RHYME), ...a.beats.slice(1).map((_, i) => scene(i + 1))], ctx(), undefined, { openingRhyme: true }); expect(on.llm.calls[0].prompt).not.toMatch(/openingRhymeReason/);
+  });
+  it("la rima de la escena prioriza la voz de KAP: el prompt local y el de escena fijan naturalidad > contexto > ritmo > rima y chileno ligero", async () => {
+    const a = arc(), flat = withKap(scene(0), "Tengo hambre y no hay pan en la mesa hoy"), { llm } = await run([a, flat, patch(RHYME), ...a.beats.slice(1).map((_, i) => scene(i + 1))], ctx(), undefined, { openingRhyme: true });
+    for (const c of [llm.calls[1], llm.calls.find(isPatch)!]) { expect(c.prompt).toMatch(/PRIORIDAD: 1\) que KAP suene NATURAL y como un niño, 2\)[\s\S]*3\) ritmo[\s\S]*4\) rima técnicamente correcta/); expect(c.prompt).toMatch(/NUNCA sacrifiques la voz infantil/); expect(c.prompt).toMatch(/Acento chileno LIGERO/); }
+  });
+  it("una rima perfecta pero artificial (poeta/adulto) no vale: se reescribe SOLO esa intervención hacia algo natural", async () => {
+    const a = arc(), poem = withKap(scene(0), "Mi alma anhela el horizonte, la puerta del destino, y en esta casa eterna busco mi camino"), natural = "Cierro la puerta de la casa, me agarro un zapato con la mano";
+    const { llm, author, out } = await run([a, poem, patch(natural), ...a.beats.slice(1).map((_, i) => scene(i + 1))], ctx(), undefined, { openingRhyme: true });
+    expect(llm.calls.filter(isPatch)).toHaveLength(1); expect(llm.calls.find(isPatch)!.prompt).toMatch(/suena a poema de adulto/); expect(author.lastDraft!.scenes[0].lines[1].text).toBe(natural); expect(out.stats!.rhymeValid).toBe(true); expect(out.stats!.scenesRegenerated).toBe(0);
+  });
 });
