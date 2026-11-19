@@ -1359,6 +1359,683 @@
      }
     ]
    }
+  },
+  {
+   "id": "E12",
+   "title": "Episodio 12",
+   "request": "Crea el episodio 12, continuando el episodio 11. KAP malinterpreta lo que le dijeron y se lo cuenta a la persona equivocada; el malentendido le complica la vida en casa y en el colegio a la vez, y KAP tiene que decidir cómo enfrentarlo mientras alguien no quiere que lo haga como él piensa.",
+   "ms": 4553232,
+   "peakMb": 13313,
+   "sysPeakMb": 13988,
+   "contextTokens": 2084,
+   "ok": true,
+   "irValid": true,
+   "irValidFirstTry": false,
+   "json": {
+    "attempts": 12,
+    "retries": 3,
+    "jsonErrors": 0,
+    "schemaErrors": 0,
+    "lengthRetries": 0,
+    "memoryDirectiveErrors": 0
+   },
+   "irErrors": [],
+   "usage": {
+    "promptTokens": 56999,
+    "outputTokens": 4521,
+    "totalMs": 4553147.038725001,
+    "loadMs": 15184.287894,
+    "promptMs": 924166.7339999998,
+    "evalMs": 3608971.068
+   },
+   "tokensPerSec": 1.25,
+   "episode": {
+    "scenes": 8,
+    "estimatedSec": 193,
+    "words": 541,
+    "title": "Episodio 12: El malentendido",
+    "logline": "KAP malinterpreta una conversación y se lo cuenta al hermano equivocado, lo que desencadena un conflicto en casa y en el colegio. Ahora debe decidir cómo afrontarlo, mientras su hermano pequeño no quiere que haga lo que él piensa."
+   },
+   "continuity": {
+    "critical": [],
+    "warnings": [
+     "sin-aporte: El episodio no declara nada nuevo para la historia (acontecimiento, hito, hilo, evolución, relación u objeto): cada episodio debe aportar al",
+     "duracion: El episodio dura ≈ 3.7 min y el formato es ≈ 5 min (4–6 min)."
+    ],
+    "info": 7
+   },
+   "narrative": {
+    "error": 0,
+    "warning": 4,
+    "info": 0,
+    "rules": [
+     "personaje-sin-funcion",
+     "cierre-reflexivo"
+    ],
+    "findings": [
+     {
+      "severity": "warning",
+      "rule": "narrativa-personaje-sin-funcion",
+      "text": "«Clase de KAP» se introduce con una sola línea y no vuelve: ¿qué aporta a la historia?",
+      "scene": 4
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-personaje-sin-funcion",
+      "text": "«Alumno 1» se introduce con una sola línea y no vuelve: ¿qué aporta a la historia?",
+      "scene": 5
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-personaje-sin-funcion",
+      "text": "«Alumno 2» se introduce con una sola línea y no vuelve: ¿qué aporta a la historia?",
+      "scene": 5
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-cierre-reflexivo",
+      "text": "El cierre de KAP es una pregunta retórica: «¿Por qué no me quieres escuchar? ¿No entiendes que quiero salir de esto?»: el cierre debería ser un gag, una reacción, una sorpresa o una consecuencia, no una reflexión.",
+      "scene": 7
+     }
+    ],
+    "taggedRules": [
+     "personaje-sin-funcion",
+     "ayuda-externa",
+     "poca-variedad-visual",
+     "cierre-reflexivo"
+    ]
+   },
+   "mode": "arc",
+   "arc": {
+    "title": "Episodio 12: El malentendido",
+    "logline": "KAP malinterpreta una conversación y se lo cuenta al hermano equivocado, lo que desencadena un conflicto en casa y en el colegio. Ahora debe decidir cómo afrontarlo, mientras su hermano pequeño no quiere que haga lo que él piensa.",
+    "assumptions": [
+     "El malentendido surge de una conversación entre KAP y alguien más que no se menciona explícitamente en el episodio anterior.",
+     "El hermano de KAP no está al tanto de la conversación que KAP escuchó, lo que genera un desencuentro."
+    ],
+    "problem": "KAP entiende mal una conversación y le cuenta algo a su hermano pequeño, lo que crea una situación de tensión en casa y una discusión en el colegio. El hermano no quiere que KAP haga lo que él piensa.",
+    "kapWant": "KAP quiere aclarar lo que pasó y evitar más conflictos, pero siente que su hermano no le está escuchando.",
+    "kapChoice": "KAP decide contarle a su hermano lo que escuchó, pensando que así resolvería el malentendido.",
+    "cost": "El hermano de KAP se siente confundido y herido, y KAP pierde la confianza de su hermano por un tiempo.",
+    "consequence": "KAP se enfrenta a una discusión con su hermano en casa, y en el colegio, es objeto de burlas por lo que le dijo a su hermano. Su hermano no le habla durante varios días.",
+    "outcome": "KAP se queda solo en la sala de clases, mirando a su hermano desde la distancia, sin saber qué hacer para arreglar las事物",
+    "setting": {
+     "main": "Calle del barrio",
+     "secondary": [
+      "Guardería",
+      "Escuela primaria"
+     ],
+     "timeOfDay": "Tarde",
+     "transitions": [
+      "más tarde ese día",
+      "al día siguiente"
+     ]
+    },
+    "hook": "El hermano de KAP se aleja de KAP en la escuela, ignorándolo, mientras KAP intenta acercarse con una disculpa.",
+    "extraCharacters": [
+     {
+      "name": "Hermano de KAP",
+      "why": "Es clave para el conflicto y la decisión de KAP."
+     }
+    ],
+    "castActions": [
+     {
+      "name": "Hermano de KAP",
+      "does": "Ignora a KAP en clase y se muestra molesto por lo que le dijo. No quiere que KAP haga lo que él piensa, creyendo que lo está engañando."
+     }
+    ],
+    "usedFromMemory": [
+     "Situación familiar de KAP (padres y drogas)",
+     "Cuidar y proteger a su hermano",
+     "Bullying hacia KAP",
+     "El sueño de KAP: ser millonario gracias a la música"
+    ],
+    "newCharacters": [],
+    "newPlaces": [],
+    "beats": [
+     {
+      "stage": "inicio",
+      "fn": "avanzar-historia",
+      "summary": "KAP está en la calle, mirando al cielo, con una expresión pensativa. Recuerda una conversación que escuchó pero no entiende bien.",
+      "location": "Calle del barrio",
+      "characters": [
+       "KAP"
+      ],
+      "change": "KAP recuerda una conversación que le ha generado dudas.",
+      "why": "Es la continuidad directa del episodio anterior, donde KAP se quedó mirando al niño con el micrófono.",
+      "time": "Tarde",
+      "interior": false,
+      "shot": "general",
+      "visual": "KAP parado en la calle, con la camiseta gris desgastada y el viento moviendo su pelo."
+     },
+     {
+      "stage": "problema",
+      "fn": "revelar-informacion",
+      "summary": "KAP recuerda haber escuchado a alguien decir que su hermano no quiere que siga con su sueño musical. KAP interpreta que eso significa que su hermano lo desaprobaba.",
+      "location": "Calle del barrio",
+      "characters": [
+       "KAP"
+      ],
+      "change": "KAP entiende mal la conversación y cree que su hermano lo desaprueba.",
+      "why": "Esta interpretación es clave para el desarrollo del episodio.",
+      "time": "Tarde",
+      "interior": false,
+      "shot": "medio",
+      "visual": "KAP con la mirada perdida, moviendo las manos como si estuviera hablando con alguien invisible."
+     },
+     {
+      "stage": "escalada",
+      "fn": "desarrollar-personaje",
+      "summary": "KAP decide hablar con su hermano para aclarar la situación. Llega a casa y le pregunta directamente qué piensa de su sueño musical.",
+      "location": "Calle del barrio (hacia la casa)",
+      "characters": [
+       "KAP",
+       "Hermano de KAP"
+      ],
+      "change": "La tensión entre hermanos comienza a crecer.",
+      "why": "Es el primer momento en que KAP actúa sobre su malentendido.",
+      "time": "Tarde",
+      "interior": false,
+      "shot": "general",
+      "visual": "KAP camina hacia la casa con paso firme, mientras el hermano lo observa desde una ventana."
+     },
+     {
+      "stage": "escalada",
+      "fn": "conflicto",
+      "summary": "El hermano de KAP le responde con hostilidad, diciendo que no entiende por qué KAP quiere ser artista cuando tienen tantas cosas que hacer en casa.",
+      "location": "Casa de KAP",
+      "characters": [
+       "KAP",
+       "Hermano de KAP"
+      ],
+      "change": "KAP se siente herido y confundido. Su hermano no lo apoya y le da la espalda.",
+      "why": "Este es el punto de mayor tensión entre hermanos en este episodio.",
+      "time": "Tarde",
+      "interior": true,
+      "shot": "medio",
+      "visual": "KAP mira a su hermano con cara de tristeza, mientras este se gira y se aleja."
+     },
+     {
+      "stage": "decision",
+      "fn": "arco-de-kap",
+      "summary": "KAP decide contar en clase lo que escuchó sobre su hermano, pensando que así podría resolver la situación.",
+      "location": "Escuela primaria",
+      "characters": [
+       "KAP",
+       "Clase de KAP"
+      ],
+      "change": "KAP hace pública la información, lo que genera más problemas.",
+      "why": "Es el punto en que KAP toma una decisión con consecuencias visibles.",
+      "time": "Tarde",
+      "interior": true,
+      "shot": "general",
+      "visual": "KAP parado frente a la clase, con una expresión seria, mientras todos lo miran."
+     },
+     {
+      "stage": "consecuencia",
+      "fn": "preparar-consecuencia",
+      "summary": "La clase se ríe de KAP por lo que dijo sobre su hermano. KAP se siente más solo y desesperado.",
+      "location": "Escuela primaria",
+      "characters": [
+       "KAP",
+       "Clase de KAP"
+      ],
+      "change": "KAP es objeto de burlas y se siente abandonado por su hermano y sus compañeros.",
+      "why": "Esta consecuencia refuerza el conflicto del episodio.",
+      "time": "Tarde",
+      "interior": true,
+      "shot": "primer plano",
+      "visual": "KAP mira al suelo, con la cara roja de vergüenza y frustración."
+     },
+     {
+      "stage": "resolucion",
+      "fn": "desarrollar-personaje",
+      "summary": "KAP intenta disculparse con su hermano en la calle, pero este lo ignora. KAP se queda solo, mirándolo.",
+      "location": "Calle del barrio",
+      "characters": [
+       "KAP",
+       "Hermano de KAP"
+      ],
+      "change": "El conflicto entre hermanos no se resuelve, pero KAP muestra su intención de seguir intentando.",
+      "why": "Refuerza la evolución emocional de KAP y deja abierta la posibilidad de reconciliación en el futuro.",
+      "time": "Tarde",
+      "interior": false,
+      "shot": "general",
+      "visual": "KAP parado frente a su hermano, con una expresión triste, mientras este se aleja sin mirarle."
+     },
+     {
+      "stage": "gancho",
+      "fn": "preparar-gancho",
+      "summary": "El hermano de KAP se aleja y entra en la casa. KAP lo sigue con la mirada, pero no dice nada. La escena termina con él solo en la calle.",
+      "location": "Calle del barrio",
+      "characters": [
+       "KAP"
+      ],
+      "change": "El episodio termina sin resolver el conflicto, dejando abierta la posibilidad de una resolución futura.",
+      "why": "Es el gancho que lleva al próximo episodio y refuerza la tensión emocional.",
+      "time": "Tarde",
+      "interior": false,
+      "shot": "general",
+      "visual": "KAP solo en la calle, con la mirada perdida y una expresión de frustración."
+     }
+    ]
+   },
+   "variety": {
+    "locations": 4,
+    "dominantShare": 0.5,
+    "times": 1,
+    "timeSource": "declarado"
+   },
+   "show": {
+    "realism": {
+     "passed": 5,
+     "total": 9,
+     "failed": [
+      "decision-real",
+      "decision-con-consecuencia",
+      "sin-frases-de-adulto",
+      "final-nace-de-la-accion"
+     ]
+    },
+    "explainLinesKap": 0,
+    "kapLines": 13,
+    "validationLinesSecondary": 0,
+    "secondaryLines": 8,
+    "costVisible": false,
+    "closing": {
+     "problem": true,
+     "reason": "El cierre de KAP es una pregunta retórica: «¿Por qué no me quieres escuchar? ¿No entiendes que quiero salir de esto?»"
+    }
+   },
+   "realismGenerador": {
+    "passed": 5,
+    "total": 9,
+    "failed": [
+     "decision-real",
+     "decision-con-consecuencia",
+     "sin-frases-de-adulto",
+     "final-nace-de-la-accion"
+    ]
+   },
+   "openingRhymeCheck": {
+    "present": true,
+    "rhyme_valid": false,
+    "natural": true,
+    "contextual": true,
+    "rhythm": false,
+    "level": "cercana"
+   },
+   "script": "# Calle del barrio\n[mood: Tarde, exterior]\n[plano: general]\n[expresion: KAP pensativo]\n[mira: KAP izquierda]\n[camara: zoom 1.2]\nKAP se queda parado en el medio de la calle, mirando al cielo con expresión pensativa. Sus ojos se mueven lentamente, como si estuviera escuchando algo que no puede ver.\nKAP: KAP: Yo no entiendo... ¿qué dijo? ¿me dijo que no quiero ser artista? No, no, no...\nKAP: KAP: Si me quiere, si me quiere, ¿por qué me lo dice así? ¿Por qué me lo dice a mí?\n[acto: inicio | KAP está en la calle, mirando al cielo, con una expresión pensativa. Recuerda una conversación que escuchó pero no entiende bien.]\n\n# Calle del barrio\n[mood: Tarde, exterior]\n[plano: medio KAP]\n[expresion: KAP pensativo]\n[gesto: KAP senala]\n[camina: KAP a izquierda]\n[vfx: lluvia]\nKAP camina lentamente por la calle, con la mirada perdida. Sus manos se mueven como si estuviera hablando con alguien invisible.\nKAP: No... no entiendo. ¿Dijo que no quiero ser artista? ¿Por qué? ¿Por qué me dijo eso?\nKAP: Pero... yo solo quiero hacer música. Solo quiero salir de aquí.\n[acto: conflicto | KAP recuerda haber escuchado a alguien decir que su hermano no quiere que siga con su sueño musical. KAP interpreta que eso significa que s…]\n\n# Calle del barrio (hacia la casa)\n[mood: Tarde, exterior]\n[plano: general]\n[camina: KAP a derecha]\n[mira: Hermano izquierda]\n[expresion: Hermano enfadado]\n[gesto: Hermano niega]\nKAP camina hacia la casa con paso firme, mirando hacia el suelo. Sus manos están en los bolsillos de su camiseta desgastada.\nHERMANO DE KAP: ¿Qué haces, KAP? No te quiero ver aquí, ¿entiendes? No me digas nada más.\nKAP: No es lo que piensas. Escuché algo... algo sobre ti y sobre mi sueño. Quiero saber qué significa.\n[acto: desarrollo | KAP decide hablar con su hermano para aclarar la situación. Llega a casa y le pregunta directamente qué piensa de su sueño musical.]\n\n# Casa de KAP\n[mood: Tarde, interior]\n[plano: medio KAP]\nKAP entra en la casa con paso lento, mirando al suelo. Sus manos están en los bolsillos de su camiseta desgastada.\nHERMANO DE KAP: ¿Qué haces, KAP? No te quiero ver aquí, ¿entiendes?\nHERMANO DE KAP: ¿Sueño? ¿Qué sueño? ¿Tú crees que ahora es el momento para eso? Tengo hambre, quiero comida, ¡no una tontería de artista!\nKAP: No es una tontería... yo solo quiero hacer música.\nHERMANO DE KAP: ¡No me digas nada más! No entiendo por qué te empeñas en eso cuando tenemos tantas cosas que hacer en casa.\nKAP mira a su hermano con cara de tristeza, mientras este se gira y se aleja.\n\n# Escuela primaria\n[mood: Tarde, interior]\n[plano: general]\n[expresion: KAP neutral]\n[camara: seguir KAP]\nKAP se para de pie en medio de la clase, con las manos en los bolsillos y una expresión seria en el rostro.\nKAP: Escuché algo... algo que mi hermano me dijo. Me dijo que no quiere que siga con mi sueño musical.\nCLASE DE KAP: La clase se ríe en voz baja, algunos se miran entre sí, otros sonríen con burla.\nKAP: No es lo que piensan... Él no me desaprueba. Solo... solo no entiende.\n[acto: emocional | KAP decide contar en clase lo que escuchó sobre su hermano, pensando que así podría resolver la situación.]\n\n# Escuela primaria\n[mood: Tarde, interior]\n[plano: primer plano KAP]\n[gesto: Alumno senala]\n[camara: zoom 1.2]\nLa clase se ríe en voz baja, algunos se miran entre sí con complicidad, otros sacan sus teléfonos para grabar.\nALUMNO 1: ¡Vaya, KAP! ¿Y ahora qué? ¿También le dices a tu hermano que quiere ser millonario?\nALUMNO 2: ¡Pobre! ¡Ni siquiera se lo merece!\nKAP: No... no es lo que piensan... yo solo... solo quería entender...\n\n# Calle del barrio\n[mood: Tarde, exterior]\n[plano: general]\n[expresion: KAP triste]\n[camina: Hermano a izquierda]\n[vfx: lluvia]\nKAP: Perdón, hermano... no entendí bien lo que escuché. Solo quería ayudarte, no lastimarte.\nHERMANO DE KAP: No me digas nada más. No entiendes nada, ¿verdad?\nKAP: Sé que no soy perfecto, pero... no te quiero ver triste. Solo quería que supieras que yo...\n[acto: resolucion | KAP intenta disculparse con su hermano en la calle, pero este lo ignora. KAP se queda solo, mirándolo.]\n\n# Calle del barrio\n[mood: Tarde, exterior]\n[plano: general]\nKAP se queda parado en el medio de la calle, mirando hacia la casa donde se fue su hermano. Sus manos están en los bolsillos, y su camiseta gris desgastada se mueve con el viento.\nKAP: No entendí bien lo que escuché... Pero no quería que te sintieras solo. Solo quería ayudarte...\nEl hermano de KAP entra a la casa, cerrando la puerta con un portazo. KAP se queda allí, mirando la puerta como si esperara que se abriera de nuevo.\nKAP: ¿Por qué no me quieres escuchar? ¿No entiendes que quiero salir de esto?\nKAP se queda solo en la calle, con la mirada perdida. El viento frío le hace temblar, pero no se mueve.\n[acto: gancho | El hermano de KAP se aleja y entra en la casa. KAP lo sigue con la mirada, pero no dice nada. La escena termina con él solo en la calle.]\n[gancho: El hermano de KAP se aleja de KAP en la escuela, ignorándolo, mientras KAP intenta acercarse con una disculpa.]\n",
+   "gate": {
+    "regenerated": 0,
+    "dropped": 0,
+    "localPatches": 3,
+    "patchKinds": {
+     "rima-invalida": 2,
+     "cierre-reflexivo": 1
+    },
+    "endingRevisions": 0,
+    "varietyRevisions": 0,
+    "codeRepairs": 1,
+    "arcRevisions": 0,
+    "rhymeValid": false,
+    "calls": 12,
+    "outputTokens": 4521,
+    "promptTokens": 56999,
+    "issues": {
+     "rima-invalida": 1,
+     "corta": 4,
+     "repite-frase": 1,
+     "cierre-reflexivo": 1
+    }
+   },
+   "outcome": "KAP se queda solo en la sala de clases, mirando a su hermano desde la distancia, sin saber qué hacer para arreglar las事物",
+   "checks": [
+    {
+     "id": "estructura-6-actos",
+     "ok": true,
+     "note": "faltan: —"
+    },
+    {
+     "id": "gancho",
+     "ok": true
+    },
+    {
+     "id": "protagonista",
+     "ok": true
+    },
+    {
+     "id": "sin-errores-criticos",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "sin-exito-prematuro",
+     "ok": true
+    },
+    {
+     "id": "directivas-validas",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "espanol",
+     "ok": true
+    },
+    {
+     "id": "diversidad-lexica",
+     "ok": true,
+     "note": "0.33"
+    }
+   ],
+   "compliance": 1,
+   "proxy": {
+    "score": 8,
+    "dialogueRatio": 0.68,
+    "locations": 4,
+    "repeatedSentences": 5
+   },
+   "warnings": [
+    "Escena 1: La rima de KAP no vale: los versos son largos o desiguales; hazlos cortos y parejos, fáciles de decir en voz alta.",
+    "Escena 2: Escena corta (48 palabras): puede ser correcto si la acción y la consecuencia están claras.",
+    "Escena 3: Escena corta (54 palabras): puede ser correcto si la acción y la consecuencia están claras.",
+    "Escena 6: Escena corta (52 palabras): puede ser correcto si la acción y la consecuencia están claras.",
+    "Escena 7: Escena corta (39 palabras): puede ser correcto si la acción y la consecuencia están claras.",
+    "Escena 8: El cierre de KAP es una pregunta retórica: «¿Por qué no me quieres escuchar? ¿No entiendes que quiero salir de esto?». El final nace de lo que acaba de ocurrir: una consecuencia inesperada, una decisión, una información nueva, un objeto, una llamada, la reacción de otro personaje o un pequeño gag."
+   ],
+   "draft": {
+    "title": "Episodio 12: El malentendido",
+    "logline": "KAP malinterpreta una conversación y se lo cuenta al hermano equivocado, lo que desencadena un conflicto en casa y en el colegio. Ahora debe decidir cómo afrontarlo, mientras su hermano pequeño no quiere que haga lo que él piensa.",
+    "assumptions": [
+     "El malentendido surge de una conversación entre KAP y alguien más que no se menciona explícitamente en el episodio anterior.",
+     "El hermano de KAP no está al tanto de la conversación que KAP escuchó, lo que genera un desencuentro."
+    ],
+    "scenes": [
+     {
+      "title": "Episodio 12: El malentendido",
+      "location": "Calle del barrio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se queda parado en el medio de la calle, mirando al cielo con expresión pensativa. Sus ojos se mueven lentamente, como si estuviera escuchando algo que no puede ver."
+       },
+       {
+        "speaker": "KAP",
+        "text": "KAP: Yo no entiendo... ¿qué dijo? ¿me dijo que no quiero ser artista? No, no, no..."
+       },
+       {
+        "speaker": "KAP",
+        "text": "KAP: Si me quiere, si me quiere, ¿por qué me lo dice así? ¿Por qué me lo dice a mí?"
+       }
+      ],
+      "memory": [
+       "acto: inicio | KAP está en la calle, mirando al cielo, con una expresión pensativa. Recuerda una conversación que escuchó pero no entiende bien."
+      ],
+      "fn": "avanzar-historia",
+      "stage": "inicio",
+      "shot": "general",
+      "time": "Tarde",
+      "interior": false,
+      "directions": [
+       "plano: general",
+       "expresion: KAP pensativo",
+       "mira: KAP izquierda",
+       "camara: zoom 1.2"
+      ],
+      "change": "KAP recuerda una conversación que le ha generado dudas."
+     },
+     {
+      "title": "Episodio 12: El malentendido",
+      "location": "Calle del barrio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP camina lentamente por la calle, con la mirada perdida. Sus manos se mueven como si estuviera hablando con alguien invisible."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No... no entiendo. ¿Dijo que no quiero ser artista? ¿Por qué? ¿Por qué me dijo eso?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "Pero... yo solo quiero hacer música. Solo quiero salir de aquí."
+       }
+      ],
+      "memory": [
+       "acto: conflicto | KAP recuerda haber escuchado a alguien decir que su hermano no quiere que siga con su sueño musical. KAP interpreta que eso significa que s…"
+      ],
+      "fn": "revelar-informacion",
+      "stage": "problema",
+      "shot": "medio",
+      "time": "Tarde",
+      "interior": false,
+      "directions": [
+       "plano: medio KAP",
+       "expresion: KAP pensativo",
+       "gesto: KAP señala al aire",
+       "camina: KAP a izquierda",
+       "vfx: lluvia ligera"
+      ],
+      "change": "KAP entiende mal la conversación y cree que su hermano lo desaprueba."
+     },
+     {
+      "title": "Episodio 12: El malentendido",
+      "location": "Calle del barrio (hacia la casa)",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP camina hacia la casa con paso firme, mirando hacia el suelo. Sus manos están en los bolsillos de su camiseta desgastada."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¿Qué haces, KAP? No te quiero ver aquí, ¿entiendes? No me digas nada más."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No es lo que piensas. Escuché algo... algo sobre ti y sobre mi sueño. Quiero saber qué significa."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo | KAP decide hablar con su hermano para aclarar la situación. Llega a casa y le pregunta directamente qué piensa de su sueño musical."
+      ],
+      "fn": "desarrollar-personaje",
+      "stage": "escalada",
+      "shot": "general",
+      "time": "Tarde",
+      "interior": false,
+      "directions": [
+       "plano: general",
+       "camina: KAP a derecha",
+       "mira: Hermano de KAP izquierda (desde una ventana)",
+       "expresion: Hermano de KAP enfadado",
+       "gesto: Hermano de KAP niega"
+      ],
+      "change": "La tensión entre hermanos comienza a crecer."
+     },
+     {
+      "title": "Episodio 12: El malentendido",
+      "location": "Casa de KAP",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP entra en la casa con paso lento, mirando al suelo. Sus manos están en los bolsillos de su camiseta desgastada."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¿Qué haces, KAP? No te quiero ver aquí, ¿entiendes?"
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¿Sueño? ¿Qué sueño? ¿Tú crees que ahora es el momento para eso? Tengo hambre, quiero comida, ¡no una tontería de artista!"
+       },
+       {
+        "speaker": "KAP",
+        "text": "No es una tontería... yo solo quiero hacer música."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¡No me digas nada más! No entiendo por qué te empeñas en eso cuando tenemos tantas cosas que hacer en casa."
+       },
+       {
+        "speaker": "",
+        "text": "KAP mira a su hermano con cara de tristeza, mientras este se gira y se aleja."
+       }
+      ],
+      "memory": [],
+      "fn": "conflicto",
+      "stage": "escalada",
+      "shot": "medio",
+      "time": "Tarde",
+      "interior": true,
+      "directions": [
+       "plano: medio KAP"
+      ],
+      "change": "KAP se siente herido y confundido. Su hermano no lo apoya y le da la espalda."
+     },
+     {
+      "title": "Episodio 12: El malentendido",
+      "location": "Escuela primaria",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se para de pie en medio de la clase, con las manos en los bolsillos y una expresión seria en el rostro."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Escuché algo... algo que mi hermano me dijo. Me dijo que no quiere que siga con mi sueño musical."
+       },
+       {
+        "speaker": "Clase de KAP",
+        "text": "La clase se ríe en voz baja, algunos se miran entre sí, otros sonríen con burla."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No es lo que piensan... Él no me desaprueba. Solo... solo no entiende."
+       }
+      ],
+      "memory": [
+       "acto: emocional | KAP decide contar en clase lo que escuchó sobre su hermano, pensando que así podría resolver la situación."
+      ],
+      "fn": "arco-de-kap",
+      "stage": "decision",
+      "shot": "general",
+      "time": "Tarde",
+      "interior": true,
+      "directions": [
+       "plano: general",
+       "expresion: KAP serio",
+       "camara: seguir KAP"
+      ],
+      "change": "KAP hace pública la información, lo que genera más problemas."
+     },
+     {
+      "title": "Episodio 12: El malentendido",
+      "location": "Escuela primaria",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "La clase se ríe en voz baja, algunos se miran entre sí con complicidad, otros sacan sus teléfonos para grabar."
+       },
+       {
+        "speaker": "Alumno 1",
+        "text": "¡Vaya, KAP! ¿Y ahora qué? ¿También le dices a tu hermano que quiere ser millonario?"
+       },
+       {
+        "speaker": "Alumno 2",
+        "text": "¡Pobre! ¡Ni siquiera se lo merece!"
+       },
+       {
+        "speaker": "KAP",
+        "text": "No... no es lo que piensan... yo solo... solo quería entender..."
+       }
+      ],
+      "memory": [],
+      "fn": "preparar-consecuencia",
+      "stage": "consecuencia",
+      "shot": "primer plano",
+      "time": "Tarde",
+      "interior": true,
+      "directions": [
+       "plano: primer plano KAP",
+       "gesto: Alumno 1 señala|risa",
+       "camara: zoom 1.2"
+      ],
+      "change": "KAP es objeto de burlas y se siente abandonado por su hermano y sus compañeros."
+     },
+     {
+      "title": "Episodio 12: El malentendido",
+      "location": "Calle del barrio",
+      "lines": [
+       {
+        "speaker": "KAP",
+        "text": "Perdón, hermano... no entendí bien lo que escuché. Solo quería ayudarte, no lastimarte."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "No me digas nada más. No entiendes nada, ¿verdad?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "Sé que no soy perfecto, pero... no te quiero ver triste. Solo quería que supieras que yo..."
+       }
+      ],
+      "memory": [
+       "acto: resolucion | KAP intenta disculparse con su hermano en la calle, pero este lo ignora. KAP se queda solo, mirándolo."
+      ],
+      "fn": "desarrollar-personaje",
+      "stage": "resolucion",
+      "shot": "general",
+      "time": "Tarde",
+      "interior": false,
+      "directions": [
+       "plano: general",
+       "expresion: KAP triste",
+       "camina: Hermano de KAP a izquierda",
+       "vfx: lluvia ligera"
+      ],
+      "change": "El conflicto entre hermanos no se resuelve, pero KAP muestra su intención de seguir intentando."
+     },
+     {
+      "title": "Episodio 12: El malentendido",
+      "location": "Calle del barrio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se queda parado en el medio de la calle, mirando hacia la casa donde se fue su hermano. Sus manos están en los bolsillos, y su camiseta gris desgastada se mueve con el viento."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No entendí bien lo que escuché... Pero no quería que te sintieras solo. Solo quería ayudarte..."
+       },
+       {
+        "speaker": "",
+        "text": "El hermano de KAP entra a la casa, cerrando la puerta con un portazo. KAP se queda allí, mirando la puerta como si esperara que se abriera de nuevo."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Por qué no me quieres escuchar? ¿No entiendes que quiero salir de esto?"
+       },
+       {
+        "speaker": "",
+        "text": "KAP se queda solo en la calle, con la mirada perdida. El viento frío le hace temblar, pero no se mueve."
+       }
+      ],
+      "memory": [
+       "acto: gancho | El hermano de KAP se aleja y entra en la casa. KAP lo sigue con la mirada, pero no dice nada. La escena termina con él solo en la calle.",
+       "gancho: El hermano de KAP se aleja de KAP en la escuela, ignorándolo, mientras KAP intenta acercarse con una disculpa."
+      ],
+      "fn": "preparar-gancho",
+      "stage": "gancho",
+      "shot": "general",
+      "time": "Tarde",
+      "interior": false,
+      "directions": [
+       "plano: general"
+      ],
+      "change": "El episodio termina sin resolver el conflicto, dejando abierta la posibilidad de una resolución futura."
+     }
+    ]
+   }
   }
  ]
 }
