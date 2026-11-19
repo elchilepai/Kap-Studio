@@ -637,6 +637,679 @@
      }
     ]
    }
+  },
+  {
+   "id": "E8",
+   "title": "Episodio 8",
+   "request": "Crea el episodio 8, continuando el episodio 7. Lo que hizo KAP en el episodio 7 se sabe en el colegio y en casa, y alguien reacciona de una forma que KAP no esperaba.",
+   "ms": 4585919,
+   "peakMb": 12956,
+   "sysPeakMb": 13621,
+   "contextTokens": 1970,
+   "ok": true,
+   "irValid": true,
+   "irValidFirstTry": false,
+   "json": {
+    "attempts": 17,
+    "retries": 7,
+    "jsonErrors": 0,
+    "schemaErrors": 1,
+    "lengthRetries": 0,
+    "memoryDirectiveErrors": 2
+   },
+   "irErrors": [],
+   "usage": {
+    "promptTokens": 73021,
+    "outputTokens": 7162,
+    "totalMs": 4585857.940264,
+    "loadMs": 8131.665325999999,
+    "promptMs": 612405.3189999999,
+    "evalMs": 3962762.518998999
+   },
+   "tokensPerSec": 1.81,
+   "episode": {
+    "scenes": 9,
+    "estimatedSec": 141,
+    "words": 387,
+    "title": "Episodio 8: El video en el colegio",
+    "logline": "El video de KAP en la calle se comparte en redes y llega al colegio, donde su profesora lo ve y reacciona de una manera que KAP no esperaba. La noticia también llega a su casa, donde sus padres, aunque desatentos, tienen una reacción inesperada."
+   },
+   "continuity": {
+    "critical": [],
+    "warnings": [
+     "sin-aporte: El episodio no declara nada nuevo para la historia (acontecimiento, hito, hilo, evolución, relación u objeto): cada episodio debe aportar al",
+     "duracion: El episodio dura ≈ 2.6 min y el formato es ≈ 5 min (4–6 min)."
+    ],
+    "info": 4
+   },
+   "narrative": {
+    "error": 0,
+    "warning": 3,
+    "info": 0,
+    "rules": [
+     "dialogo-duplicado",
+     "personaje-sin-funcion",
+     "cierre-reflexivo"
+    ],
+    "findings": [
+     {
+      "severity": "warning",
+      "rule": "narrativa-dialogo-duplicado",
+      "text": "La frase «No sé si esto es una buena idea…» aparece 2 veces (escenas 3, 7).",
+      "scene": 2
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-personaje-sin-funcion",
+      "text": "«Padres de KAP» se introduce con una sola línea y no vuelve: ¿qué aporta a la historia?",
+      "scene": 7
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-cierre-reflexivo",
+      "text": "El cierre de KAP es una pregunta retórica: «La profesora dijo que tengo algo especial… Pero ¿qué pasa si no sirvo para nada?»: el cierre debería ser un gag, una reacción, una sorpresa o una consecuencia, no una reflexión.",
+      "scene": 8
+     }
+    ],
+    "taggedRules": [
+     "dialogo-duplicado",
+     "personaje-sin-funcion",
+     "ayuda-externa",
+     "cierre-reflexivo"
+    ]
+   },
+   "mode": "arc",
+   "arc": {
+    "title": "Episodio 8: El video en el colegio",
+    "logline": "El video de KAP en la calle se comparte en redes y llega al colegio, donde su profesora lo ve y reacciona de una manera que KAP no esperaba. La noticia también llega a su casa, donde sus padres, aunque desatentos, tienen una reacción inesperada.",
+    "assumptions": [
+     "El video del episodio 7 es viral y ya está en internet",
+     "La profesora del colegio tiene acceso a redes sociales",
+     "Los padres de KAP ven el video en casa, aunque no se les menciona cómo"
+    ],
+    "problem": "El video de KAP en la calle se vuelve viral, llega al colegio y a su casa. KAP espera ser criticado o ignorado, pero alguien reacciona de una forma inesperada.",
+    "kapWant": "KAP quiere que su música sea escuchada, aunque no espera reconocimiento ni comprensión.",
+    "kapChoice": "KAP decide enfrentar la situación, aunque con miedo y dudas, y asiste al colegio el día siguiente para ver cómo reacciona la gente.",
+    "consequence": "La profesora lo ve en el video y lo llama a su oficina, pero no para castigarlo, sino para hablarle de su talento. En casa, sus padres ven el video y se quedan callados por primera vez en mucho tiempo, aunque no muestran interés ni afecto.",
+    "outcome": "KAP se siente confundido: no esperaba comprensión, pero la recibió. Sus padres no reaccionan, lo que le deja más dudas y",
+    "setting": {
+     "main": "Colegio",
+     "secondary": [
+      "Habitación de los padres de KAP",
+      "Espacio público del barrio"
+     ],
+     "timeOfDay": "Mañana",
+     "transitions": [
+      "Al día siguiente",
+      "Más tarde en el colegio",
+      "Finalmente en casa"
+     ]
+    },
+    "hook": "La profesora le pregunta si quiere seguir con su música. KAP no sabe qué responder.",
+    "extraCharacters": [
+     {
+      "name": "Profesora",
+      "why": "Necesaria para la reacción inesperada del episodio"
+     },
+     {
+      "name": "Padres de KAP",
+      "why": "Su reacción en casa es parte del problema"
+     }
+    ],
+    "castActions": [
+     {
+      "name": "Profesora",
+      "does": "Mira el video y decide hablar con KAP sobre su potencial musical"
+     },
+     {
+      "name": "Padres de KAP",
+      "does": "Ven el video y permanecen en silencio, sin reacción"
+     }
+    ],
+    "usedFromMemory": [
+     "Situación familiar de KAP (padres y drogas)",
+     "Bullying hacia KAP",
+     "El sueño de KAP: ser millonario gracias a la música",
+     "KAP en el colegio",
+     "Hermano de KAP"
+    ],
+    "newCharacters": [],
+    "newPlaces": [],
+    "beats": [
+     {
+      "stage": "inicio",
+      "fn": "avanzar-historia",
+      "summary": "KAP despierta temprano, mira el teléfono y ve que el video de su actuación se ha compartido en redes sociales.",
+      "location": "Habitación de Ramiro",
+      "characters": [
+       "KAP"
+      ],
+      "change": "KAP está al tanto del alcance del video",
+      "why": "Es la lógica consecuencia de lo ocurrido en el episodio anterior",
+      "time": "Mañana",
+      "interior": true,
+      "shot": "general",
+      "visual": "KAP mira la pantalla con expresión confundida. Ramiro está sentado a su lado, observando."
+     },
+     {
+      "stage": "problema",
+      "fn": "revelar-informacion",
+      "summary": "KAP recibe un mensaje de la profesora del colegio: '¿Quieres hablar?' KAP no sabe qué responder.",
+      "location": "Habitación de Ramiro",
+      "characters": [
+       "KAP"
+      ],
+      "change": "La profesora reacciona y contacta a KAP directamente",
+      "why": "Es consecuencia del video viral en redes",
+      "time": "Mañana",
+      "interior": true,
+      "shot": "primer plano",
+      "visual": "KAP se queda mirando el mensaje con expresión de duda y nerviosismo."
+     },
+     {
+      "stage": "escalada",
+      "fn": "avanzar-historia",
+      "summary": "KAP se dirige al colegio, lleva su cuaderno y la camiseta gris desgastada. El camino es silencioso y pesado.",
+      "location": "Calle del barrio",
+      "characters": [
+       "KAP"
+      ],
+      "change": "KAP se enfrenta a un nuevo desafío: el colegio",
+      "why": "Es la consecuencia de la profesora contactándolo y su necesidad de actuar",
+      "time": "Mañana",
+      "interior": false,
+      "shot": "medio",
+      "visual": "KAP camina con la cabeza gacha, mirando al suelo."
+     },
+     {
+      "stage": "escalada",
+      "fn": "conflicto",
+      "summary": "En el colegio, los compañeros murmuran y se ríen. Dani lo observa con una expresión entre burla y curiosidad.",
+      "location": "Pasillo del colegio",
+      "characters": [
+       "KAP"
+      ],
+      "change": "Los compañeros reaccionan con desprecio o curiosidad",
+      "why": "Es la lógica consecuencia de su situación en el colegio",
+      "time": "Mañana",
+      "interior": true,
+      "shot": "general",
+      "visual": "KAP camina entre murmullos y risas. Dani lo mira con una sonrisa irónica."
+     },
+     {
+      "stage": "decision",
+      "fn": "arco-de-kap",
+      "summary": "La profesora lo llama a su oficina. KAP entra, nervioso, pero con determinación.",
+      "location": "Oficina de la profesora",
+      "characters": [
+       "KAP",
+       "Profesora"
+      ],
+      "change": "KAP decide enfrentar el problema directamente",
+      "why": "Es una decisión clave en su arco de personaje",
+      "time": "Mañana",
+      "interior": true,
+      "shot": "medio",
+      "visual": "KAP entra a la oficina con paso firme, aunque sus manos temblaban."
+     },
+     {
+      "stage": "decision",
+      "fn": "revelar-informacion",
+      "summary": "La profesora le pregunta si quiere seguir con su música. KAP no sabe qué responder, pero la mira a los ojos.",
+      "location": "Oficina de la profesora",
+      "characters": [
+       "KAP",
+       "Profesora"
+      ],
+      "change": "KAP recibe una oportunidad, aunque incierta",
+      "why": "Es el momento emocional del episodio",
+      "time": "Mañana",
+      "interior": true,
+      "shot": "primer plano",
+      "visual": "KAP mira a la profesora con expresión de duda y esperanza."
+     },
+     {
+      "stage": "consecuencia",
+      "fn": "preparar-consecuencia",
+      "summary": "Al salir de la oficina, KAP se siente dividido: tiene una oportunidad, pero no sabe si puede confiar en ella.",
+      "location": "Pasillo del colegio",
+      "characters": [
+       "KAP"
+      ],
+      "change": "KAP queda en duda sobre el futuro",
+      "why": "Refleja la complejidad de su situación y su personalidad",
+      "time": "Mañana",
+      "interior": true,
+      "shot": "general",
+      "visual": "KAP camina lentamente por el pasillo, mirando al suelo."
+     },
+     {
+      "stage": "resolucion",
+      "fn": "avanzar-historia",
+      "summary": "Al llegar a casa, KAP encuentra a sus padres viendo el video. No dicen nada, pero se quedan callados por primera vez en mucho tiempo.",
+      "location": "Habitación de los padres de KAP",
+      "characters": [
+       "KAP",
+       "Padres de KAP"
+      ],
+      "change": "Los padres reaccionan a la situación, aunque sin afecto",
+      "why": "Refuerza el tema familiar y su impacto en KAP",
+      "time": "Tarde",
+      "interior": true,
+      "shot": "general",
+      "visual": "KAP se queda mirando a sus padres, que ven el video sin decir palabra."
+     },
+     {
+      "stage": "gancho",
+      "fn": "preparar-gancho",
+      "summary": "KAP vuelve a su habitación, cierra la puerta y mira el cuaderno de Ramiro. No sabe qué hacer con la oportunidad que se le acaba de presentar.",
+      "location": "Habitación de Ramiro",
+      "characters": [
+       "KAP"
+      ],
+      "change": "El episodio termina en un punto de incertidumbre para KAP",
+      "why": "Prepara el gancho para el siguiente episodio, donde KAP tendrá que tomar una decisión importante",
+      "time": "Tarde",
+      "interior": true,
+      "shot": "primer plano",
+      "visual": "KAP mira el cuaderno con expresión de duda y determinación."
+     }
+    ]
+   },
+   "variety": {
+    "locations": 5,
+    "dominantShare": 0.33,
+    "times": 2,
+    "timeSource": "declarado"
+   },
+   "openingRhymeCheck": {
+    "present": true,
+    "rhyme_valid": false,
+    "natural": true,
+    "contextual": true,
+    "rhythm": true,
+    "level": "ninguna"
+   },
+   "script": "# Habitación de Ramiro\n[mood: Mañana, interior]\n[plano: general]\n[mira: KAP derecha]\n[camara: zoom 1.2]\nKAP mira la pantalla con expresión confundida.\nKAP: KAP: El video se fue viral, pero no sé si es malo o bueno…\nKAP: KAP: ¿Por qué ahora todos me ven? ¿Y si se burlan más?\n[acto: inicio | KAP despierta temprano, mira el teléfono y ve que el video de su actuación se ha compartido en redes sociales.]\n\n# Habitación de Ramiro\n[mood: Mañana, interior]\n[plano: primer plano KAP]\n[camara: zoom 1.2]\nKAP se queda mirando el mensaje en la pantalla, con las cejas fruncidas y una mano apretando su camiseta.\nKAP: ¿La profesora? ¿Para qué me llama? No entiendo nada…\nKAP: No sé si debo ir… Pero si no voy, ¿qué pasa?\n[acto: conflicto | KAP recibe un mensaje de la profesora del colegio: '¿Quieres hablar?' KAP no sabe qué responder.]\n\n# Calle del barrio\n[mood: Mañana, exterior]\n[plano: medio KAP]\n[camina: KAP a izquierda]\n[expresion: KAP preocupado]\n[vfx: lluvia]\nKAP camina lentamente por la calle del barrio, con la cabeza gacha y las manos metidas en los bolsillos de su camiseta gris desgastada.\nKAP: No sé si esto es una buena idea…\nKAP: ¿Y si me burlan más? ¿Y si no me dejan seguir con mi música?\n[acto: desarrollo | KAP se dirige al colegio, lleva su cuaderno y la camiseta gris desgastada. El camino es silencioso y pesado.]\n\n# Pasillo del colegio\n[mood: Mañana, interior]\n[plano: general]\n[expresion: KAP preocupado]\n[camara: seguir KAP]\n[mira: KAP izquierda]\nKAP camina lentamente por el pasillo del colegio, con la cabeza gacha y las manos metidas en los bolsillos de su camiseta gris desgastada.\nUnos murmullos se escuchan a su alrededor, seguidos de risas cortas y burlonas.\nKAP se detiene un momento, mira a su alrededor con expresión tensa y baja la cabeza nuevamente.\n\n# Oficina de la profesora\n[mood: Mañana, interior]\n[plano: medio KAP]\n[camara: seguir KAP]\nKAP entra a la oficina con paso firme, aunque sus manos temblaban.\nPROFESORA: KAP… no esperaba verte tan pronto. Pero me gustaría hablar contigo sobre lo que vi.\nKAP: ¿Sobre qué? No sé si quiero… No entiendo por qué me llamó.\n[acto: emocional | La profesora lo llama a su oficina. KAP entra, nervioso, pero con determinación.]\n\n# Oficina de la profesora\n[mood: Mañana, interior]\n[plano: primer plano KAP]\n[camara: zoom 1.2]\nLa profesora se sienta detrás de su escritorio, mirando a KAP con seriedad y curiosidad.\nPROFESORA: KAP… tienes algo especial. No solo en lo que cantaste, sino en cómo lo hiciste.\nKAP: No sé si eso es verdad… Yo solo… quiero que me escuchen.\nPROFESORA: Y lo harás. Pero primero, ¿qué quieres hacer con esto?\n\n# Pasillo del colegio\n[mood: Mañana, interior]\n[plano: general]\n[expresion: KAP pensativo]\n[gesto: KAP encoge]\n[camina: KAP a izquierda]\nLa puerta de la oficina se cierra con un suave clic.\nKAP: No sé si esto es una buena idea…\nKAP: ¿Y si me equivoco? ¿Y si no sirvo para nada?\n\n# Habitación de los padres de KAP\n[mood: Tarde, interior]\n[plano: general]\n[expresion: Padres pensativo]\n[camara: seguir KAP]\n[vfx: oscurecer]\nKAP entra en la habitación de sus padres, con la camiseta gris desgastada y el cuaderno en la mano. Se para en la puerta, mirando a su alrededor.\nKAP: ¿Papá? Mamá? ¿Están bien?\nPADRES DE KAP: No responden. Solo miran la pantalla del teléfono, con expresiones vacías.\n[acto: resolucion | Al llegar a casa, KAP encuentra a sus padres viendo el video. No dicen nada, pero se quedan callados por primera vez en mucho tiempo.]\n\n# Habitación de Ramiro\n[mood: Tarde, interior]\n[plano: primer plano KAP]\n[camara: zoom 1.2]\nKAP entra en la habitación de Ramiro, cierra la puerta con cuidado y se para frente al cuaderno que ya no le parece tan pequeño.\nKAP: No sé si esto es una buena idea… ¿Y si me equivoco?\nKAP: La profesora dijo que tengo algo especial… Pero ¿qué pasa si no sirvo para nada?\n[acto: gancho | KAP vuelve a su habitación, cierra la puerta y mira el cuaderno de Ramiro. No sabe qué hacer con la oportunidad que se le acaba de presenta…]\n[gancho: La profesora le pregunta si quiere seguir con su música. KAP no sabe qué responder.]\n",
+   "gate": {
+    "regenerated": 3,
+    "dropped": 0,
+    "localPatches": 3,
+    "patchKinds": {
+     "menciona-memoria": 2,
+     "rima-invalida": 2,
+     "cierre-reflexivo": 1
+    },
+    "endingRevisions": 0,
+    "varietyRevisions": 0,
+    "codeRepairs": 0,
+    "arcRevisions": 0,
+    "rhymeValid": false,
+    "calls": 17,
+    "outputTokens": 7162,
+    "promptTokens": 73021,
+    "issues": {
+     "menciona-memoria": 4,
+     "corta": 12,
+     "rima-invalida": 1,
+     "personaje-no-previsto": 2,
+     "repite-frase": 2,
+     "monologo-relleno": 1,
+     "cierre-reflexivo": 1
+    }
+   },
+   "outcome": "KAP se siente confundido: no esperaba comprensión, pero la recibió. Sus padres no reaccionan, lo que le deja más dudas y",
+   "checks": [
+    {
+     "id": "estructura-6-actos",
+     "ok": true,
+     "note": "faltan: —"
+    },
+    {
+     "id": "gancho",
+     "ok": true
+    },
+    {
+     "id": "protagonista",
+     "ok": true
+    },
+    {
+     "id": "sin-errores-criticos",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "sin-exito-prematuro",
+     "ok": true
+    },
+    {
+     "id": "directivas-validas",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "espanol",
+     "ok": true
+    },
+    {
+     "id": "diversidad-lexica",
+     "ok": true,
+     "note": "0.41"
+    }
+   ],
+   "compliance": 1,
+   "proxy": {
+    "score": 8,
+    "dialogueRatio": 0.61,
+    "locations": 5,
+    "repeatedSentences": 1
+   },
+   "warnings": [
+    "El arco incluía a Ramiro en un beat sin justificarlo: se ha quitado (la memoria no obliga a reutilizarlo).",
+    "El arco incluía a Ramiro en un beat sin justificarlo: se ha quitado (la memoria no obliga a reutilizarlo).",
+    "El arco incluía a Dani en un beat sin justificarlo: se ha quitado (la memoria no obliga a reutilizarlo).",
+    "Escena 1: Escena corta (33 palabras): puede ser correcto si la acción y la consecuencia están claras.",
+    "Escena 1: La rima de KAP no vale: los finales de los versos no riman ni de forma aproximada (viral, bueno, ven, más).",
+    "Escena 2: Escena corta (39 palabras): puede ser correcto si la acción y la consecuencia están claras."
+   ],
+   "draft": {
+    "title": "Episodio 8: El video en el colegio",
+    "logline": "El video de KAP en la calle se comparte en redes y llega al colegio, donde su profesora lo ve y reacciona de una manera que KAP no esperaba. La noticia también llega a su casa, donde sus padres, aunque desatentos, tienen una reacción inesperada.",
+    "assumptions": [
+     "El video del episodio 7 es viral y ya está en internet",
+     "La profesora del colegio tiene acceso a redes sociales",
+     "Los padres de KAP ven el video en casa, aunque no se les menciona cómo"
+    ],
+    "scenes": [
+     {
+      "title": "Episodio 8: El video en el colegio",
+      "location": "Habitación de Ramiro",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP mira la pantalla con expresión confundida."
+       },
+       {
+        "speaker": "KAP",
+        "text": "KAP: El video se fue viral, pero no sé si es malo o bueno…"
+       },
+       {
+        "speaker": "KAP",
+        "text": "KAP: ¿Por qué ahora todos me ven? ¿Y si se burlan más?"
+       }
+      ],
+      "memory": [
+       "acto: inicio | KAP despierta temprano, mira el teléfono y ve que el video de su actuación se ha compartido en redes sociales."
+      ],
+      "fn": "avanzar-historia",
+      "stage": "inicio",
+      "shot": "general",
+      "time": "Mañana",
+      "interior": true,
+      "directions": [
+       "plano: general",
+       "mira: KAP derecha",
+       "camara: zoom 1.2"
+      ],
+      "change": "KAP está al tanto del alcance del video"
+     },
+     {
+      "title": "Episodio 8: El video en el colegio",
+      "location": "Habitación de Ramiro",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se queda mirando el mensaje en la pantalla, con las cejas fruncidas y una mano apretando su camiseta."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿La profesora? ¿Para qué me llama? No entiendo nada…"
+       },
+       {
+        "speaker": "KAP",
+        "text": "No sé si debo ir… Pero si no voy, ¿qué pasa?"
+       }
+      ],
+      "memory": [
+       "acto: conflicto | KAP recibe un mensaje de la profesora del colegio: '¿Quieres hablar?' KAP no sabe qué responder."
+      ],
+      "fn": "revelar-informacion",
+      "stage": "problema",
+      "shot": "primer plano",
+      "time": "Mañana",
+      "interior": true,
+      "directions": [
+       "plano: primer plano KAP",
+       "camara: zoom 1.2"
+      ],
+      "change": "La profesora reacciona y contacta a KAP directamente"
+     },
+     {
+      "title": "Episodio 8: El video en el colegio",
+      "location": "Calle del barrio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP camina lentamente por la calle del barrio, con la cabeza gacha y las manos metidas en los bolsillos de su camiseta gris desgastada."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No sé si esto es una buena idea…"
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Y si me burlan más? ¿Y si no me dejan seguir con mi música?"
+       }
+      ],
+      "memory": [
+       "acto: desarrollo | KAP se dirige al colegio, lleva su cuaderno y la camiseta gris desgastada. El camino es silencioso y pesado."
+      ],
+      "fn": "avanzar-historia",
+      "stage": "escalada",
+      "shot": "medio",
+      "time": "Mañana",
+      "interior": false,
+      "directions": [
+       "plano: medio KAP",
+       "camina: KAP a izquierda",
+       "expresion: KAP preocupado",
+       "vfx: lluvia"
+      ],
+      "change": "KAP se enfrenta a un nuevo desafío: el colegio"
+     },
+     {
+      "title": "Episodio 8: El video en el colegio",
+      "location": "Pasillo del colegio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP camina lentamente por el pasillo del colegio, con la cabeza gacha y las manos metidas en los bolsillos de su camiseta gris desgastada."
+       },
+       {
+        "speaker": "",
+        "text": "Unos murmullos se escuchan a su alrededor, seguidos de risas cortas y burlonas."
+       },
+       {
+        "speaker": "",
+        "text": "KAP se detiene un momento, mira a su alrededor con expresión tensa y baja la cabeza nuevamente."
+       }
+      ],
+      "memory": [],
+      "fn": "conflicto",
+      "stage": "escalada",
+      "shot": "general",
+      "time": "Mañana",
+      "interior": true,
+      "directions": [
+       "plano: general",
+       "expresion: KAP preocupado",
+       "camara: seguir KAP",
+       "mira: KAP izquierda"
+      ],
+      "change": "Los compañeros reaccionan con desprecio o curiosidad"
+     },
+     {
+      "title": "Episodio 8: El video en el colegio",
+      "location": "Oficina de la profesora",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP entra a la oficina con paso firme, aunque sus manos temblaban."
+       },
+       {
+        "speaker": "Profesora",
+        "text": "KAP… no esperaba verte tan pronto. Pero me gustaría hablar contigo sobre lo que vi."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Sobre qué? No sé si quiero… No entiendo por qué me llamó."
+       }
+      ],
+      "memory": [
+       "acto: emocional | La profesora lo llama a su oficina. KAP entra, nervioso, pero con determinación."
+      ],
+      "fn": "arco-de-kap",
+      "stage": "decision",
+      "shot": "medio",
+      "time": "Mañana",
+      "interior": true,
+      "directions": [
+       "plano: medio KAP",
+       "camara: seguir KAP"
+      ],
+      "change": "KAP decide enfrentar el problema directamente"
+     },
+     {
+      "title": "Episodio 8: El video en el colegio",
+      "location": "Oficina de la profesora",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "La profesora se sienta detrás de su escritorio, mirando a KAP con seriedad y curiosidad."
+       },
+       {
+        "speaker": "Profesora",
+        "text": "KAP… tienes algo especial. No solo en lo que cantaste, sino en cómo lo hiciste."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No sé si eso es verdad… Yo solo… quiero que me escuchen."
+       },
+       {
+        "speaker": "Profesora",
+        "text": "Y lo harás. Pero primero, ¿qué quieres hacer con esto?"
+       }
+      ],
+      "memory": [],
+      "fn": "revelar-informacion",
+      "stage": "decision",
+      "shot": "primer plano",
+      "time": "Mañana",
+      "interior": true,
+      "directions": [
+       "plano: primer plano KAP",
+       "camara: zoom 1.2"
+      ],
+      "change": "KAP recibe una oportunidad, aunque incierta"
+     },
+     {
+      "title": "Episodio 8: El video en el colegio",
+      "location": "Pasillo del colegio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "La puerta de la oficina se cierra con un suave clic."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No sé si esto es una buena idea…"
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Y si me equivoco? ¿Y si no sirvo para nada?"
+       }
+      ],
+      "memory": [],
+      "fn": "preparar-consecuencia",
+      "stage": "consecuencia",
+      "shot": "general",
+      "time": "Mañana",
+      "interior": true,
+      "directions": [
+       "plano: general",
+       "expresion: KAP pensativo",
+       "gesto: KAP encoge los hombros",
+       "camina: KAP a izquierda"
+      ],
+      "change": "KAP queda en duda sobre el futuro"
+     },
+     {
+      "title": "Episodio 8: El video en el colegio",
+      "location": "Habitación de los padres de KAP",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP entra en la habitación de sus padres, con la camiseta gris desgastada y el cuaderno en la mano. Se para en la puerta, mirando a su alrededor."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Papá? Mamá? ¿Están bien?"
+       },
+       {
+        "speaker": "Padres de KAP",
+        "text": "No responden. Solo miran la pantalla del teléfono, con expresiones vacías."
+       }
+      ],
+      "memory": [
+       "acto: resolucion | Al llegar a casa, KAP encuentra a sus padres viendo el video. No dicen nada, pero se quedan callados por primera vez en mucho tiempo."
+      ],
+      "fn": "avanzar-historia",
+      "stage": "resolucion",
+      "shot": "general",
+      "time": "Tarde",
+      "interior": true,
+      "directions": [
+       "plano: general",
+       "expresion: Padres de KAP callado|pensativo",
+       "camara: seguir KAP",
+       "vfx: oscurecer"
+      ],
+      "change": "Los padres reaccionan a la situación, aunque sin afecto"
+     },
+     {
+      "title": "Episodio 8: El video en el colegio",
+      "location": "Habitación de Ramiro",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP entra en la habitación de Ramiro, cierra la puerta con cuidado y se para frente al cuaderno que ya no le parece tan pequeño."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No sé si esto es una buena idea… ¿Y si me equivoco?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "La profesora dijo que tengo algo especial… Pero ¿qué pasa si no sirvo para nada?"
+       }
+      ],
+      "memory": [
+       "acto: gancho | KAP vuelve a su habitación, cierra la puerta y mira el cuaderno de Ramiro. No sabe qué hacer con la oportunidad que se le acaba de presenta…",
+       "gancho: La profesora le pregunta si quiere seguir con su música. KAP no sabe qué responder."
+      ],
+      "fn": "preparar-gancho",
+      "stage": "gancho",
+      "shot": "primer plano",
+      "time": "Tarde",
+      "interior": true,
+      "directions": [
+       "plano: primer plano KAP",
+       "camara: zoom 1.2"
+      ],
+      "change": "El episodio termina en un punto de incertidumbre para KAP"
+     }
+    ]
+   }
   }
  ]
 }
