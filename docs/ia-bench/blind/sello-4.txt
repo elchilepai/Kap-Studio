@@ -1,0 +1,2 @@
+sha256(sal+clave)=4e62197abe495bc82a1865f0fad89ea341d89ba7d99e925d2eacb3c742eaffb2
+(La clave se revela solo después del veredicto.)
