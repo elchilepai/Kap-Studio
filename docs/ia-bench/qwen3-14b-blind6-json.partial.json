@@ -598,6 +598,590 @@
      }
     ]
    }
+  },
+  {
+   "id": "E14",
+   "title": "Episodio 14",
+   "request": "Crea el episodio 14, continuando el episodio 13. Lo que KAP hizo con el teléfono tiene consecuencias que no esperaba: alguien cree que KAP hizo algo que no hizo. A la vez, su hermano pequeño necesita que KAP vaya a buscarlo a otro sitio, justo cuando KAP tendría que aclarar el problema.",
+   "ms": 2669968,
+   "peakMb": 10689,
+   "sysPeakMb": 11472,
+   "contextTokens": 2021,
+   "ok": true,
+   "irValid": true,
+   "irValidFirstTry": false,
+   "json": {
+    "attempts": 2,
+    "retries": 1,
+    "jsonErrors": 0,
+    "schemaErrors": 0,
+    "lengthRetries": 1,
+    "memoryDirectiveErrors": 27
+   },
+   "irErrors": [],
+   "usage": {
+    "promptTokens": 7921,
+    "outputTokens": 4041,
+    "totalMs": 2669954.9098300003,
+    "loadMs": 9622.444813,
+    "promptMs": 241436.37300000002,
+    "evalMs": 2418834.109
+   },
+   "tokensPerSec": 1.67,
+   "episode": {
+    "scenes": 18,
+    "estimatedSec": 153,
+    "words": 401,
+    "title": "Episodio 14: El teléfono y la responsabilidad",
+    "logline": "KAP se enfrenta a una nueva complicación por el teléfono, mientras su hermano necesita su ayuda en un momento crítico."
+   },
+   "continuity": {
+    "critical": [],
+    "warnings": [
+     "directiva: Directiva de memoria no entendida: «acto: inicio»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "hito: El hito «Víctima de bullying» ya estaba logrado en ep. 13.",
+     "directiva: Directiva de memoria no entendida: «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "hito: Hito desconocido «Cuidar y proteger a su hermano»: no está en el arco de la serie.",
+     "directiva: Directiva de memoria no entendida: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "hito: Hito desconocido «El sueño de KAP»: no está en el arco de la serie.",
+     "directiva: Directiva de memoria no entendida: «acto: emocional»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "relacion-contradice: KAP y Hermano de KAP ya se conocían (relación «conocidos» desde canon inicial); la escena 6 los presenta como si se conocieran ahora.",
+     "hito: Hito desconocido «Cuidar y proteger a su hermano»: no está en el arco de la serie.",
+     "directiva: Directiva de memoria no entendida: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "relacion-contradice: KAP y Empleado ya se conocían (relación «conocidos» desde ep. 14); la escena 7 los presenta como si se conocieran ahora.",
+     "directiva: Directiva de memoria no entendida: «acto: emocional»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "relacion-contradice: KAP y Hermano de KAP ya se conocían (relación «conocidos» desde canon inicial); la escena 8 los presenta como si se conocieran ahora.",
+     "directiva: Directiva de memoria no entendida: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "relacion-contradice: KAP y Estudiante ya se conocían (relación «conocidos» desde ep. 14); la escena 9 los presenta como si se conocieran ahora.",
+     "directiva: Directiva de memoria no entendida: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "relacion-contradice: KAP y Profesora ya se conocían (relación «conocidos» desde ep. 14); la escena 10 los presenta como si se conocieran ahora.",
+     "directiva: Directiva de memoria no entendida: «acto: resolucion»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: resolucion»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: resolucion»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "relacion-contradice: KAP y Dani ya se conocían (relación «conocidos» desde ep. 2); la escena 16 los presenta como si se conocieran ahora.",
+     "directiva: Directiva de memoria no entendida: «acto: emocional»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "relacion-contradice: KAP y Dani ya se conocían (relación «conocidos» desde ep. 2); la escena 17 los presenta como si se conocieran ahora.",
+     "directiva: Directiva de memoria no entendida: «acto: gancho»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "estructura: Al episodio le faltan: Inicio, Conflicto, Desarrollo, Punto emocional o de tensión, Resolución parcial. Decláralo en el guion con [acto: tip",
+     "duracion: El episodio dura ≈ 2.9 min y el formato es ≈ 5 min (4–6 min)."
+    ],
+    "info": 9
+   },
+   "narrative": {
+    "error": 0,
+    "warning": 5,
+    "info": 3,
+    "rules": [
+     "escenas-fragmentadas",
+     "personaje-sin-funcion",
+     "memoria-no-pedida",
+     "gancho-generico",
+     "cierre-reflexivo"
+    ],
+    "findings": [
+     {
+      "severity": "warning",
+      "rule": "narrativa-escenas-fragmentadas",
+      "text": "18 escenas de ≈ 22 palabras de media: el episodio es una lista de instantes, no escenas con desarrollo."
+     },
+     {
+      "severity": "info",
+      "rule": "narrativa-personaje-sin-funcion",
+      "text": "«Hermano de KAP» (de la memoria) solo hace un cameo de una línea: ¿era necesario traerlo?",
+      "scene": 5
+     },
+     {
+      "severity": "info",
+      "rule": "narrativa-personaje-sin-funcion",
+      "text": "«Dani» (de la memoria) solo hace un cameo de una línea: ¿era necesario traerlo?",
+      "scene": 15
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-memoria-no-pedida",
+      "text": "«Profesora» (de la memoria) aparece en 3 escenas sin que la petición lo pidiera: la memoria sirve para mantener la continuidad, no para reutilizarlo todo.",
+      "scene": 4
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-memoria-no-pedida",
+      "text": "«Hermano de KAP» (de la memoria) aparece en 1 escena sin que la petición lo pidiera: la memoria sirve para mantener la continuidad, no para reutilizarlo todo.",
+      "scene": 5
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-memoria-no-pedida",
+      "text": "«Dani» (de la memoria) aparece en 1 escena sin que la petición lo pidiera: la memoria sirve para mantener la continuidad, no para reutilizarlo todo.",
+      "scene": 15
+     },
+     {
+      "severity": "info",
+      "rule": "narrativa-gancho-generico",
+      "text": "El gancho no se apoya en nada de lo que ocurre en el episodio: «KAP se enfrenta a una decisión que cambiará su vida»."
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-cierre-reflexivo",
+      "text": "El cierre de KAP es una reflexión: «¿Y si alguien me necesita ahora? ¿Y si no contesto?»: el cierre debería ser un gag, una reacción, una sorpresa o una consecuencia, no una reflexión.",
+      "scene": 17
+     }
+    ],
+    "taggedRules": [
+     "escenas-fragmentadas",
+     "personaje-sin-funcion",
+     "gancho-generico",
+     "cierre-reflexivo"
+    ]
+   },
+   "mode": "json",
+   "variety": {
+    "locations": 4,
+    "dominantShare": 0.28,
+    "times": 0,
+    "timeSource": "texto"
+   },
+   "show": {
+    "realism": {
+     "passed": 7,
+     "total": 9,
+     "failed": [
+      "interaccion-sin-validacion",
+      "final-nace-de-la-accion"
+     ]
+    },
+    "explainLinesKap": 0,
+    "kapLines": 9,
+    "validationLinesSecondary": 0,
+    "secondaryLines": 9,
+    "costVisible": true,
+    "closing": {
+     "problem": true,
+     "reason": "El cierre de KAP es una reflexión: «¿Y si alguien me necesita ahora? ¿Y si no contesto?»"
+    }
+   },
+   "openingRhymeCheck": {
+    "present": true,
+    "rhyme_valid": false,
+    "natural": true,
+    "contextual": true,
+    "rhythm": true,
+    "level": "ninguna"
+   },
+   "script": "# Calle de noche\nKAP se queda mirando el teléfono en su bolsillo, con expresión de duda y preocupación. Escucha un ruido a lo lejos, pero no se mueve.\nKAP: ¿Fui yo el que no respondió? ¿Y si me necesitaban?\n[acto: inicio]\n[uso: KAP, teléfono móvil]\n[ubicacion: KAP, Calle de noche]\n\n# Escuela\nEn la escuela, un grupo de estudiantes murmura sobre KAP. Un chico se ríe y lo señala.\nESTUDIANTE: ¿Sabían que KAP no contestó una llamada de emergencia?\n[acto: conflicto]\n[hito-logrado: Víctima de bullying | nuevo rumor]\n[conoce: KAP, Estudiante]\n\n# Guardería\nEn la guardería, el hermano de KAP llora desesperado mientras un empleado lo intenta calmar.\nEMPLEADO: ¡Llamó a su hermano, pero no respondió! ¿Dónde está KAP?\n[acto: conflicto]\n[conoce: KAP, Empleado]\n[hito-logrado: Cuidar y proteger a su hermano | peligro inminente]\n\n# Calle de noche\nKAP se apresura hacia la guardería, con el teléfono aún en su bolsillo. Sus pasos son rápidos y determinados.\nKAP: No puedo dejarlo solo. Tengo que ir.\n[acto: desarrollo]\n[uso: KAP, teléfono móvil]\n[ubicacion: KAP, Calle de noche]\n\n# Escuela\nEn la escuela, un profesor habla con otros padres sobre el rumor que circula.\nPROFESORA: No es cierto. KAP no haría algo así. No es un mal hijo.\n[acto: desarrollo]\n[conoce: KAP, Profesora]\n[hito-logrado: El sueño de KAP | defensa de su honor]\n\n# Guardería\nKAP entra en la guardería y se abraza con su hermano, quien lo mira con esperanza.\nHERMANO DE KAP: ¿Vienes por mí, hermano?\n[acto: emocional]\n[conoce: KAP, Hermano de KAP]\n[hito-logrado: Cuidar y proteger a su hermano | conexión emocional]\n\n# Guardería\nEl empleado habla con KAP, quien escucha con atención.\nEMPLEADO: Tu hermano se puso muy nervioso. ¿Está bien?\n[acto: desarrollo]\n[conoce: KAP, Empleado]\n\n# Guardería\nKAP se sienta junto a su hermano y lo abraza con fuerza.\nKAP: Estoy aquí, hermano. No te dejaré solo.\n[acto: emocional]\n[conoce: KAP, Hermano de KAP]\n\n# Escuela\nUn estudiante encuentra el teléfono de KAP y lo lleva a la profesora.\nESTUDIANTE: Profesora, encontré esto en la calle. ¿Es de KAP?\n[acto: desarrollo]\n[conoce: KAP, Estudiante]\n[uso: KAP, teléfono móvil]\n\n# Escuela\nLa profesora mira el teléfono y lo examina con curiosidad.\nPROFESORA: Este teléfono no es de KAP. ¿Quién lo tiene?\n[acto: desarrollo]\n[conoce: KAP, Profesora]\n[uso: KAP, teléfono móvil]\n\n# Calle de noche\nKAP sale de la guardería y camina hacia la calle, con su hermano durmiendo en sus brazos.\nKAP: No me equivoqué. Solo quería ayudar.\n[acto: resolucion]\n[uso: KAP, teléfono móvil]\n[ubicacion: KAP, Calle de noche]\n\n# Calle de noche\nKAP mira el teléfono en su bolsillo una vez más, con una expresión de determinación.\nKAP: Si era una llamada importante, ya la escucharé.\n[acto: resolucion]\n[uso: KAP, teléfono móvil]\n\n# Casa de KAP\nKAP llega a su casa con su hermano y lo coloca en la cama.\nKAP: Descansa, hermano. Estoy aquí.\n[acto: resolucion]\n[ubicacion: KAP, Casa de KAP]\n\n# Escuela\nLa profesora entrega el teléfono a un policía que llega para investigar.\nPROFESORA: Este teléfono no pertenece a KAP. ¿Quién lo tiene?\n[acto: desarrollo]\n[conoce: KAP, Policía]\n[uso: KAP, teléfono móvil]\n\n# Casa de KAP\nEl teléfono comienza a sonar en la casa de KAP. KAP lo mira con nerviosismo.\nKAP: ¿Quién es?\n[acto: desarrollo]\n[uso: KAP, teléfono móvil]\n\n# Casa de KAP\nKAP contesta la llamada. En el otro extremo está Dani.\nDANI: ¿Por qué no respondiste antes, KAP?\n[acto: conflicto]\n[conoce: KAP, Dani]\n[uso: KAP, teléfono móvil]\n\n# Casa de KAP\nKAP se sienta con el teléfono en la mano, mirando al vacío.\nKAP: No sé qué pasó, pero no fue por maldad.\n[acto: emocional]\n[conoce: KAP, Dani]\n\n# Calle de noche\nKAP camina por la calle, con el teléfono en su bolsillo. Sus ojos miran al cielo.\nKAP: ¿Y si alguien me necesita ahora? ¿Y si no contesto?\n[acto: gancho]\n[gancho: KAP se enfrenta a una decisión que cambiará su vida]\n",
+   "gate": {
+    "regenerated": 0,
+    "dropped": 0,
+    "localPatches": 0,
+    "patchKinds": {},
+    "endingRevisions": 0,
+    "varietyRevisions": 0,
+    "codeRepairs": 0,
+    "arcRevisions": 0,
+    "calls": 2,
+    "outputTokens": 4041,
+    "promptTokens": 7921,
+    "issues": {}
+   },
+   "checks": [
+    {
+     "id": "estructura-6-actos",
+     "ok": false,
+     "note": "faltan: inicio, conflicto, desarrollo, emocional, resolucion"
+    },
+    {
+     "id": "gancho",
+     "ok": true
+    },
+    {
+     "id": "protagonista",
+     "ok": true
+    },
+    {
+     "id": "sin-errores-criticos",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "sin-exito-prematuro",
+     "ok": true
+    },
+    {
+     "id": "directivas-validas",
+     "ok": false,
+     "note": "«acto: inicio»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto» | «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»"
+    },
+    {
+     "id": "espanol",
+     "ok": true
+    },
+    {
+     "id": "diversidad-lexica",
+     "ok": true,
+     "note": "0.41"
+    }
+   ],
+   "compliance": 0.75,
+   "proxy": {
+    "score": 10,
+    "dialogueRatio": 0.5,
+    "locations": 4,
+    "repeatedSentences": 0
+   },
+   "warnings": [
+    "Directiva de memoria inválida del modelo: «acto: inicio»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+    "Directiva de memoria inválida del modelo: «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+    "Directiva de memoria inválida del modelo: «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+    "Directiva de memoria inválida del modelo: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+    "Directiva de memoria inválida del modelo: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+    "Directiva de memoria inválida del modelo: «acto: emocional»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»"
+   ],
+   "draft": {
+    "title": "Episodio 14: El teléfono y la responsabilidad",
+    "logline": "KAP se enfrenta a una nueva complicación por el teléfono, mientras su hermano necesita su ayuda en un momento crítico.",
+    "assumptions": [],
+    "scenes": [
+     {
+      "title": "La llamada que no contestó",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se queda mirando el teléfono en su bolsillo, con expresión de duda y preocupación. Escucha un ruido a lo lejos, pero no se mueve."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Fui yo el que no respondió? ¿Y si me necesitaban?"
+       }
+      ],
+      "memory": [
+       "acto: inicio",
+       "uso: KAP, teléfono móvil",
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "El rumor en la escuela",
+      "location": "Escuela",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "En la escuela, un grupo de estudiantes murmura sobre KAP. Un chico se ríe y lo señala."
+       },
+       {
+        "speaker": "Estudiante",
+        "text": "¿Sabían que KAP no contestó una llamada de emergencia?"
+       }
+      ],
+      "memory": [
+       "acto: conflicto",
+       "hito-logrado: Víctima de bullying | nuevo rumor",
+       "conoce: KAP, Estudiante"
+      ]
+     },
+     {
+      "title": "El hermano en peligro",
+      "location": "Guardería",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "En la guardería, el hermano de KAP llora desesperado mientras un empleado lo intenta calmar."
+       },
+       {
+        "speaker": "Empleado",
+        "text": "¡Llamó a su hermano, pero no respondió! ¿Dónde está KAP?"
+       }
+      ],
+      "memory": [
+       "acto: conflicto",
+       "conoce: KAP, Empleado",
+       "hito-logrado: Cuidar y proteger a su hermano | peligro inminente"
+      ]
+     },
+     {
+      "title": "La decisión de KAP",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se apresura hacia la guardería, con el teléfono aún en su bolsillo. Sus pasos son rápidos y determinados."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No puedo dejarlo solo. Tengo que ir."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo",
+       "uso: KAP, teléfono móvil",
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "La noticia en la escuela",
+      "location": "Escuela",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "En la escuela, un profesor habla con otros padres sobre el rumor que circula."
+       },
+       {
+        "speaker": "Profesora",
+        "text": "No es cierto. KAP no haría algo así. No es un mal hijo."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo",
+       "conoce: KAP, Profesora",
+       "hito-logrado: El sueño de KAP | defensa de su honor"
+      ]
+     },
+     {
+      "title": "El hermano en la guardería",
+      "location": "Guardería",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP entra en la guardería y se abraza con su hermano, quien lo mira con esperanza."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¿Vienes por mí, hermano?"
+       }
+      ],
+      "memory": [
+       "acto: emocional",
+       "conoce: KAP, Hermano de KAP",
+       "hito-logrado: Cuidar y proteger a su hermano | conexión emocional"
+      ]
+     },
+     {
+      "title": "La conversación con el empleado",
+      "location": "Guardería",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "El empleado habla con KAP, quien escucha con atención."
+       },
+       {
+        "speaker": "Empleado",
+        "text": "Tu hermano se puso muy nervioso. ¿Está bien?"
+       }
+      ],
+      "memory": [
+       "acto: desarrollo",
+       "conoce: KAP, Empleado"
+      ]
+     },
+     {
+      "title": "KAP habla con su hermano",
+      "location": "Guardería",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se sienta junto a su hermano y lo abraza con fuerza."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Estoy aquí, hermano. No te dejaré solo."
+       }
+      ],
+      "memory": [
+       "acto: emocional",
+       "conoce: KAP, Hermano de KAP"
+      ]
+     },
+     {
+      "title": "El teléfono en la escuela",
+      "location": "Escuela",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Un estudiante encuentra el teléfono de KAP y lo lleva a la profesora."
+       },
+       {
+        "speaker": "Estudiante",
+        "text": "Profesora, encontré esto en la calle. ¿Es de KAP?"
+       }
+      ],
+      "memory": [
+       "acto: desarrollo",
+       "conoce: KAP, Estudiante",
+       "uso: KAP, teléfono móvil"
+      ]
+     },
+     {
+      "title": "La profesora investiga",
+      "location": "Escuela",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "La profesora mira el teléfono y lo examina con curiosidad."
+       },
+       {
+        "speaker": "Profesora",
+        "text": "Este teléfono no es de KAP. ¿Quién lo tiene?"
+       }
+      ],
+      "memory": [
+       "acto: desarrollo",
+       "conoce: KAP, Profesora",
+       "uso: KAP, teléfono móvil"
+      ]
+     },
+     {
+      "title": "KAP vuelve a la calle",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP sale de la guardería y camina hacia la calle, con su hermano durmiendo en sus brazos."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No me equivoqué. Solo quería ayudar."
+       }
+      ],
+      "memory": [
+       "acto: resolucion",
+       "uso: KAP, teléfono móvil",
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "La llamada que no fue contestada",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP mira el teléfono en su bolsillo una vez más, con una expresión de determinación."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Si era una llamada importante, ya la escucharé."
+       }
+      ],
+      "memory": [
+       "acto: resolucion",
+       "uso: KAP, teléfono móvil"
+      ]
+     },
+     {
+      "title": "El hermano en casa",
+      "location": "Casa de KAP",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP llega a su casa con su hermano y lo coloca en la cama."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Descansa, hermano. Estoy aquí."
+       }
+      ],
+      "memory": [
+       "acto: resolucion",
+       "ubicacion: KAP, Casa de KAP"
+      ]
+     },
+     {
+      "title": "El teléfono en la escuela",
+      "location": "Escuela",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "La profesora entrega el teléfono a un policía que llega para investigar."
+       },
+       {
+        "speaker": "Profesora",
+        "text": "Este teléfono no pertenece a KAP. ¿Quién lo tiene?"
+       }
+      ],
+      "memory": [
+       "acto: desarrollo",
+       "conoce: KAP, Policía",
+       "uso: KAP, teléfono móvil"
+      ]
+     },
+     {
+      "title": "KAP recibe una llamada",
+      "location": "Casa de KAP",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "El teléfono comienza a sonar en la casa de KAP. KAP lo mira con nerviosismo."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Quién es?"
+       }
+      ],
+      "memory": [
+       "acto: desarrollo",
+       "uso: KAP, teléfono móvil"
+      ]
+     },
+     {
+      "title": "La llamada de Dani",
+      "location": "Casa de KAP",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP contesta la llamada. En el otro extremo está Dani."
+       },
+       {
+        "speaker": "Dani",
+        "text": "¿Por qué no respondiste antes, KAP?"
+       }
+      ],
+      "memory": [
+       "acto: conflicto",
+       "conoce: KAP, Dani",
+       "uso: KAP, teléfono móvil"
+      ]
+     },
+     {
+      "title": "KAP y Dani se enfrentan",
+      "location": "Casa de KAP",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se sienta con el teléfono en la mano, mirando al vacío."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No sé qué pasó, pero no fue por maldad."
+       }
+      ],
+      "memory": [
+       "acto: emocional",
+       "conoce: KAP, Dani"
+      ]
+     },
+     {
+      "title": "El gancho",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP camina por la calle, con el teléfono en su bolsillo. Sus ojos miran al cielo."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Y si alguien me necesita ahora? ¿Y si no contesto?"
+       }
+      ],
+      "memory": [
+       "acto: gancho",
+       "gancho: KAP se enfrenta a una decisión que cambiará su vida"
+      ]
+     }
+    ]
+   }
   }
  ]
 }
