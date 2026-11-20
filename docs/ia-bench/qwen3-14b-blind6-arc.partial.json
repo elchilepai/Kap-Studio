@@ -3,7 +3,7 @@
   "model": "qwen3:14b",
   "phase": "blind6",
   "ctx": 8192,
-  "date": "2026-11-19T22:57:19.410Z",
+  "date": "2026-11-20T00:35:27.501Z",
   "cpus": 4,
   "ramGb": 16,
   "host": "CPU sin GPU"
@@ -703,6 +703,679 @@
        "camina: KAP, a izquierda"
       ],
       "change": "Se deja una pregunta abierta sobre quién está buscando a KAP y por qué."
+     }
+    ]
+   }
+  },
+  {
+   "id": "E14",
+   "title": "Episodio 14",
+   "request": "Crea el episodio 14, continuando el episodio 13. Lo que KAP hizo con el teléfono tiene consecuencias que no esperaba: alguien cree que KAP hizo algo que no hizo. A la vez, su hermano pequeño necesita que KAP vaya a buscarlo a otro sitio, justo cuando KAP tendría que aclarar el problema.",
+   "ms": 4895567,
+   "peakMb": 12890,
+   "sysPeakMb": 13650,
+   "contextTokens": 2058,
+   "ok": true,
+   "irValid": true,
+   "irValidFirstTry": false,
+   "json": {
+    "attempts": 14,
+    "retries": 5,
+    "jsonErrors": 0,
+    "schemaErrors": 0,
+    "lengthRetries": 0,
+    "memoryDirectiveErrors": 0
+   },
+   "irErrors": [],
+   "usage": {
+    "promptTokens": 81510,
+    "outputTokens": 5515,
+    "totalMs": 4895459.888228999,
+    "loadMs": 8353.668118999998,
+    "promptMs": 1028965.0149989999,
+    "evalMs": 3853605.474
+   },
+   "tokensPerSec": 1.43,
+   "episode": {
+    "scenes": 8,
+    "estimatedSec": 152,
+    "words": 421,
+    "title": "Episodio 14: La llamada equivocada",
+    "logline": "KAP intenta aclarar una llamada misteriosa, pero un malentendido lo pone en el centro de un conflicto. Mientras, su hermano pequeño lo necesita en otro lugar, y no puede elegir entre dos problemas."
+   },
+   "continuity": {
+    "critical": [],
+    "warnings": [
+     "sin-aporte: El episodio no declara nada nuevo para la historia (acontecimiento, hito, hilo, evolución, relación u objeto): cada episodio debe aportar al",
+     "duracion: El episodio dura ≈ 2.9 min y el formato es ≈ 5 min (4–6 min)."
+    ],
+    "info": 1
+   },
+   "narrative": {
+    "error": 0,
+    "warning": 1,
+    "info": 0,
+    "rules": [
+     "cierre-reflexivo"
+    ],
+    "findings": [
+     {
+      "severity": "warning",
+      "rule": "narrativa-cierre-reflexivo",
+      "text": "El cierre de KAP es una pregunta retórica: «KAP: ¡No entiendo! ¿Por qué nadie me escucha?»: el cierre debería ser un gag, una reacción, una sorpresa o una consecuencia, no una reflexión.",
+      "scene": 7
+     }
+    ],
+    "taggedRules": [
+     "poca-variedad-visual",
+     "cierre-reflexivo"
+    ]
+   },
+   "mode": "arc",
+   "arc": {
+    "title": "Episodio 14: La llamada equivocada",
+    "logline": "KAP intenta aclarar una llamada misteriosa, pero un malentendido lo pone en el centro de un conflicto. Mientras, su hermano pequeño lo necesita en otro lugar, y no puede elegir entre dos problemas.",
+    "assumptions": [
+     "El teléfono de KAP tiene grabaciones o información que otros pueden usar para acusarlo",
+     "El hermano pequeño de KAP vive en una guardería y sus cuidadores pueden contactar a KAP urgentemente"
+    ],
+    "problem": "KAP recibe una llamada misteriosa que lo involucra en un conflicto que no provocó. Al mismo tiempo, su hermano pequeño necesita que lo vaya a buscar, lo que lo pone en una situación de tensión y dilema.",
+    "kapWant": "Aclarar la confusión con la llamada y ayudar a su hermano",
+    "kapChoice": "Decide seguir al hermano primero, dejando la llamada sin resolver",
+    "cost": "Pierde una oportunidad de aclarar el malentendido y se siente frustrado por no poder hacer ambas cosas",
+    "consequence": "La persona en la llamada se siente traicionada, y KAP recibe un mensaje acusador que lo confunde aún más",
+    "outcome": "KAP se queda en una situación incómoda, con una pregunta sin respuesta y el peso de una acusación injusta",
+    "setting": {
+     "main": "Calle de noche",
+     "secondary": [
+      "Guardería",
+      "Teléfono"
+     ],
+     "timeOfDay": "Noche",
+     "transitions": [
+      "más tarde esa noche",
+      "al día siguiente"
+     ]
+    },
+    "hook": "KAP recibe un mensaje en el teléfono que dice: 'No te creemos. ¿Dónde estabas?'",
+    "extraCharacters": [
+     {
+      "name": "Hermano de KAP",
+      "why": "KAP debe ir a buscarlo a la guardería, lo que lo distrae del problema de la llamada"
+     }
+    ],
+    "castActions": [
+     {
+      "name": "Hermano de KAP",
+      "does": "Llama a KAP desde la guardería diciendo que se perdió y necesita ayuda"
+     },
+     {
+      "name": "Persona en el teléfono",
+      "does": "Le dice a KAP que lo están buscando por algo que no hizo, lo que confunde a KAP"
+     }
+    ],
+    "usedFromMemory": [
+     "teléfono",
+     "KAP",
+     "Hermano de KAP",
+     "Dani",
+     "Situación familiar de KAP (padres y drogas)",
+     "Cuidar y proteger a su hermano"
+    ],
+    "newCharacters": [],
+    "newPlaces": [],
+    "behaviorBeats": [
+     {
+      "beat": 0,
+      "kind": "impulso",
+      "does": "KAP se da la vuelta y empieza a caminar hacia la oscuridad de la calle, como si el peso de la pregunta de Dani ya lo estuviera arrastrando lejos de allí",
+      "provokes": "La persona en el teléfono sigue hablando, pero KAP ya no escucha"
+     },
+     {
+      "beat": 2,
+      "kind": "malentendido",
+      "does": "KAP interpreta que la llamada es una trampa o una broma, y decide ignorarla para no meterse en problemas",
+      "provokes": "La persona en el otro extremo se siente ofendida"
+     },
+     {
+      "beat": 5,
+      "kind": "interrupcion",
+      "does": "El teléfono suena de nuevo, pero KAP lo ignora por completo, prefiriendo correr hacia la guardería para ayudar a su hermano",
+      "provokes": "La persona en el teléfono colga"
+     },
+     {
+      "beat": 7,
+      "kind": "esconder",
+      "does": "KAP oculta el teléfono en su bolsillo cuando llega a la guardería, temiendo que alguien lo encuentre y lo use contra él",
+      "provokes": "El hermano pequeño lo mira con confianza, sin saber lo que KAP oculta"
+     }
+    ],
+    "beats": [
+     {
+      "stage": "inicio",
+      "fn": "avanzar-historia",
+      "summary": "KAP camina lentamente por la calle, aún con el teléfono en la mano, cuando recibe una llamada de un número desconocido. La persona al otro lado le pregunta si es él.",
+      "location": "Calle de noche",
+      "characters": [
+       "KAP"
+      ],
+      "change": "La llamada se inicia, pero KAP no está seguro de quién la hace",
+      "why": "Es el momento natural tras el final del episodio anterior",
+      "time": "noche",
+      "interior": false,
+      "shot": "general",
+      "visual": "KAP camina solo en la calle, con la luz de la luna iluminando su silueta"
+     },
+     {
+      "stage": "problema",
+      "fn": "conflicto",
+      "summary": "La persona al teléfono le dice: '¿Eres tú, KAP? Estamos buscándote'. KAP se queda inmóvil, sin saber si es una broma o algo más serio.",
+      "location": "Calle de noche",
+      "characters": [
+       "KAP"
+      ],
+      "change": "KAP se siente confundido y temeroso por la llamada",
+      "why": "La situación se vuelve incómoda, y KAP no sabe qué hacer",
+      "time": "noche",
+      "interior": false,
+      "shot": "medio",
+      "visual": "KAP mira el teléfono con expresión de duda"
+     },
+     {
+      "stage": "escalada",
+      "fn": "revelar-informacion",
+      "summary": "KAP intenta ignorar la llamada, pero su hermano pequeño aparece en la calle y le dice que se perdió. KAP debe elegir entre seguir la llamada o ayudar a su hermano.",
+      "location": "Calle de noche",
+      "characters": [
+       "KAP",
+       "Hermano de KAP"
+      ],
+      "change": "KAP se enfrenta a una decisión urgente",
+      "why": "El hermano pequeño lo necesita y no puede dejarlo solo",
+      "time": "noche",
+      "interior": false,
+      "shot": "primer plano",
+      "visual": "El hermano pequeño mira a KAP con ojos preocupados"
+     },
+     {
+      "stage": "decision",
+      "fn": "arco-de-kap",
+      "summary": "KAP decide ir con su hermano, ignorando la llamada. Se disculpa rápidamente con la persona al teléfono y colga.",
+      "location": "Calle de noche",
+      "characters": [
+       "KAP",
+       "Hermano de KAP"
+      ],
+      "change": "KAP elige ayudar a su hermano, dejando la llamada sin resolver",
+      "why": "KAP prioriza a su hermano sobre cualquier misterio que la llamada pueda representar",
+      "time": "noche",
+      "interior": false,
+      "shot": "general",
+      "visual": "KAP camina con su hermano, alejándose de la calle"
+     },
+     {
+      "stage": "consecuencia",
+      "fn": "preparar-consecuencia",
+      "summary": "La persona en el teléfono se siente traicionada y colga. KAP empieza a sentirse culpable por haber ignorado la llamada.",
+      "location": "Calle de noche",
+      "characters": [
+       "KAP"
+      ],
+      "change": "La llamada termina abruptamente, dejando a KAP con más preguntas que antes",
+      "why": "La acción de KAP tiene una consecuencia inesperada",
+      "time": "noche",
+      "interior": false,
+      "shot": "medio",
+      "visual": "KAP mira el teléfono con expresión de culpa"
+     },
+     {
+      "stage": "resolucion",
+      "fn": "desarrollar-personaje",
+      "summary": "Llegan a la guardería, y KAP oculta el teléfono en su bolsillo, temiendo que alguien lo encuentre. El hermano pequeño no sabe de lo que se trata, pero confía en él.",
+      "location": "Guardería",
+      "characters": [
+       "KAP",
+       "Hermano de KAP"
+      ],
+      "change": "KAP oculta el teléfono y se siente más responsable por su hermano",
+      "why": "Es un momento de crecimiento para KAP",
+      "time": "noche",
+      "interior": true,
+      "shot": "general",
+      "visual": "KAP camina con su hermano hacia la guardería"
+     },
+     {
+      "stage": "gancho",
+      "fn": "preparar-gancho",
+      "summary": "Más tarde esa noche, KAP recibe un mensaje en el teléfono: 'No te creemos. ¿Dónde estabas?' KAP lo mira con expresión de desesperanza.",
+      "location": "Guardería",
+      "characters": [
+       "KAP"
+      ],
+      "change": "KAP recibe una acusación sin fundamento, dejando el episodio en una situación tensa",
+      "why": "Es un buen punto para cerrar el episodio y preparar una nueva tensión",
+      "time": "noche",
+      "interior": true,
+      "shot": "primer plano",
+      "visual": "KAP mira el mensaje con expresión de desesperanza"
+     },
+     {
+      "stage": "gancho",
+      "fn": "preparar-gancho",
+      "summary": "El episodio termina con KAP en una situación incómoda, cargado con preguntas sin respuesta y el peso de una acusación injusta.",
+      "location": "Guardería",
+      "characters": [
+       "KAP"
+      ],
+      "change": "KAP queda en una posición emocionalmente vulnerable al final del episodio",
+      "why": "Es un buen punto para cerrar el episodio y preparar una nueva tensión",
+      "time": "noche",
+      "interior": true,
+      "shot": "general",
+      "visual": "KAP se queda solo en la guardería, mirando el teléfono"
+     }
+    ]
+   },
+   "variety": {
+    "locations": 2,
+    "dominantShare": 0.63,
+    "times": 1,
+    "timeSource": "declarado"
+   },
+   "show": {
+    "realism": {
+     "passed": 8,
+     "total": 9,
+     "failed": [
+      "final-nace-de-la-accion"
+     ]
+    },
+    "explainLinesKap": 0,
+    "kapLines": 12,
+    "validationLinesSecondary": 0,
+    "secondaryLines": 4,
+    "costVisible": true,
+    "closing": {
+     "problem": true,
+     "reason": "El cierre de KAP es una pregunta retórica: «KAP: ¡No entiendo! ¿Por qué nadie me escucha?»"
+    }
+   },
+   "realismGenerador": {
+    "passed": 10,
+    "total": 12,
+    "failed": [
+     "final-nace-de-la-accion",
+     "estados-variados"
+    ]
+   },
+   "openingRhymeCheck": {
+    "present": true,
+    "rhyme_valid": true,
+    "natural": true,
+    "contextual": true,
+    "rhythm": true,
+    "level": "cercana"
+   },
+   "script": "# Calle de noche\n[mood: noche, exterior]\n[plano: general]\n[expresion: KAP pensativo]\n[camara: seguir KAP]\nKAP camina lentamente por la calle, con el teléfono en la mano, mirando hacia el suelo.\nKAP: KAP: (mira el teléfono, luego al suelo) ¿Y si es un detective? No me siento buscado…\nKAP: KAP: (se para en seco, mira a ambos lados de la calle) ¿Eres tú, KAP? Pues no te veo…\nKAP: KAP: (se encoge de hombros, con el teléfono pegado al oído) No sé si es un error… o una mala broma.\n[acto: inicio | KAP camina lentamente por la calle, aún con el teléfono en la mano, cuando recibe una llamada de un número desconocido. La persona al otro …]\n\n# Calle de noche\n[mood: noche, exterior]\n[plano: medio KAP]\n[mira: KAP izquierda]\n[camara: seguir KAP]\nKAP: ¿Eres tú, KAP? Estamos buscándote.\nKAP: ¿Quién… quién habla?\nKAP se queda inmóvil, con el teléfono apretado contra su oreja. Sus ojos van de un lado a otro, como si esperara que alguien más apareciera para ayudarlo.\n[acto: conflicto | La persona al teléfono le dice: '¿Eres tú, KAP? Estamos buscándote'. KAP se queda inmóvil, sin saber si es una broma o algo más serio.]\n\n# Calle de noche\n[mood: noche, exterior]\n[plano: primer plano KAP]\n[gesto: Hermano senala]\n[camara: seguir KAP]\nKAP se para en medio de la calle, con el teléfono aún en la mano. Sus ojos están fijos en la pantalla, pero su mente está en otro lugar.\nKAP: No… no puedo estar metido en esto. No ahora.\nHERMANO DE KAP: ¡KAP! ¡KAP, por favor! Me perdí y no sé cómo volver a la guardería.\nKAP mira al hermano con expresión entre preocupada y culpable. El niño tiene la camiseta de la guardería arrugada y una bolsa de plástico en la mano.\nKAP: ¿Estás solo? ¿No hay nadie más contigo?\n[acto: desarrollo | KAP intenta ignorar la llamada, pero su hermano pequeño aparece en la calle y le dice que se perdió. KAP debe elegir entre seguir la llamad…]\n\n# Calle de noche\n[mood: noche, exterior]\n[plano: general]\nKAP camina con su hermano, alejándose de la calle. El niño corre a su lado, agarrando su mano con fuerza.\nHERMANO DE KAP: ¡Vamos, rápido! No quiero quedarme aquí otra vez.\nKAP: Sí, ya vamos. Lo siento, no pude responder antes…\n[acto: emocional | KAP decide ir con su hermano, ignorando la llamada. Se disculpa rápidamente con la persona al teléfono y colga.]\n\n# Calle de noche\n[mood: noche, exterior]\n[plano: medio KAP]\n[camara: zoom 1.2]\nKAP mira la pantalla del teléfono, ahora en silencio. Su mano temblorosa lo sostiene como si fuera una carga.\nKAP: No… no quise ignorarla. Solo… solo no sabía qué hacer.\nLa pantalla del teléfono se apaga lentamente, como si el mundo alrededor de KAP se estuviera muriendo con ella.\n\n# Guardería\n[mood: noche, interior]\n[plano: general]\n[expresion: KAP preocupado]\n[gesto: KAP encoge]\n[camina: KAP a derecha]\nHERMANO DE KAP: ¡Kap! ¿Ya llegamos? Estoy cansado.\nKAP: Sí, ya casi estamos. Solo un poquito más.\nHERMANO DE KAP: ¿Y el teléfono? ¿Por qué lo ocultaste?\nKAP: No es nada, solo… algo que no quiero que nadie vea.\n[acto: resolucion | Llegan a la guardería, y KAP oculta el teléfono en su bolsillo, temiendo que alguien lo encuentre. El hermano pequeño no sabe de lo que se …]\n\n# Guardería\n[mood: noche, interior]\n[plano: primer plano KAP]\n[camara: zoom 1.2]\nKAP se detiene frente a la puerta de la guardería, con el teléfono en su bolsillo. Sus manos están quietas, pero sus ojos no dejan de mirar hacia el suelo.\nEl hermano pequeño tira de su mano con suavidad. KAP, sin responder, saca el teléfono de su bolsillo y lo enciende.\nLa pantalla se ilumina. Un mensaje aparece: 'No te creemos. ¿Dónde estabas?' KAP lo mira con expresión de desesperanza.\n[acto: gancho | Más tarde esa noche, KAP recibe un mensaje en el teléfono: 'No te creemos. ¿Dónde estabas?' KAP lo mira con expresión de desesperanza.]\n\n# Guardería\n[mood: noche, interior]\n[plano: general]\n[vfx: oscurecer]\n(acción) KAP tira el teléfono al suelo con fuerza y se sienta en el suelo, respirando pesado.\nKAP: KAP: ¡No entiendo! ¿Por qué nadie me escucha?\nEl hermano pequeño de KAP entra corriendo y se para frente a él, mirándolo con curiosidad.\n[gancho: KAP recibe un mensaje en el teléfono que dice: 'No te creemos. ¿Dónde estabas?']\n",
+   "gate": {
+    "regenerated": 2,
+    "dropped": 0,
+    "localPatches": 3,
+    "patchKinds": {
+     "explica-emocion": 1,
+     "rima-invalida": 1,
+     "coste-ausente": 1,
+     "emocion-repetida": 1,
+     "cierre-reflexivo": 1
+    },
+    "endingRevisions": 0,
+    "varietyRevisions": 0,
+    "codeRepairs": 0,
+    "arcRevisions": 0,
+    "rhymeValid": true,
+    "calls": 14,
+    "outputTokens": 5515,
+    "promptTokens": 81510,
+    "issues": {
+     "corta": 8,
+     "explica-emocion": 1,
+     "rima-invalida": 1,
+     "personaje-no-previsto": 1,
+     "coste-ausente": 1,
+     "repite-escena": 1,
+     "repite-frase": 1,
+     "sin-cambio": 1,
+     "emocion-repetida": 1,
+     "cierre-reflexivo": 1
+    }
+   },
+   "outcome": "KAP se queda en una situación incómoda, con una pregunta sin respuesta y el peso de una acusación injusta",
+   "checks": [
+    {
+     "id": "estructura-6-actos",
+     "ok": true,
+     "note": "faltan: —"
+    },
+    {
+     "id": "gancho",
+     "ok": true
+    },
+    {
+     "id": "protagonista",
+     "ok": true
+    },
+    {
+     "id": "sin-errores-criticos",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "sin-exito-prematuro",
+     "ok": true
+    },
+    {
+     "id": "directivas-validas",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "espanol",
+     "ok": true
+    },
+    {
+     "id": "diversidad-lexica",
+     "ok": true,
+     "note": "0.43"
+    }
+   ],
+   "compliance": 1,
+   "proxy": {
+    "score": 8,
+    "dialogueRatio": 0.57,
+    "locations": 2,
+    "repeatedSentences": 0
+   },
+   "warnings": [
+    "El arco incluía a Persona en el teléfono en un beat sin justificarlo: se ha quitado (la memoria no obliga a reutilizarlo).",
+    "El arco incluía a Persona en el teléfono en un beat sin justificarlo: se ha quitado (la memoria no obliga a reutilizarlo).",
+    "El arco incluía a Persona en el teléfono en un beat sin justificarlo: se ha quitado (la memoria no obliga a reutilizarlo).",
+    "El arco incluía a Persona en el teléfono en un beat sin justificarlo: se ha quitado (la memoria no obliga a reutilizarlo).",
+    "Escena 2: Escena corta (36 palabras): puede ser correcto si la acción y la consecuencia están claras.",
+    "Escena 4: Escena corta (37 palabras): puede ser correcto si la acción y la consecuencia están claras."
+   ],
+   "draft": {
+    "title": "Episodio 14: La llamada equivocada",
+    "logline": "KAP intenta aclarar una llamada misteriosa, pero un malentendido lo pone en el centro de un conflicto. Mientras, su hermano pequeño lo necesita en otro lugar, y no puede elegir entre dos problemas.",
+    "assumptions": [
+     "El teléfono de KAP tiene grabaciones o información que otros pueden usar para acusarlo",
+     "El hermano pequeño de KAP vive en una guardería y sus cuidadores pueden contactar a KAP urgentemente"
+    ],
+    "scenes": [
+     {
+      "title": "Episodio 14: La llamada equivocada",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP camina lentamente por la calle, con el teléfono en la mano, mirando hacia el suelo."
+       },
+       {
+        "speaker": "KAP",
+        "text": "KAP: (mira el teléfono, luego al suelo) ¿Y si es un detective? No me siento buscado…"
+       },
+       {
+        "speaker": "KAP",
+        "text": "KAP: (se para en seco, mira a ambos lados de la calle) ¿Eres tú, KAP? Pues no te veo…"
+       },
+       {
+        "speaker": "KAP",
+        "text": "KAP: (se encoge de hombros, con el teléfono pegado al oído) No sé si es un error… o una mala broma."
+       }
+      ],
+      "memory": [
+       "acto: inicio | KAP camina lentamente por la calle, aún con el teléfono en la mano, cuando recibe una llamada de un número desconocido. La persona al otro …"
+      ],
+      "fn": "avanzar-historia",
+      "stage": "inicio",
+      "shot": "general",
+      "time": "noche",
+      "interior": false,
+      "directions": [
+       "plano: general",
+       "expresion: KAP pensativo",
+       "camara: seguir KAP"
+      ],
+      "change": "La llamada se inicia, pero KAP no está seguro de quién la hace"
+     },
+     {
+      "title": "Episodio 14: La llamada equivocada",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "KAP",
+        "text": "¿Eres tú, KAP? Estamos buscándote."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Quién… quién habla?"
+       },
+       {
+        "speaker": "",
+        "text": "KAP se queda inmóvil, con el teléfono apretado contra su oreja. Sus ojos van de un lado a otro, como si esperara que alguien más apareciera para ayudarlo."
+       }
+      ],
+      "memory": [
+       "acto: conflicto | La persona al teléfono le dice: '¿Eres tú, KAP? Estamos buscándote'. KAP se queda inmóvil, sin saber si es una broma o algo más serio."
+      ],
+      "fn": "conflicto",
+      "stage": "problema",
+      "shot": "medio",
+      "time": "noche",
+      "interior": false,
+      "directions": [
+       "plano: medio KAP",
+       "mira: KAP izquierda",
+       "camara: seguir KAP"
+      ],
+      "change": "KAP se siente confundido y temeroso por la llamada"
+     },
+     {
+      "title": "Episodio 14: La llamada equivocada",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se para en medio de la calle, con el teléfono aún en la mano. Sus ojos están fijos en la pantalla, pero su mente está en otro lugar."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No… no puedo estar metido en esto. No ahora."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¡KAP! ¡KAP, por favor! Me perdí y no sé cómo volver a la guardería."
+       },
+       {
+        "speaker": "",
+        "text": "KAP mira al hermano con expresión entre preocupada y culpable. El niño tiene la camiseta de la guardería arrugada y una bolsa de plástico en la mano."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Estás solo? ¿No hay nadie más contigo?"
+       }
+      ],
+      "memory": [
+       "acto: desarrollo | KAP intenta ignorar la llamada, pero su hermano pequeño aparece en la calle y le dice que se perdió. KAP debe elegir entre seguir la llamad…"
+      ],
+      "fn": "revelar-informacion",
+      "stage": "escalada",
+      "shot": "primer plano",
+      "time": "noche",
+      "interior": false,
+      "directions": [
+       "plano: primer plano KAP",
+       "gesto: Hermano de KAP señala a KAP con la mano",
+       "camara: seguir KAP"
+      ],
+      "change": "KAP se enfrenta a una decisión urgente"
+     },
+     {
+      "title": "Episodio 14: La llamada equivocada",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP camina con su hermano, alejándose de la calle. El niño corre a su lado, agarrando su mano con fuerza."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¡Vamos, rápido! No quiero quedarme aquí otra vez."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Sí, ya vamos. Lo siento, no pude responder antes…"
+       }
+      ],
+      "memory": [
+       "acto: emocional | KAP decide ir con su hermano, ignorando la llamada. Se disculpa rápidamente con la persona al teléfono y colga."
+      ],
+      "fn": "arco-de-kap",
+      "stage": "decision",
+      "shot": "general",
+      "time": "noche",
+      "interior": false,
+      "directions": [
+       "plano: general"
+      ],
+      "change": "KAP elige ayudar a su hermano, dejando la llamada sin resolver"
+     },
+     {
+      "title": "Episodio 14: La llamada equivocada",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP mira la pantalla del teléfono, ahora en silencio. Su mano temblorosa lo sostiene como si fuera una carga."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No… no quise ignorarla. Solo… solo no sabía qué hacer."
+       },
+       {
+        "speaker": "",
+        "text": "La pantalla del teléfono se apaga lentamente, como si el mundo alrededor de KAP se estuviera muriendo con ella."
+       }
+      ],
+      "memory": [],
+      "fn": "preparar-consecuencia",
+      "stage": "consecuencia",
+      "shot": "medio",
+      "time": "noche",
+      "interior": false,
+      "directions": [
+       "plano: medio KAP",
+       "camara: zoom 1.2"
+      ],
+      "change": "La llamada termina abruptamente, dejando a KAP con más preguntas que antes"
+     },
+     {
+      "title": "Episodio 14: La llamada equivocada",
+      "location": "Guardería",
+      "lines": [
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¡Kap! ¿Ya llegamos? Estoy cansado."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Sí, ya casi estamos. Solo un poquito más."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¿Y el teléfono? ¿Por qué lo ocultaste?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "No es nada, solo… algo que no quiero que nadie vea."
+       }
+      ],
+      "memory": [
+       "acto: resolucion | Llegan a la guardería, y KAP oculta el teléfono en su bolsillo, temiendo que alguien lo encuentre. El hermano pequeño no sabe de lo que se …"
+      ],
+      "fn": "desarrollar-personaje",
+      "stage": "resolucion",
+      "shot": "general",
+      "time": "noche",
+      "interior": true,
+      "directions": [
+       "plano: general",
+       "expresion: KAP preocupado",
+       "gesto: KAP encoge ligeramente al ocultar el teléfono",
+       "camina: KAP a derecha con su hermano"
+      ],
+      "change": "KAP oculta el teléfono y se siente más responsable por su hermano"
+     },
+     {
+      "title": "Episodio 14: La llamada equivocada",
+      "location": "Guardería",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se detiene frente a la puerta de la guardería, con el teléfono en su bolsillo. Sus manos están quietas, pero sus ojos no dejan de mirar hacia el suelo."
+       },
+       {
+        "speaker": "",
+        "text": "El hermano pequeño tira de su mano con suavidad. KAP, sin responder, saca el teléfono de su bolsillo y lo enciende."
+       },
+       {
+        "speaker": "",
+        "text": "La pantalla se ilumina. Un mensaje aparece: 'No te creemos. ¿Dónde estabas?' KAP lo mira con expresión de desesperanza."
+       }
+      ],
+      "memory": [
+       "acto: gancho | Más tarde esa noche, KAP recibe un mensaje en el teléfono: 'No te creemos. ¿Dónde estabas?' KAP lo mira con expresión de desesperanza."
+      ],
+      "fn": "preparar-gancho",
+      "stage": "gancho",
+      "shot": "primer plano",
+      "time": "noche",
+      "interior": true,
+      "directions": [
+       "plano: primer plano KAP",
+       "camara: zoom 1.2"
+      ],
+      "change": "KAP recibe una acusación sin fundamento, dejando el episodio en una situación tensa"
+     },
+     {
+      "title": "Episodio 14: La llamada equivocada",
+      "location": "Guardería",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "(acción) KAP tira el teléfono al suelo con fuerza y se sienta en el suelo, respirando pesado."
+       },
+       {
+        "speaker": "KAP",
+        "text": "KAP: ¡No entiendo! ¿Por qué nadie me escucha?"
+       },
+       {
+        "speaker": "",
+        "text": "El hermano pequeño de KAP entra corriendo y se para frente a él, mirándolo con curiosidad."
+       }
+      ],
+      "memory": [
+       "gancho: KAP recibe un mensaje en el teléfono que dice: 'No te creemos. ¿Dónde estabas?'"
+      ],
+      "fn": "preparar-gancho",
+      "stage": "gancho",
+      "shot": "general",
+      "time": "noche",
+      "interior": true,
+      "directions": [
+       "plano: general",
+       "vfx: oscurecer"
+      ],
+      "change": "KAP queda en una posición emocionalmente vulnerable al final del episodio"
      }
     ]
    }
