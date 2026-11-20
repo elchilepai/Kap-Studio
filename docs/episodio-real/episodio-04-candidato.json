@@ -355,14 +355,35 @@
   }
  ],
  "continuity": {
+  "nota": "Corregido: la primera medición se hizo antes de derivar las escenas de la producción (artefacto del script de medición, no del generador). Medición válida tras irToScenes.",
   "critical": [],
   "warnings": [
-   "estructura: Al episodio le faltan: Inicio, Conflicto, Desarrollo, Punto emocional o de tensión, Resolución parcial, Gancho para el siguiente episodio. Decláralo en el guion con [acto: tipo | texto] o [gancho: texto]; un episodio de la serie necesita inicio, conflicto, desarrollo, punto emocional, resolución parcial y gancho.",
-   "sin-aporte: El episodio no declara nada nuevo para la historia (acontecimiento, hito, hilo, evolución, relación u objeto): cada episodio debe aportar algo nuevo.",
-   "protagonista: KAP no aparece en el episodio: la serie trata sobre su vida.",
-   "duracion: El episodio dura ≈ 0 min y el formato es ≈ 5 min (4–6 min)."
+   "duracion: El episodio dura ≈ 3 min y el formato es ≈ 5 min (4–6 min)."
   ],
-  "info": 1
+  "info": [
+   "arranque-discontinuo (KAP: Calle de noche → Calle cerca de la casa)",
+   "arranque-discontinuo (Hermano de KAP: Guardería → Calle cerca de la casa)",
+   "nuevo: llave (se pierde)",
+   "gancho-previo del ep. 3 sin retomar (Dani tiene el cuaderno de KAP)",
+   "nuevo: lugar «Calle cerca de la casa»",
+   "nuevo: lugar «Interior de la casa y calle cerca de la casa»"
+  ],
+  "narrativa": [
+   "narrativa-dialogo-duplicado",
+   "narrativa-escena-sin-aporte"
+  ],
+  "memoriaPropuesta": {
+   "cambios": 6,
+   "actos": [
+    "inicio",
+    "conflicto",
+    "desarrollo",
+    "emocional",
+    "resolucion",
+    "gancho",
+    "gancho"
+   ]
+  }
  },
  "script": "# Calle cerca de la casa\n[mood: Tarde, exterior]\n[plano: general]\nKAP camina con el cuaderno bajo el brazo, mirando a su alrededor con nerviosismo.\nKAP: Mierda, me la perdí... otra vez.\nHERMANO DE KAP: ¡Kap! ¡Ya te estuve esperando! ¡Vamos, entra ya! ¡Tengo hambre!\nKAP: No puedo entrar si no tengo la llave... y no la tengo. ¿Dónde la dejé?\nHERMANO DE KAP: ¿Y qué? ¡Yo ya estoy aquí! ¡Vamos, abre ya!\nKAP: ¡No puedo! ¡Está perdida!\nKAP: Me la perdí... otra vez. ¿Por qué siempre me pasa esto?\nHERMANO DE KAP: ¿Qué te pasa, Kap? ¡Entra ya!\n[acto: inicio | KAP regresa del colegio y se da cuenta de que ha perdido la llave. Mientras busca, su hermano pequeño lo espera en la puerta con prisa.]\n\n# Puerta de casa\n[mood: Tarde, exterior]\n[plano: medio KAP]\n[gesto: Hermano senala]\n[camara: seguir KAP]\nHERMANO DE KAP: ¡Kap! ¡Ya te estuve esperando! ¡Vamos, entra ya! ¡Tengo hambre!\nKAP: No puedo entrar si no tengo la llave... y no la tengo.\nHERMANO DE KAP: ¿Dónde está? ¡Tengo hambre, Kap! ¡Por favor!\n[acto: conflicto | El hermano de KAP le grita desde la puerta: '¡Vamos, entra ya! ¡Tengo hambre!'. KAP se siente presionado y nervioso.]\n\n# Puerta de casa\n[mood: Tarde, exterior]\n[plano: primer plano KAP]\n[camara: seguir KAP]\nKAP mira a su hermano con nerviosismo y luego se concentra en la palanca de madera que yace en el suelo.\nHERMANO DE KAP: ¡Kap! ¡No te quedes ahí, por favor! ¡Tengo hambre!\nKAP: ¡Ya voy, ya voy! Solo… solo dame un segundo.\n[acto: desarrollo | KAP mira alrededor y ve una palanca de madera en el suelo. Sin pensar, la toma y intenta forzar la puerta.]\n\n# Puerta de casa\n[mood: Tarde, exterior]\n[plano: general]\nKAP empuja con fuerza la palanca, haciendo que la puerta se mueva un poco. El hermano de KAP se enoja y levanta la voz.\nHERMANO DE KAP: ¡No hagas eso, Kap! ¡Vas a romperla!\nKAP: ¡No tengo tiempo para esto! Tengo que entrar, ya.\nHERMANO DE KAP: ¡Ya te dije que no puedes! ¡Está rota, Kap! ¡Está rota!\n[acto: emocional | KAP empuja con fuerza, ignorando las advertencias de su hermano. La puerta cede un poco.]\n\n# Puerta de casa\n[mood: Tarde, exterior]\n[plano: general]\nHERMANO DE KAP: ¡Ya entré! ¡No me esperes más, Kap! Tengo hambre y quiero comer.\nKAP: ¡No te vayas! ¡No puedes entrar solo! ¡La puerta está dañada!\nHERMANO DE KAP: ¡No me digas qué hacer! Sé lo que quiero.\n[pierde: KAP, llave]\n\n# Calle cerca de la casa\n[mood: Tarde, exterior]\n[plano: general]\n[camara: seguir KAP]\nKAP se queda afuera con la palanca en la mano, mirando la puerta dañada y tratando de pensar qué hacer a continuación.\nKAP: No… no puedo dejarlo solo. No sé si está bien…\nKAP: Mierda, mierda, mierda… esto no era parte del plan.\n[acto: resolucion | KAP se queda fuera, intentando arreglar el daño que causó, mientras su hermano entra a la casa y comienza a buscarlo.]\n\n# Interior de la casa y calle cerca de la casa\n[mood: Tarde, exterior]\n[plano: general]\n(acción) El hermano de KAP camina por el interior de la casa, revisando cada rincón con mirada insistente, mientras escucha el eco de sus propios pasos.\nHERMANO DE KAP: ¡Kap! ¿Dónde estás? ¡Tengo hambre! ¡No me dejes solo!\nFuera, KAP se queda parado frente a la puerta dañada, mirando el suelo con la palanca en la mano y suspirando con frustración.\nHERMANO DE KAP: ¡Kap! ¡Voy a buscar comida! ¡No te vayas, por favor!\nEl hermano pequeño corre hacia la cocina mientras KAP se queda mirando la puerta con la palanca en la mano, sin saber qué hacer.\n[acto: gancho | El hermano de KAP entra a la casa y empieza a buscar a KAP, quien sigue afuera intentando arreglar el daño que causó.]\n\n# Interior de la casa y calle cerca de la casa\n[mood: Tarde, exterior]\n[plano: general]\nHERMANO DE KAP: ¡Kap! ¿Estás ahí? ¡No me dejes solo, por favor! ¡Tengo hambre y quiero comer!\nHERMANO DE KAP: ¡Voy a buscar algo para comer! ¡No te vayas, Kap! ¡No me dejes solo en la casa!\nHERMANO DE KAP: ¡Kap! ¡Voy a la cocina! ¡Te espero allí!\nKAP: No… no te vayas. No sé si está bien que estés solo.\nHERMANO DE KAP: ¡Voy rápido! ¡Te espero!\nKAP: Mierda… mierda… esto no iba a pasar. No puedo dejarlo solo. No sé qué hacer.\nKAP: ¡No te vayas! ¡Espera, por favor! ¡No me dejes solo!\nHERMANO DE KAP: ¡Voy, voy! ¡No te preocupes!\n[gancho: El hermano de KAP entra a la casa solo y comienza a buscar a KAP, quien sigue afuera intentando arreglar el daño que causó.]\n",
  "render": {
