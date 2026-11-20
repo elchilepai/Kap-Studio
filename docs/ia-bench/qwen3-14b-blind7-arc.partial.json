@@ -707,6 +707,17 @@
      }
     ]
    }
+  },
+  {
+   "id": "E17",
+   "title": "Episodio 17",
+   "request": "Crea el episodio 17, continuando el episodio 16. KAP sospecha que quizá se equivocó al acusar al niño nuevo e intenta arreglarlo con un plan suyo; pero el niño no quiere verlo y lo que Dani ha hecho con la historia de las páginas cambia lo que KAP había planeado.",
+   "ms": 6144705,
+   "peakMb": 13182,
+   "sysPeakMb": 13842,
+   "contextTokens": 2024,
+   "error": "El modelo no devolvió la escena 8 válida tras 1 intento(s): El modelo no respondió: Ollama respondió 500: {\"error\":\"model runner has unexpectedly stopped, this may be due to resource limitations or an internal error, check ollama server logs for details\"}",
+   "ok": false
   }
  ]
 }

@@ -1,0 +1,727 @@
+{
+ "meta": {
+  "model": "qwen3:14b",
+  "phase": "blind7",
+  "ctx": 8192,
+  "date": "2026-11-20T11:41:17.486Z",
+  "cpus": 4,
+  "ramGb": 16,
+  "host": "CPU sin GPU"
+ },
+ "loaded": {
+  "sizeMb": 10609,
+  "context": 8192
+ },
+ "totalMin": 199.4,
+ "results": [
+  {
+   "id": "E16",
+   "title": "Episodio 16",
+   "request": "Crea el episodio 16, a continuación del episodio 3. KAP presta su cuaderno de rimas a un niño nuevo del barrio para que lo mire un momento. Cuando se lo devuelve, faltan dos páginas y KAP, sin pensarlo, lo acusa delante de los demás. El niño no contesta y se marcha, y Dani, que lo ha oído todo, decide aprovecharlo.",
+   "ms": 5810177,
+   "peakMb": 12694,
+   "sysPeakMb": 13347,
+   "contextTokens": 1925,
+   "ok": true,
+   "irValid": true,
+   "irValidFirstTry": false,
+   "json": {
+    "attempts": 10,
+    "retries": 1,
+    "jsonErrors": 0,
+    "schemaErrors": 0,
+    "lengthRetries": 0,
+    "memoryDirectiveErrors": 6
+   },
+   "irErrors": [],
+   "usage": {
+    "promptTokens": 69234,
+    "outputTokens": 5313,
+    "totalMs": 5810063.393519,
+    "loadMs": 9650.049708999999,
+    "promptMs": 1597165.295998,
+    "evalMs": 4200389.6280000005
+   },
+   "tokensPerSec": 1.26,
+   "episode": {
+    "scenes": 8,
+    "estimatedSec": 164,
+    "words": 458,
+    "title": "El cuaderno perdido",
+    "logline": "KAP presta su cuaderno de rimas a un niño nuevo del barrio, pero cuando se lo devuelve, faltan dos páginas. Sin pensar, acusa al niño delante de los demás, quien se marcha sin defenderse. Dani, que escuchó todo, aprovecha la situación para humillar aún más a K"
+   },
+   "continuity": {
+    "critical": [],
+    "warnings": [
+     "duracion: El episodio dura ≈ 3.2 min y el formato es ≈ 5 min (4–6 min)."
+    ],
+    "info": 7
+   },
+   "narrative": {
+    "error": 0,
+    "warning": 1,
+    "info": 1,
+    "rules": [
+     "personaje-sin-funcion"
+    ],
+    "findings": [
+     {
+      "severity": "warning",
+      "rule": "narrativa-personaje-sin-funcion",
+      "text": "«Otro niño» se introduce con una sola línea y no vuelve: ¿qué aporta a la historia?",
+      "scene": 2
+     },
+     {
+      "severity": "info",
+      "rule": "narrativa-personaje-sin-funcion",
+      "text": "«Dani» (de la memoria) solo hace un cameo de una línea: ¿era necesario traerlo?",
+      "scene": 3
+     }
+    ],
+    "taggedRules": [
+     "personaje-sin-funcion",
+     "poca-variedad-visual"
+    ]
+   },
+   "mode": "arc",
+   "arc": {
+    "title": "El cuaderno perdido",
+    "logline": "KAP presta su cuaderno de rimas a un niño nuevo del barrio, pero cuando se lo devuelve, faltan dos páginas. Sin pensar, acusa al niño delante de los demás, quien se marcha sin defenderse. Dani, que escuchó todo, aprovecha la situación para humillar aún más a K",
+    "assumptions": [
+     "El niño nuevo del barrio no tiene nombre establecido en el contexto, por lo que se le asignará un nombre temporal para su desarrollo en este episodio."
+    ],
+    "problem": "KAP confía en un niño nuevo del barrio y le presta su cuaderno de rimas, pero al recuperarlo, faltan dos páginas. KAP, sin pensar, acusa al niño delante de otros, lo que provoca que se vaya sin defenderse. Dani escucha esto y aprovecha la oportunidad para acusar a KAP de ser un mentiroso.",
+    "kapWant": "Proteger su cuaderno, recuperar las páginas perdidas y mantener su integridad como alguien que valora sus sueños.",
+    "kapChoice": "KAP acusa al niño nuevo delante de otros sin escuchar su versión, lo que genera un conflicto inmediato y un daño a su reputación.",
+    "cost": "Pierde la confianza de los demás por actuar impulsivamente, y el niño nuevo se aleja de él, dejando abierta una oportunidad de conexión que podría haber sido valiosa.",
+    "consequence": "El niño nuevo se marcha sin defenderse, y Dani aprovecha para acusar a KAP de mentiroso delante de todos, lo que le genera más desprecio y aislamiento.",
+    "outcome": "KAP se siente atrapado entre su culpa por haber acusado al niño y el daño hecho por Dani. El episodio termina con KAP en",
+    "setting": {
+     "main": "Calle de noche",
+     "secondary": [
+      "Plaza del barrio",
+      "Entrada de la guardería"
+     ],
+     "timeOfDay": "Noche",
+     "transitions": [
+      "De la calle a la plaza del barrio",
+      "De la plaza a la entrada de la guardería"
+     ]
+    },
+    "hook": "El niño nuevo del barrio mira hacia atrás una vez que se aleja, como si supiera algo que KAP no entiende aún.",
+    "extraCharacters": [
+     {
+      "name": "Luis",
+      "why": "Es el niño nuevo del barrio que KAP le prestó su cuaderno."
+     }
+    ],
+    "castActions": [
+     {
+      "name": "Luis",
+      "does": "Devuelve el cuaderno de KAP, pero faltan dos páginas. Se queda callado y se va sin defenderse."
+     },
+     {
+      "name": "Dani",
+      "does": "Escucha la acusación de KAP y aprovecha para humillarle delante de otros, diciendo que KAP es un mentiroso."
+     }
+    ],
+    "usedFromMemory": [
+     "KAP lleva camiseta gris desgastada",
+     "Dani acosa a KAP",
+     "KAP acusa a otros sin pensarlo",
+     "Situación familiar de KAP (padres y drogas)",
+     "Cuidar y proteger a su hermano",
+     "Bullying hacia KAP"
+    ],
+    "newCharacters": [
+     {
+      "name": "Luis",
+      "function": "Es el niño nuevo del barrio que KAP le prestó su cuaderno. Su silencio y huida generan un conflicto en este episodio."
+     }
+    ],
+    "newPlaces": [
+     "Plaza del barrio"
+    ],
+    "behaviorBeats": [
+     {
+      "beat": 2,
+      "kind": "error",
+      "does": "KAP acusa a Luis delante de otros sin haber investigado.",
+      "provokes": "Luis se queda callado y se marcha, lo que genera un conflicto entre KAP y el niño."
+     },
+     {
+      "beat": 4,
+      "kind": "malentendido",
+      "does": "KAP interpreta la reacción de Luis como una confesión de culpa.",
+      "provokes": "Luis no responde, lo que confirma a KAP en su error y aumenta su frustración."
+     },
+     {
+      "beat": 6,
+      "kind": "improvisacion",
+      "does": "KAP intenta recuperar el cuaderno de Luis antes de que se vaya, pero se equivoca al intentar abrazarlo.",
+      "provokes": "Luis lo aparta con una mirada fría y se marcha."
+     }
+    ],
+    "beats": [
+     {
+      "stage": "inicio",
+      "fn": "avanzar-historia",
+      "summary": "KAP está en la calle de noche, con su cuaderno en mano. Ve a Luis, el nuevo del barrio, mirando curioso. Le pregunta si quiere ver su cuaderno y le ofrece prestarlo por un momento.",
+      "location": "Calle de noche",
+      "characters": [
+       "KAP",
+       "Luis"
+      ],
+      "change": "KAP confía en Luis y le da su cuaderno, estableciendo una conexión inicial.",
+      "why": "KAP quiere compartir su sueño con alguien nuevo del barrio.",
+      "time": "Noche",
+      "interior": false,
+      "shot": "general",
+      "visual": "KAP entrega el cuaderno a Luis con una sonrisa."
+     },
+     {
+      "stage": "problema",
+      "fn": "conflicto",
+      "summary": "Luis le devuelve el cuaderno, pero faltan dos páginas. KAP mira alrededor, buscando a alguien que pueda haberlo hecho.",
+      "location": "Calle de noche",
+      "characters": [
+       "KAP",
+       "Luis"
+      ],
+      "change": "El cuaderno está incompleto y KAP se siente frustrado.",
+      "why": "Luis no explica la desaparición de las páginas, lo que lleva a KAP a acusarlo.",
+      "time": "Noche",
+      "interior": false,
+      "shot": "medio",
+      "visual": "KAP mira el cuaderno con frustración."
+     },
+     {
+      "stage": "escalada",
+      "fn": "conflicto",
+      "summary": "KAP, sin pensar, acusa a Luis delante de otros niños. Luis no responde ni se defiende y simplemente se marcha.",
+      "location": "Calle de noche",
+      "characters": [
+       "KAP",
+       "Luis",
+       "otros niños"
+      ],
+      "change": "Luis se va, y KAP se queda solo, con el cuaderno incompleto y la vergüenza de su acusación.",
+      "why": "KAP actúa por impulso, sin escuchar a Luis ni considerar otra explicación.",
+      "time": "Noche",
+      "interior": false,
+      "shot": "general",
+      "visual": "Luis se aleja con la mirada baja."
+     },
+     {
+      "stage": "decision",
+      "fn": "conflicto",
+      "summary": "Dani, que escuchó la acusación, se acerca a KAP y le dice que es un mentiroso, aprovechando la situación para humillarle.",
+      "location": "Calle de noche",
+      "characters": [
+       "KAP",
+       "Dani"
+      ],
+      "change": "KAP siente que su reputación se ve afectada una vez más.",
+      "why": "Dani aprovecha el momento para acusar a KAP y reforzar el bullying.",
+      "time": "Noche",
+      "interior": false,
+      "shot": "medio",
+      "visual": "KAP se siente abrumado por la acusación de Dani."
+     },
+     {
+      "stage": "consecuencia",
+      "fn": "conflicto",
+      "summary": "KAP se queda solo en la calle, mirando el cuaderno incompleto y recordando que Luis no respondió a su acusación. Se pregunta si hizo bien al juzgarle.",
+      "location": "Calle de noche",
+      "characters": [
+       "KAP"
+      ],
+      "change": "KAP comienza a dudar de su actitud y se siente responsable del distanciamiento con Luis.",
+      "why": "La culpa lo afecta y genera una reflexión interna.",
+      "time": "Noche",
+      "interior": false,
+      "shot": "primer plano",
+      "visual": "KAP mira el cuaderno con expresión de arrepentimiento."
+     },
+     {
+      "stage": "resolucion",
+      "fn": "desarrollar-personaje",
+      "summary": "KAP camina hacia la plaza del barrio, pensando en cómo podría recuperar las páginas perdidas y también en cómo podría disculparse con Luis.",
+      "location": "Plaza del barrio",
+      "characters": [
+       "KAP"
+      ],
+      "change": "KAP decide reflexionar sobre su actitud y considerar nuevas formas de actuar.",
+      "why": "Es el primer paso hacia una posible recuperación de su integridad y confianza.",
+      "time": "Noche",
+      "interior": false,
+      "shot": "general",
+      "visual": "KAP camina con el cuaderno en la mano, mirando al frente."
+     },
+     {
+      "stage": "gancho",
+      "fn": "preparar-gancho",
+      "summary": "Luis mira hacia atrás desde una esquina de la plaza, observando a KAP. Parece que algo lo está llamando de vuelta.",
+      "location": "Plaza del barrio",
+      "characters": [
+       "KAP",
+       "Luis"
+      ],
+      "change": "Se deja abierta la posibilidad de un reencuentro entre KAP y Luis en episodios futuros.",
+      "why": "Luis no se aleja por completo, lo que sugiere una conexión aún no resuelta.",
+      "time": "Noche",
+      "interior": false,
+      "shot": "general",
+      "visual": "Luis mira a KAP desde lejos, con una expresión ambigua."
+     },
+     {
+      "stage": "gancho",
+      "fn": "preparar-gancho",
+      "summary": "KAP entra en la guardería donde vive su hermano, dejando el cuaderno sobre un banco. Mira hacia la puerta con una expresión triste.",
+      "location": "Entrada de la guardería",
+      "characters": [
+       "KAP"
+      ],
+      "change": "KAP se prepara para enfrentar su situación familiar, lo que generará un nuevo conflicto en el próximo episodio.",
+      "why": "La historia debe avanzar hacia una nueva etapa, con el hermano de KAP como posible punto de apoyo.",
+      "time": "Noche",
+      "interior": false,
+      "shot": "general",
+      "visual": "KAP deja el cuaderno en un banco y entra a la guardería."
+     }
+    ]
+   },
+   "variety": {
+    "locations": 3,
+    "dominantShare": 0.63,
+    "times": 1,
+    "timeSource": "declarado"
+   },
+   "show": {
+    "realism": {
+     "passed": 7,
+     "total": 9,
+     "failed": [
+      "decision-real",
+      "decision-con-consecuencia"
+     ]
+    },
+    "explainLinesKap": 0,
+    "kapLines": 12,
+    "validationLinesSecondary": 0,
+    "secondaryLines": 5,
+    "costVisible": false,
+    "closing": {
+     "problem": false,
+     "reason": null
+    }
+   },
+   "causal": {
+    "scenes": 8,
+    "locationChanges": 2,
+    "scenesLinkedToPrevious": 6,
+    "brokenLinkScenes": [
+     5
+    ],
+    "suddenWithoutAntecedent": [
+     5
+    ]
+   },
+   "realismGenerador": {
+    "passed": 10,
+    "total": 13,
+    "failed": [
+     "decision-real",
+     "decision-con-consecuencia",
+     "estados-variados"
+    ]
+   },
+   "openingRhymeCheck": {
+    "present": true,
+    "rhyme_valid": true,
+    "natural": true,
+    "contextual": true,
+    "rhythm": true,
+    "level": "cercana"
+   },
+   "script": "# Calle de noche\n[mood: Noche, exterior]\n[plano: general]\n[camara: seguir KAP]\nKAP sostiene su cuaderno con cuidado y lo abre, mostrando algunas páginas escritas a mano.\nKAP: KAP: Eh, ¿te gustaría ver algo? Tengo un cuaderno… de rimas. Si quieres, te lo presto un rato.\nKAP: KAP: Rima con la calle, aunque no sé si me salga bien… Pero sí, es mío, y hoy quiero compartirlo.\nLUIS: ¿En serio? ¿Puedo verlo?\n[acto: inicio | KAP está en la calle de noche, con su cuaderno en mano. Ve a Luis, el nuevo del barrio, mirando curioso. Le pregunta si quiere ver su cuade…]\n[conoce: KAP, Luis]\n\n# Calle de noche\n[mood: Noche, exterior]\n[plano: medio KAP]\n[camara: zoom 1.2]\nKAP: ¿Qué pasó? ¡Estas páginas estaban aquí!\nLUIS: No sé… Solo te lo devuelvo.\nKAP mira el cuaderno con frustración, luego a Luis, que se mantiene callado y mira al suelo.\n[acto: conflicto | Luis le devuelve el cuaderno, pero faltan dos páginas. KAP mira alrededor, buscando a alguien que pueda haberlo hecho.]\n\n# Calle de noche\n[mood: Noche, exterior]\n[plano: general]\n[expresion: KAP enfadado]\n[camara: seguir KAP]\nKAP mira a Luis con los ojos entrecerrados, el cuaderno cerrado en su mano. Alrededor, otros niños se acercan curiosos, observando la situación.\nKAP: ¿Tú… tú lo hiciste, verdad? ¡Estas páginas estaban aquí antes! ¿Por qué las borraste?\nLUIS: No… no hice nada. Solo te lo devuelvo.\nKAP: ¡No me digas que no sabes lo que hiciste! ¡Te lo presté y ahora falta algo!\nOTRO NIÑO: Eh, ¿qué pasa aquí?\nKAP: ¡Nada! Solo… solo es un chico que se comporta mal. ¡Y no se disculpa!\n[acto: desarrollo | KAP, sin pensar, acusa a Luis delante de otros niños. Luis no responde ni se defiende y simplemente se marcha.]\n\n# Calle de noche\n[mood: Noche, exterior]\n[plano: medio KAP]\n[expresion: KAP sorprendido]\n[gesto: KAP senala]\n[camara: seguir KAP]\n[vfx: niebla]\nKAP: ¡Estas páginas estaban aquí antes! ¿Por qué las borraste? No… no h…\nDANI: ¿Borró? ¡Qué mentiroso! ¡No te creíamos ni un segundo, KAP!\nKAP: ¡Yo no soy mentiroso! ¡Es él, Dani! ¡Él se lo llevó…!\n[acto: emocional | Dani, que escuchó la acusación, se acerca a KAP y le dice que es un mentiroso, aprovechando la situación para humillarle.]\n[relacion: KAP, Dani, acoso, -1]\n\n# Calle de noche\n[mood: Noche, exterior]\n[plano: primer plano KAP]\n[expresion: KAP triste]\n[gesto: KAP encoge]\n[mira: KAP izquierda]\n[camara: zoom 1.2]\nKAP se queda solo en la calle, con el cuaderno cerrado en sus manos. Mira hacia el suelo, con la expresión seria y triste.\nKAP: No… no sé por qué lo hice. No debería haberlo acusado así…\nKAP mira el cuaderno, luego su mano temblorosa se cierra alrededor de él con fuerza.\nKAP: ¿Por qué no me dijo nada? ¿Por qué se fue sin defenderse…?\n[relacion: KAP, Luis, distanciado, -1]\n\n# Plaza del barrio\n[mood: Noche, exterior]\n[plano: general]\n[expresion: KAP triste]\n[camina: KAP a izquierda]\n[mira: KAP izquierda]\n[vfx: oscurecer]\nKAP camina lentamente por la plaza del barrio, con el cuaderno en su mochila. Mira al suelo, pensativo.\nKAP: No sé si hice bien… Pero no puedo seguir así. Tengo que encontrar una manera de recuperar las páginas… y también de disculparme con Luis.\nSe detiene un momento, mira hacia la entrada de la guardería donde vive su hermano, y suspira profundamente.\n[acto: resolucion | KAP camina hacia la plaza del barrio, pensando en cómo podría recuperar las páginas perdidas y también en cómo podría disculparse con Luis.]\n\n# Plaza del barrio\n[mood: Noche, exterior]\n[plano: general]\nKAP camina lentamente por la plaza del barrio, con el cuaderno en su mochila. Mira al frente, con expresión pensativa.\nDe repente, KAP se detiene al notar una figura en la esquina de la plaza. Es Luis, mirando hacia él con expresión ambigua.\nKAP: Luis… ¿eres tú?\nKAP se acerca con paso firme, pero antes de que pueda llegar a Luis, se detiene. Luis lo mira con una expresión fría y le hace una señal para que se vaya.\n[acto: gancho | Luis mira hacia atrás desde una esquina de la plaza, observando a KAP. Parece que algo lo está llamando de vuelta.]\n\n# Entrada de la guardería\n[mood: Noche, exterior]\n[plano: general]\nKAP deja el cuaderno sobre un banco de madera desgastado, mirando hacia la puerta con expresión triste.\nCon paso lento y cansado, KAP entra en la guardería, dejando el cuaderno allí como si fuera una carga demasiado pesada para llevar.\nKAP se detiene un momento en la entrada, mirando hacia adentro, como si esperara algo… o a alguien.\n[gancho: El niño nuevo del barrio mira hacia atrás una vez que se aleja, como si supiera algo que KAP no entiende aún.]\n",
+   "gate": {
+    "regenerated": 0,
+    "dropped": 0,
+    "localPatches": 1,
+    "patchKinds": {
+     "rima-invalida": 1
+    },
+    "endingRevisions": 0,
+    "varietyRevisions": 0,
+    "codeRepairs": 1,
+    "arcRevisions": 0,
+    "rhymeValid": true,
+    "calls": 10,
+    "outputTokens": 5313,
+    "promptTokens": 69234,
+    "issues": {
+     "rima-invalida": 1,
+     "corta": 2,
+     "repite-frase": 1
+    }
+   },
+   "outcome": "KAP se siente atrapado entre su culpa por haber acusado al niño y el daño hecho por Dani. El episodio termina con KAP en",
+   "checks": [
+    {
+     "id": "estructura-6-actos",
+     "ok": true,
+     "note": "faltan: —"
+    },
+    {
+     "id": "gancho",
+     "ok": true
+    },
+    {
+     "id": "protagonista",
+     "ok": true
+    },
+    {
+     "id": "sin-errores-criticos",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "sin-exito-prematuro",
+     "ok": true
+    },
+    {
+     "id": "directivas-validas",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "espanol",
+     "ok": true
+    },
+    {
+     "id": "diversidad-lexica",
+     "ok": true,
+     "note": "0.41"
+    }
+   ],
+   "compliance": 1,
+   "proxy": {
+    "score": 8,
+    "dialogueRatio": 0.57,
+    "locations": 3,
+    "repeatedSentences": 3
+   },
+   "warnings": [
+    "El arco incluía a Hermano de KAP en un beat sin justificarlo: se ha quitado (la memoria no obliga a reutilizarlo).",
+    "Escena 2: Escena corta (29 palabras): puede ser correcto si la acción y la consecuencia están claras.",
+    "Escena 4: Escena corta (33 palabras): puede ser correcto si la acción y la consecuencia están claras.",
+    "Directiva de memoria del modelo descartada: «KAP lleva camiseta gris desgastada»",
+    "Directiva de memoria del modelo descartada: «KAP acusa a otros sin pensarlo»",
+    "Directiva de memoria del modelo descartada: «Cuidar y proteger a su hermano»"
+   ],
+   "draft": {
+    "title": "El cuaderno perdido",
+    "logline": "KAP presta su cuaderno de rimas a un niño nuevo del barrio, pero cuando se lo devuelve, faltan dos páginas. Sin pensar, acusa al niño delante de los demás, quien se marcha sin defenderse. Dani, que escuchó todo, aprovecha la situación para humillar aún más a K",
+    "assumptions": [
+     "El niño nuevo del barrio no tiene nombre establecido en el contexto, por lo que se le asignará un nombre temporal para su desarrollo en este episodio."
+    ],
+    "scenes": [
+     {
+      "title": "El cuaderno perdido",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP sostiene su cuaderno con cuidado y lo abre, mostrando algunas páginas escritas a mano."
+       },
+       {
+        "speaker": "KAP",
+        "text": "KAP: Eh, ¿te gustaría ver algo? Tengo un cuaderno… de rimas. Si quieres, te lo presto un rato."
+       },
+       {
+        "speaker": "KAP",
+        "text": "KAP: Rima con la calle, aunque no sé si me salga bien… Pero sí, es mío, y hoy quiero compartirlo."
+       },
+       {
+        "speaker": "Luis",
+        "text": "¿En serio? ¿Puedo verlo?"
+       }
+      ],
+      "memory": [
+       "acto: inicio | KAP está en la calle de noche, con su cuaderno en mano. Ve a Luis, el nuevo del barrio, mirando curioso. Le pregunta si quiere ver su cuade…",
+       "conoce: KAP, Luis"
+      ],
+      "fn": "avanzar-historia",
+      "stage": "inicio",
+      "shot": "general",
+      "time": "Noche",
+      "interior": false,
+      "directions": [
+       "plano: general",
+       "camara: seguir KAP"
+      ],
+      "change": "KAP confía en Luis y le da su cuaderno, estableciendo una conexión inicial."
+     },
+     {
+      "title": "El cuaderno perdido",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "KAP",
+        "text": "¿Qué pasó? ¡Estas páginas estaban aquí!"
+       },
+       {
+        "speaker": "Luis",
+        "text": "No sé… Solo te lo devuelvo."
+       },
+       {
+        "speaker": "",
+        "text": "KAP mira el cuaderno con frustración, luego a Luis, que se mantiene callado y mira al suelo."
+       }
+      ],
+      "memory": [
+       "acto: conflicto | Luis le devuelve el cuaderno, pero faltan dos páginas. KAP mira alrededor, buscando a alguien que pueda haberlo hecho."
+      ],
+      "fn": "conflicto",
+      "stage": "problema",
+      "shot": "medio",
+      "time": "Noche",
+      "interior": false,
+      "directions": [
+       "plano: medio KAP",
+       "camara: zoom 1.2"
+      ],
+      "change": "El cuaderno está incompleto y KAP se siente frustrado."
+     },
+     {
+      "title": "El cuaderno perdido",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP mira a Luis con los ojos entrecerrados, el cuaderno cerrado en su mano. Alrededor, otros niños se acercan curiosos, observando la situación."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Tú… tú lo hiciste, verdad? ¡Estas páginas estaban aquí antes! ¿Por qué las borraste?"
+       },
+       {
+        "speaker": "Luis",
+        "text": "No… no hice nada. Solo te lo devuelvo."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¡No me digas que no sabes lo que hiciste! ¡Te lo presté y ahora falta algo!"
+       },
+       {
+        "speaker": "Otro niño",
+        "text": "Eh, ¿qué pasa aquí?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "¡Nada! Solo… solo es un chico que se comporta mal. ¡Y no se disculpa!"
+       }
+      ],
+      "memory": [
+       "acto: desarrollo | KAP, sin pensar, acusa a Luis delante de otros niños. Luis no responde ni se defiende y simplemente se marcha."
+      ],
+      "fn": "conflicto",
+      "stage": "escalada",
+      "shot": "general",
+      "time": "Noche",
+      "interior": false,
+      "directions": [
+       "plano: general",
+       "expresion: KAP enfadado",
+       "camara: seguir KAP"
+      ],
+      "change": "Luis se va, y KAP se queda solo, con el cuaderno incompleto y la vergüenza de su acusación."
+     },
+     {
+      "title": "El cuaderno perdido",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "KAP",
+        "text": "¡Estas páginas estaban aquí antes! ¿Por qué las borraste? No… no h…"
+       },
+       {
+        "speaker": "Dani",
+        "text": "¿Borró? ¡Qué mentiroso! ¡No te creíamos ni un segundo, KAP!"
+       },
+       {
+        "speaker": "KAP",
+        "text": "¡Yo no soy mentiroso! ¡Es él, Dani! ¡Él se lo llevó…!"
+       }
+      ],
+      "memory": [
+       "acto: emocional | Dani, que escuchó la acusación, se acerca a KAP y le dice que es un mentiroso, aprovechando la situación para humillarle.",
+       "relacion: KAP, Dani, acoso, -1"
+      ],
+      "fn": "conflicto",
+      "stage": "decision",
+      "shot": "medio",
+      "time": "Noche",
+      "interior": false,
+      "directions": [
+       "plano: medio KAP",
+       "expresion: KAP sorprendido",
+       "gesto: KAP senala a Dani",
+       "camara: seguir KAP",
+       "vfx: niebla ligera"
+      ],
+      "change": "KAP siente que su reputación se ve afectada una vez más."
+     },
+     {
+      "title": "El cuaderno perdido",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se queda solo en la calle, con el cuaderno cerrado en sus manos. Mira hacia el suelo, con la expresión seria y triste."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No… no sé por qué lo hice. No debería haberlo acusado así…"
+       },
+       {
+        "speaker": "",
+        "text": "KAP mira el cuaderno, luego su mano temblorosa se cierra alrededor de él con fuerza."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Por qué no me dijo nada? ¿Por qué se fue sin defenderse…?"
+       }
+      ],
+      "memory": [
+       "relacion: KAP, Luis, distanciado, -1"
+      ],
+      "fn": "conflicto",
+      "stage": "consecuencia",
+      "shot": "primer plano",
+      "time": "Noche",
+      "interior": false,
+      "directions": [
+       "plano: primer plano KAP",
+       "expresion: KAP triste",
+       "gesto: KAP encoge los hombros",
+       "mira: KAP izquierda",
+       "camara: zoom 1.2"
+      ],
+      "change": "KAP comienza a dudar de su actitud y se siente responsable del distanciamiento con Luis."
+     },
+     {
+      "title": "El cuaderno perdido",
+      "location": "Plaza del barrio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP camina lentamente por la plaza del barrio, con el cuaderno en su mochila. Mira al suelo, pensativo."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No sé si hice bien… Pero no puedo seguir así. Tengo que encontrar una manera de recuperar las páginas… y también de disculparme con Luis."
+       },
+       {
+        "speaker": "",
+        "text": "Se detiene un momento, mira hacia la entrada de la guardería donde vive su hermano, y suspira profundamente."
+       }
+      ],
+      "memory": [
+       "acto: resolucion | KAP camina hacia la plaza del barrio, pensando en cómo podría recuperar las páginas perdidas y también en cómo podría disculparse con Luis."
+      ],
+      "fn": "desarrollar-personaje",
+      "stage": "resolucion",
+      "shot": "general",
+      "time": "Noche",
+      "interior": false,
+      "directions": [
+       "plano: general",
+       "expresion: KAP triste",
+       "camina: KAP a izquierda",
+       "mira: KAP izquierda",
+       "vfx: oscurecer"
+      ],
+      "change": "KAP comienza a reflexionar sobre su actitud y considera nuevas formas de actuar."
+     },
+     {
+      "title": "El cuaderno perdido",
+      "location": "Plaza del barrio",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP camina lentamente por la plaza del barrio, con el cuaderno en su mochila. Mira al frente, con expresión pensativa."
+       },
+       {
+        "speaker": "",
+        "text": "De repente, KAP se detiene al notar una figura en la esquina de la plaza. Es Luis, mirando hacia él con expresión ambigua."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Luis… ¿eres tú?"
+       },
+       {
+        "speaker": "",
+        "text": "KAP se acerca con paso firme, pero antes de que pueda llegar a Luis, se detiene. Luis lo mira con una expresión fría y le hace una señal para que se vaya."
+       }
+      ],
+      "memory": [
+       "acto: gancho | Luis mira hacia atrás desde una esquina de la plaza, observando a KAP. Parece que algo lo está llamando de vuelta."
+      ],
+      "fn": "preparar-gancho",
+      "stage": "gancho",
+      "shot": "general",
+      "time": "Noche",
+      "interior": false,
+      "directions": [
+       "plano: general"
+      ],
+      "change": "Se deja abierta la posibilidad de un reencuentro entre KAP y Luis en episodios futuros."
+     },
+     {
+      "title": "El cuaderno perdido",
+      "location": "Entrada de la guardería",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP deja el cuaderno sobre un banco de madera desgastado, mirando hacia la puerta con expresión triste."
+       },
+       {
+        "speaker": "",
+        "text": "Con paso lento y cansado, KAP entra en la guardería, dejando el cuaderno allí como si fuera una carga demasiado pesada para llevar."
+       },
+       {
+        "speaker": "",
+        "text": "KAP se detiene un momento en la entrada, mirando hacia adentro, como si esperara algo… o a alguien."
+       }
+      ],
+      "memory": [
+       "gancho: El niño nuevo del barrio mira hacia atrás una vez que se aleja, como si supiera algo que KAP no entiende aún."
+      ],
+      "fn": "preparar-gancho",
+      "stage": "gancho",
+      "shot": "general",
+      "time": "Noche",
+      "interior": false,
+      "directions": [
+       "plano: general"
+      ],
+      "change": "KAP se prepara para enfrentar su situación familiar, lo que generará un nuevo conflicto en el próximo episodio."
+     }
+    ]
+   }
+  },
+  {
+   "id": "E17",
+   "title": "Episodio 17",
+   "request": "Crea el episodio 17, continuando el episodio 16. KAP sospecha que quizá se equivocó al acusar al niño nuevo e intenta arreglarlo con un plan suyo; pero el niño no quiere verlo y lo que Dani ha hecho con la historia de las páginas cambia lo que KAP había planeado.",
+   "ms": 6144705,
+   "peakMb": 13182,
+   "sysPeakMb": 13842,
+   "contextTokens": 2024,
+   "error": "El modelo no devolvió la escena 8 válida tras 1 intento(s): El modelo no respondió: Ollama respondió 500: {\"error\":\"model runner has unexpectedly stopped, this may be due to resource limitations or an internal error, check ollama server logs for details\"}",
+   "ok": false
+  }
+ ]
+}
