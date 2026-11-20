@@ -149,6 +149,11 @@ function openingRhymeOf(draft: any, request: string) { const iv = firstIntervent
 const { kapRealismCheck } = await import("../src/narrative/realism");
 const { explainsTheme, isValidation } = await import("../src/narrative/show");
 const { closingProblem } = await import("../src/narrative/closing");
+const { brokenLinks, causalProblem } = await import("../src/narrative/causal");
+/** Métricas causales medidas IGUAL para los dos métodos (solo para el análisis posterior; no deciden nada). */
+function causalMetrics(draft: any) { const sc = draft.scenes.map((x: any) => ({ text: x.lines.map((l: any) => l.text).join(" "), loc: x.location, lines: x.lines.map((l: any) => ({ speaker: l.speaker, text: l.text })), speakers: x.lines.map((l: any) => l.speaker ?? "") }));
+  const broken = brokenLinks(sc.map((x: any) => ({ text: x.text }))), flagged = sc.map((x: any, i: number) => (i ? causalProblem({ lines: x.lines, previous: sc.slice(0, i).map((p: any) => ({ text: p.text, change: "", speakers: p.speakers })), locationChanged: norm(sc[i - 1].loc) !== norm(x.loc) }) : undefined) ? i + 1 : 0).filter(Boolean);
+  return { scenes: sc.length, locationChanges: sc.filter((x: any, i: number) => i && norm(sc[i - 1].loc) !== norm(x.loc)).length, scenesLinkedToPrevious: sc.length - 1 - broken.length, brokenLinkScenes: broken.map((i: number) => i + 1), suddenWithoutAntecedent: flagged }; }
 /** Métricas de realismo medidas IGUAL para los dos métodos (solo para el análisis posterior; no deciden nada). */
 function showMetrics(draft: any, request: string) { const lines = draft.scenes.map((sc: any) => sc.lines.map((l: any) => ({ speaker: l.speaker, text: l.text })));
   const kapT = lines.flat().filter((l: any) => norm(l.speaker ?? "") === "kap"), others = lines.flat().filter((l: any) => (l.speaker ?? "").trim() && norm(l.speaker) !== "kap");
@@ -174,7 +179,7 @@ async function runAuthor(t: Task, requestText: string, scenes: number, w: World,
     json: { attempts: st.attempts, retries: st.retries, jsonErrors: st.jsonErrors, schemaErrors: st.schemaErrors, lengthRetries: st.lengthRetries, memoryDirectiveErrors: st.memoryDirectiveErrors }, irErrors: r.errors, usage: st.usage, tokensPerSec: +tps.toFixed(2),
     episode: { scenes: draft.scenes.length, estimatedSec: secs, words: draft.scenes.reduce((n: number, s: any) => n + s.lines.reduce((k: number, l: any) => k + words(l.text).length, 0), 0), title: draft.title, logline: draft.logline },
     continuity: { critical: f.filter((x) => x.severity === "error").map((x) => `${x.rule}: ${x.text.slice(0, 140)}`), warnings: f.filter((x) => x.severity === "warning").map((x) => `${x.rule}: ${x.text.slice(0, 140)}`), info: f.filter((x) => x.severity === "info").length },
-    narrative: { ...countBySeverity(plain), rules: [...new Set(plain.map((f) => f.rule.replace("narrativa-", "")))], findings: plain, taggedRules: [...new Set(tagged.map((f) => f.rule.replace("narrativa-", "")))] }, mode: MODE, arc: author.lastArc, variety: varietyOf(draft), show: showMetrics(draft, requestText), realismGenerador: st.realism, openingRhymeCheck: openingRhymeOf(draft, requestText), script: out.script, gate: { regenerated: st.scenesRegenerated ?? 0, dropped: st.scenesDropped ?? 0, localPatches: st.localPatches ?? 0, patchKinds: st.patchKinds ?? {}, endingRevisions: st.endingRevisions ?? 0, varietyRevisions: st.varietyRevisions ?? 0, codeRepairs: st.codeRepairs ?? 0, arcRevisions: st.arcRevisions ?? 0, rhymeValid: st.rhymeValid, calls: st.attempts, outputTokens: st.usage.outputTokens, promptTokens: st.usage.promptTokens, issues: st.gateIssues ?? {} }, outcome: author.lastArc?.outcome, checks, compliance: +(checks.filter((c) => c.ok).length / checks.length).toFixed(2), proxy: proxy(draft, secs), warnings: out.warnings.slice(0, 6), draft };
+    narrative: { ...countBySeverity(plain), rules: [...new Set(plain.map((f) => f.rule.replace("narrativa-", "")))], findings: plain, taggedRules: [...new Set(tagged.map((f) => f.rule.replace("narrativa-", "")))] }, mode: MODE, arc: author.lastArc, variety: varietyOf(draft), show: showMetrics(draft, requestText), causal: causalMetrics(draft), realismGenerador: st.realism, openingRhymeCheck: openingRhymeOf(draft, requestText), script: out.script, gate: { regenerated: st.scenesRegenerated ?? 0, dropped: st.scenesDropped ?? 0, localPatches: st.localPatches ?? 0, patchKinds: st.patchKinds ?? {}, endingRevisions: st.endingRevisions ?? 0, varietyRevisions: st.varietyRevisions ?? 0, codeRepairs: st.codeRepairs ?? 0, arcRevisions: st.arcRevisions ?? 0, rhymeValid: st.rhymeValid, calls: st.attempts, outputTokens: st.usage.outputTokens, promptTokens: st.usage.promptTokens, issues: st.gateIssues ?? {} }, outcome: author.lastArc?.outcome, checks, compliance: +(checks.filter((c) => c.ok).length / checks.length).toFixed(2), proxy: proxy(draft, secs), warnings: out.warnings.slice(0, 6), draft };
 }
 
 // ---------------------------------------------------------------- fases
@@ -184,7 +189,7 @@ console.log(`\n== Banco de IA local · ${MODEL} · fase ${PHASE} · ${meta.cpus}
 if (!(await llm.available())) { console.error(`El modelo ${MODEL} no está disponible en Ollama`); process.exit(2); }
 const results: any[] = [];
 /** Guardado incremental: un reinicio del contenedor no debe perder las tareas ya terminadas. */
-const save = () => fs.writeFile(path.join(OUT, `${SLUG}-${PHASE}${PHASE === "blind2" || PHASE === "blind3" || PHASE === "blind4" || PHASE === "blind5" || PHASE === "blind6" ? "-" + MODE : ""}${ONLY.length ? "-" + ONLY.join("") : ""}.partial.json`), JSON.stringify({ meta, partial: true, results }, null, 1));
+const save = () => fs.writeFile(path.join(OUT, `${SLUG}-${PHASE}${PHASE === "blind2" || PHASE === "blind3" || PHASE === "blind4" || PHASE === "blind5" || PHASE === "blind6" || PHASE === "blind7" ? "-" + MODE : ""}${ONLY.length ? "-" + ONLY.join("") : ""}.partial.json`), JSON.stringify({ meta, partial: true, results }, null, 1));
 if (PHASE === "tech" || PHASE === "all") {
   const worlds: Partial<Record<"fresh" | "after3", World>> = {};
   for (const t of TASKS.concat([{ id: "T7", title: "", world: "after3", request: "", kind: "review" }]).filter((x) => !ONLY.length || ONLY.includes(x.id))) {
@@ -195,9 +200,13 @@ if (PHASE === "tech" || PHASE === "all") {
     for (const c of ((r as any).checks ?? []).filter((c: Check) => !c.ok)) console.log(`     ✗ ${c.id}${c.note ? ` — ${c.note}` : ""}`);
   }
 }
-if (PHASE === "blind6") {
-  // Episodios 13, 14 y 15 encadenados sobre la memoria disponible (episodios 1-3 de demostración); cada uno se aprueba SOLO en la base temporal de esta prueba.
-  const E = [
+if (PHASE === "blind6" || PHASE === "blind7") {
+  // Episodios encadenados sobre la memoria disponible (episodios 1-3 de demostración); cada uno se aprueba SOLO en la base temporal de esta prueba.
+  const E = PHASE === "blind7" ? [
+    { id: "E16", n: 16, from: 1003, request: "Crea el episodio 16, a continuación del episodio 3. KAP presta su cuaderno de rimas a un niño nuevo del barrio para que lo mire un momento. Cuando se lo devuelve, faltan dos páginas y KAP, sin pensarlo, lo acusa delante de los demás. El niño no contesta y se marcha, y Dani, que lo ha oído todo, decide aprovecharlo." },
+    { id: "E17", n: 17, from: 1016, request: "Crea el episodio 17, continuando el episodio 16. KAP sospecha que quizá se equivocó al acusar al niño nuevo e intenta arreglarlo con un plan suyo; pero el niño no quiere verlo y lo que Dani ha hecho con la historia de las páginas cambia lo que KAP había planeado." },
+    { id: "E18", n: 18, from: 1017, request: "Crea el episodio 18, continuando el episodio 17. La solución que KAP intentó ha tenido un efecto que no esperaba y alguien a quien no pensaba implicar se ha enterado. KAP tiene que decidir qué cuenta y qué no, y lo que decida tendrá un precio." },
+  ] : [
     { id: "E13", n: 13, from: 1003, request: "Crea el episodio 13, a continuación del episodio 3. KAP encuentra en la calle un teléfono móvil que alguien ha perdido y, mientras lo tiene en la mano, empieza a sonar con la llamada de alguien que parece muy preocupado. KAP no sabe si contestar, devolverlo o esperar a pensar qué hacer, y Dani, que lo ha visto, quiere quedarse con el teléfono." },
     { id: "E14", n: 14, from: 1013, request: "Crea el episodio 14, continuando el episodio 13. Lo que KAP hizo con el teléfono tiene consecuencias que no esperaba: alguien cree que KAP hizo algo que no hizo. A la vez, su hermano pequeño necesita que KAP vaya a buscarlo a otro sitio, justo cuando KAP tendría que aclarar el problema." },
     { id: "E15", n: 15, from: 1014, request: "Crea el episodio 15, continuando el episodio 14. KAP intenta arreglar lo que provocó con una idea suya, pero la persona a la que quiere ayudar no quiere que se lo arregle a su manera, y la idea de KAP sale distinta de lo que esperaba." },
@@ -309,6 +318,6 @@ if (PHASE === "narrative" || PHASE === "all") {
   }
 }
 const loadedInfo = await loaded();
-await fs.writeFile(path.join(OUT, `${SLUG}-${PHASE}${PHASE === "blind2" || PHASE === "blind3" || PHASE === "blind4" || PHASE === "blind5" || PHASE === "blind6" ? "-" + MODE : ""}${ONLY.length ? "-" + ONLY.join("") : ""}.json`), JSON.stringify({ meta, loaded: loadedInfo, totalMin: +((Date.now() - t0) / 60000).toFixed(1), results }, null, 1));
+await fs.writeFile(path.join(OUT, `${SLUG}-${PHASE}${PHASE === "blind2" || PHASE === "blind3" || PHASE === "blind4" || PHASE === "blind5" || PHASE === "blind6" || PHASE === "blind7" ? "-" + MODE : ""}${ONLY.length ? "-" + ONLY.join("") : ""}.json`), JSON.stringify({ meta, loaded: loadedInfo, totalMin: +((Date.now() - t0) / 60000).toFixed(1), results }, null, 1));
 console.log(`\nTotal ${((Date.now() - t0) / 60000).toFixed(1)} min · modelo en memoria: ${JSON.stringify(loadedInfo)} · guardado en docs/ia-bench/`);
 await fs.rm(root, { recursive: true, force: true });
