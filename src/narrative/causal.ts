@@ -32,11 +32,11 @@ export function causalProblem(inp: CausalInput): CausalProblem | undefined {
   const text = inp.lines.map((l) => l.text).join(" "), inherited = [prev.text, prev.change, prev.does ?? "", inp.pending ?? "", inp.previous.at(-2)?.change ?? ""].join(" ");
   const link = causalLink(text, inherited);
   const seen = new Set(inp.previous.flatMap((p) => (p.speakers ?? []).map(norm)).filter(Boolean)), newSpeaker = inp.lines.some((l) => { const k = norm(l.speaker ?? ""); return !!k && k !== "kap" && !seen.has(k) && !norm(inherited).includes(k); });
-  const sudden = inp.lines.some((l) => SUDDEN.test(l.text)) || newSpeaker || !!inp.locationChanged;
+  const sudden = inp.lines.some((l) => SUDDEN.test(l.text)) || newSpeaker;   // un cambio de lugar solo, sin nada nuevo que explicar, no es un problema
   const open = Math.max(0, inp.lines.findIndex((l) => !(l.speaker ?? "").trim()));
   const base = `La escena anterior terminó con: «${prev.change.slice(0, 140) || prev.text.slice(0, 100)}»`;
   if (inp.isConsequence && link < 1) return { reason: `${base}. La consecuencia no sale de ahí: haz que lo que ocurre sea el efecto visible de lo que KAP acaba de hacer.`, line: open };
-  if (sudden && link < 2) return { reason: `${base}. Aparece algo (un rumor, una llamada, un personaje, un lugar, una acusación) sin que eso lo provoque o lo prepare: que la primera línea lo conecte con un hecho de la escena anterior (alguien vio a KAP, alguien lo contó, la llamada perdida tuvo un efecto), mostrado con un acontecimiento y sin que nadie lo explique.`, line: open };
+  if (sudden && link < (inp.locationChanged ? 2 : 1)) return { reason: `${base}. Aparece algo (un rumor, una llamada, un personaje, un lugar, una acusación) sin que eso lo provoque o lo prepare: que la primera línea lo conecte con un hecho de la escena anterior (alguien vio a KAP, alguien lo contó, la llamada perdida tuvo un efecto), mostrado con un acontecimiento y sin que nadie lo explique.`, line: open };
   return undefined;
 }
 
