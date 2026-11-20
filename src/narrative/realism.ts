@@ -7,11 +7,12 @@ import { norm } from "../memory/text.ts";
 import { STOCK_CLOSE, closingProblem } from "./closing.ts";
 import { checkRhyme, firstInterventionOf } from "./rhyme.ts";
 import { ADULT_VOICE, MOTIVATIONAL, OPPOSITION, content, jac, reviewNarrative } from "./review.ts";
+import { brokenLinks } from "./causal.ts";
 import { explainsTheme, isThoughtOnly, isValidation } from "./show.ts";
 
-export type RealismScene = { location: string; title?: string; lines: { speaker?: string; text: string }[]; fn?: string; stage?: string; /** Lo que KAP hace en la escena y cómo queda (si el generador los declara; si no, esas tres comprobaciones no se hacen). */ kapDoes?: string; kapState?: string };
+export type RealismScene = { location: string; title?: string; lines: { speaker?: string; text: string }[]; fn?: string; stage?: string; /** Lo que KAP hace en la escena y cómo queda (si el generador los declara; si no, esas tres comprobaciones no se hacen). */ kapDoes?: string; kapState?: string; /** Cambio que la escena declara (si se conoce, se comprueba la cadena causal entre escenas). */ change?: string };
 export type RealismInput = { scenes: RealismScene[]; protagonist?: string; /** Textos de la escena de apertura de los que debe nacer la rima (petición, lugar…). */ contextTerms?: string[] };
-export type RealismId = "decision-real" | "decision-con-consecuencia" | "kap-no-explica-de-mas" | "sin-frases-de-adulto" | "interaccion-sin-validacion" | "conflicto-cambia-algo" | "final-nace-de-la-accion" | "primera-rima-espontanea" | "ninguna-escena-eliminable" | "kap-actua" | "estados-variados" | "no-demasiado-reflexivo";
+export type RealismId = "decision-real" | "decision-con-consecuencia" | "kap-no-explica-de-mas" | "sin-frases-de-adulto" | "interaccion-sin-validacion" | "conflicto-cambia-algo" | "final-nace-de-la-accion" | "primera-rima-espontanea" | "ninguna-escena-eliminable" | "kap-actua" | "estados-variados" | "no-demasiado-reflexivo" | "cadena-causal";
 export type RealismCheck = { id: RealismId; ok: boolean; note?: string };
 export type RealismResult = { checks: RealismCheck[]; failed: RealismId[]; passed: number; total: number };
 
@@ -54,6 +55,9 @@ export function kapRealismCheck(inp: RealismInput): RealismResult {
     const st = S.map((x) => norm(x.kapState ?? "")); let run = 1, maxRun = 1; for (let i = 1; i < st.length; i++) { run = st[i] && st[i] === st[i - 1] ? run + 1 : 1; maxRun = Math.max(maxRun, run); }
     add("estados-variados", maxRun < 3 && (S.length < 6 || new Set(st.filter(Boolean)).size >= 2), maxRun >= 3 ? `KAP está en el mismo estado durante ${maxRun} escenas seguidas` : S.length >= 6 && new Set(st.filter(Boolean)).size < 2 ? "KAP no cambia de estado en todo el episodio" : undefined);
     add("no-demasiado-reflexivo", share < 0.35, share >= 0.35 ? "el episodio es demasiado reflexivo: pocas escenas en las que KAP haga algo" : undefined); }
+  // Cadena causal (solo si las escenas declaran su cambio): cada escena debe apoyarse en algo de la anterior; unas pocas rupturas son normales (saltos de lugar o tiempo).
+  if (S.length >= 4 && S.some((x) => x.change !== undefined)) { const broken = brokenLinks(S.map((x) => ({ text: text(x), change: x.change, does: x.kapDoes }))), limit = Math.max(2, Math.ceil(S.length * 0.25));
+    add("cadena-causal", broken.length < limit, broken.length >= limit ? `${broken.length} escenas no se apoyan en nada de la anterior (${broken.map((i) => i + 1).join(", ")}): lo nuevo aparece sin causa visible` : undefined); }
   const failed = checks.filter((c) => !c.ok).map((c) => c.id); void jac;
   return { checks, failed, passed: checks.length - failed.length, total: checks.length };
 }

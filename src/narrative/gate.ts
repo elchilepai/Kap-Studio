@@ -10,9 +10,10 @@ import { norm } from "../memory/text.ts";
 import { closingProblem } from "./closing.ts";
 import { explainsTheme, isThoughtOnly, isValidation } from "./show.ts";
 import { checkRhyme, firstInterventionOf, type RhymeCheck } from "./rhyme.ts";
+import { causalProblem, explainsCause } from "./causal.ts";
 import { ADULT_VOICE, MOTIVATIONAL, content, jac, words } from "./review.ts";
 
-export type GateIssueKind = "repite-escena" | "repite-frase" | "sin-cambio" | "personaje-no-previsto" | "monologo-relleno" | "corta" | "voz-adulta" | "hermano-reactivo" | "menciona-memoria" | "cierre-reflexivo" | "rima-invalida" | "explica-emocion" | "validacion-moraleja" | "cierre-desconectado" | "coste-ausente" | "kap-no-actua" | "emocion-repetida";
+export type GateIssueKind = "repite-escena" | "repite-frase" | "sin-cambio" | "personaje-no-previsto" | "monologo-relleno" | "corta" | "voz-adulta" | "hermano-reactivo" | "menciona-memoria" | "cierre-reflexivo" | "rima-invalida" | "explica-emocion" | "validacion-moraleja" | "cierre-desconectado" | "coste-ausente" | "kap-no-actua" | "emocion-repetida" | "sin-antecedente";
 export type GateScope = "scene" | "local" | "repair" | "info";
 export type GateIssue = { kind: GateIssueKind; blocking: boolean; scope: GateScope; text: string; /** Índices de las líneas a reescribir (ámbito local) o a quitar (reparación). */ lines?: number[] };
 export type GateLine = { speaker?: string; text: string };
@@ -34,6 +35,8 @@ export type GateInput = {
   cost?: string;
   /** Lo que KAP HACE en esta escena (una acción visible) y cómo queda; los declara la propia escena. */
   kapDoes?: string; kapState?: string;
+  /** Causalidad: consecuencia que el arco dejaba abierta tras el beat anterior y si esta escena cambia de lugar. */
+  pending?: string; locationChanged?: boolean;
 };
 
 const sets = (s: string) => new Set(content(s));
@@ -41,7 +44,7 @@ const text = (s: GateScene) => s.lines.map((l) => l.text).join(" ");
 const mentions = (t: string, name: string) => new RegExp(`(^|[^a-z0-9ñ])${norm(name).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}([^a-z0-9ñ]|$)`).test(norm(t));
 const REFLECT_START = /^\s*[¿¡]?\s*(?:y si|tal vez|quiz[aá]s?|a veces|alg[uú]n d[ií]a|nunca|siempre|todo|la vida|el mundo|por qu[eé] (?:yo|me|nadie))/i;
 const IS_BLOCKING: GateIssueKind[] = ["repite-escena", "repite-frase", "sin-cambio", "personaje-no-previsto"];
-const SCOPE: Record<GateIssueKind, GateScope> = { "repite-escena": "scene", "sin-cambio": "scene", "personaje-no-previsto": "scene", "repite-frase": "repair", "monologo-relleno": "repair", corta: "info", "voz-adulta": "local", "hermano-reactivo": "local", "menciona-memoria": "local", "cierre-reflexivo": "local", "rima-invalida": "local", "explica-emocion": "local", "validacion-moraleja": "local", "cierre-desconectado": "local", "coste-ausente": "local", "kap-no-actua": "local", "emocion-repetida": "local" };
+const SCOPE: Record<GateIssueKind, GateScope> = { "repite-escena": "scene", "sin-cambio": "scene", "personaje-no-previsto": "scene", "repite-frase": "repair", "monologo-relleno": "repair", corta: "info", "voz-adulta": "local", "hermano-reactivo": "local", "menciona-memoria": "local", "cierre-reflexivo": "local", "rima-invalida": "local", "explica-emocion": "local", "validacion-moraleja": "local", "cierre-desconectado": "local", "coste-ausente": "local", "kap-no-actua": "local", "emocion-repetida": "local", "sin-antecedente": "local" };
 
 /** Última comprobación de la rima de una escena (se expone para el banco de pruebas y los avisos). */
 export function sceneRhyme(lines: GateLine[], rhyme: NonNullable<GateInput["rhyme"]>, who = "KAP"): { check: RhymeCheck; index: number[] } {
@@ -93,14 +96,16 @@ export function checkScene(inp: GateInput): GateIssue[] {
   // MOSTRAR, NO EXPLICAR: KAP verbaliza el tema o lo que siente; un secundario solo valida o enseña. Se repara la línea, no la escena.
   const explainIdx = kapIdx.filter((i) => explainsTheme(sc.lines[i].text));
   if (explainIdx.length) add("explica-emocion", "KAP explica el tema o lo que siente en vez de mostrarlo: cámbialo por algo que HAGA o diga de forma concreta (esconder el cuaderno, cambiar de tema, equivocarse, hablar demasiado rápido, quedarse callado, una broma, arreglar algo, una decisión impulsiva).", explainIdx);
-  const valIdx = sc.lines.map((l, i) => ((l.speaker ?? "").trim() && norm(l.speaker ?? "") !== kap && isValidation(l.text) ? i : -1)).filter((i) => i >= 0);
-  if (valIdx.length) add("validacion-moraleja", "Este personaje solo valida o enseña a KAP: dale una reacción propia (no lo entiende, se equivoca, quiere otra cosa, se distrae, bromea, no sabe qué hacer).", valIdx);
+  const valIdx = sc.lines.map((l, i) => ((l.speaker ?? "").trim() && norm(l.speaker ?? "") !== kap && (isValidation(l.text) || explainsCause(l.text)) ? i : -1)).filter((i) => i >= 0);
+  if (valIdx.length) add("validacion-moraleja", "Este personaje solo valida, enseña o explica a KAP lo que ha provocado: dale una reacción propia que CAMBIE la situación con un hecho (lo cuenta a otro, se lo quita, se enfada y se va, no lo entiende, quiere otra cosa) en vez de decirle qué significa lo que hizo.", valIdx);
   if (inp.cost) { const cs = new Set(content(inp.cost).map((x) => x.slice(0, 5))), ts = new Set(content(t).map((x) => x.slice(0, 5)));
     if (cs.size && ![...cs].some((x) => ts.has(x))) add("coste-ausente", `La consecuencia no muestra el coste concreto de la decisión de KAP (${inp.cost}): enséñalo con una acción o un objeto que pierde, no lo cuentes.`, [Math.max(0, sc.lines.findIndex((l) => !(l.speaker ?? "").trim()))]); }
   // CONDUCTA: KAP debe ACTUAR (ACCIÓN → REACCIÓN → IMPROVISACIÓN → CONSECUENCIA), no solo hablar o pensar; y una emoción ya establecida no se repite: se pasa a la acción.
   if (inp.kapDoes !== undefined) { const thought = isThoughtOnly(inp.kapDoes), at = Math.max(0, sc.lines.findIndex((l) => !(l.speaker ?? "").trim())), last = prev.at(-1);
     if (kapIdx.length >= 2 && thought) add("kap-no-actua", "KAP habla o piensa pero no hace nada: haz que HAGA algo concreto y visible (algo impulsivo, esconder algo, intentar arreglar algo y empeorarlo, interrumpir, probar una solución improvisada) y que otro personaje reaccione. La acción va en la línea narrada.", [at]);
     if (inp.kapState && last?.state && norm(inp.kapState) === norm(last.state) && (thought || jac(sets(inp.kapDoes), sets(last.does ?? "")) >= 0.5)) add("emocion-repetida", `La emoción de KAP («${inp.kapState}») ya estaba establecida en la escena anterior: no la repitas; pasa a una acción que haga avanzar la situación y provoque una reacción.`, [at]); }
+  // CAUSALIDAD: lo que aparece de golpe (rumor, llamada, personaje, lugar, acusación) debe apoyarse en lo que acaba de pasar; la consecuencia, en la decisión
+  const cz = causalProblem({ lines: sc.lines, previous: prev, pending: inp.pending, locationChanged: inp.locationChanged, isConsequence: inp.cost !== undefined }); if (cz) add("sin-antecedente", cz.reason, [cz.line]);
   // rima (solo la escena que la lleva) y cierre (solo la última)
   if (inp.rhyme) { const { check, index } = sceneRhyme(sc.lines, inp.rhyme, inp.protagonist); if (!check.rhyme_valid) add("rima-invalida", `La rima de KAP no vale: ${check.reasons.join("; ")}.`, index); }
   if (inp.isLast) { const c = closingProblem(sc.lines, inp.protagonist); if (c) add("cierre-reflexivo", `${c.reason}. El final nace de lo que acaba de ocurrir: una consecuencia inesperada, una decisión, una información nueva, un objeto, una llamada, la reacción de otro personaje o un pequeño gag.`, [c.index]);

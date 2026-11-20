@@ -27,7 +27,7 @@ const Beat = z.object({
 });
 /** Momentos de CONDUCTA de KAP: hace algo → provoca algo → tiene que reaccionar. Pocos, naturales y opcionales: no es una plantilla. */
 const BEHAVIOR_KINDS = ["impulso", "error", "malentendido", "improvisacion", "cambio-de-opinion", "esconder", "exageracion", "interrupcion", "tonteria", "egoismo-puntual"] as const;
-const Behavior = z.object({ beat: z.number().int().min(0).max(11), kind: z.enum(BEHAVIOR_KINDS), does: z.string().min(8).max(200), provokes: z.string().min(8).max(200) });
+const Behavior = z.object({ beat: z.number().int().min(0).max(11), kind: z.enum(BEHAVIOR_KINDS), does: z.string().min(8).max(200), provokes: z.string().min(8).max(200), reaction: z.string().max(200).optional() });   // reaction = quién reacciona y qué problema queda abierto (acción → consecuencia → reacción → siguiente problema)
 /** El arco entero; las comprobaciones de orden/cobertura producen mensajes que el modelo ve al reintentar. */
 export const EpisodeArc = z.object({
   title: z.string().min(1).max(100), logline: z.string().min(1).max(260), assumptions: z.array(z.string().max(300)).max(8),
@@ -118,7 +118,7 @@ export function llmArcAuthor(llm: LlmClient, opts: ArcAuthorOptions = {}): ArcAu
       for (const b of arc.beats) { const kept = b.characters.filter((c) => !memoryOutside.some((m) => norm(m) === norm(c))); if (kept.length !== b.characters.length) warnings.push(`El arco incluía a ${b.characters.filter((c) => !kept.includes(c)).join(", ")} en un beat sin justificarlo: se ha quitado (la memoria no obliga a reutilizarlo).`); b.characters = kept.length ? kept : ["KAP"]; }
       self.lastArc = arc;
       // los behaviorBeats apuntan al beat por su posición ORIGINAL: se resuelven por referencia (el orden de etapas puede haberse reparado)
-      const behaviorOf = new Map<number, { kind: string; does: string; provokes: string }>(); for (const bb of a.data.behaviorBeats) { const ref = a.data.beats[bb.beat], idx = ref ? arc.beats.indexOf(ref) : -1; if (idx >= 0 && !behaviorOf.has(idx)) behaviorOf.set(idx, { kind: bb.kind, does: bb.does, provokes: bb.provokes }); }
+      const behaviorOf = new Map<number, { kind: string; does: string; provokes: string; reaction?: string }>(); for (const bb of a.data.behaviorBeats) { const ref = a.data.beats[bb.beat], idx = ref ? arc.beats.indexOf(ref) : -1; if (idx >= 0 && !behaviorOf.has(idx)) behaviorOf.set(idx, { kind: bb.kind, does: bb.does, provokes: bb.provokes, ...(bb.reaction ? { reaction: bb.reaction } : {}) }); }
       const arcView = { ...arc, behaviorBeats: [...behaviorOf.entries()].map(([i, b]) => ({ beat: i + 1, ...b })), beats: arc.beats.map((b, k) => `${k + 1}. [${b.stage}] ${b.summary}`) };
       const siblingOf = (names: string[]) => names.find((n) => /herman/i.test(n));
       // la escena de la PRIMERA RIMA: el primer beat que habla de rimar/improvisar (o, si la petición lo pide, el de la decisión)
@@ -128,11 +128,14 @@ export function llmArcAuthor(llm: LlmClient, opts: ArcAuthorOptions = {}): ArcAu
       type Out = z.infer<typeof SceneOut>; type Acc = { beat: (typeof arc.beats)[number]; out: Out; lines: GateLine[]; issues: GateIssue[] };
       const accepted: Acc[] = [], done: { n: number; title: string; location: string; text: string }[] = [], prev: { text: string; change: string; lines: string[]; speakers: string[]; state?: string; does?: string }[] = []; let kapSpoke = false;
       for (let i = 0; i < arc.beats.length; i++) {
-        const beat = arc.beats[i], brief = { stage: beat.stage, fn: beat.fn, summary: beat.summary, change: beat.change, why: beat.why, location: beat.location, characters: beat.characters, time: beat.time, interior: beat.interior, shot: beat.shot, visual: beat.visual, ...(beat.stage === "consecuencia" ? { costeQueSeDebeVer: arc.cost } : {}), ...(behaviorOf.get(i) ? { comportamientoDeKAP: behaviorOf.get(i) } : {}) };
+        // CAUSALIDAD: la escena hereda lo que cambió en la anterior (y lo que la conducta de KAP dejó abierto): no empieza con un problema recién inventado
+        const last = prev.at(-1), pb = behaviorOf.get(i - 1), pending = pb ? [pb.provokes, pb.reaction].filter(Boolean).join(" → ") : undefined;
+        const inherit = last ? { cambio: last.change, kapHizo: last.does || undefined, ...(pending ? { quedaAbierto: pending } : {}) } : undefined;
+        const beat = arc.beats[i], brief = { stage: beat.stage, fn: beat.fn, summary: beat.summary, change: beat.change, why: beat.why, location: beat.location, characters: beat.characters, time: beat.time, interior: beat.interior, shot: beat.shot, visual: beat.visual, ...(beat.stage === "consecuencia" ? { costeQueSeDebeVer: arc.cost } : {}), ...(behaviorOf.get(i) ? { comportamientoDeKAP: behaviorOf.get(i) } : {}), ...(inherit ? { heredaDeLaEscenaAnterior: inherit } : {}) };
         const sibling = siblingOf(beat.characters), hasKap = beat.characters.some((c) => norm(c) === "kap");
         const mode = i === rhymeBeat ? "first-rhyme" as const : !kapSpoke && hasKap && !skipOpening ? "opening" as const : undefined;
         const contextTerms = [beat.summary, beat.change, beat.visual, beat.location, ...beat.characters, request.notes, i === rhymeBeat ? arc.problem : ""], base = `${mode ? RIMA_RULES : ""}${sibling ? SIBLING_RULES : ""}`;
-        const check = (lines: GateLine[], change: string, decl?: { kapDoes: string; kapState: string }) => checkScene({ kapDoes: decl?.kapDoes, kapState: decl?.kapState, scene: { lines, change }, previous: prev, speakers: beat.characters, memoryOutside, siblingName: sibling, rhyme: mode ? { mode, contextTerms } : undefined, isLast: i === arc.beats.length - 1, cost: beat.stage === "consecuencia" ? arc.cost : undefined });
+        const check = (lines: GateLine[], change: string, decl?: { kapDoes: string; kapState: string }) => checkScene({ kapDoes: decl?.kapDoes, kapState: decl?.kapState, scene: { lines, change }, previous: prev, speakers: beat.characters, memoryOutside, siblingName: sibling, rhyme: mode ? { mode, contextTerms } : undefined, isLast: i === arc.beats.length - 1, cost: beat.stage === "consecuencia" ? arc.cost : undefined, pending, locationChanged: !!accepted.length && norm(accepted.at(-1)!.beat.location) !== norm(beat.location) });
         const gen = async (extra: string, n: number) => call(SceneOut, { ...sceneOpts(n * 0.05), prompt: scenePrompt(context, arcView, done, i, arc.beats.length, brief, base + extra) });
         // (a) generar; (b) reparar EN CÓDIGO lo que se pueda; (c) solo si queda un problema de toda la escena, regenerarla (máx. B.general veces, con TODAS las razones agrupadas)
         let best: Acc | undefined, regens = 0, res = await gen("", 0);
@@ -150,7 +153,7 @@ export function llmArcAuthor(llm: LlmClient, opts: ArcAuthorOptions = {}): ArcAu
         const keep = best!, essential = i === 0 || i === arc.beats.length - 1 || arc.beats.filter((x) => x.stage === beat.stage).length === 1;
         if (isBlocking(keep.issues) && needsSceneRegen(keep.issues) && !essential) { dropped++; warnings.push(`Escena del beat ${i + 1} («${clip(beat.summary, 60)}») eliminada: ${keep.issues.filter((x) => x.blocking).map((x) => x.text).join(" ")}`); continue; }
         // (d) reparaciones LOCALES (rima, voz, hermano, mención, cierre): una sola llamada pequeña por ronda con TODAS las líneas afectadas; cada motivo con su tope
-        const used: Record<string, number> = { rima: 0, cierre: 0, voz: 0 }, lines = keep.lines, budget = (k: GateIssueKind) => (k === "rima-invalida" ? ["rima", B.rhyme] as const : k === "cierre-reflexivo" || k === "cierre-desconectado" ? ["cierre", B.closing] as const : ["voz", B.voice] as const);
+        const used: Record<string, number> = { rima: 0, cierre: 0, voz: 0, causa: 0 }, lines = keep.lines, budget = (k: GateIssueKind) => (k === "rima-invalida" ? ["rima", B.rhyme] as const : k === "cierre-reflexivo" || k === "cierre-desconectado" ? ["cierre", B.closing] as const : k === "sin-antecedente" ? ["causa", B.voice] as const : ["voz", B.voice] as const);
         let issues = keep.issues;
         for (let round = 0; round < Math.max(B.rhyme, B.closing, B.voice); round++) {
           const targets = new Map<number, string[]>(), kinds: GateIssueKind[] = [];
@@ -166,7 +169,7 @@ export function llmArcAuthor(llm: LlmClient, opts: ArcAuthorOptions = {}): ArcAu
         if (mode) { const rv = sceneRhyme(lines, { mode, contextTerms }).check.rhyme_valid; if (mode === "first-rhyme" || rhymeValid === undefined) rhymeValid = rv; }
         if (lines.some((l) => norm(l.speaker ?? "") === "kap")) kapSpoke = true;
         accepted.push({ ...keep, lines, issues }); const text = lines.map((l) => l.text).join(" ");
-        done.push({ n: accepted.length, title: keep.out.title, location: beat.location, text: `${clip(text, 240)} · KAP: ${keep.out.kapDoes || "—"} (${keep.out.kapState || "—"})` }); prev.push({ text, change: keep.out.change, lines: lines.map((l) => l.text), speakers: lines.map((l) => l.speaker ?? ""), state: keep.out.kapState, does: keep.out.kapDoes });
+        done.push({ n: accepted.length, title: keep.out.title, location: beat.location, text: `${clip(text, 240)} · KAP: ${keep.out.kapDoes || "—"} (${keep.out.kapState || "—"}) · cambió: ${clip(keep.out.change, 120)}` }); prev.push({ text, change: keep.out.change, lines: lines.map((l) => l.text), speakers: lines.map((l) => l.speaker ?? ""), state: keep.out.kapState, does: keep.out.kapDoes });
       }
 
       // 3) MEMORIA: actos y gancho los fija el código sobre las escenas FINALES; lo del modelo solo pasa si es una directiva válida
@@ -193,7 +196,7 @@ export function llmArcAuthor(llm: LlmClient, opts: ArcAuthorOptions = {}): ArcAu
       // revisión narrativa: avisa, no bloquea
       const review = reviewNarrative({ scenes: scenes.map((s) => ({ location: s.location, title: s.title, lines: s.lines.map((l) => ({ speaker: l.speaker, text: l.text })), fn: s.fn, stage: s.stage, shot: s.shot, time: s.time, interior: s.interior })), hook: arc.hook, knownCharacters: context.relevantCharacters, allowedCharacters: [...permitted].map((n) => defaultCast.concat(arc.newCharacters.map((c) => c.name), arc.extraCharacters.map((c) => c.name)).find((x) => norm(x) === n) ?? n), previousEpisodes: hints?.previousEpisodes, acts: [...actSeen] });
       const idxOf = (sc: (typeof scenes)[number]) => scenes.indexOf(sc);
-      const realism = kapRealismCheck({ scenes: scenes.map((s) => ({ location: s.location, title: s.title, lines: s.lines.map((l) => ({ speaker: l.speaker, text: l.text })), fn: s.fn, stage: s.stage, kapDoes: accepted[idxOf(s)]?.out.kapDoes, kapState: accepted[idxOf(s)]?.out.kapState })), contextTerms: [request.notes, scenes[0]?.location ?? "", scenes.slice(0, 2).flatMap((s) => s.lines.map((l) => l.text)).join(" ")] });
+      const realism = kapRealismCheck({ scenes: scenes.map((s) => ({ location: s.location, title: s.title, lines: s.lines.map((l) => ({ speaker: l.speaker, text: l.text })), fn: s.fn, stage: s.stage, kapDoes: accepted[idxOf(s)]?.out.kapDoes, kapState: accepted[idxOf(s)]?.out.kapState, change: accepted[idxOf(s)]?.out.change })), contextTerms: [request.notes, scenes[0]?.location ?? "", scenes.slice(0, 2).flatMap((s) => s.lines.map((l) => l.text)).join(" ")] });
       self.lastRealism = realism; for (const c of realism.checks.filter((x) => !x.ok)) warnings.push(`KAP_REALISM_CHECK · ${c.id}${c.note ? `: ${c.note}` : ""}`);
       self.lastReview = review; self.lastGate = { regenerated, dropped, localPatches, codeRepairs, arcRevisions, issues: gateIssues, rhyme_valid: rhymeValid }; for (const f of review) warnings.push(`Narrativa (${f.severity}) · ${f.rule.replace("narrativa-", "")}: ${f.text}`);
       const stats: AuthorStats = { attempts: calls, retries: Math.max(0, calls - (1 + arc.beats.length)), jsonErrors: logs.filter((l) => l.kind === "json").length, schemaErrors: logs.filter((l) => l.kind === "schema").length, lengthRetries: 0, memoryDirectiveErrors: droppedDirectives, usage: sumUsage(usages), estimatedSec: secs, scenesRegenerated: regenerated, scenesDropped: dropped, gateIssues, localPatches, codeRepairs, arcRevisions, rhymeValid, patchKinds, endingRevisions, varietyRevisions, realism: { passed: realism.passed, total: realism.total, failed: realism.failed } };
