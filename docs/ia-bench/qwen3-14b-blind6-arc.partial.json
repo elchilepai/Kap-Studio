@@ -1,0 +1,711 @@
+{
+ "meta": {
+  "model": "qwen3:14b",
+  "phase": "blind6",
+  "ctx": 8192,
+  "date": "2026-11-19T22:57:19.410Z",
+  "cpus": 4,
+  "ramGb": 16,
+  "host": "CPU sin GPU"
+ },
+ "partial": true,
+ "results": [
+  {
+   "id": "E13",
+   "title": "Episodio 13",
+   "request": "Crea el episodio 13, a continuación del episodio 3. KAP encuentra en la calle un teléfono móvil que alguien ha perdido y, mientras lo tiene en la mano, empieza a sonar con la llamada de alguien que parece muy preocupado. KAP no sabe si contestar, devolverlo o esperar a pensar qué hacer, y Dani, que lo ha visto, quiere quedarse con el teléfono.",
+   "ms": 4954110,
+   "peakMb": 13137,
+   "sysPeakMb": 13753,
+   "contextTokens": 1933,
+   "ok": true,
+   "irValid": true,
+   "irValidFirstTry": false,
+   "json": {
+    "attempts": 20,
+    "retries": 11,
+    "jsonErrors": 0,
+    "schemaErrors": 0,
+    "lengthRetries": 0,
+    "memoryDirectiveErrors": 0
+   },
+   "irErrors": [],
+   "usage": {
+    "promptTokens": 94239,
+    "outputTokens": 6246,
+    "totalMs": 4953937.860116,
+    "loadMs": 9401.246997000004,
+    "promptMs": 1045162.3449999999,
+    "evalMs": 3892187.782999999
+   },
+   "tokensPerSec": 1.6,
+   "episode": {
+    "scenes": 8,
+    "estimatedSec": 135,
+    "words": 376,
+    "title": "Episodio 13: El teléfono que no devolvió",
+    "logline": "KAP encuentra un teléfono en la calle, y mientras lo tiene en la mano, suena con una llamada urgente. Dani quiere quedárselo, y KAP debe decidir qué hacer."
+   },
+   "continuity": {
+    "critical": [],
+    "warnings": [
+     "duracion: El episodio dura ≈ 2.6 min y el formato es ≈ 5 min (4–6 min)."
+    ],
+    "info": 3
+   },
+   "narrative": {
+    "error": 0,
+    "warning": 2,
+    "info": 0,
+    "rules": [
+     "dialogo-duplicado",
+     "localizacion-estancada"
+    ],
+    "findings": [
+     {
+      "severity": "warning",
+      "rule": "narrativa-dialogo-duplicado",
+      "text": "La frase «Sí… sí, soy yo.» aparece 2 veces (escenas 5, 6).",
+      "scene": 4
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-localizacion-estancada",
+      "text": "8 escenas seguidas (1-8) en «Calle de noche»: ¿hace falta cambiar de lugar, de momento o de plano?",
+      "scene": 0
+     }
+    ],
+    "taggedRules": [
+     "dialogo-duplicado",
+     "localizacion-estancada",
+     "ayuda-externa",
+     "poca-variedad-visual"
+    ]
+   },
+   "mode": "arc",
+   "arc": {
+    "title": "Episodio 13: El teléfono que no devolvió",
+    "logline": "KAP encuentra un teléfono en la calle, y mientras lo tiene en la mano, suena con una llamada urgente. Dani quiere quedárselo, y KAP debe decidir qué hacer.",
+    "assumptions": [
+     "El teléfono no pertenece a un personaje de la serie, por lo que su dueño no aparecerá ni se mencionará directamente.",
+     "El episodio se desarrolla en la calle y en un lugar cercano, como una acera o un parque."
+    ],
+    "problem": "KAP encuentra un teléfono móvil en la calle, que comienza a sonar con una llamada urgente. Dani aparece y le ofrece quedárselo.",
+    "kapWant": "KAP quiere hacer lo correcto, pero no sabe si devolver el teléfono o usarlo para ayudar a alguien.",
+    "kapChoice": "KAP decide contestar la llamada para ver quién está al otro lado, pero al hacerlo, revela su ubicación y se pone en peligro.",
+    "cost": "KAP pierde la oportunidad de devolver el teléfono con discreción, y ahora debe enfrentarse a una situación incómoda por haber intervenido.",
+    "consequence": "La persona que llama está muy preocupada y le pregunta directamente si es KAP. KAP no puede negarlo y se ve obligado a revelar su presencia.",
+    "outcome": "KAP termina el episodio en una situación incómoda, con Dani mirándolo de forma desconfiada y la persona al teléfono aún涮",
+    "setting": {
+     "main": "Calle de noche",
+     "secondary": [
+      "Parque cercano",
+      "Acerca de un edificio"
+     ],
+     "timeOfDay": "Noche",
+     "transitions": [
+      "más tarde esa noche",
+      "al día siguiente (parcialmente)"
+     ]
+    },
+    "hook": "La persona al otro lado de la llamada le dice: '¿Eres tú, KAP? Estamos buscándote'.",
+    "extraCharacters": [],
+    "castActions": [
+     {
+      "name": "Dani",
+      "does": "intenta tomar el teléfono de KAP y le ofrece quedárselo, diciendo que puede usarlo para algo más 'importante'"
+     }
+    ],
+    "usedFromMemory": [
+     "KAP",
+     "Dani",
+     "Situación familiar de KAP (padres y drogas)",
+     "Bullying hacia KAP",
+     "Cuidar y proteger a su hermano",
+     "Dani acosa a KAP"
+    ],
+    "newCharacters": [],
+    "newPlaces": [],
+    "behaviorBeats": [
+     {
+      "beat": 1,
+      "kind": "impulso",
+      "does": "KAP levanta el teléfono al escuchar la llamada, con expresión de duda.",
+      "provokes": "Dani lo mira con interés y se acerca."
+     },
+     {
+      "beat": 3,
+      "kind": "error",
+      "does": "KAP decide contestar la llamada sin pensarlo demasiado.",
+      "provokes": "La persona al otro lado reconoce su voz, lo que pone a KAP en una situación incómoda."
+     },
+     {
+      "beat": 5,
+      "kind": "interrupcion",
+      "does": "KAP intenta colgar, pero la persona le pregunta directamente si es él.",
+      "provokes": "KAP se queda paralizado, sin saber qué hacer."
+     }
+    ],
+    "beats": [
+     {
+      "stage": "inicio",
+      "fn": "avanzar-historia",
+      "summary": "KAP camina por la calle de noche cuando encuentra un teléfono en el suelo. Lo recoge y mira alrededor, inseguro.",
+      "location": "Calle de noche",
+      "characters": [
+       "KAP"
+      ],
+      "change": "KAP tiene ahora un objeto nuevo: el teléfono.",
+      "why": "Es el inicio del episodio, con KAP en su entorno habitual de la noche.",
+      "time": "noche",
+      "interior": false,
+      "shot": "general",
+      "visual": "El teléfono brilla en la calle oscura."
+     },
+     {
+      "stage": "problema",
+      "fn": "conflicto",
+      "summary": "El teléfono empieza a sonar. KAP lo mira, inseguro. Dani aparece detrás de él y le ofrece quedárselo.",
+      "location": "Calle de noche",
+      "characters": [
+       "KAP",
+       "Dani"
+      ],
+      "change": "KAP se siente dividido entre devolver el teléfono o usarlo.",
+      "why": "Introduce el conflicto principal del episodio: el teléfono y la presencia de Dani.",
+      "time": "noche",
+      "interior": false,
+      "shot": "medio",
+      "visual": "KAP sostiene el teléfono, con Dani a su lado mirándolo."
+     },
+     {
+      "stage": "escalada",
+      "fn": "desarrollar-personaje",
+      "summary": "Dani insiste en que KAP le dé el teléfono. KAP se resiste, pero no sabe qué hacer.",
+      "location": "Calle de noche",
+      "characters": [
+       "KAP",
+       "Dani"
+      ],
+      "change": "KAP se siente presionado por Dani y por la situación del teléfono.",
+      "why": "KAP muestra su inseguridad y miedo al enfrentarse a Dani.",
+      "time": "noche",
+      "interior": false,
+      "shot": "primer plano",
+      "visual": "KAP mira a Dani con expresión de duda."
+     },
+     {
+      "stage": "decision",
+      "fn": "preparar-consecuencia",
+      "summary": "KAP decide contestar la llamada. La voz al otro lado le pregunta si es él, y KAP confirma sin pensarlo.",
+      "location": "Calle de noche",
+      "characters": [
+       "KAP"
+      ],
+      "change": "KAP ha tomado una decisión que lo pone en peligro.",
+      "why": "La llamada introduce un nuevo giro inesperado y pone a KAP en una situación incómoda.",
+      "time": "noche",
+      "interior": false,
+      "shot": "general",
+      "visual": "KAP habla al teléfono, con Dani mirándolo desde atrás."
+     },
+     {
+      "stage": "consecuencia",
+      "fn": "revelar-informacion",
+      "summary": "La persona al otro lado del teléfono le dice: '¿Eres tú, KAP? Estamos buscándote'. KAP se queda inmóvil, sin saber qué hacer.",
+      "location": "Calle de noche",
+      "characters": [
+       "KAP"
+      ],
+      "change": "KAP está ahora en una situación aún más incómoda y expuesta.",
+      "why": "La llamada revela que alguien está buscando a KAP, generando tensión y misterio.",
+      "time": "Noche",
+      "interior": false,
+      "shot": "medio",
+      "visual": "KAP mira al teléfono con expresión de sorpresa y miedo."
+     },
+     {
+      "stage": "resolucion",
+      "fn": "preparar-gancho",
+      "summary": "KAP intenta colgar, pero la persona le pregunta directamente si es él. KAP se queda callado y mira a Dani con expresión de culpa.",
+      "location": "Calle de noche",
+      "characters": [
+       "KAP",
+       "Dani"
+      ],
+      "change": "La situación se ha tensado y KAP no sabe cómo salir de ella.",
+      "why": "KAP siente culpa al no responder directamente, lo que aumenta la incertidumbre.",
+      "time": "Noche",
+      "interior": false,
+      "shot": "general",
+      "visual": "KAP mira a Dani, quien lo observa con expresión de desconfianza."
+     },
+     {
+      "stage": "gancho",
+      "fn": "preparar-gancho",
+      "summary": "La persona al otro lado del teléfono repite: '¿Eres tú, KAP? Estamos buscándote'. KAP no responde y el teléfono se queda en silencio.",
+      "location": "Calle de noche",
+      "characters": [
+       "KAP"
+      ],
+      "change": "Se deja una pregunta abierta sobre quién está buscando a KAP y por qué.",
+      "why": "La repetición de la frase y el silencio de KAP dejan en suspenso la situación.",
+      "time": "Noche",
+      "interior": false,
+      "shot": "general",
+      "visual": "KAP se queda quieto, mirando al suelo."
+     },
+     {
+      "stage": "gancho",
+      "fn": "preparar-gancho",
+      "summary": "Dani le dice a KAP: '¿Quién te está buscando?' KAP no responde y se aleja.",
+      "location": "Calle de noche",
+      "characters": [
+       "KAP",
+       "Dani"
+      ],
+      "change": "Se deja una pregunta abierta sobre quién está buscando a KAP y por qué.",
+      "why": "El episodio termina con un giro inesperado que prepara el siguiente episodio.",
+      "time": "noche",
+      "interior": false,
+      "shot": "general",
+      "visual": "KAP se aleja, con Dani mirándolo desde atrás."
+     }
+    ]
+   },
+   "variety": {
+    "locations": 1,
+    "dominantShare": 1,
+    "times": 1,
+    "timeSource": "declarado"
+   },
+   "show": {
+    "realism": {
+     "passed": 6,
+     "total": 9,
+     "failed": [
+      "decision-real",
+      "decision-con-consecuencia",
+      "final-nace-de-la-accion"
+     ]
+    },
+    "explainLinesKap": 0,
+    "kapLines": 15,
+    "validationLinesSecondary": 0,
+    "secondaryLines": 8,
+    "costVisible": false,
+    "closing": {
+     "problem": false,
+     "reason": null
+    }
+   },
+   "realismGenerador": {
+    "passed": 7,
+    "total": 12,
+    "failed": [
+     "decision-real",
+     "decision-con-consecuencia",
+     "final-nace-de-la-accion",
+     "kap-actua",
+     "no-demasiado-reflexivo"
+    ]
+   },
+   "openingRhymeCheck": {
+    "present": true,
+    "rhyme_valid": false,
+    "natural": true,
+    "contextual": true,
+    "rhythm": false,
+    "level": "ninguna"
+   },
+   "script": "# Calle de noche\n[mood: noche, exterior]\n[plano: general]\n[expresion: KAP, pensativo]\n[gesto: KAP, senala]\n[camara: zoom 1.2]\n(acción) KAP se agacha y recoge el teléfono, lo mira un momento y luego lo enciende. De repente, suena una llamada; KAP lo mira con ojos muy grandes, sin saber qué hacer.\nKAP: KAP: El teléfono está brillando… ¿y si le digo que está aquí?\nKAP: KAP: El ruido del teléfono me recuerda al perro de la vecina… ¡también hace eso!\nKAP: KAP: El teléfono no para… ¿y si le digo que está perdido?\n[acto: inicio | KAP camina por la calle de noche cuando encuentra un teléfono en el suelo. Lo recoge y mira alrededor, inseguro.]\n[obtiene: KAP, teléfono]\n\n# Calle de noche\n[mood: noche, exterior]\n[plano: medio KAP]\n[gesto: Dani senala]\n[entra: Dani derecha]\n[mira: KAP izquierda]\nEl teléfono empieza a sonar con un tono insistente, interrumpiendo el silencio de la calle.\nKAP: ¿Eh? ¿Qué…?\nDANI: ¿Qué es eso? ¿Un teléfono?\nKAP: No sé… Es que…\nDANI: Vamos, KAP. Déjame el teléfono. Puedo usarlo para algo más importante.\n[acto: conflicto | El teléfono empieza a sonar. KAP lo mira, inseguro. Dani aparece detrás de él y le ofrece quedárselo.]\n\n# Calle de noche\n[mood: noche, exterior]\n[plano: primer plano KAP]\n[camara: zoom 1.2]\nKAP: No… no sé si es mío…\nDANI: ¿Y quién va a devolverlo si no lo usas? ¿Eh?\nKAP: No sé… tal vez alguien lo está buscando…\n[acto: desarrollo | Dani insiste en que KAP le dé el teléfono. KAP se resiste, pero no sabe qué hacer.]\n\n# Calle de noche\n[mood: noche, exterior]\n[plano: general]\nKAP levanta el teléfono con manos temblorosas y lo lleva a su oreja. La llamada suena más fuerte ahora, como si alguien al otro lado estuviera gritando.\nKAP: H-hola… ¿sí? ¿Quién es?\nLa voz al otro lado del teléfono suspira con alivio y dice: '¿Eres tú, KAP? Estamos buscándote.'\nKAP: ¿Yo…? S-sí. ¿Quién es?\nKAP se queda inmóvil, con el teléfono aún pegado a su oreja, mientras Dani lo observa desde atrás, con los brazos cruzados y una mirada curiosa.\n[acto: emocional | KAP decide contestar la llamada. La voz al otro lado le pregunta si es él, y KAP confirma sin pensarlo.]\n\n# Calle de noche\n[mood: Noche, exterior]\n[plano: medio KAP]\n[expresion: KAP preocupado]\n[camara: seguir KAP]\nKAP: Sí… sí, soy yo.\n¡Por fin! Estamos buscándote. ¿Dónde estás?\nKAP: No… no sé…\n¿Estás solo?\n\n# Calle de noche\n[mood: Noche, exterior]\n[plano: general]\n[expresion: KAP sorprendido]\n[gesto: KAP levanta]\nKAP: No… no sé…\nPERSONA EN EL TELÉFONO: ¿Eres tú, KAP? Estamos buscándote.\nKAP: …sí… sí, soy yo.\nPERSONA EN EL TELÉFONO: ¡Por fin! ¿Dónde estás?\nKAP: …no sé… no sé dónde estoy.\nDANI: ¿Quién te está buscando?\n[acto: resolucion | KAP intenta colgar, pero la persona le pregunta directamente si es él. KAP se queda callado y mira a Dani con expresión de culpa.]\n\n# Calle de noche\n[mood: Noche, exterior]\n[plano: general]\n[mira: KAP izquierda]\n[camara: seguir KAP]\nLa persona al otro lado del teléfono repite con voz temblorosa: '¿Eres tú, KAP? Estamos buscándote'.\nKAP: KAP no responde. Su mirada se baja al suelo, y sus manos se quedan quietas junto al teléfono.\nEl teléfono se queda en silencio. No hay más sonidos que el viento frío de la noche.\n[acto: gancho | La persona al otro lado del teléfono repite: '¿Eres tú, KAP? Estamos buscándote'. KAP no responde y el teléfono se queda en silencio.]\n\n# Calle de noche\n[mood: noche, exterior]\n[plano: general]\n[expresion: KAP, preocupado]\n[mira: KAP, derecha]\n[camina: KAP, a izquierda]\nDANI: ¿Y si te están buscando por algo malo?\nKAP se queda mirando al suelo, con el teléfono aún en la mano. No dice nada.\nDANI: Vamos, KAP. Si no quieres hablar, al menos dime qué pasa.\n(acción) KAP hace una pausa, luego se da la vuelta y empieza a caminar lentamente hacia la oscuridad de la calle, como si el peso de la pregunta de Dani ya lo estuviera arrastrando lejos de allí.\n[gancho: La persona al otro lado de la llamada le dice: '¿Eres tú, KAP? Estamos buscándote'.]\n",
+   "gate": {
+    "regenerated": 4,
+    "dropped": 0,
+    "localPatches": 6,
+    "patchKinds": {
+     "kap-no-actua": 3,
+     "rima-invalida": 2,
+     "coste-ausente": 1,
+     "cierre-desconectado": 1
+    },
+    "endingRevisions": 0,
+    "varietyRevisions": 1,
+    "codeRepairs": 2,
+    "arcRevisions": 1,
+    "rhymeValid": false,
+    "calls": 20,
+    "outputTokens": 6246,
+    "promptTokens": 94239,
+    "issues": {
+     "episodio-plano": 1,
+     "kap-no-actua": 3,
+     "rima-invalida": 1,
+     "corta": 9,
+     "repite-frase": 4,
+     "sin-cambio": 3,
+     "cierre-desconectado": 1
+    }
+   },
+   "outcome": "KAP termina el episodio en una situación incómoda, con Dani mirándolo de forma desconfiada y la persona al teléfono aún涮",
+   "checks": [
+    {
+     "id": "estructura-6-actos",
+     "ok": true,
+     "note": "faltan: —"
+    },
+    {
+     "id": "gancho",
+     "ok": true
+    },
+    {
+     "id": "protagonista",
+     "ok": true
+    },
+    {
+     "id": "sin-errores-criticos",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "sin-exito-prematuro",
+     "ok": true
+    },
+    {
+     "id": "directivas-validas",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "espanol",
+     "ok": true
+    },
+    {
+     "id": "diversidad-lexica",
+     "ok": true,
+     "note": "0.43"
+    }
+   ],
+   "compliance": 1,
+   "proxy": {
+    "score": 8,
+    "dialogueRatio": 0.68,
+    "locations": 1,
+    "repeatedSentences": 0
+   },
+   "warnings": [
+    "Variedad: todas las escenas ocurren en «Calle de noche» y a la misma hora (noche), aunque el arco declara escenarios o transiciones posibles.",
+    "Escena 1: KAP habla o piensa pero no hace nada: haz que HAGA algo concreto y visible (algo impulsivo, esconder algo, intentar arreglar algo y empeorarlo, interrumpir, probar una solución improvisada) y que otro personaje reaccione. La acción va en la línea narrada.",
+    "Escena 1: La rima de KAP no vale: los versos son largos o desiguales; hazlos cortos y parejos, fáciles de decir en voz alta; los finales de los versos no riman ni de forma aproximada (brillando, aquí, vecina, eso).",
+    "Escena 2: Escena corta (37 palabras): puede ser correcto si la acción y la consecuencia están claras.",
+    "Escena 2: KAP habla o piensa pero no hace nada: haz que HAGA algo concreto y visible (algo impulsivo, esconder algo, intentar arreglar algo y empeorarlo, interrumpir, probar una solución improvisada) y que otro personaje reaccione. La acción va en la línea narrada.",
+    "Escena 3: Escena corta (24 palabras): puede ser correcto si la acción y la consecuencia están claras."
+   ],
+   "draft": {
+    "title": "Episodio 13: El teléfono que no devolvió",
+    "logline": "KAP encuentra un teléfono en la calle, y mientras lo tiene en la mano, suena con una llamada urgente. Dani quiere quedárselo, y KAP debe decidir qué hacer.",
+    "assumptions": [
+     "El teléfono no pertenece a un personaje de la serie, por lo que su dueño no aparecerá ni se mencionará directamente.",
+     "El episodio se desarrolla en la calle y en un lugar cercano, como una acera o un parque."
+    ],
+    "scenes": [
+     {
+      "title": "Episodio 13: El teléfono que no devolvió",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "(acción) KAP se agacha y recoge el teléfono, lo mira un momento y luego lo enciende. De repente, suena una llamada; KAP lo mira con ojos muy grandes, sin saber qué hacer."
+       },
+       {
+        "speaker": "KAP",
+        "text": "KAP: El teléfono está brillando… ¿y si le digo que está aquí?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "KAP: El ruido del teléfono me recuerda al perro de la vecina… ¡también hace eso!"
+       },
+       {
+        "speaker": "KAP",
+        "text": "KAP: El teléfono no para… ¿y si le digo que está perdido?"
+       }
+      ],
+      "memory": [
+       "acto: inicio | KAP camina por la calle de noche cuando encuentra un teléfono en el suelo. Lo recoge y mira alrededor, inseguro.",
+       "obtiene: KAP, teléfono"
+      ],
+      "fn": "avanzar-historia",
+      "stage": "inicio",
+      "shot": "general",
+      "time": "noche",
+      "interior": false,
+      "directions": [
+       "plano: general",
+       "expresion: KAP, pensativo",
+       "gesto: KAP, señala el teléfono",
+       "camara: zoom 1.2 sobre el teléfono"
+      ],
+      "change": "KAP tiene ahora un objeto nuevo: el teléfono."
+     },
+     {
+      "title": "Episodio 13: El teléfono que no devolvió",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "El teléfono empieza a sonar con un tono insistente, interrumpiendo el silencio de la calle."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Eh? ¿Qué…?"
+       },
+       {
+        "speaker": "Dani",
+        "text": "¿Qué es eso? ¿Un teléfono?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "No sé… Es que…"
+       },
+       {
+        "speaker": "Dani",
+        "text": "Vamos, KAP. Déjame el teléfono. Puedo usarlo para algo más importante."
+       }
+      ],
+      "memory": [
+       "acto: conflicto | El teléfono empieza a sonar. KAP lo mira, inseguro. Dani aparece detrás de él y le ofrece quedárselo."
+      ],
+      "fn": "conflicto",
+      "stage": "problema",
+      "shot": "medio",
+      "time": "noche",
+      "interior": false,
+      "directions": [
+       "plano: medio KAP",
+       "gesto: Dani senala el teléfono",
+       "entra: Dani derecha",
+       "mira: KAP izquierda"
+      ],
+      "change": "KAP se siente dividido entre devolver el teléfono o usarlo."
+     },
+     {
+      "title": "Episodio 13: El teléfono que no devolvió",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "KAP",
+        "text": "No… no sé si es mío…"
+       },
+       {
+        "speaker": "Dani",
+        "text": "¿Y quién va a devolverlo si no lo usas? ¿Eh?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "No sé… tal vez alguien lo está buscando…"
+       }
+      ],
+      "memory": [
+       "acto: desarrollo | Dani insiste en que KAP le dé el teléfono. KAP se resiste, pero no sabe qué hacer."
+      ],
+      "fn": "desarrollar-personaje",
+      "stage": "escalada",
+      "shot": "primer plano",
+      "time": "noche",
+      "interior": false,
+      "directions": [
+       "plano: primer plano KAP",
+       "camara: zoom 1.2"
+      ],
+      "change": "KAP se siente presionado por Dani y por la situación del teléfono."
+     },
+     {
+      "title": "Episodio 13: El teléfono que no devolvió",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP levanta el teléfono con manos temblorosas y lo lleva a su oreja. La llamada suena más fuerte ahora, como si alguien al otro lado estuviera gritando."
+       },
+       {
+        "speaker": "KAP",
+        "text": "H-hola… ¿sí? ¿Quién es?"
+       },
+       {
+        "speaker": "",
+        "text": "La voz al otro lado del teléfono suspira con alivio y dice: '¿Eres tú, KAP? Estamos buscándote.'"
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Yo…? S-sí. ¿Quién es?"
+       },
+       {
+        "speaker": "",
+        "text": "KAP se queda inmóvil, con el teléfono aún pegado a su oreja, mientras Dani lo observa desde atrás, con los brazos cruzados y una mirada curiosa."
+       }
+      ],
+      "memory": [
+       "acto: emocional | KAP decide contestar la llamada. La voz al otro lado le pregunta si es él, y KAP confirma sin pensarlo."
+      ],
+      "fn": "preparar-consecuencia",
+      "stage": "decision",
+      "shot": "general",
+      "time": "noche",
+      "interior": false,
+      "directions": [
+       "plano: general"
+      ],
+      "change": "KAP ha tomado una decisión que lo pone en peligro."
+     },
+     {
+      "title": "Episodio 13: El teléfono que no devolvió",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "KAP",
+        "text": "Sí… sí, soy yo."
+       },
+       {
+        "speaker": "",
+        "text": "¡Por fin! Estamos buscándote. ¿Dónde estás?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "No… no sé…"
+       },
+       {
+        "speaker": "",
+        "text": "¿Estás solo?"
+       }
+      ],
+      "memory": [],
+      "fn": "revelar-informacion",
+      "stage": "consecuencia",
+      "shot": "medio",
+      "time": "Noche",
+      "interior": false,
+      "directions": [
+       "plano: medio KAP",
+       "expresion: KAP asustado",
+       "camara: seguir KAP"
+      ],
+      "change": "KAP se ha expuesto al revelar su ubicación y su nombre, poniéndose en una situación incómoda y potencialmente peligrosa."
+     },
+     {
+      "title": "Episodio 13: El teléfono que no devolvió",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "KAP",
+        "text": "No… no sé…"
+       },
+       {
+        "speaker": "Persona en el teléfono",
+        "text": "¿Eres tú, KAP? Estamos buscándote."
+       },
+       {
+        "speaker": "KAP",
+        "text": "…sí… sí, soy yo."
+       },
+       {
+        "speaker": "Persona en el teléfono",
+        "text": "¡Por fin! ¿Dónde estás?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "…no sé… no sé dónde estoy."
+       },
+       {
+        "speaker": "Dani",
+        "text": "¿Quién te está buscando?"
+       }
+      ],
+      "memory": [
+       "acto: resolucion | KAP intenta colgar, pero la persona le pregunta directamente si es él. KAP se queda callado y mira a Dani con expresión de culpa."
+      ],
+      "fn": "preparar-gancho",
+      "stage": "resolucion",
+      "shot": "general",
+      "time": "Noche",
+      "interior": false,
+      "directions": [
+       "plano: general",
+       "expresion: KAP sorprendido",
+       "gesto: KAP levanta el teléfono a su oreja"
+      ],
+      "change": "La situación se ha tensado y KAP no sabe cómo salir de ella."
+     },
+     {
+      "title": "Episodio 13: El teléfono que no devolvió",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "La persona al otro lado del teléfono repite con voz temblorosa: '¿Eres tú, KAP? Estamos buscándote'."
+       },
+       {
+        "speaker": "KAP",
+        "text": "KAP no responde. Su mirada se baja al suelo, y sus manos se quedan quietas junto al teléfono."
+       },
+       {
+        "speaker": "",
+        "text": "El teléfono se queda en silencio. No hay más sonidos que el viento frío de la noche."
+       }
+      ],
+      "memory": [
+       "acto: gancho | La persona al otro lado del teléfono repite: '¿Eres tú, KAP? Estamos buscándote'. KAP no responde y el teléfono se queda en silencio."
+      ],
+      "fn": "preparar-gancho",
+      "stage": "gancho",
+      "shot": "general",
+      "time": "Noche",
+      "interior": false,
+      "directions": [
+       "plano: general",
+       "mira: KAP izquierda",
+       "camara: seguir KAP"
+      ],
+      "change": "La pregunta sobre quién está buscando a KAP y por qué se deja en el aire, generando tensión y misterio."
+     },
+     {
+      "title": "Episodio 13: El teléfono que no devolvió",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "Dani",
+        "text": "¿Y si te están buscando por algo malo?"
+       },
+       {
+        "speaker": "",
+        "text": "KAP se queda mirando al suelo, con el teléfono aún en la mano. No dice nada."
+       },
+       {
+        "speaker": "Dani",
+        "text": "Vamos, KAP. Si no quieres hablar, al menos dime qué pasa."
+       },
+       {
+        "speaker": "",
+        "text": "(acción) KAP hace una pausa, luego se da la vuelta y empieza a caminar lentamente hacia la oscuridad de la calle, como si el peso de la pregunta de Dani ya lo estuviera arrastrando lejos de allí."
+       }
+      ],
+      "memory": [
+       "gancho: La persona al otro lado de la llamada le dice: '¿Eres tú, KAP? Estamos buscándote'."
+      ],
+      "fn": "preparar-gancho",
+      "stage": "gancho",
+      "shot": "general",
+      "time": "noche",
+      "interior": false,
+      "directions": [
+       "plano: general",
+       "expresion: KAP, preocupado",
+       "mira: KAP, derecha",
+       "camina: KAP, a izquierda"
+      ],
+      "change": "Se deja una pregunta abierta sobre quién está buscando a KAP y por qué."
+     }
+    ]
+   }
+  }
+ ]
+}
