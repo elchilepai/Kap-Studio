@@ -1,0 +1,382 @@
+{
+ "number": 4,
+ "title": "Episodio 4: La llave perdida",
+ "request": "Crea el episodio 4, a continuación del episodio 3. Al volver del colegio, KAP se da cuenta de que ha perdido la llave de casa y su hermano pequeño ya lo está esperando en la puerta, con hambre y con prisa por entrar. KAP no quiere que nadie se entere de que la ha perdido y decide arreglarlo a su manera.",
+ "request_parsed": {
+  "number": 4,
+  "continuesFrom": 1003,
+  "exact": false,
+  "cast": [
+   "KAP"
+  ]
+ },
+ "generationMin": 113.3,
+ "scenes": 8,
+ "words": 444,
+ "estimatedSec": 160,
+ "irValid": true,
+ "irErrors": [],
+ "checks": {
+  "passed": 9,
+  "total": 13,
+  "failed": [
+   "decision-real",
+   "decision-con-consecuencia",
+   "ninguna-escena-eliminable",
+   "estados-variados"
+  ]
+ },
+ "gate": {
+  "regenerated": 3,
+  "localPatches": 3,
+  "codeRepairs": 0,
+  "dropped": 0,
+  "patchKinds": {
+   "rima-invalida": 1,
+   "kap-no-actua": 1,
+   "emocion-repetida": 2
+  },
+  "gateIssues": {
+   "rima-invalida": 1,
+   "repite-frase": 4,
+   "sin-cambio": 4,
+   "corta": 8,
+   "kap-no-actua": 1,
+   "emocion-repetida": 3
+  },
+  "arcRevisions": 0,
+  "endingRevisions": 0,
+  "varietyRevisions": 0,
+  "rhymeValid": false
+ },
+ "usage": {
+  "promptTokens": 87976,
+  "outputTokens": 6375,
+  "totalMs": 6797989.751471,
+  "loadMs": 8435.221795999998,
+  "promptMs": 1814613.765,
+  "evalMs": 4969558.520999
+ },
+ "calls": 15,
+ "retries": 6,
+ "warnings": [
+  "Escena 1: La rima de KAP no vale: los finales de los versos no riman ni de forma aproximada (perdí, vez).",
+  "Escena 2: La frase «¡Kap! ¡Ya te estuve esperando! ¡Vamos, entra ya! ¡Tengo hambre!» ya la había dicho el mismo personaje: no repitas diálogos.",
+  "Escena 2: La escena apenas añade información nueva respecto a lo ya escrito.",
+  "Escena 2: Escena corta (29 palabras): puede ser correcto si la acción y la consecuencia están claras.",
+  "Escena 3: Escena corta (39 palabras): puede ser correcto si la acción y la consecuencia están claras.",
+  "Escena 4: Escena corta (51 palabras): puede ser correcto si la acción y la consecuencia están claras.",
+  "Escena 5: Escena corta (32 palabras): puede ser correcto si la acción y la consecuencia están claras.",
+  "Escena 6: Escena corta (41 palabras): puede ser correcto si la acción y la consecuencia están claras.",
+  "Escena 6: KAP habla o piensa pero no hace nada: haz que HAGA algo concreto y visible (algo impulsivo, esconder algo, intentar arreglar algo y empeorarlo, interrumpir, probar una solución improvisada) y que otro personaje reaccione. La acción va en la línea narrada.",
+  "Escena 6: La emoción de KAP («frustrado») ya estaba establecida en la escena anterior: no la repitas; pasa a una acción que haga avanzar la situación y provoque una reacción.",
+  "Escena 7: La emoción de KAP («frustrado») ya estaba establecida en la escena anterior: no la repitas; pasa a una acción que haga avanzar la situación y provoque una reacción.",
+  "Directiva de memoria del modelo descartada: «daño: Puerta, dañada»",
+  "Directiva de memoria del modelo descartada: «KAP y su hermano tienen una relación basada en la protección y el cuidado.»",
+  "Directiva de memoria del modelo descartada: «KAP no puede controlar la situación como planeaba, lo que revela su inseguridad y miedo a…»",
+  "Directiva de memoria del modelo descartada: «El hermano de KAP actúa con independencia, algo que antes no había ocurrido, lo que sugie…»",
+  "Episodio corto (≈ 2.7 min): no se ha rellenado; la duración sale de la historia. Revisa si el arco necesita más desarrollo.",
+  "KAP_REALISM_CHECK · decision-real: no se ve a KAP decidiendo ni actuando en la escena de decisión",
+  "KAP_REALISM_CHECK · decision-con-consecuencia: tras la decisión no hay una escena que muestre algo nuevo ligado a ella",
+  "KAP_REALISM_CHECK · ninguna-escena-eliminable: hay escenas que no cambian nada o repiten otra",
+  "KAP_REALISM_CHECK · estados-variados: KAP está en el mismo estado durante 3 escenas seguidas",
+  "Narrativa (warning) · dialogo-duplicado: La frase «¡Kap! ¡Ya te estuve esperando! ¡Vamos, entra ya! ¡Tengo hambre!» aparece 2 veces (escenas 1, 2).",
+  "Narrativa (warning) · escena-sin-aporte: La escena 2 no aporta información nueva respecto a las anteriores.",
+  "Narrativa (info) · poca-variedad-visual: Todo el episodio ocurre en el mismo momento del día.",
+  "Narrativa (info) · poca-variedad-visual: Más del 70 % de las escenas usan el mismo tipo de plano."
+ ],
+ "arc": {
+  "title": "Episodio 4: La llave perdida",
+  "logline": "KAP regresa del colegio y descubre que ha perdido la llave de casa, pero su hermano pequeño lo espera con hambre y prisa. Para evitar que nadie se entere, KAP decide arreglarlo a su manera, aunque sus decisiones no salen como planeaba.",
+  "assumptions": [
+   "El episodio ocurre en la misma mañana del día siguiente al final de episodio 3, ya que no se menciona un cambio de día.",
+   "La llave perdida es una consecuencia directa de KAP distraído al regresar del colegio."
+  ],
+  "problem": "KAP ha perdido la llave de casa y su hermano pequeño lo espera con prisa y hambre, lo que le genera ansiedad por no revelar su error.",
+  "kapWant": "Evitar que su hermano o sus padres descubran que perdió la llave y mantener el control de la situación.",
+  "kapChoice": "KAP intenta forzar la puerta con una palanca improvisada, ignorando las advertencias de su hermano pequeño.",
+  "cost": "La puerta se daña, lo que puede provocar problemas con sus padres al regresar a casa y poner en riesgo la estabilidad familiar.",
+  "consequence": "La puerta se rompe parcialmente y el hermano de KAP entra solo, mientras KAP se queda afuera con la palanca en la mano y la llave aún perdida.",
+  "outcome": "KAP no logra resolver la situación a su manera y termina en una posición incómoda, con su hermano dentro de casa y él af",
+  "setting": {
+   "main": "Puerta de casa",
+   "secondary": [
+    "Calle cerca de la casa",
+    "Interior de la casa"
+   ],
+   "timeOfDay": "Tarde",
+   "transitions": [
+    "De la calle a la puerta de casa",
+    "De la puerta al interior de la casa"
+   ]
+  },
+  "hook": "El hermano de KAP entra a la casa solo y comienza a buscar a KAP, quien sigue afuera intentando arreglar el daño que causó.",
+  "extraCharacters": [
+   {
+    "name": "Hermano de KAP",
+    "why": "Es fundamental para el conflicto, ya que su presencia influye en la decisión de KAP y su prisa por entrar."
+   }
+  ],
+  "castActions": [
+   {
+    "name": "Hermano de KAP",
+    "does": "Insiste en entrar a casa con urgencia, lo que presiona a KAP para que actúe rápido, aunque sea de forma errónea."
+   }
+  ],
+  "usedFromMemory": [
+   "KAP y su hermano tienen una relación basada en la protección y el cuidado.",
+   "La situación familiar de KAP es delicada, con padres ausentes o desatendidos."
+  ],
+  "newCharacters": [],
+  "newPlaces": [],
+  "behaviorBeats": [
+   {
+    "beat": 0,
+    "kind": "impulso",
+    "does": "KAP intenta forzar la puerta con una palanca de madera que encuentra en la calle.",
+    "provokes": "La puerta se daña ligeramente y su hermano lo ve desde dentro."
+   },
+   {
+    "beat": 2,
+    "kind": "error",
+    "does": "KAP no escucha las advertencias de su hermano y sigue con la fuerza.",
+    "provokes": "El hermano de KAP se enfada y entra a la casa solo, dejando a KAP afuera."
+   }
+  ],
+  "beats": [
+   {
+    "stage": "inicio",
+    "fn": "avanzar-historia",
+    "summary": "KAP regresa del colegio y se da cuenta de que ha perdido la llave. Mientras busca, su hermano pequeño lo espera en la puerta con prisa.",
+    "location": "Calle cerca de la casa",
+    "characters": [
+     "KAP",
+     "Hermano de KAP"
+    ],
+    "change": "KAP se da cuenta de que perdió la llave y se siente frustrado al no poder entrar a casa.",
+    "why": "Es el momento en que KAP regresa del colegio y descubre su error.",
+    "time": "Tarde",
+    "interior": false,
+    "shot": "general",
+    "visual": "KAP camina con el cuaderno bajo el brazo, mirando a su alrededor con nerviosismo."
+   },
+   {
+    "stage": "problema",
+    "fn": "conflicto",
+    "summary": "El hermano de KAP le grita desde la puerta: '¡Vamos, entra ya! ¡Tengo hambre!'. KAP se siente presionado y nervioso.",
+    "location": "Puerta de casa",
+    "characters": [
+     "KAP",
+     "Hermano de KAP"
+    ],
+    "change": "El hermano de KAP le exige entrar, lo que aumenta la tensión en KAP.",
+    "why": "El hermano está ansioso por entrar y no entiende por qué KAP no puede hacerlo.",
+    "time": "Tarde",
+    "interior": false,
+    "shot": "medio",
+    "visual": "El hermano de KAP se parapeta detrás de la puerta, mirando a KAP con frustración."
+   },
+   {
+    "stage": "escalada",
+    "fn": "desarrollar-personaje",
+    "summary": "KAP mira alrededor y ve una palanca de madera en el suelo. Sin pensar, la toma y intenta forzar la puerta.",
+    "location": "Puerta de casa",
+    "characters": [
+     "KAP"
+    ],
+    "change": "KAP decide actuar de forma impulsiva para resolver el problema.",
+    "why": "KAP no quiere que su hermano se entere de que perdió la llave, así que toma una decisión precipitada.",
+    "time": "Tarde",
+    "interior": false,
+    "shot": "primer plano",
+    "visual": "KAP mira a su hermano con nerviosismo y luego se concentra en la palanca."
+   },
+   {
+    "stage": "decision",
+    "fn": "conflicto",
+    "summary": "KAP empuja con fuerza, ignorando las advertencias de su hermano. La puerta cede un poco.",
+    "location": "Puerta de casa",
+    "characters": [
+     "KAP",
+     "Hermano de KAP"
+    ],
+    "change": "La puerta se daña y el hermano de KAP se enoja.",
+    "why": "La fuerza aplicada por KAP provoca que la puerta se mueva, lo que alerta a su hermano.",
+    "time": "Tarde",
+    "interior": false,
+    "shot": "general",
+    "visual": "La puerta se mueve levemente y el hermano de KAP levanta la voz."
+   },
+   {
+    "stage": "consecuencia",
+    "fn": "preparar-consecuencia",
+    "summary": "El hermano de KAP entra a la casa sin esperar más, dejando a KAP afuera con la palanca en la mano y la llave aún perdida.",
+    "location": "Puerta de casa",
+    "characters": [
+     "KAP",
+     "Hermano de KAP"
+    ],
+    "change": "El hermano de KAP entra solo, dejando a KAP fuera con una situación complicada.",
+    "why": "KAP no logra resolver el problema y su hermano actúa por sí mismo.",
+    "time": "Tarde",
+    "interior": false,
+    "shot": "general",
+    "visual": "El hermano de KAP entra a la casa mientras KAP se queda afuera, mirando con frustración."
+   },
+   {
+    "stage": "resolucion",
+    "fn": "avanzar-historia",
+    "summary": "KAP se queda fuera, intentando arreglar el daño que causó, mientras su hermano entra a la casa y comienza a buscarlo.",
+    "location": "Calle cerca de la casa",
+    "characters": [
+     "KAP"
+    ],
+    "change": "KAP queda en una situación incómoda, sin poder resolver el problema y con su hermano dentro de casa.",
+    "why": "La situación no se resuelve como KAP quería, dejando abiertas consecuencias para el futuro.",
+    "time": "Tarde",
+    "interior": false,
+    "shot": "general",
+    "visual": "KAP mira hacia la casa con expresión de frustración y culpa."
+   },
+   {
+    "stage": "gancho",
+    "fn": "preparar-gancho",
+    "summary": "El hermano de KAP entra a la casa y empieza a buscar a KAP, quien sigue afuera intentando arreglar el daño que causó.",
+    "location": "Interior de la casa y calle cerca de la casa",
+    "characters": [
+     "KAP",
+     "Hermano de KAP"
+    ],
+    "change": "El episodio termina con una tensión creciente, dejando abierta la posibilidad de más conflictos familiares.",
+    "why": "KAP no logra resolver el problema a su manera, lo que deja consecuencias para los siguientes episodios.",
+    "time": "Tarde",
+    "interior": false,
+    "shot": "general",
+    "visual": "El hermano de KAP camina por el interior de la casa mientras KAP se queda afuera con la palanca en la mano."
+   },
+   {
+    "stage": "gancho",
+    "fn": "preparar-gancho",
+    "summary": "El hermano de KAP entra a la casa y empieza a buscar a KAP, quien sigue afuera intentando arreglar el daño que causó.",
+    "location": "Interior de la casa y calle cerca de la casa",
+    "characters": [
+     "KAP",
+     "Hermano de KAP"
+    ],
+    "change": "El episodio termina con una tensión creciente, dejando abierta la posibilidad de más conflictos familiares.",
+    "why": "KAP no logra resolver el problema a su manera, lo que deja consecuencias para los siguientes episodios.",
+    "time": "Tarde",
+    "interior": false,
+    "shot": "general",
+    "visual": "El hermano de KAP camina por el interior de la casa mientras KAP se queda afuera con la palanca en la mano."
+   }
+  ]
+ },
+ "realismChecks": [
+  {
+   "id": "decision-real",
+   "ok": false,
+   "note": "no se ve a KAP decidiendo ni actuando en la escena de decisión"
+  },
+  {
+   "id": "decision-con-consecuencia",
+   "ok": false,
+   "note": "tras la decisión no hay una escena que muestre algo nuevo ligado a ella"
+  },
+  {
+   "id": "kap-no-explica-de-mas",
+   "ok": true
+  },
+  {
+   "id": "sin-frases-de-adulto",
+   "ok": true
+  },
+  {
+   "id": "interaccion-sin-validacion",
+   "ok": true
+  },
+  {
+   "id": "conflicto-cambia-algo",
+   "ok": true
+  },
+  {
+   "id": "final-nace-de-la-accion",
+   "ok": true
+  },
+  {
+   "id": "primera-rima-espontanea",
+   "ok": true
+  },
+  {
+   "id": "ninguna-escena-eliminable",
+   "ok": false,
+   "note": "hay escenas que no cambian nada o repiten otra"
+  },
+  {
+   "id": "kap-actua",
+   "ok": true
+  },
+  {
+   "id": "estados-variados",
+   "ok": false,
+   "note": "KAP está en el mismo estado durante 3 escenas seguidas"
+  },
+  {
+   "id": "no-demasiado-reflexivo",
+   "ok": true
+  },
+  {
+   "id": "cadena-causal",
+   "ok": true
+  }
+ ],
+ "review": [
+  {
+   "severity": "warning",
+   "rule": "narrativa-dialogo-duplicado",
+   "text": "La frase «¡Kap! ¡Ya te estuve esperando! ¡Vamos, entra ya! ¡Tengo hambre!» aparece 2 veces (escenas 1, 2).",
+   "scene": 0
+  },
+  {
+   "severity": "warning",
+   "rule": "narrativa-escena-sin-aporte",
+   "text": "La escena 2 no aporta información nueva respecto a las anteriores.",
+   "scene": 1
+  },
+  {
+   "severity": "info",
+   "rule": "narrativa-poca-variedad-visual",
+   "text": "Todo el episodio ocurre en el mismo momento del día."
+  },
+  {
+   "severity": "info",
+   "rule": "narrativa-poca-variedad-visual",
+   "text": "Más del 70 % de las escenas usan el mismo tipo de plano."
+  }
+ ],
+ "continuity": {
+  "critical": [],
+  "warnings": [
+   "estructura: Al episodio le faltan: Inicio, Conflicto, Desarrollo, Punto emocional o de tensión, Resolución parcial, Gancho para el siguiente episodio. Decláralo en el guion con [acto: tipo | texto] o [gancho: texto]; un episodio de la serie necesita inicio, conflicto, desarrollo, punto emocional, resolución parcial y gancho.",
+   "sin-aporte: El episodio no declara nada nuevo para la historia (acontecimiento, hito, hilo, evolución, relación u objeto): cada episodio debe aportar algo nuevo.",
+   "protagonista: KAP no aparece en el episodio: la serie trata sobre su vida.",
+   "duracion: El episodio dura ≈ 0 min y el formato es ≈ 5 min (4–6 min)."
+  ],
+  "info": 1
+ },
+ "script": "# Calle cerca de la casa\n[mood: Tarde, exterior]\n[plano: general]\nKAP camina con el cuaderno bajo el brazo, mirando a su alrededor con nerviosismo.\nKAP: Mierda, me la perdí... otra vez.\nHERMANO DE KAP: ¡Kap! ¡Ya te estuve esperando! ¡Vamos, entra ya! ¡Tengo hambre!\nKAP: No puedo entrar si no tengo la llave... y no la tengo. ¿Dónde la dejé?\nHERMANO DE KAP: ¿Y qué? ¡Yo ya estoy aquí! ¡Vamos, abre ya!\nKAP: ¡No puedo! ¡Está perdida!\nKAP: Me la perdí... otra vez. ¿Por qué siempre me pasa esto?\nHERMANO DE KAP: ¿Qué te pasa, Kap? ¡Entra ya!\n[acto: inicio | KAP regresa del colegio y se da cuenta de que ha perdido la llave. Mientras busca, su hermano pequeño lo espera en la puerta con prisa.]\n\n# Puerta de casa\n[mood: Tarde, exterior]\n[plano: medio KAP]\n[gesto: Hermano senala]\n[camara: seguir KAP]\nHERMANO DE KAP: ¡Kap! ¡Ya te estuve esperando! ¡Vamos, entra ya! ¡Tengo hambre!\nKAP: No puedo entrar si no tengo la llave... y no la tengo.\nHERMANO DE KAP: ¿Dónde está? ¡Tengo hambre, Kap! ¡Por favor!\n[acto: conflicto | El hermano de KAP le grita desde la puerta: '¡Vamos, entra ya! ¡Tengo hambre!'. KAP se siente presionado y nervioso.]\n\n# Puerta de casa\n[mood: Tarde, exterior]\n[plano: primer plano KAP]\n[camara: seguir KAP]\nKAP mira a su hermano con nerviosismo y luego se concentra en la palanca de madera que yace en el suelo.\nHERMANO DE KAP: ¡Kap! ¡No te quedes ahí, por favor! ¡Tengo hambre!\nKAP: ¡Ya voy, ya voy! Solo… solo dame un segundo.\n[acto: desarrollo | KAP mira alrededor y ve una palanca de madera en el suelo. Sin pensar, la toma y intenta forzar la puerta.]\n\n# Puerta de casa\n[mood: Tarde, exterior]\n[plano: general]\nKAP empuja con fuerza la palanca, haciendo que la puerta se mueva un poco. El hermano de KAP se enoja y levanta la voz.\nHERMANO DE KAP: ¡No hagas eso, Kap! ¡Vas a romperla!\nKAP: ¡No tengo tiempo para esto! Tengo que entrar, ya.\nHERMANO DE KAP: ¡Ya te dije que no puedes! ¡Está rota, Kap! ¡Está rota!\n[acto: emocional | KAP empuja con fuerza, ignorando las advertencias de su hermano. La puerta cede un poco.]\n\n# Puerta de casa\n[mood: Tarde, exterior]\n[plano: general]\nHERMANO DE KAP: ¡Ya entré! ¡No me esperes más, Kap! Tengo hambre y quiero comer.\nKAP: ¡No te vayas! ¡No puedes entrar solo! ¡La puerta está dañada!\nHERMANO DE KAP: ¡No me digas qué hacer! Sé lo que quiero.\n[pierde: KAP, llave]\n\n# Calle cerca de la casa\n[mood: Tarde, exterior]\n[plano: general]\n[camara: seguir KAP]\nKAP se queda afuera con la palanca en la mano, mirando la puerta dañada y tratando de pensar qué hacer a continuación.\nKAP: No… no puedo dejarlo solo. No sé si está bien…\nKAP: Mierda, mierda, mierda… esto no era parte del plan.\n[acto: resolucion | KAP se queda fuera, intentando arreglar el daño que causó, mientras su hermano entra a la casa y comienza a buscarlo.]\n\n# Interior de la casa y calle cerca de la casa\n[mood: Tarde, exterior]\n[plano: general]\n(acción) El hermano de KAP camina por el interior de la casa, revisando cada rincón con mirada insistente, mientras escucha el eco de sus propios pasos.\nHERMANO DE KAP: ¡Kap! ¿Dónde estás? ¡Tengo hambre! ¡No me dejes solo!\nFuera, KAP se queda parado frente a la puerta dañada, mirando el suelo con la palanca en la mano y suspirando con frustración.\nHERMANO DE KAP: ¡Kap! ¡Voy a buscar comida! ¡No te vayas, por favor!\nEl hermano pequeño corre hacia la cocina mientras KAP se queda mirando la puerta con la palanca en la mano, sin saber qué hacer.\n[acto: gancho | El hermano de KAP entra a la casa y empieza a buscar a KAP, quien sigue afuera intentando arreglar el daño que causó.]\n\n# Interior de la casa y calle cerca de la casa\n[mood: Tarde, exterior]\n[plano: general]\nHERMANO DE KAP: ¡Kap! ¿Estás ahí? ¡No me dejes solo, por favor! ¡Tengo hambre y quiero comer!\nHERMANO DE KAP: ¡Voy a buscar algo para comer! ¡No te vayas, Kap! ¡No me dejes solo en la casa!\nHERMANO DE KAP: ¡Kap! ¡Voy a la cocina! ¡Te espero allí!\nKAP: No… no te vayas. No sé si está bien que estés solo.\nHERMANO DE KAP: ¡Voy rápido! ¡Te espero!\nKAP: Mierda… mierda… esto no iba a pasar. No puedo dejarlo solo. No sé qué hacer.\nKAP: ¡No te vayas! ¡Espera, por favor! ¡No me dejes solo!\nHERMANO DE KAP: ¡Voy, voy! ¡No te preocupes!\n[gancho: El hermano de KAP entra a la casa solo y comienza a buscar a KAP, quien sigue afuera intentando arreglar el daño que causó.]\n",
+ "render": {
+  "status": "done",
+  "error": null,
+  "renderSec": 82,
+  "quality": "480p",
+  "width": 854,
+  "height": 480,
+  "video": "h264",
+  "audio": "aac",
+  "durationSec": 205.8,
+  "sizeMb": 11.3,
+  "scenes": 12,
+  "videoPath": "/tmp/kap-real-41wsOC/episodio-04.mp4"
+ }
+}

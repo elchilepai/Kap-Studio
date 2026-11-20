@@ -1,0 +1,84 @@
+Episodio 4 · «Episodio 4: La llave perdida» (CANDIDATO, sin aprobar)
+Petición: Crea el episodio 4, a continuación del episodio 3. Al volver del colegio, KAP se da cuenta de que ha perdido la llave de casa y su hermano pequeño ya lo está esperando en la puerta, con hambre y con prisa por entrar. KAP no quiere que nadie se entere de que la ha perdido y decide arreglarlo a su manera.
+
+# Calle cerca de la casa
+[mood: Tarde, exterior]
+[plano: general]
+KAP camina con el cuaderno bajo el brazo, mirando a su alrededor con nerviosismo.
+KAP: Mierda, me la perdí... otra vez.
+HERMANO DE KAP: ¡Kap! ¡Ya te estuve esperando! ¡Vamos, entra ya! ¡Tengo hambre!
+KAP: No puedo entrar si no tengo la llave... y no la tengo. ¿Dónde la dejé?
+HERMANO DE KAP: ¿Y qué? ¡Yo ya estoy aquí! ¡Vamos, abre ya!
+KAP: ¡No puedo! ¡Está perdida!
+KAP: Me la perdí... otra vez. ¿Por qué siempre me pasa esto?
+HERMANO DE KAP: ¿Qué te pasa, Kap? ¡Entra ya!
+[acto: inicio | KAP regresa del colegio y se da cuenta de que ha perdido la llave. Mientras busca, su hermano pequeño lo espera en la puerta con prisa.]
+
+# Puerta de casa
+[mood: Tarde, exterior]
+[plano: medio KAP]
+[gesto: Hermano senala]
+[camara: seguir KAP]
+HERMANO DE KAP: ¡Kap! ¡Ya te estuve esperando! ¡Vamos, entra ya! ¡Tengo hambre!
+KAP: No puedo entrar si no tengo la llave... y no la tengo.
+HERMANO DE KAP: ¿Dónde está? ¡Tengo hambre, Kap! ¡Por favor!
+[acto: conflicto | El hermano de KAP le grita desde la puerta: '¡Vamos, entra ya! ¡Tengo hambre!'. KAP se siente presionado y nervioso.]
+
+# Puerta de casa
+[mood: Tarde, exterior]
+[plano: primer plano KAP]
+[camara: seguir KAP]
+KAP mira a su hermano con nerviosismo y luego se concentra en la palanca de madera que yace en el suelo.
+HERMANO DE KAP: ¡Kap! ¡No te quedes ahí, por favor! ¡Tengo hambre!
+KAP: ¡Ya voy, ya voy! Solo… solo dame un segundo.
+[acto: desarrollo | KAP mira alrededor y ve una palanca de madera en el suelo. Sin pensar, la toma y intenta forzar la puerta.]
+
+# Puerta de casa
+[mood: Tarde, exterior]
+[plano: general]
+KAP empuja con fuerza la palanca, haciendo que la puerta se mueva un poco. El hermano de KAP se enoja y levanta la voz.
+HERMANO DE KAP: ¡No hagas eso, Kap! ¡Vas a romperla!
+KAP: ¡No tengo tiempo para esto! Tengo que entrar, ya.
+HERMANO DE KAP: ¡Ya te dije que no puedes! ¡Está rota, Kap! ¡Está rota!
+[acto: emocional | KAP empuja con fuerza, ignorando las advertencias de su hermano. La puerta cede un poco.]
+
+# Puerta de casa
+[mood: Tarde, exterior]
+[plano: general]
+HERMANO DE KAP: ¡Ya entré! ¡No me esperes más, Kap! Tengo hambre y quiero comer.
+KAP: ¡No te vayas! ¡No puedes entrar solo! ¡La puerta está dañada!
+HERMANO DE KAP: ¡No me digas qué hacer! Sé lo que quiero.
+[pierde: KAP, llave]
+
+# Calle cerca de la casa
+[mood: Tarde, exterior]
+[plano: general]
+[camara: seguir KAP]
+KAP se queda afuera con la palanca en la mano, mirando la puerta dañada y tratando de pensar qué hacer a continuación.
+KAP: No… no puedo dejarlo solo. No sé si está bien…
+KAP: Mierda, mierda, mierda… esto no era parte del plan.
+[acto: resolucion | KAP se queda fuera, intentando arreglar el daño que causó, mientras su hermano entra a la casa y comienza a buscarlo.]
+
+# Interior de la casa y calle cerca de la casa
+[mood: Tarde, exterior]
+[plano: general]
+(acción) El hermano de KAP camina por el interior de la casa, revisando cada rincón con mirada insistente, mientras escucha el eco de sus propios pasos.
+HERMANO DE KAP: ¡Kap! ¿Dónde estás? ¡Tengo hambre! ¡No me dejes solo!
+Fuera, KAP se queda parado frente a la puerta dañada, mirando el suelo con la palanca en la mano y suspirando con frustración.
+HERMANO DE KAP: ¡Kap! ¡Voy a buscar comida! ¡No te vayas, por favor!
+El hermano pequeño corre hacia la cocina mientras KAP se queda mirando la puerta con la palanca en la mano, sin saber qué hacer.
+[acto: gancho | El hermano de KAP entra a la casa y empieza a buscar a KAP, quien sigue afuera intentando arreglar el daño que causó.]
+
+# Interior de la casa y calle cerca de la casa
+[mood: Tarde, exterior]
+[plano: general]
+HERMANO DE KAP: ¡Kap! ¿Estás ahí? ¡No me dejes solo, por favor! ¡Tengo hambre y quiero comer!
+HERMANO DE KAP: ¡Voy a buscar algo para comer! ¡No te vayas, Kap! ¡No me dejes solo en la casa!
+HERMANO DE KAP: ¡Kap! ¡Voy a la cocina! ¡Te espero allí!
+KAP: No… no te vayas. No sé si está bien que estés solo.
+HERMANO DE KAP: ¡Voy rápido! ¡Te espero!
+KAP: Mierda… mierda… esto no iba a pasar. No puedo dejarlo solo. No sé qué hacer.
+KAP: ¡No te vayas! ¡Espera, por favor! ¡No me dejes solo!
+HERMANO DE KAP: ¡Voy, voy! ¡No te preocupes!
+[gancho: El hermano de KAP entra a la casa solo y comienza a buscar a KAP, quien sigue afuera intentando arreglar el daño que causó.]
+
