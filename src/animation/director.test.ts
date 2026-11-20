@@ -63,3 +63,14 @@ describe("director 2D por reglas", () => {
     expect(e.some((x) => x > 0.4)).toBe(true); expect(e.some((x) => x === 0)).toBe(true); expect(syntheticEnvelope("Hola, ¿cómo estás? Muy bien.", 3, 30)).toEqual(e);
   });
 });
+
+describe("decorado: un lugar exterior no se dibuja como interior", () => {
+  it("«Puerta de casa» y «Calle cerca de la casa» son exterior; «Casa de KAP», «Cocina» o «Interior de la casa…» siguen siendo interior", () => {
+    expect(resolveSet("Puerta de casa", [], "").preset).toBe("street"); expect(resolveSet("Calle cerca de la casa", [], "").preset).toBe("street"); expect(resolveSet("Patio del colegio", [], "").preset).toBe("street");
+    expect(resolveSet("Casa de KAP", [], "").preset).toBe("room"); expect(resolveSet("Cocina", [], "").preset).toBe("room"); expect(resolveSet("Interior de la casa y calle cerca de la casa", [], "").preset).toBe("room");
+  });
+  it("si el beat dice «exterior», una casa no se dibuja como habitación; el resto del mapa no cambia", () => {
+    expect(resolveSet("Casa de KAP", [], "Tarde, exterior").preset).toBe("street"); expect(resolveSet("Casa de KAP", [], "Tarde, interior").preset).toBe("room");
+    expect(resolveSet("Azotea de la casa", [], "").preset).toBe("rooftop"); expect(resolveSet("Parque", [], "").preset).toBe("forest"); expect(resolveSet("Casa", [], "", { preset: "room" }).preset).toBe("room");
+  });
+});

@@ -161,7 +161,7 @@ export function llmArcAuthor(llm: LlmClient, opts: ArcAuthorOptions = {}): ArcAu
           if (!targets.size) break;
           const idx = [...targets.keys()].sort((p, q) => p - q), withRhyme = kinds.includes("rima-invalida");
           const r = await call(LinePatch, { system: PATCH_SYSTEM, prompt: patchPrompt({ location: beat.location, summary: beat.summary, change: keep.out.change || beat.change, characters: beat.characters }, lines, idx.map((index) => ({ index, reason: targets.get(index)!.join(" ") })), contextTerms.filter(Boolean), withRhyme ? RIMA_RULES : ""), temperature: temp + 0.1, maxTokens: 500 });
-          localPatches++; for (const k of new Set(kinds)) patchKinds[k] = (patchKinds[k] ?? 0) + 1; if (!r.ok || r.data.lines.length !== idx.length) break;
+          localPatches++; for (const k of new Set(kinds)) patchKinds[k] = (patchKinds[k] ?? 0) + 1; if (!r.ok || r.data.lines.length !== idx.length) { for (const k of new Set(kinds)) used[budget(k)[0]]++; continue; }   // un parche fallido gasta presupuesto y se reintenta (no se abandona la reparación con el defecto sin tocar)
           idx.forEach((index, k) => { lines[index] = { ...lines[index], text: r.data.lines[k].trim() }; }); for (const k of new Set(kinds)) used[budget(k)[0]]++;
           issues = check(lines, keep.out.change, keep.out);
         }

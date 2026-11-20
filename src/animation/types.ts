@@ -40,6 +40,8 @@ export type Appearance = {
   body?: BodyType; eyeStyle?: EyeStyle;
   /** Si existe y es «layered», el personaje se dibuja con sus propias capas en lugar del vector paramétrico. */
   rig?: LayeredRig;
+  /** Estilo del personaje paramétrico: «stickman» (por defecto: cabeza + trazos) o «cutout» (figura completa con ropa y pelo, el diseño anterior). */
+  look?: "stickman" | "cutout";
 };
 
 export type Cue =
@@ -84,7 +86,7 @@ export type StageSpec = {
 
 /** Mundo lógico: 16 × 9 unidades; el suelo está en y = 7. La cámara recorta una ventana de este mundo según el formato. */
 export const WORLD_W = 16, WORLD_H = 9, GROUND_Y = 7;
-export const ANIM_VERSION = 1; // súbelo si cambia el aspecto del render: invalida cachés
+export const ANIM_VERSION = 2; // súbelo si cambia el aspecto del render: invalida cachés
 
 export type ActorState = {
   id: string; x: number; y: number; facing: 1 | -1; visible: boolean; alpha: number;

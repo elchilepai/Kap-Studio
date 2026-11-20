@@ -54,4 +54,10 @@ describe("línea de tiempo (pura y determinista)", () => {
     void v; expect(dimsOk(s, 9 / 16)).toBe(true);
   });
   it("la envolvente de prueba es válida", () => { expect(envelope(10).every((x) => x >= 0 && x <= 1)).toBe(true); });
+  it("estilo: el personaje paramétrico es STICKMAN por defecto (look: «cutout» conserva el diseño completo anterior) y usa la misma pose", () => {
+    const base = demoStage(), withLook = (look?: "stickman" | "cutout"): StageSpec => ({ ...base, actors: base.actors.map((a) => ({ ...a, appearance: { ...a.appearance, ...(look ? { look } : {}) } })) });
+    const hash = (st: StageSpec) => { const cv = createCanvas(320, 180); renderFrame(cv.getContext("2d") as never, st, 1.7, { images: {} }, 320, 180); return createHash("sha256").update(cv.data()).digest("hex"); };
+    expect(hash(withLook())).toBe(hash(withLook("stickman"))); expect(hash(withLook())).not.toBe(hash(withLook("cutout")));
+    expect(hash(withLook("stickman"))).toBe(hash(withLook("stickman")));   // determinista
+  });
 });

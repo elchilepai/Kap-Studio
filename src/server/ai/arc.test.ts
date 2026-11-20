@@ -185,6 +185,16 @@ describe("generador por arco (arco → escenas) con puerta de calidad", () => {
     const { llm, author, out } = await run([a, poem, patch(natural), ...a.beats.slice(1).map((_, i) => scene(i + 1))], ctx(), undefined, { openingRhyme: true });
     expect(llm.calls.filter(isPatch)).toHaveLength(1); expect(llm.calls.find(isPatch)!.prompt).toMatch(/suena a poema de adulto/); expect(author.lastDraft!.scenes[0].lines[1].text).toBe(natural); expect(out.stats!.rhymeValid).toBe(true); expect(out.stats!.scenesRegenerated).toBe(0);
   });
+  it("un parche local FALLIDO (devuelve otro número de líneas) no abandona la rima: gasta presupuesto y se reintenta una vez más", async () => {
+    const a = arc(), poem = withKap(scene(0), "Mi alma anhela el horizonte, la puerta del destino, y en esta casa eterna busco mi camino"), natural = "Cierro la puerta de la casa, me agarro un zapato con la mano";
+    const { llm, author, out } = await run([a, poem, patch("una línea de más para nadie", "otra línea que sobra del todo"), patch(natural), ...a.beats.slice(1).map((_, i) => scene(i + 1))], ctx(), undefined, { openingRhyme: true });
+    expect(llm.calls.filter(isPatch)).toHaveLength(2); expect(author.lastDraft!.scenes[0].lines[1].text).toBe(natural); expect(out.stats!.rhymeValid).toBe(true);
+  });
+  it("si todos los parches de rima fallan, el defecto se declara (no se marca como arreglado) y se respeta el tope", async () => {
+    const a = arc(), poem = withKap(scene(0), "Mi alma anhela el horizonte, la puerta del destino, y en esta casa eterna busco mi camino"), bad = patch("una línea de más para nadie", "otra línea que sobra del todo");
+    const { llm, out } = await run([a, poem, bad, bad, ...a.beats.slice(1).map((_, i) => scene(i + 1))], ctx(), undefined, { openingRhyme: true });
+    expect(llm.calls.filter(isPatch)).toHaveLength(2); expect(out.stats!.rhymeValid).toBe(false); expect(out.warnings.some((w) => /rima/i.test(w))).toBe(true);
+  });
   it("métricas: las reescrituras locales, el desenlace y la variedad se cuentan por separado", async () => {
     const flat = arc({ beats: arc().beats.map((b) => ({ ...b, location: "Casa de KAP", time: "noche" })) }), moved = { beats: [4, 5, 6].map((index) => ({ index, location: "Calle", time: "mañana", interior: false, why: "al día siguiente el problema se traslada a la calle" })) };
     const bad = withKap(scene(0), "Tengo hambre y no hay pan en la mesa hoy"), { out } = await run([flat, moved, bad, patch(RHYME), ...flat.beats.slice(1).map((_, i) => scene(i + 1))], ctx(), undefined, { openingRhyme: true });

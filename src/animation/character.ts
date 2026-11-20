@@ -114,8 +114,47 @@ function mouth(c: Ctx, v: Viseme, open: number, e: Expression, rH: number, mx: n
 
 const BODY_W = { slim: 0.86, regular: 1, broad: 1.2 } as const;
 
+/** Luminancia aproximada (0..1) de un color #rrggbb: el trazo del stickman se aclara si es demasiado oscuro para verse sobre el fondo. */
+const luma = (hex: string) => { const n = parseInt(hex.replace("#", "").padEnd(6, "0").slice(0, 6), 16); return (0.2126 * ((n >> 16) & 255) + 0.7152 * ((n >> 8) & 255) + 0.0722 * (n & 255)) / 255; };
+
+/**
+ * STICKMAN 2D (estilo por defecto): cabeza redonda y cuerpo y extremidades de trazo. Usa EXACTAMENTE la misma pose que el personaje
+ * completo (mismos brazos, piernas, inclinación, expresión y visemas), así que toda la animación existente sirve sin cambios.
+ * El color del trazo sale de la ropa del personaje para distinguirlos; la gorra/sombrero se conserva como seña de identidad.
+ */
+function drawStickman(c: Ctx, a: Appearance, pose: Pose, o: { ink: string; line: number; facing: 1 | -1; shadow: boolean; alpha: number }) {
+  const hh = 3.0 * a.height, ink = o.ink, lw = o.line, sw = 0.052 * hh * Math.min(1.15, a.build);
+  const col = luma(a.top) < 0.4 ? shade(a.top, 0.55) : a.top;
+  c.save(); c.globalAlpha *= o.alpha; c.scale(o.facing, 1);
+  if (o.shadow) { c.fillStyle = "rgba(0,0,0,0.28)"; c.beginPath(); c.ellipse(0, 0.03, hh * 0.17, hh * 0.03, 0, 0, Math.PI * 2); c.fill(); }
+  c.translate(0, -pose.bob * hh); c.rotate(pose.lean);
+  const hipY = -0.46 * hh, shY = -0.78 * hh - pose.shrug * hh * 0.5, rH = 0.105 * hh;
+  const seg = (x: number, y: number, ang: number, len: number) => limb(c, x, y, ang, len, sw, col, ink, lw);
+  // brazos y piernas: dos tramos con el mismo reparto de ángulos que el personaje completo
+  const arm = (ang: [number, number], shape: HandShape) => { const [ex, ey] = seg(0, shY + 0.03 * hh, ang[0], 0.19 * hh); const [hx, hy] = seg(ex, ey, ang[0] + ang[1], 0.18 * hh);
+    c.beginPath(); c.arc(hx, hy, sw * (shape === "fist" ? 0.95 : 0.7), 0, Math.PI * 2); fs(c, col, ink, lw); };
+  const leg = (ang: number) => { const [kx, ky] = seg(0, hipY, ang * 0.9, 0.23 * hh); const [fx, fy] = seg(kx, ky, ang * 0.9 - Math.max(0, -ang) * 0.9, 0.22 * hh);
+    c.strokeStyle = ink; c.lineWidth = sw + lw * 2; c.lineCap = "round"; c.beginPath(); c.moveTo(fx, fy); c.lineTo(fx + 0.07 * hh, fy); c.stroke(); c.strokeStyle = col; c.lineWidth = sw; c.beginPath(); c.moveTo(fx, fy); c.lineTo(fx + 0.07 * hh, fy); c.stroke(); };
+  c.save(); c.globalAlpha *= 0.82; arm(pose.armB, pose.handB); leg(pose.legB); c.restore();   // brazo y pierna traseros algo más tenues: dan profundidad sin ensuciar
+  c.strokeStyle = ink; c.lineWidth = sw + lw * 2; c.lineCap = "round"; c.beginPath(); c.moveTo(0, hipY); c.lineTo(0, shY); c.stroke(); c.strokeStyle = col; c.lineWidth = sw; c.beginPath(); c.moveTo(0, hipY); c.lineTo(0, shY); c.stroke();
+  leg(pose.legF); arm(pose.armF, pose.handF);
+  // cabeza
+  const hy = shY - rH * 1.15 + pose.headDip * hh; c.save(); c.translate(0, shY); c.rotate(pose.headTilt); c.translate(0, -shY);
+  c.beginPath(); c.arc(0, hy, rH, 0, Math.PI * 2); fs(c, a.skin, ink, lw * 1.3);
+  if (a.hairStyle === "cap" || a.accessory === "hat") { const hc = a.hairStyle === "cap" ? a.accent : shade(a.accent, -0.1); c.beginPath(); c.arc(0, hy - rH * 0.1, rH * 1.04, Math.PI * 1.02, Math.PI * 1.98); c.closePath(); fs(c, hc, ink, lw); c.beginPath(); c.ellipse(rH * 0.85, hy - rH * 0.12, rH * 0.62, rH * 0.13, 0, 0, Math.PI * 2); fs(c, shade(hc, -0.18), ink, lw); }
+  const e = pose.expression, ey = hy + rH * 0.02, look = pose.lookX * rH * 0.12 + rH * 0.14, bl = 1 - pose.blink * 0.9;
+  for (const sx of [-1, 1]) { const x = sx * rH * 0.42 + rH * 0.12;
+    if ((e === "happy" && !pose.blink) || bl < 0.2) { c.strokeStyle = ink; c.lineWidth = lw * 1.6; c.lineCap = "round"; c.beginPath(); c.arc(x, ey + rH * 0.04, rH * 0.17, Math.PI * 1.12, Math.PI * 1.88); c.stroke(); }
+    else { c.beginPath(); c.arc(x + look * 0.6, ey, rH * (e === "surprised" ? 0.2 : 0.14) * (0.5 + bl * 0.5), 0, Math.PI * 2); c.fillStyle = ink; c.fill(); }
+    const tilt = (e === "angry" ? 0.45 : e === "sad" || e === "worried" ? -0.4 : 0) * -sx;
+    if (tilt) { c.save(); c.translate(x, ey - rH * 0.36); c.rotate(tilt); c.strokeStyle = ink; c.lineWidth = lw * 1.8; c.lineCap = "round"; c.beginPath(); c.moveTo(-rH * 0.2, 0); c.lineTo(rH * 0.2, 0); c.stroke(); c.restore(); } }
+  mouth(c, pose.viseme, pose.mouth, e, rH * 1.25, rH * 0.12, hy + rH * 0.52, ink, lw);
+  c.restore(); c.restore();
+}
+
 export function drawCharacter(c: Ctx, a: Appearance, pose: Pose, o: { ink: string; line: number; facing: 1 | -1; shadow: boolean; alpha: number }, images?: Record<string, unknown>) {
   if (a.rig?.kind === "layered") { drawLayered(c, a, a.rig, pose, o, images ?? {}); return; }
+  if (a.look !== "cutout") { drawStickman(c, a, pose, o); return; }   // por defecto: stickman 2D (el diseño completo anterior se conserva con look: "cutout")
   const hh = 3.0 * a.height, b = a.build * BODY_W[a.body ?? "regular"], lw = o.line; const ink = o.ink;
   c.save(); c.globalAlpha *= o.alpha; c.scale(o.facing, 1);
   if (o.shadow) { c.fillStyle = "rgba(0,0,0,0.28)"; c.beginPath(); c.ellipse(0, 0.03, hh * 0.2, hh * 0.035, 0, 0, Math.PI * 2); c.fill(); }

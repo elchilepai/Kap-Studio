@@ -34,13 +34,16 @@ export const norm = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").to
 export { syntheticEnvelope };
 
 const SET_RULES: [RegExp, SetPreset][] = [
-  [/azotea|tejado|terraza/, "rooftop"], [/refugio|habitaci|cuarto|casa|interior|sala|cocina|taller|laboratorio|cabana|cueva|bunker/, "room"],
+  [/azotea|tejado|terraza/, "rooftop"],
+  [/^(?:(?!interior|habitaci|cuarto|casa|sala|cocina|taller)[\s\S])*?(?:calle|acera|patio|portal|fachada|puerta|entrada|exterior|afuera|fuera)/, "street"],   // lo exterior que se nombra ANTES que lo interior («Puerta de casa», «Calle cerca de la casa») es exterior
+  [/refugio|habitaci|cuarto|casa|interior|sala|cocina|taller|laboratorio|cabana|cueva|bunker/, "room"],
   [/bosque|selva|jardin|parque|campo|monte/, "forest"], [/calle|plaza|mercado|puente|callejon|carretera|puerto|costa|faro|playa/, "street"],
   [/ciudad|skyline|torre|rascacielos|metro|tunel|distrito/, "city"],
 ];
 export function resolveSet(location: string, tags: string[], mood: string, given?: DirectorInput["set"]): SetSpec {
   const key = norm(`${location} ${tags.join(" ")}`); let preset: SetPreset = given?.preset ?? "abstract";
   if (!given?.preset) for (const [re, p] of SET_RULES) if (re.test(key)) { preset = p; break; }
+  if (!given?.preset && preset === "room" && /\bexterior\b/.test(norm(mood))) preset = "street";   // el beat dice que la escena es exterior
   const m = norm(mood); const tod: TimeOfDay = given?.timeOfDay ?? (/noche|nocturn/.test(key) || /oscur|tens|misteri|miedo/.test(m) ? "night" : /amanec|atardec|ocaso/.test(key) || /trist/.test(m) ? "dusk" : /dia|sol|aleg|diverti/.test(key + m) ? "day" : "dusk");
   return { preset, timeOfDay: tod, seed: hash32(location || "kap") % 1000, imageId: given?.imageId, accent: given?.accent, ...(given?.layers ? { layers: given.layers } : {}), ...(given?.elements ? { elements: given.elements } : {}), ...(given?.foreground ? { foreground: given.foreground } : {}) };
 }
