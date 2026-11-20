@@ -1,0 +1,285 @@
+{
+ "arc": {
+  "episodes": [
+   {
+    "id": "E16",
+    "scenes": 8,
+    "estMin": 2.73,
+    "words": 458,
+    "irValid": true,
+    "regenerated": 0,
+    "localPatches": 1,
+    "codeRepairs": 1,
+    "dropped": 0,
+    "patchKinds": {
+     "rima-invalida": 1
+    },
+    "gateIssues": {
+     "rima-invalida": 1,
+     "corta": 2,
+     "repite-frase": 1
+    },
+    "rhymeValid": true,
+    "continuityCritical": 0,
+    "continuityWarnings": 1,
+    "narrativeWarnings": 1,
+    "realism": {
+     "passed": 7,
+     "total": 9,
+     "failed": [
+      "decision-real",
+      "decision-con-consecuencia"
+     ]
+    },
+    "causal": {
+     "scenes": 8,
+     "locationChanges": 2,
+     "scenesLinkedToPrevious": 6,
+     "brokenLinkScenes": [
+      5
+     ],
+     "suddenWithoutAntecedent": [
+      5
+     ]
+    },
+    "explainLinesKap": 0,
+    "validationSecondary": 0,
+    "closingProblem": false,
+    "minutes": 96.8
+   },
+   {
+    "id": "E17",
+    "scenes": 8,
+    "estMin": 2.78,
+    "words": 465,
+    "irValid": true,
+    "regenerated": 1,
+    "localPatches": 4,
+    "codeRepairs": 0,
+    "dropped": 0,
+    "patchKinds": {
+     "rima-invalida": 2,
+     "emocion-repetida": 1,
+     "cierre-reflexivo": 1
+    },
+    "gateIssues": {
+     "corta": 5,
+     "rima-invalida": 1,
+     "repite-frase": 1,
+     "sin-cambio": 1,
+     "explica-emocion": 1,
+     "emocion-repetida": 1,
+     "cierre-reflexivo": 1
+    },
+    "rhymeValid": false,
+    "continuityCritical": 0,
+    "continuityWarnings": 1,
+    "narrativeWarnings": 1,
+    "realism": {
+     "passed": 8,
+     "total": 9,
+     "failed": [
+      "final-nace-de-la-accion"
+     ]
+    },
+    "causal": {
+     "scenes": 8,
+     "locationChanges": 5,
+     "scenesLinkedToPrevious": 6,
+     "brokenLinkScenes": [
+      4
+     ],
+     "suddenWithoutAntecedent": []
+    },
+    "explainLinesKap": 1,
+    "validationSecondary": 0,
+    "closingProblem": true,
+    "minutes": 93.3
+   },
+   {
+    "id": "E18",
+    "scenes": 8,
+    "estMin": 2.57,
+    "words": 428,
+    "irValid": true,
+    "regenerated": 1,
+    "localPatches": 4,
+    "codeRepairs": 0,
+    "dropped": 0,
+    "patchKinds": {
+     "rima-invalida": 1,
+     "coste-ausente": 1,
+     "emocion-repetida": 2,
+     "menciona-memoria": 2,
+     "cierre-reflexivo": 1
+    },
+    "gateIssues": {
+     "rima-invalida": 1,
+     "corta": 5,
+     "repite-frase": 1,
+     "coste-ausente": 1,
+     "emocion-repetida": 2,
+     "menciona-memoria": 2,
+     "cierre-reflexivo": 1
+    },
+    "rhymeValid": false,
+    "continuityCritical": 0,
+    "continuityWarnings": 2,
+    "narrativeWarnings": 2,
+    "realism": {
+     "passed": 6,
+     "total": 9,
+     "failed": [
+      "decision-real",
+      "decision-con-consecuencia",
+      "final-nace-de-la-accion"
+     ]
+    },
+    "causal": {
+     "scenes": 8,
+     "locationChanges": 2,
+     "scenesLinkedToPrevious": 6,
+     "brokenLinkScenes": [
+      3
+     ],
+     "suddenWithoutAntecedent": []
+    },
+    "explainLinesKap": 0,
+    "validationSecondary": 0,
+    "closingProblem": true,
+    "minutes": 93.9
+   }
+  ],
+  "interEpisodeLinkStems": [
+   13,
+   18
+  ]
+ },
+ "json": {
+  "episodes": [
+   {
+    "id": "E16",
+    "scenes": 27,
+    "estMin": 4.3,
+    "words": 687,
+    "irValid": true,
+    "regenerated": 0,
+    "localPatches": 0,
+    "codeRepairs": 0,
+    "dropped": 0,
+    "patchKinds": {},
+    "gateIssues": {},
+    "continuityCritical": 0,
+    "continuityWarnings": 7,
+    "narrativeWarnings": 5,
+    "realism": {
+     "passed": 6,
+     "total": 9,
+     "failed": [
+      "interaccion-sin-validacion",
+      "final-nace-de-la-accion",
+      "ninguna-escena-eliminable"
+     ]
+    },
+    "causal": {
+     "scenes": 27,
+     "locationChanges": 3,
+     "scenesLinkedToPrevious": 20,
+     "brokenLinkScenes": [
+      10,
+      11,
+      20,
+      22,
+      24,
+      25
+     ],
+     "suddenWithoutAntecedent": [
+      11,
+      24
+     ]
+    },
+    "explainLinesKap": 1,
+    "validationSecondary": 0,
+    "closingProblem": true,
+    "minutes": 54.6
+   },
+   {
+    "id": "E17",
+    "scenes": 17,
+    "estMin": 4.9,
+    "words": 813,
+    "irValid": true,
+    "regenerated": 0,
+    "localPatches": 0,
+    "codeRepairs": 0,
+    "dropped": 0,
+    "patchKinds": {},
+    "gateIssues": {},
+    "continuityCritical": 0,
+    "continuityWarnings": 14,
+    "narrativeWarnings": 4,
+    "realism": {
+     "passed": 7,
+     "total": 9,
+     "failed": [
+      "kap-no-explica-de-mas",
+      "sin-frases-de-adulto"
+     ]
+    },
+    "causal": {
+     "scenes": 17,
+     "locationChanges": 14,
+     "scenesLinkedToPrevious": 15,
+     "brokenLinkScenes": [
+      6
+     ],
+     "suddenWithoutAntecedent": [
+      4
+     ]
+    },
+    "explainLinesKap": 2,
+    "validationSecondary": 1,
+    "closingProblem": false,
+    "minutes": 36.4
+   },
+   {
+    "id": "E18",
+    "scenes": 18,
+    "estMin": 4.17,
+    "words": 684,
+    "irValid": true,
+    "regenerated": 0,
+    "localPatches": 0,
+    "codeRepairs": 0,
+    "dropped": 0,
+    "patchKinds": {},
+    "gateIssues": {},
+    "continuityCritical": 0,
+    "continuityWarnings": 18,
+    "narrativeWarnings": 3,
+    "realism": {
+     "passed": 8,
+     "total": 9,
+     "failed": [
+      "interaccion-sin-validacion"
+     ]
+    },
+    "causal": {
+     "scenes": 18,
+     "locationChanges": 0,
+     "scenesLinkedToPrevious": 17,
+     "brokenLinkScenes": [],
+     "suddenWithoutAntecedent": []
+    },
+    "explainLinesKap": 0,
+    "validationSecondary": 0,
+    "closingProblem": false,
+    "minutes": 28.6
+   }
+  ],
+  "interEpisodeLinkStems": [
+   7,
+   13
+  ]
+ }
+}
