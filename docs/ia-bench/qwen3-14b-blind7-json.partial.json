@@ -1,0 +1,717 @@
+{
+ "meta": {
+  "model": "qwen3:14b",
+  "phase": "blind7",
+  "ctx": 8192,
+  "date": "2026-11-20T15:00:42.260Z",
+  "cpus": 4,
+  "ramGb": 16,
+  "host": "CPU sin GPU"
+ },
+ "partial": true,
+ "results": [
+  {
+   "id": "E16",
+   "title": "Episodio 16",
+   "request": "Crea el episodio 16, a continuación del episodio 3. KAP presta su cuaderno de rimas a un niño nuevo del barrio para que lo mire un momento. Cuando se lo devuelve, faltan dos páginas y KAP, sin pensarlo, lo acusa delante de los demás. El niño no contesta y se marcha, y Dani, que lo ha oído todo, decide aprovecharlo.",
+   "ms": 3274889,
+   "peakMb": 10678,
+   "sysPeakMb": 11490,
+   "contextTokens": 1925,
+   "ok": true,
+   "irValid": true,
+   "irValidFirstTry": false,
+   "json": {
+    "attempts": 2,
+    "retries": 1,
+    "jsonErrors": 0,
+    "schemaErrors": 0,
+    "lengthRetries": 1,
+    "memoryDirectiveErrors": 1
+   },
+   "irErrors": [],
+   "usage": {
+    "promptTokens": 7716,
+    "outputTokens": 4691,
+    "totalMs": 3274854.991914,
+    "loadMs": 11904.315498,
+    "promptMs": 240889.73,
+    "evalMs": 3021984.748
+   },
+   "tokensPerSec": 1.55,
+   "episode": {
+    "scenes": 27,
+    "estimatedSec": 258,
+    "words": 687,
+    "title": "Episodio 16: La culpa",
+    "logline": "KAP presta su cuaderno a un niño nuevo, pero al devolverlo faltan páginas y lo acusa públicamente, lo que le da a Dani una oportunidad para aprovecharse."
+   },
+   "continuity": {
+    "critical": [],
+    "warnings": [
+     "directiva: Directiva de memoria no entendida: «acto: inicio»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "objeto-sin-introducir: «cuaderno de rimas» se usa en la escena 1 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "hito: El hito «Víctima de bullying» ya estaba logrado en ep. 2.",
+     "ubicacion-incoherente: Se declara a KAP en «Cocina» pero la escena 8 transcurre en «Calle de día».",
+     "relacion-contradice: KAP y Hermano de KAP ya se conocían (relación «hermanos» desde canon inicial); la escena 8 los presenta como si se conocieran ahora.",
+     "relacion-contradice: KAP y Dani ya se conocían (relación «acoso» desde ep. 2); la escena 11 los presenta como si se conocieran ahora.",
+     "estructura: Al episodio le faltan: Inicio, Conflicto, Desarrollo, Punto emocional o de tensión, Resolución parcial. Decláralo en el guion con [acto: tip"
+    ],
+    "info": 4
+   },
+   "narrative": {
+    "error": 0,
+    "warning": 5,
+    "info": 2,
+    "rules": [
+     "dialogo-duplicado",
+     "localizacion-estancada",
+     "escena-sin-aporte",
+     "personaje-sin-funcion",
+     "memoria-no-pedida",
+     "cierre-moralizante",
+     "cierre-reflexivo"
+    ],
+    "findings": [
+     {
+      "severity": "warning",
+      "rule": "narrativa-dialogo-duplicado",
+      "text": "La frase «No puedo seguir así…» aparece 3 veces (escenas 10, 20, 25).",
+      "scene": 9
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-localizacion-estancada",
+      "text": "18 escenas seguidas (10-27) en «Calle de noche» con poca información nueva: ¿hace falta cambiar de lugar, de momento o de plano?",
+      "scene": 9
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-escena-sin-aporte",
+      "text": "La escena 25 no aporta información nueva respecto a las anteriores.",
+      "scene": 24
+     },
+     {
+      "severity": "info",
+      "rule": "narrativa-personaje-sin-funcion",
+      "text": "«Hermano de KAP» (de la memoria) solo hace un cameo de una línea: ¿era necesario traerlo?",
+      "scene": 7
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-memoria-no-pedida",
+      "text": "«Hermano de KAP» (de la memoria) aparece en 1 escena sin que la petición lo pidiera: la memoria sirve para mantener la continuidad, no para reutilizarlo todo.",
+      "scene": 7
+     },
+     {
+      "severity": "info",
+      "rule": "narrativa-cierre-moralizante",
+      "text": "El cierre tiene tono de lección o superación. No todos los episodios deben terminar con KAP más fuerte: ¿encaja con lo que pasa?",
+      "scene": 26
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-cierre-reflexivo",
+      "text": "El cierre de KAP es una frase de superación/moraleja: «No voy a rendirme.»: el cierre debería ser un gag, una reacción, una sorpresa o una consecuencia, no una reflexión.",
+      "scene": 26
+     }
+    ],
+    "taggedRules": [
+     "dialogo-duplicado",
+     "localizacion-estancada",
+     "escena-sin-aporte",
+     "personaje-sin-funcion",
+     "cierre-moralizante",
+     "cierre-reflexivo"
+    ]
+   },
+   "mode": "json",
+   "variety": {
+    "locations": 3,
+    "dominantShare": 0.7,
+    "times": 1,
+    "timeSource": "texto"
+   },
+   "show": {
+    "realism": {
+     "passed": 6,
+     "total": 9,
+     "failed": [
+      "interaccion-sin-validacion",
+      "final-nace-de-la-accion",
+      "ninguna-escena-eliminable"
+     ]
+    },
+    "explainLinesKap": 1,
+    "kapLines": 20,
+    "validationLinesSecondary": 0,
+    "secondaryLines": 7,
+    "costVisible": true,
+    "closing": {
+     "problem": true,
+     "reason": "El cierre de KAP es una frase de superación/moraleja: «No voy a rendirme.»"
+    }
+   },
+   "causal": {
+    "scenes": 27,
+    "locationChanges": 3,
+    "scenesLinkedToPrevious": 20,
+    "brokenLinkScenes": [
+     10,
+     11,
+     20,
+     22,
+     24,
+     25
+    ],
+    "suddenWithoutAntecedent": [
+     11,
+     24
+    ]
+   },
+   "openingRhymeCheck": {
+    "present": true,
+    "rhyme_valid": false,
+    "natural": true,
+    "contextual": true,
+    "rhythm": false,
+    "level": "ninguna"
+   },
+   "script": "# Calle de noche\nKAP mira fijamente el cuaderno que tiene en sus manos, las páginas sueltas y las marcas de tinta le recuerdan la conversación con Ramiro. Aunque no lo recuerda con claridad, algo dentro de él sabe que está a punto de cometer un error grave.\nKAP: No puedo perder esas páginas…\n[acto: inicio]\n[ubicacion: KAP, Calle de noche]\n[usa: KAP, cuaderno de rimas]\n\n# Casa por la mañana\nKAP despierta temprano y se sienta en el borde de su cama. El cuaderno está sobre la mesita de noche, abierto a una página que le recuerda el sueño de ser millonario.\nKAP: No puedo perderlo…\n[ubicacion: KAP, Casa por la mañana]\n\n# Calle de día\nKAP camina por la calle con su cuaderno bajo el brazo. En el camino, se cruza con un niño nuevo del barrio, más joven que él, con ropa vieja y una mirada curiosa.\nKAP: ¿Quieres echar un vistazo? Es solo por un momento.\n[conoce: KAP, niño nuevo]\n[ubicacion: KAP, Calle de día]\n\n# Calle de día\nEl niño acepta con una sonrisa y se sienta en el suelo para mirar las páginas del cuaderno. KAP se aleja un poco, observándolo.\nKAP: Espero que no se pierda nada importante.\n[ubicacion: KAP, Calle de día]\n\n# Calle de día\nEl niño le devuelve el cuaderno, pero KAP nota que faltan dos páginas. Sin pensarlo, su mirada se clava en el niño.\nKAP: ¿Qué hiciste con esas páginas?\n[hito-logrado: Víctima de bullying | KAP acusado injustamente]\n[ubicacion: KAP, Calle de día]\n\n# Calle de día\nEl niño lo mira con expresión de miedo y se levanta lentamente. No responde, solo se da la vuelta y empieza a caminar.\nKAP: ¡No te vayas! ¡Tienes que responder!\n[ubicacion: KAP, Calle de día]\n\n# Calle de día\nKAP se queda solo con el cuaderno en sus manos. Mira al niño que ya no está, y una sensación de vacío lo invade.\nKAP: ¿Qué hice?\n[ubicacion: KAP, Calle de día]\n\n# Calle de día\nDe vuelta en casa, KAP entra en la cocina y se sienta a la mesa. Su hermano lo mira con curiosidad.\nHERMANO DE KAP: ¿Qué te pasa, KAP?\n[conoce: KAP, Hermano de KAP]\n[ubicacion: KAP, Cocina]\n\n# Calle de día\nKAP mira a su hermano y, por un momento, siente la necesidad de confiar en alguien. Pero no puede hacerlo.\nKAP: Nada.\n[ubicacion: KAP, Calle de día]\n\n# Calle de noche\nEsa noche, KAP camina por la calle con el cuaderno bajo el brazo. Su mirada está perdida y sus pasos son lentos.\nKAP: No puedo seguir así…\n[ubicacion: KAP, Calle de noche]\n\n# Calle de noche\nDe repente, una figura aparece en la oscuridad. Es Dani, que observa a KAP con una sonrisa maliciosa.\nDANI: ¿Te sientes bien, KAP?\n[conoce: KAP, Dani]\n[ubicacion: KAP, Calle de noche]\n\n# Calle de noche\nKAP lo mira con desconfianza, pero Dani se acerca y habla con voz baja.\nDANI: Ese niño no te dijo nada, ¿verdad?\n[ubicacion: KAP, Calle de noche]\n\n# Calle de noche\nKAP no responde. Dani se acerca más y susurra en su oído.\nDANI: Puedo ayudarte… si colaboras conmigo.\n[ubicacion: KAP, Calle de noche]\n\n# Calle de noche\nKAP se queda inmóvil. Mira a Dani con una mezcla de miedo y desesperación.\nKAP: ¿Qué quieres decir?\n[ubicacion: KAP, Calle de noche]\n\n# Calle de noche\nDani sonríe y le muestra el cuaderno que lleva en su bolsillo. KAP lo reconoce inmediatamente.\nDANI: ¿Quieres recuperar esas páginas?\n[ubicacion: KAP, Calle de noche]\n\n# Calle de noche\nKAP mira a Dani con una mezcla de miedo y desesperación. No sabe qué hacer, pero siente que no tiene otra opción.\nKAP: ¿Qué quieres a cambio?\n[ubicacion: KAP, Calle de noche]\n\n# Calle de noche\nDani se acerca más y susurra en su oído.\nDANI: Tus secretos, KAP. Todo lo que escribiste en esas páginas.\n[ubicacion: KAP, Calle de noche]\n\n# Calle de noche\nKAP se queda paralizado. Sabe que no tiene otra opción. Dani tiene algo que él necesita.\nKAP: ¿Y si no te doy nada?\n[ubicacion: KAP, Calle de noche]\n\n# Calle de noche\nDani sonríe y se aleja lentamente, dejando a KAP solo en la calle. La tensión es palpable.\nDANI: Entonces, no las recuperarás nunca.\n[ubicacion: KAP, Calle de noche]\n\n# Calle de noche\nKAP se queda solo, mirando al cielo. Sabe que algo dentro de él acaba de cambiar.\nKAP: No puedo seguir así…\n[ubicacion: KAP, Calle de noche]\n\n# Calle de noche\nLa luna se eleva en el cielo, iluminando la calle vacía. KAP se aleja lentamente, con el corazón roto y una nueva determinación.\nKAP: Tengo que hacer algo.\n[ubicacion: KAP, Calle de noche]\n\n# Calle de noche\nKAP se detiene frente a la puerta de una casa. Es la casa del niño nuevo. Siente un nudo en el estómago.\nKAP: Tengo que hablar con él.\n[ubicacion: KAP, Calle de noche]\n\n# Calle de noche\nKAP toca la puerta. Nadie responde. La luz está apagada. Se queda allí, con el cuaderno en la mano.\nKAP: ¿Por qué no me respondes?\n[ubicacion: KAP, Calle de noche]\n\n# Calle de noche\nKAP mira al suelo y siente una culpa profunda. Ha hecho algo que no puede deshacer.\nKAP: Lo siento.\n[ubicacion: KAP, Calle de noche]\n\n# Calle de noche\nKAP se aleja lentamente, con el cuaderno en la mano. No sabe qué hacer, pero algo dentro de él ha cambiado.\nKAP: No puedo seguir así…\n[ubicacion: KAP, Calle de noche]\n\n# Calle de noche\nKAP camina por la calle, mirando al suelo. Su respiración es lenta y su mente está en blanco.\nKAP: Tengo que encontrar una forma de arreglar esto.\n[ubicacion: KAP, Calle de noche]\n\n# Calle de noche\nLa luna ilumina su camino. Aunque no tiene respuesta, siente que algo dentro de él ha empezado a cambiar.\nKAP: No voy a rendirme.\n[gancho: El cuaderno de KAP está en manos de Dani | KAP acusó injustamente al niño nuevo]\n",
+   "gate": {
+    "regenerated": 0,
+    "dropped": 0,
+    "localPatches": 0,
+    "patchKinds": {},
+    "endingRevisions": 0,
+    "varietyRevisions": 0,
+    "codeRepairs": 0,
+    "arcRevisions": 0,
+    "calls": 2,
+    "outputTokens": 4691,
+    "promptTokens": 7716,
+    "issues": {}
+   },
+   "checks": [
+    {
+     "id": "estructura-6-actos",
+     "ok": false,
+     "note": "faltan: inicio, conflicto, desarrollo, emocional, resolucion"
+    },
+    {
+     "id": "gancho",
+     "ok": true
+    },
+    {
+     "id": "protagonista",
+     "ok": true
+    },
+    {
+     "id": "sin-errores-criticos",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "sin-exito-prematuro",
+     "ok": true
+    },
+    {
+     "id": "directivas-validas",
+     "ok": false,
+     "note": "«acto: inicio»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»"
+    },
+    {
+     "id": "espanol",
+     "ok": true
+    },
+    {
+     "id": "diversidad-lexica",
+     "ok": true,
+     "note": "0.35"
+    }
+   ],
+   "compliance": 0.75,
+   "proxy": {
+    "score": 8,
+    "dialogueRatio": 0.5,
+    "locations": 3,
+    "repeatedSentences": 1
+   },
+   "warnings": [
+    "Directiva de memoria inválida del modelo: «acto: inicio»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»"
+   ],
+   "draft": {
+    "title": "Episodio 16: La culpa",
+    "logline": "KAP presta su cuaderno a un niño nuevo, pero al devolverlo faltan páginas y lo acusa públicamente, lo que le da a Dani una oportunidad para aprovecharse.",
+    "assumptions": [],
+    "scenes": [
+     {
+      "title": "Calle de noche (2)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP mira fijamente el cuaderno que tiene en sus manos, las páginas sueltas y las marcas de tinta le recuerdan la conversación con Ramiro. Aunque no lo recuerda con claridad, algo dentro de él sabe que está a punto de cometer un error grave."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No puedo perder esas páginas…"
+       }
+      ],
+      "memory": [
+       "acto: inicio",
+       "ubicacion: KAP, Calle de noche",
+       "usa: KAP, cuaderno de rimas"
+      ]
+     },
+     {
+      "title": "Casa por la mañana (2)",
+      "location": "Casa por la mañana",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP despierta temprano y se sienta en el borde de su cama. El cuaderno está sobre la mesita de noche, abierto a una página que le recuerda el sueño de ser millonario."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No puedo perderlo…"
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Casa por la mañana"
+      ]
+     },
+     {
+      "title": "Calle de día",
+      "location": "Calle de día",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP camina por la calle con su cuaderno bajo el brazo. En el camino, se cruza con un niño nuevo del barrio, más joven que él, con ropa vieja y una mirada curiosa."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Quieres echar un vistazo? Es solo por un momento."
+       }
+      ],
+      "memory": [
+       "conoce: KAP, niño nuevo",
+       "ubicacion: KAP, Calle de día"
+      ]
+     },
+     {
+      "title": "Calle de día (2)",
+      "location": "Calle de día",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "El niño acepta con una sonrisa y se sienta en el suelo para mirar las páginas del cuaderno. KAP se aleja un poco, observándolo."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Espero que no se pierda nada importante."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de día"
+      ]
+     },
+     {
+      "title": "Calle de día (3)",
+      "location": "Calle de día",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "El niño le devuelve el cuaderno, pero KAP nota que faltan dos páginas. Sin pensarlo, su mirada se clava en el niño."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Qué hiciste con esas páginas?"
+       }
+      ],
+      "memory": [
+       "hito-logrado: Víctima de bullying | KAP acusado injustamente",
+       "ubicacion: KAP, Calle de día"
+      ]
+     },
+     {
+      "title": "Calle de día (4)",
+      "location": "Calle de día",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "El niño lo mira con expresión de miedo y se levanta lentamente. No responde, solo se da la vuelta y empieza a caminar."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¡No te vayas! ¡Tienes que responder!"
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de día"
+      ]
+     },
+     {
+      "title": "Calle de día (5)",
+      "location": "Calle de día",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se queda solo con el cuaderno en sus manos. Mira al niño que ya no está, y una sensación de vacío lo invade."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Qué hice?"
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de día"
+      ]
+     },
+     {
+      "title": "Calle de día (6)",
+      "location": "Calle de día",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "De vuelta en casa, KAP entra en la cocina y se sienta a la mesa. Su hermano lo mira con curiosidad."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¿Qué te pasa, KAP?"
+       }
+      ],
+      "memory": [
+       "conoce: KAP, Hermano de KAP",
+       "ubicacion: KAP, Cocina"
+      ]
+     },
+     {
+      "title": "Calle de día (7)",
+      "location": "Calle de día",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP mira a su hermano y, por un momento, siente la necesidad de confiar en alguien. Pero no puede hacerlo."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Nada."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de día"
+      ]
+     },
+     {
+      "title": "Calle de noche",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Esa noche, KAP camina por la calle con el cuaderno bajo el brazo. Su mirada está perdida y sus pasos son lentos."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No puedo seguir así…"
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "Calle de noche (2)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "De repente, una figura aparece en la oscuridad. Es Dani, que observa a KAP con una sonrisa maliciosa."
+       },
+       {
+        "speaker": "Dani",
+        "text": "¿Te sientes bien, KAP?"
+       }
+      ],
+      "memory": [
+       "conoce: KAP, Dani",
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "Calle de noche (3)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP lo mira con desconfianza, pero Dani se acerca y habla con voz baja."
+       },
+       {
+        "speaker": "Dani",
+        "text": "Ese niño no te dijo nada, ¿verdad?"
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "Calle de noche (4)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP no responde. Dani se acerca más y susurra en su oído."
+       },
+       {
+        "speaker": "Dani",
+        "text": "Puedo ayudarte… si colaboras conmigo."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "Calle de noche (5)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se queda inmóvil. Mira a Dani con una mezcla de miedo y desesperación."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Qué quieres decir?"
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "Calle de noche (6)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Dani sonríe y le muestra el cuaderno que lleva en su bolsillo. KAP lo reconoce inmediatamente."
+       },
+       {
+        "speaker": "Dani",
+        "text": "¿Quieres recuperar esas páginas?"
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "Calle de noche (7)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP mira a Dani con una mezcla de miedo y desesperación. No sabe qué hacer, pero siente que no tiene otra opción."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Qué quieres a cambio?"
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "Calle de noche (8)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Dani se acerca más y susurra en su oído."
+       },
+       {
+        "speaker": "Dani",
+        "text": "Tus secretos, KAP. Todo lo que escribiste en esas páginas."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "Calle de noche (9)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se queda paralizado. Sabe que no tiene otra opción. Dani tiene algo que él necesita."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Y si no te doy nada?"
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "Calle de noche (10)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Dani sonríe y se aleja lentamente, dejando a KAP solo en la calle. La tensión es palpable."
+       },
+       {
+        "speaker": "Dani",
+        "text": "Entonces, no las recuperarás nunca."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "Calle de noche (11)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se queda solo, mirando al cielo. Sabe que algo dentro de él acaba de cambiar."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No puedo seguir así…"
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "Calle de noche (12)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "La luna se eleva en el cielo, iluminando la calle vacía. KAP se aleja lentamente, con el corazón roto y una nueva determinación."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Tengo que hacer algo."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "Calle de noche (13)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se detiene frente a la puerta de una casa. Es la casa del niño nuevo. Siente un nudo en el estómago."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Tengo que hablar con él."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "Calle de noche (14)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP toca la puerta. Nadie responde. La luz está apagada. Se queda allí, con el cuaderno en la mano."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Por qué no me respondes?"
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "Calle de noche (15)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP mira al suelo y siente una culpa profunda. Ha hecho algo que no puede deshacer."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Lo siento."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "Calle de noche (16)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se aleja lentamente, con el cuaderno en la mano. No sabe qué hacer, pero algo dentro de él ha cambiado."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No puedo seguir así…"
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "Calle de noche (17)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP camina por la calle, mirando al suelo. Su respiración es lenta y su mente está en blanco."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Tengo que encontrar una forma de arreglar esto."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "Calle de noche (18)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "La luna ilumina su camino. Aunque no tiene respuesta, siente que algo dentro de él ha empezado a cambiar."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No voy a rendirme."
+       }
+      ],
+      "memory": [
+       "gancho: El cuaderno de KAP está en manos de Dani | KAP acusó injustamente al niño nuevo"
+      ]
+     }
+    ]
+   }
+  }
+ ]
+}
