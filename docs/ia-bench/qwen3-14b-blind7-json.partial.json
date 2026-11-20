@@ -1458,6 +1458,540 @@
      }
     ]
    }
+  },
+  {
+   "id": "E18",
+   "title": "Episodio 18",
+   "request": "Crea el episodio 18, continuando el episodio 17. La solución que KAP intentó ha tenido un efecto que no esperaba y alguien a quien no pensaba implicar se ha enterado. KAP tiene que decidir qué cuenta y qué no, y lo que decida tendrá un precio.",
+   "ms": 1715603,
+   "peakMb": 10674,
+   "sysPeakMb": 11434,
+   "contextTokens": 2034,
+   "ok": true,
+   "irValid": true,
+   "irValidFirstTry": false,
+   "json": {
+    "attempts": 1,
+    "retries": 0,
+    "jsonErrors": 0,
+    "schemaErrors": 0,
+    "lengthRetries": 0,
+    "memoryDirectiveErrors": 15
+   },
+   "irErrors": [],
+   "usage": {
+    "promptTokens": 3082,
+    "outputTokens": 2638,
+    "totalMs": 1715593.209016,
+    "loadMs": 13681.558198,
+    "promptMs": 147939.842,
+    "evalMs": 1553945.006
+   },
+   "tokensPerSec": 1.7,
+   "episode": {
+    "scenes": 18,
+    "estimatedSec": 250,
+    "words": 684,
+    "title": "Episodio 18: La verdad entre las líneas",
+    "logline": "KAP se enfrenta a una elección difícil cuando su intento por corregir el bullying lo lleva a un lugar inesperado, y una revelación amenaza con cambiar su vida para siempre."
+   },
+   "continuity": {
+    "critical": [],
+    "warnings": [
+     "directiva: Directiva de memoria no entendida: «acto: inicio»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "hito: El hito «Víctima de bullying» ya estaba logrado en ep. 16.",
+     "directiva: Directiva de memoria no entendida: «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "relacion-contradice: KAP y Hermano de KAP ya se conocían (relación «conocidos» desde canon inicial); la escena 3 los presenta como si se conocieran ahora.",
+     "directiva: Directiva de memoria no entendida: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: emocional»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: resolucion»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: emocional»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: resolucion»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: emocional»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: resolucion»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "estructura: Al episodio le faltan: Inicio, Conflicto, Desarrollo, Punto emocional o de tensión, Resolución parcial. Decláralo en el guion con [acto: tip"
+    ],
+    "info": 4
+   },
+   "narrative": {
+    "error": 0,
+    "warning": 3,
+    "info": 0,
+    "rules": [
+     "localizacion-estancada",
+     "personaje-sin-funcion",
+     "memoria-no-pedida"
+    ],
+    "findings": [
+     {
+      "severity": "warning",
+      "rule": "narrativa-localizacion-estancada",
+      "text": "18 escenas seguidas (1-18) en «Cocina»: ¿hace falta cambiar de lugar, de momento o de plano?",
+      "scene": 0
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-personaje-sin-funcion",
+      "text": "«Padre de KAP» se introduce con una sola línea y no vuelve: ¿qué aporta a la historia?",
+      "scene": 16
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-memoria-no-pedida",
+      "text": "«Hermano de KAP» (de la memoria) aparece en 3 escenas sin que la petición lo pidiera: la memoria sirve para mantener la continuidad, no para reutilizarlo todo.",
+      "scene": 1
+     }
+    ],
+    "taggedRules": [
+     "localizacion-estancada",
+     "personaje-sin-funcion"
+    ]
+   },
+   "mode": "json",
+   "variety": {
+    "locations": 1,
+    "dominantShare": 1,
+    "times": 0,
+    "timeSource": "texto"
+   },
+   "show": {
+    "realism": {
+     "passed": 8,
+     "total": 9,
+     "failed": [
+      "interaccion-sin-validacion"
+     ]
+    },
+    "explainLinesKap": 0,
+    "kapLines": 12,
+    "validationLinesSecondary": 0,
+    "secondaryLines": 6,
+    "costVisible": true,
+    "closing": {
+     "problem": false,
+     "reason": null
+    }
+   },
+   "causal": {
+    "scenes": 18,
+    "locationChanges": 0,
+    "scenesLinkedToPrevious": 17,
+    "brokenLinkScenes": [],
+    "suddenWithoutAntecedent": []
+   },
+   "openingRhymeCheck": {
+    "present": true,
+    "rhyme_valid": false,
+    "natural": true,
+    "contextual": true,
+    "rhythm": true,
+    "level": "ninguna"
+   },
+   "script": "# Cocina\nKAP se sienta en la mesa de la cocina, mirando fijamente el cuaderno que tiene frente a él. La profesora le había dado una oportunidad, y ahora él tenía que escribir su historia diferente. Pero no sabía que esta decisión lo llevaría a un lugar que no imaginaba.\nKAP: Esta vez, escribiré una historia diferente.\n[acto: inicio]\n[hito-logrado: Víctima de bullying | KAP empieza a escribir su historia nueva]\n[perfil: KAP, sueños = ser millonario gracias a la música]\n[ubicacion: KAP, Cocina]\n\n# Cocina\nMientras escribe, escucha pasos acercarse. Su hermano entra, con cara de preocupación. KAP lo mira y, por un momento, siente la responsabilidad que le pesa en los hombros.\nHERMANO DE KAP: ¿Ya terminaste? ¿Vas a ir a buscar a mamá?\n[acto: conflicto]\n[conoce: KAP, Hermano de KAP]\n[ubicacion: KAP, Cocina]\n\n# Cocina\nKAP mira a su hermano y, por un instante, duda. ¿Debería contarle sobre el bullying? ¿O preferiría protegerlo de más dolor? Su mente se divide entre la verdad y la protección.\nKAP: No sé si es el momento adecuado.\n[acto: desarrollo]\n[ubicacion: KAP, Cocina]\n\n# Cocina\nSu hermano lo mira con ojos llenos de confianza. A pesar de su edad, parece entender más de lo que KAP creía. El niño pequeño le devuelve la mirada con una determinación que lo sorprende.\nHERMANO DE KAP: Confía en mí, KAP.\n[acto: emocional]\n[ubicacion: KAP, Cocina]\n\n# Cocina\nKAP inspira profundamente y cierra el cuaderno. Su hermano lo ve con una mezcla de orgullo y miedo. KAP ha tomado una decisión, pero no sabe aún si será la correcta.\nKAP: Hoy no escribiré sobre eso.\n[acto: resolucion]\n[ubicacion: KAP, Cocina]\n\n# Cocina\nMientras sale de la cocina, escucha a su madre gritar desde el otro lado de la casa. Su hermano se queda petrificado, y KAP siente un escalofrío. No esperaba que esto llegara tan rápido.\nKAP: ¿Qué pasará ahora?\n[gancho: La verdad se revela de una forma inesperada | KAP, su hermano y sus padres]\n\n# Cocina\nKAP se detiene en el umbral de la puerta, escuchando a su madre llamar a su padre. Su hermano se agacha, temiendo lo que podría pasar. KAP sabe que su familia no está en condiciones de enfrentar esto.\nHERMANO DE KAP: ¿Qué hago, KAP?\n[acto: conflicto]\n[ubicacion: KAP, Cocina]\n\n# Cocina\nKAP mira a su hermano y, por un momento, siente el peso de su responsabilidad. No puede protegerlo de todo, pero al menos puede intentar evitar que se lastime más.\nKAP: No te muevas, hermano.\n[acto: desarrollo]\n[ubicacion: KAP, Cocina]\n\n# Cocina\nLa puerta se abre de golpe, y su madre entra con cara de desesperación. Sus ojos están rojos, y sus manos tiemblan. KAP la mira con miedo, preguntándose qué ha hecho para que esto pasara.\nMADRE DE KAP: ¿Por qué no me dijiste nada?\n[acto: emocional]\n[ubicacion: KAP, Cocina]\n\n# Cocina\nKAP se queda inmóvil. No sabe qué decir. Su madre lo mira con una mezcla de dolor y culpa, y KAP entiende que su decisión ha tenido un costo mucho mayor del que imaginaba.\nKAP: No sabía que te afectaría tanto.\n[acto: resolucion]\n[ubicacion: KAP, Cocina]\n\n# Cocina\nSu madre se sienta en la mesa, con la mirada baja. Su hermano se acerca y le toma la mano. KAP siente el peso de la verdad, pero también la responsabilidad que ahora le corresponde.\nMADRE DE KAP: ¿Qué harás ahora?\n[acto: conflicto]\n[ubicacion: KAP, Cocina]\n\n# Cocina\nKAP respira hondo y se acerca a su madre. Su hermano lo mira con expectativa. KAP sabe que no puede volver atrás, pero tampoco puede dejar que su familia caiga en el abismo.\nKAP: Voy a hacer lo que sea necesario.\n[acto: desarrollo]\n[ubicacion: KAP, Cocina]\n\n# Cocina\nSu madre lo mira con lágrimas en los ojos. KAP siente que, por primera vez, ha encontrado un camino que no solo le pertenece a él, sino también a su familia.\nKAP: Prometo que esto no terminará así.\n[acto: emocional]\n[ubicacion: KAP, Cocina]\n\n# Cocina\nKAP se sienta a la mesa y abre el cuaderno. Esta vez, no escribirá sobre su bullying, sino sobre una historia que tal vez podría cambiarlo todo: la historia de su familia.\nKAP: Esta vez, escribiré sobre nosotros.\n[acto: resolucion]\n[ubicacion: KAP, Cocina]\n\n# Cocina\nKAP comienza a escribir, y la luz de la cocina se refleja en las páginas del cuaderno. Esta vez, no se trata de una historia que nadie más haya escrito antes.\nKAP: Esta historia empieza aquí.\n[gancho: La historia de su familia | KAP comienza a escribir sobre su familia]\n\n# Cocina\nKAP no sabe que, al escribir sobre su familia, ha abierto una puerta que no sabía que existía. Un efecto imprevisto de su decisión comienza a tomar forma.\nKAP: ¿Qué más podría salir de esto?\n[acto: conflicto]\n[ubicacion: KAP, Cocina]\n\n# Cocina\nMientras escribe, escucha una voz familiar. Su padre entra, con cara de sorpresa. KAP se levanta de la mesa y lo mira con una mezcla de miedo y esperanza.\nPADRE DE KAP: ¿Eso es... mi historia?\n[acto: desarrollo]\n[ubicacion: KAP, Cocina]\n\n# Cocina\nKAP mira a su padre con una determinación nueva. La historia que ha empezado a escribir no solo cambiará su vida, sino la de toda su familia.\nKAP: Esta historia ya no puede detenerse.\n[gancho: El efecto de la verdad se revela | KAP, Padre de KAP y Madre de KAP]\n",
+   "gate": {
+    "regenerated": 0,
+    "dropped": 0,
+    "localPatches": 0,
+    "patchKinds": {},
+    "endingRevisions": 0,
+    "varietyRevisions": 0,
+    "codeRepairs": 0,
+    "arcRevisions": 0,
+    "calls": 1,
+    "outputTokens": 2638,
+    "promptTokens": 3082,
+    "issues": {}
+   },
+   "checks": [
+    {
+     "id": "estructura-6-actos",
+     "ok": false,
+     "note": "faltan: inicio, conflicto, desarrollo, emocional, resolucion"
+    },
+    {
+     "id": "gancho",
+     "ok": true
+    },
+    {
+     "id": "protagonista",
+     "ok": true
+    },
+    {
+     "id": "sin-errores-criticos",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "sin-exito-prematuro",
+     "ok": true
+    },
+    {
+     "id": "directivas-validas",
+     "ok": false,
+     "note": "«acto: inicio»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto» | «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»"
+    },
+    {
+     "id": "espanol",
+     "ok": true
+    },
+    {
+     "id": "diversidad-lexica",
+     "ok": true,
+     "note": "0.37"
+    }
+   ],
+   "compliance": 0.75,
+   "proxy": {
+    "score": 8,
+    "dialogueRatio": 0.5,
+    "locations": 1,
+    "repeatedSentences": 0
+   },
+   "warnings": [
+    "Directiva de memoria inválida del modelo: «acto: inicio»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+    "Directiva de memoria inválida del modelo: «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+    "Directiva de memoria inválida del modelo: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+    "Directiva de memoria inválida del modelo: «acto: emocional»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+    "Directiva de memoria inválida del modelo: «acto: resolucion»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+    "Directiva de memoria inválida del modelo: «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»"
+   ],
+   "draft": {
+    "title": "Episodio 18: La verdad entre las líneas",
+    "logline": "KAP se enfrenta a una elección difícil cuando su intento por corregir el bullying lo lleva a un lugar inesperado, y una revelación amenaza con cambiar su vida para siempre.",
+    "assumptions": [],
+    "scenes": [
+     {
+      "title": "Inicio: La historia comienza",
+      "location": "Cocina",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se sienta en la mesa de la cocina, mirando fijamente el cuaderno que tiene frente a él. La profesora le había dado una oportunidad, y ahora él tenía que escribir su historia diferente. Pero no sabía que esta decisión lo llevaría a un lugar que no imaginaba."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Esta vez, escribiré una historia diferente."
+       }
+      ],
+      "memory": [
+       "acto: inicio",
+       "hito-logrado: Víctima de bullying | KAP empieza a escribir su historia nueva",
+       "perfil: KAP, sueños = ser millonario gracias a la música",
+       "ubicacion: KAP, Cocina"
+      ]
+     },
+     {
+      "title": "Conflicto: La verdad se revela",
+      "location": "Cocina",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Mientras escribe, escucha pasos acercarse. Su hermano entra, con cara de preocupación. KAP lo mira y, por un momento, siente la responsabilidad que le pesa en los hombros."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¿Ya terminaste? ¿Vas a ir a buscar a mamá?"
+       }
+      ],
+      "memory": [
+       "acto: conflicto",
+       "conoce: KAP, Hermano de KAP",
+       "ubicacion: KAP, Cocina"
+      ]
+     },
+     {
+      "title": "Desarrollo: El costo de la verdad",
+      "location": "Cocina",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP mira a su hermano y, por un instante, duda. ¿Debería contarle sobre el bullying? ¿O preferiría protegerlo de más dolor? Su mente se divide entre la verdad y la protección."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No sé si es el momento adecuado."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo",
+       "ubicacion: KAP, Cocina"
+      ]
+     },
+     {
+      "title": "Emocional: La elección de KAP",
+      "location": "Cocina",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Su hermano lo mira con ojos llenos de confianza. A pesar de su edad, parece entender más de lo que KAP creía. El niño pequeño le devuelve la mirada con una determinación que lo sorprende."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "Confía en mí, KAP."
+       }
+      ],
+      "memory": [
+       "acto: emocional",
+       "ubicacion: KAP, Cocina"
+      ]
+     },
+     {
+      "title": "Resolucion: La decisión se toma",
+      "location": "Cocina",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP inspira profundamente y cierra el cuaderno. Su hermano lo ve con una mezcla de orgullo y miedo. KAP ha tomado una decisión, pero no sabe aún si será la correcta."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Hoy no escribiré sobre eso."
+       }
+      ],
+      "memory": [
+       "acto: resolucion",
+       "ubicacion: KAP, Cocina"
+      ]
+     },
+     {
+      "title": "Gancho: La revelación inesperada",
+      "location": "Cocina",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Mientras sale de la cocina, escucha a su madre gritar desde el otro lado de la casa. Su hermano se queda petrificado, y KAP siente un escalofrío. No esperaba que esto llegara tan rápido."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Qué pasará ahora?"
+       }
+      ],
+      "memory": [
+       "gancho: La verdad se revela de una forma inesperada | KAP, su hermano y sus padres"
+      ]
+     },
+     {
+      "title": "Conflicto: El grito en la casa",
+      "location": "Cocina",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se detiene en el umbral de la puerta, escuchando a su madre llamar a su padre. Su hermano se agacha, temiendo lo que podría pasar. KAP sabe que su familia no está en condiciones de enfrentar esto."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¿Qué hago, KAP?"
+       }
+      ],
+      "memory": [
+       "acto: conflicto",
+       "ubicacion: KAP, Cocina"
+      ]
+     },
+     {
+      "title": "Desarrollo: El costo de la verdad",
+      "location": "Cocina",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP mira a su hermano y, por un momento, siente el peso de su responsabilidad. No puede protegerlo de todo, pero al menos puede intentar evitar que se lastime más."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No te muevas, hermano."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo",
+       "ubicacion: KAP, Cocina"
+      ]
+     },
+     {
+      "title": "Emocional: La revelación de su madre",
+      "location": "Cocina",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "La puerta se abre de golpe, y su madre entra con cara de desesperación. Sus ojos están rojos, y sus manos tiemblan. KAP la mira con miedo, preguntándose qué ha hecho para que esto pasara."
+       },
+       {
+        "speaker": "Madre de KAP",
+        "text": "¿Por qué no me dijiste nada?"
+       }
+      ],
+      "memory": [
+       "acto: emocional",
+       "ubicacion: KAP, Cocina"
+      ]
+     },
+     {
+      "title": "Resolucion: El precio de la verdad",
+      "location": "Cocina",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se queda inmóvil. No sabe qué decir. Su madre lo mira con una mezcla de dolor y culpa, y KAP entiende que su decisión ha tenido un costo mucho mayor del que imaginaba."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No sabía que te afectaría tanto."
+       }
+      ],
+      "memory": [
+       "acto: resolucion",
+       "ubicacion: KAP, Cocina"
+      ]
+     },
+     {
+      "title": "Conflicto: El dilema de KAP",
+      "location": "Cocina",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Su madre se sienta en la mesa, con la mirada baja. Su hermano se acerca y le toma la mano. KAP siente el peso de la verdad, pero también la responsabilidad que ahora le corresponde."
+       },
+       {
+        "speaker": "Madre de KAP",
+        "text": "¿Qué harás ahora?"
+       }
+      ],
+      "memory": [
+       "acto: conflicto",
+       "ubicacion: KAP, Cocina"
+      ]
+     },
+     {
+      "title": "Desarrollo: La decisión se toma",
+      "location": "Cocina",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP respira hondo y se acerca a su madre. Su hermano lo mira con expectativa. KAP sabe que no puede volver atrás, pero tampoco puede dejar que su familia caiga en el abismo."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Voy a hacer lo que sea necesario."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo",
+       "ubicacion: KAP, Cocina"
+      ]
+     },
+     {
+      "title": "Emocional: La promesa de KAP",
+      "location": "Cocina",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Su madre lo mira con lágrimas en los ojos. KAP siente que, por primera vez, ha encontrado un camino que no solo le pertenece a él, sino también a su familia."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Prometo que esto no terminará así."
+       }
+      ],
+      "memory": [
+       "acto: emocional",
+       "ubicacion: KAP, Cocina"
+      ]
+     },
+     {
+      "title": "Resolucion: El comienzo de algo nuevo",
+      "location": "Cocina",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se sienta a la mesa y abre el cuaderno. Esta vez, no escribirá sobre su bullying, sino sobre una historia que tal vez podría cambiarlo todo: la historia de su familia."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Esta vez, escribiré sobre nosotros."
+       }
+      ],
+      "memory": [
+       "acto: resolucion",
+       "ubicacion: KAP, Cocina"
+      ]
+     },
+     {
+      "title": "Gancho: La historia de su familia",
+      "location": "Cocina",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP comienza a escribir, y la luz de la cocina se refleja en las páginas del cuaderno. Esta vez, no se trata de una historia que nadie más haya escrito antes."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Esta historia empieza aquí."
+       }
+      ],
+      "memory": [
+       "gancho: La historia de su familia | KAP comienza a escribir sobre su familia"
+      ]
+     },
+     {
+      "title": "Conflicto: El efecto inesperado",
+      "location": "Cocina",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP no sabe que, al escribir sobre su familia, ha abierto una puerta que no sabía que existía. Un efecto imprevisto de su decisión comienza a tomar forma."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Qué más podría salir de esto?"
+       }
+      ],
+      "memory": [
+       "acto: conflicto",
+       "ubicacion: KAP, Cocina"
+      ]
+     },
+     {
+      "title": "Desarrollo: La revelación",
+      "location": "Cocina",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Mientras escribe, escucha una voz familiar. Su padre entra, con cara de sorpresa. KAP se levanta de la mesa y lo mira con una mezcla de miedo y esperanza."
+       },
+       {
+        "speaker": "Padre de KAP",
+        "text": "¿Eso es... mi historia?"
+       }
+      ],
+      "memory": [
+       "acto: desarrollo",
+       "ubicacion: KAP, Cocina"
+      ]
+     },
+     {
+      "title": "Gancho: El efecto de la verdad",
+      "location": "Cocina",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP mira a su padre con una determinación nueva. La historia que ha empezado a escribir no solo cambiará su vida, sino la de toda su familia."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Esta historia ya no puede detenerse."
+       }
+      ],
+      "memory": [
+       "gancho: El efecto de la verdad se revela | KAP, Padre de KAP y Madre de KAP"
+      ]
+     }
+    ]
+   }
   }
  ]
 }

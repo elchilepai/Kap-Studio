@@ -1,0 +1,2001 @@
+{
+ "meta": {
+  "model": "qwen3:14b",
+  "phase": "blind7",
+  "ctx": 8192,
+  "date": "2026-11-20T15:00:42.260Z",
+  "cpus": 4,
+  "ramGb": 16,
+  "host": "CPU sin GPU"
+ },
+ "loaded": {
+  "sizeMb": 10609,
+  "context": 8192
+ },
+ "totalMin": 119.8,
+ "results": [
+  {
+   "id": "E16",
+   "title": "Episodio 16",
+   "request": "Crea el episodio 16, a continuación del episodio 3. KAP presta su cuaderno de rimas a un niño nuevo del barrio para que lo mire un momento. Cuando se lo devuelve, faltan dos páginas y KAP, sin pensarlo, lo acusa delante de los demás. El niño no contesta y se marcha, y Dani, que lo ha oído todo, decide aprovecharlo.",
+   "ms": 3274889,
+   "peakMb": 10678,
+   "sysPeakMb": 11490,
+   "contextTokens": 1925,
+   "ok": true,
+   "irValid": true,
+   "irValidFirstTry": false,
+   "json": {
+    "attempts": 2,
+    "retries": 1,
+    "jsonErrors": 0,
+    "schemaErrors": 0,
+    "lengthRetries": 1,
+    "memoryDirectiveErrors": 1
+   },
+   "irErrors": [],
+   "usage": {
+    "promptTokens": 7716,
+    "outputTokens": 4691,
+    "totalMs": 3274854.991914,
+    "loadMs": 11904.315498,
+    "promptMs": 240889.73,
+    "evalMs": 3021984.748
+   },
+   "tokensPerSec": 1.55,
+   "episode": {
+    "scenes": 27,
+    "estimatedSec": 258,
+    "words": 687,
+    "title": "Episodio 16: La culpa",
+    "logline": "KAP presta su cuaderno a un niño nuevo, pero al devolverlo faltan páginas y lo acusa públicamente, lo que le da a Dani una oportunidad para aprovecharse."
+   },
+   "continuity": {
+    "critical": [],
+    "warnings": [
+     "directiva: Directiva de memoria no entendida: «acto: inicio»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "objeto-sin-introducir: «cuaderno de rimas» se usa en la escena 1 sin haber sido introducido (declara [obtiene: …] o aparece antes).",
+     "hito: El hito «Víctima de bullying» ya estaba logrado en ep. 2.",
+     "ubicacion-incoherente: Se declara a KAP en «Cocina» pero la escena 8 transcurre en «Calle de día».",
+     "relacion-contradice: KAP y Hermano de KAP ya se conocían (relación «hermanos» desde canon inicial); la escena 8 los presenta como si se conocieran ahora.",
+     "relacion-contradice: KAP y Dani ya se conocían (relación «acoso» desde ep. 2); la escena 11 los presenta como si se conocieran ahora.",
+     "estructura: Al episodio le faltan: Inicio, Conflicto, Desarrollo, Punto emocional o de tensión, Resolución parcial. Decláralo en el guion con [acto: tip"
+    ],
+    "info": 4
+   },
+   "narrative": {
+    "error": 0,
+    "warning": 5,
+    "info": 2,
+    "rules": [
+     "dialogo-duplicado",
+     "localizacion-estancada",
+     "escena-sin-aporte",
+     "personaje-sin-funcion",
+     "memoria-no-pedida",
+     "cierre-moralizante",
+     "cierre-reflexivo"
+    ],
+    "findings": [
+     {
+      "severity": "warning",
+      "rule": "narrativa-dialogo-duplicado",
+      "text": "La frase «No puedo seguir así…» aparece 3 veces (escenas 10, 20, 25).",
+      "scene": 9
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-localizacion-estancada",
+      "text": "18 escenas seguidas (10-27) en «Calle de noche» con poca información nueva: ¿hace falta cambiar de lugar, de momento o de plano?",
+      "scene": 9
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-escena-sin-aporte",
+      "text": "La escena 25 no aporta información nueva respecto a las anteriores.",
+      "scene": 24
+     },
+     {
+      "severity": "info",
+      "rule": "narrativa-personaje-sin-funcion",
+      "text": "«Hermano de KAP» (de la memoria) solo hace un cameo de una línea: ¿era necesario traerlo?",
+      "scene": 7
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-memoria-no-pedida",
+      "text": "«Hermano de KAP» (de la memoria) aparece en 1 escena sin que la petición lo pidiera: la memoria sirve para mantener la continuidad, no para reutilizarlo todo.",
+      "scene": 7
+     },
+     {
+      "severity": "info",
+      "rule": "narrativa-cierre-moralizante",
+      "text": "El cierre tiene tono de lección o superación. No todos los episodios deben terminar con KAP más fuerte: ¿encaja con lo que pasa?",
+      "scene": 26
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-cierre-reflexivo",
+      "text": "El cierre de KAP es una frase de superación/moraleja: «No voy a rendirme.»: el cierre debería ser un gag, una reacción, una sorpresa o una consecuencia, no una reflexión.",
+      "scene": 26
+     }
+    ],
+    "taggedRules": [
+     "dialogo-duplicado",
+     "localizacion-estancada",
+     "escena-sin-aporte",
+     "personaje-sin-funcion",
+     "cierre-moralizante",
+     "cierre-reflexivo"
+    ]
+   },
+   "mode": "json",
+   "variety": {
+    "locations": 3,
+    "dominantShare": 0.7,
+    "times": 1,
+    "timeSource": "texto"
+   },
+   "show": {
+    "realism": {
+     "passed": 6,
+     "total": 9,
+     "failed": [
+      "interaccion-sin-validacion",
+      "final-nace-de-la-accion",
+      "ninguna-escena-eliminable"
+     ]
+    },
+    "explainLinesKap": 1,
+    "kapLines": 20,
+    "validationLinesSecondary": 0,
+    "secondaryLines": 7,
+    "costVisible": true,
+    "closing": {
+     "problem": true,
+     "reason": "El cierre de KAP es una frase de superación/moraleja: «No voy a rendirme.»"
+    }
+   },
+   "causal": {
+    "scenes": 27,
+    "locationChanges": 3,
+    "scenesLinkedToPrevious": 20,
+    "brokenLinkScenes": [
+     10,
+     11,
+     20,
+     22,
+     24,
+     25
+    ],
+    "suddenWithoutAntecedent": [
+     11,
+     24
+    ]
+   },
+   "openingRhymeCheck": {
+    "present": true,
+    "rhyme_valid": false,
+    "natural": true,
+    "contextual": true,
+    "rhythm": false,
+    "level": "ninguna"
+   },
+   "script": "# Calle de noche\nKAP mira fijamente el cuaderno que tiene en sus manos, las páginas sueltas y las marcas de tinta le recuerdan la conversación con Ramiro. Aunque no lo recuerda con claridad, algo dentro de él sabe que está a punto de cometer un error grave.\nKAP: No puedo perder esas páginas…\n[acto: inicio]\n[ubicacion: KAP, Calle de noche]\n[usa: KAP, cuaderno de rimas]\n\n# Casa por la mañana\nKAP despierta temprano y se sienta en el borde de su cama. El cuaderno está sobre la mesita de noche, abierto a una página que le recuerda el sueño de ser millonario.\nKAP: No puedo perderlo…\n[ubicacion: KAP, Casa por la mañana]\n\n# Calle de día\nKAP camina por la calle con su cuaderno bajo el brazo. En el camino, se cruza con un niño nuevo del barrio, más joven que él, con ropa vieja y una mirada curiosa.\nKAP: ¿Quieres echar un vistazo? Es solo por un momento.\n[conoce: KAP, niño nuevo]\n[ubicacion: KAP, Calle de día]\n\n# Calle de día\nEl niño acepta con una sonrisa y se sienta en el suelo para mirar las páginas del cuaderno. KAP se aleja un poco, observándolo.\nKAP: Espero que no se pierda nada importante.\n[ubicacion: KAP, Calle de día]\n\n# Calle de día\nEl niño le devuelve el cuaderno, pero KAP nota que faltan dos páginas. Sin pensarlo, su mirada se clava en el niño.\nKAP: ¿Qué hiciste con esas páginas?\n[hito-logrado: Víctima de bullying | KAP acusado injustamente]\n[ubicacion: KAP, Calle de día]\n\n# Calle de día\nEl niño lo mira con expresión de miedo y se levanta lentamente. No responde, solo se da la vuelta y empieza a caminar.\nKAP: ¡No te vayas! ¡Tienes que responder!\n[ubicacion: KAP, Calle de día]\n\n# Calle de día\nKAP se queda solo con el cuaderno en sus manos. Mira al niño que ya no está, y una sensación de vacío lo invade.\nKAP: ¿Qué hice?\n[ubicacion: KAP, Calle de día]\n\n# Calle de día\nDe vuelta en casa, KAP entra en la cocina y se sienta a la mesa. Su hermano lo mira con curiosidad.\nHERMANO DE KAP: ¿Qué te pasa, KAP?\n[conoce: KAP, Hermano de KAP]\n[ubicacion: KAP, Cocina]\n\n# Calle de día\nKAP mira a su hermano y, por un momento, siente la necesidad de confiar en alguien. Pero no puede hacerlo.\nKAP: Nada.\n[ubicacion: KAP, Calle de día]\n\n# Calle de noche\nEsa noche, KAP camina por la calle con el cuaderno bajo el brazo. Su mirada está perdida y sus pasos son lentos.\nKAP: No puedo seguir así…\n[ubicacion: KAP, Calle de noche]\n\n# Calle de noche\nDe repente, una figura aparece en la oscuridad. Es Dani, que observa a KAP con una sonrisa maliciosa.\nDANI: ¿Te sientes bien, KAP?\n[conoce: KAP, Dani]\n[ubicacion: KAP, Calle de noche]\n\n# Calle de noche\nKAP lo mira con desconfianza, pero Dani se acerca y habla con voz baja.\nDANI: Ese niño no te dijo nada, ¿verdad?\n[ubicacion: KAP, Calle de noche]\n\n# Calle de noche\nKAP no responde. Dani se acerca más y susurra en su oído.\nDANI: Puedo ayudarte… si colaboras conmigo.\n[ubicacion: KAP, Calle de noche]\n\n# Calle de noche\nKAP se queda inmóvil. Mira a Dani con una mezcla de miedo y desesperación.\nKAP: ¿Qué quieres decir?\n[ubicacion: KAP, Calle de noche]\n\n# Calle de noche\nDani sonríe y le muestra el cuaderno que lleva en su bolsillo. KAP lo reconoce inmediatamente.\nDANI: ¿Quieres recuperar esas páginas?\n[ubicacion: KAP, Calle de noche]\n\n# Calle de noche\nKAP mira a Dani con una mezcla de miedo y desesperación. No sabe qué hacer, pero siente que no tiene otra opción.\nKAP: ¿Qué quieres a cambio?\n[ubicacion: KAP, Calle de noche]\n\n# Calle de noche\nDani se acerca más y susurra en su oído.\nDANI: Tus secretos, KAP. Todo lo que escribiste en esas páginas.\n[ubicacion: KAP, Calle de noche]\n\n# Calle de noche\nKAP se queda paralizado. Sabe que no tiene otra opción. Dani tiene algo que él necesita.\nKAP: ¿Y si no te doy nada?\n[ubicacion: KAP, Calle de noche]\n\n# Calle de noche\nDani sonríe y se aleja lentamente, dejando a KAP solo en la calle. La tensión es palpable.\nDANI: Entonces, no las recuperarás nunca.\n[ubicacion: KAP, Calle de noche]\n\n# Calle de noche\nKAP se queda solo, mirando al cielo. Sabe que algo dentro de él acaba de cambiar.\nKAP: No puedo seguir así…\n[ubicacion: KAP, Calle de noche]\n\n# Calle de noche\nLa luna se eleva en el cielo, iluminando la calle vacía. KAP se aleja lentamente, con el corazón roto y una nueva determinación.\nKAP: Tengo que hacer algo.\n[ubicacion: KAP, Calle de noche]\n\n# Calle de noche\nKAP se detiene frente a la puerta de una casa. Es la casa del niño nuevo. Siente un nudo en el estómago.\nKAP: Tengo que hablar con él.\n[ubicacion: KAP, Calle de noche]\n\n# Calle de noche\nKAP toca la puerta. Nadie responde. La luz está apagada. Se queda allí, con el cuaderno en la mano.\nKAP: ¿Por qué no me respondes?\n[ubicacion: KAP, Calle de noche]\n\n# Calle de noche\nKAP mira al suelo y siente una culpa profunda. Ha hecho algo que no puede deshacer.\nKAP: Lo siento.\n[ubicacion: KAP, Calle de noche]\n\n# Calle de noche\nKAP se aleja lentamente, con el cuaderno en la mano. No sabe qué hacer, pero algo dentro de él ha cambiado.\nKAP: No puedo seguir así…\n[ubicacion: KAP, Calle de noche]\n\n# Calle de noche\nKAP camina por la calle, mirando al suelo. Su respiración es lenta y su mente está en blanco.\nKAP: Tengo que encontrar una forma de arreglar esto.\n[ubicacion: KAP, Calle de noche]\n\n# Calle de noche\nLa luna ilumina su camino. Aunque no tiene respuesta, siente que algo dentro de él ha empezado a cambiar.\nKAP: No voy a rendirme.\n[gancho: El cuaderno de KAP está en manos de Dani | KAP acusó injustamente al niño nuevo]\n",
+   "gate": {
+    "regenerated": 0,
+    "dropped": 0,
+    "localPatches": 0,
+    "patchKinds": {},
+    "endingRevisions": 0,
+    "varietyRevisions": 0,
+    "codeRepairs": 0,
+    "arcRevisions": 0,
+    "calls": 2,
+    "outputTokens": 4691,
+    "promptTokens": 7716,
+    "issues": {}
+   },
+   "checks": [
+    {
+     "id": "estructura-6-actos",
+     "ok": false,
+     "note": "faltan: inicio, conflicto, desarrollo, emocional, resolucion"
+    },
+    {
+     "id": "gancho",
+     "ok": true
+    },
+    {
+     "id": "protagonista",
+     "ok": true
+    },
+    {
+     "id": "sin-errores-criticos",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "sin-exito-prematuro",
+     "ok": true
+    },
+    {
+     "id": "directivas-validas",
+     "ok": false,
+     "note": "«acto: inicio»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»"
+    },
+    {
+     "id": "espanol",
+     "ok": true
+    },
+    {
+     "id": "diversidad-lexica",
+     "ok": true,
+     "note": "0.35"
+    }
+   ],
+   "compliance": 0.75,
+   "proxy": {
+    "score": 8,
+    "dialogueRatio": 0.5,
+    "locations": 3,
+    "repeatedSentences": 1
+   },
+   "warnings": [
+    "Directiva de memoria inválida del modelo: «acto: inicio»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»"
+   ],
+   "draft": {
+    "title": "Episodio 16: La culpa",
+    "logline": "KAP presta su cuaderno a un niño nuevo, pero al devolverlo faltan páginas y lo acusa públicamente, lo que le da a Dani una oportunidad para aprovecharse.",
+    "assumptions": [],
+    "scenes": [
+     {
+      "title": "Calle de noche (2)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP mira fijamente el cuaderno que tiene en sus manos, las páginas sueltas y las marcas de tinta le recuerdan la conversación con Ramiro. Aunque no lo recuerda con claridad, algo dentro de él sabe que está a punto de cometer un error grave."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No puedo perder esas páginas…"
+       }
+      ],
+      "memory": [
+       "acto: inicio",
+       "ubicacion: KAP, Calle de noche",
+       "usa: KAP, cuaderno de rimas"
+      ]
+     },
+     {
+      "title": "Casa por la mañana (2)",
+      "location": "Casa por la mañana",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP despierta temprano y se sienta en el borde de su cama. El cuaderno está sobre la mesita de noche, abierto a una página que le recuerda el sueño de ser millonario."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No puedo perderlo…"
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Casa por la mañana"
+      ]
+     },
+     {
+      "title": "Calle de día",
+      "location": "Calle de día",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP camina por la calle con su cuaderno bajo el brazo. En el camino, se cruza con un niño nuevo del barrio, más joven que él, con ropa vieja y una mirada curiosa."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Quieres echar un vistazo? Es solo por un momento."
+       }
+      ],
+      "memory": [
+       "conoce: KAP, niño nuevo",
+       "ubicacion: KAP, Calle de día"
+      ]
+     },
+     {
+      "title": "Calle de día (2)",
+      "location": "Calle de día",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "El niño acepta con una sonrisa y se sienta en el suelo para mirar las páginas del cuaderno. KAP se aleja un poco, observándolo."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Espero que no se pierda nada importante."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de día"
+      ]
+     },
+     {
+      "title": "Calle de día (3)",
+      "location": "Calle de día",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "El niño le devuelve el cuaderno, pero KAP nota que faltan dos páginas. Sin pensarlo, su mirada se clava en el niño."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Qué hiciste con esas páginas?"
+       }
+      ],
+      "memory": [
+       "hito-logrado: Víctima de bullying | KAP acusado injustamente",
+       "ubicacion: KAP, Calle de día"
+      ]
+     },
+     {
+      "title": "Calle de día (4)",
+      "location": "Calle de día",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "El niño lo mira con expresión de miedo y se levanta lentamente. No responde, solo se da la vuelta y empieza a caminar."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¡No te vayas! ¡Tienes que responder!"
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de día"
+      ]
+     },
+     {
+      "title": "Calle de día (5)",
+      "location": "Calle de día",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se queda solo con el cuaderno en sus manos. Mira al niño que ya no está, y una sensación de vacío lo invade."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Qué hice?"
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de día"
+      ]
+     },
+     {
+      "title": "Calle de día (6)",
+      "location": "Calle de día",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "De vuelta en casa, KAP entra en la cocina y se sienta a la mesa. Su hermano lo mira con curiosidad."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¿Qué te pasa, KAP?"
+       }
+      ],
+      "memory": [
+       "conoce: KAP, Hermano de KAP",
+       "ubicacion: KAP, Cocina"
+      ]
+     },
+     {
+      "title": "Calle de día (7)",
+      "location": "Calle de día",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP mira a su hermano y, por un momento, siente la necesidad de confiar en alguien. Pero no puede hacerlo."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Nada."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de día"
+      ]
+     },
+     {
+      "title": "Calle de noche",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Esa noche, KAP camina por la calle con el cuaderno bajo el brazo. Su mirada está perdida y sus pasos son lentos."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No puedo seguir así…"
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "Calle de noche (2)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "De repente, una figura aparece en la oscuridad. Es Dani, que observa a KAP con una sonrisa maliciosa."
+       },
+       {
+        "speaker": "Dani",
+        "text": "¿Te sientes bien, KAP?"
+       }
+      ],
+      "memory": [
+       "conoce: KAP, Dani",
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "Calle de noche (3)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP lo mira con desconfianza, pero Dani se acerca y habla con voz baja."
+       },
+       {
+        "speaker": "Dani",
+        "text": "Ese niño no te dijo nada, ¿verdad?"
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "Calle de noche (4)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP no responde. Dani se acerca más y susurra en su oído."
+       },
+       {
+        "speaker": "Dani",
+        "text": "Puedo ayudarte… si colaboras conmigo."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "Calle de noche (5)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se queda inmóvil. Mira a Dani con una mezcla de miedo y desesperación."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Qué quieres decir?"
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "Calle de noche (6)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Dani sonríe y le muestra el cuaderno que lleva en su bolsillo. KAP lo reconoce inmediatamente."
+       },
+       {
+        "speaker": "Dani",
+        "text": "¿Quieres recuperar esas páginas?"
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "Calle de noche (7)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP mira a Dani con una mezcla de miedo y desesperación. No sabe qué hacer, pero siente que no tiene otra opción."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Qué quieres a cambio?"
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "Calle de noche (8)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Dani se acerca más y susurra en su oído."
+       },
+       {
+        "speaker": "Dani",
+        "text": "Tus secretos, KAP. Todo lo que escribiste en esas páginas."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "Calle de noche (9)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se queda paralizado. Sabe que no tiene otra opción. Dani tiene algo que él necesita."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Y si no te doy nada?"
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "Calle de noche (10)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Dani sonríe y se aleja lentamente, dejando a KAP solo en la calle. La tensión es palpable."
+       },
+       {
+        "speaker": "Dani",
+        "text": "Entonces, no las recuperarás nunca."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "Calle de noche (11)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se queda solo, mirando al cielo. Sabe que algo dentro de él acaba de cambiar."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No puedo seguir así…"
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "Calle de noche (12)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "La luna se eleva en el cielo, iluminando la calle vacía. KAP se aleja lentamente, con el corazón roto y una nueva determinación."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Tengo que hacer algo."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "Calle de noche (13)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se detiene frente a la puerta de una casa. Es la casa del niño nuevo. Siente un nudo en el estómago."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Tengo que hablar con él."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "Calle de noche (14)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP toca la puerta. Nadie responde. La luz está apagada. Se queda allí, con el cuaderno en la mano."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Por qué no me respondes?"
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "Calle de noche (15)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP mira al suelo y siente una culpa profunda. Ha hecho algo que no puede deshacer."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Lo siento."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "Calle de noche (16)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se aleja lentamente, con el cuaderno en la mano. No sabe qué hacer, pero algo dentro de él ha cambiado."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No puedo seguir así…"
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "Calle de noche (17)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP camina por la calle, mirando al suelo. Su respiración es lenta y su mente está en blanco."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Tengo que encontrar una forma de arreglar esto."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche"
+      ]
+     },
+     {
+      "title": "Calle de noche (18)",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "La luna ilumina su camino. Aunque no tiene respuesta, siente que algo dentro de él ha empezado a cambiar."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No voy a rendirme."
+       }
+      ],
+      "memory": [
+       "gancho: El cuaderno de KAP está en manos de Dani | KAP acusó injustamente al niño nuevo"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "E17",
+   "title": "Episodio 17",
+   "request": "Crea el episodio 17, continuando el episodio 16. KAP sospecha que quizá se equivocó al acusar al niño nuevo e intenta arreglarlo con un plan suyo; pero el niño no quiere verlo y lo que Dani ha hecho con la historia de las páginas cambia lo que KAP había planeado.",
+   "ms": 2186660,
+   "peakMb": 10673,
+   "sysPeakMb": 11445,
+   "contextTokens": 1988,
+   "ok": true,
+   "irValid": true,
+   "irValidFirstTry": false,
+   "json": {
+    "attempts": 1,
+    "retries": 0,
+    "jsonErrors": 0,
+    "schemaErrors": 0,
+    "lengthRetries": 0,
+    "memoryDirectiveErrors": 12
+   },
+   "irErrors": [],
+   "usage": {
+    "promptTokens": 3023,
+    "outputTokens": 3367,
+    "totalMs": 2186651.325582,
+    "loadMs": 9873.656415,
+    "promptMs": 132220.913,
+    "evalMs": 2044522.404
+   },
+   "tokensPerSec": 1.65,
+   "episode": {
+    "scenes": 17,
+    "estimatedSec": 294,
+    "words": 813,
+    "title": "Episodio 17: El plan y la sombra",
+    "logline": "KAP intenta arreglar su error acusando al niño nuevo, pero Dani altera sus planes con el cuaderno de KAP."
+   },
+   "continuity": {
+    "critical": [],
+    "warnings": [
+     "directiva: Directiva de memoria no entendida: «relacion: KAP, niño nuevo»: usa «A, B, tipo[, −2..2]»",
+     "hito: Hito desconocido «KAP intenta reconciliarse con el niño nuevo»: no está en el arco de la serie.",
+     "directiva: Directiva de memoria no entendida: «relacion: KAP, Hermano de KAP»: usa «A, B, tipo[, −2..2]»",
+     "relacion-contradice: KAP y Dani ya se conocían (relación «conocidos» desde ep. 2); la escena 6 los presenta como si se conocieran ahora.",
+     "hito: Hito desconocido «Dani manipula el cuaderno de KAP»: no está en el arco de la serie.",
+     "hito: Hito desconocido «KAP redescubre su pasión por la música»: no está en el arco de la serie.",
+     "hito: Hito desconocido «KAP se abre a la profesora»: no está en el arco de la serie.",
+     "directiva: Directiva de memoria no entendida: «relacion: KAP, Hermano de KAP»: usa «A, B, tipo[, −2..2]»",
+     "directiva: Directiva de memoria no entendida: «relacion: KAP, Hermano de KAP»: usa «A, B, tipo[, −2..2]»",
+     "hito: Hito desconocido «Hermano de KAP participa en el proyecto»: no está en el arco de la serie.",
+     "hito: Hito desconocido «KAP comparte su historia con su hermano»: no está en el arco de la serie.",
+     "directiva: Directiva de memoria no entendida: «relacion: KAP, Hermano de KAP»: usa «A, B, tipo[, −2..2]»",
+     "hito: Hito desconocido «KAP se compromete con su sueño»: no está en el arco de la serie.",
+     "hito: Hito desconocido «KAP comienza su historia musical»: no está en el arco de la serie."
+    ],
+    "info": 1
+   },
+   "narrative": {
+    "error": 0,
+    "warning": 4,
+    "info": 1,
+    "rules": [
+     "memoria-no-pedida",
+     "dialogo-motivacional",
+     "cierre-moralizante",
+     "voz-adulta"
+    ],
+    "findings": [
+     {
+      "severity": "warning",
+      "rule": "narrativa-memoria-no-pedida",
+      "text": "«Hermano de KAP» (de la memoria) aparece en 6 escenas sin que la petición lo pidiera: la memoria sirve para mantener la continuidad, no para reutilizarlo todo.",
+      "scene": 2
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-memoria-no-pedida",
+      "text": "«Profesora» (de la memoria) aparece en 4 escenas sin que la petición lo pidiera: la memoria sirve para mantener la continuidad, no para reutilizarlo todo.",
+      "scene": 8
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-dialogo-motivacional",
+      "text": "4 frases de tipo «no te rindas / cree en ti / solo es el principio» (escenas 3, 8, 14, 16): suenan a eslogan, no a personajes."
+     },
+     {
+      "severity": "info",
+      "rule": "narrativa-cierre-moralizante",
+      "text": "El cierre tiene tono de lección o superación. No todos los episodios deben terminar con KAP más fuerte: ¿encaja con lo que pasa?",
+      "scene": 16
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-voz-adulta",
+      "text": "6 líneas de KAP suenan a eslogan o a adulto («mi voz», «mis sueños», «el futuro»…; escenas 3, 8, 15, 16): ¿habla como un niño de su etapa?"
+     }
+    ],
+    "taggedRules": [
+     "dialogo-motivacional",
+     "cierre-moralizante",
+     "voz-adulta"
+    ]
+   },
+   "mode": "json",
+   "variety": {
+    "locations": 3,
+    "dominantShare": 0.47,
+    "times": 1,
+    "timeSource": "texto"
+   },
+   "show": {
+    "realism": {
+     "passed": 7,
+     "total": 9,
+     "failed": [
+      "kap-no-explica-de-mas",
+      "sin-frases-de-adulto"
+     ]
+    },
+    "explainLinesKap": 2,
+    "kapLines": 33,
+    "validationLinesSecondary": 1,
+    "secondaryLines": 18,
+    "costVisible": true,
+    "closing": {
+     "problem": false,
+     "reason": null
+    }
+   },
+   "causal": {
+    "scenes": 17,
+    "locationChanges": 14,
+    "scenesLinkedToPrevious": 15,
+    "brokenLinkScenes": [
+     6
+    ],
+    "suddenWithoutAntecedent": [
+     4
+    ]
+   },
+   "openingRhymeCheck": {
+    "present": true,
+    "rhyme_valid": true,
+    "natural": true,
+    "contextual": true,
+    "rhythm": true,
+    "level": "asonante"
+   },
+   "script": "# Calle de noche\nKAP camina por la calle, el cuaderno en su mochila. Ha decidido hablar con el niño nuevo para pedir perdón, pero no sabe si lo aceptará.\nKAP: No me equivoqué… o al menos, no quiero que se quede con eso.\nLa luna ilumina su camino. Sus manos temblorosas aferran la mochila con fuerza.\nKAP: Tengo que hacer esto bien.\nMientras camina, recuerda las palabras de Ramiro: 'La verdad siempre se revela, pero es el coraje lo que la lleva a la luz.'\n[acto: inicio | KAP intenta arreglar su error]\n[ubicacion: KAP, Calle de noche]\n[sospecha: KAP, acusación injusta]\n[plan: KAP, disculparse con el niño nuevo]\n\n# Calle de día\nKAP llega a la escuela y busca al niño nuevo. Lo encuentra sentado en un banco, rodeado por otros niños que lo ignoran.\nKAP: ¿Hola? ¿Estás bien?\nEl niño lo mira con desconfianza, pero no responde.\nKAP: Lo siento… no quería acusarte. Sé que no fuiste tú.\nEl niño se levanta y se aleja, ignorando completamente la disculpa de KAP.\n[acto: conflicto | El niño rechaza la disculpa]\n[ubicacion: KAP, Calle de día]\n[relación: KAP, niño nuevo]\n[hito-logrado: KAP intenta reconciliarse con el niño nuevo]\n\n# Cocina\nKAP entra en su casa y se sienta en la mesa. Su hermano lo mira con curiosidad.\nHERMANO DE KAP: ¿Qué pasó?\nKAP: Nada… solo intenté arreglar algo que no debí hacer.\nEl hermano de KAP lo observa con preocupación, pero no dice nada más.\nKAP: Tengo que seguir adelante.\n[ubicacion: KAP, Cocina]\n[relación: KAP, Hermano de KAP]\n\n# Calle de noche\nKAP camina por la calle de nuevo, esta vez con el cuaderno en sus manos. No sabe que Dani lo ha visto.\nKAP: Tengo que encontrar una manera de devolverle el cuaderno al niño nuevo.\nDe repente, una sombra se mueve en la esquina. Es Dani, observándolo con una sonrisa maliciosa.\nKAP: ¿Qué haces aquí, Dani?\nDani se acerca, sosteniendo una hoja de papel manchada de tinta.\n[ubicacion: KAP, Calle de noche]\n[conoce: KAP, Dani]\n[hilo-abierto: El cuaderno robado | KAP, Dani]\n\n# Calle de noche\nDani se acerca a KAP y le muestra la hoja de papel.\nDANI: ¿Sabes qué hice con tu cuaderno?\nKAP: ¿Qué hiciste?\nDANI: Lo quemé. Solo las páginas que quería.\nKAP: ¡No puedes hacer eso!\nKAP se acerca a Dani con una mirada furiosa, pero no dice nada más.\n[acto: desarrollo | Dani altera el plan de KAP]\n[hito-logrado: Dani manipula el cuaderno de KAP]\n[uso: Dani, manipulación]\n\n# Calle de noche\nKAP camina otra vez por la calle, pero ahora con una expresión diferente. La frustración lo domina.\nKAP: ¿Cómo pude perderme tanto?\nRecuerda las palabras de Ramiro: 'La música es tu refugio, pero también tu arma.'\nKAP: Tengo que empezar de nuevo.\nLa luna lo observa en silencio, mientras KAP camina hacia un lugar desconocido.\n[acto: emocional | KAP se siente derrotado]\n[ubicacion: KAP, Calle de noche]\n[uso: KAP, reflexión]\n\n# Calle de día\nKAP entra en la escuela con el cuaderno en sus manos. Esta vez, no busca al niño nuevo.\nKAP: Tengo que escribir otra historia… una que no me mienta.\nSaca el cuaderno y empieza a escribir, las páginas en blanco le dan un nuevo comienzo.\nKAP: Esta vez, será diferente.\nMientras escribe, siente que algo dentro de él se está fortaleciendo.\n[acto: resolucion | KAP empieza de nuevo]\n[ubicacion: KAP, Calle de día]\n[hito-logrado: KAP redescubre su pasión por la música]\n\n# Calle de noche\nKAP camina por la calle de noche, el cuaderno en su mochila. Ha cambiado algo dentro de él.\nKAP: No me rendiré… ni ahora, ni nunca.\nLa luna lo ilumina una vez más, pero esta vez, KAP camina con paso firme.\nKAP: Voy a hacerlo. Por mí, por mi hermano y por mi música.\nKAP se aleja, dejando atrás la sombra de Dani y el peso del pasado.\n[gancho: KAP empieza a escribir su historia nueva]\n[ubicacion: KAP, Calle de noche]\n[uso: KAP, determinación]\n\n# Calle de día\nKAP entra en la escuela y se dirige a la profesora.\nKAP: Profesora, tengo algo que decirle.\nPROFESORA: ¿Sí, KAP?\nKAP: Quiero presentar un nuevo proyecto musical. Esta vez, quiero hacerlo bien.\nLa profesora lo mira con interés, y una pequeña sonrisa aparece en su rostro.\n[ubicacion: KAP, Calle de día]\n[hito-logrado: KAP se abre a la profesora]\n\n# Cocina\nKAP entra en casa y se sienta junto a su hermano.\nHERMANO DE KAP: ¿Qué pasó en la escuela?\nKAP: Voy a empezar algo nuevo… algo que me hará mejor.\nHERMANO DE KAP: ¿Me puedes enseñar?\nKAP: Sí… si quieres aprender.\n[ubicacion: KAP, Cocina]\n[relación: KAP, Hermano de KAP]\n\n# Calle de noche\nKAP camina por la calle con su hermano. Lleva el cuaderno bajo el brazo.\nHERMANO DE KAP: ¿Qué es lo que escribirás?\nKAP: Una historia verdadera… sin mentiras ni errores.\nHERMANO DE KAP: Entonces, vamos.\nKAP: Sí… vamos.\n[ubicacion: KAP, Calle de noche]\n[relación: KAP, Hermano de KAP]\n\n# Calle de día\nKAP entra en la escuela con su hermano. La profesora los espera.\nPROFESORA: ¿Listos para empezar?\nKAP: Sí, profesora.\nHERMANO DE KAP: Quiero aprender también.\nPROFESORA: Perfecto… entonces, ¡empecemos!\n[ubicacion: KAP, Calle de día]\n[hito-logrado: Hermano de KAP participa en el proyecto]\n\n# Cocina\nKAP y su hermano se sientan en la mesa. El cuaderno está entre ellos.\nHERMANO DE KAP: ¿Qué escribirás primero?\nKAP: La verdad… sobre mí, sobre nosotros.\nHERMANO DE KAP: Entonces, empieza.\nKAP: Sí… empezaré.\n[ubicacion: KAP, Cocina]\n[hito-logrado: KAP comparte su historia con su hermano]\n\n# Calle de noche\nKAP camina por la calle con el cuaderno en sus manos. Su hermano lo sigue.\nHERMANO DE KAP: ¿Sabes que algún día serás famoso?\nKAP: Sí… si trabajo duro y no me rindo.\nHERMANO DE KAP: Entonces, no te rindas.\nKAP: No lo haré.\n[ubicacion: KAP, Calle de noche]\n[relación: KAP, Hermano de KAP]\n\n# Calle de día\nKAP entra en la escuela con el cuaderno. Esta vez, no lo lleva bajo el brazo… lo lleva con orgullo.\nKAP: Esto es solo el comienzo.\nPROFESORA: Vamos a escribir la historia de un niño que no se rindió.\nKAP: Sí… y esta vez, será mi historia.\nLa profesora sonríe y le entrega una pluma.\n[ubicacion: KAP, Calle de día]\n[hito-logrado: KAP se compromete con su sueño]\n\n# Calle de noche\nKAP camina por la calle, el cuaderno en sus manos. La luna lo observa con paciencia.\nKAP: No me rindí… y no me rendiré.\nKAP se detiene un momento, mira al cielo y sonríe por primera vez en mucho tiempo.\nKAP: Esta es mi historia… y la escribiré yo mismo.\nLa luna lo ilumina una vez más, mientras KAP camina hacia un nuevo comienzo.\n[ubicacion: KAP, Calle de noche]\n[uso: KAP, determinación]\n\n# Calle de día\nKAP entra en la escuela y se sienta en su lugar habitual. El cuaderno está abierto.\nKAP: Esta vez, escribiré una historia diferente.\nPROFESORA: ¿Ya tienes un título?\nKAP: Sí… 'El niño que no se rindió'.\nPROFESORA: Me gusta. Empieza.\n[ubicacion: KAP, Calle de día]\n[hito-logrado: KAP comienza su historia musical]\n",
+   "gate": {
+    "regenerated": 0,
+    "dropped": 0,
+    "localPatches": 0,
+    "patchKinds": {},
+    "endingRevisions": 0,
+    "varietyRevisions": 0,
+    "codeRepairs": 0,
+    "arcRevisions": 0,
+    "calls": 1,
+    "outputTokens": 3367,
+    "promptTokens": 3023,
+    "issues": {}
+   },
+   "checks": [
+    {
+     "id": "estructura-6-actos",
+     "ok": true,
+     "note": "faltan: —"
+    },
+    {
+     "id": "gancho",
+     "ok": true
+    },
+    {
+     "id": "protagonista",
+     "ok": true
+    },
+    {
+     "id": "sin-errores-criticos",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "sin-exito-prematuro",
+     "ok": true
+    },
+    {
+     "id": "directivas-validas",
+     "ok": false,
+     "note": "«relación: KAP, niño nuevo»: usa «A, B, tipo[, −2..2]» | «relación: KAP, Hermano de KAP»: usa «A, B, tipo[, −2..2]»"
+    },
+    {
+     "id": "espanol",
+     "ok": true
+    },
+    {
+     "id": "diversidad-lexica",
+     "ok": true,
+     "note": "0.32"
+    }
+   ],
+   "compliance": 0.88,
+   "proxy": {
+    "score": 10,
+    "dialogueRatio": 0.59,
+    "locations": 3,
+    "repeatedSentences": 0
+   },
+   "warnings": [
+    "Directiva de memoria inválida del modelo: «relación: KAP, niño nuevo»: usa «A, B, tipo[, −2..2]»",
+    "Directiva de memoria inválida del modelo: «relación: KAP, Hermano de KAP»: usa «A, B, tipo[, −2..2]»",
+    "Directiva de memoria inválida del modelo: «relación: KAP, Hermano de KAP»: usa «A, B, tipo[, −2..2]»",
+    "Directiva de memoria inválida del modelo: «relación: KAP, Hermano de KAP»: usa «A, B, tipo[, −2..2]»",
+    "Directiva de memoria inválida del modelo: «relación: KAP, Hermano de KAP»: usa «A, B, tipo[, −2..2]»",
+    "Directiva de memoria inválida del modelo: «sospecha: KAP, acusación injusta»: directiva de memoria desconocida"
+   ],
+   "draft": {
+    "title": "Episodio 17: El plan y la sombra",
+    "logline": "KAP intenta arreglar su error acusando al niño nuevo, pero Dani altera sus planes con el cuaderno de KAP.",
+    "assumptions": [],
+    "scenes": [
+     {
+      "title": "Calle de noche",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP camina por la calle, el cuaderno en su mochila. Ha decidido hablar con el niño nuevo para pedir perdón, pero no sabe si lo aceptará."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No me equivoqué… o al menos, no quiero que se quede con eso."
+       },
+       {
+        "speaker": "",
+        "text": "La luna ilumina su camino. Sus manos temblorosas aferran la mochila con fuerza."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Tengo que hacer esto bien."
+       },
+       {
+        "speaker": "",
+        "text": "Mientras camina, recuerda las palabras de Ramiro: 'La verdad siempre se revela, pero es el coraje lo que la lleva a la luz.'"
+       }
+      ],
+      "memory": [
+       "acto: inicio | KAP intenta arreglar su error",
+       "ubicacion: KAP, Calle de noche",
+       "sospecha: KAP, acusación injusta",
+       "plan: KAP, disculparse con el niño nuevo"
+      ]
+     },
+     {
+      "title": "Calle de día",
+      "location": "Calle de día",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP llega a la escuela y busca al niño nuevo. Lo encuentra sentado en un banco, rodeado por otros niños que lo ignoran."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Hola? ¿Estás bien?"
+       },
+       {
+        "speaker": "",
+        "text": "El niño lo mira con desconfianza, pero no responde."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Lo siento… no quería acusarte. Sé que no fuiste tú."
+       },
+       {
+        "speaker": "",
+        "text": "El niño se levanta y se aleja, ignorando completamente la disculpa de KAP."
+       }
+      ],
+      "memory": [
+       "acto: conflicto | El niño rechaza la disculpa",
+       "ubicacion: KAP, Calle de día",
+       "relación: KAP, niño nuevo",
+       "hito-logrado: KAP intenta reconciliarse con el niño nuevo"
+      ]
+     },
+     {
+      "title": "Cocina",
+      "location": "Cocina",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP entra en su casa y se sienta en la mesa. Su hermano lo mira con curiosidad."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¿Qué pasó?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "Nada… solo intenté arreglar algo que no debí hacer."
+       },
+       {
+        "speaker": "",
+        "text": "El hermano de KAP lo observa con preocupación, pero no dice nada más."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Tengo que seguir adelante."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Cocina",
+       "relación: KAP, Hermano de KAP"
+      ]
+     },
+     {
+      "title": "Calle de noche",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP camina por la calle de nuevo, esta vez con el cuaderno en sus manos. No sabe que Dani lo ha visto."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Tengo que encontrar una manera de devolverle el cuaderno al niño nuevo."
+       },
+       {
+        "speaker": "",
+        "text": "De repente, una sombra se mueve en la esquina. Es Dani, observándolo con una sonrisa maliciosa."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Qué haces aquí, Dani?"
+       },
+       {
+        "speaker": "",
+        "text": "Dani se acerca, sosteniendo una hoja de papel manchada de tinta."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche",
+       "conoce: KAP, Dani",
+       "hilo-abierto: El cuaderno robado | KAP, Dani"
+      ]
+     },
+     {
+      "title": "Calle de noche",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Dani se acerca a KAP y le muestra la hoja de papel."
+       },
+       {
+        "speaker": "Dani",
+        "text": "¿Sabes qué hice con tu cuaderno?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Qué hiciste?"
+       },
+       {
+        "speaker": "Dani",
+        "text": "Lo quemé. Solo las páginas que quería."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¡No puedes hacer eso!"
+       },
+       {
+        "speaker": "",
+        "text": "KAP se acerca a Dani con una mirada furiosa, pero no dice nada más."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo | Dani altera el plan de KAP",
+       "hito-logrado: Dani manipula el cuaderno de KAP",
+       "uso: Dani, manipulación"
+      ]
+     },
+     {
+      "title": "Calle de noche",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP camina otra vez por la calle, pero ahora con una expresión diferente. La frustración lo domina."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Cómo pude perderme tanto?"
+       },
+       {
+        "speaker": "",
+        "text": "Recuerda las palabras de Ramiro: 'La música es tu refugio, pero también tu arma.'"
+       },
+       {
+        "speaker": "KAP",
+        "text": "Tengo que empezar de nuevo."
+       },
+       {
+        "speaker": "",
+        "text": "La luna lo observa en silencio, mientras KAP camina hacia un lugar desconocido."
+       }
+      ],
+      "memory": [
+       "acto: emocional | KAP se siente derrotado",
+       "ubicacion: KAP, Calle de noche",
+       "uso: KAP, reflexión"
+      ]
+     },
+     {
+      "title": "Calle de día",
+      "location": "Calle de día",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP entra en la escuela con el cuaderno en sus manos. Esta vez, no busca al niño nuevo."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Tengo que escribir otra historia… una que no me mienta."
+       },
+       {
+        "speaker": "",
+        "text": "Saca el cuaderno y empieza a escribir, las páginas en blanco le dan un nuevo comienzo."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Esta vez, será diferente."
+       },
+       {
+        "speaker": "",
+        "text": "Mientras escribe, siente que algo dentro de él se está fortaleciendo."
+       }
+      ],
+      "memory": [
+       "acto: resolucion | KAP empieza de nuevo",
+       "ubicacion: KAP, Calle de día",
+       "hito-logrado: KAP redescubre su pasión por la música"
+      ]
+     },
+     {
+      "title": "Calle de noche",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP camina por la calle de noche, el cuaderno en su mochila. Ha cambiado algo dentro de él."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No me rendiré… ni ahora, ni nunca."
+       },
+       {
+        "speaker": "",
+        "text": "La luna lo ilumina una vez más, pero esta vez, KAP camina con paso firme."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Voy a hacerlo. Por mí, por mi hermano y por mi música."
+       },
+       {
+        "speaker": "",
+        "text": "KAP se aleja, dejando atrás la sombra de Dani y el peso del pasado."
+       }
+      ],
+      "memory": [
+       "gancho: KAP empieza a escribir su historia nueva",
+       "ubicacion: KAP, Calle de noche",
+       "uso: KAP, determinación"
+      ]
+     },
+     {
+      "title": "Calle de día",
+      "location": "Calle de día",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP entra en la escuela y se dirige a la profesora."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Profesora, tengo algo que decirle."
+       },
+       {
+        "speaker": "Profesora",
+        "text": "¿Sí, KAP?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "Quiero presentar un nuevo proyecto musical. Esta vez, quiero hacerlo bien."
+       },
+       {
+        "speaker": "",
+        "text": "La profesora lo mira con interés, y una pequeña sonrisa aparece en su rostro."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de día",
+       "hito-logrado: KAP se abre a la profesora"
+      ]
+     },
+     {
+      "title": "Cocina",
+      "location": "Cocina",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP entra en casa y se sienta junto a su hermano."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¿Qué pasó en la escuela?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "Voy a empezar algo nuevo… algo que me hará mejor."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¿Me puedes enseñar?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "Sí… si quieres aprender."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Cocina",
+       "relación: KAP, Hermano de KAP"
+      ]
+     },
+     {
+      "title": "Calle de noche",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP camina por la calle con su hermano. Lleva el cuaderno bajo el brazo."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¿Qué es lo que escribirás?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "Una historia verdadera… sin mentiras ni errores."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "Entonces, vamos."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Sí… vamos."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche",
+       "relación: KAP, Hermano de KAP"
+      ]
+     },
+     {
+      "title": "Calle de día",
+      "location": "Calle de día",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP entra en la escuela con su hermano. La profesora los espera."
+       },
+       {
+        "speaker": "Profesora",
+        "text": "¿Listos para empezar?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "Sí, profesora."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "Quiero aprender también."
+       },
+       {
+        "speaker": "Profesora",
+        "text": "Perfecto… entonces, ¡empecemos!"
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de día",
+       "hito-logrado: Hermano de KAP participa en el proyecto"
+      ]
+     },
+     {
+      "title": "Cocina",
+      "location": "Cocina",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP y su hermano se sientan en la mesa. El cuaderno está entre ellos."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¿Qué escribirás primero?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "La verdad… sobre mí, sobre nosotros."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "Entonces, empieza."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Sí… empezaré."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Cocina",
+       "hito-logrado: KAP comparte su historia con su hermano"
+      ]
+     },
+     {
+      "title": "Calle de noche",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP camina por la calle con el cuaderno en sus manos. Su hermano lo sigue."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¿Sabes que algún día serás famoso?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "Sí… si trabajo duro y no me rindo."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "Entonces, no te rindas."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No lo haré."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche",
+       "relación: KAP, Hermano de KAP"
+      ]
+     },
+     {
+      "title": "Calle de día",
+      "location": "Calle de día",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP entra en la escuela con el cuaderno. Esta vez, no lo lleva bajo el brazo… lo lleva con orgullo."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Esto es solo el comienzo."
+       },
+       {
+        "speaker": "Profesora",
+        "text": "Vamos a escribir la historia de un niño que no se rindió."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Sí… y esta vez, será mi historia."
+       },
+       {
+        "speaker": "",
+        "text": "La profesora sonríe y le entrega una pluma."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de día",
+       "hito-logrado: KAP se compromete con su sueño"
+      ]
+     },
+     {
+      "title": "Calle de noche",
+      "location": "Calle de noche",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP camina por la calle, el cuaderno en sus manos. La luna lo observa con paciencia."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No me rindí… y no me rendiré."
+       },
+       {
+        "speaker": "",
+        "text": "KAP se detiene un momento, mira al cielo y sonríe por primera vez en mucho tiempo."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Esta es mi historia… y la escribiré yo mismo."
+       },
+       {
+        "speaker": "",
+        "text": "La luna lo ilumina una vez más, mientras KAP camina hacia un nuevo comienzo."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de noche",
+       "uso: KAP, determinación"
+      ]
+     },
+     {
+      "title": "Calle de día",
+      "location": "Calle de día",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP entra en la escuela y se sienta en su lugar habitual. El cuaderno está abierto."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Esta vez, escribiré una historia diferente."
+       },
+       {
+        "speaker": "Profesora",
+        "text": "¿Ya tienes un título?"
+       },
+       {
+        "speaker": "KAP",
+        "text": "Sí… 'El niño que no se rindió'."
+       },
+       {
+        "speaker": "Profesora",
+        "text": "Me gusta. Empieza."
+       }
+      ],
+      "memory": [
+       "ubicacion: KAP, Calle de día",
+       "hito-logrado: KAP comienza su historia musical"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "E18",
+   "title": "Episodio 18",
+   "request": "Crea el episodio 18, continuando el episodio 17. La solución que KAP intentó ha tenido un efecto que no esperaba y alguien a quien no pensaba implicar se ha enterado. KAP tiene que decidir qué cuenta y qué no, y lo que decida tendrá un precio.",
+   "ms": 1715603,
+   "peakMb": 10674,
+   "sysPeakMb": 11434,
+   "contextTokens": 2034,
+   "ok": true,
+   "irValid": true,
+   "irValidFirstTry": false,
+   "json": {
+    "attempts": 1,
+    "retries": 0,
+    "jsonErrors": 0,
+    "schemaErrors": 0,
+    "lengthRetries": 0,
+    "memoryDirectiveErrors": 15
+   },
+   "irErrors": [],
+   "usage": {
+    "promptTokens": 3082,
+    "outputTokens": 2638,
+    "totalMs": 1715593.209016,
+    "loadMs": 13681.558198,
+    "promptMs": 147939.842,
+    "evalMs": 1553945.006
+   },
+   "tokensPerSec": 1.7,
+   "episode": {
+    "scenes": 18,
+    "estimatedSec": 250,
+    "words": 684,
+    "title": "Episodio 18: La verdad entre las líneas",
+    "logline": "KAP se enfrenta a una elección difícil cuando su intento por corregir el bullying lo lleva a un lugar inesperado, y una revelación amenaza con cambiar su vida para siempre."
+   },
+   "continuity": {
+    "critical": [],
+    "warnings": [
+     "directiva: Directiva de memoria no entendida: «acto: inicio»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "hito: El hito «Víctima de bullying» ya estaba logrado en ep. 16.",
+     "directiva: Directiva de memoria no entendida: «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "relacion-contradice: KAP y Hermano de KAP ya se conocían (relación «conocidos» desde canon inicial); la escena 3 los presenta como si se conocieran ahora.",
+     "directiva: Directiva de memoria no entendida: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: emocional»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: resolucion»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: emocional»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: resolucion»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: emocional»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: resolucion»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "directiva: Directiva de memoria no entendida: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+     "estructura: Al episodio le faltan: Inicio, Conflicto, Desarrollo, Punto emocional o de tensión, Resolución parcial. Decláralo en el guion con [acto: tip"
+    ],
+    "info": 4
+   },
+   "narrative": {
+    "error": 0,
+    "warning": 3,
+    "info": 0,
+    "rules": [
+     "localizacion-estancada",
+     "personaje-sin-funcion",
+     "memoria-no-pedida"
+    ],
+    "findings": [
+     {
+      "severity": "warning",
+      "rule": "narrativa-localizacion-estancada",
+      "text": "18 escenas seguidas (1-18) en «Cocina»: ¿hace falta cambiar de lugar, de momento o de plano?",
+      "scene": 0
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-personaje-sin-funcion",
+      "text": "«Padre de KAP» se introduce con una sola línea y no vuelve: ¿qué aporta a la historia?",
+      "scene": 16
+     },
+     {
+      "severity": "warning",
+      "rule": "narrativa-memoria-no-pedida",
+      "text": "«Hermano de KAP» (de la memoria) aparece en 3 escenas sin que la petición lo pidiera: la memoria sirve para mantener la continuidad, no para reutilizarlo todo.",
+      "scene": 1
+     }
+    ],
+    "taggedRules": [
+     "localizacion-estancada",
+     "personaje-sin-funcion"
+    ]
+   },
+   "mode": "json",
+   "variety": {
+    "locations": 1,
+    "dominantShare": 1,
+    "times": 0,
+    "timeSource": "texto"
+   },
+   "show": {
+    "realism": {
+     "passed": 8,
+     "total": 9,
+     "failed": [
+      "interaccion-sin-validacion"
+     ]
+    },
+    "explainLinesKap": 0,
+    "kapLines": 12,
+    "validationLinesSecondary": 0,
+    "secondaryLines": 6,
+    "costVisible": true,
+    "closing": {
+     "problem": false,
+     "reason": null
+    }
+   },
+   "causal": {
+    "scenes": 18,
+    "locationChanges": 0,
+    "scenesLinkedToPrevious": 17,
+    "brokenLinkScenes": [],
+    "suddenWithoutAntecedent": []
+   },
+   "openingRhymeCheck": {
+    "present": true,
+    "rhyme_valid": false,
+    "natural": true,
+    "contextual": true,
+    "rhythm": true,
+    "level": "ninguna"
+   },
+   "script": "# Cocina\nKAP se sienta en la mesa de la cocina, mirando fijamente el cuaderno que tiene frente a él. La profesora le había dado una oportunidad, y ahora él tenía que escribir su historia diferente. Pero no sabía que esta decisión lo llevaría a un lugar que no imaginaba.\nKAP: Esta vez, escribiré una historia diferente.\n[acto: inicio]\n[hito-logrado: Víctima de bullying | KAP empieza a escribir su historia nueva]\n[perfil: KAP, sueños = ser millonario gracias a la música]\n[ubicacion: KAP, Cocina]\n\n# Cocina\nMientras escribe, escucha pasos acercarse. Su hermano entra, con cara de preocupación. KAP lo mira y, por un momento, siente la responsabilidad que le pesa en los hombros.\nHERMANO DE KAP: ¿Ya terminaste? ¿Vas a ir a buscar a mamá?\n[acto: conflicto]\n[conoce: KAP, Hermano de KAP]\n[ubicacion: KAP, Cocina]\n\n# Cocina\nKAP mira a su hermano y, por un instante, duda. ¿Debería contarle sobre el bullying? ¿O preferiría protegerlo de más dolor? Su mente se divide entre la verdad y la protección.\nKAP: No sé si es el momento adecuado.\n[acto: desarrollo]\n[ubicacion: KAP, Cocina]\n\n# Cocina\nSu hermano lo mira con ojos llenos de confianza. A pesar de su edad, parece entender más de lo que KAP creía. El niño pequeño le devuelve la mirada con una determinación que lo sorprende.\nHERMANO DE KAP: Confía en mí, KAP.\n[acto: emocional]\n[ubicacion: KAP, Cocina]\n\n# Cocina\nKAP inspira profundamente y cierra el cuaderno. Su hermano lo ve con una mezcla de orgullo y miedo. KAP ha tomado una decisión, pero no sabe aún si será la correcta.\nKAP: Hoy no escribiré sobre eso.\n[acto: resolucion]\n[ubicacion: KAP, Cocina]\n\n# Cocina\nMientras sale de la cocina, escucha a su madre gritar desde el otro lado de la casa. Su hermano se queda petrificado, y KAP siente un escalofrío. No esperaba que esto llegara tan rápido.\nKAP: ¿Qué pasará ahora?\n[gancho: La verdad se revela de una forma inesperada | KAP, su hermano y sus padres]\n\n# Cocina\nKAP se detiene en el umbral de la puerta, escuchando a su madre llamar a su padre. Su hermano se agacha, temiendo lo que podría pasar. KAP sabe que su familia no está en condiciones de enfrentar esto.\nHERMANO DE KAP: ¿Qué hago, KAP?\n[acto: conflicto]\n[ubicacion: KAP, Cocina]\n\n# Cocina\nKAP mira a su hermano y, por un momento, siente el peso de su responsabilidad. No puede protegerlo de todo, pero al menos puede intentar evitar que se lastime más.\nKAP: No te muevas, hermano.\n[acto: desarrollo]\n[ubicacion: KAP, Cocina]\n\n# Cocina\nLa puerta se abre de golpe, y su madre entra con cara de desesperación. Sus ojos están rojos, y sus manos tiemblan. KAP la mira con miedo, preguntándose qué ha hecho para que esto pasara.\nMADRE DE KAP: ¿Por qué no me dijiste nada?\n[acto: emocional]\n[ubicacion: KAP, Cocina]\n\n# Cocina\nKAP se queda inmóvil. No sabe qué decir. Su madre lo mira con una mezcla de dolor y culpa, y KAP entiende que su decisión ha tenido un costo mucho mayor del que imaginaba.\nKAP: No sabía que te afectaría tanto.\n[acto: resolucion]\n[ubicacion: KAP, Cocina]\n\n# Cocina\nSu madre se sienta en la mesa, con la mirada baja. Su hermano se acerca y le toma la mano. KAP siente el peso de la verdad, pero también la responsabilidad que ahora le corresponde.\nMADRE DE KAP: ¿Qué harás ahora?\n[acto: conflicto]\n[ubicacion: KAP, Cocina]\n\n# Cocina\nKAP respira hondo y se acerca a su madre. Su hermano lo mira con expectativa. KAP sabe que no puede volver atrás, pero tampoco puede dejar que su familia caiga en el abismo.\nKAP: Voy a hacer lo que sea necesario.\n[acto: desarrollo]\n[ubicacion: KAP, Cocina]\n\n# Cocina\nSu madre lo mira con lágrimas en los ojos. KAP siente que, por primera vez, ha encontrado un camino que no solo le pertenece a él, sino también a su familia.\nKAP: Prometo que esto no terminará así.\n[acto: emocional]\n[ubicacion: KAP, Cocina]\n\n# Cocina\nKAP se sienta a la mesa y abre el cuaderno. Esta vez, no escribirá sobre su bullying, sino sobre una historia que tal vez podría cambiarlo todo: la historia de su familia.\nKAP: Esta vez, escribiré sobre nosotros.\n[acto: resolucion]\n[ubicacion: KAP, Cocina]\n\n# Cocina\nKAP comienza a escribir, y la luz de la cocina se refleja en las páginas del cuaderno. Esta vez, no se trata de una historia que nadie más haya escrito antes.\nKAP: Esta historia empieza aquí.\n[gancho: La historia de su familia | KAP comienza a escribir sobre su familia]\n\n# Cocina\nKAP no sabe que, al escribir sobre su familia, ha abierto una puerta que no sabía que existía. Un efecto imprevisto de su decisión comienza a tomar forma.\nKAP: ¿Qué más podría salir de esto?\n[acto: conflicto]\n[ubicacion: KAP, Cocina]\n\n# Cocina\nMientras escribe, escucha una voz familiar. Su padre entra, con cara de sorpresa. KAP se levanta de la mesa y lo mira con una mezcla de miedo y esperanza.\nPADRE DE KAP: ¿Eso es... mi historia?\n[acto: desarrollo]\n[ubicacion: KAP, Cocina]\n\n# Cocina\nKAP mira a su padre con una determinación nueva. La historia que ha empezado a escribir no solo cambiará su vida, sino la de toda su familia.\nKAP: Esta historia ya no puede detenerse.\n[gancho: El efecto de la verdad se revela | KAP, Padre de KAP y Madre de KAP]\n",
+   "gate": {
+    "regenerated": 0,
+    "dropped": 0,
+    "localPatches": 0,
+    "patchKinds": {},
+    "endingRevisions": 0,
+    "varietyRevisions": 0,
+    "codeRepairs": 0,
+    "arcRevisions": 0,
+    "calls": 1,
+    "outputTokens": 2638,
+    "promptTokens": 3082,
+    "issues": {}
+   },
+   "checks": [
+    {
+     "id": "estructura-6-actos",
+     "ok": false,
+     "note": "faltan: inicio, conflicto, desarrollo, emocional, resolucion"
+    },
+    {
+     "id": "gancho",
+     "ok": true
+    },
+    {
+     "id": "protagonista",
+     "ok": true
+    },
+    {
+     "id": "sin-errores-criticos",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "sin-exito-prematuro",
+     "ok": true
+    },
+    {
+     "id": "directivas-validas",
+     "ok": false,
+     "note": "«acto: inicio»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto» | «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»"
+    },
+    {
+     "id": "espanol",
+     "ok": true
+    },
+    {
+     "id": "diversidad-lexica",
+     "ok": true,
+     "note": "0.37"
+    }
+   ],
+   "compliance": 0.75,
+   "proxy": {
+    "score": 8,
+    "dialogueRatio": 0.5,
+    "locations": 1,
+    "repeatedSentences": 0
+   },
+   "warnings": [
+    "Directiva de memoria inválida del modelo: «acto: inicio»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+    "Directiva de memoria inválida del modelo: «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+    "Directiva de memoria inválida del modelo: «acto: desarrollo»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+    "Directiva de memoria inválida del modelo: «acto: emocional»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+    "Directiva de memoria inválida del modelo: «acto: resolucion»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»",
+    "Directiva de memoria inválida del modelo: «acto: conflicto»: usa «inicio|conflicto|desarrollo|emocional|resolucion|gancho | texto»"
+   ],
+   "draft": {
+    "title": "Episodio 18: La verdad entre las líneas",
+    "logline": "KAP se enfrenta a una elección difícil cuando su intento por corregir el bullying lo lleva a un lugar inesperado, y una revelación amenaza con cambiar su vida para siempre.",
+    "assumptions": [],
+    "scenes": [
+     {
+      "title": "Inicio: La historia comienza",
+      "location": "Cocina",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se sienta en la mesa de la cocina, mirando fijamente el cuaderno que tiene frente a él. La profesora le había dado una oportunidad, y ahora él tenía que escribir su historia diferente. Pero no sabía que esta decisión lo llevaría a un lugar que no imaginaba."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Esta vez, escribiré una historia diferente."
+       }
+      ],
+      "memory": [
+       "acto: inicio",
+       "hito-logrado: Víctima de bullying | KAP empieza a escribir su historia nueva",
+       "perfil: KAP, sueños = ser millonario gracias a la música",
+       "ubicacion: KAP, Cocina"
+      ]
+     },
+     {
+      "title": "Conflicto: La verdad se revela",
+      "location": "Cocina",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Mientras escribe, escucha pasos acercarse. Su hermano entra, con cara de preocupación. KAP lo mira y, por un momento, siente la responsabilidad que le pesa en los hombros."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¿Ya terminaste? ¿Vas a ir a buscar a mamá?"
+       }
+      ],
+      "memory": [
+       "acto: conflicto",
+       "conoce: KAP, Hermano de KAP",
+       "ubicacion: KAP, Cocina"
+      ]
+     },
+     {
+      "title": "Desarrollo: El costo de la verdad",
+      "location": "Cocina",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP mira a su hermano y, por un instante, duda. ¿Debería contarle sobre el bullying? ¿O preferiría protegerlo de más dolor? Su mente se divide entre la verdad y la protección."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No sé si es el momento adecuado."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo",
+       "ubicacion: KAP, Cocina"
+      ]
+     },
+     {
+      "title": "Emocional: La elección de KAP",
+      "location": "Cocina",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Su hermano lo mira con ojos llenos de confianza. A pesar de su edad, parece entender más de lo que KAP creía. El niño pequeño le devuelve la mirada con una determinación que lo sorprende."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "Confía en mí, KAP."
+       }
+      ],
+      "memory": [
+       "acto: emocional",
+       "ubicacion: KAP, Cocina"
+      ]
+     },
+     {
+      "title": "Resolucion: La decisión se toma",
+      "location": "Cocina",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP inspira profundamente y cierra el cuaderno. Su hermano lo ve con una mezcla de orgullo y miedo. KAP ha tomado una decisión, pero no sabe aún si será la correcta."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Hoy no escribiré sobre eso."
+       }
+      ],
+      "memory": [
+       "acto: resolucion",
+       "ubicacion: KAP, Cocina"
+      ]
+     },
+     {
+      "title": "Gancho: La revelación inesperada",
+      "location": "Cocina",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Mientras sale de la cocina, escucha a su madre gritar desde el otro lado de la casa. Su hermano se queda petrificado, y KAP siente un escalofrío. No esperaba que esto llegara tan rápido."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Qué pasará ahora?"
+       }
+      ],
+      "memory": [
+       "gancho: La verdad se revela de una forma inesperada | KAP, su hermano y sus padres"
+      ]
+     },
+     {
+      "title": "Conflicto: El grito en la casa",
+      "location": "Cocina",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se detiene en el umbral de la puerta, escuchando a su madre llamar a su padre. Su hermano se agacha, temiendo lo que podría pasar. KAP sabe que su familia no está en condiciones de enfrentar esto."
+       },
+       {
+        "speaker": "Hermano de KAP",
+        "text": "¿Qué hago, KAP?"
+       }
+      ],
+      "memory": [
+       "acto: conflicto",
+       "ubicacion: KAP, Cocina"
+      ]
+     },
+     {
+      "title": "Desarrollo: El costo de la verdad",
+      "location": "Cocina",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP mira a su hermano y, por un momento, siente el peso de su responsabilidad. No puede protegerlo de todo, pero al menos puede intentar evitar que se lastime más."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No te muevas, hermano."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo",
+       "ubicacion: KAP, Cocina"
+      ]
+     },
+     {
+      "title": "Emocional: La revelación de su madre",
+      "location": "Cocina",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "La puerta se abre de golpe, y su madre entra con cara de desesperación. Sus ojos están rojos, y sus manos tiemblan. KAP la mira con miedo, preguntándose qué ha hecho para que esto pasara."
+       },
+       {
+        "speaker": "Madre de KAP",
+        "text": "¿Por qué no me dijiste nada?"
+       }
+      ],
+      "memory": [
+       "acto: emocional",
+       "ubicacion: KAP, Cocina"
+      ]
+     },
+     {
+      "title": "Resolucion: El precio de la verdad",
+      "location": "Cocina",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se queda inmóvil. No sabe qué decir. Su madre lo mira con una mezcla de dolor y culpa, y KAP entiende que su decisión ha tenido un costo mucho mayor del que imaginaba."
+       },
+       {
+        "speaker": "KAP",
+        "text": "No sabía que te afectaría tanto."
+       }
+      ],
+      "memory": [
+       "acto: resolucion",
+       "ubicacion: KAP, Cocina"
+      ]
+     },
+     {
+      "title": "Conflicto: El dilema de KAP",
+      "location": "Cocina",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Su madre se sienta en la mesa, con la mirada baja. Su hermano se acerca y le toma la mano. KAP siente el peso de la verdad, pero también la responsabilidad que ahora le corresponde."
+       },
+       {
+        "speaker": "Madre de KAP",
+        "text": "¿Qué harás ahora?"
+       }
+      ],
+      "memory": [
+       "acto: conflicto",
+       "ubicacion: KAP, Cocina"
+      ]
+     },
+     {
+      "title": "Desarrollo: La decisión se toma",
+      "location": "Cocina",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP respira hondo y se acerca a su madre. Su hermano lo mira con expectativa. KAP sabe que no puede volver atrás, pero tampoco puede dejar que su familia caiga en el abismo."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Voy a hacer lo que sea necesario."
+       }
+      ],
+      "memory": [
+       "acto: desarrollo",
+       "ubicacion: KAP, Cocina"
+      ]
+     },
+     {
+      "title": "Emocional: La promesa de KAP",
+      "location": "Cocina",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Su madre lo mira con lágrimas en los ojos. KAP siente que, por primera vez, ha encontrado un camino que no solo le pertenece a él, sino también a su familia."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Prometo que esto no terminará así."
+       }
+      ],
+      "memory": [
+       "acto: emocional",
+       "ubicacion: KAP, Cocina"
+      ]
+     },
+     {
+      "title": "Resolucion: El comienzo de algo nuevo",
+      "location": "Cocina",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP se sienta a la mesa y abre el cuaderno. Esta vez, no escribirá sobre su bullying, sino sobre una historia que tal vez podría cambiarlo todo: la historia de su familia."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Esta vez, escribiré sobre nosotros."
+       }
+      ],
+      "memory": [
+       "acto: resolucion",
+       "ubicacion: KAP, Cocina"
+      ]
+     },
+     {
+      "title": "Gancho: La historia de su familia",
+      "location": "Cocina",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP comienza a escribir, y la luz de la cocina se refleja en las páginas del cuaderno. Esta vez, no se trata de una historia que nadie más haya escrito antes."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Esta historia empieza aquí."
+       }
+      ],
+      "memory": [
+       "gancho: La historia de su familia | KAP comienza a escribir sobre su familia"
+      ]
+     },
+     {
+      "title": "Conflicto: El efecto inesperado",
+      "location": "Cocina",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP no sabe que, al escribir sobre su familia, ha abierto una puerta que no sabía que existía. Un efecto imprevisto de su decisión comienza a tomar forma."
+       },
+       {
+        "speaker": "KAP",
+        "text": "¿Qué más podría salir de esto?"
+       }
+      ],
+      "memory": [
+       "acto: conflicto",
+       "ubicacion: KAP, Cocina"
+      ]
+     },
+     {
+      "title": "Desarrollo: La revelación",
+      "location": "Cocina",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "Mientras escribe, escucha una voz familiar. Su padre entra, con cara de sorpresa. KAP se levanta de la mesa y lo mira con una mezcla de miedo y esperanza."
+       },
+       {
+        "speaker": "Padre de KAP",
+        "text": "¿Eso es... mi historia?"
+       }
+      ],
+      "memory": [
+       "acto: desarrollo",
+       "ubicacion: KAP, Cocina"
+      ]
+     },
+     {
+      "title": "Gancho: El efecto de la verdad",
+      "location": "Cocina",
+      "lines": [
+       {
+        "speaker": "",
+        "text": "KAP mira a su padre con una determinación nueva. La historia que ha empezado a escribir no solo cambiará su vida, sino la de toda su familia."
+       },
+       {
+        "speaker": "KAP",
+        "text": "Esta historia ya no puede detenerse."
+       }
+      ],
+      "memory": [
+       "gancho: El efecto de la verdad se revela | KAP, Padre de KAP y Madre de KAP"
+      ]
+     }
+    ]
+   }
+  }
+ ]
+}
