@@ -1,0 +1,393 @@
+{
+ "nota": "Métricas para el análisis posterior; NO deciden el ganador ni se usan para modificar los episodios. No abrir antes del veredicto ciego.",
+ "porMetodoYEpisodio": {
+  "mejorado": {
+   "E13": {
+    "min": 82.6,
+    "escenas": 8,
+    "palabras": 376,
+    "duracionMin": 2.2,
+    "regeneracionesCompletas": 4,
+    "reparacionesLocales": 6,
+    "motivosLocales": {
+     "kap-no-actua": 3,
+     "rima-invalida": 2,
+     "coste-ausente": 1,
+     "cierre-desconectado": 1
+    },
+    "reparacionesEnCodigo": 2,
+    "revisionesArco": {
+     "desenlace": 0,
+     "variedad": 1
+    },
+    "detecciones": {
+     "episodio-plano": 1,
+     "kap-no-actua": 3,
+     "rima-invalida": 1,
+     "corta": 9,
+     "repite-frase": 4,
+     "sin-cambio": 3,
+     "cierre-desconectado": 1
+    },
+    "escenasEliminadas": 0,
+    "erroresJSONoEsquema": 0,
+    "irValida": true,
+    "erroresMemoria": 0,
+    "criticosContinuidad": 0,
+    "avisosContinuidad": 1,
+    "avisosNarrativos": 2,
+    "kapRealismCheck": {
+     "passed": 6,
+     "total": 9,
+     "failed": [
+      "decision-real",
+      "decision-con-consecuencia",
+      "final-nace-de-la-accion"
+     ]
+    },
+    "explicaKap": 0,
+    "lineasKap": 15,
+    "validacionSecundarios": 0,
+    "lineasSecundarios": 8,
+    "costeVisible": false,
+    "cierre": {
+     "problem": false,
+     "reason": null
+    },
+    "rhyme_valid_generador": false,
+    "openingRhymeObligatoria": true,
+    "rimaApertura": {
+     "present": true,
+     "rhyme_valid": false,
+     "natural": true,
+     "contextual": true,
+     "rhythm": false,
+     "level": "ninguna"
+    },
+    "variedad": {
+     "locations": 1,
+     "dominantShare": 1,
+     "times": 1,
+     "timeSource": "declarado"
+    },
+    "llamadas": 20,
+    "commitError": null
+   },
+   "E14": {
+    "min": 81.6,
+    "escenas": 8,
+    "palabras": 421,
+    "duracionMin": 2.5,
+    "regeneracionesCompletas": 2,
+    "reparacionesLocales": 3,
+    "motivosLocales": {
+     "explica-emocion": 1,
+     "rima-invalida": 1,
+     "coste-ausente": 1,
+     "emocion-repetida": 1,
+     "cierre-reflexivo": 1
+    },
+    "reparacionesEnCodigo": 0,
+    "revisionesArco": {
+     "desenlace": 0,
+     "variedad": 0
+    },
+    "detecciones": {
+     "corta": 8,
+     "explica-emocion": 1,
+     "rima-invalida": 1,
+     "personaje-no-previsto": 1,
+     "coste-ausente": 1,
+     "repite-escena": 1,
+     "repite-frase": 1,
+     "sin-cambio": 1,
+     "emocion-repetida": 1,
+     "cierre-reflexivo": 1
+    },
+    "escenasEliminadas": 0,
+    "erroresJSONoEsquema": 0,
+    "irValida": true,
+    "erroresMemoria": 0,
+    "criticosContinuidad": 0,
+    "avisosContinuidad": 2,
+    "avisosNarrativos": 1,
+    "kapRealismCheck": {
+     "passed": 8,
+     "total": 9,
+     "failed": [
+      "final-nace-de-la-accion"
+     ]
+    },
+    "explicaKap": 0,
+    "lineasKap": 12,
+    "validacionSecundarios": 0,
+    "lineasSecundarios": 4,
+    "costeVisible": true,
+    "cierre": {
+     "problem": true,
+     "reason": "El cierre de KAP es una pregunta retórica: «KAP: ¡No entiendo! ¿Por qué nadie me escucha?»"
+    },
+    "rhyme_valid_generador": true,
+    "openingRhymeObligatoria": true,
+    "rimaApertura": {
+     "present": true,
+     "rhyme_valid": true,
+     "natural": true,
+     "contextual": true,
+     "rhythm": true,
+     "level": "cercana"
+    },
+    "variedad": {
+     "locations": 2,
+     "dominantShare": 0.63,
+     "times": 1,
+     "timeSource": "declarado"
+    },
+    "llamadas": 14,
+    "commitError": null
+   },
+   "E15": {
+    "min": 89.7,
+    "escenas": 8,
+    "palabras": 408,
+    "duracionMin": 2.5,
+    "regeneracionesCompletas": 3,
+    "reparacionesLocales": 2,
+    "motivosLocales": {
+     "rima-invalida": 1,
+     "emocion-repetida": 1
+    },
+    "reparacionesEnCodigo": 2,
+    "revisionesArco": {
+     "desenlace": 0,
+     "variedad": 1
+    },
+    "detecciones": {
+     "episodio-plano": 1,
+     "corta": 5,
+     "rima-invalida": 1,
+     "repite-frase": 4,
+     "emocion-repetida": 3,
+     "repite-escena": 1,
+     "sin-cambio": 2
+    },
+    "escenasEliminadas": 0,
+    "erroresJSONoEsquema": 0,
+    "irValida": true,
+    "erroresMemoria": 0,
+    "criticosContinuidad": 0,
+    "avisosContinuidad": 1,
+    "avisosNarrativos": 1,
+    "kapRealismCheck": {
+     "passed": 7,
+     "total": 9,
+     "failed": [
+      "decision-real",
+      "decision-con-consecuencia"
+     ]
+    },
+    "explicaKap": 0,
+    "lineasKap": 13,
+    "validacionSecundarios": 0,
+    "lineasSecundarios": 8,
+    "costeVisible": false,
+    "cierre": {
+     "problem": false,
+     "reason": null
+    },
+    "rhyme_valid_generador": false,
+    "openingRhymeObligatoria": true,
+    "rimaApertura": {
+     "present": true,
+     "rhyme_valid": false,
+     "natural": true,
+     "contextual": true,
+     "rhythm": true,
+     "level": "ninguna"
+    },
+    "variedad": {
+     "locations": 1,
+     "dominantShare": 1,
+     "times": 1,
+     "timeSource": "declarado"
+    },
+    "llamadas": 15,
+    "commitError": null
+   }
+  },
+  "anterior": {
+   "E13": {
+    "min": 48.3,
+    "escenas": 18,
+    "palabras": 392,
+    "duracionMin": 2.5,
+    "regeneracionesCompletas": 0,
+    "reparacionesLocales": 0,
+    "motivosLocales": {},
+    "reparacionesEnCodigo": 0,
+    "revisionesArco": {
+     "desenlace": 0,
+     "variedad": 0
+    },
+    "detecciones": {},
+    "escenasEliminadas": 0,
+    "erroresJSONoEsquema": 0,
+    "irValida": true,
+    "erroresMemoria": 37,
+    "criticosContinuidad": 0,
+    "avisosContinuidad": 43,
+    "avisosNarrativos": 5,
+    "kapRealismCheck": {
+     "passed": 6,
+     "total": 9,
+     "failed": [
+      "interaccion-sin-validacion",
+      "final-nace-de-la-accion",
+      "ninguna-escena-eliminable"
+     ]
+    },
+    "explicaKap": 0,
+    "lineasKap": 13,
+    "validacionSecundarios": 0,
+    "lineasSecundarios": 5,
+    "costeVisible": true,
+    "cierre": {
+     "problem": true,
+     "reason": "El cierre de KAP es una reflexión: «¿Y si era alguien que me necesitaba?»"
+    },
+    "rhyme_valid_generador": null,
+    "openingRhymeObligatoria": false,
+    "rimaApertura": {
+     "present": true,
+     "rhyme_valid": false,
+     "natural": true,
+     "contextual": true,
+     "rhythm": true,
+     "level": "ninguna"
+    },
+    "variedad": {
+     "locations": 2,
+     "dominantShare": 0.94,
+     "times": 2,
+     "timeSource": "texto"
+    },
+    "llamadas": 2,
+    "commitError": null
+   },
+   "E14": {
+    "min": 44.5,
+    "escenas": 18,
+    "palabras": 401,
+    "duracionMin": 2.5,
+    "regeneracionesCompletas": 0,
+    "reparacionesLocales": 0,
+    "motivosLocales": {},
+    "reparacionesEnCodigo": 0,
+    "revisionesArco": {
+     "desenlace": 0,
+     "variedad": 0
+    },
+    "detecciones": {},
+    "escenasEliminadas": 0,
+    "erroresJSONoEsquema": 0,
+    "irValida": true,
+    "erroresMemoria": 27,
+    "criticosContinuidad": 0,
+    "avisosContinuidad": 31,
+    "avisosNarrativos": 5,
+    "kapRealismCheck": {
+     "passed": 7,
+     "total": 9,
+     "failed": [
+      "interaccion-sin-validacion",
+      "final-nace-de-la-accion"
+     ]
+    },
+    "explicaKap": 0,
+    "lineasKap": 9,
+    "validacionSecundarios": 0,
+    "lineasSecundarios": 9,
+    "costeVisible": true,
+    "cierre": {
+     "problem": true,
+     "reason": "El cierre de KAP es una reflexión: «¿Y si alguien me necesita ahora? ¿Y si no contesto?»"
+    },
+    "rhyme_valid_generador": null,
+    "openingRhymeObligatoria": false,
+    "rimaApertura": {
+     "present": true,
+     "rhyme_valid": false,
+     "natural": true,
+     "contextual": true,
+     "rhythm": true,
+     "level": "ninguna"
+    },
+    "variedad": {
+     "locations": 4,
+     "dominantShare": 0.28,
+     "times": 0,
+     "timeSource": "texto"
+    },
+    "llamadas": 2,
+    "commitError": null
+   },
+   "E15": {
+    "min": 50.0,
+    "escenas": 18,
+    "palabras": 413,
+    "duracionMin": 2.6,
+    "regeneracionesCompletas": 0,
+    "reparacionesLocales": 0,
+    "motivosLocales": {},
+    "reparacionesEnCodigo": 0,
+    "revisionesArco": {
+     "desenlace": 0,
+     "variedad": 0
+    },
+    "detecciones": {},
+    "escenasEliminadas": 0,
+    "erroresJSONoEsquema": 0,
+    "irValida": true,
+    "erroresMemoria": 21,
+    "criticosContinuidad": 0,
+    "avisosContinuidad": 40,
+    "avisosNarrativos": 4,
+    "kapRealismCheck": {
+     "passed": 7,
+     "total": 9,
+     "failed": [
+      "interaccion-sin-validacion",
+      "final-nace-de-la-accion"
+     ]
+    },
+    "explicaKap": 0,
+    "lineasKap": 13,
+    "validacionSecundarios": 0,
+    "lineasSecundarios": 5,
+    "costeVisible": true,
+    "cierre": {
+     "problem": true,
+     "reason": "El cierre de KAP es una reflexión: «Tal vez… algún día seré mejor que Dani.»"
+    },
+    "rhyme_valid_generador": null,
+    "openingRhymeObligatoria": false,
+    "rimaApertura": {
+     "present": true,
+     "rhyme_valid": false,
+     "natural": true,
+     "contextual": true,
+     "rhythm": true,
+     "level": "ninguna"
+    },
+    "variedad": {
+     "locations": 3,
+     "dominantShare": 0.61,
+     "times": 0,
+     "timeSource": "texto"
+    },
+    "llamadas": 2,
+    "commitError": null
+   }
+  }
+ }
+}
