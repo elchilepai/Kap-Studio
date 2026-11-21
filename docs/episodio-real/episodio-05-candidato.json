@@ -1,0 +1,351 @@
+{
+ "number": 5,
+ "title": "Episodio 5: El accidente de la maceta",
+ "request": "Crea el episodio 5, a continuación del episodio 3. Mientras ensaya una rima en el patio, KAP lanza al aire una pelota de trapo y rompe sin querer la maceta favorita del vecino. KAP quiere arreglarlo antes de que el vecino vuelva, pero su hermano pequeño decide ayudar a su manera.",
+ "request_parsed": {
+  "number": 5,
+  "continuesFrom": 1003,
+  "exact": false,
+  "cast": [
+   "KAP"
+  ]
+ },
+ "generationMin": 106.3,
+ "scenes": 8,
+ "words": 553,
+ "estimatedSec": 197,
+ "irValid": true,
+ "irErrors": [],
+ "checks": {
+  "passed": 12,
+  "total": 13,
+  "failed": [
+   "primera-rima-espontanea"
+  ]
+ },
+ "gate": {
+  "regenerated": 0,
+  "localPatches": 2,
+  "codeRepairs": 0,
+  "dropped": 0,
+  "patchKinds": {
+   "rima-invalida": 2
+  },
+  "gateIssues": {
+   "rima-invalida": 1,
+   "corta": 2
+  },
+  "arcRevisions": 0,
+  "endingRevisions": 0,
+  "varietyRevisions": 0,
+  "rhymeValid": false
+ },
+ "usage": {
+  "promptTokens": 67378,
+  "outputTokens": 5353,
+  "totalMs": 6367156.167396999,
+  "loadMs": 30731.121023000007,
+  "promptMs": 2478604.7709999997,
+  "evalMs": 3854120.043999
+ },
+ "calls": 11,
+ "retries": 2,
+ "warnings": [
+  "Escena 1: La rima de KAP no vale: suena a poema de adulto (palabras como «alma», «destino», «horizonte»…): una rima de niño usa cosas de lo que ve y hace; los finales de los versos no riman ni de forma aproximada (volando, cielo, jardín, vecino).",
+  "Escena 2: Escena corta (33 palabras): puede ser correcto si la acción y la consecuencia están claras.",
+  "Escena 3: Escena corta (42 palabras): puede ser correcto si la acción y la consecuencia están claras.",
+  "Directiva de memoria del modelo descartada: «KAP»",
+  "Directiva de memoria del modelo descartada: «Hermano de KAP»",
+  "Directiva de memoria del modelo descartada: «vecino»",
+  "Directiva de memoria del modelo descartada: «KAP»",
+  "Directiva de memoria del modelo descartada: «vecino»",
+  "Directiva de memoria del modelo descartada: «Hermano de KAP»",
+  "Directiva de memoria del modelo descartada: «KAP»",
+  "Directiva de memoria del modelo descartada: «Hermano de KAP»",
+  "Directiva de memoria del modelo descartada: «El vecino regresa y descubre lo que pasó»",
+  "Directiva de memoria del modelo descartada: «KAP se queda callado y mira al suelo»",
+  "Directiva de memoria del modelo descartada: «La tensión queda abierta»",
+  "Episodio corto (≈ 3.3 min): no se ha rellenado; la duración sale de la historia. Revisa si el arco necesita más desarrollo.",
+  "KAP_REALISM_CHECK · primera-rima-espontanea: suena a poema de adulto (palabras como «alma», «destino», «horizonte»…): una rima de niño usa cosas de lo que ve y hace; los finales de los versos no riman ni de forma aproximada (volando, cielo, jardín, vecino)",
+  "Narrativa (warning) · ayuda-externa: «vecino» entra después de la decisión de KAP y aparece en la resolución: ¿resuelve el problema por él?",
+  "Narrativa (info) · poca-variedad-visual: Más del 70 % de las escenas ocurren en el mismo lugar.",
+  "Narrativa (info) · poca-variedad-visual: Todo el episodio ocurre en el mismo momento del día."
+ ],
+ "arc": {
+  "title": "Episodio 5: El accidente de la maceta",
+  "logline": "Mientras KAP ensaya una rima en el patio, lanza una pelota de trapo que rompe la maceta favorita del vecino. Con el hermano pequeño a su lado, intenta arreglarlo antes de que el vecino regrese, pero la ayuda inesperada de su hermano complica más la situación.",
+  "assumptions": [
+   "El vecino no está presente durante la mayor parte del episodio y regresa al final.",
+   "El hermano pequeño actúa según su edad y forma de pensar, sin entender plenamente la gravedad de lo que hizo KAP."
+  ],
+  "problem": "KAP rompe la maceta favorita del vecino mientras ensaya una rima con una pelota de trapo. Ahora debe arreglarlo antes de que el vecino regrese.",
+  "kapWant": "Arreglar el problema sin que nadie lo descubra y evitar una discusión o castigo.",
+  "kapChoice": "Intenta reconstruir la maceta con su hermano pequeño, quien no entiende el contexto y actúa de forma inesperada.",
+  "cost": "El hermano pequeño pone más tierra en la maceta, lo que hace que se vea obvio que algo pasó. KAP pierde la oportunidad de arreglarlo de manera discreta.",
+  "consequence": "La maceta parece recién hecha, pero con evidentes señales de haber sido rota. El vecino regresa y descubre lo que pasó.",
+  "outcome": "El vecino se enoja, pero no culpa directamente a KAP. La tensión queda abierta, y KAP debe enfrentar las consecuencias.",
+  "setting": {
+   "main": "Patio de la casa",
+   "secondary": [
+    "Calle donde vive el vecino",
+    "Interior de la casa para revisar materiales"
+   ],
+   "timeOfDay": "Tarde",
+   "transitions": [
+    "más tarde ese día",
+    "al regresar el vecino"
+   ]
+  },
+  "hook": "El vecino observa con mirada dura la maceta reconstruida y pregunta a KAP: «¿Fue tu idea?»",
+  "extraCharacters": [
+   {
+    "name": "Hermano de KAP",
+    "why": "Influye directamente en la decisión de KAP al ayudar de forma inesperada."
+   }
+  ],
+  "castActions": [
+   {
+    "name": "Hermano de KAP",
+    "does": "Agrega demasiada tierra y planta una flor que no correspondía a la maceta original, lo que hace que se note que algo pasó."
+   }
+  ],
+  "usedFromMemory": [
+   "KAP",
+   "Hermano de KAP",
+   "vecino"
+  ],
+  "newCharacters": [],
+  "newPlaces": [],
+  "behaviorBeats": [
+   {
+    "beat": 2,
+    "kind": "malentendido",
+    "does": "El hermano pequeño interpreta la maceta como un juguete y empieza a meter cosas en ella.",
+    "provokes": "La maceta se ve claramente alterada, lo que hará sospechar al vecino."
+   },
+   {
+    "beat": 4,
+    "kind": "error",
+    "does": "KAP intenta ocultar el daño de la maceta, pero su hermano no lo entiende y pone más tierra de lo necesario.",
+    "provokes": "La reconstrucción se ve obvia."
+   }
+  ],
+  "beats": [
+   {
+    "stage": "inicio",
+    "fn": "avanzar-historia",
+    "summary": "KAP ensaya una rima en el patio, lanzando una pelota de trapo. La pelota golpea la maceta del vecino y la rompe.",
+    "location": "Patio de la casa",
+    "characters": [
+     "KAP"
+    ],
+    "change": "La maceta está rota y KAP se da cuenta inmediatamente.",
+    "why": "Mientras ensaya, se distrae con la pelota y no ve el momento exacto en que rompe la maceta.",
+    "time": "tarde",
+    "interior": false,
+    "shot": "general",
+    "visual": "La maceta rota en el suelo, con tierra y fragmentos alrededor."
+   },
+   {
+    "stage": "problema",
+    "fn": "conflicto",
+    "summary": "KAP mira la maceta rota y se pone nervioso. El hermano pequeño aparece y pregunta qué está pasando.",
+    "location": "Patio de la casa",
+    "characters": [
+     "KAP",
+     "Hermano de KAP"
+    ],
+    "change": "El hermano pequeño no entiende el problema, pero se acerca curioso.",
+    "why": "El hermano pequeño vive en la casa y escucha ruidos al exterior.",
+    "time": "tarde",
+    "interior": false,
+    "shot": "medio",
+    "visual": "KAP se frota la cabeza, nervioso, mientras su hermano mira la maceta rota con curiosidad."
+   },
+   {
+    "stage": "escalada",
+    "fn": "preparar-consecuencia",
+    "summary": "KAP le explica al hermano que no quería romper la maceta, pero el niño se ofrece para ayudar.",
+    "location": "Patio de la casa",
+    "characters": [
+     "KAP",
+     "Hermano de KAP"
+    ],
+    "change": "El hermano pequeño quiere ayudar y empieza a recoger tierra y fragmentos.",
+    "why": "El niño intenta ayudar sin entender el contexto, lo que complica más la situación.",
+    "time": "tarde",
+    "interior": false,
+    "shot": "primer plano",
+    "visual": "El hermano pequeño se agacha para recoger tierra, mientras KAP lo observa con una expresión de preocupación."
+   },
+   {
+    "stage": "decision",
+    "fn": "arco-de-kap",
+    "summary": "KAP le pide al hermano que no haga ruido y que ayude a reconstruir la maceta. El niño intenta hacerlo, pero se equivoca.",
+    "location": "Patio de la casa",
+    "characters": [
+     "KAP",
+     "Hermano de KAP"
+    ],
+    "change": "La reconstrucción no parece natural, lo que hará sospechar al vecino más tarde.",
+    "why": "El hermano no entiende bien el plan de KAP y actúa de forma espontánea.",
+    "time": "tarde",
+    "interior": false,
+    "shot": "general",
+    "visual": "La maceta se ve reconstruida, pero con tierra en exceso y una flor que no era la original."
+   },
+   {
+    "stage": "consecuencia",
+    "fn": "revelar-informacion",
+    "summary": "El vecino regresa al patio y observa la maceta. Se enoja, pero no culpa directamente a KAP.",
+    "location": "Patio de la casa",
+    "characters": [
+     "KAP",
+     "Hermano de KAP",
+     "vecino"
+    ],
+    "change": "El vecino se acerca a la maceta y pregunta a KAP si fue su idea.",
+    "why": "El vecino regresa al ver movimiento en su patio y se da cuenta de que algo pasó.",
+    "time": "tarde",
+    "interior": false,
+    "shot": "general",
+    "visual": "El vecino mira a KAP con expresión seria, mientras el hermano pequeño lo observa con miedo."
+   },
+   {
+    "stage": "resolucion",
+    "fn": "preparar-gancho",
+    "summary": "KAP se queda callado y mira al suelo. El vecino no dice nada más, pero su mirada habla por sí sola.",
+    "location": "Patio de la casa",
+    "characters": [
+     "KAP",
+     "vecino"
+    ],
+    "change": "El vecino se aleja, dejando a KAP con el peso del problema.",
+    "why": "El vecino no quiere hacer una escena pública y deja el tema para hablar más tarde.",
+    "time": "tarde",
+    "interior": false,
+    "shot": "general",
+    "visual": "KAP se queda solo en el patio, mirando al suelo con expresión seria."
+   },
+   {
+    "stage": "gancho",
+    "fn": "preparar-gancho",
+    "summary": "KAP se dirige a la casa y cierra la puerta. El hermano pequeño lo sigue, preocupado.",
+    "location": "Interior de la casa",
+    "characters": [
+     "KAP",
+     "Hermano de KAP"
+    ],
+    "change": "El ambiente dentro de la casa se vuelve más tenso, lo que prepara el terreno para futuros episodios.",
+    "why": "La tensión del episodio lleva a KAP a buscar refugio en su hogar.",
+    "time": "tarde",
+    "interior": true,
+    "shot": "general",
+    "visual": "KAP entra a la casa, con el hermano pequeño detrás, mirando hacia él con preocupación."
+   },
+   {
+    "stage": "gancho",
+    "fn": "preparar-gancho",
+    "summary": "La puerta se cierra. KAP se queda mirando el suelo en silencio.",
+    "location": "Interior de la casa",
+    "characters": [
+     "KAP"
+    ],
+    "change": "El episodio termina con una nota de tensión y miedo, preparando el terreno para futuros conflictos.",
+    "why": "El cierre deja a KAP en un estado emocional delicado, lo que afectará sus decisiones futuras.",
+    "time": "tarde",
+    "interior": true,
+    "shot": "primer plano",
+    "visual": "KAP se queda solo en la sala, mirando al suelo con expresión seria y triste."
+   }
+  ]
+ },
+ "realismChecks": [
+  {
+   "id": "decision-real",
+   "ok": true
+  },
+  {
+   "id": "decision-con-consecuencia",
+   "ok": true
+  },
+  {
+   "id": "kap-no-explica-de-mas",
+   "ok": true
+  },
+  {
+   "id": "sin-frases-de-adulto",
+   "ok": true
+  },
+  {
+   "id": "interaccion-sin-validacion",
+   "ok": true
+  },
+  {
+   "id": "conflicto-cambia-algo",
+   "ok": true
+  },
+  {
+   "id": "final-nace-de-la-accion",
+   "ok": true
+  },
+  {
+   "id": "primera-rima-espontanea",
+   "ok": false,
+   "note": "suena a poema de adulto (palabras como «alma», «destino», «horizonte»…): una rima de niño usa cosas de lo que ve y hace; los finales de los versos no riman ni de forma aproximada (volando, cielo, jardín, vecino)"
+  },
+  {
+   "id": "ninguna-escena-eliminable",
+   "ok": true
+  },
+  {
+   "id": "kap-actua",
+   "ok": true
+  },
+  {
+   "id": "estados-variados",
+   "ok": true
+  },
+  {
+   "id": "no-demasiado-reflexivo",
+   "ok": true
+  },
+  {
+   "id": "cadena-causal",
+   "ok": true
+  }
+ ],
+ "review": [
+  {
+   "severity": "warning",
+   "rule": "narrativa-ayuda-externa",
+   "text": "«vecino» entra después de la decisión de KAP y aparece en la resolución: ¿resuelve el problema por él?",
+   "scene": 4
+  },
+  {
+   "severity": "info",
+   "rule": "narrativa-poca-variedad-visual",
+   "text": "Más del 70 % de las escenas ocurren en el mismo lugar."
+  },
+  {
+   "severity": "info",
+   "rule": "narrativa-poca-variedad-visual",
+   "text": "Todo el episodio ocurre en el mismo momento del día."
+  }
+ ],
+ "continuity": {
+  "critical": [],
+  "warnings": [
+   "sin-aporte: El episodio no declara nada nuevo para la historia (acontecimiento, hito, hilo, evolución, relación u objeto): cada episodio debe aportar algo nuevo.",
+   "duracion: El episodio dura ≈ 3.8 min y el formato es ≈ 5 min (4–6 min)."
+  ],
+  "info": 5
+ },
+ "script": "# Patio de la casa\n[mood: tarde, exterior]\n[plano: general]\n[expresion: KAP sorprendido]\n[camara: zoom 1.2]\nKAP lanza la pelota de trapo al aire con una sonrisa, mientras ensaya una rima.\nKAP: KAP: La pelota se fue volando, como un cometa en el cielo...\nKAP: KAP: Pero se metió en el jardín, y ¡pum! —rompió la maceta del vecino.\nLa pelota golpea la maceta con fuerza, rompiéndola en pedazos. KAP se queda paralizado, mirando el desastre.\n[acto: inicio | KAP ensaya una rima en el patio, lanzando una pelota de trapo. La pelota golpea la maceta del vecino y la rompe.]\n\n# Patio de la casa\n[mood: tarde, exterior]\n[plano: medio KAP]\n[camara: seguir KAP]\nKAP se frota la cabeza con nerviosismo, mirando la maceta rota en el suelo.\nHERMANO DE KAP: ¿Qué pasó? ¿Te caíste? ¿Te lastimaste?\nKAP: No, no me lastimé… es solo que… yo no quería romper la maceta.\n[acto: conflicto | KAP mira la maceta rota y se pone nervioso. El hermano pequeño aparece y pregunta qué está pasando.]\n\n# Patio de la casa\n[mood: tarde, exterior]\n[plano: primer plano KAP]\n[expresion: KAP preocupado]\n[gesto: Hermano senala]\n[camara: zoom 1.2]\nKAP se agacha para ayudar, pero el hermano pequeño ya está metiendo la mano en la tierra.\nHERMANO DE KAP: ¡Ayuda, KAP! Esta maceta es muy bonita. ¡Voy a ponerle flores!\nKAP: No, hermano… no es un juguete. Es la maceta del vecino. No debes tocarla.\n[acto: desarrollo | KAP le explica al hermano que no quería romper la maceta, pero el niño se ofrece para ayudar.]\n\n# Patio de la casa\n[mood: tarde, exterior]\n[plano: general]\n[expresion: KAP preocupado]\n[gesto: Hermano senala]\n[camina: Hermano a derecha]\nKAP: Hermano, por favor, no hagas ruido. Tenemos que arreglarlo rápido antes de que el vecino regrese.\nHERMANO DE KAP: ¡Sí! Yo puedo ayudar. ¡Voy a ponerle más tierra!\nKAP: No, no es necesario… solo pon un poco y nada más. Y no digas nada.\nHERMANO DE KAP: ¡Pero esta maceta está muy vacía! Voy a buscar una flor para que se vea bonita.\n[acto: emocional | KAP le pide al hermano que no haga ruido y que ayude a reconstruir la maceta. El niño intenta hacerlo, pero se equivoca.]\n\n# Patio de la casa\n[mood: tarde, exterior]\n[plano: general]\nEl vecino aparece en el patio, caminando con paso firme. Se detiene al ver la maceta reconstruida, pero algo no le encaja.\nVECINO: ¿Qué pasó aquí? Esta maceta no se ve como antes.\nHERMANO DE KAP: ¡Yo la arreglé! Puse flores y tierra, ¡así que ya está bien!\nVECINO: ¿Tú hiciste esto?\nKAP: No… no fue mi idea. Solo quería ayudar.\n\n# Patio de la casa\n[mood: tarde, exterior]\n[plano: general]\nEl vecino se acerca a la maceta y frunce el ceño al ver cómo está hecha. Mira a KAP con una expresión que no dice nada, pero lo dice todo.\nVECINO: ¿Fue tu idea?\nHERMANO DE KAP: ¡Sí! Yo la arreglé, ¡así que ya está bien!\nKAP: …No fue mi idea.\nVECINO: …Entonces, ¿quién lo hizo?\nKAP: …No sé. Solo… no quería que se rompiera.\n[acto: resolucion | KAP se queda callado y mira al suelo. El vecino no dice nada más, pero su mirada habla por sí sola.]\n\n# Interior de la casa\n[mood: tarde, interior]\n[plano: general]\nKAP camina lento hacia la puerta de la casa, con la cabeza gacha. Su hermano lo sigue, mirándolo con expresión preocupada.\nHERMANO DE KAP: ¿Por qué estás triste, KAP? ¿Fue tu culpa?\nKAP: No… no fue mi culpa. Solo que… no sé si el vecino se va a enojar mucho.\nHERMANO DE KAP: Pero yo ya arreglé la maceta. ¡Le puse flores! ¿No te gustan?\nKAP: Sí… pero no sé si el vecino va a creer que fue un accidente.\nHERMANO DE KAP: Entonces… ¿qué hacemos? ¿Vamos a pedir perdón?\n[acto: gancho | KAP se dirige a la casa y cierra la puerta. El hermano pequeño lo sigue, preocupado.]\n\n# Interior de la casa\n[mood: tarde, interior]\n[plano: primer plano KAP]\nKAP: La puerta se cierra con un ruido suave, como si cerrara una parte de sí mismo. KAP se queda de pie en el centro de la sala, mirando al suelo. Sus hombros están caídos, y sus manos, cruzadas sobre su pecho, no mueven ni un músculo.\nKAP: El silencio dentro de la casa es pesado. No hay ruido, ni de la calle, ni del hermano pequeño que se queda atrás, mirando con expresión triste y confundida.\nKAP: KAP cierra los ojos por un momento, como si intentara borrar lo que pasó. Pero el recuerdo de la mirada del vecino, de la maceta reconstruida y de la voz de su hermano lo persigue.\nKAP: El cuaderno que lleva en el pecho se siente más pesado que nunca. Como si, dentro de sus páginas, estuvieran escritas todas las cosas que aún no puede decir.\nKAP: La luz del atardecer entra por la ventana rota y le da un tono amarillo a todo. KAP se queda allí, mirando al suelo, como si buscara una salida que ya no exista.\n[gancho: El vecino observa con mirada dura la maceta reconstruida y pregunta a KAP: «¿Fue tu idea?»]\n",
+ "render": {
+  "status": "failed",
+  "error": "El motor de animación falló (código 1):     at file:///home/user/Kap-Studio/scripts/anim-worker.mjs:22:3 |  | Node.js v22.23.4",
+  "renderSec": 9,
+  "quality": "480p"
+ }
+}

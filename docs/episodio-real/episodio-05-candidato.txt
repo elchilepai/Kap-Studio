@@ -1,0 +1,87 @@
+Episodio 5 · «Episodio 5: El accidente de la maceta» (CANDIDATO, sin aprobar)
+Petición: Crea el episodio 5, a continuación del episodio 3. Mientras ensaya una rima en el patio, KAP lanza al aire una pelota de trapo y rompe sin querer la maceta favorita del vecino. KAP quiere arreglarlo antes de que el vecino vuelva, pero su hermano pequeño decide ayudar a su manera.
+
+# Patio de la casa
+[mood: tarde, exterior]
+[plano: general]
+[expresion: KAP sorprendido]
+[camara: zoom 1.2]
+KAP lanza la pelota de trapo al aire con una sonrisa, mientras ensaya una rima.
+KAP: KAP: La pelota se fue volando, como un cometa en el cielo...
+KAP: KAP: Pero se metió en el jardín, y ¡pum! —rompió la maceta del vecino.
+La pelota golpea la maceta con fuerza, rompiéndola en pedazos. KAP se queda paralizado, mirando el desastre.
+[acto: inicio | KAP ensaya una rima en el patio, lanzando una pelota de trapo. La pelota golpea la maceta del vecino y la rompe.]
+
+# Patio de la casa
+[mood: tarde, exterior]
+[plano: medio KAP]
+[camara: seguir KAP]
+KAP se frota la cabeza con nerviosismo, mirando la maceta rota en el suelo.
+HERMANO DE KAP: ¿Qué pasó? ¿Te caíste? ¿Te lastimaste?
+KAP: No, no me lastimé… es solo que… yo no quería romper la maceta.
+[acto: conflicto | KAP mira la maceta rota y se pone nervioso. El hermano pequeño aparece y pregunta qué está pasando.]
+
+# Patio de la casa
+[mood: tarde, exterior]
+[plano: primer plano KAP]
+[expresion: KAP preocupado]
+[gesto: Hermano senala]
+[camara: zoom 1.2]
+KAP se agacha para ayudar, pero el hermano pequeño ya está metiendo la mano en la tierra.
+HERMANO DE KAP: ¡Ayuda, KAP! Esta maceta es muy bonita. ¡Voy a ponerle flores!
+KAP: No, hermano… no es un juguete. Es la maceta del vecino. No debes tocarla.
+[acto: desarrollo | KAP le explica al hermano que no quería romper la maceta, pero el niño se ofrece para ayudar.]
+
+# Patio de la casa
+[mood: tarde, exterior]
+[plano: general]
+[expresion: KAP preocupado]
+[gesto: Hermano senala]
+[camina: Hermano a derecha]
+KAP: Hermano, por favor, no hagas ruido. Tenemos que arreglarlo rápido antes de que el vecino regrese.
+HERMANO DE KAP: ¡Sí! Yo puedo ayudar. ¡Voy a ponerle más tierra!
+KAP: No, no es necesario… solo pon un poco y nada más. Y no digas nada.
+HERMANO DE KAP: ¡Pero esta maceta está muy vacía! Voy a buscar una flor para que se vea bonita.
+[acto: emocional | KAP le pide al hermano que no haga ruido y que ayude a reconstruir la maceta. El niño intenta hacerlo, pero se equivoca.]
+
+# Patio de la casa
+[mood: tarde, exterior]
+[plano: general]
+El vecino aparece en el patio, caminando con paso firme. Se detiene al ver la maceta reconstruida, pero algo no le encaja.
+VECINO: ¿Qué pasó aquí? Esta maceta no se ve como antes.
+HERMANO DE KAP: ¡Yo la arreglé! Puse flores y tierra, ¡así que ya está bien!
+VECINO: ¿Tú hiciste esto?
+KAP: No… no fue mi idea. Solo quería ayudar.
+
+# Patio de la casa
+[mood: tarde, exterior]
+[plano: general]
+El vecino se acerca a la maceta y frunce el ceño al ver cómo está hecha. Mira a KAP con una expresión que no dice nada, pero lo dice todo.
+VECINO: ¿Fue tu idea?
+HERMANO DE KAP: ¡Sí! Yo la arreglé, ¡así que ya está bien!
+KAP: …No fue mi idea.
+VECINO: …Entonces, ¿quién lo hizo?
+KAP: …No sé. Solo… no quería que se rompiera.
+[acto: resolucion | KAP se queda callado y mira al suelo. El vecino no dice nada más, pero su mirada habla por sí sola.]
+
+# Interior de la casa
+[mood: tarde, interior]
+[plano: general]
+KAP camina lento hacia la puerta de la casa, con la cabeza gacha. Su hermano lo sigue, mirándolo con expresión preocupada.
+HERMANO DE KAP: ¿Por qué estás triste, KAP? ¿Fue tu culpa?
+KAP: No… no fue mi culpa. Solo que… no sé si el vecino se va a enojar mucho.
+HERMANO DE KAP: Pero yo ya arreglé la maceta. ¡Le puse flores! ¿No te gustan?
+KAP: Sí… pero no sé si el vecino va a creer que fue un accidente.
+HERMANO DE KAP: Entonces… ¿qué hacemos? ¿Vamos a pedir perdón?
+[acto: gancho | KAP se dirige a la casa y cierra la puerta. El hermano pequeño lo sigue, preocupado.]
+
+# Interior de la casa
+[mood: tarde, interior]
+[plano: primer plano KAP]
+KAP: La puerta se cierra con un ruido suave, como si cerrara una parte de sí mismo. KAP se queda de pie en el centro de la sala, mirando al suelo. Sus hombros están caídos, y sus manos, cruzadas sobre su pecho, no mueven ni un músculo.
+KAP: El silencio dentro de la casa es pesado. No hay ruido, ni de la calle, ni del hermano pequeño que se queda atrás, mirando con expresión triste y confundida.
+KAP: KAP cierra los ojos por un momento, como si intentara borrar lo que pasó. Pero el recuerdo de la mirada del vecino, de la maceta reconstruida y de la voz de su hermano lo persigue.
+KAP: El cuaderno que lleva en el pecho se siente más pesado que nunca. Como si, dentro de sus páginas, estuvieran escritas todas las cosas que aún no puede decir.
+KAP: La luz del atardecer entra por la ventana rota y le da un tono amarillo a todo. KAP se queda allí, mirando al suelo, como si buscara una salida que ya no exista.
+[gancho: El vecino observa con mirada dura la maceta reconstruida y pregunta a KAP: «¿Fue tu idea?»]
+
