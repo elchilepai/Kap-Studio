@@ -50,12 +50,14 @@ export function parseScript(text: string, chars: KnownCharacter[] = []): ParsedS
   let cur: ParsedScene | null = null; let para: Line[] = []; const globalMem: string[] = [];
   const open = (title: string): ParsedScene => { const s: ParsedScene = { title, location: title, lines: [] }; scenes.push(s); return s; };
 
+  /** Si el modelo repite el nombre del hablante dentro del texto («KAP: KAP: hola»), el subtítulo muestra solo «KAP: hola». */
+  const clean = (who: string, t: string) => t.replace(new RegExp(`^(?:${who.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\s*:\\s*)+`, "i"), "").trim() || t;
   const lineOf = (l: string): Line => {
     const m = DIALOGUE.exec(l);
     if (m) {
       const name = m[1].trim(); const kn = known.get(norm(name));
-      if (kn) return { speaker: kn, text: m[2].trim() };
-      if (name === name.toUpperCase() && /[A-ZÁÉÍÓÚÑÜ]/.test(name)) return { speaker: name, text: m[2].trim() };
+      if (kn) return { speaker: kn, text: clean(kn, m[2].trim()) };
+      if (name === name.toUpperCase() && /[A-ZÁÉÍÓÚÑÜ]/.test(name)) return { speaker: name, text: clean(name, m[2].trim()) };
     }
     return { text: l.trim() };
   };
@@ -135,7 +137,7 @@ export const linesToText = (lines: Line[]) => lines.map((l) => (l.speaker ? `${l
 export function textToLines(text: string, chars: KnownCharacter[] = []): Line[] {
   const known = new Map(chars.map((c) => [norm(c.name), c.name]));
   return text.split(/\r?\n/).map((l) => l.trim()).filter(Boolean).map((l) => {
-    const m = DIALOGUE.exec(l); if (m) { const kn = known.get(norm(m[1].trim())); if (kn) return { speaker: kn, text: m[2].trim() }; if (m[1] === m[1].toUpperCase()) return { speaker: m[1].trim(), text: m[2].trim() }; }
+    const m = DIALOGUE.exec(l); if (m) { const dedup = (who: string, t: string) => t.replace(new RegExp(`^(?:${who.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\s*:\\s*)+`, "i"), "").trim() || t; const kn = known.get(norm(m[1].trim())); if (kn) return { speaker: kn, text: dedup(kn, m[2].trim()) }; if (m[1] === m[1].toUpperCase()) return { speaker: m[1].trim(), text: dedup(m[1].trim(), m[2].trim()) }; }
     return { text: l };
   });
 }

@@ -66,11 +66,43 @@ describe("director 2D por reglas", () => {
 
 describe("decorado: un lugar exterior no se dibuja como interior", () => {
   it("«Puerta de casa» y «Calle cerca de la casa» son exterior; «Casa de KAP», «Cocina» o «Interior de la casa…» siguen siendo interior", () => {
-    expect(resolveSet("Puerta de casa", [], "").preset).toBe("street"); expect(resolveSet("Calle cerca de la casa", [], "").preset).toBe("street"); expect(resolveSet("Patio del colegio", [], "").preset).toBe("street");
+    expect(resolveSet("Puerta de casa", [], "").preset).toBe("patio"); expect(resolveSet("Calle cerca de la casa", [], "").preset).toBe("street"); expect(resolveSet("Patio del colegio", [], "").preset).toBe("patio");
     expect(resolveSet("Casa de KAP", [], "").preset).toBe("room"); expect(resolveSet("Cocina", [], "").preset).toBe("room"); expect(resolveSet("Interior de la casa y calle cerca de la casa", [], "").preset).toBe("room");
   });
   it("si el beat dice «exterior», una casa no se dibuja como habitación; el resto del mapa no cambia", () => {
-    expect(resolveSet("Casa de KAP", [], "Tarde, exterior").preset).toBe("street"); expect(resolveSet("Casa de KAP", [], "Tarde, interior").preset).toBe("room");
+    expect(resolveSet("Casa de KAP", [], "Tarde, exterior").preset).toBe("street"); expect(resolveSet("Patio de la casa", [], "tarde, exterior").preset).toBe("patio");   // el patio doméstico no es una calle ni un skyline expect(resolveSet("Casa de KAP", [], "Tarde, interior").preset).toBe("room");
     expect(resolveSet("Azotea de la casa", [], "").preset).toBe("rooftop"); expect(resolveSet("Parque", [], "").preset).toBe("forest"); expect(resolveSet("Casa", [], "", { preset: "room" }).preset).toBe("room");
+  });
+});
+
+describe("hora del día: lo que dice el guion manda", () => {
+  it("mañana ≠ tarde ≠ atardecer ≠ noche, también sobre la hora del lugar guardado", () => {
+    expect(resolveSet("Patio", [], "tarde, exterior").timeOfDay).toBe("afternoon"); expect(resolveSet("Patio", [], "mañana").timeOfDay).toBe("day"); expect(resolveSet("Patio", [], "de noche").timeOfDay).toBe("night"); expect(resolveSet("Patio", [], "al atardecer").timeOfDay).toBe("dusk");
+    expect(resolveSet("Patio", [], "tarde", { preset: "patio", timeOfDay: "night" }).timeOfDay).toBe("afternoon");   // lo dicho gana al valor guardado
+    expect(resolveSet("Patio", [], "", { preset: "patio", timeOfDay: "night" }).timeOfDay).toBe("night");               // sin hora dicha, vale la guardada
+    expect(resolveSet("Patio", [], "triste").timeOfDay).toBe("dusk");                                                    // sin hora, el ánimo decide como antes
+  });
+});
+
+describe("acciones que se VEN: la narración mueve el cuerpo y el plano pedido no apaga los de diálogo", () => {
+  const poses = (s: ReturnType<typeof direct>) => s.cues.filter((c) => c.type === "pose").map((c) => `${(c as { actor: string }).actor}:${(c as { value: string }).value}`);
+  it("«KAP se agacha…», «lanza», «retrocede» dan a quien lo hace esa pose (solo si el texto lo dice)", () => {
+    const L = (text: string) => ({ text, start: 0.5, end: 3 });
+    expect(poses(direct(base({ lines: [L("KAP se agacha para recoger la pelota.")] })))).toEqual(["kap:crouch"]);
+    expect(poses(direct(base({ lines: [L("Mira lanza la pelota al aire.")] })))).toEqual(["mira:throw"]);
+    expect(poses(direct(base({ lines: [L("KAP retrocede un paso, pero Mira se agacha junto a la maceta.")] }))).sort()).toEqual(["kap:recoil", "mira:crouch"]);
+    expect(poses(direct(base({ lines: [L("KAP mira el cielo con una sonrisa.")] })))).toEqual([]);   // nada que mover: no inventa
+    expect(poses(direct(base({ lines: [{ speaker: "KAP", text: "Me agacho yo ahora mismo, ya verás.", start: 0.5, end: 3 }] })))).toEqual([]);   // el diálogo no cuenta
+  });
+  it("las poses nuevas se aplican (el cuerpo se inclina) y vuelven a reposo", () => {
+    const s = direct(base({ lines: [{ text: "KAP se agacha para recoger la pelota.", start: 0.5, end: 3 }] }));
+    const at = (t: number) => evaluate(s, t).actors.find((a) => a.id === "kap")!;
+    expect(at(1.5).pose).toBe("crouch"); expect(at(0.1).pose).toBe("idle"); expect(at(3.5).pose).toBe("idle");
+  });
+  it("un «plano:» del beat fija el encuadre inicial pero NO desactiva los planos de diálogo; «camara:» sí", () => {
+    const lines = [{ speaker: "MIRA", text: "¿Seguimos adelante, KAP?", start: 0.3, end: 2.5 }, { speaker: "KAP", text: "No. ¡Vamos!", start: 2.8, end: 4.2 }];
+    const withShot = direct(base({ directions: ["plano: general"], lines })), withCam = direct(base({ directions: ["camara: zoom 1.2"], lines }));
+    expect(withShot.cues.filter((c) => c.type === "camera" && (c as { focus?: string }).focus).length).toBeGreaterThan(0);
+    expect(withCam.cues.filter((c) => c.type === "camera" && (c as { focus?: string }).focus).length).toBe(0);
   });
 });

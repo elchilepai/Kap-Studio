@@ -4,17 +4,19 @@ import { GROUND_Y, WORLD_H, WORLD_W } from "./types.ts";
 import { rng, shade, mix } from "./util.ts";
 
 const PAL: Record<TimeOfDay, { s0: string; s1: string; far: string; mid: string; near: string; ground: string; light: string }> = {
+  afternoon: { s0: "#6fb0e0", s1: "#ffe3ad", far: "#b4bdd0", mid: "#97a7c2", near: "#7a8dae", ground: "#7a8f62", light: "#fff4c2" },   // tarde: cielo claro con luz cálida (no atardecer)
   day: { s0: "#74b9e8", s1: "#dcf2ff", far: "#a9bfdc", mid: "#8aa5c8", near: "#6c88ae", ground: "#6f8d62", light: "#fff4c2" },
   dusk: { s0: "#2f2b63", s1: "#e98a63", far: "#6a527f", mid: "#4a3b70", near: "#33294f", ground: "#2e2745", light: "#ffcf8a" },
   night: { s0: "#0a0f1e", s1: "#1d2a4a", far: "#1b2644", mid: "#141d36", near: "#0e1528", ground: "#0b101e", light: "#E9B949" },
 };
+const bright = (t: TimeOfDay) => t === "day" || t === "afternoon";   // sin estrellas ni ventanas encendidas
 export type View = { l: number; r: number; t: number; b: number; cx: number };
 
 function sky(c: Ctx, p: (typeof PAL)["day"], v: View) {
   const g = c.createLinearGradient(0, v.t, 0, GROUND_Y + 0.5); g.addColorStop(0, p.s0); g.addColorStop(1, p.s1); c.fillStyle = g; c.fillRect(v.l - 1, v.t - 1, v.r - v.l + 2, v.b - v.t + 2);
 }
 function stars(c: Ctx, seed: number, v: View, tod: TimeOfDay) {
-  if (tod === "day") return; const r = rng(seed); c.fillStyle = "rgba(255,255,255,0.8)";
+  if (bright(tod)) return; const r = rng(seed); c.fillStyle = "rgba(255,255,255,0.8)";
   for (let i = 0; i < 70; i++) { const x = -2 + r() * (WORLD_W + 4), y = r() * 4.2, s = 0.012 + r() * 0.03; if (x < v.l - 1 || x > v.r + 1) continue; c.beginPath(); c.arc(x, y, s, 0, Math.PI * 2); c.fill(); }
 }
 function ground(c: Ctx, p: (typeof PAL)["day"], v: View, extra?: string) {
@@ -44,13 +46,23 @@ function drawBase(c: Ctx, set: SetSpec, v: View, t: number, images: Record<strin
   }
   sky(c, p, v); stars(c, set.seed, v, set.timeOfDay);
   if (set.timeOfDay === "night" && set.preset !== "room") { c.fillStyle = "#f3efd8"; c.beginPath(); c.arc(12.4 + par(0.8), 1.6, 0.55, 0, Math.PI * 2); c.fill(); c.fillStyle = p.s0; c.beginPath(); c.arc(12.65 + par(0.8), 1.5, 0.5, 0, Math.PI * 2); c.fill(); }
-  const win = set.timeOfDay === "day" ? null : p.light;
+  const win = bright(set.timeOfDay) ? null : p.light;
   switch (set.preset) {
     case "city": skyline(c, set.seed, p.far, GROUND_Y, 2.2, 4.6, v, null, par(0.8)); skyline(c, set.seed + 1, p.mid, GROUND_Y, 1.8, 4, v, win, par(0.45)); skyline(c, set.seed + 2, p.near, GROUND_Y + 0.15, 1.2, 3, v, win, par(0.1)); ground(c, p, v);
       c.strokeStyle = "rgba(255,255,255,0.18)"; c.setLineDash([0.6, 0.6]); c.lineWidth = 0.06; c.beginPath(); c.moveTo(v.l - 1, 8.2); c.lineTo(v.r + 1, 8.2); c.stroke(); c.setLineDash([]); break;
     case "street": skyline(c, set.seed, p.far, GROUND_Y, 2.6, 5, v, null, par(0.7)); skyline(c, set.seed + 3, p.near, GROUND_Y, 3, 5.4, v, win, par(0.15)); ground(c, p, v, shade(p.ground, 0.05));
       for (const x of [3, 9.5, 15]) { c.fillStyle = "#10131a"; c.fillRect(x + par(0.05) - 0.04, 3.4, 0.08, GROUND_Y - 3.4); c.beginPath(); c.arc(x + par(0.05), 3.4, 0.2, 0, Math.PI * 2); c.fillStyle = p.light; c.fill();
-        const g = c.createRadialGradient(x + par(0.05), 3.4, 0.1, x + par(0.05), 3.4, 2.2); g.addColorStop(0, set.timeOfDay === "day" ? "rgba(255,244,194,0.1)" : "rgba(255,207,138,0.35)"); g.addColorStop(1, "rgba(255,207,138,0)"); c.fillStyle = g; c.fillRect(x - 3, 1.2, 6, 5); } break;
+        const g = c.createRadialGradient(x + par(0.05), 3.4, 0.1, x + par(0.05), 3.4, 2.2); g.addColorStop(0, bright(set.timeOfDay) ? "rgba(255,244,194,0.1)" : "rgba(255,207,138,0.35)"); g.addColorStop(1, "rgba(255,207,138,0)"); c.fillStyle = g; c.fillRect(x - 3, 1.2, 6, 5); } break;
+    case "patio": {   // patio doméstico: fachada con puerta y ventana, suelo de patio, valla baja y macetas (no un skyline)
+      const wall = mix("#c9a98a", p.mid, 0.3), roof = shade(mix("#8a5a44", p.near, 0.35), -0.15), s2 = par(0.08);
+      c.fillStyle = p.far; c.beginPath(); c.moveTo(v.l - 1, GROUND_Y); for (let x = v.l - 1; x <= v.r + 1; x += 0.5) c.lineTo(x, GROUND_Y - 1.1 - Math.sin((x + par(0.7)) * 0.5 + set.seed) * 0.5); c.lineTo(v.r + 1, GROUND_Y); c.fill();   // colinas/árboles lejanos
+      c.fillStyle = wall; c.fillRect(-1.5 + s2, 1.7, 10.4, GROUND_Y - 1.7); c.fillStyle = roof; c.beginPath(); c.moveTo(-1.8 + s2, 1.75); c.lineTo(3.7 + s2, 0.55); c.lineTo(9.2 + s2, 1.75); c.closePath(); c.fill();
+      c.fillStyle = shade(wall, -0.08); c.fillRect(-1.5 + s2, GROUND_Y - 0.35, 10.4, 0.35);
+      c.fillStyle = "#5a4636"; c.fillRect(5.6 + s2, 3.9, 1.3, GROUND_Y - 3.9); c.fillStyle = "#3a2d22"; c.fillRect(5.6 + s2, 3.9, 1.3, 0.1); c.fillStyle = p.light; c.beginPath(); c.arc(6.65 + s2, 5.5, 0.07, 0, Math.PI * 2); c.fill();   // puerta
+      c.fillStyle = "#e8e0c8"; c.fillRect(1.4 + s2, 3.0, 2.1, 1.7); c.fillStyle = win ?? p.s1; c.fillRect(1.5 + s2, 3.1, 1.9, 1.5); c.fillStyle = "#e8e0c8"; c.fillRect(2.4 + s2, 3.1, 0.08, 1.5);   // ventana
+      ground(c, p, v, mix("#9c8a70", p.ground, 0.25)); c.strokeStyle = "rgba(0,0,0,0.18)"; c.lineWidth = 0.03; for (let x = v.l - 1; x < v.r + 1; x += 1.4) { c.beginPath(); c.moveTo(x, GROUND_Y); c.lineTo(x * 1.35 - 3, v.b); c.stroke(); }   // baldosas del patio
+      c.fillStyle = "#d8cfb8"; for (let x = 9.6; x < v.r + 1; x += 0.55) c.fillRect(x + par(0.12), GROUND_Y - 1.1, 0.2, 1.1); c.fillRect(9.4 + par(0.12), GROUND_Y - 0.85, v.r - 9 + 1, 0.12); c.fillRect(9.4 + par(0.12), GROUND_Y - 0.4, v.r - 9 + 1, 0.12);   // valla baja
+      tree(c, 12.6 + par(0.2), GROUND_Y - 0.1, 3.2, p.mid, "#000"); break; }
     case "forest": { c.fillStyle = p.far; c.beginPath(); c.moveTo(v.l - 1, GROUND_Y); for (let x = v.l - 1; x <= v.r + 1; x += 0.5) c.lineTo(x, GROUND_Y - 1.4 - Math.sin((x + par(0.8)) * 0.6 + set.seed) * 0.8); c.lineTo(v.r + 1, GROUND_Y); c.fill();
       const r = rng(set.seed); for (let i = 0; i < 12; i++) tree(c, -2 + i * 1.6 + r() * 0.6 + par(0.45), GROUND_Y, 2.6 + r() * 1.2, p.mid, "#000");
       ground(c, p, v); for (let i = 0; i < 6; i++) tree(c, -2 + i * 3.4 + r() * 1.2 + par(0.05), GROUND_Y + 0.6, 4.6 + r() * 1.4, p.near, "#000"); break; }
@@ -59,7 +71,7 @@ function drawBase(c: Ctx, set: SetSpec, v: View, t: number, images: Record<strin
     case "room": { const w = c.createLinearGradient(0, 0, 0, GROUND_Y); w.addColorStop(0, mix(p.near, "#000000", 0.2)); w.addColorStop(1, shade(p.near, 0.08)); c.fillStyle = w; c.fillRect(v.l - 1, v.t - 1, v.r - v.l + 2, GROUND_Y - v.t + 1);
       ground(c, p, v, "#3a2f33"); c.strokeStyle = "rgba(0,0,0,0.25)"; c.lineWidth = 0.03; for (let x = v.l - 1; x < v.r + 1; x += 1.3) { c.beginPath(); c.moveTo(x, GROUND_Y); c.lineTo(x * 1.6 - 5, v.b); c.stroke(); }
       const wx = 9.4 + par(0.2); c.fillStyle = "#e8e0c8"; c.fillRect(wx - 0.1, 1.5, 3.1, 3.1); c.fillStyle = p.s1; c.fillRect(wx, 1.6, 2.9, 2.9); c.fillStyle = "#e8e0c8"; c.fillRect(wx + 1.4, 1.6, 0.1, 2.9); c.fillRect(wx, 3, 2.9, 0.1);
-      if (set.timeOfDay !== "day") { c.fillStyle = "rgba(243,239,216,0.07)"; c.beginPath(); c.moveTo(wx, 4.5); c.lineTo(wx + 2.9, 4.5); c.lineTo(wx + 1.2, v.b); c.lineTo(wx - 2.6, v.b); c.closePath(); c.fill(); }
+      if (!bright(set.timeOfDay)) { c.fillStyle = "rgba(243,239,216,0.07)"; c.beginPath(); c.moveTo(wx, 4.5); c.lineTo(wx + 2.9, 4.5); c.lineTo(wx + 1.2, v.b); c.lineTo(wx - 2.6, v.b); c.closePath(); c.fill(); }
       c.fillStyle = shade(p.near, -0.3); c.fillRect(1.2 + par(0.1), 2.3, 2.6, 0.12); c.fillRect(1.2 + par(0.1), 3.3, 2.6, 0.12); c.fillStyle = p.light; c.fillRect(1.5 + par(0.1), 1.95, 0.4, 0.35); c.fillStyle = shade(p.far, 0.1); c.fillRect(2.3 + par(0.1), 2.9, 0.5, 0.4); break; }
     default: { ground(c, p, v, shade(p.ground, 0.0)); const r = rng(set.seed); for (let i = 0; i < 9; i++) { const x = r() * WORLD_W + par(0.3 * r()), y = 1 + r() * 5, s = 0.6 + r() * 1.6; const g = c.createRadialGradient(x, y, 0, x, y, s); g.addColorStop(0, `rgba(233,185,73,${0.1 + r() * 0.12})`); g.addColorStop(1, "rgba(233,185,73,0)"); c.fillStyle = g; c.fillRect(x - s, y - s, s * 2, s * 2); } }
   }
@@ -88,10 +100,11 @@ const parShift = (v: View, depth: number) => (v.cx - WORLD_W / 2) * depth;
 export function defaultElements(preset: SetSpec["preset"], seed: number): { elements: SetElement[]; foreground: SetElement[] } {
   const r = rng(seed + 31); const el = (id: string, kind: ElementKind, x: number, depth: number, scale = 1, y?: number): SetElement => ({ id, kind, x, depth, scale, ...(y !== undefined ? { y } : {}) });
   switch (preset) {
-    case "street": return { elements: [el("e1", "bench", 2.4 + r() * 1.5, 0.05, 1.2), el("e2", "crate", 12.8 + r(), 0.05, 1)], foreground: [el("f1", "pillar", -0.2, -0.45, 2.6), el("f2", "bush", 15.6, -0.5, 2)] };
+    case "street": return { elements: [el("e1", "bench", 2.4 + r() * 1.5, 0.05, 1.2), el("e2", "crate", 12.8 + r(), 0.05, 1)], foreground: [el("f2", "bush", 15.6, -0.5, 1.6)] };   // sin pilares oscuros en primer plano: personajes y acción > decoración
     case "forest": return { elements: [el("e1", "bush", 3 + r() * 2, 0.1, 1.4), el("e2", "bush", 11 + r() * 2, 0.1, 1.2)], foreground: [el("f1", "bush", 0.2, -0.5, 2.6), el("f2", "bush", 15.2, -0.55, 2.4)] };
-    case "room": return { elements: [el("e1", "crate", 14, 0.05, 1.3), el("e2", "plant", 1.2, 0.05, 1.4)], foreground: [el("f1", "pillar", 15.8, -0.4, 2.8)] };
-    case "rooftop": return { elements: [el("e1", "crate", 13.6, 0.05, 1.1)], foreground: [el("f1", "pillar", -0.3, -0.4, 2.2)] };
+    case "room": return { elements: [el("e1", "crate", 14, 0.05, 1.3), el("e2", "plant", 1.2, 0.05, 1.4)], foreground: [] };
+    case "patio": return { elements: [el("e1", "plant", 4.4 + r() * 0.5, 0.05, 1.5), el("e2", "plant", 8.4 + r() * 0.6, 0.05, 1.2), el("e3", "bench", 11.6, 0.05, 1.1)], foreground: [] };
+    case "rooftop": return { elements: [el("e1", "crate", 13.6, 0.05, 1.1)], foreground: [] };
     case "city": return { elements: [el("e1", "lamp", 3.4, 0.05, 1.1), el("e2", "lamp", 12.4, 0.05, 1.1)], foreground: [] };
     default: return { elements: [], foreground: [] };
   }

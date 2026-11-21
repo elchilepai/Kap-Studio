@@ -1,4 +1,4 @@
-import type { ActorState, Appearance, Expression, Gesture, PoseName, Viseme, Ctx } from "./types.ts";
+import type { ActionPose, ActorState, Appearance, Expression, Gesture, Viseme, Ctx } from "./types.ts";
 import { clamp, lerp, shade } from "./util.ts";
 import { drawLayered } from "./rig.ts";
 export type { Ctx };
@@ -30,7 +30,7 @@ const limb = (c: Ctx, x: number, y: number, a: number, len: number, w: number, c
 export function restPose(): Pose { return { bob: 0, lean: 0, headTilt: 0, headDip: 0, lookX: 0, armF: [0.08, 0.12], armB: [-0.08, 0.1], handF: "relaxed", handB: "relaxed", legF: 0, legB: 0, shrug: 0, blink: 0, mouth: 0, viseme: "rest", expression: "neutral" }; }
 
 /** Catálogo de poses estáticas (objetivo de cada una). Se mezclan con suavidad desde la pose anterior. */
-export const POSE_CATALOG: Record<PoseName, Partial<Pose>> = {
+export const POSE_CATALOG: Record<ActionPose, Partial<Pose>> = {
   idle: {},
   arms_crossed: { armF: [0.3, -1.85], armB: [-0.3, 1.85], handF: "fist", handB: "fist", headTilt: 0.03 },   // los antebrazos cruzan el pecho
   hands_hips: { armF: [0.85, -1.5], armB: [-0.85, 1.5], handF: "fist", handB: "fist" },
@@ -39,6 +39,10 @@ export const POSE_CATALOG: Record<PoseName, Partial<Pose>> = {
   facepalm: { armF: [2.5, 1.2], handF: "open", headDip: 0.012, headTilt: 0.12 },
   cheer: { armF: [2.9, 0.1], armB: [-2.9, 0.1], handF: "open", handB: "open" },
   shrug: { armF: [0.9, 1.3], armB: [-0.9, -1.3], handF: "open", handB: "open", shrug: 0.025, headTilt: 0.12 },
+  crouch: { lean: 0.5, bob: -0.04, armF: [0.9, 0.5], armB: [0.7, 0.5], handF: "open", handB: "open", legF: 0.35, legB: -0.2, headTilt: 0.1 },   // se agacha / recoge / planta
+  reach: { lean: 0.22, armF: [1.6, 0.2], armB: [0.5, 0.3], handF: "open", legF: 0.15 },   // alcanza / agarra / abre / empuja
+  throw: { lean: -0.12, armF: [2.6, 0.3], armB: [-0.5, 0.2], handF: "fist", legF: 0.2, legB: -0.15 },   // lanza
+  recoil: { lean: -0.25, armF: [0.6, 0.9], armB: [-0.6, 0.9], handF: "open", handB: "open", legF: -0.2, legB: 0.2, headTilt: -0.08 },   // retrocede
 };
 /** Animaciones disponibles para un personaje paramétrico (un rig por capas declara las suyas). */
 export const ANIMATIONS = ["idle", "walk", "run", "talk", "wave", "point", "shrug", "nod", "shake", "think", "raise", ...Object.keys(POSE_CATALOG).filter((k) => k !== "idle")] as const;
@@ -53,7 +57,8 @@ export function poseFor(s: ActorState, t: number, seed: number): Pose {
   p.armF = [0.08 + Math.sin((t + off) * 1.7) * 0.03, 0.14]; p.armB = [-0.08 - Math.sin((t + off) * 1.5) * 0.03, 0.1];
   const bp = (t + off) % 3.6; p.blink = clamp(bp > 3.45 ? 1 - Math.abs(bp - 3.525) / 0.075 : 0, 0, 1);
   if (s.pose !== "idle") { const tgt = POSE_CATALOG[s.pose], k = s.poseP; const mix = (a: [number, number], b?: [number, number]): [number, number] => (b ? [lerp(a[0], b[0], k), lerp(a[1], b[1], k)] : a);
-    p.armF = mix(p.armF, tgt.armF); p.armB = mix(p.armB, tgt.armB); p.headTilt += (tgt.headTilt ?? 0) * k; p.headDip += (tgt.headDip ?? 0) * k; p.lookX = (tgt.lookX ?? 0) * k; p.shrug = (tgt.shrug ?? 0) * k; if (k > 0.5) { p.handF = tgt.handF ?? p.handF; p.handB = tgt.handB ?? p.handB; } }
+    p.armF = mix(p.armF, tgt.armF); p.armB = mix(p.armB, tgt.armB); p.headTilt += (tgt.headTilt ?? 0) * k; p.headDip += (tgt.headDip ?? 0) * k; p.lookX = (tgt.lookX ?? 0) * k; p.shrug = (tgt.shrug ?? 0) * k; if (k > 0.5) { p.handF = tgt.handF ?? p.handF; p.handB = tgt.handB ?? p.handB; }
+    p.lean += (tgt.lean ?? 0) * k; p.bob += (tgt.bob ?? 0) * k; p.legF += (tgt.legF ?? 0) * k; p.legB += (tgt.legB ?? 0) * k; }
   if (s.moving) {
     const k = s.moving === 2 ? 1.5 : 1, ph = s.walkPhase * Math.PI * 2 * (s.moving === 2 ? 0.8 : 1);
     p.legF = Math.sin(ph) * 0.55 * k; p.legB = -Math.sin(ph) * 0.55 * k;
@@ -125,23 +130,23 @@ const luma = (hex: string) => { const n = parseInt(hex.replace("#", "").padEnd(6
 function drawStickman(c: Ctx, a: Appearance, pose: Pose, o: { ink: string; line: number; facing: 1 | -1; shadow: boolean; alpha: number }) {
   // protección defensiva: un diseño incompleto nunca debe romper el render (valores por defecto válidos, sin cambiar el aspecto de los diseños completos)
   const top = typeof a.top === "string" && /^#[0-9a-fA-F]{6}$/.test(a.top) ? a.top : "#E9B949", skin = a.skin ?? "#f1c9a5", accent = a.accent ?? "#ffffff", height = a.height ?? 1, build = a.build ?? 1;
-  const hh = 3.0 * height, ink = o.ink, lw = o.line, sw = 0.052 * hh * Math.min(1.15, build);
+  const hh = 3.0 * height, ink = o.ink, lw = o.line, sw = 0.058 * hh * Math.min(1.15, build);   // cabeza grande y trazo algo más grueso: la cara se lee a 480p
   const col = luma(top) < 0.4 ? shade(top, 0.55) : top;
   c.save(); c.globalAlpha *= o.alpha; c.scale(o.facing, 1);
   if (o.shadow) { c.fillStyle = "rgba(0,0,0,0.28)"; c.beginPath(); c.ellipse(0, 0.03, hh * 0.17, hh * 0.03, 0, 0, Math.PI * 2); c.fill(); }
   c.translate(0, -pose.bob * hh); c.rotate(pose.lean);
-  const hipY = -0.46 * hh, shY = -0.78 * hh - pose.shrug * hh * 0.5, rH = 0.105 * hh;
+  const hipY = -0.40 * hh, shY = -0.68 * hh - pose.shrug * hh * 0.5, rH = 0.15 * hh;
   const seg = (x: number, y: number, ang: number, len: number) => limb(c, x, y, ang, len, sw, col, ink, lw);
   // brazos y piernas: dos tramos con el mismo reparto de ángulos que el personaje completo
-  const arm = (ang: [number, number], shape: HandShape) => { const [ex, ey] = seg(0, shY + 0.03 * hh, ang[0], 0.19 * hh); const [hx, hy] = seg(ex, ey, ang[0] + ang[1], 0.18 * hh);
+  const arm = (ang: [number, number], shape: HandShape) => { const [ex, ey] = seg(0, shY + 0.03 * hh, ang[0], 0.17 * hh); const [hx, hy] = seg(ex, ey, ang[0] + ang[1], 0.16 * hh);
     c.beginPath(); c.arc(hx, hy, sw * (shape === "fist" ? 0.95 : 0.7), 0, Math.PI * 2); fs(c, col, ink, lw); };
-  const leg = (ang: number) => { const [kx, ky] = seg(0, hipY, ang * 0.9, 0.23 * hh); const [fx, fy] = seg(kx, ky, ang * 0.9 - Math.max(0, -ang) * 0.9, 0.22 * hh);
+  const leg = (ang: number) => { const [kx, ky] = seg(0, hipY, ang * 0.9, 0.20 * hh); const [fx, fy] = seg(kx, ky, ang * 0.9 - Math.max(0, -ang) * 0.9, 0.20 * hh);
     c.strokeStyle = ink; c.lineWidth = sw + lw * 2; c.lineCap = "round"; c.beginPath(); c.moveTo(fx, fy); c.lineTo(fx + 0.07 * hh, fy); c.stroke(); c.strokeStyle = col; c.lineWidth = sw; c.beginPath(); c.moveTo(fx, fy); c.lineTo(fx + 0.07 * hh, fy); c.stroke(); };
   c.save(); c.globalAlpha *= 0.82; arm(pose.armB, pose.handB); leg(pose.legB); c.restore();   // brazo y pierna traseros algo más tenues: dan profundidad sin ensuciar
   c.strokeStyle = ink; c.lineWidth = sw + lw * 2; c.lineCap = "round"; c.beginPath(); c.moveTo(0, hipY); c.lineTo(0, shY); c.stroke(); c.strokeStyle = col; c.lineWidth = sw; c.beginPath(); c.moveTo(0, hipY); c.lineTo(0, shY); c.stroke();
   leg(pose.legF); arm(pose.armF, pose.handF);
   // cabeza
-  const hy = shY - rH * 1.15 + pose.headDip * hh; c.save(); c.translate(0, shY); c.rotate(pose.headTilt); c.translate(0, -shY);
+  const hy = shY - rH * 1.12 + pose.headDip * hh; c.save(); c.translate(0, shY); c.rotate(pose.headTilt); c.translate(0, -shY);
   c.beginPath(); c.arc(0, hy, rH, 0, Math.PI * 2); fs(c, skin, ink, lw * 1.3);
   if (a.hairStyle === "cap" || a.accessory === "hat") { const hc = a.hairStyle === "cap" ? accent : shade(accent, -0.1); c.beginPath(); c.arc(0, hy - rH * 0.1, rH * 1.04, Math.PI * 1.02, Math.PI * 1.98); c.closePath(); fs(c, hc, ink, lw); c.beginPath(); c.ellipse(rH * 0.85, hy - rH * 0.12, rH * 0.62, rH * 0.13, 0, 0, Math.PI * 2); fs(c, shade(hc, -0.18), ink, lw); }
   const e = pose.expression, ey = hy + rH * 0.02, look = pose.lookX * rH * 0.12 + rH * 0.14, bl = 1 - pose.blink * 0.9;

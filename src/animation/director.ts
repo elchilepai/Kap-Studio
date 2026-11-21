@@ -35,7 +35,8 @@ export { syntheticEnvelope };
 
 const SET_RULES: [RegExp, SetPreset][] = [
   [/azotea|tejado|terraza/, "rooftop"],
-  [/^(?:(?!interior|habitaci|cuarto|casa|sala|cocina|taller)[\s\S])*?(?:calle|acera|patio|portal|fachada|puerta|entrada|exterior|afuera|fuera)/, "street"],   // lo exterior que se nombra ANTES que lo interior («Puerta de casa», «Calle cerca de la casa») es exterior
+  [/^(?:(?!interior|habitaci|cuarto|sala|cocina|taller)[\s\S])*?(?:patio|fachada|portal|porche|puerta (?:de |principal)|entrada de|jardin de (?:la )?casa)/, "patio"],   // el patio doméstico no es una calle
+  [/^(?:(?!interior|habitaci|cuarto|casa|sala|cocina|taller)[\s\S])*?(?:calle|acera|puerta|entrada|exterior|afuera|fuera)/, "street"],   // lo exterior que se nombra ANTES que lo interior («Puerta de casa», «Calle cerca de la casa») es exterior
   [/refugio|habitaci|cuarto|casa|interior|sala|cocina|taller|laboratorio|cabana|cueva|bunker/, "room"],
   [/bosque|selva|jardin|parque|campo|monte/, "forest"], [/calle|plaza|mercado|puente|callejon|carretera|puerto|costa|faro|playa/, "street"],
   [/ciudad|skyline|torre|rascacielos|metro|tunel|distrito/, "city"],
@@ -44,7 +45,10 @@ export function resolveSet(location: string, tags: string[], mood: string, given
   const key = norm(`${location} ${tags.join(" ")}`); let preset: SetPreset = given?.preset ?? "abstract";
   if (!given?.preset) for (const [re, p] of SET_RULES) if (re.test(key)) { preset = p; break; }
   if (!given?.preset && preset === "room" && /\bexterior\b/.test(norm(mood))) preset = "street";   // el beat dice que la escena es exterior
-  const m = norm(mood); const tod: TimeOfDay = given?.timeOfDay ?? (/noche|nocturn/.test(key) || /oscur|tens|misteri|miedo/.test(m) ? "night" : /amanec|atardec|ocaso/.test(key) || /trist/.test(m) ? "dusk" : /dia|sol|aleg|diverti/.test(key + m) ? "day" : "dusk");
+  const m = norm(mood), said = `${key} ${m}`;
+  // la hora que dice el guion MANDA (también sobre la del lugar guardado): mañana ≠ tarde ≠ atardecer ≠ noche; solo si no dice nada se recurre al ánimo
+  const stated: TimeOfDay | undefined = /\b(?:noche|nocturn\w*|medianoche)\b/.test(said) ? "night" : /\b(?:atardecer|atardec\w*|ocaso|anochecer|crepusculo)\b/.test(said) ? "dusk" : /\btarde\b/.test(said) ? "afternoon" : /\b(?:manana|amanecer|amanec\w*|madrugada|mediodia|dia)\b/.test(said) ? "day" : undefined;
+  const tod: TimeOfDay = stated ?? given?.timeOfDay ?? (/oscur|tens|misteri|miedo/.test(m) ? "night" : /trist/.test(m) ? "dusk" : /\bsol\b|aleg|diverti/.test(said) ? "day" : "dusk");
   return { preset, timeOfDay: tod, seed: hash32(location || "kap") % 1000, imageId: given?.imageId, accent: given?.accent, ...(given?.layers ? { layers: given.layers } : {}), ...(given?.elements ? { elements: given.elements } : {}), ...(given?.foreground ? { foreground: given.foreground } : {}) };
 }
 
@@ -65,7 +69,7 @@ export function direct(inp: DirectorInput): StageSpec {
   // ---------- acciones: beats estructurados + texto editable (ambos se convierten al mismo vocabulario) ----------
   const beats: Beat[] = [...(inp.beats ?? [])];
   for (const raw of inp.directions) { const r = parseDirection(raw); if (r.beat) beats.push(r.beat); else warnings.push(r.warning ?? `No entiendo «${raw}»`); }
-  let explicitCamera = false;
+  let explicitCamera = false, shotOnly = false;
   const who = (name: string | undefined, ctx: string) => { const a = name ? byName(name) : undefined; if (!a) warnings.push(`${ctx}: personaje «${name ?? "?"}» no está en la escena`); return a; };
   for (const b of beats) {
     const at = b.at ?? 0.2;
@@ -78,7 +82,7 @@ export function direct(inp: DirectorInput): StageSpec {
         else if (b.mode === "reset") cues.push({ t: at, type: "camera", x: WORLD_W / 2, zoom: 1, dur: b.dur ?? 1 });
         else cues.push({ t: at, type: "camera", zoom: b.zoom ?? 1.3, dur: b.dur ?? 1.5, ease: "inOut" });
         break; }
-      case "shot": { explicitCamera = true; const z = b.size === "wide" ? 1 : b.size === "medium" ? 1.22 : 1.55; const a = b.actor ? who(b.actor, "plano") : undefined;
+      case "shot": { shotOnly = true; const z = b.size === "wide" ? 1 : b.size === "medium" ? 1.22 : 1.55; const a = b.actor ? who(b.actor, "plano") : undefined;
         cues.push(a ? { t: at, type: "camera", focus: a.id, zoom: z, dur: b.cut ? 0.01 : 0.9, ease: "inOut" } : { t: at, type: "camera", x: WORLD_W / 2, zoom: z, dur: b.cut ? 0.01 : 0.9, ease: "inOut" }); break; }
       case "enter": case "exit": { const a = who(b.actor, b.type === "enter" ? "entra" : "sale"); if (!a) break; touched.add(a.id); const act = actors.find((x) => x.id === a.id)!;
         if (b.type === "enter") { act.presentAtStart = false; cues.push({ t: at, type: "enter", actor: a.id, from: b.from, x: act.slot, dur: b.dur ?? 1.8 }); } else cues.push({ t: at, type: "exit", actor: a.id, to: b.to, dur: b.dur ?? 1.8 });
@@ -134,6 +138,23 @@ export function direct(inp: DirectorInput): StageSpec {
     if (/\b(corre|huye|escapa)\b/.test(nar)) cues.push({ t: 0.3, type: "move", actor: lead.id, x: lead.slot < 8 ? 14 : 2, dur: Math.max(1.4, D * 0.6), run: true });
     else if (/\b(camina|avanza|se acerca|se aleja|llega|recorre)\b/.test(nar)) cues.push({ t: 0.3, type: "move", actor: lead.id, x: Math.min(WORLD_W - 1, lead.slot + (actors.length > 1 ? 1.2 : 3.2)), dur: Math.max(1.6, D * 0.8) });
   }
+  // Lo que la narración dice que un personaje HACE se ve en el cuerpo (no solo en el subtítulo): cada cláusula con un verbo de acción
+  // y un personaje nombrado le da esa pose durante un momento. Solo reglas léxicas sobre las líneas narradas; no inventa nada que el texto no diga.
+  const ACTIONS: [RegExp, "crouch" | "reach" | "throw" | "recoil", number][] = [
+    [/\b(?:se agach\w*|se inclin\w*|se arrodill\w*|recoge|recoger|coge|mete (?:la|las) mano\w*|planta\w*|rebusca\w*|busca\w* (?:en|entre|bajo|debajo))\b/, "crouch", 1.5],
+    [/\b(?:lanza\w*|arroja\w*|tira (?:la|el|una|un)|patea\w*)\b/, "throw", 1.0],
+    [/\b(?:alcanza\w*|estira\w*|agarra\w*|empuja\w*|abre|abrir|cierra|cerrar|toca\w*|levanta\w*|mueve\w*|aparta\w*)\b/, "reach", 1.2],
+    [/\b(?:retrocede\w*|da un paso atras|se echa atras|se aleja de golpe|se sobresalta|se asusta)\b/, "recoil", 1.0],
+  ];
+  const aliasesOf = (nm: string) => [norm(nm), ...norm(nm).split(/\s+/).filter((w) => w.length > 3 && w !== "kap")];
+  for (const l of inp.lines) {
+    if (l.speaker) continue;
+    norm(l.text).split(/[.!?;]+|,|\bpero\b|\bmientras\b/).map((x) => x.trim()).filter(Boolean).forEach((clause, ci) => {
+      const hit = actors.map((a) => ({ a, i: Math.min(...aliasesOf(a.name).map((al) => { const m = new RegExp(`\\b${al.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`).exec(clause); return m ? m.index : 1e9; })) })).filter((x) => x.i < 1e9).sort((p, q) => p.i - q.i)[0];
+      const act = hit && ACTIONS.find(([re]) => re.test(clause)); if (!hit || !act) return;
+      cues.push({ t: Math.max(0.1, l.start + ci * 0.45), type: "pose", actor: hit.a.id, value: act[1], dur: act[2] });
+    });
+  }
   const weather: [RegExp, EffectKind][] = [[/lluvi|llueve|tormenta/, "rain"], [/nieve|nieva|nevada/, "snow"], [/niebla|bruma/, "fog"], [/polvo|ceniza|cenizas/, "dust"]];
   for (const [re, e] of weather) if (re.test(nar + " " + norm(inp.location)) && !cues.some((c) => c.type === "effect" && c.effect === e)) cues.push({ t: 0, type: "effect", effect: e, dur: D + tail });
   if (/rayo|relampago|trueno|explosi|estruendo/.test(nar) && !cues.some((c) => c.type === "shake")) { cues.push({ t: Math.min(D * 0.4, 1.5), type: "effect", effect: "flash", dur: 0.6 }); cues.push({ t: Math.min(D * 0.4, 1.5), type: "shake", amp: 0.3, dur: 0.8 }); }
@@ -167,7 +188,7 @@ export function direct(inp: DirectorInput): StageSpec {
   }
 
   // ---------- cámara por defecto: nunca queda estática ----------
-  if (!explicitCamera && !dialogueCam && portraitShot) {
+  if (!explicitCamera && !dialogueCam && !shotOnly && portraitShot) {
     // Vertical: la cámara acompaña a quien se mueve (re-enfocando cada 0,8 s) o se queda en el grupo con un empuje lento; nunca recorta a un personaje.
     const T = Math.max(1, D + tail), mv = cues.filter((c) => (c.type === "move" || c.type === "enter") && actors.some((a) => a.id === c.actor)).sort((a, b) => a.t - b.t)[0];
     if (mv && "actor" in mv) {
@@ -182,7 +203,7 @@ export function direct(inp: DirectorInput): StageSpec {
       const k = inp.index % 2, z0 = wideZ, z1 = Math.min(wideZ * 1.1, fitZoom);      // el empuje lento nunca llega a cortar a nadie
       cues.push({ t: 0, type: "camera", x: centroid, zoom: k ? z1 : z0, dur: 0.01 }, { t: 0.01, type: "camera", x: centroid, zoom: k ? z0 : z1, dur: T, ease: "linear" });
     }
-  } else if (!explicitCamera && !dialogueCam) {
+  } else if (!explicitCamera && !dialogueCam && !shotOnly) {
     const k = inp.index % 3, T = Math.max(1, D + tail);
     if (k === 0) cues.push({ t: 0, type: "camera", zoom: 1.0, dur: 0.01 }, { t: 0.01, type: "camera", zoom: 1.09, dur: T, ease: "linear" });
     else if (k === 1) cues.push({ t: 0, type: "camera", zoom: 1.1, dur: 0.01 }, { t: 0.01, type: "camera", zoom: 1.0, dur: T, ease: "linear" });

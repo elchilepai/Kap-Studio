@@ -158,4 +158,8 @@ describe("las líneas [clave: valor] nunca se narran ni se subtitulan", () => {
     const sc = parseScript(`[vfx: lluvia]\nLlueve.\n\n[zumba: KAP]\nOtra frase.`, chars);
     expect(sc.flatMap((x) => x.lines).every((l) => !/\[|zumba|vfx/.test(l.text))).toBe(true);
   });
+  it("«KAP: KAP: texto» se presenta como «KAP: texto» (el modelo repetía el nombre dentro de la línea)", () => {
+    const p = parseScript("# Patio\nKAP: KAP: La pelota se fue volando.\nHERMANO DE KAP: HERMANO DE KAP: ¿Qué pasó?\nKAP: KAP, ¿me oyes?", [{ id: "1", name: "KAP" }, { id: "2", name: "Hermano de KAP" }]);
+    expect(p[0].lines).toEqual([{ speaker: "KAP", text: "La pelota se fue volando." }, { speaker: "Hermano de KAP", text: "¿Qué pasó?" }, { speaker: "KAP", text: "KAP, ¿me oyes?" }]);   // un vocativo no se toca
+  });
 });
