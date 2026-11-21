@@ -154,9 +154,9 @@ describe("propuesta de la serie", () => {
   });
   it("canon: los hechos confirmados sobre la familia, 2Pac, la banda y su humor están registrados, y NO se añade lo no confirmado", () => {
     const c = KAP(), t = c.facts.map((f) => f.text).join(" | ");
-    expect(t).toMatch(/gran sueño de KAP/); expect(t).toMatch(/2Pac.*referentes musicales.*estética de niño/); expect(t).toMatch(/padres terminan separándose.*conflicto familiar grave relacionado con las drogas/);
+    expect(t).toMatch(/gran sueño de KAP/); expect(t).toMatch(/2Pac.*referentes musicales.*estética de niño/); expect(t).toMatch(/relación problemática relacionada con las drogas/); expect(t).toMatch(/padre de KAP agrede físicamente a la madre/); expect(t).toMatch(/Como consecuencia de ese conflicto, los padres de KAP terminan separándose/); expect(t).toMatch(/escucha y percibe ese conflicto desde su habitación/); expect(t).toMatch(/preocupado por su hermano pequeño y trata de protegerlo/); expect(t).toMatch(/comienzo de su objetivo de sacar adelante a su hermano/);
     expect(t).toMatch(/etapa posterior de su vida \(no en su infancia\).*banda/); expect(t).toMatch(/robos y peleas.*no es lo que quiere/); expect(t).toMatch(/humor más oscuro y su personalidad posterior/);
-    expect(t).not.toMatch(/agred|violen|maltrat|golpe|pega|cárcel|prisión|pandilla|entren|gimnasio|físic/i);   // el entrenamiento es evolución futura y la agresión del piloto no se ha confirmado como canon
+    expect(t).not.toMatch(/maltrat|golpe|pega |cárcel|prisión|pandilla|entren|gimnasio|músculo/i);   // el entrenamiento es evolución futura; sin detalles de la agresión ni nada no confirmado
     for (const f of KAP_FACTS) expect(Change.safeParse({ kind: "fact.add", text: f }).success, f).toBe(true);
   });
 });
