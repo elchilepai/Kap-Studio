@@ -199,7 +199,7 @@ export function direct(inp: DirectorInput): StageSpec {
           const other = actors.filter((o) => o.id !== a.id).sort((p, q) => Math.abs(p.slot - a.slot) - Math.abs(q.slot - a.slot))[0];
           if (other) cues.push({ t: t + 0.95, type: "face", actor: a.id, dir: xNow(other.id, t + 0.95) >= xNow(a.id, t + 0.95) ? "right" : "left" });   // mirada entre personajes
         });
-        sounds.push({ t: t0, kind: /portazo|puerta/.test(clause) ? "door" : STRONG.test(clause) ? "bump" : /telefono|movil|timbre|llamada/.test(clause) ? "ring" : "bump" });
+        { const kind: SoundCue["kind"] | undefined = /portazo|puerta/.test(clause) ? "door" : /golpe|estruendo|rompe|cae\b|seco/.test(clause) ? "bump" : /telefono|movil|timbre|llamada/.test(clause) ? "ring" : undefined; if (kind && !sounds.some((x) => x.kind === kind && Math.abs(x.t - t0) < 1.2)) sounds.push({ t: t0, kind }); }   // un grito o un ruido sin más no es un golpe: solo suena lo que el texto dice que suena
         camera(t0, actors[0]?.id ?? "", "source", 1, src);
         const ringing = OBJECTS.find(([re]) => re.test(clause))?.[1]; if (ringing && actors[0] && objSpecs().length < 4 && !props.some((q) => q.kind === ringing)) { const sp: PropSpec = { id: `o${props.length}`, kind: ringing, x: clampX(actors[0].slot + (actors[0].slot < 8 ? 1.4 : -1.4)), y: 7.55, scale: 1, visibleAtStart: false }; props.push(sp); cues.push({ t: t0, type: "prop", id: sp.id, action: "show" }); }   // suena el teléfono: se ve
         end = t0 + 1; cursor = end - l.start - step.overlap; return;

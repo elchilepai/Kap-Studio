@@ -66,4 +66,10 @@ describe("la voz solo pronuncia el diálogo", () => {
       expect(await sceneAudio({ ...scene, lines: [{ text: "Se oye un portazo." }] } as Scene, { assetPath: async () => undefined, voice: spy, cacheDir: path.join(dir, "cache"), tmpDir: path.join(dir, "tmp3") })).toBeUndefined();   // sin diálogo no hay voz
     } finally { await fs.rm(dir, { recursive: true, force: true }); }
   }, 60_000);
+  it("quien solo se nombra en la narración («el hermano», «su hermano») sigue siendo personaje de la escena", () => {
+    const ch = [{ id: "k", name: "KAP" }, { id: "h", name: "Hermano de KAP" }];
+    const ir = parsedToIR(parseScript("# Salón\nKAP: ¿Qué fue eso?\n# Salón\nEl hermano se acerca a la ventana y mira también.\n# Salón\nNo dice nada. Solo observa.", ch));
+    const sc = irToScenes(ir, ch, () => "x");
+    expect(sc[1].characterIds).toContain("h"); expect(sc[0].characterIds).not.toContain("h");   // aparece donde se le nombra, no antes
+  });
 });

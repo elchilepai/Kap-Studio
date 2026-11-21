@@ -33,7 +33,9 @@ export function irToScenes(ir: ScreenplayIR, chars: { id: string; name: string }
   const out = ir.scenes.map((p, i) => {
     const named = new Set([...p.lines.map((l) => l.speaker), ...p.beats.map((b) => ("actor" in b ? b.actor : undefined))].filter(Boolean).map((n) => norm(n!)));
     const text = norm(p.lines.map((l) => `${l.speaker ?? ""} ${l.text}`).join(" ") + " " + p.title);
-    const characterIds = chars.filter((c) => named.has(norm(c.name)) || new RegExp(`(^|[^a-z0-9])${norm(c.name).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}([^a-z0-9]|$)`).test(text)).map((c) => c.id);
+    // «el hermano» / «su hermano» es «Hermano de KAP»: las palabras significativas del nombre también cuentan (si no, el personaje desaparece de las escenas donde solo se le nombra en la narración)
+    const aliases = (nm: string) => [norm(nm), ...norm(nm).split(/\s+/).filter((w) => w.length > 4 && w !== "kap")], reOf = (a: string) => new RegExp(`(^|[^a-z0-9])${a.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}([^a-z0-9]|$)`);
+    let characterIds = chars.filter((c) => named.has(norm(c.name)) || aliases(c.name).some((a) => reOf(a).test(text))).map((c) => c.id);
     const words = p.lines.reduce((n, l) => n + wordCount(l.text), 0);
     const title = p.title || p.lines.find((l) => !l.speaker)?.text.split(/\s+/).slice(0, 6).join(" ").replace(/[.,;:!?…]+$/, "") || `Escena ${i + 1}`;
     return {
