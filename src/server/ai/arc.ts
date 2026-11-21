@@ -14,6 +14,7 @@ import { isMemoryKey, parseMemoryDirectives } from "@/memory/directives";
 import { GENERIC_HOOK, SCENE_FUNCTIONS, reviewNarrative, type NarrativeFinding } from "@/narrative/review";
 import { checkScene, gateFeedback, isBlocking, needsSceneRegen, repairLines, sceneRhyme, type GateIssue, type GateIssueKind, type GateLine } from "@/narrative/gate";
 import { endingInterchangeable } from "@/narrative/closing";
+import { normalizeLines } from "@/narrative/lines";
 import { episodeVariety } from "@/narrative/variety";
 import { kapRealismCheck, type RealismResult } from "@/narrative/realism";
 import { EpisodeDraft, draftSeconds, draftToIR, irToScript } from "./episode";
@@ -172,7 +173,7 @@ export function llmArcAuthor(llm: LlmClient, opts: ArcAuthorOptions = {}): ArcAu
         let best: Acc | undefined, regens = 0, res = await gen("", 0);
         for (;;) {
           if (!res.ok) { if (best) break; throw new Error(`El modelo no devolvió la escena ${i + 1} válida tras ${res.attempts} intento(s): ${res.errors.join("; ")}`); }
-          let lines: GateLine[] = res.data.lines.map((l) => ({ speaker: l.speaker, text: l.text })), issues = check(lines, res.data.change, res.data);
+          let lines: GateLine[] = normalizeLines(res.data.lines.map((l) => ({ speaker: l.speaker, text: l.text })), [...beat.characters, ...defaultCast, "KAP", ...context.relevantCharacters]) as GateLine[], issues = check(lines, res.data.change, res.data);
           for (const x of issues) count(x.kind);   // se cuentan los detectados (aunque luego se reparen en código)
           const rep = repairLines(lines, issues); if (rep.repaired.length) { codeRepairs++; lines = rep.lines; issues = check(lines, res.data.change, res.data); }
           const cand: Acc = { beat, out: res.data, lines, issues }, score = (x: Acc) => [x.issues.filter((k) => k.scope === "scene" || k.scope === "repair").length, x.issues.filter((k) => k.scope === "local").length];

@@ -1,4 +1,4 @@
-import type { ActorSpec, ActorState, CameraState, Cue, EffectKind, Expression, FrameState, ActionPose, Gesture, StageSpec, Viseme } from "./types.ts";
+import type { ActionExpression, ActorSpec, ActorState, CameraState, Cue, EffectKind, FrameState, ActionPose, Gesture, StageSpec, Viseme } from "./types.ts";
 import { WORLD_W } from "./types.ts";
 import { clamp, ease, lerp } from "./util.ts";
 import type { Ease } from "./types.ts";
@@ -6,7 +6,7 @@ import type { Ease } from "./types.ts";
 type Seg = { t0: number; t1: number; x0: number; x1: number; run: boolean };
 type VisEv = { t: number; on: boolean; fade: number };
 type Track = {
-  segs: Seg[]; vis: VisEv[]; face: { t: number; dir: 1 | -1 }[]; expr: { t: number; v: Expression }[];
+  segs: Seg[]; vis: VisEv[]; face: { t: number; dir: 1 | -1 }[]; expr: { t: number; v: ActionExpression }[];
   gest: { t0: number; t1: number; v: Gesture }[]; poses: { t: number; v: ActionPose }[]; speak: { t0: number; t1: number; env: number[]; vis?: Viseme[] }[]; x0: number; offscreen: boolean;
 };
 type CamSeg = { t0: number; t1: number; from: CameraState; to: CameraState; ease: Ease | undefined };
@@ -80,14 +80,14 @@ function alphaOf(ev: VisEv[], t: number): number {
 
 function actorState(a: ActorSpec, tr: Track, t: number, fps: number): ActorState {
   const x = xAt(tr, t);
-  let moving = 0, phase = 0;
+  let moving = 0, phase = 0, speed = 0;
   for (const s of tr.segs) {
     const dx = Math.abs(s.x1 - s.x0); if (dx < 0.05 || t < s.t0) continue;
     const p = clamp((t - s.t0) / (s.t1 - s.t0), 0, 1); phase += dx * ease("inOut", p);
-    if (t < s.t1) moving = s.run ? 2 : 1;
+    if (t < s.t1) { moving = s.run ? 2 : 1; speed = (6 * p * (1 - p)) / 1.5; }   // derivada de la curva suave: arranca despacio, va rápido en medio y frena al llegar
   }
   let facing = a.facing; for (const f of tr.face) { if (f.t <= t) facing = f.dir; else break; }
-  let expression: Expression = "neutral"; for (const e of tr.expr) { if (e.t <= t) expression = e.v; else break; }
+  let expression: ActionExpression = "neutral"; for (const e of tr.expr) { if (e.t <= t) expression = e.v; else break; }
   let pose: ActionPose = "idle", poseT = 99; for (const e of tr.poses) { if (e.t <= t) { pose = e.v; poseT = t - e.t; } else break; }
   let gesture: Gesture = "none", gp = 0; for (const g of tr.gest) if (t >= g.t0 && t < g.t1) { gesture = g.v; gp = (t - g.t0) / (g.t1 - g.t0); }
   let mouth = 0, speaking = false, viseme: Viseme = "rest";
@@ -96,7 +96,7 @@ function actorState(a: ActorSpec, tr: Track, t: number, fps: number): ActorState
     viseme = s.vis?.[k] ?? (mouth < 0.1 ? "rest" : mouth < 0.3 ? "I" : mouth < 0.6 ? "E" : "A");   // sin pista fonética: solo la amplitud decide la forma
   }
   const alpha = alphaOf(tr.vis, t);
-  return { id: a.id, x, y: 0, facing, visible: alpha > 0.001, alpha, moving, walkPhase: phase * 1.15, expression, gesture, gestureP: gp, mouth, viseme, speaking, pose, poseP: clamp(poseT / 0.3, 0, 1) };
+  return { id: a.id, x, y: 0, facing, visible: alpha > 0.001, alpha, moving, speed, walkPhase: phase * 1.15, expression, gesture, gestureP: gp, mouth, viseme, speaking, pose, poseP: clamp(poseT / 0.3, 0, 1) };
 }
 
 /** Estado COMPLETO de la escena en el instante t. Función pura y determinista (mismo t ⇒ mismo resultado). */

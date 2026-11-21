@@ -116,7 +116,7 @@ describe.skipIf(!hasTts)("pipeline automático REAL de principio a fin (FFmpeg +
   it("corregir UNA escena y volver a componer reutiliza la caché (solo se renderiza lo cambiado)", async () => {
     const before = new Set(await fs.readdir(path.join(cache(), "clips")));
     const cur = (await st.productions.get(epId))!;
-    const edited = cur.scenes.map((s, i) => i === 6 ? { ...s, locked: true, lines: [{ text: "Texto corregido a mano en el editor." }, ...s.lines.slice(1)], narration: "" } : s);
+    const edited = cur.scenes.map((s, i) => i === 6 ? { ...s, locked: true, lines: [{ speaker: "KAP", text: "Texto corregido a mano en el editor." }, ...s.lines.slice(1)], narration: "" } : s);
     await st.productions.save({ ...cur, scenes: edited });
     const t0 = Date.now(); await enqueue("re", { productionId: epId, params: { mode: "rerender", voice: "espeak", musicAssetId: "mus" } });
     await finished("re"); const dt = Date.now() - t0;

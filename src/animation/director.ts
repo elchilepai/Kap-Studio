@@ -1,6 +1,6 @@
 import { frameShot, layoutSlots, wideZoom, type SafeZone } from "./framing.ts";
 import { evaluate } from "./timeline.ts";
-import type { Appearance, Cue, EffectKind, Expression, Gesture, PropKind, PropSpec, SetPreset, SetSpec, Side, StageSpec, StyleParams, TimeOfDay } from "./types.ts";
+import type { ActionExpression, Appearance, Cue, ObjectKind, EffectKind, Expression, Gesture, PropKind, PropSpec, SetPreset, SetSpec, Side, StageSpec, StyleParams, TimeOfDay } from "./types.ts";
 import { WORLD_W } from "./types.ts";
 import { hash32 } from "./util.ts";
 import { amplitudeProvider, syntheticEnvelope, type LipSyncProvider, type LipSyncTrack } from "./lipsync.ts";
@@ -37,7 +37,7 @@ const SET_RULES: [RegExp, SetPreset][] = [
   [/azotea|tejado|terraza/, "rooftop"],
   [/^(?:(?!interior|habitaci|cuarto|sala|cocina|taller)[\s\S])*?(?:patio|fachada|portal|porche|puerta (?:de |principal)|entrada de|jardin de (?:la )?casa)/, "patio"],   // el patio doméstico no es una calle
   [/^(?:(?!interior|habitaci|cuarto|casa|sala|cocina|taller)[\s\S])*?(?:calle|acera|puerta|entrada|exterior|afuera|fuera)/, "street"],   // lo exterior que se nombra ANTES que lo interior («Puerta de casa», «Calle cerca de la casa») es exterior
-  [/refugio|habitaci|cuarto|casa|interior|sala|cocina|taller|laboratorio|cabana|cueva|bunker/, "room"],
+  [/refugio|habitaci|cuarto|dormitorio|casa|interior|sala|salon|comedor|pasillo|recibidor|vestibulo|escritorio|bano|cocina|taller|laboratorio|cabana|cueva|bunker/, "room"],
   [/bosque|selva|jardin|parque|campo|monte/, "forest"], [/calle|plaza|mercado|puente|callejon|carretera|puerto|costa|faro|playa/, "street"],
   [/ciudad|skyline|torre|rascacielos|metro|tunel|distrito/, "city"],
 ];
@@ -49,7 +49,8 @@ export function resolveSet(location: string, tags: string[], mood: string, given
   // la hora que dice el guion MANDA (también sobre la del lugar guardado): mañana ≠ tarde ≠ atardecer ≠ noche; solo si no dice nada se recurre al ánimo
   const stated: TimeOfDay | undefined = /\b(?:noche|nocturn\w*|medianoche)\b/.test(said) ? "night" : /\b(?:atardecer|atardec\w*|ocaso|anochecer|crepusculo)\b/.test(said) ? "dusk" : /\btarde\b/.test(said) ? "afternoon" : /\b(?:manana|amanecer|amanec\w*|madrugada|mediodia|dia)\b/.test(said) ? "day" : undefined;
   const tod: TimeOfDay = stated ?? given?.timeOfDay ?? (/oscur|tens|misteri|miedo/.test(m) ? "night" : /trist/.test(m) ? "dusk" : /\bsol\b|aleg|diverti/.test(said) ? "day" : "dusk");
-  return { preset, timeOfDay: tod, seed: hash32(location || "kap") % 1000, imageId: given?.imageId, accent: given?.accent, ...(given?.layers ? { layers: given.layers } : {}), ...(given?.elements ? { elements: given.elements } : {}), ...(given?.foreground ? { foreground: given.foreground } : {}) };
+  const variant = preset === "room" ? (/habitaci|cuarto|dormitorio/.test(key) ? "bedroom" : /salon|sala\b|comedor|living/.test(key) ? "living" : /cocina/.test(key) ? "kitchen" : /pasillo|recibidor|vestibulo/.test(key) ? "hallway" : undefined) : undefined;
+  return { preset, timeOfDay: tod, seed: hash32(location || "kap") % 1000, ...(variant ? { variant } : {}), imageId: given?.imageId, accent: given?.accent, ...(given?.layers ? { layers: given.layers } : {}), ...(given?.elements ? { elements: given.elements } : {}), ...(given?.foreground ? { foreground: given.foreground } : {}) };
 }
 
 const MOOD_EXPR: [RegExp, Expression][] = [[/oscur|tens|miedo|preocup/, "worried"], [/trist|melanc/, "sad"], [/aleg|diverti|feliz/, "happy"], [/misteri|intrig/, "thinking"], [/enfad|furi|ira/, "angry"]];
@@ -132,32 +133,86 @@ export function direct(inp: DirectorInput): StageSpec {
     }
   });
 
+  // ---------- ACTING a partir de la narración ----------
+  // La narración NO se lee: DIRIGE. Cada cláusula con un personaje nombrado y un verbo se convierte en pequeñas fases (anticipación → acción → llegada/reacción)
+  // con cuerpo, mirada, expresión, cámara y, si hay, el objeto en la mano. Solo reglas léxicas: no se inventa movimiento que el texto no diga.
+  const CLAUSE = 1.5;   // segundos que la línea de tiempo reserva a cada cláusula de acción (igual que el montaje)
+  const LANDMARK: [RegExp, number][] = [[/\bventana\b/, 10.8], [/\b(?:puerta|salida|pasillo|salon|cocina|fuera|afuera|calle|entrada)\b/, 14.2]];
+  const EXPRS: [RegExp, ActionExpression][] = [
+    [/\b(?:asustad\w*|miedo|aterr\w*|pavor|ojos muy abiertos|se estremece)\b/, "scared"], [/\b(?:verguenza|avergonz\w*|sonroj\w*)\b/, "embarrassed"], [/\b(?:confus\w*|no entiende|desconcert\w*)\b/, "confused"],
+    [/\b(?:curios\w*|intrigad\w*)\b/, "curious"], [/\b(?:alivi\w*)\b/, "relieved"], [/\b(?:incomod\w*|se remueve|nervios\w*)\b/, "uncomfortable"], [/\b(?:aburrid\w*|bosteza\w*)\b/, "bored"],
+    [/\b(?:trist\w*|llora\w*|lagrim\w*)\b/, "sad"], [/\b(?:enfad\w*|furios\w*|rabia)\b/, "angry"], [/\b(?:sorprend\w*|sobresalt\w*)\b/, "surprised"], [/\b(?:preocupad\w*|inquiet\w*|tens[oa]\b|angusti\w*)\b/, "worried"], [/\b(?:sonr\w*|rie\b|rien\b|alegre)\b/, "happy"], [/\b(?:piensa\w*|duda\w*|pensativ\w*)\b/, "thinking"],
+  ];
+  const ACTIONS: [RegExp, "crouch" | "reach" | "throw" | "recoil", number][] = [
+    [/\b(?:se agach\w*|se inclin\w*|se arrodill\w*|recoge|recoger|mete (?:la|las) mano\w*|planta\w*|rebusca\w*)\b/, "crouch", 1.5],
+    [/\b(?:lanza\w*|arroja\w*|tira (?:la|el|una|un)|patea\w*)\b/, "throw", 1.0],
+    [/\b(?:alcanza\w*|estira\w*|agarra\w*|coge\w*|toma\w*|saca\w*|empuja\w*|abre|abrir|cierra|cerrar|toca\w*|levanta\w*|mueve\w*|aparta\w*|esconde\w*|guarda\w*|se quita|se pone|deja (?:la|el|las|los|una|un))\b/, "reach", 1.2],
+    [/\b(?:retrocede\w*|da un paso atras|se echa atras|se sobresalta|se asusta)\b/, "recoil", 1.0],
+  ];
+  const OBJECTS: [RegExp, ObjectKind][] = [[/\b(?:telefono|movil|celular)\b/, "phone"], [/\bmochila\b/, "backpack"], [/\b(?:cuaderno|libreta)\b/, "notebook"], [/\b(?:auriculares|cascos)\b/, "headphones"], [/\bmaleta\b/, "suitcase"], [/\b(?:pelota|balon)\b/, "ball"], [/\b(?:papel|hoja)\b/, "paper"], [/\bsilla\b/, "chair"]];
+  const TAKE = /\b(?:coge\w*|agarra\w*|saca\w*|toma\w*|recoge\w*|sostiene|sujeta\w*|lleva|abraza\w*|se pone|se quita|mira (?:el|la|su) (?:telefono|movil|pantalla))\b/, PUT = /\b(?:deja\w*|apoya\w*|suelta\w*|tira\w*|lanza\w*|guarda\w*)\b/;
+  const ALERT = /\b(?:se oye\w*|se escucha\w*|suena\w*|portazo|grito\w*|ruido|estruendo|golpe seco|se rompe\w*|truen\w*)\b/, STRONG = /grito|estruendo|golpe|rompe|portazo|truen/;
+  const STOP = /\b(?:se detiene|se para|se queda (?:quiet\w*|inmovil\w*|paralizad\w*)|se congela\w*|deja de moverse)\b/, RUN = /\b(?:corre\w*|echa a correr|sale corriendo)\b/;
+  const WALK = /\b(?:se acerca\w*|se aproxima\w*|camina\w*|va (?:hacia|a)|avanza\w*|entra|llega\w*|se dirige\w*)\b/, AWAY = /\b(?:se aleja\w*|se separa|se marcha|se va)\b/, LOOK = /\bmira\w*\s+(?:hacia|a|al|a la|por|fijamente)\b/;
+  const aliasesOf = (nm: string) => [norm(nm), ...norm(nm).split(/\s+/).filter((w) => w.length > 3 && w !== "kap")];
+  const mentions = (clause: string) => actors.map((a) => ({ a, i: Math.min(...aliasesOf(a.name).map((al) => { const m = new RegExp(`(?<!\\bde\\s)\\b${al.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`).exec(clause); return m ? m.index : 1e9; })) })).filter((x) => x.i < 1e9).sort((p, q) => p.i - q.i).map((x) => x.a);
+  const xNow = (id: string, t: number) => { const f = evaluate({ v: 1, width: inp.width, height: inp.height, fps: inp.fps, duration: D + tail, seed: 0, set: { preset: "abstract", timeOfDay: "day", seed: 0 }, actors, props: [], cues: cues.filter((c) => c.type !== "camera"), style: inp.style, warnings: [] } as StageSpec, Math.max(0, t)); const i = actors.findIndex((a) => a.id === id); return f.actors[i]?.x ?? actors[i]?.slot ?? WORLD_W / 2; };
+  const clampX = (x: number) => Math.max(0.8, Math.min(WORLD_W - 0.8, x)), cam = { t: -9 };
+  const camera = (t: number, id: string, kind: "push" | "cut" | "follow", dur = 1) => {   // la cámara sigue la historia: un empuje al llegar información, un corte a la reacción, seguimiento al caminar; no más de uno cada 2,5 s
+    if (explicitCamera || t - cam.t < 2.5) return; cam.t = t;
+    if (kind === "follow") cues.push({ t, type: "camera", focus: id, zoom: 1.12, dur, ease: "inOut" });
+    else { cues.push(kind === "push" ? { t, type: "camera", focus: id, zoom: 1.32, dur: 0.9, ease: "inOut" } : { t, type: "camera", focus: id, zoom: 1.55, dur: 0.01 }, { t: t + (kind === "push" ? 2.4 : 1.5), type: "camera", x: WORLD_W / 2, zoom: 1, dur: 0.8, ease: "inOut" }); }
+  };
+  const walkTo = (a: (typeof actors)[number], x: number, t: number, run: boolean): number => {
+    const x0 = xNow(a.id, t), d = Math.abs(x - x0); if (d < 0.3) return t;
+    const dur = Math.max(run ? 0.9 : 1.1, Math.min(run ? 2.4 : 3.4, d / (run ? 5.2 : 2.4)));
+    cues.push({ t, type: "face", actor: a.id, dir: x > x0 ? "right" : "left" });   // primero se gira hacia donde va
+    let t1 = t + 0.12; if (run) { cues.push({ t, type: "pose", actor: a.id, value: "crouch", dur: 0.28 }); t1 = t + 0.28; }   // anticipación antes de arrancar
+    cues.push({ t: t1, type: "move", actor: a.id, x: clampX(x), dur, run }); const tEnd = t1 + dur;
+    cues.push({ t: tEnd, type: "pose", actor: a.id, value: "idle" });   // llega, frena y se asienta
+    camera(t1, a.id, "follow", dur); return tEnd;
+  };
+  const objSpecs = () => props.filter((p) => ["phone", "backpack", "notebook", "headphones", "suitcase", "ball", "paper", "chair"].includes(p.kind));
+  for (const l of inp.lines) {
+    if (l.speaker) continue; let lastP: (typeof actors)[number] | undefined;   // una cláusula sin nombre («…, confusa, no entiende nada») sigue siendo del último personaje nombrado en la línea
+    norm(l.text).split(/[.!?;]+|,|\bpero\b|\bmientras\b/).map((x) => x.trim()).filter((x) => x.length > 2).forEach((clause, ci) => {
+      const t0 = Math.max(0.1, l.start + ci * CLAUSE), who = mentions(clause), P = who[0] ?? lastP, others = who.slice(who[0] ? 1 : 0), free = P && !touched.has(P.id); if (who[0]) lastP = who[0];
+      const ex = EXPRS.find(([re]) => re.test(clause))?.[1];
+      if (ALERT.test(clause)) {   // un sonido: todos reaccionan (escalonados), con un empuje de cámara a quien más cerca está de la acción
+        const strong = STRONG.test(clause); actors.forEach((a, k) => { if (touched.has(a.id)) return; const t = t0 + 0.15 * k; cues.push({ t, type: "pose", actor: a.id, value: "recoil", dur: 0.7 }, { t: t + 0.1, type: "expression", actor: a.id, value: strong ? "scared" : "surprised" }); });
+        if (actors[0]) camera(t0, actors[0].id, "push");
+        const ringing = OBJECTS.find(([re]) => re.test(clause))?.[1]; if (ringing && actors[0] && objSpecs().length < 4 && !props.some((q) => q.kind === ringing)) { const sp: PropSpec = { id: `o${props.length}`, kind: ringing, x: clampX(actors[0].slot + (actors[0].slot < 8 ? 1.4 : -1.4)), y: 7.55, scale: 1, visibleAtStart: false }; props.push(sp); cues.push({ t: t0, type: "prop", id: sp.id, action: "show" }); }   // suena el teléfono: se ve
+        return;
+      }
+      if (!P) return;
+      let moved = false;
+      const target = others[0], landmark = LANDMARK.find(([re]) => re.test(clause))?.[1], nearest = actors.filter((a) => a.id !== P.id).sort((p, q) => Math.abs(p.slot - P.slot) - Math.abs(q.slot - P.slot))[0];
+      if (free && STOP.test(clause)) { cues.push({ t: t0, type: "move", actor: P.id, x: xNow(P.id, t0), dur: 0.25 }, { t: t0 + 0.25, type: "pose", actor: P.id, value: "idle" }); moved = true; }
+      else if (free && (RUN.test(clause) || WALK.test(clause))) {
+        const run = RUN.test(clause), x0 = xNow(P.id, t0), other = target ?? (/\bse acerca|se aproxima/.test(clause) ? nearest : undefined);
+        const dest = other ? (() => { const ox = xNow(other.id, t0 + 1); return ox - (Math.sign(ox - x0) || 1) * 1.4; })() : landmark;
+        if (dest !== undefined) { const te = walkTo(P, dest, t0, run); moved = true; if (other) cues.push({ t: te + 0.05, type: "face", actor: P.id, dir: xNow(other.id, te) >= xNow(P.id, te) ? "right" : "left" }); else if (landmark !== undefined) cues.push({ t: te + 0.05, type: "face", actor: P.id, dir: landmark >= xNow(P.id, te) ? "right" : "left" }); }
+      } else if (free && AWAY.test(clause)) { const other = target ?? nearest; if (other) { const x0 = xNow(P.id, t0), dir = Math.sign(xNow(other.id, t0) - x0) || 1; walkTo(P, x0 - dir * 1.8, t0, false); cues.push({ t: t0 + 1.9, type: "face", actor: P.id, dir: dir > 0 ? "right" : "left" }); moved = true; } }
+      else if (free && LOOK.test(clause)) { const other = target ?? (landmark === undefined ? undefined : undefined), x0 = xNow(P.id, t0), toX = other ? xNow(other.id, t0) : landmark; if (toX !== undefined) cues.push({ t: t0, type: "face", actor: P.id, dir: toX >= x0 ? "right" : "left" }); }
+      if (!moved) { const act = ACTIONS.find(([re]) => re.test(clause)); if (act) cues.push({ t: t0, type: "pose", actor: P.id, value: act[1], dur: act[2] }); }
+      if (ex) { cues.push({ t: t0 + 0.1, type: "expression", actor: P.id, value: ex }); if (ex === "scared" || ex === "surprised") camera(t0 + 0.1, P.id, "cut"); }
+      // objetos: lo que se coge va en la mano, lo que se deja queda en el suelo, lo que aparece en la escena se ve (solo los que la narración nombra; máx. 4)
+      const obj = OBJECTS.find(([re]) => re.test(clause))?.[1];
+      if (obj && objSpecs().length < 4) {
+        const spec = (holder?: string, x = 0): PropSpec => { const sp: PropSpec = { id: `o${props.length}`, kind: obj, x, y: 7.55, scale: 1, visibleAtStart: false, ...(holder ? { holder } : {}) }; props.push(sp); return sp; };
+        const held = props.find((q) => q.kind === obj && q.holder === P.id), floorAt = () => clampX(xNow(P.id, t0) + (P.slot < 8 ? 1 : -1) * 1.1);
+        if (TAKE.test(clause) && !PUT.test(clause)) { const floor = props.find((q) => q.kind === obj && !q.holder); if (floor) cues.push({ t: t0 + 0.3, type: "prop", id: floor.id, action: "hide" }); cues.push({ t: t0 + 0.35, type: "prop", id: (held ?? spec(P.id)).id, action: "show" }); }
+        else if (PUT.test(clause)) { if (held) cues.push({ t: t0 + 0.1, type: "prop", id: held.id, action: "hide" }); if (!/guarda/.test(clause)) cues.push({ t: t0 + 0.25, type: "prop", id: spec(undefined, floorAt()).id, action: "show" }); }
+        else if (!props.some((q) => q.kind === obj)) cues.push({ t: t0, type: "prop", id: spec(undefined, floorAt()).id, action: "show" });
+      }
+    });
+  }
+
   // ---------- acciones sugeridas por la narración ----------
   const nar = norm(inp.narration); const lead = actors[0];
-  if (lead && !touched.has(lead.id)) {
+  if (lead && !touched.has(lead.id) && !cues.some((c) => c.type === "move" && c.actor === lead.id)) {
     if (/\b(corre|huye|escapa)\b/.test(nar)) cues.push({ t: 0.3, type: "move", actor: lead.id, x: lead.slot < 8 ? 14 : 2, dur: Math.max(1.4, D * 0.6), run: true });
     else if (/\b(camina|avanza|se acerca|se aleja|llega|recorre)\b/.test(nar)) cues.push({ t: 0.3, type: "move", actor: lead.id, x: Math.min(WORLD_W - 1, lead.slot + (actors.length > 1 ? 1.2 : 3.2)), dur: Math.max(1.6, D * 0.8) });
-  }
-  // Lo que la narración dice que un personaje HACE se ve en el cuerpo (no solo en el subtítulo): cada cláusula con un verbo de acción
-  // y un personaje nombrado le da esa pose durante un momento. Solo reglas léxicas sobre las líneas narradas; no inventa nada que el texto no diga.
-  const ACTIONS: [RegExp, "crouch" | "reach" | "throw" | "recoil", number][] = [
-    [/\b(?:se agach\w*|se inclin\w*|se arrodill\w*|recoge|recoger|coge|mete (?:la|las) mano\w*|planta\w*|rebusca\w*|busca\w* (?:en|entre|bajo|debajo))\b/, "crouch", 1.5],
-    [/\b(?:lanza\w*|arroja\w*|tira (?:la|el|una|un)|patea\w*)\b/, "throw", 1.0],
-    [/\b(?:alcanza\w*|estira\w*|agarra\w*|empuja\w*|abre|abrir|cierra|cerrar|toca\w*|levanta\w*|mueve\w*|aparta\w*|esconde\w*|guarda\w*|saca\w*|se quita|se pone|deja (?:la|el|las|los|una|un))\b/, "reach", 1.2],
-    [/\b(?:retrocede\w*|da un paso atras|se echa atras|se aleja de golpe|se sobresalta|se asusta)\b/, "recoil", 1.0],
-  ];
-  const aliasesOf = (nm: string) => [norm(nm), ...norm(nm).split(/\s+/).filter((w) => w.length > 3 && w !== "kap")];
-  for (const l of inp.lines) {
-    if (l.speaker) continue;
-    norm(l.text).split(/[.!?;]+|,|\bpero\b|\bmientras\b/).map((x) => x.trim()).filter(Boolean).forEach((clause, ci) => {
-      const hit = actors.map((a) => ({ a, i: Math.min(...aliasesOf(a.name).map((al) => { const m = new RegExp(`\\b${al.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`).exec(clause); return m ? m.index : 1e9; })) })).filter((x) => x.i < 1e9).sort((p, q) => p.i - q.i)[0];
-      if (!hit) return; const t0 = Math.max(0.1, l.start + ci * 0.45);
-      // desplazamientos que cuenta la narración: «se acerca a…», «se aleja…» (hacia / lejos del personaje más cercano; solo si nadie lo dirigió a mano)
-      const toward = /\b(?:se acerca|se aproxima|va hacia|corre hacia)\b/.test(clause), away = /\b(?:se aleja|se separa|se marcha)\b/.test(clause), other = actors.filter((x) => x.id !== hit.a.id).sort((p, q) => Math.abs(p.slot - hit.a.slot) - Math.abs(q.slot - hit.a.slot))[0];
-      if ((toward || away) && other && !touched.has(hit.a.id)) { const dir = Math.sign(other.slot - hit.a.slot) || 1; cues.push({ t: t0, type: "move", actor: hit.a.id, x: Math.max(0.8, Math.min(WORLD_W - 0.8, toward ? other.slot - dir * 1.4 : hit.a.slot - dir * 1.8)), dur: 1.6 }); }
-      const act = ACTIONS.find(([re]) => re.test(clause)); if (!act) return;
-      cues.push({ t: t0, type: "pose", actor: hit.a.id, value: act[1], dur: act[2] });
-    });
   }
   const weather: [RegExp, EffectKind][] = [[/lluvi|llueve|tormenta/, "rain"], [/nieve|nieva|nevada/, "snow"], [/niebla|bruma/, "fog"], [/polvo|ceniza|cenizas/, "dust"]];
   for (const [re, e] of weather) if (re.test(nar + " " + norm(inp.location)) && !cues.some((c) => c.type === "effect" && c.effect === e)) cues.push({ t: 0, type: "effect", effect: e, dur: D + tail });

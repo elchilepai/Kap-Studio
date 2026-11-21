@@ -1,6 +1,7 @@
 import type { Line } from "./script";
 import { sentences } from "./text";
 import { subtitleMetrics } from "@/animation/framing";
+import { fitTimeline, sceneTimeline, type TItem } from "./timeline";
 
 /**
  * Subtítulos. La sincronización es PROPORCIONAL: el tiempo de cada fragmento depende de su longitud dentro de la
@@ -31,27 +32,33 @@ export function splitBalanced(text: string, limit: number): string[] {
   if (buf) out.push(buf); return out;
 }
 
-/** `splitLong`: en formato vertical una frase larga no cabe en 2 líneas de ~22 caracteres: se divide en varios subtítulos consecutivos. */
-export function buildSceneCues(lines: Line[], durationSec: number, o: { maxChars: number; lead?: number; tail?: number; splitLong?: boolean } ): Cue[] {
-  const lead = o.lead ?? 0.3, tail = o.tail ?? 0.3;
-  const win = Math.max(0.5, durationSec - lead - tail);
-  const chunks: { speaker?: string; text: string }[] = [];
-  for (const l of lines) {
-    let buf = "";
-    const flush = () => { if (buf.trim()) chunks.push({ speaker: l.speaker, text: buf.trim() }); buf = ""; };
-    const parts = sentences(l.text).flatMap((x) => (o.splitLong ? splitBalanced(x, o.maxChars * 2) : [x]));
-    for (const s of parts) { if (buf && (buf + " " + s).length > o.maxChars * 2) flush(); buf = (buf + " " + s).trim(); }
-    flush();
+/**
+ * Subtítulos = SOLO lo que un personaje DICE. La narración/dirección no se subtitula (ni se pronuncia): dirige la animación.
+ * Cada frase hablada ocupa su hueco de la línea de tiempo común (`items`, de la voz real si existe; si no, estimada y ajustada a la escena);
+ * dentro de su hueco se reparte por frases. `splitLong`: en formato vertical una frase larga se divide en varios subtítulos consecutivos.
+ */
+export function buildSceneCues(lines: Line[], durationSec: number, o: { maxChars: number; lead?: number; tail?: number; splitLong?: boolean; items?: TItem[] }): Cue[] {
+  const lead = o.lead ?? 0.3, tail = o.tail ?? 0.3, win = Math.max(0.5, durationSec - lead - tail);
+  const items = o.items ?? fitTimeline(sceneTimeline(lines), win), cues: Cue[] = [];
+  for (const it of items) {
+    if (it.kind !== "dialogue") continue;
+    const parts = sentences(it.text).flatMap((x) => (o.splitLong ? splitBalanced(x, o.maxChars * 2) : [x])), chunks: string[] = []; let buf = "";
+    for (const sx of parts) { if (buf && (buf + " " + sx).length > o.maxChars * 2) { chunks.push(buf); buf = ""; } buf = (buf + " " + sx).trim(); }
+    if (buf) chunks.push(buf);
+    const total = chunks.reduce((n, c) => n + c.length + 8, 0) || 1, span = Math.max(0.3, it.end - it.start); let t = lead + it.start;
+    for (const c of chunks) { const d = (span * (c.length + 8)) / total; cues.push({ start: t, end: Math.min(durationSec, t + d), speaker: it.speaker, text: c }); t += d; }
   }
-  const total = chunks.reduce((n, c) => n + c.text.length + 8, 0) || 1;
-  let t = lead; const cues: Cue[] = [];
-  for (const c of chunks) {
-    const d = Math.max(0.9, (win * (c.text.length + 8)) / total);
-    cues.push({ start: t, end: Math.min(durationSec, t + d), speaker: c.speaker, text: c.text }); t += d;
+  return cues;
+}
+
+/** Líneas que ve el DIRECTOR: las frases habladas (con su hablante) y las acciones narradas (sin hablante) con sus tiempos absolutos en la escena. */
+export function timedLines(lines: Line[], durationSec: number, o: { maxChars: number; lead?: number; tail?: number; splitLong?: boolean; items?: TItem[] }): { speaker?: string; text: string; start: number; end: number; kind: "dialogue" | "action" }[] {
+  const lead = o.lead ?? 0.3, tail = o.tail ?? 0.3, win = Math.max(0.5, durationSec - lead - tail), items = o.items ?? fitTimeline(sceneTimeline(lines), win), out: ReturnType<typeof timedLines> = [];
+  for (const it of items) {
+    if (it.kind === "action") { out.push({ text: it.text, start: lead + it.start, end: lead + it.end, kind: "action" }); continue; }
+    out.push(...buildSceneCues([{ speaker: it.speaker, text: it.text }], durationSec, { ...o, items: [{ ...it, start: it.start, end: it.end }] }).map((c) => ({ speaker: c.speaker, text: c.text, start: c.start, end: c.end, kind: "dialogue" as const })));
   }
-  // si los mínimos de 0,9 s desbordan la ventana, se reescala para que nada quede fuera de la escena
-  const over = (cues.at(-1)?.end ?? 0) > durationSec ? (durationSec - lead) / ((cues.at(-1)?.end ?? 1) - lead) : 1;
-  return over < 1 ? cues.map((c) => ({ ...c, start: lead + (c.start - lead) * over, end: lead + (c.end - lead) * over })) : cues;
+  return out;
 }
 
 const ts = (s: number) => { const cs = Math.round(s * 100); const h = Math.floor(cs / 360000), m = Math.floor((cs % 360000) / 6000), sec = Math.floor((cs % 6000) / 100); return `${h}:${String(m).padStart(2, "0")}:${String(sec).padStart(2, "0")}.${String(cs % 100).padStart(2, "0")}`; };

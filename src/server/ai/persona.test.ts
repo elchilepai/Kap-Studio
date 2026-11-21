@@ -17,4 +17,7 @@ describe("capa de personalidad de KAP en los prompts", () => {
     expect(SCENE_SYSTEM).toMatch(/Reacciona primero con el cuerpo|REACCIONA PRIMERO CON EL CUERPO/); expect(SCENE_SYSTEM).toMatch(/CADENA CAUSAL/);
   });
   it("es compacta (no es la biblia entera)", () => { expect(KAP_PERSONALITY.length).toBeLessThan(2400); });
+  it("la narración es DIRECCIÓN (no subtítulo ni voz) y el diálogo es corto y funcional", () => {
+    expect(SCENE_SYSTEM).toMatch(/LA NARRACIÓN ES DIRECCIÓN, NO TEXTO/); expect(SCENE_SYSTEM).toMatch(/no se muestran ni se dicen en voz alta/); expect(SCENE_SYSTEM).toMatch(/nunca una acción a nombre de un personaje/); expect(SCENE_SYSTEM).toMatch(/una escena puede tener cero líneas habladas/);
+  });
 });

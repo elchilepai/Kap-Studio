@@ -37,6 +37,20 @@ function tree(c: Ctx, x: number, base: number, h: number, col: string, ink: stri
   void ink;
 }
 
+/** Mobiliario de la habitación según su variante: pocas formas planas y limpias, lo justo para saber dónde estamos (dormitorio, salón, cocina, pasillo). */
+function furniture(c: Ctx, variant: SetSpec["variant"], p: (typeof PAL)["day"], par: (k: number) => number, win: string | null) {
+  if (!variant) return; const wood = mix("#8a6a4a", p.near, 0.3), wood2 = shade(wood, -0.2), cloth = mix("#7a8fb5", p.near, 0.3), x = par(0.12), G = GROUND_Y;
+  c.lineWidth = 0.04; c.strokeStyle = "rgba(0,0,0,0.45)"; c.lineJoin = "round";
+  const box = (X: number, Y: number, W: number, H: number, col: string) => { c.fillStyle = col; c.fillRect(X + x, Y, W, H); c.strokeRect(X + x, Y, W, H); };
+  if (variant === "bedroom") { box(0.5, G - 1.15, 4.4, 0.75, wood2); box(0.7, G - 1.55, 4.0, 0.5, "#e8e0c8"); box(0.7, G - 1.5, 1.0, 0.4, "#f3efd8"); box(2.2, G - 1.45, 2.5, 0.4, cloth);   // cama con almohada y manta
+    box(12.2, G - 1.3, 3.0, 0.14, wood); box(12.4, G - 1.16, 0.12, 1.16, wood2); box(15.0, G - 1.16, 0.12, 1.16, wood2); box(13.2, G - 2.1, 0.7, 0.8, "#2a2f3a"); box(7.0, 1.7, 1.5, 1.1, mix("#c8553d", p.near, 0.3)); }   // escritorio con pantalla y un póster
+  else if (variant === "living") { box(0.6, G - 1.3, 4.4, 1.0, cloth); box(0.4, G - 1.55, 0.5, 1.25, shade(cloth, -0.15)); box(4.7, G - 1.55, 0.5, 1.25, shade(cloth, -0.15)); box(6.2, G - 0.7, 2.4, 0.15, wood); box(6.4, G - 0.55, 0.14, 0.55, wood2); box(8.2, G - 0.55, 0.14, 0.55, wood2);   // sofá y mesa baja
+    box(5.7, 1.8, 3.2, 1.8, "#161a24"); box(5.85, 1.95, 2.9, 1.5, win ? "#2a3a55" : "#3a4a66"); }   // televisión en la pared
+  else if (variant === "kitchen") { box(0.4, G - 1.3, 5.2, 1.3, wood); box(0.4, G - 1.4, 5.2, 0.12, "#d8cfb8"); box(0.4, 1.6, 4.2, 1.2, wood2); box(2.4, 1.6, 0.05, 1.2, "rgba(0,0,0,0.4)");   // encimera y armarios altos
+    box(7.0, G - 1.1, 2.6, 0.14, wood); box(7.3, G - 0.96, 0.12, 0.96, wood2); box(9.2, G - 0.96, 0.12, 0.96, wood2); }   // mesa
+  else { box(2.6, G - 3.3, 1.3, 3.3, wood2); box(3.7, G - 1.7, 0.1, 0.1, p.light); box(10.6, G - 3.3, 1.3, 3.3, wood2); box(11.7, G - 1.7, 0.1, 0.1, p.light); box(7.3, G - 3.0, 0.08, 3.0, "#5a4636"); box(7.0, G - 3.0, 0.7, 0.08, "#5a4636"); }   // dos puertas y un perchero
+}
+
 /** Dibuja el escenario con paralaje: las capas lejanas se desplazan menos que la cámara. */
 function drawBase(c: Ctx, set: SetSpec, v: View, t: number, images: Record<string, unknown>) {
   const p = PAL[set.timeOfDay]; const par = (k: number) => (v.cx - WORLD_W / 2) * k;
@@ -72,7 +86,7 @@ function drawBase(c: Ctx, set: SetSpec, v: View, t: number, images: Record<strin
       ground(c, p, v, "#3a2f33"); c.strokeStyle = "rgba(0,0,0,0.25)"; c.lineWidth = 0.03; for (let x = v.l - 1; x < v.r + 1; x += 1.3) { c.beginPath(); c.moveTo(x, GROUND_Y); c.lineTo(x * 1.6 - 5, v.b); c.stroke(); }
       const wx = 9.4 + par(0.2); c.fillStyle = "#e8e0c8"; c.fillRect(wx - 0.1, 1.5, 3.1, 3.1); c.fillStyle = p.s1; c.fillRect(wx, 1.6, 2.9, 2.9); c.fillStyle = "#e8e0c8"; c.fillRect(wx + 1.4, 1.6, 0.1, 2.9); c.fillRect(wx, 3, 2.9, 0.1);
       if (!bright(set.timeOfDay)) { c.fillStyle = "rgba(243,239,216,0.07)"; c.beginPath(); c.moveTo(wx, 4.5); c.lineTo(wx + 2.9, 4.5); c.lineTo(wx + 1.2, v.b); c.lineTo(wx - 2.6, v.b); c.closePath(); c.fill(); }
-      c.fillStyle = shade(p.near, -0.3); c.fillRect(1.2 + par(0.1), 2.3, 2.6, 0.12); c.fillRect(1.2 + par(0.1), 3.3, 2.6, 0.12); c.fillStyle = p.light; c.fillRect(1.5 + par(0.1), 1.95, 0.4, 0.35); c.fillStyle = shade(p.far, 0.1); c.fillRect(2.3 + par(0.1), 2.9, 0.5, 0.4); break; }
+      c.fillStyle = shade(p.near, -0.3); c.fillRect(1.2 + par(0.1), 2.3, 2.6, 0.12); c.fillRect(1.2 + par(0.1), 3.3, 2.6, 0.12); c.fillStyle = p.light; c.fillRect(1.5 + par(0.1), 1.95, 0.4, 0.35); c.fillStyle = shade(p.far, 0.1); c.fillRect(2.3 + par(0.1), 2.9, 0.5, 0.4); furniture(c, set.variant, p, par, win); break; }
     default: { ground(c, p, v, shade(p.ground, 0.0)); const r = rng(set.seed); for (let i = 0; i < 9; i++) { const x = r() * WORLD_W + par(0.3 * r()), y = 1 + r() * 5, s = 0.6 + r() * 1.6; const g = c.createRadialGradient(x, y, 0, x, y, s); g.addColorStop(0, `rgba(233,185,73,${0.1 + r() * 0.12})`); g.addColorStop(1, "rgba(233,185,73,0)"); c.fillStyle = g; c.fillRect(x - s, y - s, s * 2, s * 2); } }
   }
 }
@@ -88,6 +102,15 @@ export function drawProp(c: Ctx, pr: PropSpec, alpha: number, ink: string, accen
     case "star": c.beginPath(); for (let i = 0; i < 10; i++) { const a = (i * Math.PI) / 5 - Math.PI / 2, r = i % 2 ? 0.2 : 0.45; c.lineTo(Math.cos(a) * r, Math.sin(a) * r - 0.5); } c.closePath(); fl(accent); break;
     case "moon": c.beginPath(); c.arc(0, -0.5, 0.45, 0, Math.PI * 2); fl("#f3efd8"); break;
     case "tree": c.beginPath(); c.rect(-0.1, -0.7, 0.2, 0.7); fl("#5a4636"); c.beginPath(); c.arc(0, -1.1, 0.55, 0, Math.PI * 2); fl("#4d7a55"); break;
+    // objetos que el director deduce de la narración: formas muy simples y legibles (2D de trazo)
+    case "phone": c.beginPath(); c.roundRect(-0.15, -0.5, 0.3, 0.5, 0.05); fl("#2a2f3a"); c.beginPath(); c.rect(-0.11, -0.45, 0.22, 0.36); fl("#8fd3ff"); break;
+    case "backpack": c.beginPath(); c.roundRect(-0.35, -0.85, 0.7, 0.85, 0.12); fl(accent); c.beginPath(); c.roundRect(-0.25, -0.38, 0.5, 0.26, 0.05); fl(mix(accent, "#000000", 0.25)); c.beginPath(); c.arc(0, -0.85, 0.14, Math.PI, 0); c.stroke(); break;
+    case "notebook": c.beginPath(); c.rect(-0.25, -0.65, 0.5, 0.65); fl("#c8553d"); c.beginPath(); c.moveTo(-0.15, -0.65); c.lineTo(-0.15, 0); c.stroke(); c.beginPath(); c.rect(-0.05, -0.5, 0.22, 0.3); fl("#f3efd8"); break;
+    case "headphones": c.beginPath(); c.arc(0, -0.3, 0.3, Math.PI, 0); c.lineWidth = 0.07; c.stroke(); c.lineWidth = 0.05; for (const dx of [-0.3, 0.3]) { c.beginPath(); c.roundRect(dx - 0.09, -0.34, 0.18, 0.26, 0.06); fl(accent); } break;
+    case "suitcase": c.beginPath(); c.roundRect(-0.45, -0.65, 0.9, 0.65, 0.07); fl("#7a5a3c"); c.beginPath(); c.arc(0, -0.65, 0.16, Math.PI, 0); c.stroke(); c.beginPath(); c.rect(-0.04, -0.4, 0.08, 0.1); fl("#d8c9a3"); break;
+    case "ball": c.beginPath(); c.arc(0, -0.28, 0.28, 0, Math.PI * 2); fl("#e8e0c8"); c.beginPath(); c.arc(0, -0.28, 0.28, 0.3, 2.2); c.stroke(); break;
+    case "paper": c.beginPath(); c.rect(-0.22, -0.55, 0.44, 0.55); fl("#f3efd8"); for (const y of [-0.4, -0.28, -0.16]) { c.beginPath(); c.moveTo(-0.14, y); c.lineTo(0.14, y); c.stroke(); } break;
+    case "chair": c.beginPath(); c.rect(-0.28, -0.45, 0.56, 0.1); fl("#7a5a3c"); c.beginPath(); c.rect(-0.28, -0.95, 0.08, 0.5); fl("#7a5a3c"); for (const dx of [-0.24, 0.2]) { c.beginPath(); c.rect(dx, -0.35, 0.06, 0.35); fl("#5a4636"); } break;
     default: c.beginPath(); c.rect(-0.03, -1.9, 0.06, 1.9); fl("#2b2f3a"); c.beginPath(); c.arc(0, -1.9, 0.2, 0, Math.PI * 2); fl(accent);
   }
   c.restore();

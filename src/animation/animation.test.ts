@@ -71,4 +71,16 @@ describe("línea de tiempo (pura y determinista)", () => {
     expect(hash(w("patio", "afternoon"))).not.toBe(hash(w("street", "afternoon"))); expect(hash(w("patio", "afternoon"))).not.toBe(hash(w("patio", "dusk"))); expect(hash(w("patio", "afternoon"))).not.toBe(hash(w("patio", "day")));
     expect(hash(w("patio", "afternoon"))).toBe(hash(w("patio", "afternoon")));
   });
+  it("expresiones de acting y objetos se dibujan (cada una distinta de la neutra) y el stickman pesa más al arrancar que al frenar", () => {
+    const base = demoStage(), hash = (st: StageSpec, t = 1.7) => { const cv = createCanvas(320, 180); renderFrame(cv.getContext("2d") as never, st, t, { images: {} }, 320, 180); return createHash("sha256").update(cv.data()).digest("hex"); };
+    const withExpr = (v: string): StageSpec => ({ ...base, cues: [...base.cues.filter((c) => c.type !== "expression"), { t: 0, type: "expression", actor: base.actors[0].id, value: v as never }] }), neutral = hash(withExpr("neutral"));
+    for (const v of ["scared", "embarrassed", "confused", "curious", "relieved", "uncomfortable", "bored"]) expect(hash(withExpr(v)), v).not.toBe(neutral);
+    const withProp = (kind: string): StageSpec => ({ ...base, props: [{ id: "o", kind: kind as never, x: 8, y: 7.55, scale: 1, visibleAtStart: true }] });
+    for (const k of ["phone", "backpack", "notebook", "headphones", "suitcase", "ball", "paper", "chair"]) expect(hash(withProp(k)), k).not.toBe(hash({ ...base, props: [] }));
+    const held: StageSpec = { ...base, props: [{ id: "o", kind: "phone", x: 0, y: 0, scale: 1, visibleAtStart: true, holder: base.actors[0].id }] }; expect(hash(held)).not.toBe(hash({ ...base, props: [] }));   // en la mano
+  });
+  it("cada habitación se distingue por su mobiliario (dormitorio, salón, cocina, pasillo) y todas se dibujan", () => {
+    const base = demoStage(), hash = (variant?: string) => { const st: StageSpec = { ...base, set: { preset: "room", timeOfDay: "afternoon", seed: 3, ...(variant ? { variant: variant as never } : {}) } }; const cv = createCanvas(320, 180); renderFrame(cv.getContext("2d") as never, st, 1.7, { images: {} }, 320, 180); return createHash("sha256").update(cv.data()).digest("hex"); };
+    const hs = ["bedroom", "living", "kitchen", "hallway"].map(hash); expect(new Set([...hs, hash()]).size).toBe(5);   // cuatro variantes + la habitación genérica, todas distintas
+  });
 });

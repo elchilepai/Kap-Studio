@@ -1,4 +1,4 @@
-import type { ActionPose, ActorState, Appearance, Expression, Gesture, Viseme, Ctx } from "./types.ts";
+import type { ActionExpression, ActionPose, ActorState, Appearance, Gesture, Viseme, Ctx } from "./types.ts";
 import { clamp, lerp, shade } from "./util.ts";
 import { drawLayered } from "./rig.ts";
 export type { Ctx };
@@ -7,7 +7,7 @@ export type HandShape = "relaxed" | "open" | "fist" | "point";
 export type Pose = {
   bob: number; lean: number; headTilt: number; headDip: number; lookX: number;
   armF: [number, number]; armB: [number, number]; handF: HandShape; handB: HandShape; legF: number; legB: number;
-  shrug: number; blink: number; mouth: number; viseme: Viseme; expression: Expression;
+  shrug: number; blink: number; mouth: number; viseme: Viseme; expression: ActionExpression;
 };
 
 /**
@@ -60,10 +60,10 @@ export function poseFor(s: ActorState, t: number, seed: number): Pose {
     p.armF = mix(p.armF, tgt.armF); p.armB = mix(p.armB, tgt.armB); p.headTilt += (tgt.headTilt ?? 0) * k; p.headDip += (tgt.headDip ?? 0) * k; p.lookX = (tgt.lookX ?? 0) * k; p.shrug = (tgt.shrug ?? 0) * k; if (k > 0.5) { p.handF = tgt.handF ?? p.handF; p.handB = tgt.handB ?? p.handB; }
     p.lean += (tgt.lean ?? 0) * k; p.bob += (tgt.bob ?? 0) * k; p.legF += (tgt.legF ?? 0) * k; p.legB += (tgt.legB ?? 0) * k; }
   if (s.moving) {
-    const k = s.moving === 2 ? 1.5 : 1, ph = s.walkPhase * Math.PI * 2 * (s.moving === 2 ? 0.8 : 1);
-    p.legF = Math.sin(ph) * 0.55 * k; p.legB = -Math.sin(ph) * 0.55 * k;
-    p.armF = [-Math.sin(ph) * 0.5 * k, 0.25 + 0.2 * k]; p.armB = [Math.sin(ph) * 0.5 * k, 0.2 + 0.2 * k];
-    p.bob = Math.abs(Math.sin(ph)) * 0.014 * k; p.lean = 0.06 * k; if (s.moving === 2) { p.handF = "fist"; p.handB = "fist"; }
+    const k = s.moving === 2 ? 1.5 : 1, ph = s.walkPhase * Math.PI * 2 * (s.moving === 2 ? 0.8 : 1), w = 0.35 + 0.65 * s.speed;   // el paso y el braceo crecen con la velocidad: peso al arrancar y al frenar
+    p.legF = Math.sin(ph) * 0.55 * k * w; p.legB = -Math.sin(ph) * 0.55 * k * w;
+    p.armF = [-Math.sin(ph) * 0.5 * k * w, 0.25 + 0.2 * k]; p.armB = [Math.sin(ph) * 0.5 * k * w, 0.2 + 0.2 * k];
+    p.bob = Math.abs(Math.sin(ph)) * 0.014 * k * w; p.lean = (0.025 + 0.07 * s.speed) * k; if (s.moving === 2) { p.handF = "fist"; p.handB = "fist"; }
   }
   if (s.speaking) { p.mouth = s.mouth; p.viseme = s.viseme; p.headTilt += Math.sin(t * 5.3) * 0.02; p.headDip = Math.max(p.headDip, Math.max(0, s.mouth - 0.3) * 0.006);
     if (!s.moving && s.gesture === "none" && s.pose === "idle") { p.armF = [0.25 + Math.sin(t * 3.1) * 0.2, 0.9 + Math.sin(t * 4.3) * 0.25]; p.handF = "open"; } }
@@ -91,7 +91,7 @@ function hand(c: Ctx, x: number, y: number, ang: number, shape: HandShape, w: nu
   c.restore();
 }
 
-function mouth(c: Ctx, v: Viseme, open: number, e: Expression, rH: number, mx: number, my: number, ink: string, lw: number) {
+function mouth(c: Ctx, v: Viseme, open: number, e: ActionExpression, rH: number, mx: number, my: number, ink: string, lw: number) {
   const o = clamp(open, 0, 1);
   const ell = (rx: number, ry: number, fill = "#5a1f2b") => { c.beginPath(); c.ellipse(mx, my, rx, ry, 0, 0, Math.PI * 2); fs(c, fill, ink, lw * 0.8); };
   const tongue = (dy: number) => { c.beginPath(); c.ellipse(mx, my + dy, rH * 0.14, rH * 0.07, 0, 0, Math.PI); c.fillStyle = "#c45a6a"; c.fill(); };
@@ -117,6 +117,12 @@ function mouth(c: Ctx, v: Viseme, open: number, e: Expression, rH: number, mx: n
   c.stroke();
 }
 
+/** Parámetros de la cara stickman por expresión de ACTING (ojos, cejas, boca): sencillas pero legibles. Las expresiones de siempre conservan su aspecto. */
+const STICK_FACE: Partial<Record<ActionExpression, { eye?: number; down?: number; tilt?: number; tiltL?: number; tiltR?: number; raise?: number; raiseR?: number; mouth?: "o" | "wave" | "zig" | "smile" | "flat"; blush?: boolean; closed?: boolean; lid?: boolean }>> = {
+  scared: { eye: 0.22, tilt: -0.5, raise: 0.22, mouth: "o" }, embarrassed: { eye: 0.12, down: 0.14, tilt: -0.25, mouth: "wave", blush: true },
+  confused: { tiltL: 0.35, tiltR: -0.1, raiseR: 0.2, mouth: "wave" }, curious: { eye: 0.16, raiseR: 0.22, tiltR: -0.2, mouth: "smile" },
+  relieved: { closed: true, tilt: -0.15, mouth: "smile" }, uncomfortable: { tilt: -0.2, down: 0.05, mouth: "zig" }, bored: { lid: true, eye: 0.12, mouth: "flat" },
+};
 const BODY_W = { slim: 0.86, regular: 1, broad: 1.2 } as const;
 
 /** Luminancia aproximada (0..1) de un color #rrggbb: el trazo del stickman se aclara si es demasiado oscuro para verse sobre el fondo. */
@@ -149,13 +155,24 @@ function drawStickman(c: Ctx, a: Appearance, pose: Pose, o: { ink: string; line:
   const hy = shY - rH * 1.12 + pose.headDip * hh; c.save(); c.translate(0, shY); c.rotate(pose.headTilt); c.translate(0, -shY);
   c.beginPath(); c.arc(0, hy, rH, 0, Math.PI * 2); fs(c, skin, ink, lw * 1.3);
   if (a.hairStyle === "cap" || a.accessory === "hat") { const hc = a.hairStyle === "cap" ? accent : shade(accent, -0.1); c.beginPath(); c.arc(0, hy - rH * 0.1, rH * 1.04, Math.PI * 1.02, Math.PI * 1.98); c.closePath(); fs(c, hc, ink, lw); c.beginPath(); c.ellipse(rH * 0.85, hy - rH * 0.12, rH * 0.62, rH * 0.13, 0, 0, Math.PI * 2); fs(c, shade(hc, -0.18), ink, lw); }
-  const e = pose.expression, ey = hy + rH * 0.02, look = pose.lookX * rH * 0.12 + rH * 0.14, bl = 1 - pose.blink * 0.9;
-  for (const sx of [-1, 1]) { const x = sx * rH * 0.42 + rH * 0.12;
-    if ((e === "happy" && !pose.blink) || bl < 0.2) { c.strokeStyle = ink; c.lineWidth = lw * 1.6; c.lineCap = "round"; c.beginPath(); c.arc(x, ey + rH * 0.04, rH * 0.17, Math.PI * 1.12, Math.PI * 1.88); c.stroke(); }
-    else { c.beginPath(); c.arc(x + look * 0.6, ey, rH * (e === "surprised" ? 0.2 : 0.14) * (0.5 + bl * 0.5), 0, Math.PI * 2); c.fillStyle = ink; c.fill(); }
-    const tilt = (e === "angry" ? 0.45 : e === "sad" || e === "worried" ? -0.4 : 0) * -sx;
-    if (tilt) { c.save(); c.translate(x, ey - rH * 0.36); c.rotate(tilt); c.strokeStyle = ink; c.lineWidth = lw * 1.8; c.lineCap = "round"; c.beginPath(); c.moveTo(-rH * 0.2, 0); c.lineTo(rH * 0.2, 0); c.stroke(); c.restore(); } }
-  mouth(c, pose.viseme, pose.mouth, e, rH * 1.25, rH * 0.12, hy + rH * 0.52, ink, lw);
+  const e = pose.expression, ey = hy + rH * 0.02, look = pose.lookX * rH * 0.12 + rH * 0.14, bl = 1 - pose.blink * 0.9, F = STICK_FACE[e] ?? {};
+  for (const sx of [-1, 1]) { const x = sx * rH * 0.42 + rH * 0.12, er = rH * (F.eye ?? (e === "surprised" ? 0.2 : 0.14)) * (0.5 + bl * 0.5);
+    if (((e === "happy" || F.closed) && !pose.blink) || bl < 0.2) { c.strokeStyle = ink; c.lineWidth = lw * 1.6; c.lineCap = "round"; c.beginPath(); c.arc(x, ey + rH * 0.04, rH * 0.17, Math.PI * 1.12, Math.PI * 1.88); c.stroke(); }
+    else { c.beginPath(); c.arc(x + look * 0.6, ey + (F.down ?? 0) * rH, er, 0, Math.PI * 2); c.fillStyle = ink; c.fill();
+      if (F.lid) { c.strokeStyle = ink; c.lineWidth = lw * 1.8; c.lineCap = "round"; c.beginPath(); c.moveTo(x - er * 1.6, ey - er * 0.2); c.lineTo(x + er * 1.6, ey - er * 0.2); c.stroke(); } }
+    const base = e === "angry" ? 0.45 : e === "sad" || e === "worried" ? -0.4 : 0, tilt = ((sx < 0 ? F.tiltL : F.tiltR) ?? F.tilt ?? base) * -sx, raise = (F.raise ?? 0) + (sx > 0 ? F.raiseR ?? 0 : 0);
+    if (tilt || raise) { c.save(); c.translate(x, ey - rH * (0.36 + raise)); c.rotate(tilt); c.strokeStyle = ink; c.lineWidth = lw * 1.8; c.lineCap = "round"; c.beginPath(); c.moveTo(-rH * 0.2, 0); c.lineTo(rH * 0.2, 0); c.stroke(); c.restore(); }
+    if (F.blush) { c.fillStyle = "rgba(232,131,107,0.55)"; c.beginPath(); c.arc(x + sx * rH * 0.1, ey + rH * 0.42, rH * 0.13, 0, Math.PI * 2); c.fill(); } }
+  const mx = rH * 0.12, my = hy + rH * 0.55, speaking = pose.viseme !== "rest" || pose.mouth > 0.12;
+  if (F.mouth && !speaking) {   // boca de las expresiones de acting (cuando habla manda el visema)
+    c.strokeStyle = ink; c.lineWidth = lw * 1.5; c.lineCap = "round"; c.lineJoin = "round"; c.beginPath();
+    if (F.mouth === "o") { c.ellipse(mx, my, rH * 0.12, rH * 0.17, 0, 0, Math.PI * 2); c.fillStyle = "#5a1f2b"; c.fill(); }
+    else if (F.mouth === "wave") { c.moveTo(mx - rH * 0.3, my); c.bezierCurveTo(mx - rH * 0.15, my - rH * 0.12, mx - rH * 0.05, my + rH * 0.12, mx + rH * 0.1, my); c.bezierCurveTo(mx + rH * 0.2, my - rH * 0.1, mx + rH * 0.28, my + rH * 0.08, mx + rH * 0.32, my); }
+    else if (F.mouth === "zig") { for (let k = 0; k <= 4; k++) { const px = mx - rH * 0.3 + k * rH * 0.15, py = my + (k % 2 ? rH * 0.07 : -rH * 0.07); if (k) c.lineTo(px, py); else c.moveTo(px, py); } }
+    else if (F.mouth === "smile") c.arc(mx, my - rH * 0.12, rH * 0.2, Math.PI * 0.15, Math.PI * 0.85);
+    else { c.moveTo(mx - rH * 0.22, my); c.lineTo(mx + rH * 0.22, my); }
+    c.stroke();
+  } else mouth(c, pose.viseme, pose.mouth, e, rH * 1.25, mx, my, ink, lw);
   c.restore(); c.restore();
 }
 

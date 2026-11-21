@@ -2,7 +2,8 @@ import type { Scene } from "@/domain/types";
 import { parseDirection, beatToDirection, type Beat } from "@/animation/beats";
 import type { ScreenplayIR, IRScene } from "@/domain/screenplay";
 import type { ScriptInterpreter } from "@/ports/studio";
-import { estimateSeconds, norm, tokens, uniq, wordCount } from "./text";
+import { norm, tokens, uniq, wordCount } from "./text";
+import { sceneSeconds } from "./timeline";
 import { parseScript, splitLong, type ParsedScene } from "./script";
 
 /** Texto del autor (formato documentado) → IR. Es el ÚNICO sitio que conoce la sintaxis del guion. */
@@ -41,7 +42,7 @@ export function irToScenes(ir: ScreenplayIR, chars: { id: string; name: string }
       visualHint: p.hints.image ?? "", mood: p.mood,
       tags: uniq([...tokens(p.location), ...tokens(p.hints.image ?? ""), ...tokens(p.mood), ...chars.filter((c) => characterIds.includes(c.id)).flatMap((c) => tokens(c.name))]),
       transition: (p.hints.transition as Scene["transition"]) ?? "fade", motion: "kenburns" as const,
-      durationSec: p.hints.durationSec ?? Math.round(estimateSeconds(words) * 10) / 10, durationSource: p.hints.durationSec ? ("manual" as const) : ("estimated" as const),
+      durationSec: p.hints.durationSec ?? Math.round(Math.min(40, Math.max(3, sceneSeconds(p.lines) + 1)) * 10) / 10, durationSource: p.hints.durationSec ? ("manual" as const) : ("estimated" as const),
       directions: p.source ?? p.beats.map(beatToDirection), memory: p.memory ?? [], locked: false,
     };
   });

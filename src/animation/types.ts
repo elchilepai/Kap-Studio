@@ -9,6 +9,8 @@ export type { PoseName };
 /** Poses de ACCIÓN que añade el director a partir de la narración (internas de la animación: no forman parte del vocabulario del guion ni de la IR). */
 export type ActionPose = PoseName | "crouch" | "reach" | "throw" | "recoil";
 export type Expression = "neutral" | "happy" | "sad" | "angry" | "surprised" | "worried" | "thinking";
+/** Expresiones de ACTING que añade el director a partir de la narración (internas de la animación: no forman parte del vocabulario del guion ni de la IR). */
+export type ActionExpression = Expression | "scared" | "embarrassed" | "confused" | "curious" | "relieved" | "uncomfortable" | "bored";
 export type Gesture = "none" | "wave" | "point" | "shrug" | "nod" | "shake" | "think" | "raise";
 export type Ease = "linear" | "in" | "out" | "inOut";
 export type Side = "left" | "right";
@@ -52,7 +54,7 @@ export type Cue =
   | { t: number; type: "move"; actor: string; x: number; dur: number; run?: boolean }
   | { t: number; type: "face"; actor: string; dir: Side }
   | { t: number; type: "pose"; actor: string; value: ActionPose; dur?: number }
-  | { t: number; type: "expression"; actor: string; value: Expression }
+  | { t: number; type: "expression"; actor: string; value: ActionExpression }
   | { t: number; type: "gesture"; actor: string; value: Gesture; dur: number }
   | { t: number; type: "speak"; actor: string; dur: number; envelope: number[]; visemes?: Viseme[] }
   | { t: number; type: "camera"; x?: number; y?: number; zoom?: number; rot?: number; focus?: string; lead?: number; dur: number; ease?: Ease }
@@ -62,7 +64,10 @@ export type Cue =
 export type EffectKind = "rain" | "snow" | "fog" | "flash" | "darken" | "dust";
 
 export type PropKind = "lantern" | "box" | "door" | "sign" | "star" | "moon" | "tree" | "lamp";
-export type PropSpec = { id: string; kind: PropKind; x: number; y: number; scale: number; visibleAtStart: boolean };
+/** Objetos que el director deduce de la narración (internos de la animación; la IR no cambia): teléfono, mochila, cuaderno, auriculares, maleta, pelota, papel, silla. */
+export type ObjectKind = "phone" | "backpack" | "notebook" | "headphones" | "suitcase" | "ball" | "paper" | "chair";
+/** `holder`: si existe, el objeto va en la mano de ese personaje (lo coge, lo sostiene) en vez de estar en el suelo. */
+export type PropSpec = { id: string; kind: PropKind | ObjectKind; x: number; y: number; scale: number; visibleAtStart: boolean; holder?: string };
 
 /** Capa de fondo con profundidad. depth: 0 = se mueve con el mundo; 0,8 = lejana (se desplaza poco); negativo = primer plano (se desplaza MÁS que la cámara). */
 export type SetLayer = { image: string; depth: number; y?: number; height?: number; tile?: boolean; alpha?: number };
@@ -71,7 +76,9 @@ export type ElementKind = PropKind | "bench" | "pillar" | "bush" | "plant" | "cr
 export type SetElement = { id: string; kind: ElementKind; x: number; y?: number; scale: number; depth: number; flip?: boolean };
 export type SetPreset = "room" | "street" | "city" | "forest" | "rooftop" | "patio" | "abstract" | "image";
 export type TimeOfDay = "day" | "afternoon" | "dusk" | "night";
-export type SetSpec = { preset: SetPreset; timeOfDay: TimeOfDay; seed: number; imageId?: string; accent?: string; layers?: SetLayer[]; elements?: SetElement[]; foreground?: SetElement[] };
+/** Variante de una habitación (mobiliario que dice DÓNDE estamos): dormitorio, salón, cocina o pasillo. Se deduce del nombre del lugar; no se guarda. */
+export type RoomVariant = "bedroom" | "living" | "kitchen" | "hallway";
+export type SetSpec = { preset: SetPreset; timeOfDay: TimeOfDay; seed: number; variant?: RoomVariant; imageId?: string; accent?: string; layers?: SetLayer[]; elements?: SetElement[]; foreground?: SetElement[] };
 
 export type ActorSpec = { id: string; name: string; appearance: Appearance; slot: number; facing: 1 | -1; presentAtStart: boolean; /** 0 = delante (por defecto), 1 = fila trasera (más arriba y algo menor) */ row?: 0 | 1 };
 export type Grade = "none" | "dusk" | "night" | "warm" | "cold" | "dark";
@@ -92,7 +99,7 @@ export const ANIM_VERSION = 2; // súbelo si cambia el aspecto del render: inval
 
 export type ActorState = {
   id: string; x: number; y: number; facing: 1 | -1; visible: boolean; alpha: number;
-  moving: number; walkPhase: number; expression: Expression; gesture: Gesture; gestureP: number; mouth: number; viseme: Viseme; speaking: boolean; pose: ActionPose; poseP: number;
+  moving: number; /** 0..1: velocidad relativa del tramo (arranca despacio, frena al llegar) */ speed: number; walkPhase: number; expression: ActionExpression; gesture: Gesture; gestureP: number; mouth: number; viseme: Viseme; speaking: boolean; pose: ActionPose; poseP: number;
 };
 export type CameraState = { x: number; y: number; zoom: number; rot: number };
 export type FrameState = {

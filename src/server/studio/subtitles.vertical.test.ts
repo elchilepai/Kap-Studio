@@ -9,7 +9,7 @@ describe("subtítulos en vertical", () => {
     expect(splitBalanced("Hola mundo", 44)).toEqual(["Hola mundo"]);
   });
   it("una frase larga ya no desborda la pantalla vertical: cada línea ≤ ~25 caracteres", () => {
-    const cues = buildSceneCues([{ text: LONG }], 10, { maxChars: 22, splitLong: true });
+    const cues = buildSceneCues([{ speaker: "KAP", text: LONG }], 10, { maxChars: 22, splitLong: true });
     expect(cues.length).toBeGreaterThan(1);
     for (const c of cues) for (const l of wrap2(c.text, 22)) expect(l.length).toBeLessThanOrEqual(22 * 1.15 + 1);
     expect(cues.map((c) => c.text).join(" ")).toBe(LONG);                                   // no se pierde texto
@@ -17,11 +17,11 @@ describe("subtítulos en vertical", () => {
     expect(cues.at(-1)!.end).toBeLessThanOrEqual(10);
   });
   it("sin `splitLong` (16:9) el comportamiento es el de siempre", () => {
-    expect(buildSceneCues([{ text: LONG }], 10, { maxChars: 44 })).toHaveLength(buildSceneCues([{ text: LONG }], 10, { maxChars: 44, splitLong: false }).length);
-    expect(buildSceneCues([{ text: LONG }], 10, { maxChars: 44 })).toHaveLength(1);
+    expect(buildSceneCues([{ speaker: "KAP", text: LONG }], 10, { maxChars: 44 })).toHaveLength(buildSceneCues([{ speaker: "KAP", text: LONG }], 10, { maxChars: 44, splitLong: false }).length);
+    expect(buildSceneCues([{ speaker: "KAP", text: LONG }], 10, { maxChars: 44 })).toHaveLength(1);
   });
   it("el ASS vertical deja libre la franja inferior (margen ≥ 15 %) y usa tamaño relativo al ancho", () => {
-    const ass = toASS(buildSceneCues([{ text: "Hola" }], 4, { maxChars: 22 }), { width: 1080, height: 1920, style: DEFAULT_SUB_STYLE });
+    const ass = toASS(buildSceneCues([{ speaker: "KAP", text: "Hola" }], 4, { maxChars: 22 }), { width: 1080, height: 1920, style: DEFAULT_SUB_STYLE });
     const m = /Style: KAP,Inter,(\d+),.*?,2,(\d+),(\d+),(\d+),1/.exec(ass)!; expect(Number(m[1])).toBe(63); expect(Number(m[4])).toBeGreaterThanOrEqual(1920 * 0.15);
   });
 });

@@ -132,7 +132,7 @@ export async function produce(job: RenderJob, ctx: ExecContext, d: ProduceDeps):
   const [bibleChars, bibleKnownPlaces] = animation === "2d" ? await Promise.all([st.characters.list(), st.places.list()]) : [[], []];
   const prodNow = (await st.productions.get(prod.id)) ?? prod;
   const cuesAll: { cue: Cue; at: number }[] = [];
-  const cuesOf = scenes.map((s, i) => (style.enabled ? buildSceneCues(s.lines, durs[i], { maxChars: vertical ? 22 : 44, lead: LEAD, tail: TAIL, splitLong: vertical }) : []));
+  const cuesOf = scenes.map((s, i) => (style.enabled ? buildSceneCues(s.lines, durs[i], { items: audios[i]?.items, maxChars: vertical ? 22 : 44, lead: LEAD, tail: TAIL, splitLong: vertical }) : []));
   cuesOf.forEach((cs, i) => cs.forEach((c) => cuesAll.push({ cue: c, at: starts[i] })));
   const workers = Math.max(1, Math.min(d.clipWorkers ?? 1, scenes.length));
   // con varios clips a la vez cada FFmpeg recibe su parte de los núcleos (no se satura la CPU ni se multiplica la memoria)
@@ -149,7 +149,7 @@ export async function produce(job: RenderJob, ctx: ExecContext, d: ProduceDeps):
     let r: { file: string; cached: boolean };
     if (animation === "2d") {
       const env = audios[i] ? await audioEnvelope(audios[i]!.file, 30, ctx.signal).catch(() => undefined) : undefined;
-      const built = await buildSceneStage(s, { durationSec: D, tail: MAX_OVERLAP, width, height, envelope: env, index: i, subtitles: style }, {
+      const built = await buildSceneStage(s, { durationSec: D, tail: MAX_OVERLAP, width, height, envelope: env, index: i, subtitles: style, items: audios[i]?.items }, {
         production: prodNow, characters: bibleChars, places: bibleKnownPlaces, style: styleBible,
         assetInfo: async (id) => { const f = await assetFile(id); return f ? { path: f.f, sig: `${f.a.id}:${f.a.size}:${f.a.createdAt}`, kind: f.a.kind } : undefined; },
       });

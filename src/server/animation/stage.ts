@@ -2,7 +2,8 @@ import type { Asset, Character, Place, Production, Scene } from "@/domain/types"
 import type { StyleBible } from "@/domain/animation";
 import type { StageSpec, StyleParams } from "@/animation/types";
 import { direct } from "@/animation/director";
-import { buildSceneCues, DEFAULT_SUB_STYLE, type SubStyle } from "@/server/studio/subtitles";
+import { DEFAULT_SUB_STYLE, timedLines, type SubStyle } from "@/server/studio/subtitles";
+import type { TItem } from "@/server/studio/timeline";
 import { subtitleMetrics } from "@/animation/framing";
 import { autoDesign, resolveAppearance } from "./design";
 import { norm } from "@/server/studio/text";
@@ -22,7 +23,7 @@ export type StageCtx = {
  * Construye el escenario 2D de UNA escena a partir de su descripción estructurada y de la biblia visual
  * (diseño de personajes, prenda del reparto, escenario del lugar, estilo). Misma función para vista previa y exportación.
  */
-export async function buildSceneStage(scene: Scene, o: { durationSec: number; tail: number; width: number; height: number; fps?: number; envelope?: number[]; index: number; subtitles?: SubStyle }, ctx: StageCtx) {
+export async function buildSceneStage(scene: Scene, o: { durationSec: number; tail: number; width: number; height: number; fps?: number; envelope?: number[]; index: number; subtitles?: SubStyle; /** Línea de tiempo real de la locución (diálogo + silencios de las acciones). */ items?: TItem[] }, ctx: StageCtx) {
   const fps = o.fps ?? 30;
   // zona de subtítulos (la misma fórmula que el ASS): la cámara deja los pies por encima. Sin subtítulos no hay zona que respetar.
   const sub = o.subtitles ?? DEFAULT_SUB_STYLE; const m = subtitleMetrics(o.width, o.height, sub);
@@ -35,8 +36,8 @@ export async function buildSceneStage(scene: Scene, o: { durationSec: number; ta
   const place = ctx.places.find((p) => scene.location && norm(p.name) === norm(scene.location));
   const bg = await ctx.assetInfo(scene.visualAssetId && scene.visualSource !== "card" ? scene.visualAssetId : place?.set?.imageAssetId ?? place?.visualAssetId);
   const useImage = bg && bg.kind === "image" ? bg : undefined;
-  const timed = buildSceneCues(scene.lines, o.durationSec, { maxChars: o.height > o.width ? 22 : 44, lead: LEAD, tail: TAIL });
-  const envelopes = o.envelope ? timed.map((c) => o.envelope!.slice(Math.max(0, Math.floor((c.start - LEAD) * fps)), Math.max(1, Math.ceil((c.end - LEAD) * fps)))) : undefined;
+  const timed = timedLines(scene.lines, o.durationSec, { maxChars: o.height > o.width ? 22 : 44, lead: LEAD, tail: TAIL, items: o.items });
+  const envelopes = o.envelope ? timed.map((c) => (c.kind === "dialogue" ? o.envelope!.slice(Math.max(0, Math.floor((c.start - LEAD) * fps)), Math.max(1, Math.ceil((c.end - LEAD) * fps))) : [])) : undefined;
   const stage: StageSpec = direct({
     duration: o.durationSec, tail: o.tail, aspect: o.width / o.height, index: o.index, fps, width: o.width, height: o.height,
     location: scene.location || scene.title, mood: scene.mood, tags: scene.tags, narration: scene.narration, characters: actors,

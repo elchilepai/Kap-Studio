@@ -104,12 +104,12 @@ describe("asignación de visuales", () => {
 
 describe("subtítulos", () => {
   it("cues: dentro de la escena, ordenados, proporcionales y sin solaparse", () => {
-    const cues = buildSceneCues([{ text: "Una frase corta. Otra frase bastante más larga que la primera para ver proporción." }, { speaker: "KAP", text: "Vamos." }], 10, { maxChars: 42 });
+    const cues = buildSceneCues([{ speaker: "MIRA", text: "Una frase corta. Otra frase bastante más larga que la primera para ver proporción." }, { speaker: "KAP", text: "Vamos." }], 10, { maxChars: 42 });
     expect(cues.length).toBeGreaterThanOrEqual(2);
     for (let i = 0; i < cues.length; i++) { expect(cues[i].start).toBeGreaterThanOrEqual(0); expect(cues[i].end).toBeLessThanOrEqual(10.001); expect(cues[i].end).toBeGreaterThan(cues[i].start); if (i) expect(cues[i].start).toBeGreaterThanOrEqual(cues[i - 1].end - 0.001); }
   });
   it("escenas muy cortas con mucho texto se reescalan sin desbordar", () => {
-    const cues = buildSceneCues([{ text: Array.from({ length: 12 }, (_, i) => `Frase ${i}.`).join(" ") }], 3, { maxChars: 10 });
+    const cues = buildSceneCues([{ speaker: "KAP", text: Array.from({ length: 12 }, (_, i) => `Frase ${i}.`).join(" ") }], 3, { maxChars: 10 });
     expect(Math.max(...cues.map((c) => c.end))).toBeLessThanOrEqual(3.001);
   });
   it("wrap2 equilibra en 2 líneas", () => { expect(wrap2("uno dos tres cuatro cinco seis", 18)).toEqual(["uno dos tres", "cuatro cinco seis"]); });
