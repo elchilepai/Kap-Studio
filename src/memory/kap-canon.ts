@@ -56,6 +56,12 @@ export const KAP_FACTS = [
   "También se ríen de sus sueños: KAP dice que algún día será millonario gracias a su música, pero los demás no creen en él y lo consideran un niño que vive de fantasías.",
   "A pesar de todo, KAP empieza a desarrollar una pasión y un talento especial por la música rap.",
   "Con el paso de los años, KAP supera las dificultades, desarrolla su carrera musical y finalmente llega a la cima como artista de rap.",
+  "La música, y en especial el rap, es el gran sueño de KAP.",
+  "2Pac es uno de los grandes referentes musicales de KAP y parte de su estética de niño está influenciada por él.",
+  "En el pasado de KAP, sus padres terminan separándose después de un conflicto familiar grave relacionado con las drogas.",
+  "En una etapa posterior de su vida (no en su infancia), KAP pasa un tiempo relacionado con una banda.",
+  "Con el tiempo KAP descubre que el mundo de robos y peleas de esa etapa no es lo que quiere para su vida.",
+  "Esa experiencia contribuye a formar su humor más oscuro y su personalidad posterior.",
 ];
 
 export const KAP_PROFILE: [string, string][] = [

@@ -152,4 +152,11 @@ describe("propuesta de la serie", () => {
   it("se propone registrar la versión de diseño visual usada (base de la evolución física)", () => {
     const e = full(["evento: x"], { characters: [{ name: "KAP", designVersion: 1 }] }); const ch = extractChanges(e, KAP()).changes.find((c) => c.change.kind === "character.appearance"); expect(ch?.change).toMatchObject({ name: "KAP", designVersion: 1 });
   });
+  it("canon: los hechos confirmados sobre la familia, 2Pac, la banda y su humor están registrados, y NO se añade lo no confirmado", () => {
+    const c = KAP(), t = c.facts.map((f) => f.text).join(" | ");
+    expect(t).toMatch(/gran sueño de KAP/); expect(t).toMatch(/2Pac.*referentes musicales.*estética de niño/); expect(t).toMatch(/padres terminan separándose.*conflicto familiar grave relacionado con las drogas/);
+    expect(t).toMatch(/etapa posterior de su vida \(no en su infancia\).*banda/); expect(t).toMatch(/robos y peleas.*no es lo que quiere/); expect(t).toMatch(/humor más oscuro y su personalidad posterior/);
+    expect(t).not.toMatch(/agred|violen|maltrat|golpe|pega|cárcel|prisión|pandilla|entren|gimnasio|físic/i);   // el entrenamiento es evolución futura y la agresión del piloto no se ha confirmado como canon
+    for (const f of KAP_FACTS) expect(Change.safeParse({ kind: "fact.add", text: f }).success, f).toBe(true);
+  });
 });
