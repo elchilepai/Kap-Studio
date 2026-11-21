@@ -20,6 +20,7 @@ import { pruneClipCache, renderSceneClip, type Visual } from "./clip";
 import { composeVideo, MAX_OVERLAP, sceneStarts, type ComposeMode } from "./compose";
 import { mapLimit } from "./pool";
 import { sceneAudio, type SceneAudio } from "./voice";
+import { SOUND_VOLUME, synthSound } from "./sfx";
 import { norm } from "./text";
 import { renderAnimatedClip } from "@/server/animation/clip2d";
 import { buildSceneStage } from "@/server/animation/stage";
@@ -131,7 +132,7 @@ export async function produce(job: RenderJob, ctx: ExecContext, d: ProduceDeps):
   const animation = prm.animation ?? (styleBible?.defaultMode === "animated2d" ? "2d" : "still");
   const [bibleChars, bibleKnownPlaces] = animation === "2d" ? await Promise.all([st.characters.list(), st.places.list()]) : [[], []];
   const prodNow = (await st.productions.get(prod.id)) ?? prod;
-  const cuesAll: { cue: Cue; at: number }[] = [];
+  const cuesAll: { cue: Cue; at: number }[] = [], soundsOf: import("@/animation/types").SoundCue[][] = scenes.map(() => []);
   const cuesOf = scenes.map((s, i) => (style.enabled ? buildSceneCues(s.lines, durs[i], { items: audios[i]?.items, maxChars: vertical ? 22 : 44, lead: LEAD, tail: TAIL, splitLong: vertical }) : []));
   cuesOf.forEach((cs, i) => cs.forEach((c) => cuesAll.push({ cue: c, at: starts[i] })));
   const workers = Math.max(1, Math.min(d.clipWorkers ?? 1, scenes.length));
@@ -153,6 +154,7 @@ export async function produce(job: RenderJob, ctx: ExecContext, d: ProduceDeps):
         production: prodNow, characters: bibleChars, places: bibleKnownPlaces, style: styleBible,
         assetInfo: async (id) => { const f = await assetFile(id); return f ? { path: f.f, sig: `${f.a.id}:${f.a.size}:${f.a.createdAt}`, kind: f.a.kind } : undefined; },
       });
+      soundsOf[i] = built.stage.sounds ?? [];   // sonido con función: lo propone el director a partir de la narración
       r = await renderAnimatedClip({ stage: built.stage, width, height, durationSec: D + MAX_OVERLAP, images: built.images, assText, fontsDir: path.dirname(resolveFont()!), threads: clipThreads },
         { cacheDir: d.cacheDir, tmpDir: path.join(ctx.tmpDir, `clip${i}`), signal: ctx.signal, onProgress: onP });
     } else {
@@ -170,6 +172,10 @@ export async function produce(job: RenderJob, ctx: ExecContext, d: ProduceDeps):
   const narration = audios.flatMap((a, i) => (a ? [{ file: a.file, start: starts[i] + LEAD }] : []));
   const sfx: { file: string; start: number; volume: number }[] = [];
   for (const [i, s] of scenes.entries()) { const f = await assetFile(s.sfxAssetId); if (f) sfx.push({ file: f.f, start: starts[i], volume: 0.8 }); }
+  for (const [i, list] of soundsOf.entries()) for (const x of list.slice(0, 12)) {   // una escena sin diálogo sigue teniendo vida: ambiente, pasos, puertas, golpes, llamadas
+    const left = durs[i] - x.t, dur = x.kind === "steps" || x.kind === "ambience" ? Math.min(x.dur ?? 2, left - 0.1) : undefined; if (left < 0.3 || (dur !== undefined && dur < 0.5)) continue;
+    try { sfx.push({ file: await synthSound(x.kind, dur, { cacheDir: d.cacheDir, signal: ctx.signal }), start: starts[i] + x.t, volume: SOUND_VOLUME(x.kind) }); } catch (e) { if (ctx.signal?.aborted) throw e; /* un sonido que no se pueda sintetizar no rompe el render */ }
+  }
   const mus = await assetFile(prm.musicAssetId ?? prod.musicAssetId);
   const out = path.join(ctx.tmpDir, "episode.mp4");
   step(4, 0.8, "Montando vídeo, transiciones y audio");

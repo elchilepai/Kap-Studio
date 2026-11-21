@@ -42,6 +42,8 @@ export const POSE_CATALOG: Record<ActionPose, Partial<Pose>> = {
   crouch: { lean: 0.5, bob: -0.04, armF: [0.9, 0.5], armB: [0.7, 0.5], handF: "open", handB: "open", legF: 0.35, legB: -0.2, headTilt: 0.1 },   // se agacha / recoge / planta
   reach: { lean: 0.22, armF: [1.6, 0.2], armB: [0.5, 0.3], handF: "open", legF: 0.15 },   // alcanza / agarra / abre / empuja
   throw: { lean: -0.12, armF: [2.6, 0.3], armB: [-0.5, 0.2], handF: "fist", legF: 0.2, legB: -0.15 },   // lanza
+  settle: { bob: -0.012, lean: -0.03, armF: [0.18, 0.25], armB: [-0.18, 0.2] },   // al llegar: pequeño asentamiento (rodillas que ceden un poco)
+  listen: { lean: -0.06, headTilt: 0.1, lookX: 0.5, headDip: -0.01, armF: [0.12, 0.2], armB: [-0.1, 0.15] },   // escucha: se queda quieto, la cabeza se levanta y gira
   recoil: { lean: -0.25, armF: [0.6, 0.9], armB: [-0.6, 0.9], handF: "open", handB: "open", legF: -0.2, legB: 0.2, headTilt: -0.08 },   // retrocede
 };
 /** Animaciones disponibles para un personaje paramétrico (un rig por capas declara las suyas). */

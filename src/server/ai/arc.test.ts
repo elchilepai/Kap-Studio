@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { LlmClient, LlmRequest } from "@/ports/studio";
-import { EpisodeArc, arcBeats, llmArcAuthor, sequenceToBeat } from "./arc";
+import { EpisodeArc, arcBeats, llmArcAuthor, mergeRepeatedBeats, sequenceToBeat } from "./arc";
 import { KAP_PERSONALITY } from "./prompts";
 import { validateIR } from "@/domain/screenplay";
 import { parsedToIR } from "@/server/studio/interpreter";
@@ -321,5 +321,19 @@ describe("secuencias: planificación ligera antes de las escenas", () => {
     expect(pilot.author.lastDraft!.scenes.map((x) => x.location)).toEqual(places); expect(pilot.out.stats!.gateIssues!["coste-ausente"]).toBeUndefined();   // en el piloto no se exige el coste de una decisión
     const normal = await run([a, ...a.sequences.map((_, i) => scene(i))], ctx({ number: 4 }), { previousEpisodes: [{ locations: ["Calle"], settings: [], hook: "x", ending: "y" }] } as never);
     expect(normal.llm.calls[0].prompt).not.toMatch(/HISTORIA DE ORIGEN/); expect(normal.llm.calls[1].prompt).not.toMatch(/PILOTO \(historia de origen\)/);
+  });
+});
+
+describe("menos escenas, mejores: el mismo momento no es otra escena", () => {
+  it("beats consecutivos que cuentan lo mismo (mismo lugar, mismos personajes, mismos acontecimientos) se fusionan; los distintos no", () => {
+    const b = (summary: string, loc = "Habitación de KAP", stage = "escalada") => sequenceToBeat({ purpose: "Aporta algo a la historia", stage, location: loc, time: "noche", characters: ["KAP", "Hermano de KAP"], beats: summary.split(" / "), change: `Cambia ${summary.slice(0, 12)} de forma visible`, } as never);
+    const same = mergeRepeatedBeats([b("KAP mira el teléfono / el hermano mira la pantalla", "Habitación de KAP", "inicio"), b("KAP mira el teléfono / el hermano mira la pantalla otra vez"), b("KAP guarda el teléfono / el hermano intenta quitárselo / KAP lo aparta")]);
+    expect(same.merged).toBe(1); expect(same.beats).toHaveLength(2); expect(same.beats[0].stage).toBe("inicio"); expect(same.beats[0].events).toContain("KAP mira el teléfono");
+    expect(mergeRepeatedBeats([b("KAP mira el teléfono / el hermano mira la pantalla"), b("KAP mira el teléfono / el hermano mira la pantalla", "Pasillo")]).merged).toBe(0);   // otro lugar: es otra escena
+  });
+  it("en la generación: un arco con dos beats repetidos produce una escena menos y lo avisa (no se alarga con relleno)", async () => {
+    const a = arc(); a.beats.splice(6, 0, { ...a.beats[5] });   // 9 beats, el 6.º y el 7.º son el mismo momento
+    const { author, out } = await run([a, ...a.beats.slice(0, 8).map((_, i) => scene(i))]);
+    expect(author.lastDraft!.scenes).toHaveLength(8); expect(out.warnings.some((w) => /fusionado 1 beat/.test(w))).toBe(true);
   });
 });

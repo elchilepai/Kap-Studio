@@ -11,17 +11,20 @@ import { closingProblem } from "./closing.ts";
 import { explainsTheme, isThoughtOnly, isValidation } from "./show.ts";
 import { checkRhyme, firstInterventionOf, type RhymeCheck } from "./rhyme.ts";
 import { causalProblem, explainsCause } from "./causal.ts";
+import { ACTION_MODEL, hasAction, planClauses } from "./action.ts";
 import { ADULT_VOICE, MOTIVATIONAL, content, jac, words } from "./review.ts";
 
-export type GateIssueKind = "repite-escena" | "repite-frase" | "sin-cambio" | "personaje-no-previsto" | "monologo-relleno" | "corta" | "voz-adulta" | "hermano-reactivo" | "menciona-memoria" | "cierre-reflexivo" | "rima-invalida" | "explica-emocion" | "validacion-moraleja" | "cierre-desconectado" | "coste-ausente" | "kap-no-actua" | "emocion-repetida" | "sin-antecedente" | "conversacion-estatica";
+export type GateIssueKind = "repite-escena" | "repite-frase" | "sin-cambio" | "personaje-no-previsto" | "monologo-relleno" | "corta" | "voz-adulta" | "hermano-reactivo" | "menciona-memoria" | "cierre-reflexivo" | "rima-invalida" | "explica-emocion" | "validacion-moraleja" | "cierre-desconectado" | "coste-ausente" | "kap-no-actua" | "emocion-repetida" | "sin-antecedente" | "conversacion-estatica" | "mismo-momento" | "accion-repetida" | "aire-muerto";
 export type GateScope = "scene" | "local" | "repair" | "info";
-export type GateIssue = { kind: GateIssueKind; blocking: boolean; scope: GateScope; text: string; /** Índices de las líneas a reescribir (ámbito local) o a quitar (reparación). */ lines?: number[] };
+export type GateIssue = { kind: GateIssueKind; blocking: boolean; scope: GateScope; text: string; /** Índices de las líneas a reescribir (ámbito local) o a quitar (reparación). */ lines?: number[]; /** Reparación en código: texto nuevo de una línea (índice → texto). */ edits?: Record<number, string> };
 export type GateLine = { speaker?: string; text: string };
 export type GateScene = { lines: GateLine[]; change: string };
 export type GateInput = {
   scene: GateScene;
   /** Escenas ya ACEPTADAS (texto, cambio declarado, líneas y, si se conocen, quién dijo cada una). */
-  previous: { text: string; change: string; lines: string[]; speakers?: string[]; /** Estado de KAP y acción declarados por esa escena. */ state?: string; does?: string }[];
+  previous: { text: string; change: string; lines: string[]; speakers?: string[]; /** Estado de KAP y acción declarados por esa escena. */ state?: string; does?: string; location?: string }[];
+  /** Lugar de esta escena (para comparar con la anterior: «mismo momento»). */
+  location?: string;
   /** Personajes que pueden hablar en esta escena (los del beat, el protagonista y los nuevos declarados). */
   speakers: string[];
   /** Personajes de la memoria que NO están en el reparto de este episodio (ni deben hablar ni, de entrada, ser mencionados). */
@@ -43,8 +46,8 @@ const sets = (s: string) => new Set(content(s));
 const text = (s: GateScene) => s.lines.map((l) => l.text).join(" ");
 const mentions = (t: string, name: string) => new RegExp(`(^|[^a-z0-9ñ])${norm(name).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}([^a-z0-9ñ]|$)`).test(norm(t));
 const REFLECT_START = /^\s*[¿¡]?\s*(?:y si|tal vez|quiz[aá]s?|a veces|alg[uú]n d[ií]a|nunca|siempre|todo|la vida|el mundo|por qu[eé] (?:yo|me|nadie))/i;
-const IS_BLOCKING: GateIssueKind[] = ["repite-escena", "repite-frase", "sin-cambio", "personaje-no-previsto"];
-const SCOPE: Record<GateIssueKind, GateScope> = { "repite-escena": "scene", "sin-cambio": "scene", "personaje-no-previsto": "scene", "repite-frase": "repair", "monologo-relleno": "repair", corta: "info", "voz-adulta": "local", "hermano-reactivo": "local", "menciona-memoria": "local", "cierre-reflexivo": "local", "rima-invalida": "local", "explica-emocion": "local", "validacion-moraleja": "local", "cierre-desconectado": "local", "coste-ausente": "local", "kap-no-actua": "local", "emocion-repetida": "local", "sin-antecedente": "local", "conversacion-estatica": "scene" };
+const IS_BLOCKING: GateIssueKind[] = ["repite-escena", "repite-frase", "sin-cambio", "personaje-no-previsto", "mismo-momento"];
+const SCOPE: Record<GateIssueKind, GateScope> = { "repite-escena": "scene", "sin-cambio": "scene", "personaje-no-previsto": "scene", "repite-frase": "repair", "monologo-relleno": "repair", corta: "info", "voz-adulta": "local", "hermano-reactivo": "local", "menciona-memoria": "local", "cierre-reflexivo": "local", "rima-invalida": "local", "explica-emocion": "local", "validacion-moraleja": "local", "cierre-desconectado": "local", "coste-ausente": "local", "kap-no-actua": "local", "emocion-repetida": "local", "sin-antecedente": "local", "conversacion-estatica": "scene", "mismo-momento": "scene", "accion-repetida": "repair", "aire-muerto": "local" };
 
 /** Última comprobación de la rima de una escena (se expone para el banco de pruebas y los avisos). */
 export function sceneRhyme(lines: GateLine[], rhyme: NonNullable<GateInput["rhyme"]>, who = "KAP"): { check: RhymeCheck; index: number[] } {
@@ -77,10 +80,30 @@ export function checkScene(inp: GateInput): GateIssue[] {
       const me = shape(sp(sc.lines), sc.lines.map((l) => l.text)), you = shape(last.speakers, last.lines);
       if (me.talk >= 4 && you.talk >= 4 && me.act <= 1 && you.act <= 1 && who(sp(sc.lines)) === who(last.speakers) && jac(mine, sets(last.text)) >= 0.2)
         add("conversacion-estatica", "Sigue la misma conversación que la escena anterior (mismos personajes, mismo tema, sin que ocurra nada): si la conversación continúa, que alguien entre o se vaya, haga algo, aparezca información nueva, cambie el lugar, alguien interrumpa o cambie de opinión, o el problema se complique; o fúndela con la anterior."); } }
+  // ACCIÓN REPETIDA (relleno): la misma acción narrada dos veces en la escena («se levanta y camina hacia la puerta… se levanta y camina hacia la puerta»); se arregla en código quitando la repetición.
+  { const sents = (x: string) => x.split(/(?<=[.!?…])\s+/).map((y) => y.trim()).filter(Boolean), seenS: Set<string>[] = [], edits: Record<number, string> = {}, drop: number[] = [];
+    sc.lines.forEach((l, i) => { if ((l.speaker ?? "").trim()) return; const keep: string[] = [];
+      for (const sn of sents(l.text)) { const st = sets(sn); if (st.size >= 3 && seenS.some((o) => jac(st, o) >= 0.7)) continue; seenS.push(st); keep.push(sn); }
+      if (!keep.length) drop.push(i); else if (keep.length !== sents(l.text).length) edits[i] = keep.join(" "); });
+    if (drop.length || Object.keys(edits).length) add("accion-repetida", "La misma acción se narra más de una vez en la escena (relleno): se quita la repetición.", drop); if (Object.keys(edits).length) out.at(-1)!.edits = edits; }
+  // AIRE MUERTO en el guion: una escena sin diálogo cuya narración solo DESCRIBE (sin nada que se haga) no tiene vida: ni acción, ni mirada, ni reacción.
+  { const idx = sc.lines.map((l, i) => (!(l.speaker ?? "").trim() ? i : -1)).filter((i) => i >= 0), hasTalk = sc.lines.some((l) => (l.speaker ?? "").trim());
+    if (!hasTalk && idx.length) { const steps = idx.flatMap((i) => planClauses(sc.lines[i].text)), desc = steps.filter((s) => s.descriptive).length;
+      if (steps.length >= 2 && desc / steps.length >= 0.6) add("aire-muerto", "La escena solo DESCRIBE (sin diálogo ni nada que se haga): es tiempo sin vida. Cuenta lo que se VE: qué hace alguien, qué mira, cómo reacciona, qué cambia (una acción, una mirada, un gesto, un sonido), no cómo es el lugar o la luz.", idx); } }
   // ¿qué ha cambiado? el cambio declarado debe existir, ser nuevo y apoyarse en contenido nuevo
   const ch = sc.change.trim(), allPrev = new Set(prev.flatMap((p) => [...sets(p.text)])), fresh = mine.size ? [...mine].filter((w) => !allPrev.has(w)).length / mine.size : 0;
   if (ch.length < 12 || prev.some((p) => p.change && jac(sets(ch), sets(p.change)) >= 0.6)) add("sin-cambio", "El cambio declarado es vacío o igual al de una escena anterior: ¿qué cambia al terminar esta escena (una acción, un dato nuevo, una reacción, una decisión, una consecuencia)?");
   else if (prev.length && mine.size >= 6 && fresh < 0.3) add("sin-cambio", "La escena apenas añade información nueva respecto a lo ya escrito.");
+  // MISMO MOMENTO: dos escenas seguidas no pueden ser esencialmente lo mismo (mismo lugar, mismos personajes, misma acción, sin nada nuevo). Sin acción,
+  // información, lugar, personaje, decisión, consecuencia, cambio emocional visible ni objeto nuevos, la escena se fusiona o se elimina (se regenera y, si sigue igual, se descarta).
+  { const last = prev.at(-1);
+    if (last && prev.length) { const spk = (a: string[]) => new Set(a.map(norm).filter(Boolean)), mineSp = spk(sc.lines.map((l) => l.speaker ?? "")), lastSp = spk(last.speakers ?? []), sameCast = mineSp.size === lastSp.size && [...mineSp].every((x) => lastSp.has(x));
+      const sameLoc = !inp.location || !last.location || norm(inp.location) === norm(last.location), nar = (ls: string[], sp: string[]) => ls.filter((_, i) => !(sp[i] ?? "").trim()).join(" ");
+      const verbsOf = (t: string) => new Set((norm(t).match(new RegExp(ACTION_MODEL.map(([r]) => r.source).join("|"), "g")) ?? []).map((v) => v.trim().split(/\s+/)[0].slice(0, 5))), objsOf = (t: string) => new Set(norm(t).match(/\b(?:telefono|movil|mochila|cuaderno|auriculares|maleta|pelota|papel|silla|puerta|ventana|llave)\b/g) ?? []);
+      const mineNar = nar(sc.lines.map((l) => l.text), sc.lines.map((l) => l.speaker ?? "")), lastNar = nar(last.lines, last.speakers ?? last.lines.map(() => ""));
+      const newVerb = [...verbsOf(mineNar)].some((v) => !verbsOf(lastNar).has(v) && !verbsOf(last.text).has(v)), newObj = [...objsOf(t)].some((o) => !objsOf(last.text).has(o)), newSpeaker = [...mineSp].some((x) => !lastSp.has(x)), newState = !!inp.kapState && !!last.state && norm(inp.kapState) !== norm(last.state);
+      if (sameLoc && (sameCast || (!mineSp.size && !lastSp.size)) && !newVerb && !newObj && !newSpeaker && !newState && fresh < 0.5)
+        add("mismo-momento", "Esta escena es esencialmente el mismo momento que la anterior (mismo lugar, mismos personajes, misma acción, sin nada nuevo). Necesita al menos una cosa nueva: una acción, una información, un lugar, un personaje, una decisión, una consecuencia, un cambio emocional visible o un objeto relevante; si no la hay, no es una escena distinta (se fusiona con la anterior)."); } }
   // MONÓLOGO DE RELLENO: varias intervenciones seguidas de KAP sin información, acción ni cambio nuevos (y sin acción narrada que lo justifique)
   const narrated = sc.lines.filter((l) => !(l.speaker ?? "").trim() && words(l.text).length >= 8).length;
   if (narrated < 2) { const seenWords = new Set(prev.flatMap((p) => [...sets(p.text)]));
@@ -125,10 +148,11 @@ export function checkScene(inp: GateInput): GateIssue[] {
 
 /** Reparación EN CÓDIGO (sin modelo): quita las frases repetidas de relleno y recorta el monólogo de relleno. Solo si la escena conserva ≥ 3 líneas y ≥ 2 voces/acciones. */
 export function repairLines(lines: GateLine[], issues: GateIssue[]): { lines: GateLine[]; repaired: GateIssueKind[] } {
-  const drop = new Set<number>(), kinds: GateIssueKind[] = [];
-  for (const i of issues.filter((x) => x.scope === "repair" && x.lines?.length)) { const before = drop.size; i.lines!.forEach((l) => drop.add(l)); if (drop.size > before) kinds.push(i.kind); }
-  const next = lines.filter((_, i) => !drop.has(i)), voices = new Set(next.map((l) => norm(l.speaker ?? "")));
-  if (!drop.size || next.length < 3 || voices.size < 2) return { lines, repaired: [] };
+  const drop = new Set<number>(), kinds: GateIssueKind[] = [], edits = new Map<number, string>();
+  for (const i of issues.filter((x) => x.scope === "repair")) { const before = drop.size; (i.lines ?? []).forEach((l) => drop.add(l)); for (const [k, t] of Object.entries(i.edits ?? {})) edits.set(Number(k), t); if (drop.size > before || i.edits) kinds.push(i.kind); }
+  const next = lines.map((l, i) => (edits.has(i) ? { ...l, text: edits.get(i)! } : l)).filter((_, i) => !drop.has(i)), voices = new Set(next.map((l) => norm(l.speaker ?? "")));
+  if (!drop.size && !edits.size) return { lines, repaired: [] };
+  if (next.length < 3 || (voices.size < 2 && drop.size)) return { lines, repaired: [] };
   return { lines: next, repaired: kinds };
 }
 

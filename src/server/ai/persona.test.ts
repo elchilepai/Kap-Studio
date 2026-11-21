@@ -20,4 +20,8 @@ describe("capa de personalidad de KAP en los prompts", () => {
   it("la narración es DIRECCIÓN (no subtítulo ni voz) y el diálogo es corto y funcional", () => {
     expect(SCENE_SYSTEM).toMatch(/LA NARRACIÓN ES DIRECCIÓN, NO TEXTO/); expect(SCENE_SYSTEM).toMatch(/no se muestran ni se dicen en voz alta/); expect(SCENE_SYSTEM).toMatch(/nunca una acción a nombre de un personaje/); expect(SCENE_SYSTEM).toMatch(/una escena puede tener cero líneas habladas/);
   });
+  it("una escena es una pequeña secuencia con intención, el silencio tiene función y se prefieren menos escenas buenas", () => {
+    expect(SCENE_SYSTEM).toMatch(/UNA ESCENA ES UNA PEQUEÑA SECUENCIA: INTENCIÓN → ACCIÓN → REACCIÓN → CAMBIO/); expect(SCENE_SYSTEM).toMatch(/El silencio tiene función/); expect(SCENE_SYSTEM).toMatch(/KAP no explica lo que hace/); expect(SCENE_SYSTEM).toMatch(/Los objetos sirven para contar/);
+    expect(ARC_SYSTEM).toMatch(/6 secuencias buenas a 10 con relleno/); expect(ARC_SYSTEM).toMatch(/nunca se añaden secuencias para alargar/); expect(ARC_SYSTEM).toMatch(/no pueden ser el mismo momento/);
+  });
 });

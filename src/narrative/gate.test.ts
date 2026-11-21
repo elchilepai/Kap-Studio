@@ -143,4 +143,34 @@ describe("conducta infantil: KAP actúa y una emoción establecida no se repite"
     expect(checkScene(mk(other, { speakers: ["Padre", "Madre"] })).map((i) => i.kind)).not.toContain("conversacion-estatica");   // otros personajes y otro tema
     expect(checkScene({ ...mk(B), previous: [] }).map((i) => i.kind)).not.toContain("conversacion-estatica");   // la primera escena no tiene nada que repetir
   });
+  describe("ritmo del guion: mismo momento, acción repetida y escenas sin vida", () => {
+    const L = (...xs: [string, string][]) => xs.map(([speaker, text]) => ({ speaker, text }));
+    const prevScene = { text: "KAP y su hermano miran el teléfono en la habitación. KAP mira la pantalla. El hermano mira también el teléfono.", change: "Los hermanos miran la canción en el teléfono", lines: ["KAP y su hermano miran el teléfono en la habitación.", "KAP mira la pantalla.", "El hermano mira también el teléfono."], speakers: ["", "", ""], location: "Habitación de KAP", state: "callado" };
+    const mk = (lines: ReturnType<typeof L>, o: Partial<GateInput> = {}) => ({ scene: { lines, change: "Sigue la escena de antes sin cambiar nada" }, previous: [prevScene], speakers: ["KAP", "Hermano"], memoryOutside: [] as string[], location: "Habitación de KAP", kapState: "callado", ...o });
+    it("MISMO MOMENTO: la misma acción en el mismo sitio con los mismos personajes y nada nuevo bloquea la escena (se fusiona o se elimina)", () => {
+      const same = L(["", "KAP y su hermano siguen mirando el teléfono en la habitación. KAP mira la pantalla."], ["", "El hermano mira el teléfono otra vez."], ["", "Los dos miran la pantalla."]);
+      const x = checkScene(mk(same)).find((i) => i.kind === "mismo-momento"); expect(x).toMatchObject({ scope: "scene", blocking: true }); expect(needsSceneRegen(checkScene(mk(same)))).toBe(true);
+    });
+    it("…pero con una cosa nueva (acción, lugar, personaje, objeto, cambio emocional) ya es otra escena", () => {
+      const base = L(["", "KAP y su hermano siguen mirando el teléfono en la habitación. KAP mira la pantalla."], ["", "El hermano mira el teléfono otra vez."], ["", "Los dos miran la pantalla."]);
+      const none = (r: ReturnType<typeof checkScene>) => expect(r.map((i) => i.kind)).not.toContain("mismo-momento");
+      none(checkScene(mk(base, { location: "Pasillo" })));                                                            // nuevo lugar
+      none(checkScene(mk(base, { kapState: "asustado" })));                                                           // cambio emocional visible
+      none(checkScene(mk(L(["", "KAP guarda el teléfono en la mochila y se levanta de golpe."], ["", "El hermano intenta quitárselo."], ["", "Los dos miran la pantalla."]))));   // acción y objeto nuevos
+      none(checkScene(mk(L(["Hermano", "¿Qué estás viendo, KAP? Enséñamelo ya."], ["KAP", "Nada, no es nada, quédate quieto."], ["Hermano", "Pues déjame ver el teléfono ahora."], ["KAP", "Que no, mira hacia otro lado."]))));   // habla alguien nuevo
+    });
+    it("ACCIÓN REPETIDA: la misma acción narrada dos veces en la escena se arregla en código (sin llamar al modelo)", () => {
+      const lines = L(["", "KAP se levanta y camina hacia la puerta. Mira al exterior y cierra la puerta con cuidado."], ["Hermano", "¿A dónde vas ahora mismo?"], ["", "KAP se levanta y camina hacia la puerta. Se detiene junto al marco."], ["KAP", "A ningún sitio, vuelve a la cama."]);
+      const issues = checkScene(mk(lines, { previous: [] })), r = repairLines(lines, issues);
+      expect(issues.find((i) => i.kind === "accion-repetida")).toMatchObject({ scope: "repair" }); expect(r.repaired).toContain("accion-repetida");
+      expect(r.lines[2].text).toBe("Se detiene junto al marco."); expect(r.lines).toHaveLength(4); expect(r.lines[0].text).toContain("cierra la puerta");   // se quita solo la repetición
+    });
+    it("AIRE MUERTO en el guion: una escena sin diálogo cuya narración solo describe (luz, lugar) se señala; si alguien hace algo, no", () => {
+      const desc = L(["", "La luz del sol ilumina el suelo de la habitación."], ["", "El silencio llena toda la casa vacía."], ["", "Un tono amarillo cubre las paredes y los muebles."]);
+      expect(checkScene(mk(desc, { previous: [] })).find((i) => i.kind === "aire-muerto")).toMatchObject({ scope: "local" });
+      const live = L(["", "KAP se queda quieto. Mira hacia la puerta."], ["", "Su hermano se acerca y le coge la mano."], ["", "Una puerta se cierra al otro lado del pasillo."]);
+      expect(checkScene(mk(live, { previous: [] })).map((i) => i.kind)).not.toContain("aire-muerto");
+      expect(checkScene(mk(L(["KAP", "¿Qué fue eso?"], ["", "La luz del sol ilumina el suelo."], ["Hermano", "No sé, vamos."]), { previous: [] })).map((i) => i.kind)).not.toContain("aire-muerto");   // con diálogo no se aplica
+    });
+  });
 });

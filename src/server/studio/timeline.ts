@@ -4,17 +4,17 @@
  * voz (silencios en las acciones), los subtítulos y el director de animación.
  */
 import { wordCount } from "./text";
+import { actionDuration } from "@/narrative/action";
 
 export type TLine = { speaker?: string; text: string };
 export type TItem = { kind: "dialogue" | "action"; speaker?: string; text: string; start: number; end: number };
 /** Pausa tras cada frase hablada (la misma que la voz añade entre líneas). */
-export const GAP = 0.25, WORDS_PER_SEC = 2.6, ACTION_MIN = 1.4, ACTION_PER_CLAUSE = 1.5;
+export const GAP = 0.25, WORDS_PER_SEC = 2.6;
 
 export const isDialogue = (l: TLine) => !!l.speaker?.trim();
-/** Cláusulas de una acción narrada (una por frase o por «pero»/«mientras»): cada una necesita su momento en pantalla. */
-export const clausesOf = (text: string) => text.split(/[.!?…;]+|\bpero\b|\bmientras\b/i).map((x) => x.trim()).filter((x) => x.length > 2);
 export const speechSeconds = (text: string) => Math.max(0.7, wordCount(text) / WORDS_PER_SEC);
-export const actionSeconds = (text: string) => Math.max(ACTION_MIN, clausesOf(text).length * ACTION_PER_CLAUSE);
+/** Lo que dura una acción narrada: sale del TIPO de acción y de su encadenado continuo (ver narrative/action.ts), no de contar cláusulas. */
+export const actionSeconds = (text: string) => actionDuration(text);
 
 /** Disposición secuencial. `durations[i]` = segundos reales de la línea i (si ya se conocen, p. ej. tras sintetizar la voz); si no, se estiman. */
 export function sceneTimeline(lines: TLine[], durations: (number | undefined)[] = []): TItem[] {

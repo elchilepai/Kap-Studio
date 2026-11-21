@@ -39,7 +39,7 @@ export async function buildSceneStage(scene: Scene, o: { durationSec: number; ta
   const timed = timedLines(scene.lines, o.durationSec, { maxChars: o.height > o.width ? 22 : 44, lead: LEAD, tail: TAIL, items: o.items });
   const envelopes = o.envelope ? timed.map((c) => (c.kind === "dialogue" ? o.envelope!.slice(Math.max(0, Math.floor((c.start - LEAD) * fps)), Math.max(1, Math.ceil((c.end - LEAD) * fps))) : [])) : undefined;
   const stage: StageSpec = direct({
-    duration: o.durationSec, tail: o.tail, aspect: o.width / o.height, index: o.index, fps, width: o.width, height: o.height,
+    pacing: true, duration: o.durationSec, tail: o.tail, aspect: o.width / o.height, index: o.index, fps, width: o.width, height: o.height,
     location: scene.location || scene.title, mood: scene.mood, tags: scene.tags, narration: scene.narration, characters: actors,
     lines: timed.map((c) => ({ speaker: c.speaker, text: c.text, start: c.start, end: c.end })), directions: scene.directions,
     set: { ...(place?.set ? { preset: place.set.preset, timeOfDay: place.set.timeOfDay, accent: place.set.accent, layers: place.set.layers, elements: place.set.elements, foreground: place.set.foreground } : {}), ...(useImage ? { preset: "image" as const, imageId: scene.visualAssetId && scene.visualSource !== "card" ? scene.visualAssetId : place?.set?.imageAssetId ?? place?.visualAssetId } : {}) },

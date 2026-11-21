@@ -42,6 +42,23 @@ const FN_OF_STAGE: Record<(typeof BEAT_STAGES)[number], (typeof SCENE_FUNCTIONS)
 const INDOOR = /habitaci|cuarto|dormitorio|cocina|salon|sala\b|pasillo|interior|bano|comedor|casa de/, OUTDOOR = /calle|patio|exterior|plaza|parque|acera|fachada|entrada|portal|jardin|azotea/;
 const plain = (s: string) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 export type ArcBeat = z.infer<typeof Beat>; export type ArcSequence = z.infer<typeof Sequence>;
+const wset = (b: ArcBeat) => new Set(plain(`${b.summary} ${(b.events ?? []).join(" ")}`).split(/[^a-z0-9ñ]+/).filter((w) => w.length > 3));
+const jacSet = (a: Set<string>, b: Set<string>) => { if (!a.size || !b.size) return 0; let n = 0; for (const x of a) if (b.has(x)) n++; return n / (a.size + b.size - n); };
+/**
+ * Dos beats seguidos que cuentan EL MISMO MOMENTO (mismo lugar, mismos personajes, casi los mismos acontecimientos) no son dos escenas: se fusionan.
+ * Es preferible 6 escenas buenas a 10 con relleno; la duración sale de la historia. Nunca se pierde el inicio ni el gancho.
+ */
+export function mergeRepeatedBeats(beats: ArcBeat[]): { beats: ArcBeat[]; merged: number } {
+  const out: ArcBeat[] = []; let merged = 0;
+  for (const b of beats) {
+    const a = out.at(-1), cast = (x: ArcBeat) => [...new Set(x.characters.map(plain))].sort().join("|");
+    if (a && plain(a.location) === plain(b.location) && cast(a) === cast(b) && (jacSet(wset(a), wset(b)) >= 0.5 || (a.stage === b.stage && jacSet(wset(a), wset(b)) >= 0.3))) {
+      const events = [...new Set([...(a.events ?? []), ...(b.events ?? [])])].slice(0, 6);
+      Object.assign(a, { stage: a.stage === "inicio" ? a.stage : b.stage, change: b.change.length >= 12 ? b.change : a.change, ...(events.length ? { events, summary: events.join(" → ").slice(0, 280) } : {}) }); merged++;
+    } else out.push(b);
+  }
+  return { beats: out, merged };
+}
 /** Secuencia → beat (el formato que consume el generador de escenas). Conserva lugar/hora/personajes/cambio y guarda los acontecimientos y el nivel de diálogo. */
 export function sequenceToBeat(s: ArcSequence): ArcBeat {
   const events = s.beats.map((b) => b.trim()), joined = events.join(" → "), summary = (joined.length >= 12 ? joined : `${joined} (${s.purpose})`).slice(0, 280), loc = plain(s.location);
@@ -120,6 +137,7 @@ export function llmArcAuthor(llm: LlmClient, opts: ArcAuthorOptions = {}): ArcAu
       const effBeats = arcBeats(a.data);
       const arc = { ...a.data, beats: effBeats.map((b, i) => ({ b, i })).sort((x, y) => BEAT_STAGES.indexOf(x.b.stage) - BEAT_STAGES.indexOf(y.b.stage) || x.i - y.i).map((x) => x.b) };   // orden de etapas reparado en código
       if (arc.beats.some((b, i) => b !== effBeats[i])) warnings.push("El modelo desordenó las etapas del arco; se han reordenado.");
+      { const m = mergeRepeatedBeats(arc.beats); if (m.merged) { arc.beats = m.beats; warnings.push(`Se han fusionado ${m.merged} beat(s) repetido(s) del arco: el mismo momento no es otra escena.`); } }
       const lastLoc = /\ben ([^;]+);/.exec(context.sections.find((s) => s.id === "lastshot")?.text ?? "")?.[1]?.trim();
       if (request.exact && lastLoc && arc.beats[0].location.toLowerCase() !== lastLoc.toLowerCase()) { warnings.push(`El arco empezaba en «${arc.beats[0].location}»; se corrige a «${lastLoc}» (último plano del episodio anterior).`); arc.beats[0].location = lastLoc; }
 
@@ -158,7 +176,7 @@ export function llmArcAuthor(llm: LlmClient, opts: ArcAuthorOptions = {}): ArcAu
 
       // 2) LAS ESCENAS, una por beat, con puerta de calidad. Regla de coste: lo local se arregla en local (código o una llamada pequeña), no regenerando la escena.
       type Out = z.infer<typeof SceneOut>; type Acc = { beat: (typeof arc.beats)[number]; out: Out; lines: GateLine[]; issues: GateIssue[] };
-      const accepted: Acc[] = [], done: { n: number; title: string; location: string; text: string }[] = [], prev: { text: string; change: string; lines: string[]; speakers: string[]; state?: string; does?: string }[] = []; let kapSpoke = false;
+      const accepted: Acc[] = [], done: { n: number; title: string; location: string; text: string }[] = [], prev: { text: string; change: string; lines: string[]; speakers: string[]; state?: string; does?: string; location?: string }[] = []; let kapSpoke = false;
       for (let i = 0; i < arc.beats.length; i++) {
         // CAUSALIDAD: la escena hereda lo que cambió en la anterior (y lo que la conducta de KAP dejó abierto): no empieza con un problema recién inventado
         const last = prev.at(-1), pb = behaviorOf.get(i - 1), pending = pb ? [pb.provokes, pb.reaction].filter(Boolean).join(" → ") : undefined;
@@ -167,7 +185,7 @@ export function llmArcAuthor(llm: LlmClient, opts: ArcAuthorOptions = {}): ArcAu
         const sibling = siblingOf(beat.characters), hasKap = beat.characters.some((c) => norm(c) === "kap");
         const mode = i === rhymeBeat ? "first-rhyme" as const : !kapSpoke && hasKap && !skipOpening ? "opening" as const : undefined;
         const contextTerms = [beat.summary, beat.change, beat.visual, beat.location, ...beat.characters, request.notes, i === rhymeBeat ? arc.problem : ""], base = `${mode ? RIMA_RULES : ""}${sibling ? SIBLING_RULES : ""}${origin ? ORIGIN_SCENE_RULES : ""}`;
-        const check = (lines: GateLine[], change: string, decl?: { kapDoes: string; kapState: string }) => checkScene({ kapDoes: decl?.kapDoes, kapState: decl?.kapState, scene: { lines, change }, previous: prev, speakers: beat.characters, memoryOutside, siblingName: sibling, rhyme: mode ? { mode, contextTerms } : undefined, isLast: i === arc.beats.length - 1, cost: beat.stage === "consecuencia" && !origin ? arc.cost : undefined, pending, locationChanged: !!accepted.length && norm(accepted.at(-1)!.beat.location) !== norm(beat.location) });
+        const check = (lines: GateLine[], change: string, decl?: { kapDoes: string; kapState: string }) => checkScene({ location: beat.location, kapDoes: decl?.kapDoes, kapState: decl?.kapState, scene: { lines, change }, previous: prev, speakers: beat.characters, memoryOutside, siblingName: sibling, rhyme: mode ? { mode, contextTerms } : undefined, isLast: i === arc.beats.length - 1, cost: beat.stage === "consecuencia" && !origin ? arc.cost : undefined, pending, locationChanged: !!accepted.length && norm(accepted.at(-1)!.beat.location) !== norm(beat.location) });
         const gen = async (extra: string, n: number) => call(SceneOut, { ...sceneOpts(n * 0.05), prompt: scenePrompt(context, arcView, done, i, arc.beats.length, brief, base + extra) });
         // (a) generar; (b) reparar EN CÓDIGO lo que se pueda; (c) solo si queda un problema de toda la escena, regenerarla (máx. B.general veces, con TODAS las razones agrupadas)
         let best: Acc | undefined, regens = 0, res = await gen("", 0);
@@ -201,7 +219,7 @@ export function llmArcAuthor(llm: LlmClient, opts: ArcAuthorOptions = {}): ArcAu
         if (mode) { const rv = sceneRhyme(lines, { mode, contextTerms }).check.rhyme_valid; if (mode === "first-rhyme" || rhymeValid === undefined) rhymeValid = rv; }
         if (lines.some((l) => norm(l.speaker ?? "") === "kap")) kapSpoke = true;
         accepted.push({ ...keep, lines, issues }); const text = lines.map((l) => l.text).join(" ");
-        done.push({ n: accepted.length, title: keep.out.title, location: beat.location, text: `${clip(text, 240)} · KAP: ${keep.out.kapDoes || "—"} (${keep.out.kapState || "—"}) · cambió: ${clip(keep.out.change, 120)}` }); prev.push({ text, change: keep.out.change, lines: lines.map((l) => l.text), speakers: lines.map((l) => l.speaker ?? ""), state: keep.out.kapState, does: keep.out.kapDoes });
+        done.push({ n: accepted.length, title: keep.out.title, location: beat.location, text: `${clip(text, 240)} · KAP: ${keep.out.kapDoes || "—"} (${keep.out.kapState || "—"}) · cambió: ${clip(keep.out.change, 120)}` }); prev.push({ text, change: keep.out.change, lines: lines.map((l) => l.text), speakers: lines.map((l) => l.speaker ?? ""), state: keep.out.kapState, does: keep.out.kapDoes, location: beat.location });
       }
 
       // 3) MEMORIA: actos y gancho los fija el código sobre las escenas FINALES; lo del modelo solo pasa si es una directiva válida

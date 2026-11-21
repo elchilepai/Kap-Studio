@@ -1,8 +1,10 @@
 import { frameShot, layoutSlots, wideZoom, type SafeZone } from "./framing.ts";
 import { evaluate } from "./timeline.ts";
-import type { ActionExpression, Appearance, Cue, ObjectKind, EffectKind, Expression, Gesture, PropKind, PropSpec, SetPreset, SetSpec, Side, StageSpec, StyleParams, TimeOfDay } from "./types.ts";
+import type { ActionExpression, Appearance, Cue, ObjectKind, SoundCue, EffectKind, Expression, Gesture, PropKind, PropSpec, SetPreset, SetSpec, Side, StageSpec, StyleParams, TimeOfDay } from "./types.ts";
 import { WORLD_W } from "./types.ts";
 import { hash32 } from "./util.ts";
+import { chain, planClauses } from "../narrative/action.ts";
+import { deadAir } from "./pacing.ts";
 import { amplitudeProvider, syntheticEnvelope, type LipSyncProvider, type LipSyncTrack } from "./lipsync.ts";
 import { norm as bnorm, parseDirection, type Beat } from "./beats.ts";
 export type { Beat };
@@ -15,6 +17,7 @@ export type { Beat };
 export type TimedLine = { speaker?: string; text: string; start: number; end: number };
 export type DirectorActor = { id: string; name: string; appearance: Appearance };
 export type DirectorInput = {
+  /** Rellena con vida (mirada, expresión, cámara lenta, ambiente) los tramos de ≥ 3 s sin nada que ocurra. Lo activa el montaje real. */ pacing?: boolean;
   duration: number; tail?: number; aspect: number; index: number; fps: number; width: number; height: number;
   location: string; mood: string; tags: string[]; narration: string;
   characters: DirectorActor[]; lines: TimedLine[];
@@ -134,34 +137,42 @@ export function direct(inp: DirectorInput): StageSpec {
   });
 
   // ---------- ACTING a partir de la narración ----------
-  // La narración NO se lee: DIRIGE. Cada cláusula con un personaje nombrado y un verbo se convierte en pequeñas fases (anticipación → acción → llegada/reacción)
-  // con cuerpo, mirada, expresión, cámara y, si hay, el objeto en la mano. Solo reglas léxicas: no se inventa movimiento que el texto no diga.
-  const CLAUSE = 1.5;   // segundos que la línea de tiempo reserva a cada cláusula de acción (igual que el montaje)
+  // La narración NO se lee: DIRIGE. Se interpreta como acciones CONTINUAS (narrative/action.ts): cada paso empieza cuando el anterior está a punto de acabar y la
+  // duración sale del tipo de acción y de la distancia, no de contar cláusulas. Cada paso se actúa con fases (se gira → anticipación → acción → llegada/frenado → reacción),
+  // cuerpo, mirada, expresión, objeto en la mano, sonido y una cámara con función. Solo reglas léxicas: no se inventa movimiento que el texto no diga.
   const LANDMARK: [RegExp, number][] = [[/\bventana\b/, 10.8], [/\b(?:puerta|salida|pasillo|salon|cocina|fuera|afuera|calle|entrada)\b/, 14.2]];
   const EXPRS: [RegExp, ActionExpression][] = [
-    [/\b(?:asustad\w*|miedo|aterr\w*|pavor|ojos muy abiertos|se estremece)\b/, "scared"], [/\b(?:verguenza|avergonz\w*|sonroj\w*)\b/, "embarrassed"], [/\b(?:confus\w*|no entiende|desconcert\w*)\b/, "confused"],
+    [/\b(?:asustad\w*|miedo|aterr\w*|pavor|ojos muy abiertos|se estremece\w*)\b/, "scared"], [/\b(?:verguenza|avergonz\w*|sonroj\w*)\b/, "embarrassed"], [/\b(?:confus\w*|no entiende|desconcert\w*)\b/, "confused"],
     [/\b(?:curios\w*|intrigad\w*)\b/, "curious"], [/\b(?:alivi\w*)\b/, "relieved"], [/\b(?:incomod\w*|se remueve|nervios\w*)\b/, "uncomfortable"], [/\b(?:aburrid\w*|bosteza\w*)\b/, "bored"],
     [/\b(?:trist\w*|llora\w*|lagrim\w*)\b/, "sad"], [/\b(?:enfad\w*|furios\w*|rabia)\b/, "angry"], [/\b(?:sorprend\w*|sobresalt\w*)\b/, "surprised"], [/\b(?:preocupad\w*|inquiet\w*|tens[oa]\b|angusti\w*)\b/, "worried"], [/\b(?:sonr\w*|rie\b|rien\b|alegre)\b/, "happy"], [/\b(?:piensa\w*|duda\w*|pensativ\w*)\b/, "thinking"],
   ];
-  const ACTIONS: [RegExp, "crouch" | "reach" | "throw" | "recoil", number][] = [
+  const ACTIONS: [RegExp, "crouch" | "reach" | "throw" | "recoil" | "settle" | "listen", number][] = [
+    [/\b(?:se levanta\w*|se incorpora\w*|se pone de pie|suspira\w*|respira\w*|traga\w*|se sienta\w*)\b/, "settle", 0.7],   // cambio de postura / asentamiento
     [/\b(?:se agach\w*|se inclin\w*|se arrodill\w*|recoge|recoger|mete (?:la|las) mano\w*|planta\w*|rebusca\w*)\b/, "crouch", 1.5],
     [/\b(?:lanza\w*|arroja\w*|tira (?:la|el|una|un)|patea\w*)\b/, "throw", 1.0],
-    [/\b(?:alcanza\w*|estira\w*|agarra\w*|coge\w*|toma\w*|saca\w*|empuja\w*|abre|abrir|cierra|cerrar|toca\w*|levanta\w*|mueve\w*|aparta\w*|esconde\w*|guarda\w*|se quita|se pone|deja (?:la|el|las|los|una|un))\b/, "reach", 1.2],
+    [/\b(?:alcanza\w*|estira\w*|se estira\w*|agarra\w*|coge\w*|toma\w*|saca\w*|empuja\w*|abre|abrir|cierra|cerrar|toca\w*|levanta\w*|mueve\w*|aparta\w*|esconde\w*|guarda\w*|se quita|se pone|enciende\w*|apaga\w*|gira\b|sostiene|sujeta\w*|abraza\w*|apoya\w*|suelta\w*|deja (?:la|el|las|los|una|un))\b/, "reach", 1.2],
     [/\b(?:retrocede\w*|da un paso atras|se echa atras|se sobresalta|se asusta)\b/, "recoil", 1.0],
+    [/\b(?:escucha\w*|oye\b)\b/, "listen", 0.9],
   ];
+  const GESTURES: [RegExp, Gesture][] = [[/\basiente\w*/, "nod"], [/\bniega\w*/, "shake"], [/\bse encoge de hombros\b/, "shrug"], [/\b(?:senala\w*|apunta\w*)\b/, "point"], [/\b(?:saluda\w*)\b/, "wave"]];
   const OBJECTS: [RegExp, ObjectKind][] = [[/\b(?:telefono|movil|celular)\b/, "phone"], [/\bmochila\b/, "backpack"], [/\b(?:cuaderno|libreta)\b/, "notebook"], [/\b(?:auriculares|cascos)\b/, "headphones"], [/\bmaleta\b/, "suitcase"], [/\b(?:pelota|balon)\b/, "ball"], [/\b(?:papel|hoja)\b/, "paper"], [/\bsilla\b/, "chair"]];
   const TAKE = /\b(?:coge\w*|agarra\w*|saca\w*|toma\w*|recoge\w*|sostiene|sujeta\w*|lleva|abraza\w*|se pone|se quita|mira (?:el|la|su) (?:telefono|movil|pantalla))\b/, PUT = /\b(?:deja\w*|apoya\w*|suelta\w*|tira\w*|lanza\w*|guarda\w*)\b/;
   const ALERT = /\b(?:se oye\w*|se escucha\w*|suena\w*|portazo|grito\w*|ruido|estruendo|golpe seco|se rompe\w*|truen\w*)\b/, STRONG = /grito|estruendo|golpe|rompe|portazo|truen/;
   const STOP = /\b(?:se detiene|se para|se queda (?:quiet\w*|inmovil\w*|paralizad\w*)|se congela\w*|deja de moverse)\b/, RUN = /\b(?:corre\w*|echa a correr|sale corriendo)\b/;
-  const WALK = /\b(?:se acerca\w*|se aproxima\w*|camina\w*|va (?:hacia|a)|avanza\w*|entra|llega\w*|se dirige\w*)\b/, AWAY = /\b(?:se aleja\w*|se separa|se marcha|se va)\b/, LOOK = /\bmira\w*\s+(?:hacia|a|al|a la|por|fijamente)\b/;
+  const WALK = /\b(?:se acerca\w*|se aproxima\w*|camina\w*|va (?:hacia|a)|avanza\w*|entra|llega\w*|se dirige\w*|cruza\w*|recorre\w*)\b/, AWAY = /\b(?:se aleja\w*|se separa|se marcha|se va)\b/, LOOK = /\bmira\w*\s+(?:hacia|a|al|a la|por|fijamente)\b/;
   const aliasesOf = (nm: string) => [norm(nm), ...norm(nm).split(/\s+/).filter((w) => w.length > 3 && w !== "kap")];
   const mentions = (clause: string) => actors.map((a) => ({ a, i: Math.min(...aliasesOf(a.name).map((al) => { const m = new RegExp(`(?<!\\bde\\s)\\b${al.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`).exec(clause); return m ? m.index : 1e9; })) })).filter((x) => x.i < 1e9).sort((p, q) => p.i - q.i).map((x) => x.a);
   const xNow = (id: string, t: number) => { const f = evaluate({ v: 1, width: inp.width, height: inp.height, fps: inp.fps, duration: D + tail, seed: 0, set: { preset: "abstract", timeOfDay: "day", seed: 0 }, actors, props: [], cues: cues.filter((c) => c.type !== "camera"), style: inp.style, warnings: [] } as StageSpec, Math.max(0, t)); const i = actors.findIndex((a) => a.id === id); return f.actors[i]?.x ?? actors[i]?.slot ?? WORLD_W / 2; };
-  const clampX = (x: number) => Math.max(0.8, Math.min(WORLD_W - 0.8, x)), cam = { t: -9 };
-  const camera = (t: number, id: string, kind: "push" | "cut" | "follow", dur = 1) => {   // la cámara sigue la historia: un empuje al llegar información, un corte a la reacción, seguimiento al caminar; no más de uno cada 2,5 s
-    if (explicitCamera || t - cam.t < 2.5) return; cam.t = t;
-    if (kind === "follow") cues.push({ t, type: "camera", focus: id, zoom: 1.12, dur, ease: "inOut" });
-    else { cues.push(kind === "push" ? { t, type: "camera", focus: id, zoom: 1.32, dur: 0.9, ease: "inOut" } : { t, type: "camera", focus: id, zoom: 1.55, dur: 0.01 }, { t: t + (kind === "push" ? 2.4 : 1.5), type: "camera", x: WORLD_W / 2, zoom: 1, dur: 0.8, ease: "inOut" }); }
+  const clampX = (x: number) => Math.max(0.8, Math.min(WORLD_W - 0.8, x));
+  const sounds: SoundCue[] = [];
+  // CÁMARA CON FUNCIÓN: cada plano propuesto por la narración lleva su prioridad y su tramo; si dos chocan gana el que más importa (reacción > información/fuente > seguimiento > momento emocional).
+  type CamCand = { t0: number; t1: number; prio: number; cues: Cue[] }; const camCands: CamCand[] = [];
+  const camera = (t: number, id: string, kind: "follow" | "cut" | "push" | "hold" | "source", dur = 1, x?: number) => {
+    if (explicitCamera) return;
+    if (kind === "follow") camCands.push({ t0: t, t1: t + dur, prio: 2, cues: [{ t, type: "camera", focus: id, zoom: 1.12, dur, ease: "inOut" }] });
+    else if (kind === "hold") camCands.push({ t0: t, t1: t + dur, prio: 1, cues: [{ t, type: "camera", focus: id, zoom: 1.2, dur, ease: "inOut" }] });   // momento emocional: más cerca y estable
+    else if (kind === "source") camCands.push({ t0: t, t1: t + 2.2, prio: 3, cues: [{ t, type: "camera", x: x ?? WORLD_W / 2, zoom: 1.1, dur: 0.6, ease: "inOut" }, { t: t + 2.2, type: "camera", x: WORLD_W / 2, zoom: 1, dur: 0.8, ease: "inOut" }] });   // reencuadre hacia lo que se oye
+    else camCands.push({ t0: t, t1: t + (kind === "push" ? 2.4 : 1.5), prio: kind === "cut" ? 4 : 3, cues: [kind === "push" ? { t, type: "camera", focus: id, zoom: 1.32, dur: 0.9, ease: "inOut" } : { t, type: "camera", focus: id, zoom: 1.55, dur: 0.01 }, { t: t + (kind === "push" ? 2.4 : 1.5), type: "camera", x: WORLD_W / 2, zoom: 1, dur: 0.8, ease: "inOut" }] });
   };
   const walkTo = (a: (typeof actors)[number], x: number, t: number, run: boolean): number => {
     const x0 = xNow(a.id, t), d = Math.abs(x - x0); if (d < 0.3) return t;
@@ -169,33 +180,41 @@ export function direct(inp: DirectorInput): StageSpec {
     cues.push({ t, type: "face", actor: a.id, dir: x > x0 ? "right" : "left" });   // primero se gira hacia donde va
     let t1 = t + 0.12; if (run) { cues.push({ t, type: "pose", actor: a.id, value: "crouch", dur: 0.28 }); t1 = t + 0.28; }   // anticipación antes de arrancar
     cues.push({ t: t1, type: "move", actor: a.id, x: clampX(x), dur, run }); const tEnd = t1 + dur;
-    cues.push({ t: tEnd, type: "pose", actor: a.id, value: "idle" });   // llega, frena y se asienta
+    cues.push({ t: tEnd, type: "pose", actor: a.id, value: "settle", dur: 0.3 });   // llega, frena y se asienta
+    if (dur > 1.2) sounds.push({ t: t1, kind: "steps", dur: dur - 0.1 });
     camera(t1, a.id, "follow", dur); return tEnd;
   };
   const objSpecs = () => props.filter((p) => ["phone", "backpack", "notebook", "headphones", "suitcase", "ball", "paper", "chair"].includes(p.kind));
   for (const l of inp.lines) {
-    if (l.speaker) continue; let lastP: (typeof actors)[number] | undefined;   // una cláusula sin nombre («…, confusa, no entiende nada») sigue siendo del último personaje nombrado en la línea
-    norm(l.text).split(/[.!?;]+|,|\bpero\b|\bmientras\b/).map((x) => x.trim()).filter((x) => x.length > 2).forEach((clause, ci) => {
-      const t0 = Math.max(0.1, l.start + ci * CLAUSE), who = mentions(clause), P = who[0] ?? lastP, others = who.slice(who[0] ? 1 : 0), free = P && !touched.has(P.id); if (who[0]) lastP = who[0];
-      const ex = EXPRS.find(([re]) => re.test(clause))?.[1];
-      if (ALERT.test(clause)) {   // un sonido: todos reaccionan (escalonados), con un empuje de cámara a quien más cerca está de la acción
-        const strong = STRONG.test(clause); actors.forEach((a, k) => { if (touched.has(a.id)) return; const t = t0 + 0.15 * k; cues.push({ t, type: "pose", actor: a.id, value: "recoil", dur: 0.7 }, { t: t + 0.1, type: "expression", actor: a.id, value: strong ? "scared" : "surprised" }); });
-        if (actors[0]) camera(t0, actors[0].id, "push");
+    if (l.speaker) continue; let lastP: (typeof actors)[number] | undefined, cursor = 0;   // «…, confusa, no entiende nada» sigue siendo del último personaje nombrado de la línea
+    chain(planClauses(l.text)).forEach((step) => {
+      const clause = norm(step.clause), t0 = Math.max(0.1, l.start + Math.max(step.start, cursor)), who = mentions(clause), P = who[0] ?? lastP, others = who.slice(who[0] ? 1 : 0), free = P && !touched.has(P.id); if (who[0]) lastP = who[0];
+      let end = t0 + step.dur; const ex = EXPRS.find(([re]) => re.test(clause))?.[1];
+      const landmark = LANDMARK.find(([re]) => re.test(clause))?.[1];
+      if (ALERT.test(clause)) {   // un sonido: se frenan, giran la cabeza HACIA la fuente, reaccionan con el cuerpo y se miran entre ellos
+        const strong = STRONG.test(clause), src = landmark ?? 14.2;
+        actors.forEach((a, k) => { if (touched.has(a.id)) return; const t = t0 + 0.12 * k, x = xNow(a.id, t);
+          if (Math.abs(xNow(a.id, t + 0.3) - x) > 0.05) cues.push({ t, type: "move", actor: a.id, x, dur: 0.25 });   // si caminaba, se frena
+          cues.push({ t, type: "pose", actor: a.id, value: strong ? "recoil" : "listen", dur: strong ? 0.7 : 0.9 }, { t: t + 0.05, type: "face", actor: a.id, dir: src >= x ? "right" : "left" }, { t: t + 0.1, type: "expression", actor: a.id, value: strong ? "scared" : "surprised" });
+          const other = actors.filter((o) => o.id !== a.id).sort((p, q) => Math.abs(p.slot - a.slot) - Math.abs(q.slot - a.slot))[0];
+          if (other) cues.push({ t: t + 0.95, type: "face", actor: a.id, dir: xNow(other.id, t + 0.95) >= xNow(a.id, t + 0.95) ? "right" : "left" });   // mirada entre personajes
+        });
+        sounds.push({ t: t0, kind: /portazo|puerta/.test(clause) ? "door" : STRONG.test(clause) ? "bump" : /telefono|movil|timbre|llamada/.test(clause) ? "ring" : "bump" });
+        camera(t0, actors[0]?.id ?? "", "source", 1, src);
         const ringing = OBJECTS.find(([re]) => re.test(clause))?.[1]; if (ringing && actors[0] && objSpecs().length < 4 && !props.some((q) => q.kind === ringing)) { const sp: PropSpec = { id: `o${props.length}`, kind: ringing, x: clampX(actors[0].slot + (actors[0].slot < 8 ? 1.4 : -1.4)), y: 7.55, scale: 1, visibleAtStart: false }; props.push(sp); cues.push({ t: t0, type: "prop", id: sp.id, action: "show" }); }   // suena el teléfono: se ve
-        return;
+        end = t0 + 1; cursor = end - l.start - step.overlap; return;
       }
-      if (!P) return;
-      let moved = false;
-      const target = others[0], landmark = LANDMARK.find(([re]) => re.test(clause))?.[1], nearest = actors.filter((a) => a.id !== P.id).sort((p, q) => Math.abs(p.slot - P.slot) - Math.abs(q.slot - P.slot))[0];
-      if (free && STOP.test(clause)) { cues.push({ t: t0, type: "move", actor: P.id, x: xNow(P.id, t0), dur: 0.25 }, { t: t0 + 0.25, type: "pose", actor: P.id, value: "idle" }); moved = true; }
+      if (!P) { cursor = end - l.start - step.overlap; return; }
+      let moved = false; const target = others[0], nearest = actors.filter((a) => a.id !== P.id).sort((p, q) => Math.abs(p.slot - P.slot) - Math.abs(q.slot - P.slot))[0];
+      if (free && STOP.test(clause)) { cues.push({ t: t0, type: "move", actor: P.id, x: xNow(P.id, t0), dur: 0.25 }, { t: t0 + 0.25, type: "pose", actor: P.id, value: "settle", dur: 0.3 }); moved = true; }
       else if (free && (RUN.test(clause) || WALK.test(clause))) {
         const run = RUN.test(clause), x0 = xNow(P.id, t0), other = target ?? (/\bse acerca|se aproxima/.test(clause) ? nearest : undefined);
         const dest = other ? (() => { const ox = xNow(other.id, t0 + 1); return ox - (Math.sign(ox - x0) || 1) * 1.4; })() : landmark;
-        if (dest !== undefined) { const te = walkTo(P, dest, t0, run); moved = true; if (other) cues.push({ t: te + 0.05, type: "face", actor: P.id, dir: xNow(other.id, te) >= xNow(P.id, te) ? "right" : "left" }); else if (landmark !== undefined) cues.push({ t: te + 0.05, type: "face", actor: P.id, dir: landmark >= xNow(P.id, te) ? "right" : "left" }); }
-      } else if (free && AWAY.test(clause)) { const other = target ?? nearest; if (other) { const x0 = xNow(P.id, t0), dir = Math.sign(xNow(other.id, t0) - x0) || 1; walkTo(P, x0 - dir * 1.8, t0, false); cues.push({ t: t0 + 1.9, type: "face", actor: P.id, dir: dir > 0 ? "right" : "left" }); moved = true; } }
-      else if (free && LOOK.test(clause)) { const other = target ?? (landmark === undefined ? undefined : undefined), x0 = xNow(P.id, t0), toX = other ? xNow(other.id, t0) : landmark; if (toX !== undefined) cues.push({ t: t0, type: "face", actor: P.id, dir: toX >= x0 ? "right" : "left" }); }
-      if (!moved) { const act = ACTIONS.find(([re]) => re.test(clause)); if (act) cues.push({ t: t0, type: "pose", actor: P.id, value: act[1], dur: act[2] }); }
-      if (ex) { cues.push({ t: t0 + 0.1, type: "expression", actor: P.id, value: ex }); if (ex === "scared" || ex === "surprised") camera(t0 + 0.1, P.id, "cut"); }
+        if (dest !== undefined) { const te = walkTo(P, dest, t0, run); end = te; moved = true; if (other) cues.push({ t: te + 0.05, type: "face", actor: P.id, dir: xNow(other.id, te) >= xNow(P.id, te) ? "right" : "left" }); else if (landmark !== undefined) cues.push({ t: te + 0.05, type: "face", actor: P.id, dir: landmark >= xNow(P.id, te) ? "right" : "left" }); }
+      } else if (free && AWAY.test(clause)) { const other = target ?? nearest; if (other) { const x0 = xNow(P.id, t0), dir = Math.sign(xNow(other.id, t0) - x0) || 1; end = walkTo(P, x0 - dir * 1.8, t0, false); cues.push({ t: end + 0.05, type: "face", actor: P.id, dir: dir > 0 ? "right" : "left" }); moved = true; } }
+      else if (free && LOOK.test(clause)) { const x0 = xNow(P.id, t0), toX = target ? xNow(target.id, t0) : landmark; if (toX !== undefined) cues.push({ t: t0, type: "face", actor: P.id, dir: toX >= x0 ? "right" : "left" }); }
+      if (!moved) { const act = ACTIONS.find(([re]) => re.test(clause)); if (act) cues.push({ t: t0, type: "pose", actor: P.id, value: act[1], dur: act[2] }); const gst = GESTURES.find(([re]) => re.test(clause)); if (gst && free) cues.push({ t: t0, type: "gesture", actor: P.id, value: gst[1], dur: 1 }); if (step.kind === "look" && free && !LOOK.test(clause) && nearest) cues.push({ t: t0, type: "face", actor: P.id, dir: nearest.slot >= P.slot ? "right" : "left" }); if (/\bpuerta\b/.test(clause) && /\b(?:abre|cierra|cerrar|abrir)\b/.test(clause)) sounds.push({ t: t0 + 0.4, kind: "door" }); if (/\b(?:llama|toca|golpea)\w* (?:a )?la puerta\b/.test(clause)) sounds.push({ t: t0, kind: "knock" }); }
+      if (ex) { cues.push({ t: t0 + 0.1, type: "expression", actor: P.id, value: ex }); if (ex === "scared" || ex === "surprised") camera(t0 + 0.1, P.id, "cut"); else if (!moved && (ex === "sad" || ex === "worried" || ex === "embarrassed")) camera(t0, P.id, "hold", 2.5); }
       // objetos: lo que se coge va en la mano, lo que se deja queda en el suelo, lo que aparece en la escena se ve (solo los que la narración nombra; máx. 4)
       const obj = OBJECTS.find(([re]) => re.test(clause))?.[1];
       if (obj && objSpecs().length < 4) {
@@ -205,8 +224,10 @@ export function direct(inp: DirectorInput): StageSpec {
         else if (PUT.test(clause)) { if (held) cues.push({ t: t0 + 0.1, type: "prop", id: held.id, action: "hide" }); if (!/guarda/.test(clause)) cues.push({ t: t0 + 0.25, type: "prop", id: spec(undefined, floorAt()).id, action: "show" }); }
         else if (!props.some((q) => q.kind === obj)) cues.push({ t: t0, type: "prop", id: spec(undefined, floorAt()).id, action: "show" });
       }
+      cursor = Math.max(cursor, end - l.start - step.overlap);
     });
   }
+  { const acc: CamCand[] = []; for (const c of [...camCands].sort((p, q) => q.prio - p.prio || p.t0 - q.t0)) if (!acc.some((a) => c.t0 < a.t1 + 0.2 && c.t1 + 0.2 > a.t0)) acc.push(c); for (const c of acc) cues.push(...c.cues); }
 
   // ---------- acciones sugeridas por la narración ----------
   const nar = norm(inp.narration); const lead = actors[0];
@@ -269,5 +290,18 @@ export function direct(inp: DirectorInput): StageSpec {
     else cues.push({ t: 0, type: "camera", x: WORLD_W / 2 - 0.8, dur: 0.01 }, { t: 0.01, type: "camera", x: WORLD_W / 2 + 0.8, dur: T, ease: "linear" });
   }
 
-  return { v: 1, width: inp.width, height: inp.height, fps: inp.fps, duration: D + tail, seed: hash32(inp.location + inp.index) % 100000, set: resolveSet(inp.location, inp.tags, inp.mood, inp.set), actors, props, cues, style: inp.style, warnings, ...(inp.safe ? { safe: inp.safe } : {}) };
+  // ---------- AIRE MUERTO: una pausa tiene función ----------
+  // Si pasan ≥ 3 s sin diálogo, acción, reacción, cámara ni sonido, no se deja el vídeo vacío (ni se acelera): se dan a la pausa vida y razón — una mirada entre personajes o hacia otro lado,
+  // un cambio de expresión, un asentamiento del cuerpo, la cámara que se acerca despacio y sonido de ambiente. Solo rellena tramos que de otro modo estarían muertos.
+  if (inp.pacing) { let life = 0, filled = 0;   // lo activa el montaje real (stage.ts); los usos sueltos del director conservan su comportamiento
+    for (let g = deadAir(cues, D, { sounds }); g.length && life < 14; g = deadAir(cues, D, { sounds }), life++) {
+      const gap = g[0], t = gap.t0 + 1.2, a = actors[life % Math.max(1, actors.length)]; if (!a) break; const other = actors.find((o) => o.id !== a.id);
+      if (life % 3 === 0) cues.push({ t, type: "face", actor: a.id, dir: other ? (other.slot >= a.slot ? "right" : "left") : (a.slot < 8 ? "right" : "left") });   // la mirada va a otro personaje (o a otro lado)
+      else if (life % 3 === 1) cues.push({ t, type: "expression", actor: a.id, value: life % 2 ? "thinking" : "neutral" });
+      else cues.push({ t, type: "pose", actor: a.id, value: "settle", dur: 0.4 });
+      if (!explicitCamera && !cues.some((c) => c.type === "camera" && c.t >= gap.t0 && c.t < gap.t1)) cues.push({ t: gap.t0, type: "camera", focus: actors[0]?.id ?? a.id, zoom: 1.14, dur: Math.min(3.5, gap.t1 - gap.t0), ease: "inOut" });   // la cámara se acerca despacio
+      sounds.push({ t: gap.t0, kind: "ambience", dur: gap.t1 - gap.t0 }); filled++;
+    }
+    if (filled) warnings.push(`Pausa larga sin acción (${filled} tramo${filled > 1 ? "s" : ""}): se ha llenado con mirada, cámara y ambiente; si la escena queda vacía, la planificación es floja.`); }
+  return { v: 1, width: inp.width, height: inp.height, fps: inp.fps, duration: D + tail, seed: hash32(inp.location + inp.index) % 100000, set: resolveSet(inp.location, inp.tags, inp.mood, inp.set), actors, props, cues, style: inp.style, warnings, ...(sounds.length ? { sounds } : {}), ...(inp.safe ? { safe: inp.safe } : {}) };
 }

@@ -7,10 +7,13 @@
 import type { PoseName } from "./beats.ts";
 export type { PoseName };
 /** Poses de ACCIÓN que añade el director a partir de la narración (internas de la animación: no forman parte del vocabulario del guion ni de la IR). */
-export type ActionPose = PoseName | "crouch" | "reach" | "throw" | "recoil";
+export type ActionPose = PoseName | "crouch" | "reach" | "throw" | "recoil" | "settle" | "listen";
 export type Expression = "neutral" | "happy" | "sad" | "angry" | "surprised" | "worried" | "thinking";
 /** Expresiones de ACTING que añade el director a partir de la narración (internas de la animación: no forman parte del vocabulario del guion ni de la IR). */
 export type ActionExpression = Expression | "scared" | "embarrassed" | "confused" | "curious" | "relieved" | "uncomfortable" | "bored";
+/** Sonido con función (puerta, golpe, teléfono, pasos, ambiente…): el director lo propone y el montaje lo sintetiza con FFmpeg. Interno de la animación; la IR no cambia. */
+export type SoundKind = "door" | "bump" | "knock" | "ring" | "steps" | "ambience";
+export type SoundCue = { t: number; kind: SoundKind; dur?: number };
 export type Gesture = "none" | "wave" | "point" | "shrug" | "nod" | "shake" | "think" | "raise";
 export type Ease = "linear" | "in" | "out" | "inOut";
 export type Side = "left" | "right";
@@ -86,7 +89,7 @@ export type StyleParams = { ink: string; line: number; grade: Grade; vignette: n
 
 export type StageSpec = {
   v: 1; width: number; height: number; fps: number; duration: number; seed: number;
-  set: SetSpec; actors: ActorSpec[]; props: PropSpec[]; cues: Cue[]; style: StyleParams;
+  set: SetSpec; actors: ActorSpec[]; props: PropSpec[]; cues: Cue[]; style: StyleParams; sounds?: SoundCue[];
   /** Zona de subtítulos (fracción de la altura). La cámara sube la escena para que los pies queden por encima. Si falta se asume el subtítulo por defecto. */
   safe?: { top: number; bottom: number };
   /** Avisos del director (directivas no entendidas…): se muestran al revisar. */

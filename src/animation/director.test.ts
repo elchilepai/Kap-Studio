@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { direct, resolveSet, syntheticEnvelope, type DirectorInput } from "./director.ts";
 import { evaluate } from "./timeline.ts";
 import { KAP_LOOK, MIRA_LOOK } from "./demo.ts";
+import { deadAir, sceneChanges } from "./pacing.ts";
 
 const base = (o: Partial<DirectorInput> = {}): DirectorInput => ({
   duration: 8, aspect: 16 / 9, index: 0, fps: 30, width: 854, height: 480, location: "Refugio", mood: "", tags: [], narration: "", style: { ink: "#000000", line: 0.04, grade: "none", vignette: 0, shadow: true },
@@ -121,13 +122,13 @@ describe("acting: la narración dirige el cuerpo, la mirada, la expresión, la c
   const at = (s: ReturnType<typeof direct>, id: string, t: number) => evaluate(s, t).actors.find((a) => a.id === id)!;
   it("un sonido: todos reaccionan (sobresalto + expresión, escalonados) y la cámara se acerca; un «camara:» explícito la apaga", () => {
     const s = direct(base({ lines: [L("Se oye un portazo al fondo del pasillo.")] }));
-    expect(cues(s, "pose").map((c) => `${c.actor}:${c.value}`).sort()).toEqual(["kap:recoil", "mira:recoil"]); expect(cues(s, "expression").every((c) => c.value === "scared")).toBe(true);
-    expect(cues(s, "camera").some((c) => c.focus === "kap" && (c.zoom as number) > 1.2)).toBe(true);
+    expect(cues(s, "pose").map((c) => `${c.actor}:${c.value}`).sort()).toEqual(["kap:recoil", "mira:recoil"]);   // un portazo: sobresalto expect(cues(s, "expression").every((c) => c.value === "scared")).toBe(true);
+    expect(cues(s, "camera").some((c) => (c.zoom as number) > 1.05 && c.x !== undefined)).toBe(true);   // reencuadre hacia la fuente del sonido
     expect(cues(direct(base({ lines: [L("Se oye un portazo al fondo del pasillo.")], directions: ["camara: zoom 1.1"] })), "camera").every((c) => !c.focus)).toBe(true);
   });
   it("correr: primero se gira, se agacha un instante (anticipación), arranca corriendo, llega, frena y se asienta", () => {
     const s = direct(base({ lines: [L("KAP corre hacia la puerta.")] })), run = cues(s, "move")[0], t0 = cues(s, "face")[0].t as number;
-    expect(run.run).toBe(true); expect(cues(s, "pose").map((c) => c.value)).toEqual(["crouch", "idle"]); expect((run.t as number)).toBeGreaterThan(t0 + 0.2);   // la anticipación va antes de arrancar
+    expect(run.run).toBe(true); expect(cues(s, "pose").map((c) => c.value)).toEqual(["crouch", "settle"]); expect((run.t as number)).toBeGreaterThan(t0 + 0.2);   // la anticipación va antes de arrancar
     expect(cues(s, "pose")[1].t as number).toBeCloseTo((run.t as number) + (run.dur as number), 5);   // al llegar vuelve a reposo
     const k = at(s, "kap", (run.t as number) + (run.dur as number) / 2), start = at(s, "kap", (run.t as number) + 0.05), end = at(s, "kap", (run.t as number) + (run.dur as number) - 0.05);
     expect(k.speed).toBeGreaterThan(0.9); expect(start.speed).toBeLessThan(0.3); expect(end.speed).toBeLessThan(0.3);   // arranca despacio, va rápido en medio y frena
@@ -159,5 +160,58 @@ describe("espacios: el decorado corresponde al lugar narrativo (nada de «Salón
     const r = (loc: string, mood = "") => { const x = resolveSet(loc, [], mood); return `${x.preset}${x.variant ? `:${x.variant}` : ""}`; };
     expect(r("Salón", "Mañana, interior")).toBe("room:living"); expect(r("Salón")).toBe("room:living"); expect(r("Comedor")).toBe("room:living"); expect(r("Pasillo")).toBe("room:hallway"); expect(r("Cocina")).toBe("room:kitchen");
     expect(r("Habitación de KAP")).toBe("room:bedroom"); expect(r("Dormitorio")).toBe("room:bedroom"); expect(r("Casa de KAP")).toBe("room"); expect(r("Patio de la casa")).toBe("patio"); expect(r("Calle")).toBe("street"); expect(r("Lugar raro")).toBe("abstract");
+  });
+});
+
+describe("ritmo: acciones continuas, cámara con función, sonido y pausas con vida", () => {
+  const L = (text: string, start = 0.5) => ({ text, start, end: start + 3 }), cues = (s: ReturnType<typeof direct>, t: string) => s.cues.filter((c) => c.type === t) as unknown as Record<string, unknown>[];
+  it("«se levanta, cruza el pasillo y abre la puerta» es UNA acción: cada paso arranca solapado con el anterior, no con 1,5 s de silencio entre ellos", () => {
+    const s = direct(base({ lines: [L("KAP se levanta, cruza el pasillo y abre la puerta.")] })), mv = cues(s, "move")[0], reach = cues(s, "pose").find((c) => c.value === "reach");
+    expect((mv.t as number) - 0.5).toBeLessThan(0.8);                                   // empieza a caminar mientras se incorpora (no a +1,5 s)
+    expect(reach!.t as number).toBeLessThanOrEqual((mv.t as number) + (mv.dur as number) + 0.05);   // alcanza la puerta al llegar (sin hueco)
+    expect(deadAir(s.cues, 6, { from: 0.5, sounds: s.sounds })).toEqual([]);   // ningún hueco sin nada entre los pasos
+  });
+  it("escuchar vs asustarse: un ruido suave = quedarse quieto, levantar la cabeza y girarla hacia la fuente; un portazo = sobresalto; los dos se miran después", () => {
+    const soft = direct(base({ lines: [L("Se oye un ruido en el pasillo.")] })), hard = direct(base({ lines: [L("Se oye un portazo en el pasillo.")] }));
+    expect(cues(soft, "pose").map((c) => c.value)).toEqual(["listen", "listen"]); expect(cues(hard, "pose").map((c) => c.value)).toEqual(["recoil", "recoil"]);
+    const f = cues(soft, "face"); expect(f.some((c) => c.dir === "right" && (c.t as number) < 1.2)).toBe(true); expect(f.some((c) => (c.t as number) > 1.3)).toBe(true);   // gira hacia la fuente y luego se miran
+    expect(cues(soft, "expression").every((c) => c.value === "surprised")).toBe(true); expect(cues(hard, "expression").every((c) => c.value === "scared")).toBe(true);
+    expect(cues(soft, "camera").some((c) => c.x !== undefined)).toBe(true);   // la cámara se reencuadra hacia la fuente
+  });
+  it("sonido con función: puerta, golpe, teléfono y pasos salen de lo que cuenta la narración (y solo de eso)", () => {
+    const kinds = (t: string) => (direct(base({ lines: [L(t)] })).sounds ?? []).map((x) => x.kind);
+    expect(kinds("Se oye un portazo.")).toContain("door"); expect(kinds("Suena el teléfono sobre la mesa.")).toContain("ring"); expect(kinds("Se oye un golpe seco.")).toContain("bump");
+    expect(kinds("KAP cruza el pasillo hacia la puerta.")).toContain("steps"); expect(kinds("KAP llama a la puerta.")).toContain("knock"); expect(kinds("KAP está sentado en la cama.")).toEqual([]);
+  });
+  it("la cámara sigue la historia por prioridad: reacción > información > seguimiento > momento emocional; sin reglas de «un movimiento cada X s»", () => {
+    const hold = direct(base({ lines: [L("KAP, triste, mira al suelo.")] })); expect(cues(hold, "camera").some((c) => c.focus === "kap" && (c.zoom as number) >= 1.2 && (c.dur as number) >= 2)).toBe(true);   // momento emocional: más cerca y estable
+    const both = direct(base({ lines: [L("KAP cruza el pasillo asustado.")] })), z = cues(both, "camera").map((c) => c.zoom as number);
+    expect(z.some((v) => v >= 1.5)).toBe(true);          // la reacción (primer plano breve) gana al seguimiento que se solapa con ella
+    expect(cues(direct(base({ lines: [L("Se oye un portazo.")], directions: ["camara: zoom 1.2"] })), "camera").every((c) => !c.focus && c.x === undefined)).toBe(true);   // un «camara:» explícito manda
+  });
+  it("una pausa de ≥ 3 s no queda vacía (mirada/expresión/asentamiento, cámara lenta y ambiente) y solo si el montaje lo pide; no se acelera nada", () => {
+    const sparse = (pacing: boolean) => direct(base({ pacing, duration: 10, lines: [{ speaker: "KAP", text: "¿Hola?", start: 0.3, end: 1.2 }] }));
+    expect(deadAir(sparse(false).cues, 10, { sounds: sparse(false).sounds })).not.toEqual([]);   // sin pacing: el director no toca nada
+    const s = sparse(true); expect(deadAir(s.cues, 10, { sounds: s.sounds })).toEqual([]); expect((s.sounds ?? []).some((x) => x.kind === "ambience")).toBe(true);
+    expect(s.cues.filter((c) => c.type === "speak")).toHaveLength(1); expect(s.warnings.some((w) => /Pausa larga/.test(w))).toBe(true);
+    const talk = direct(base({ pacing: true, duration: 10, lines: [{ speaker: "KAP", text: "Hola.", start: 0.3, end: 3 }, { speaker: "MIRA", text: "Hola, KAP.", start: 3.2, end: 6 }, { speaker: "KAP", text: "¿Entramos?", start: 6.2, end: 9 }] }));
+    expect(talk.warnings.some((w) => /Pausa larga/.test(w))).toBe(false);   // con diálogo continuo no hay nada que rellenar
+  });
+});
+
+describe("toda acción visual importante tiene respuesta visual; una escena sin cambio se detecta", () => {
+  const L = (text: string) => ({ text, start: 0.5, end: 3.5 });
+  const response = (text: string) => { const st = direct(base({ lines: [L(text)] })); return st.cues.filter((c) => ["pose", "move", "face", "gesture", "expression", "prop"].includes(c.type)).length + (st.sounds?.length ?? 0) + (st.props.length > 0 ? 1 : 0); };
+  it("cada tipo de acción del modelo (postura, correr, caminar, manipular, quedarse quieto, sonido, reacción, gesto, mirada) produce algo que se ve u oye", () => {
+    const table: [string, string][] = [["postura", "KAP se levanta."], ["postura", "Mira se sienta."], ["correr", "KAP corre hacia la puerta."], ["locomoción", "KAP cruza el pasillo."], ["locomoción", "Mira se acerca a KAP."], ["locomoción", "KAP se aleja de Mira."],
+      ["manipular", "KAP abre la puerta."], ["manipular", "Mira enciende la luz."], ["manipular", "KAP coge el teléfono."], ["quieto", "KAP se queda quieto."], ["sonido", "Se oye un portazo."], ["sonido", "Se oye un ruido."], ["reacción", "KAP se sobresalta."], ["reacción", "Mira retrocede."],
+      ["gesto", "Mira asiente."], ["gesto", "KAP niega."], ["gesto", "KAP se encoge de hombros."], ["emoción", "KAP sonríe."], ["emoción", "Mira, asustada, mira a KAP."], ["mirada", "KAP mira hacia la ventana."], ["mirada", "KAP observa a Mira."], ["mirada", "Mira escucha."]];
+    for (const [kind, t] of table) expect(response(t), `${kind}: «${t}»`).toBeGreaterThan(0);
+  });
+  it("lo que solo describe no inventa respuesta (no hay acción artificial) y la escena sin nada que cambie se detecta", () => {
+    expect(response("La luz del sol ilumina el suelo de la habitación.")).toBe(0);
+    const still = direct(base({ duration: 6, lines: [L("La luz del sol ilumina el suelo.")] })), moving = direct(base({ duration: 8, lines: [L("KAP cruza el pasillo hacia la puerta, asustado.")] }));
+    expect(sceneChanges(still)).toBe(false); expect(sceneChanges(moving)).toBe(true);
+    expect(sceneChanges(direct(base({ duration: 8, lines: [L("Se oye un portazo.")] })))).toBe(true);   // reaccionan: cambia la expresión
   });
 });
