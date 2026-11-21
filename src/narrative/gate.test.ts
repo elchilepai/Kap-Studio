@@ -131,4 +131,16 @@ describe("conducta infantil: KAP actúa y una emoción establecida no se repite"
   it("las dos comprobaciones nuevas comparten una sola llamada local: no añaden una regeneración de escena", () => {
     const r = checkScene(inp(talk, { previous: [{ ...prevOf(base(0)), state: "confuso", does: "Duda" }], kapDoes: "Piensa", kapState: "confuso" })); const local = r.filter((x) => x.scope === "local"); expect(local.map((x) => x.kind)).toEqual(expect.arrayContaining(["kap-no-actua", "emocion-repetida"])); expect(needsSceneRegen(r)).toBe(false); expect(local.every((x) => x.lines!.join() === "0")).toBe(true);
   });
+  it("CONVERSACIÓN ESTÁTICA: la misma conversación que la escena anterior, sin que ocurra nada, se señala (regenerar); si ocurre algo, o cambian los personajes, no", () => {
+    const talk = (...xs: [string, string][]) => ({ lines: xs.map(([speaker, text]) => ({ speaker, text })), change: `Cambia algo distinto ${xs.length} ${xs[0][1].slice(0, 12)}` });
+    const A = talk(["Hermano", "¿Por qué no podemos salir hermanito? Quiero ver a papá"], ["KAP", "No es el momento hermanito, quédate aquí conmigo"], ["Hermano", "Pero quiero salir, los gritos me dan miedo"], ["KAP", "Solo quédate aquí, no es seguro salir ahora"], ["Hermano", "¿Y cuándo podremos salir de aquí hermanito?"]);
+    const B = talk(["Hermano", "Quiero salir a ver a papá y a mamá hermanito"], ["KAP", "Ya te dije que no es el momento, quédate aquí"], ["Hermano", "¿Por qué no podemos salir? Los gritos me asustan"], ["KAP", "Quédate aquí conmigo, salir no es seguro ahora"], ["Hermano", "¿Y si salimos solo un momento hermanito?"]);
+    const mk = (scene: ReturnType<typeof talk>, o: Partial<GateInput> = {}) => ({ scene, previous: [prevOf(A)], speakers: ["KAP", "Hermano"], memoryOutside: [] as string[], ...o });
+    const x = checkScene(mk(B)).find((i) => i.kind === "conversacion-estatica"); expect(x).toMatchObject({ scope: "scene", blocking: false });
+    const withAction = talk(["", "Una puerta se cierra con fuerza al otro lado del pasillo y KAP se queda quieto, escuchando."], ...B.lines.map((l) => [l.speaker, l.text] as [string, string]).slice(0, 4), ["", "KAP se acerca despacio a la puerta y pone la mano sobre la madera."]);
+    expect(checkScene(mk(withAction)).map((i) => i.kind)).not.toContain("conversacion-estatica");   // ocurre algo
+    const other = talk(["Padre", "Dame las llaves ahora mismo, no estoy bromeando contigo"], ["Madre", "No pienso dártelas, estás fuera de ti completamente"], ["Padre", "Salir de aquí es lo único que quiero hacer ahora"], ["Madre", "Pues sal por esa puerta y no vuelvas más"]);
+    expect(checkScene(mk(other, { speakers: ["Padre", "Madre"] })).map((i) => i.kind)).not.toContain("conversacion-estatica");   // otros personajes y otro tema
+    expect(checkScene({ ...mk(B), previous: [] }).map((i) => i.kind)).not.toContain("conversacion-estatica");   // la primera escena no tiene nada que repetir
+  });
 });

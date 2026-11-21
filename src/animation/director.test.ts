@@ -105,4 +105,13 @@ describe("acciones que se VEN: la narración mueve el cuerpo y el plano pedido n
     expect(withShot.cues.filter((c) => c.type === "camera" && (c as { focus?: string }).focus).length).toBeGreaterThan(0);
     expect(withCam.cues.filter((c) => c.type === "camera" && (c as { focus?: string }).focus).length).toBe(0);
   });
+  it("«se acerca» / «se aleja» mueven a quien lo hace hacia o lejos del otro, y «esconde/guarda/se quita» dan la pose de alcanzar; si el movimiento ya estaba dirigido a mano, no se duplica", () => {
+    const L = (text: string) => ({ text, start: 0.5, end: 3 }), moves = (s: ReturnType<typeof direct>) => s.cues.filter((c) => c.type === "move") as { actor: string; x: number }[];
+    const near = direct(base({ lines: [L("KAP se acerca despacio a Mira.")] })), kapSlot = near.actors.find((a) => a.id === "kap")!.slot, miraSlot = near.actors.find((a) => a.id === "mira")!.slot;
+    expect(moves(near)).toHaveLength(1); expect(moves(near)[0].actor).toBe("kap"); expect(Math.abs(moves(near)[0].x - miraSlot)).toBeLessThan(Math.abs(kapSlot - miraSlot));   // hacia ella
+    const far = direct(base({ lines: [L("KAP se aleja de Mira sin decir nada.")] })); expect(Math.abs(moves(far)[0].x - miraSlot)).toBeGreaterThan(Math.abs(kapSlot - miraSlot));   // lejos de ella
+    expect(moves(direct(base({ lines: [L("KAP se acerca despacio a Mira.")], directions: ["camina: KAP a derecha"] }))).length).toBe(1);   // solo el dirigido a mano
+    expect(direct(base({ lines: [L("KAP guarda el papel en el bolsillo.")] })).cues.filter((c) => c.type === "pose").map((c) => (c as { value: string }).value)).toEqual(["reach"]);
+    expect(direct(base({ lines: [L("KAP mira por la ventana, sin moverse.")] })).cues.filter((c) => c.type === "pose" || c.type === "move").length).toBe(0);   // no inventa acciones
+  });
 });

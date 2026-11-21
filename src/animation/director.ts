@@ -143,7 +143,7 @@ export function direct(inp: DirectorInput): StageSpec {
   const ACTIONS: [RegExp, "crouch" | "reach" | "throw" | "recoil", number][] = [
     [/\b(?:se agach\w*|se inclin\w*|se arrodill\w*|recoge|recoger|coge|mete (?:la|las) mano\w*|planta\w*|rebusca\w*|busca\w* (?:en|entre|bajo|debajo))\b/, "crouch", 1.5],
     [/\b(?:lanza\w*|arroja\w*|tira (?:la|el|una|un)|patea\w*)\b/, "throw", 1.0],
-    [/\b(?:alcanza\w*|estira\w*|agarra\w*|empuja\w*|abre|abrir|cierra|cerrar|toca\w*|levanta\w*|mueve\w*|aparta\w*)\b/, "reach", 1.2],
+    [/\b(?:alcanza\w*|estira\w*|agarra\w*|empuja\w*|abre|abrir|cierra|cerrar|toca\w*|levanta\w*|mueve\w*|aparta\w*|esconde\w*|guarda\w*|saca\w*|se quita|se pone|deja (?:la|el|las|los|una|un))\b/, "reach", 1.2],
     [/\b(?:retrocede\w*|da un paso atras|se echa atras|se aleja de golpe|se sobresalta|se asusta)\b/, "recoil", 1.0],
   ];
   const aliasesOf = (nm: string) => [norm(nm), ...norm(nm).split(/\s+/).filter((w) => w.length > 3 && w !== "kap")];
@@ -151,8 +151,12 @@ export function direct(inp: DirectorInput): StageSpec {
     if (l.speaker) continue;
     norm(l.text).split(/[.!?;]+|,|\bpero\b|\bmientras\b/).map((x) => x.trim()).filter(Boolean).forEach((clause, ci) => {
       const hit = actors.map((a) => ({ a, i: Math.min(...aliasesOf(a.name).map((al) => { const m = new RegExp(`\\b${al.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`).exec(clause); return m ? m.index : 1e9; })) })).filter((x) => x.i < 1e9).sort((p, q) => p.i - q.i)[0];
-      const act = hit && ACTIONS.find(([re]) => re.test(clause)); if (!hit || !act) return;
-      cues.push({ t: Math.max(0.1, l.start + ci * 0.45), type: "pose", actor: hit.a.id, value: act[1], dur: act[2] });
+      if (!hit) return; const t0 = Math.max(0.1, l.start + ci * 0.45);
+      // desplazamientos que cuenta la narración: «se acerca a…», «se aleja…» (hacia / lejos del personaje más cercano; solo si nadie lo dirigió a mano)
+      const toward = /\b(?:se acerca|se aproxima|va hacia|corre hacia)\b/.test(clause), away = /\b(?:se aleja|se separa|se marcha)\b/.test(clause), other = actors.filter((x) => x.id !== hit.a.id).sort((p, q) => Math.abs(p.slot - hit.a.slot) - Math.abs(q.slot - hit.a.slot))[0];
+      if ((toward || away) && other && !touched.has(hit.a.id)) { const dir = Math.sign(other.slot - hit.a.slot) || 1; cues.push({ t: t0, type: "move", actor: hit.a.id, x: Math.max(0.8, Math.min(WORLD_W - 0.8, toward ? other.slot - dir * 1.4 : hit.a.slot - dir * 1.8)), dur: 1.6 }); }
+      const act = ACTIONS.find(([re]) => re.test(clause)); if (!act) return;
+      cues.push({ t: t0, type: "pose", actor: hit.a.id, value: act[1], dur: act[2] });
     });
   }
   const weather: [RegExp, EffectKind][] = [[/lluvi|llueve|tormenta/, "rain"], [/nieve|nieva|nevada/, "snow"], [/niebla|bruma/, "fog"], [/polvo|ceniza|cenizas/, "dust"]];

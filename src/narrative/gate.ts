@@ -13,7 +13,7 @@ import { checkRhyme, firstInterventionOf, type RhymeCheck } from "./rhyme.ts";
 import { causalProblem, explainsCause } from "./causal.ts";
 import { ADULT_VOICE, MOTIVATIONAL, content, jac, words } from "./review.ts";
 
-export type GateIssueKind = "repite-escena" | "repite-frase" | "sin-cambio" | "personaje-no-previsto" | "monologo-relleno" | "corta" | "voz-adulta" | "hermano-reactivo" | "menciona-memoria" | "cierre-reflexivo" | "rima-invalida" | "explica-emocion" | "validacion-moraleja" | "cierre-desconectado" | "coste-ausente" | "kap-no-actua" | "emocion-repetida" | "sin-antecedente";
+export type GateIssueKind = "repite-escena" | "repite-frase" | "sin-cambio" | "personaje-no-previsto" | "monologo-relleno" | "corta" | "voz-adulta" | "hermano-reactivo" | "menciona-memoria" | "cierre-reflexivo" | "rima-invalida" | "explica-emocion" | "validacion-moraleja" | "cierre-desconectado" | "coste-ausente" | "kap-no-actua" | "emocion-repetida" | "sin-antecedente" | "conversacion-estatica";
 export type GateScope = "scene" | "local" | "repair" | "info";
 export type GateIssue = { kind: GateIssueKind; blocking: boolean; scope: GateScope; text: string; /** Índices de las líneas a reescribir (ámbito local) o a quitar (reparación). */ lines?: number[] };
 export type GateLine = { speaker?: string; text: string };
@@ -44,7 +44,7 @@ const text = (s: GateScene) => s.lines.map((l) => l.text).join(" ");
 const mentions = (t: string, name: string) => new RegExp(`(^|[^a-z0-9ñ])${norm(name).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}([^a-z0-9ñ]|$)`).test(norm(t));
 const REFLECT_START = /^\s*[¿¡]?\s*(?:y si|tal vez|quiz[aá]s?|a veces|alg[uú]n d[ií]a|nunca|siempre|todo|la vida|el mundo|por qu[eé] (?:yo|me|nadie))/i;
 const IS_BLOCKING: GateIssueKind[] = ["repite-escena", "repite-frase", "sin-cambio", "personaje-no-previsto"];
-const SCOPE: Record<GateIssueKind, GateScope> = { "repite-escena": "scene", "sin-cambio": "scene", "personaje-no-previsto": "scene", "repite-frase": "repair", "monologo-relleno": "repair", corta: "info", "voz-adulta": "local", "hermano-reactivo": "local", "menciona-memoria": "local", "cierre-reflexivo": "local", "rima-invalida": "local", "explica-emocion": "local", "validacion-moraleja": "local", "cierre-desconectado": "local", "coste-ausente": "local", "kap-no-actua": "local", "emocion-repetida": "local", "sin-antecedente": "local" };
+const SCOPE: Record<GateIssueKind, GateScope> = { "repite-escena": "scene", "sin-cambio": "scene", "personaje-no-previsto": "scene", "repite-frase": "repair", "monologo-relleno": "repair", corta: "info", "voz-adulta": "local", "hermano-reactivo": "local", "menciona-memoria": "local", "cierre-reflexivo": "local", "rima-invalida": "local", "explica-emocion": "local", "validacion-moraleja": "local", "cierre-desconectado": "local", "coste-ausente": "local", "kap-no-actua": "local", "emocion-repetida": "local", "sin-antecedente": "local", "conversacion-estatica": "scene" };
 
 /** Última comprobación de la rima de una escena (se expone para el banco de pruebas y los avisos). */
 export function sceneRhyme(lines: GateLine[], rhyme: NonNullable<GateInput["rhyme"]>, who = "KAP"): { check: RhymeCheck; index: number[] } {
@@ -69,6 +69,14 @@ export function checkScene(inp: GateInput): GateIssue[] {
     const filler = [...seen, ...own.map((o) => ({ ...o, known: true }))].some((x) => jac(x.w, w) >= 0.8 && (!x.known || x.who === who));   // sin datos de quién habló se asume relleno
     if (filler) dupIdx.push(i); else own.push({ w, who }); });
   if (dupIdx.length) add("repite-frase", `La frase «${sc.lines[dupIdx[0]].text.slice(0, 80)}» ya la había dicho el mismo personaje: no repitas diálogos.`, dupIdx);
+  // CONVERSACIÓN ESTÁTICA (regla narrativa, no un tope): misma conversación que la escena anterior (mismos personajes, mismo vocabulario) y sin que ocurra nada
+  // en ninguna de las dos (casi todo diálogo, a lo sumo una línea de acción). Si la conversación sigue, algo tiene que pasar. No bloquea: se regenera dentro del tope general.
+  { const last = prev.at(-1);
+    if (last?.speakers) { const sp = (ls: { speaker?: string }[]) => ls.map((l) => l.speaker ?? ""), who = (a: string[]) => [...new Set(a.map(norm).filter(Boolean))].sort().join("|");
+      const shape = (a: string[], ts: string[]) => ({ talk: a.filter((x) => x.trim()).length, act: ts.filter((x, i) => !(a[i] ?? "").trim() && words(x).length >= 5).length });
+      const me = shape(sp(sc.lines), sc.lines.map((l) => l.text)), you = shape(last.speakers, last.lines);
+      if (me.talk >= 4 && you.talk >= 4 && me.act <= 1 && you.act <= 1 && who(sp(sc.lines)) === who(last.speakers) && jac(mine, sets(last.text)) >= 0.2)
+        add("conversacion-estatica", "Sigue la misma conversación que la escena anterior (mismos personajes, mismo tema, sin que ocurra nada): si la conversación continúa, que alguien entre o se vaya, haga algo, aparezca información nueva, cambie el lugar, alguien interrumpa o cambie de opinión, o el problema se complique; o fúndela con la anterior."); } }
   // ¿qué ha cambiado? el cambio declarado debe existir, ser nuevo y apoyarse en contenido nuevo
   const ch = sc.change.trim(), allPrev = new Set(prev.flatMap((p) => [...sets(p.text)])), fresh = mine.size ? [...mine].filter((w) => !allPrev.has(w)).length / mine.size : 0;
   if (ch.length < 12 || prev.some((p) => p.change && jac(sets(ch), sets(p.change)) >= 0.6)) add("sin-cambio", "El cambio declarado es vacío o igual al de una escena anterior: ¿qué cambia al terminar esta escena (una acción, un dato nuevo, una reacción, una decisión, una consecuencia)?");

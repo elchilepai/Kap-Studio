@@ -26,3 +26,10 @@ Heurísticas sin IA que **avisan y no bloquean** (se muestran aparte de la conti
 
 ## Resultados medidos (CPU 4 vCPU / 16 GB, Qwen3-14B, contexto 8192; ver `docs/ia-bench/`)
 Resumen y comparación: `docs/ia-bench/` (ficheros `*-blind2-*.json`; `arc-v1/` conserva el primer intento del arco, que reutilizaba en exceso la memoria).
+
+## Planificación por secuencias (idea → arco → secuencias → beats visuales → escenas → diálogo)
+El arco ya no se planifica como «8 beats»: el modelo declara **`sequences`** (4–12, las que pida la historia). Cada secuencia es un tramo con una función clara y se convierte en **una escena**:
+`purpose` (qué aporta), `stage`, `location`, `time`, `characters`, `beats` (acontecimientos VISIBLES en orden, no reflexiones), `change` y, opcionalmente, `shot` y `talk` (`ninguno|poco|normal`: una escena puede contarse sin diálogo).
+`sequenceToBeat` las convierte al beat que ya consume el generador de escenas (sin llamadas nuevas al modelo); el encargo de la escena lleva `acontecimientos` y `dialogo`. El formato anterior (`beats`) sigue aceptándose.
+Con secuencias solo se exigen las etapas `inicio` y `gancho` (una escena silenciosa o una historia de origen no tiene por qué tener «decisión» ni «consecuencia»). El **piloto** (episodio 1 sin episodios previos, o «piloto» en la petición) usa una planificación de ORIGEN por fases y no exige el coste de una decisión.
+La puerta de calidad añade `conversacion-estatica` (la misma conversación que la escena anterior sin que ocurra nada → se regenera dentro del tope general). El director deduce de la narración «se acerca/se aleja», «esconde/guarda/se quita…» además de las poses de acción.

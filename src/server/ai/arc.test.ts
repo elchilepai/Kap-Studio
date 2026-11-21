@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import type { LlmClient, LlmRequest } from "@/ports/studio";
-import { EpisodeArc, llmArcAuthor } from "./arc";
+import { EpisodeArc, arcBeats, llmArcAuthor, sequenceToBeat } from "./arc";
+import { KAP_PERSONALITY } from "./prompts";
 import { validateIR } from "@/domain/screenplay";
 import { parsedToIR } from "@/server/studio/interpreter";
 import { parseScript } from "@/server/studio/script";
@@ -272,5 +273,53 @@ describe("generador por arco (arco → escenas) con puerta de calidad", () => {
   it("el prompt prioriza conducta sobre lenguaje y fija ACCIÓN → REACCIÓN → IMPROVISACIÓN → CONSECUENCIA, el error que mueve la historia y finales sin moraleja", async () => {
     const { llm } = await run(happy()); for (const c of [llm.calls[0], llm.calls[1]]) { const t = c.system ?? ""; expect(t).toMatch(/CONDUCTA INFANTIL, NO SOLO LENGUAJE INFANTIL/); expect(t).toMatch(/ACCIÓN → REACCIÓN → IMPROVISACIÓN → CONSECUENCIA, nunca SITUACIÓN → REFLEXIÓN → MORALEJA/); expect(t).toMatch(/naturalidad > comportamiento infantil > conflicto > moraleja/); expect(t).toMatch(/No es una lista que cumplir/); expect(t).toMatch(/El ERROR mueve la historia[\s\S]*tiene que arreglar el problema que él mismo creó/); expect(t).toMatch(/Una emoción ya establecida NO se repite/); expect(t).toMatch(/filósofo pequeño/); expect(t).toMatch(/Sin caricatura/); expect(t).toMatch(/Los secundarios tienen voluntad propia[\s\S]*KAP no controla siempre la conversación/); expect(t).toMatch(/consecuencia concreta → reacción de KAP → nuevo problema o pregunta natural → corte/); }
     expect(llm.calls[0].system).toMatch(/nunca plantilla[\s\S]*"behaviorBeats"/);
+  });
+});
+
+// ------------------------------------------------------------------ capa de SECUENCIAS (planificación: idea → arco → secuencias → beats visuales → escenas)
+/** Arco en formato nuevo: SECUENCIAS (sin «beats»), con acontecimientos visibles, lugar/hora/personajes y nivel de diálogo. */
+const seqArc = (places: string[] = ["Calle", "Tienda", "Casa de KAP", "Calle", "Tienda", "Casa de KAP"], over: Record<string, unknown> = {}) => {
+  const { beats: _legacy, ...rest } = arc(), n = places.length;
+  return { ...rest, sequences: places.map((loc, i) => ({ purpose: `Aporta ${text(i, 3, 600)} a la historia`, stage: i === 0 ? "inicio" : i === n - 1 ? "gancho" : "escalada", location: loc, time: i % 2 ? "noche" : "mañana", characters: ["KAP", "Hermano de KAP"],
+    beats: [`KAP entra y deja algo ${text(i, 2, 500)}`, `se oye un ruido ${text(i, 2, 520)}`, `mira hacia la puerta ${text(i, 2, 540)}`], change: `Cambia ${text(i, 5, 300)} de forma visible`, shot: i === 1 ? "general" : "medio", ...(i === 1 ? { talk: "ninguno" } : {}) })), ...over };
+};
+describe("secuencias: planificación ligera antes de las escenas", () => {
+  it("una secuencia puede contener beats (acontecimientos) y se valida; no hace falta «beats», ni 8 secuencias, ni decisión/consecuencia", () => {
+    const r = EpisodeArc.safeParse(seqArc()); expect(r.success).toBe(true); expect(arcBeats(r.data!)).toHaveLength(6);
+    expect(EpisodeArc.safeParse(seqArc(["Calle", "Tienda", "Casa de KAP", "Calle"])).success).toBe(true);   // 4 secuencias: las que pida la historia
+    const noEnd = seqArc(); (noEnd.sequences as { stage: string }[])[5].stage = "escalada"; const bad = EpisodeArc.safeParse(noEnd); expect(bad.success).toBe(false); expect(JSON.stringify(bad.error!.issues)).toMatch(/falta la etapa «gancho»/);
+    const noStages = { ...arc(), beats: undefined, sequences: undefined }; expect(EpisodeArc.safeParse(noStages).success).toBe(false);
+    expect(EpisodeArc.safeParse(arc()).success).toBe(true);   // el formato anterior (beats) sigue valiendo
+  });
+  it("secuencia → beat: conserva lugar, hora, personajes y cambio; los acontecimientos y el diálogo viajan al encargo de la escena", () => {
+    const s = (seqArc().sequences as Parameters<typeof sequenceToBeat>[0][])[1], b = sequenceToBeat(s);
+    expect(b).toMatchObject({ stage: s.stage, location: s.location, time: s.time, characters: s.characters, change: s.change, why: s.purpose, shot: "general", talk: "ninguno", fn: "avanzar-historia" });
+    expect(b.events).toEqual(s.beats); expect(b.summary).toContain(s.beats[0]); expect(b.summary).toContain(" → "); expect(b.summary.length).toBeLessThanOrEqual(280);
+    const mk = (location: string, interior?: boolean) => sequenceToBeat({ ...s, location, ...(interior === undefined ? {} : { interior }) }).interior;
+    expect(mk("Pasillo")).toBe(true); expect(mk("Habitación de KAP")).toBe(true); expect(mk("Patio de la casa")).toBe(false); expect(mk("Calle")).toBe(false); expect(mk("Calle", true)).toBe(true);   // interior/exterior se infiere salvo que la secuencia lo diga
+    expect(sequenceToBeat({ ...s, beats: ["Sale"] , purpose: "Cierra la escena con un gesto" }).summary.length).toBeGreaterThanOrEqual(12);
+  });
+  it("el plan se convierte en escenas: una por secuencia (6, no 8), con su lugar y hora, y el encargo trae los acontecimientos y el diálogo pedido", async () => {
+    const a = seqArc(), { llm, author, out } = await run([a, ...a.sequences.map((_, i) => scene(i))]);
+    expect(author.lastDraft!.scenes).toHaveLength(6); expect(author.lastDraft!.scenes.map((x) => x.location)).toEqual(a.sequences.map((x) => x.location)); expect(author.lastDraft!.scenes.map((x) => x.time)).toEqual(a.sequences.map((x) => x.time));
+    const brief = (k: number) => JSON.parse(llm.calls[k].prompt.split("corresponde a este beat del arco:\n")[1].split("\n")[0]);
+    expect(brief(1).acontecimientos).toEqual(a.sequences[0].beats); expect(brief(1).dialogo).toBeUndefined(); expect(brief(2).dialogo).toBe("ninguno"); expect(brief(2).acontecimientos).toHaveLength(3);
+    expect(author.lastArc!.beats).toHaveLength(6); expect(out.stats!.scenesDropped).toBe(0); expect(llm.calls).toHaveLength(7);   // 1 arco + 6 escenas: la capa NO añade llamadas
+  });
+  it("el flujo anterior (beats) sigue igual: 8 escenas, sin acontecimientos ni diálogo en el encargo", async () => {
+    const { llm, author } = await run(happy()); expect(author.lastDraft!.scenes).toHaveLength(8); expect(llm.calls[1].prompt).not.toContain("acontecimientos"); expect(author.lastArc!.sequences).toBeUndefined();
+  });
+  it("la personalidad de KAP y la planificación por secuencias llegan al arco y a las escenas", async () => {
+    const a = seqArc(), { llm } = await run([a, ...a.sequences.map((_, i) => scene(i))]);
+    expect(llm.calls[0].system).toContain(KAP_PERSONALITY); expect(llm.calls[0].system).toMatch(/PLANIFICAS EN SECUENCIAS/); expect(llm.calls[0].system).toMatch(/NO es un beat/);
+    expect(llm.calls[1].system).toContain(KAP_PERSONALITY); expect(llm.calls[1].system).toMatch(/LA ESCENA SALE DE LA SECUENCIA/); expect(llm.calls[1].system).toMatch(/no verbaliza lo que siente/);
+  });
+  it("el piloto usa otra planificación (historia de origen, varias fases y lugares, sin exigir el coste) y los episodios normales no", async () => {
+    const places = ["Habitación de KAP", "Habitación de KAP", "Pasillo", "Cocina", "Pasillo", "Habitación de KAP", "Habitación de KAP"], a = seqArc(places);
+    const pilot = await run([a, ...a.sequences.map((_, i) => scene(i))], ctx({ number: 1, notes: "Crea el episodio 1: el piloto" }));
+    expect(pilot.llm.calls[0].prompt).toMatch(/HISTORIA DE ORIGEN/); expect(pilot.llm.calls[1].prompt).toMatch(/PILOTO \(historia de origen\)/);
+    expect(pilot.author.lastDraft!.scenes.map((x) => x.location)).toEqual(places); expect(pilot.out.stats!.gateIssues!["coste-ausente"]).toBeUndefined();   // en el piloto no se exige el coste de una decisión
+    const normal = await run([a, ...a.sequences.map((_, i) => scene(i))], ctx({ number: 4 }), { previousEpisodes: [{ locations: ["Calle"], settings: [], hook: "x", ending: "y" }] } as never);
+    expect(normal.llm.calls[0].prompt).not.toMatch(/HISTORIA DE ORIGEN/); expect(normal.llm.calls[1].prompt).not.toMatch(/PILOTO \(historia de origen\)/);
   });
 });
