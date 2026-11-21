@@ -123,8 +123,10 @@ const luma = (hex: string) => { const n = parseInt(hex.replace("#", "").padEnd(6
  * El color del trazo sale de la ropa del personaje para distinguirlos; la gorra/sombrero se conserva como seña de identidad.
  */
 function drawStickman(c: Ctx, a: Appearance, pose: Pose, o: { ink: string; line: number; facing: 1 | -1; shadow: boolean; alpha: number }) {
-  const hh = 3.0 * a.height, ink = o.ink, lw = o.line, sw = 0.052 * hh * Math.min(1.15, a.build);
-  const col = luma(a.top) < 0.4 ? shade(a.top, 0.55) : a.top;
+  // protección defensiva: un diseño incompleto nunca debe romper el render (valores por defecto válidos, sin cambiar el aspecto de los diseños completos)
+  const top = typeof a.top === "string" && /^#[0-9a-fA-F]{6}$/.test(a.top) ? a.top : "#E9B949", skin = a.skin ?? "#f1c9a5", accent = a.accent ?? "#ffffff", height = a.height ?? 1, build = a.build ?? 1;
+  const hh = 3.0 * height, ink = o.ink, lw = o.line, sw = 0.052 * hh * Math.min(1.15, build);
+  const col = luma(top) < 0.4 ? shade(top, 0.55) : top;
   c.save(); c.globalAlpha *= o.alpha; c.scale(o.facing, 1);
   if (o.shadow) { c.fillStyle = "rgba(0,0,0,0.28)"; c.beginPath(); c.ellipse(0, 0.03, hh * 0.17, hh * 0.03, 0, 0, Math.PI * 2); c.fill(); }
   c.translate(0, -pose.bob * hh); c.rotate(pose.lean);
@@ -140,8 +142,8 @@ function drawStickman(c: Ctx, a: Appearance, pose: Pose, o: { ink: string; line:
   leg(pose.legF); arm(pose.armF, pose.handF);
   // cabeza
   const hy = shY - rH * 1.15 + pose.headDip * hh; c.save(); c.translate(0, shY); c.rotate(pose.headTilt); c.translate(0, -shY);
-  c.beginPath(); c.arc(0, hy, rH, 0, Math.PI * 2); fs(c, a.skin, ink, lw * 1.3);
-  if (a.hairStyle === "cap" || a.accessory === "hat") { const hc = a.hairStyle === "cap" ? a.accent : shade(a.accent, -0.1); c.beginPath(); c.arc(0, hy - rH * 0.1, rH * 1.04, Math.PI * 1.02, Math.PI * 1.98); c.closePath(); fs(c, hc, ink, lw); c.beginPath(); c.ellipse(rH * 0.85, hy - rH * 0.12, rH * 0.62, rH * 0.13, 0, 0, Math.PI * 2); fs(c, shade(hc, -0.18), ink, lw); }
+  c.beginPath(); c.arc(0, hy, rH, 0, Math.PI * 2); fs(c, skin, ink, lw * 1.3);
+  if (a.hairStyle === "cap" || a.accessory === "hat") { const hc = a.hairStyle === "cap" ? accent : shade(accent, -0.1); c.beginPath(); c.arc(0, hy - rH * 0.1, rH * 1.04, Math.PI * 1.02, Math.PI * 1.98); c.closePath(); fs(c, hc, ink, lw); c.beginPath(); c.ellipse(rH * 0.85, hy - rH * 0.12, rH * 0.62, rH * 0.13, 0, 0, Math.PI * 2); fs(c, shade(hc, -0.18), ink, lw); }
   const e = pose.expression, ey = hy + rH * 0.02, look = pose.lookX * rH * 0.12 + rH * 0.14, bl = 1 - pose.blink * 0.9;
   for (const sx of [-1, 1]) { const x = sx * rH * 0.42 + rH * 0.12;
     if ((e === "happy" && !pose.blink) || bl < 0.2) { c.strokeStyle = ink; c.lineWidth = lw * 1.6; c.lineCap = "round"; c.beginPath(); c.arc(x, ey + rH * 0.04, rH * 0.17, Math.PI * 1.12, Math.PI * 1.88); c.stroke(); }

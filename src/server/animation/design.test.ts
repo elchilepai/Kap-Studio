@@ -50,4 +50,12 @@ describe("labial por amplitud del audio", () => {
     expect(e.every((x) => x >= 0 && x <= 1)).toBe(true);
   });
   it("silencio total → boca cerrada", () => { expect(envelopeFromPcm(new Int16Array(8000), 8000, 30).every((x) => x === 0)).toBe(true); });
+  it("autoDesign: el hash sin signo no produce índices negativos (vecino, dani…): todos los campos de la prenda y del aspecto existen", () => {
+    for (const n of ["vecino", "dani", "Hermano de KAP", "ramiro", "KAP", "Profesora", "x", "Doña Carmen", "niño nuevo"]) {
+      const d = autoDesign(n), o = d.outfits[0];
+      for (const v of [d.skin, d.hairStyle, d.hairColor, d.eyeColor, o.top, o.bottom, o.shoes, o.accent, o.accessory]) expect(v, `${n}: campo indefinido`).toBeDefined();
+      expect(o.top).toMatch(/^#[0-9a-fA-F]{6}$/); expect(DesignSchema.safeParse(d).success).toBe(true); expect(resolveAppearance(d).top).toBe(o.top);
+    }
+    expect(autoDesign("vecino").outfits[0].top).toMatch(/^#/); expect(autoDesign("dani").outfits[0].top).toMatch(/^#/);   // los dos que fallaban
+  });
 });

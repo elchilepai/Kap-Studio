@@ -22,9 +22,9 @@ const STYLES = ["short", "long", "spiky", "bun", "cap"] as const, ACCS = ["none"
 export function autoDesign(name: string): CharacterDesign {
   const h = hash32(name.toLowerCase());
   return {
-    archetype: "flat", skin: SKINS[h % SKINS.length], hairStyle: STYLES[(h >> 3) % STYLES.length], hairColor: HAIRS[(h >> 5) % HAIRS.length], eyeColor: EYES[(h >> 7) % EYES.length],
+    archetype: "flat", skin: SKINS[h % SKINS.length], hairStyle: STYLES[(h >>> 3) % STYLES.length], hairColor: HAIRS[(h >>> 5) % HAIRS.length], eyeColor: EYES[(h >>> 7) % EYES.length],
     height: 1, build: 1, body: "regular", eyeStyle: "round", version: 1, changeLog: [],
-    outfits: [{ id: DEFAULT_OUTFIT_ID, name: "Base", top: TOPS[(h >> 9) % TOPS.length], bottom: BOTTOMS[(h >> 11) % BOTTOMS.length], shoes: "#1c1f27", accent: "#ffffff", accessory: ACCS[(h >> 13) % ACCS.length] }],
+    outfits: [{ id: DEFAULT_OUTFIT_ID, name: "Base", top: TOPS[(h >>> 9) % TOPS.length], bottom: BOTTOMS[(h >>> 11) % BOTTOMS.length], shoes: "#1c1f27", accent: "#ffffff", accessory: ACCS[(h >>> 13) % ACCS.length] }],
   };
 }
 

@@ -60,4 +60,9 @@ describe("línea de tiempo (pura y determinista)", () => {
     expect(hash(withLook())).toBe(hash(withLook("stickman"))); expect(hash(withLook())).not.toBe(hash(withLook("cutout")));
     expect(hash(withLook("stickman"))).toBe(hash(withLook("stickman")));   // determinista
   });
+  it("stickman: un diseño incompleto (sin top, skin, accent…) se dibuja con valores por defecto y no rompe el render", () => {
+    const base = demoStage(), hash = (st: StageSpec) => { const cv = createCanvas(320, 180); renderFrame(cv.getContext("2d") as never, st, 1.7, { images: {} }, 320, 180); return createHash("sha256").update(cv.data()).digest("hex"); };
+    const broken: StageSpec = { ...base, actors: base.actors.map((a) => ({ ...a, appearance: { ...a.appearance, top: undefined, skin: undefined, accent: undefined } as never })) };
+    expect(() => hash(broken)).not.toThrow(); expect(hash(broken)).toBe(hash(broken)); expect(hash(broken)).not.toBe(hash(base));   // con diseño válido el aspecto es otro (usa sus colores)
+  });
 });
