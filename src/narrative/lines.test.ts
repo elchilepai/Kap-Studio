@@ -27,6 +27,10 @@ describe("narración ≠ diálogo", () => {
       expect(dlg(s, t), `${s}: ${t}`).toEqual({ speaker: s, text: t });
     expect(looksLikeNarration("KAP, ¿me oyes? Dime algo, por favor.", known)).toBe(false);
   });
+  it("los incisos de narración dentro de una frase hablada no se leen («Vamos —murmura, agarrando la mano—.» → «Vamos.»)", () => {
+    expect(dlg("KAP", "Vamos, rápido —murmura, agarrando al hermano por la mano—. Vamos, no mires, solo ven conmigo.")).toEqual({ speaker: "KAP", text: "Vamos, rápido. Vamos, no mires, solo ven conmigo." });
+    expect(dlg("KAP", "Ven aquí —dice— y no te muevas.")?.text).toBe("Ven aquí y no te muevas."); expect(dlg("KAP", "No sé — de verdad — qué hacer.")?.text).toBe("No sé — de verdad — qué hacer.");   // un inciso hablado se queda
+  });
   it("las líneas vacías se descartan y la narración sin hablante se conserva", () => {
     expect(normalizeLines([{ speaker: "KAP", text: "   " }, { text: "Se oye un portazo." }, { speaker: "KAP", text: "¿Qué fue eso?" }], known)).toEqual([{ text: "Se oye un portazo." }, { speaker: "KAP", text: "¿Qué fue eso?" }]);
   });

@@ -35,6 +35,7 @@ export function looksLikeNarration(text: string, known: string[] = []): boolean 
 export function normalizeLine(l: RawLine, known: string[] = []): RawLine | undefined {
   let text = (l.text ?? "").replace(/\s+/g, " ").trim(); let speaker = (l.speaker ?? "").replace(/:\s*$/, "").trim();
   if (speaker) { text = stripSpeakerEcho(speaker, text); if (NON_CHARACTER.test(speaker) || speaker.split(/\s+/).length > 4 || /[()\[\]]/.test(speaker)) speaker = ""; }
+  if (speaker) text = text.replace(/\s*—\s*(?=[^—]{2,90}—)([^—]*(?:murmur\w*|susurr\w*|\bdice\b|\bgrit\w*|responde|pregunta|exclama|agarr\w*|\bmir\w*|\bcoge\w*|\w+(?:ando|iendo)\b)[^—]*)—\s*/gi, " ").replace(/\s+([.,!?…])/g, "$1").replace(/\s{2,}/g, " ").trim() || text;   // incisos de narración dentro de la frase («Vamos —murmura, agarrándolo—.»)
   if (speaker && looksLikeNarration(text, known)) speaker = "";
   if (!speaker) text = text.replace(/^[(\[]\s*/, "").replace(/\s*[)\]]\s*(?=[.!?]?$)/, "").replace(/^[)\]]\s*/, "").replace(/\s+[)\]]\s*$/, "").trim();
   if (!text) return undefined;
