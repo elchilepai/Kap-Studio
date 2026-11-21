@@ -1,0 +1,113 @@
+Episodio 1 · «El comienzo de un sueño» (CANDIDATO, sin aprobar)
+Petición: Crea el episodio 1: el piloto de la serie, el comienzo de la historia de KAP. No es un episodio normal: presenta quién es KAP (un niño introvertido, observador, reservado y poco hablador, muy protector con su hermano pequeño y que se pone nervioso cuando todo se descontrola), cómo es su familia y el ambiente en el que crece, y el origen de su objetivo de sacar adelante a su hermano. Todo se descubre por la situación y las acciones, no por explicaciones. Empieza con la vida cotidiana en casa, con pequeños gestos entre los hermanos y la música ya presente en KAP de forma natural (escuchando algo, escribiendo o ensayando una rima, algo de 2Pac), sin que diga que quiere ser rapero. Después sube la tensión: sus padres discuten por el contexto de las drogas, la discusión escala hasta que el padre pierde el control y agrede a la madre (sin detalles gráficos ni recrearse en ello), y los padres acaban separándose. KAP lo escucha desde su habitación, asustado pero intentando mantener la calma porque su hermano pequeño está con él: lo tranquiliza, evita que salga, se pone delante si hace falta o se queda callado y cerca de él, sin discursos ni análisis adulto. El hermano pregunta, reacciona y tiene presencia propia. KAP no tiene por qué cometer ningún error ni tomar decisiones espectaculares: puede observar, callar y no saber qué hacer. Al final, una pequeña acción o conversación entre los dos hermanos hace nacer su objetivo (algún día saldrán de esa situación), sin moraleja, sin narrador y sin frases del tipo «desde ese día supe que…»: KAP sigue siendo un niño que no sabe cómo va a hacerlo, pero ha decidido intentarlo.
+
+# Habitación de KAP
+[mood: Tarde, interior]
+[plano: general]
+KAP está sentado en su cama, escuchando música de 2Pac con los auriculares puestos. Su hermano pequeño juega con sus juguetes en el suelo, a su lado.
+HERMANO DE KAP: ¿KAP? ¿Por qué no estás cantando como siempre?
+KAP: Estoy aquí, hermanito. Solo... miro un poco.
+HERMANO DE KAP: ¿No te gusta la música de 2Pac? Yo también la quiero escuchar.
+KAP: Yo ya tengo mi parte. Tú puedes tener la tuya cuando quieras, hermanito.
+KAP: Hoy no canto por el mundo, solo por ti. Porque sé que algún día, voy a salir de aquí.
+HERMANO DE KAP: ¿Vas a salir de aquí? ¿A dónde?
+KAP: A donde sea, pero siempre con vosotros.
+HERMANO DE KAP: ¿Y si no te dejan salir?
+KAP: (se queda callado por un momento, mirando a su hermano) No lo sé. Pero algún día, vamos a estar bien.
+[acto: inicio | KAP está en su habitación, escuchando música de 2Pac mientras observa a su hermano pequeño jugar con sus juguetes. La atmósfera es tranquil…]
+
+# Habitación de KAP
+[mood: Tarde, interior]
+[plano: primer plano KAP]
+[expresion: KAP preocupado]
+[gesto: KAP encoge]
+[mira: KAP izquierda]
+[camara: zoom 1.2]
+KAP se queda mirando a su hermano, con expresión tensa, mientras escucha gritos provenientes de la cocina. El hermano lo observa con curiosidad y se acerca a él.
+HERMANO DE KAP: ¿Por qué estás tan callado, KAP? ¿Hay problemas?
+KAP: No... no hay nada. Solo es... un ruido.
+HERMANO DE KAP: Pero me parece que no es solo un ruido. ¿Es papá y mamá?
+[acto: conflicto | KAP escucha la discusión entre sus padres desde su habitación. Puede oír gritos y objetos que caen, pero no se atreve a salir.]
+
+# Habitación de KAP
+[mood: Tarde, interior]
+[plano: medio KAP]
+[expresion: KAP preocupado]
+Los gritos de los padres se escuchan más fuertes ahora. Un objeto cae al suelo con un estruendo. KAP se agacha, protegiendo a su hermano con su cuerpo.
+HERMANO DE KAP: ¿Qué pasa, KAP? ¿Por qué estás tan callado?
+KAP: No es nada, hermanito. Solo... solo no te muevas, ¿vale?
+HERMANO DE KAP: Pero yo quiero ir a ver qué pasa. ¡Papá siempre me deja jugar con él cuando hay problemas!
+[acto: desarrollo | La discusión entre los padres escala hasta que el padre grita y le da un empujón a la madre. KAP se inquieta, pero mantiene la calma por su…]
+[conoce: KAP, Hermano de KAP]
+[relacion: KAP, Hermano de KAP, confianza +2]
+
+# Habitación de KAP
+[mood: Tarde, interior]
+[plano: general]
+[gesto: KAP niega]
+[mira: KAP izquierda]
+[camina: KAP a izquierda]
+KAP: No... no te muevas, hermanito. No es el momento.
+HERMANO DE KAP: ¿Por qué? ¿Qué pasa afuera?
+KAP: No es seguro, solo... solo queda aquí conmigo, por favor.
+HERMANO DE KAP: Pero me gustaría ver a papá y mamá. Me gustaría que dejaran de gritar.
+KAP: No es el momento, ya te dije.
+[acto: emocional | KAP decide que no permitirá que su hermano se exponga al caos de afuera. Se pone delante de la puerta y le dice que no pueden salir.]
+
+# Habitación de KAP
+[mood: Tarde, interior]
+[plano: medio KAP]
+[camina: a a centro]
+[vfx: lluvia]
+HERMANO DE KAP: KAP... por qué no podemos salir? ¿Qué pasa afuera? Me gustaría ver a papá y mamá. Me gustaría que dejaran de gritar.
+KAP: No es el momento, hermanito. Solo... solo queda aquí conmigo, por favor.
+HERMANO DE KAP: Pero me gustaría verlos. No entiendo por qué no podemos salir. ¿Por qué estás tan callado?
+KAP: Es mejor que no salgamos, hermanito. Por ahora, tenemos que protegernos. No es seguro.
+HERMANO DE KAP: ¿Y si algún día sí es seguro? ¿Cuándo será?
+KAP: Cuando todo esté mejor... cuando ya no haya gritos, ni llantos, ni... ni cosas que no deberían estar pasando.
+HERMANO DE KAP: ¿Y cómo se hará eso? ¿Cómo lo sabes tú?
+KAP: No lo sé, hermanito. Pero... algún día, sí lo sabré.
+KAP: Hasta entonces, solo tenemos que seguir aquí, juntos.
+HERMANO DE KAP: ¿Y si algún día quiero salir y no quieres venir conmigo?
+[relacion: KAP, Hermano de KAP, protege, +1]
+
+# Habitación de KAP
+[mood: Tarde, interior]
+[plano: general]
+HERMANO DE KAP: Pero me gustaría verlos. No entiendo por qué no podemos salir.
+KAP: KAP: En la calle hay peligro, hermanito, / pero aquí somos más fuertes, aunque no lo parezca.
+KAP: KAP: Papá y mamá están muy enojados, / pero tú y yo... tenemos que quedarnos aquí, tranqui.
+KAP: KAP: La música me ayuda a pensar, / aunque no sé si es un camino o un engaño.
+HERMANO DE KAP: (El hermano asiente con la cabeza, mostrando una pequeña comprensión. Se acurruca junto a KAP, mirando el micrófono con curiosidad.)
+KAP: (KAP mira a su hermano con una expresión entre tristeza y determinación. Pone una mano en la cabeza del hermano y lo abraza brevemente, como si estuviera diciéndole algo sin palabras.)
+[acto: resolucion | El hermano, aunque confundido, asiente con la cabeza, mostrando una pequeña comprensión. KAP se sienta a su lado y saca su pequeño micrófon…]
+
+# Habitación de KAP
+[mood: Tarde, interior]
+[plano: primer plano KAP]
+KAP: ...y aunque ahora no lo entiendas, algún día entenderás que esto es solo el principio.
+HERMANO DE KAP: ¿Y cuándo será ese día, KAP?
+KAP: Cuando seas más grande, hermanito. Cuando seas más fuerte.
+HERMANO DE KAP: Pero yo ya soy grande. Ya tengo siete años.
+KAP: Y yo, aunque no lo parezca, también estoy creciendo. Y un día... un día voy a salir de aquí.
+HERMANO DE KAP: ¿Y cómo vas a salir? ¿Como papá y mamá?
+KAP: No como ellos. Yo saldré de otra manera. Con música. Con palabras.
+HERMANO DE KAP: ¿Y qué pasa si no te creen?
+KAP: Entonces... me aseguraré de que me escuchen.
+HERMANO DE KAP: ¿Y si no puedes?
+[acto: gancho | KAP termina la rima, mirando a su hermano con una mezcla de firmeza y esperanza en sus ojos. El episodio se cierra con el sonido de un relo…]
+
+# Habitación de KAP
+[mood: Tarde, interior]
+[plano: general]
+HERMANO DE KAP: KAP... ¿es papá o mamá? ¿Ya se han calmado?
+KAP: No lo sé, hermanito. Solo... solo no te muevas, por favor.
+HERMANO DE KAP: Pero quiero verlos. Me gustaría que dejaran de gritar. ¿Por qué siempre hacen eso?
+HERMANO DE KAP: Pero yo ya no quiero estar aquí. Yo quiero salir y verlos.
+KAP: Ya te dije que no es seguro. Solo... solo confía en mí, hermanito.
+HERMANO DE KAP: ¿Y si me pierdo? ¿Y si no te escucho cuando necesite ayuda?
+KAP: Entonces... entonces me aseguraré de que nunca te pierdas. Te prometo que siempre estaré aquí para ti.
+HERMANO DE KAP: ¿Lo prometes, KAP? ¿Como en la canción que escribiste?
+KAP: Sí... sí, como en la canción.
+[gancho: El hermano pequeño pregunta por qué no pueden salir, y KAP le dice algo que no es una promesa, pero sí el primer paso hacia un sueño que aún no entiende del todo.]
+
