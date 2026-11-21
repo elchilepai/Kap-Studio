@@ -1,0 +1,83 @@
+Episodio 1 · «El comienzo» (CANDIDATO, sin aprobar)
+Petición: Crea el episodio 1: el piloto de la serie, el comienzo de la historia de KAP. No es un episodio normal: presenta quién es KAP (un niño introvertido, observador, reservado y poco hablador, muy protector con su hermano pequeño y que se pone nervioso cuando todo se descontrola), cómo es su familia y el ambiente en el que crece, y el origen de su objetivo de sacar adelante a su hermano. Todo se descubre por la situación y las acciones, no por explicaciones. Empieza con la vida cotidiana en casa, con pequeños gestos entre los hermanos y la música ya presente en KAP de forma natural (escuchando algo, escribiendo o ensayando una rima, algo de 2Pac), sin que diga que quiere ser rapero. Después sube la tensión: sus padres discuten por el contexto de las drogas, la discusión escala hasta que el padre pierde el control y agrede a la madre (sin detalles gráficos ni recrearse en ello), y los padres acaban separándose. KAP lo escucha desde su habitación, asustado pero intentando mantener la calma porque su hermano pequeño está con él: lo tranquiliza, evita que salga, se pone delante si hace falta o se queda callado y cerca de él, sin discursos ni análisis adulto. El hermano pregunta, reacciona y tiene presencia propia. KAP no tiene por qué cometer ningún error ni tomar decisiones espectaculares: puede observar, callar y no saber qué hacer. Al final, una pequeña acción o conversación entre los dos hermanos hace nacer su objetivo (algún día saldrán de esa situación), sin moraleja, sin narrador y sin frases del tipo «desde ese día supe que…»: KAP sigue siendo un niño que no sabe cómo va a hacerlo, pero ha decidido intentarlo.
+
+# Habitación de KAP
+[mood: Noche, interior]
+[plano: general]
+[expresion: KAP pensativo]
+[camara: seguir KAP]
+KAP está sentado en su cama, mirando fijamente al suelo mientras su hermano pequeño corre de un lado a otro, jugando con un peluche viejo que parece haber sido arrancado de una bolsa de ropa usada.
+KAP: El piso se mueve, el peluche no… joder, qué ruido es ese.
+KAP: Miro al suelo, miro al techo, pero no hay nada que me diga qué hacer…
+[acto: inicio | KAP está en su habitación escuchando música, observando a su hermano pequeño jugar en el suelo.]
+[conoce: KAP, Hermano de KAP]
+
+# Pasillo
+[mood: Noche, interior]
+[plano: general]
+[expresion: KAP preocupado]
+[gesto: KAP encoge]
+De repente, se escucha una voz gritando desde el salón, seguida de otro grito más fuerte. Un ruido seco, como si algo se rompiera, atraviesa el aire.
+KAP: KAP cierra los ojos con fuerza y se queda inmóvil, mirando al suelo. No se mueve, ni siquiera cuando el ruido se acerca.
+KAP cierra los ojos con fuerza y se queda inmóvil, mirando al suelo. No se mueve, ni siquiera cuando el ruido se acerca.
+[acto: conflicto | Se escucha una discusión en el salón, seguida de gritos y un ruido fuerte.]
+[relacion: KAP, Hermano de KAP, protege, +1]
+
+# Habitación de KAP
+[mood: Noche, interior]
+[plano: medio KAP]
+[camara: seguir KAP]
+Los gritos se acercan, más fuertes. Un portazo suena en el pasillo. El hermano de KAP se detiene en medio de la habitación, mirando a KAP con los ojos muy abiertos.
+KAP: Vamos, rápido —murmura, agarrando al hermano por la mano—. Vamos, no mires, no hables, solo ven conmigo.
+KAP lleva al hermano hacia la cama, sin soltar su mano. El ruido sigue en el pasillo, como si el mundo se estuviera rompiendo más allá de la puerta.
+[acto: desarrollo | El ruido se intensifica. KAP agarra al hermano y lo lleva a su habitación.]
+[relacion: KAP, Hermano de KAP, protege, +1]
+
+# Habitación de KAP
+[mood: Noche, interior]
+[plano: primer plano KAP]
+KAP: KAP: Mira, hermanito… el tipo, él también empezó en la calle…
+KAP: KAP: Dice que aunque el mundo le grita, siempre tiene un ritmo…
+KAP: KAP: Y ahora es un rey… no por la plata, sino por lo que dice.
+KAP: KAP: Puede que algún día… nosotros también tengamos un ritmo.
+[acto: emocional | KAP le muestra a su hermano una canción de 2Pac, intentando distraerlo.]
+
+# Salón
+[mood: Mañana, interior]
+[plano: general]
+[expresion: KAP pensativo]
+La casa se queda en silencio. Solo el sonido de los pasos en la calle, lejos, y el viento que entra por las ventanas abiertas. KAP y su hermano miran por la ventana, viendo cómo sus padres cargan una maleta y salen de la casa. La puerta se cierra con un golpe suave, casi como si no quisieran hacer ruido.
+KAP: No dice nada. Solo observa, con la mirada fija en el lugar donde estuvieron sus padres hace un momento.
+El hermano se acerca a la ventana y mira también, con una expresión vacía. No pregunta. Solo observa.
+KAP se vuelve hacia su hermano y le sonríe con una expresión que no es feliz, pero tampoco es triste. Es una mirada que dice: 'Ahora somos solo nosotros.'
+Baja la mirada, como si no supiera qué hacer con sus manos o su cuerpo.
+KAP se acerca a él y le da una palmadita en la espalda. No es un gesto grande, pero es suficiente para decir: 'Estoy aquí.'
+La luz del sol entra por la ventana, iluminando el suelo de la habitación. La casa, que antes estaba llena de ruido y discusiones, ahora parece vacía.
+[pierde: KAP, padres]
+[relacion: KAP, Hermano de KAP, apoyo, +1]
+
+# Habitación de KAP
+[mood: Mañana, interior]
+[plano: medio KAP]
+[expresion: KAP pensativo]
+[mira: KAP izquierda]
+VACÍO: La luz del amanecer entra por la ventana, iluminando suavemente la habitación. KAP y su hermano están sentados en el suelo, mirando fijamente la pantalla del teléfono. La canción de 2Pac termina, y el silencio se prolonga.
+VACÍO: El hermano se acerca al teléfono y lo gira hacia él, como si quisiera ver mejor las palabras en la pantalla. Sus ojos reflejan curiosidad y algo más… una esperanza pequeña pero real.
+VACÍO: KAP no dice nada. Solo mira a su hermano, luego vuelve a la pantalla. La canción se repite, y esta vez, KAP asiente levemente, como si estuviera de acuerdo con algo que no puede expresar en voz alta.
+VACÍO: Se levanta y camina hacia la puerta, mira hacia fuera por un momento y luego regresa a su lugar junto a KAP. Se sienta, cruzando las piernas, y vuelve a mirar la pantalla.
+VACÍO: KAP toma el teléfono con ambas manos, lo apoya en el suelo y lo gira hacia su hermano. Por un instante, parece que va a hablar, pero se detiene. Luego, sin hacer ruido, se levanta y camina hacia la puerta, mira al exterior y cierra la puerta con cuidado.
+VACÍO: El hermano lo observa en silencio. Después de un momento, toma el teléfono y lo sostiene contra su pecho, como si estuviera sosteniendo un sueño aún no nacido.
+[acto: resolucion | KAP y su hermano se quedan mirando una canción de 2Pac en el teléfono, en silencio.]
+[relacion: KAP, Hermano de KAP, dependencia, +1]
+[conoce: KAP, canción 2Pac]
+[obtiene: KAP, inspiración]
+
+# Habitación de KAP
+[mood: Mañana, interior]
+[plano: primer plano KAP]
+HERMANO DE KAP: ¿Qué pasará ahora?
+KAP: (Mira a su hermano con seriedad, sin responder inmediatamente. Sus ojos reflejan una determinación silenciosa. Luego, con un movimiento lento y firme, KAP coge el teléfono y lo coloca entre ambos, encendiendo la pantalla para que la luz ilumine su rostro. Su hermano lo observa, expectante.)
+KAP: (Sin decir una palabra, KAP busca una canción en el teléfono, pero no se la muestra a su hermano. En lugar de eso, la reproduce en voz baja, solo para él. La música comienza a sonar, un ritmo bajo y poderoso que llena la habitación.)
+[acto: gancho | El hermano de KAP pregunta en voz baja: «¿Qué pasará ahora?»]
+[gancho: KAP y su hermano se quedan mirando una canción de 2Pac en el teléfono, un pequeño gesto que anuncia el comienzo de un sueño aún no formulado.]
+

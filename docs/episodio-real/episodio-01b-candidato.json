@@ -1,0 +1,410 @@
+{
+ "number": 1,
+ "title": "El comienzo",
+ "request": "Crea el episodio 1: el piloto de la serie, el comienzo de la historia de KAP. No es un episodio normal: presenta quién es KAP (un niño introvertido, observador, reservado y poco hablador, muy protector con su hermano pequeño y que se pone nervioso cuando todo se descontrola), cómo es su familia y el ambiente en el que crece, y el origen de su objetivo de sacar adelante a su hermano. Todo se descubre por la situación y las acciones, no por explicaciones. Empieza con la vida cotidiana en casa, con pequeños gestos entre los hermanos y la música ya presente en KAP de forma natural (escuchando algo, escribiendo o ensayando una rima, algo de 2Pac), sin que diga que quiere ser rapero. Después sube la tensión: sus padres discuten por el contexto de las drogas, la discusión escala hasta que el padre pierde el control y agrede a la madre (sin detalles gráficos ni recrearse en ello), y los padres acaban separándose. KAP lo escucha desde su habitación, asustado pero intentando mantener la calma porque su hermano pequeño está con él: lo tranquiliza, evita que salga, se pone delante si hace falta o se queda callado y cerca de él, sin discursos ni análisis adulto. El hermano pregunta, reacciona y tiene presencia propia. KAP no tiene por qué cometer ningún error ni tomar decisiones espectaculares: puede observar, callar y no saber qué hacer. Al final, una pequeña acción o conversación entre los dos hermanos hace nacer su objetivo (algún día saldrán de esa situación), sin moraleja, sin narrador y sin frases del tipo «desde ese día supe que…»: KAP sigue siendo un niño que no sabe cómo va a hacerlo, pero ha decidido intentarlo.",
+ "request_parsed": {
+  "number": 1,
+  "exact": false,
+  "cast": [
+   "KAP"
+  ]
+ },
+ "generationMin": 193.9,
+ "scenes": 7,
+ "words": 766,
+ "estimatedSec": 270,
+ "irValid": true,
+ "irErrors": [],
+ "checks": {
+  "passed": 11,
+  "total": 13,
+  "failed": [
+   "decision-real",
+   "decision-con-consecuencia"
+  ]
+ },
+ "gate": {
+  "regenerated": 13,
+  "localPatches": 8,
+  "codeRepairs": 0,
+  "dropped": 2,
+  "patchKinds": {
+   "rima-invalida": 4,
+   "menciona-memoria": 4
+  },
+  "gateIssues": {
+   "personaje-no-previsto": 16,
+   "rima-invalida": 4,
+   "menciona-memoria": 8,
+   "corta": 8,
+   "repite-escena": 1,
+   "repite-frase": 1,
+   "sin-cambio": 1,
+   "sin-antecedente": 3,
+   "kap-no-actua": 1
+  },
+  "arcRevisions": 0,
+  "endingRevisions": 0,
+  "varietyRevisions": 0,
+  "rhymeValid": false
+ },
+ "usage": {
+  "promptTokens": 123816,
+  "outputTokens": 11450,
+  "totalMs": 11593720.285932,
+  "loadMs": 54642.050958,
+  "promptMs": 4803313.288998999,
+  "evalMs": 6725677.209
+ },
+ "calls": 31,
+ "retries": 21,
+ "warnings": [
+  "El modelo desordenó las etapas del arco; se han reordenado.",
+  "El arco incluía a Hermano de KAP en un beat sin justificarlo: se ha quitado (la memoria no obliga a reutilizarlo).",
+  "El arco incluía a Hermano de KAP en un beat sin justificarlo: se ha quitado (la memoria no obliga a reutilizarlo).",
+  "El arco incluía a Hermano de KAP en un beat sin justificarlo: se ha quitado (la memoria no obliga a reutilizarlo).",
+  "El arco incluía a Hermano de KAP en un beat sin justificarlo: se ha quitado (la memoria no obliga a reutilizarlo).",
+  "El arco incluía a Hermano de KAP en un beat sin justificarlo: se ha quitado (la memoria no obliga a reutilizarlo).",
+  "El arco incluía a Hermano de KAP en un beat sin justificarlo: se ha quitado (la memoria no obliga a reutilizarlo).",
+  "El arco incluía a Hermano de KAP en un beat sin justificarlo: se ha quitado (la memoria no obliga a reutilizarlo).",
+  "El arco incluía a Hermano de KAP en un beat sin justificarlo: se ha quitado (la memoria no obliga a reutilizarlo).",
+  "El arco incluía a Hermano de KAP en un beat sin justificarlo: se ha quitado (la memoria no obliga a reutilizarlo).",
+  "Escena 1: La rima de KAP no vale: los versos son largos o desiguales; hazlos cortos y parejos, fáciles de decir en voz alta.",
+  "Escena 3: Menciona a «Hermano de KAP» sin que esta escena lo necesite: quita esa mención.",
+  "Escena 4: Escena corta (48 palabras): puede ser correcto si la acción y la consecuencia están claras.",
+  "Escena 4: La rima de KAP no vale: suena a lema o a reflexión de adulto («mi música», «mi sueño», «no me rendiré», «el futuro»…): KAP habla como un niño; los versos son largos o desiguales; hazlos cortos y parejos, fáciles de decir en voz alta.",
+  "Escena del beat 6 («KAP y su hermano se quedan mirando una canción de 2Pac en e…») eliminada: «Hermano de KAP» (de la memoria) habla en esta escena sin estar en su reparto: la memoria no obliga a usarlo.",
+  "Escena del beat 8 («El hermano de KAP pregunta en voz baja: «¿Qué pasará ahora?»») eliminada: «Hermano de KAP» (de la memoria) habla en esta escena sin estar en su reparto: la memoria no obliga a usarlo.",
+  "Escena 7: «Hermano de KAP» (de la memoria) habla en esta escena sin estar en su reparto: la memoria no obliga a usarlo.",
+  "Directiva de memoria del modelo descartada: «observa: KAP, Hermano de KAP»",
+  "KAP_REALISM_CHECK · decision-real: no se ve a KAP decidiendo ni actuando en la escena de decisión",
+  "KAP_REALISM_CHECK · decision-con-consecuencia: tras la decisión no hay una escena que muestre algo nuevo ligado a ella",
+  "Narrativa (warning) · dialogo-duplicado: La frase «KAP cierra los ojos con fuerza y se queda inmóvil, mirando al suelo. …» aparece 2 veces (escenas 2).",
+  "Narrativa (info) · personaje-sin-funcion: «Hermano de KAP» (de la memoria) solo hace un cameo de una línea: ¿era necesario traerlo?",
+  "Narrativa (warning) · memoria-no-pedida: «Hermano de KAP» (de la memoria) aparece en 1 escena sin que la petición lo pidiera: la memoria sirve para mantener la continuidad, no para reutilizarlo todo.",
+  "Narrativa (warning) · ayuda-externa: «vacío» entra después de la decisión de KAP y aparece en la resolución: ¿resuelve el problema por él?",
+  "Narrativa (info) · poca-variedad-visual: Más del 70 % de las escenas ocurren en el mismo lugar."
+ ],
+ "arc": {
+  "title": "El comienzo",
+  "logline": "En una noche tranquila de la vida cotidiana en casa de KAP, una discusión familiar escalará a un punto crítico, marcando el inicio de su determinación para proteger a su hermano y salir adelante.",
+  "assumptions": [
+   "El episodio no requiere personajes o elementos adicionales fuera del contexto proporcionado.",
+   "La violencia familiar se representa con sutileza, desde la perspectiva de KAP y su hermano."
+  ],
+  "problem": "Los padres de KAP discuten violentamente, lo que afecta emocionalmente a KAP y a su hermano pequeño.",
+  "kapWant": "Proteger a su hermano y mantener la calma en medio del caos.",
+  "kapChoice": "KAP decide quedarse con su hermano en su habitación, tranquilizándolo sin decir palabras grandes ni tomar decisiones espectaculares.",
+  "cost": "KAP sacrifica su propia tranquilidad y posiblemente su sueño para cuidar de su hermano.",
+  "consequence": "La discusión familiar termina con la separación de los padres, dejando a KAP y su hermano en una nueva realidad.",
+  "outcome": "A través de un gesto sencillo, KAP y su hermano deciden mirar hacia el futuro con esperanza, marcando el nacimiento de K",
+  "setting": {
+   "main": "La casa de KAP",
+   "secondary": [
+    "Habitación de KAP",
+    "Pasillo",
+    "Salón"
+   ],
+   "timeOfDay": "Noche",
+   "transitions": [
+    "Más tarde esa noche",
+    "Al día siguiente"
+   ]
+  },
+  "hook": "KAP y su hermano se quedan mirando una canción de 2Pac en el teléfono, un pequeño gesto que anuncia el comienzo de un sueño aún no formulado.",
+  "extraCharacters": [],
+  "castActions": [
+   {
+    "name": "Hermano de KAP",
+    "does": "Pregunta por la discusión y reacciona con miedo, lo que fortalece su dependencia emocional de KAP."
+   }
+  ],
+  "usedFromMemory": [
+   "KAP",
+   "Padres de KAP",
+   "Hermano de KAP"
+  ],
+  "newCharacters": [],
+  "newPlaces": [],
+  "behaviorBeats": [
+   {
+    "beat": 0,
+    "kind": "impulso",
+    "does": "KAP escucha la discusión de sus padres desde su habitación, sintiendo miedo pero manteniendo la calma.",
+    "provokes": "El hermano de KAP se sienta junto a él, temblando."
+   },
+   {
+    "beat": 1,
+    "kind": "esconder",
+    "does": "KAP evita mirar directamente al hermano, pero le da la espalda para protegerlo del ruido.",
+    "provokes": "El hermano pregunta qué está pasando, pero KAP no responde."
+   },
+   {
+    "beat": 2,
+    "kind": "cambio-de-opinion",
+    "does": "KAP decide no dejar que su hermano salga de la habitación, colocándose delante de la puerta.",
+    "provokes": "El hermano se queda en silencio, mirando a KAP con confianza."
+   },
+   {
+    "beat": 3,
+    "kind": "improvisacion",
+    "does": "KAP saca su teléfono y le muestra una canción de 2Pac al hermano, intentando distraerlo.",
+    "provokes": "El hermano se queda mirando la pantalla, en silencio pero con una mirada diferente."
+   }
+  ],
+  "mistake": {
+   "misread": "",
+   "actsOn": "",
+   "reaction": "",
+   "discovery": "",
+   "fix": ""
+  },
+  "beats": [
+   {
+    "stage": "inicio",
+    "fn": "avanzar-historia",
+    "summary": "KAP está en su habitación escuchando música, observando a su hermano pequeño jugar en el suelo.",
+    "location": "Habitación de KAP",
+    "characters": [
+     "KAP"
+    ],
+    "change": "Se establece la vida cotidiana y la relación entre los hermanos.",
+    "why": "Para mostrar quién es KAP y cómo vive en su entorno familiar.",
+    "time": "Noche",
+    "interior": true,
+    "shot": "general",
+    "visual": "KAP mira fijamente al hermano, que juega con un peluche."
+   },
+   {
+    "stage": "problema",
+    "fn": "conflicto",
+    "summary": "Se escucha una discusión en el salón, seguida de gritos y un ruido fuerte.",
+    "location": "Pasillo",
+    "characters": [
+     "KAP"
+    ],
+    "change": "Se introduce la tensión familiar que afecta a KAP y su hermano.",
+    "why": "Para mostrar cómo la violencia familiar impacta en sus vidas.",
+    "time": "Noche",
+    "interior": true,
+    "shot": "general",
+    "visual": "KAP y su hermano miran hacia el salón, con expresiones de miedo."
+   },
+   {
+    "stage": "escalada",
+    "fn": "conflicto",
+    "summary": "El ruido se intensifica. KAP agarra al hermano y lo lleva a su habitación.",
+    "location": "Habitación de KAP",
+    "characters": [
+     "KAP"
+    ],
+    "change": "Se refuerza la protección de KAP hacia su hermano.",
+    "why": "Para demostrar la responsabilidad y el amor que KAP siente por su hermano.",
+    "time": "Noche",
+    "interior": true,
+    "shot": "medio",
+    "visual": "KAP lleva al hermano hacia la cama, mientras continúan los gritos en el pasillo."
+   },
+   {
+    "stage": "decision",
+    "fn": "arco-de-kap",
+    "summary": "KAP le muestra a su hermano una canción de 2Pac, intentando distraerlo.",
+    "location": "Habitación de KAP",
+    "characters": [
+     "KAP"
+    ],
+    "change": "Se introduce el sueño de KAP de forma natural, sin que lo declare explícitamente.",
+    "why": "Para preparar el nacimiento del objetivo de KAP de manera sutil.",
+    "time": "Noche",
+    "interior": true,
+    "shot": "primer plano",
+    "visual": "El hermano mira la pantalla con atención, mientras KAP le sonríe con timidez."
+   },
+   {
+    "stage": "consecuencia",
+    "fn": "revelar-informacion",
+    "summary": "La discusión termina con un silencio absoluto. Los padres se van de la casa.",
+    "location": "Salón",
+    "characters": [
+     "KAP"
+    ],
+    "change": "Se revela la consecuencia de la discusión familiar: la separación de los padres.",
+    "why": "Para mostrar cómo el entorno familiar cambia abruptamente, marcando un antes y un después.",
+    "time": "Mañana",
+    "interior": true,
+    "shot": "general",
+    "visual": "KAP y su hermano miran por la ventana, viendo a los padres salir de la casa."
+   },
+   {
+    "stage": "resolucion",
+    "fn": "arco-de-kap",
+    "summary": "KAP y su hermano se quedan mirando una canción de 2Pac en el teléfono, en silencio.",
+    "location": "Habitación de KAP",
+    "characters": [
+     "KAP"
+    ],
+    "change": "Se establece un nuevo comienzo para KAP y su hermano, con una mirada hacia el futuro.",
+    "why": "Para marcar el nacimiento del objetivo de KAP sin palabras ni moralejas.",
+    "time": "Mañana",
+    "interior": true,
+    "shot": "medio",
+    "visual": "KAP y su hermano se quedan mirando la pantalla, con una expresión que mezcla esperanza y determinación."
+   },
+   {
+    "stage": "resolucion",
+    "fn": "arco-de-kap",
+    "summary": "KAP y su hermano se quedan mirando una canción de 2Pac en el teléfono, en silencio.",
+    "location": "Habitación de KAP",
+    "characters": [
+     "KAP"
+    ],
+    "change": "Se establece un nuevo comienzo para KAP y su hermano, con una mirada hacia el futuro.",
+    "why": "Para marcar el nacimiento del objetivo de KAP sin palabras ni moralejas.",
+    "time": "Mañana",
+    "interior": true,
+    "shot": "medio",
+    "visual": "KAP y su hermano se quedan mirando la pantalla, con una expresión que mezcla esperanza y determinación."
+   },
+   {
+    "stage": "gancho",
+    "fn": "preparar-gancho",
+    "summary": "El hermano de KAP pregunta en voz baja: «¿Qué pasará ahora?»",
+    "location": "Habitación de KAP",
+    "characters": [
+     "KAP"
+    ],
+    "change": "Se introduce una pregunta que marcará la evolución del episodio siguiente.",
+    "why": "Para preparar el gancho para el siguiente episodio, manteniendo la continuidad narrativa.",
+    "time": "Mañana",
+    "interior": true,
+    "shot": "primer plano",
+    "visual": "KAP mira a su hermano con una expresión seria, sin responder inmediatamente."
+   },
+   {
+    "stage": "gancho",
+    "fn": "preparar-gancho",
+    "summary": "El hermano de KAP pregunta en voz baja: «¿Qué pasará ahora?»",
+    "location": "Habitación de KAP",
+    "characters": [
+     "KAP"
+    ],
+    "change": "Se introduce una pregunta que marcará la evolución del episodio siguiente.",
+    "why": "Para preparar el gancho para el siguiente episodio, manteniendo la continuidad narrativa.",
+    "time": "Mañana",
+    "interior": true,
+    "shot": "primer plano",
+    "visual": "KAP mira a su hermano con una expresión seria, sin responder inmediatamente."
+   }
+  ]
+ },
+ "realismChecks": [
+  {
+   "id": "decision-real",
+   "ok": false,
+   "note": "no se ve a KAP decidiendo ni actuando en la escena de decisión"
+  },
+  {
+   "id": "decision-con-consecuencia",
+   "ok": false,
+   "note": "tras la decisión no hay una escena que muestre algo nuevo ligado a ella"
+  },
+  {
+   "id": "kap-no-explica-de-mas",
+   "ok": true
+  },
+  {
+   "id": "sin-frases-de-adulto",
+   "ok": true
+  },
+  {
+   "id": "interaccion-sin-validacion",
+   "ok": true
+  },
+  {
+   "id": "conflicto-cambia-algo",
+   "ok": true
+  },
+  {
+   "id": "final-nace-de-la-accion",
+   "ok": true
+  },
+  {
+   "id": "primera-rima-espontanea",
+   "ok": true
+  },
+  {
+   "id": "ninguna-escena-eliminable",
+   "ok": true
+  },
+  {
+   "id": "kap-actua",
+   "ok": true
+  },
+  {
+   "id": "estados-variados",
+   "ok": true
+  },
+  {
+   "id": "no-demasiado-reflexivo",
+   "ok": true
+  },
+  {
+   "id": "cadena-causal",
+   "ok": true
+  }
+ ],
+ "review": [
+  {
+   "severity": "warning",
+   "rule": "narrativa-dialogo-duplicado",
+   "text": "La frase «KAP cierra los ojos con fuerza y se queda inmóvil, mirando al suelo. …» aparece 2 veces (escenas 2).",
+   "scene": 1
+  },
+  {
+   "severity": "info",
+   "rule": "narrativa-personaje-sin-funcion",
+   "text": "«Hermano de KAP» (de la memoria) solo hace un cameo de una línea: ¿era necesario traerlo?",
+   "scene": 6
+  },
+  {
+   "severity": "warning",
+   "rule": "narrativa-memoria-no-pedida",
+   "text": "«Hermano de KAP» (de la memoria) aparece en 1 escena sin que la petición lo pidiera: la memoria sirve para mantener la continuidad, no para reutilizarlo todo.",
+   "scene": 6
+  },
+  {
+   "severity": "warning",
+   "rule": "narrativa-ayuda-externa",
+   "text": "«vacío» entra después de la decisión de KAP y aparece en la resolución: ¿resuelve el problema por él?",
+   "scene": 5
+  },
+  {
+   "severity": "info",
+   "rule": "narrativa-poca-variedad-visual",
+   "text": "Más del 70 % de las escenas ocurren en el mismo lugar."
+  }
+ ],
+ "continuity": {
+  "critical": [],
+  "warnings": [
+   "relacion-contradice: KAP y Hermano de KAP ya se conocían (relación «hermanos» desde canon inicial); la escena 1 los presenta como si se conocieran ahora.",
+   "objeto-perdido: «padres» está perdido desde ep. 1 y se menciona en la escena 9. Si vuelve a estar disponible, declara cómo ([obtiene: …] o [repara: …])."
+  ],
+  "info": 7
+ },
+ "script": "# Habitación de KAP\n[mood: Noche, interior]\n[plano: general]\n[expresion: KAP pensativo]\n[camara: seguir KAP]\nKAP está sentado en su cama, mirando fijamente al suelo mientras su hermano pequeño corre de un lado a otro, jugando con un peluche viejo que parece haber sido arrancado de una bolsa de ropa usada.\nKAP: El piso se mueve, el peluche no… joder, qué ruido es ese.\nKAP: Miro al suelo, miro al techo, pero no hay nada que me diga qué hacer…\n[acto: inicio | KAP está en su habitación escuchando música, observando a su hermano pequeño jugar en el suelo.]\n[conoce: KAP, Hermano de KAP]\n\n# Pasillo\n[mood: Noche, interior]\n[plano: general]\n[expresion: KAP preocupado]\n[gesto: KAP encoge]\nDe repente, se escucha una voz gritando desde el salón, seguida de otro grito más fuerte. Un ruido seco, como si algo se rompiera, atraviesa el aire.\nKAP: KAP cierra los ojos con fuerza y se queda inmóvil, mirando al suelo. No se mueve, ni siquiera cuando el ruido se acerca.\nKAP cierra los ojos con fuerza y se queda inmóvil, mirando al suelo. No se mueve, ni siquiera cuando el ruido se acerca.\n[acto: conflicto | Se escucha una discusión en el salón, seguida de gritos y un ruido fuerte.]\n[relacion: KAP, Hermano de KAP, protege, +1]\n\n# Habitación de KAP\n[mood: Noche, interior]\n[plano: medio KAP]\n[camara: seguir KAP]\nLos gritos se acercan, más fuertes. Un portazo suena en el pasillo. El hermano de KAP se detiene en medio de la habitación, mirando a KAP con los ojos muy abiertos.\nKAP: Vamos, rápido —murmura, agarrando al hermano por la mano—. Vamos, no mires, no hables, solo ven conmigo.\nKAP lleva al hermano hacia la cama, sin soltar su mano. El ruido sigue en el pasillo, como si el mundo se estuviera rompiendo más allá de la puerta.\n[acto: desarrollo | El ruido se intensifica. KAP agarra al hermano y lo lleva a su habitación.]\n[relacion: KAP, Hermano de KAP, protege, +1]\n\n# Habitación de KAP\n[mood: Noche, interior]\n[plano: primer plano KAP]\nKAP: KAP: Mira, hermanito… el tipo, él también empezó en la calle…\nKAP: KAP: Dice que aunque el mundo le grita, siempre tiene un ritmo…\nKAP: KAP: Y ahora es un rey… no por la plata, sino por lo que dice.\nKAP: KAP: Puede que algún día… nosotros también tengamos un ritmo.\n[acto: emocional | KAP le muestra a su hermano una canción de 2Pac, intentando distraerlo.]\n\n# Salón\n[mood: Mañana, interior]\n[plano: general]\n[expresion: KAP pensativo]\nLa casa se queda en silencio. Solo el sonido de los pasos en la calle, lejos, y el viento que entra por las ventanas abiertas. KAP y su hermano miran por la ventana, viendo cómo sus padres cargan una maleta y salen de la casa. La puerta se cierra con un golpe suave, casi como si no quisieran hacer ruido.\nKAP: No dice nada. Solo observa, con la mirada fija en el lugar donde estuvieron sus padres hace un momento.\nEl hermano se acerca a la ventana y mira también, con una expresión vacía. No pregunta. Solo observa.\nKAP se vuelve hacia su hermano y le sonríe con una expresión que no es feliz, pero tampoco es triste. Es una mirada que dice: 'Ahora somos solo nosotros.'\nBaja la mirada, como si no supiera qué hacer con sus manos o su cuerpo.\nKAP se acerca a él y le da una palmadita en la espalda. No es un gesto grande, pero es suficiente para decir: 'Estoy aquí.'\nLa luz del sol entra por la ventana, iluminando el suelo de la habitación. La casa, que antes estaba llena de ruido y discusiones, ahora parece vacía.\n[pierde: KAP, padres]\n[relacion: KAP, Hermano de KAP, apoyo, +1]\n\n# Habitación de KAP\n[mood: Mañana, interior]\n[plano: medio KAP]\n[expresion: KAP pensativo]\n[mira: KAP izquierda]\nVACÍO: La luz del amanecer entra por la ventana, iluminando suavemente la habitación. KAP y su hermano están sentados en el suelo, mirando fijamente la pantalla del teléfono. La canción de 2Pac termina, y el silencio se prolonga.\nVACÍO: El hermano se acerca al teléfono y lo gira hacia él, como si quisiera ver mejor las palabras en la pantalla. Sus ojos reflejan curiosidad y algo más… una esperanza pequeña pero real.\nVACÍO: KAP no dice nada. Solo mira a su hermano, luego vuelve a la pantalla. La canción se repite, y esta vez, KAP asiente levemente, como si estuviera de acuerdo con algo que no puede expresar en voz alta.\nVACÍO: Se levanta y camina hacia la puerta, mira hacia fuera por un momento y luego regresa a su lugar junto a KAP. Se sienta, cruzando las piernas, y vuelve a mirar la pantalla.\nVACÍO: KAP toma el teléfono con ambas manos, lo apoya en el suelo y lo gira hacia su hermano. Por un instante, parece que va a hablar, pero se detiene. Luego, sin hacer ruido, se levanta y camina hacia la puerta, mira al exterior y cierra la puerta con cuidado.\nVACÍO: El hermano lo observa en silencio. Después de un momento, toma el teléfono y lo sostiene contra su pecho, como si estuviera sosteniendo un sueño aún no nacido.\n[acto: resolucion | KAP y su hermano se quedan mirando una canción de 2Pac en el teléfono, en silencio.]\n[relacion: KAP, Hermano de KAP, dependencia, +1]\n[conoce: KAP, canción 2Pac]\n[obtiene: KAP, inspiración]\n\n# Habitación de KAP\n[mood: Mañana, interior]\n[plano: primer plano KAP]\nHERMANO DE KAP: ¿Qué pasará ahora?\nKAP: (Mira a su hermano con seriedad, sin responder inmediatamente. Sus ojos reflejan una determinación silenciosa. Luego, con un movimiento lento y firme, KAP coge el teléfono y lo coloca entre ambos, encendiendo la pantalla para que la luz ilumine su rostro. Su hermano lo observa, expectante.)\nKAP: (Sin decir una palabra, KAP busca una canción en el teléfono, pero no se la muestra a su hermano. En lugar de eso, la reproduce en voz baja, solo para él. La música comienza a sonar, un ritmo bajo y poderoso que llena la habitación.)\n[acto: gancho | El hermano de KAP pregunta en voz baja: «¿Qué pasará ahora?»]\n[gancho: KAP y su hermano se quedan mirando una canción de 2Pac en el teléfono, un pequeño gesto que anuncia el comienzo de un sueño aún no formulado.]\n",
+ "render": {
+  "status": "done",
+  "error": null,
+  "renderSec": 95,
+  "quality": "480p",
+  "width": 854,
+  "height": 480,
+  "video": "h264",
+  "audio": "aac",
+  "durationSec": 318,
+  "sizeMb": 17,
+  "scenes": 20,
+  "videoPath": "/tmp/kap-real-K7gkB7/episodio-01b.mp4"
+ }
+}
