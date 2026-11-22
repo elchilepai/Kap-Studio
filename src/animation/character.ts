@@ -44,6 +44,9 @@ export const POSE_CATALOG: Record<ActionPose, Partial<Pose>> = {
   throw: { lean: -0.12, armF: [2.6, 0.3], armB: [-0.5, 0.2], handF: "fist", legF: 0.2, legB: -0.15 },   // lanza
   settle: { bob: -0.012, lean: -0.03, armF: [0.18, 0.25], armB: [-0.18, 0.2] },   // al llegar: pequeño asentamiento (rodillas que ceden un poco)
   listen: { lean: -0.06, headTilt: 0.1, lookX: 0.5, headDip: -0.01, armF: [0.12, 0.2], armB: [-0.1, 0.15] },   // escucha: se queda quieto, la cabeza se levanta y gira
+  shrink: { lean: -0.1, bob: -0.02, armF: [0.35, 0.9], armB: [-0.35, 0.9], handF: "fist", handB: "fist", shrug: 0.03, headDip: 0.01, headTilt: 0.08 },   // se encoge
+  droop: { lean: 0.08, headDip: 0.014, headTilt: 0.06, armF: [0.05, 0.1], armB: [-0.05, 0.1], bob: -0.014 },   // baja la mirada / se desinfla
+  tense: { lean: 0.05, armF: [0.6, 1.5], armB: [-0.6, 1.5], handF: "fist", handB: "fist", shrug: 0.012 },   // aprieta lo que tiene / se tensa
   recoil: { lean: -0.25, armF: [0.6, 0.9], armB: [-0.6, 0.9], handF: "open", handB: "open", legF: -0.2, legB: 0.2, headTilt: -0.08 },   // retrocede
 };
 /** Animaciones disponibles para un personaje paramétrico (un rig por capas declara las suyas). */
@@ -58,14 +61,20 @@ export function poseFor(s: ActorState, t: number, seed: number): Pose {
   p.bob = Math.sin((t + off) * 2.1) * 0.006; p.headTilt = Math.sin((t + off) * 0.9) * 0.015;
   p.armF = [0.08 + Math.sin((t + off) * 1.7) * 0.03, 0.14]; p.armB = [-0.08 - Math.sin((t + off) * 1.5) * 0.03, 0.1];
   const bp = (t + off) % 3.6; p.blink = clamp(bp > 3.45 ? 1 - Math.abs(bp - 3.525) / 0.075 : 0, 0, 1);
-  if (s.pose !== "idle") { const tgt = POSE_CATALOG[s.pose], k = s.poseP; const mix = (a: [number, number], b?: [number, number]): [number, number] => (b ? [lerp(a[0], b[0], k), lerp(a[1], b[1], k)] : a);
+  const applyPose = (name: ActionPose, k: number) => { const tgt = POSE_CATALOG[name]; const mix = (a: [number, number], b?: [number, number]): [number, number] => (b ? [lerp(a[0], b[0], k), lerp(a[1], b[1], k)] : a);
     p.armF = mix(p.armF, tgt.armF); p.armB = mix(p.armB, tgt.armB); p.headTilt += (tgt.headTilt ?? 0) * k; p.headDip += (tgt.headDip ?? 0) * k; p.lookX = (tgt.lookX ?? 0) * k; p.shrug = (tgt.shrug ?? 0) * k; if (k > 0.5) { p.handF = tgt.handF ?? p.handF; p.handB = tgt.handB ?? p.handB; }
-    p.lean += (tgt.lean ?? 0) * k; p.bob += (tgt.bob ?? 0) * k; p.legF += (tgt.legF ?? 0) * k; p.legB += (tgt.legB ?? 0) * k; }
+    p.lean += (tgt.lean ?? 0) * k; p.bob += (tgt.bob ?? 0) * k; p.legF += (tgt.legF ?? 0) * k; p.legB += (tgt.legB ?? 0) * k; };
+  if (s.pose2 && s.pose2P) applyPose(s.pose2, s.pose2P);   // flow: la pose que se va (peso decreciente) y después la que entra
+  if (s.pose !== "idle") applyPose(s.pose, s.poseP);
   if (s.moving) {
     const k = s.moving === 2 ? 1.5 : 1, ph = s.walkPhase * Math.PI * 2 * (s.moving === 2 ? 0.8 : 1), w = 0.35 + 0.65 * s.speed;   // el paso y el braceo crecen con la velocidad: peso al arrancar y al frenar
     p.legF = Math.sin(ph) * 0.55 * k * w; p.legB = -Math.sin(ph) * 0.55 * k * w;
     p.armF = [-Math.sin(ph) * 0.5 * k * w, 0.25 + 0.2 * k]; p.armB = [Math.sin(ph) * 0.5 * k * w, 0.2 + 0.2 * k];
     p.bob = Math.abs(Math.sin(ph)) * 0.014 * k * w; p.lean = (0.025 + 0.07 * s.speed) * k; if (s.moving === 2) { p.handF = "fist"; p.handB = "fist"; }
+    if (s.moveP !== undefined) {   // flow (Shorts): sin saltos al arrancar ni al parar; se inclina hacia atrás un instante (anticipación), acelera inclinado hacia delante y se endereza al frenar
+      const g = clamp(s.speed * 1.7, 0, 1), anti = Math.max(0, 1 - s.moveP / 0.14), brake = Math.max(0, (s.moveP - 0.82) / 0.18);
+      p.legF = Math.sin(ph) * 0.55 * k * g; p.legB = -Math.sin(ph) * 0.55 * k * g; p.armF = [-Math.sin(ph) * 0.5 * k * g, 0.12 + 0.33 * k * g]; p.armB = [Math.sin(ph) * 0.5 * k * g, 0.1 + 0.3 * k * g];
+      p.bob = Math.abs(Math.sin(ph)) * 0.014 * k * g; p.lean = 0.085 * k * s.speed - 0.05 * anti - 0.03 * brake; p.headDip = 0.004 * g; }
   }
   if (s.speaking) { p.mouth = s.mouth; p.viseme = s.viseme; p.headTilt += Math.sin(t * 5.3) * 0.02; p.headDip = Math.max(p.headDip, Math.max(0, s.mouth - 0.3) * 0.006);
     if (!s.moving && s.gesture === "none" && s.pose === "idle") { p.armF = [0.25 + Math.sin(t * 3.1) * 0.2, 0.9 + Math.sin(t * 4.3) * 0.25]; p.handF = "open"; } }

@@ -78,17 +78,19 @@ function alphaOf(ev: VisEv[], t: number): number {
   return last.on ? p : 1 - p;
 }
 
-function actorState(a: ActorSpec, tr: Track, t: number, fps: number): ActorState {
+function actorState(a: ActorSpec, tr: Track, t: number, fps: number, flow = false): ActorState {
   const x = xAt(tr, t);
-  let moving = 0, phase = 0, speed = 0;
+  let moving = 0, phase = 0, speed = 0, moveP = 0;
   for (const s of tr.segs) {
     const dx = Math.abs(s.x1 - s.x0); if (dx < 0.05 || t < s.t0) continue;
     const p = clamp((t - s.t0) / (s.t1 - s.t0), 0, 1); phase += dx * ease("inOut", p);
-    if (t < s.t1) { moving = s.run ? 2 : 1; speed = (6 * p * (1 - p)) / 1.5; }   // derivada de la curva suave: arranca despacio, va rápido en medio y frena al llegar
+    if (t < s.t1) { moving = s.run ? 2 : 1; speed = (6 * p * (1 - p)) / 1.5; moveP = p; }   // derivada de la curva suave: arranca despacio, va rápido en medio y frena al llegar
   }
   let facing = a.facing; for (const f of tr.face) { if (f.t <= t) facing = f.dir; else break; }
   let expression: ActionExpression = "neutral"; for (const e of tr.expr) { if (e.t <= t) expression = e.v; else break; }
-  let pose: ActionPose = "idle", poseT = 99; for (const e of tr.poses) { if (e.t <= t) { pose = e.v; poseT = t - e.t; } else break; }
+  let pose: ActionPose = "idle", poseT = 99, prev: ActionPose = "idle"; for (const e of tr.poses) { if (e.t <= t) { prev = pose; pose = e.v; poseT = t - e.t; } else break; }
+  const FADE = 0.3, k0 = clamp(poseT / FADE, 0, 1);   // flow: la pose anterior no desaparece de golpe; se funde mientras entra la nueva (también al volver a «idle»)
+  const fl = flow && prev !== "idle" && prev !== pose && k0 < 1 ? { pose2: prev, pose2P: 1 - k0 } : {};
   let gesture: Gesture = "none", gp = 0; for (const g of tr.gest) if (t >= g.t0 && t < g.t1) { gesture = g.v; gp = (t - g.t0) / (g.t1 - g.t0); }
   let mouth = 0, speaking = false, viseme: Viseme = "rest";
   for (const s of tr.speak) if (t >= s.t0 && t < s.t1) {
@@ -96,7 +98,7 @@ function actorState(a: ActorSpec, tr: Track, t: number, fps: number): ActorState
     viseme = s.vis?.[k] ?? (mouth < 0.1 ? "rest" : mouth < 0.3 ? "I" : mouth < 0.6 ? "E" : "A");   // sin pista fonética: solo la amplitud decide la forma
   }
   const alpha = alphaOf(tr.vis, t);
-  return { id: a.id, x, y: 0, facing, visible: alpha > 0.001, alpha, moving, speed, walkPhase: phase * 1.15, expression, gesture, gestureP: gp, mouth, viseme, speaking, pose, poseP: clamp(poseT / 0.3, 0, 1) };
+  return { id: a.id, x, y: 0, facing, visible: alpha > 0.001, alpha, moving, speed, walkPhase: phase * 1.15, expression, gesture, gestureP: gp, mouth, viseme, speaking, pose, poseP: clamp(poseT / 0.3, 0, 1), ...(flow ? { ...fl, moveP: moving ? moveP : undefined } : {}) };
 }
 
 /** Estado COMPLETO de la escena en el instante t. Función pura y determinista (mismo t ⇒ mismo resultado). */
@@ -106,7 +108,7 @@ export function evaluate(stage: StageSpec, t: number): FrameState {
   for (const s of c.shakes) if (tt >= s.t0 && tt < s.t1) { const k = 1 - (tt - s.t0) / (s.t1 - s.t0); sx += Math.sin(tt * 61.3) * s.amp * k; sy += Math.cos(tt * 47.9) * s.amp * k * 0.7; }
   return {
     t: tt, camera: camAt(c.cam, c.base, tt), shakeX: sx, shakeY: sy,
-    actors: stage.actors.map((a) => actorState(a, c.tracks.get(a.id)!, tt, stage.fps)),
+    actors: stage.actors.map((a) => actorState(a, c.tracks.get(a.id)!, tt, stage.fps, !!stage.flow)),
     props: stage.props.map((p) => ({ id: p.id, alpha: alphaOf(c.props.get(p.id) ?? [], tt) })),
     effects: c.effects.filter((e) => tt >= e.t0 && tt < e.t1).map((e) => ({ effect: e.effect, intensity: e.k, p: (tt - e.t0) / (e.t1 - e.t0) })),
   };

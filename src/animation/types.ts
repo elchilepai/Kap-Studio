@@ -7,7 +7,7 @@
 import type { PoseName } from "./beats.ts";
 export type { PoseName };
 /** Poses de ACCIÓN que añade el director a partir de la narración (internas de la animación: no forman parte del vocabulario del guion ni de la IR). */
-export type ActionPose = PoseName | "crouch" | "reach" | "throw" | "recoil" | "settle" | "listen";
+export type ActionPose = PoseName | "crouch" | "reach" | "throw" | "recoil" | "settle" | "listen" | "shrink" | "droop" | "tense";
 export type Expression = "neutral" | "happy" | "sad" | "angry" | "surprised" | "worried" | "thinking";
 /** Expresiones de ACTING que añade el director a partir de la narración (internas de la animación: no forman parte del vocabulario del guion ni de la IR). */
 export type ActionExpression = Expression | "scared" | "embarrassed" | "confused" | "curious" | "relieved" | "uncomfortable" | "bored";
@@ -92,6 +92,7 @@ export type StyleParams = { ink: string; line: number; grade: Grade; vignette: n
 export type StageSpec = {
   v: 1; width: number; height: number; fps: number; duration: number; seed: number;
   set: SetSpec; actors: ActorSpec[]; props: PropSpec[]; cues: Cue[]; style: StyleParams; sounds?: SoundCue[]; music?: MusicCue[];
+  /** Movimiento continuo (SHORT MODE): las poses se funden entre sí en vez de saltar, y al caminar hay anticipación, aceleración y frenada. */ flow?: boolean;
   /** Zona de subtítulos (fracción de la altura). La cámara sube la escena para que los pies queden por encima. Si falta se asume el subtítulo por defecto. */
   safe?: { top: number; bottom: number };
   /** Avisos del director (directivas no entendidas…): se muestran al revisar. */
@@ -105,6 +106,8 @@ export const ANIM_VERSION = 2; // súbelo si cambia el aspecto del render: inval
 export type ActorState = {
   id: string; x: number; y: number; facing: 1 | -1; visible: boolean; alpha: number;
   moving: number; /** 0..1: velocidad relativa del tramo (arranca despacio, frena al llegar) */ speed: number; walkPhase: number; expression: ActionExpression; gesture: Gesture; gestureP: number; mouth: number; viseme: Viseme; speaking: boolean; pose: ActionPose; poseP: number;
+  /** Solo con `StageSpec.flow` (Shorts): pose que se va (se mezcla hacia fuera mientras entra la nueva) y progreso 0..1 del tramo de movimiento (anticipación / frenada). */
+  pose2?: ActionPose; pose2P?: number; moveP?: number;
 };
 export type CameraState = { x: number; y: number; zoom: number; rot: number };
 export type FrameState = {

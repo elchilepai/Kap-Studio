@@ -66,3 +66,12 @@ describe("directivas solo del director (sonido, música, impacto, silencio)", ()
     expect(parseDirectorCue("sonido: trompeta")?.warning).toBeDefined(); expect(parseDirectorCue("plano: general")).toBeUndefined();
   });
 });
+
+describe("la reflexión debe verse (situación y no discurso)", () => {
+  it("un final de frase corta («Bueno… algo es algo.») vale; una conferencia final o un monólogo no", () => {
+    const g = good(); g.at(-1)!.dialogue = { speaker: "KAP", text: "Bueno… algo es algo." }; expect(shortRetentionCheck(g).failed).not.toContain("remate");
+    g.at(-1)!.dialogue = { speaker: "KAP", text: "Cada persona tiene su propio ritmo y comparar el camino de los demás con el mío solo me hace daño sin motivo" }; expect(shortRetentionCheck(g).failed).toContain("remate");
+    const m = good(); m[3].dialogue = { speaker: "KAP", text: "Siento que todos avanzan más rápido que yo y no sé qué estoy haciendo mal porque lo intento siempre igual que ellos pero nunca sale" }; expect(shortRetentionCheck(m).failed).toContain("sin-tramos-solo-dialogo");
+  });
+  it("la lección dicha en voz alta a mitad del Short también se señala", () => { const m = good(); m[4].dialogue = { speaker: "KAP", text: "Lo importante es que cada uno avance a su ritmo" }; expect(shortRetentionCheck(m).failed).toContain("sin-tramos-solo-dialogo"); });
+});

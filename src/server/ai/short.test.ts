@@ -62,6 +62,12 @@ describe("enrutado por modo (el episodio no cambia)", () => {
   });
 });
 
+describe("dirección creativa del prompt", () => {
+  it("pide situación concreta, cuerpo antes que palabras, reacciones variadas y final sin conferencia", () => {
+    for (const re of [/duda, problema o situaci[oó]n cotidiana/, /DE LA PREGUNTA A LA SITUACI[OÓ]N/, /nadie dice la lecci[oó]n en voz alta/, /REACCIONA CON EL CUERPO ANTES DE HABLAR/, /REACCIONES VARIADAS/, /MOVIMIENTO CONTINUO/, /no una conferencia/, /silence/]) expect(SHORT_SYSTEM).toMatch(re);
+  });
+});
+
 describe("formato vertical", () => {
   it("un Short se renderiza en 9:16 a 1080×1920", async () => { const { dimensions } = await import("@/server/render/presets"); expect(dimensions("9:16", "1080p")).toMatchObject({ width: 1080, height: 1920 }); });
 });

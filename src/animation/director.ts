@@ -1,6 +1,6 @@
 import { frameShot, layoutSlots, wideZoom, type SafeZone } from "./framing.ts";
 import { evaluate } from "./timeline.ts";
-import type { ActionExpression, Appearance, Cue, MusicCue, ObjectKind, SoundCue, EffectKind, Expression, Gesture, PropKind, PropSpec, SetPreset, SetSpec, Side, StageSpec, StyleParams, TimeOfDay } from "./types.ts";
+import type { ActionExpression, ActionPose, Appearance, Cue, MusicCue, ObjectKind, SoundCue, EffectKind, Expression, Gesture, PropKind, PropSpec, SetPreset, SetSpec, Side, StageSpec, StyleParams, TimeOfDay } from "./types.ts";
 import { WORLD_W } from "./types.ts";
 import { hash32 } from "./util.ts";
 import { chain, planClauses } from "../narrative/action.ts";
@@ -229,6 +229,20 @@ export function direct(inp: DirectorInput): StageSpec {
       cursor = Math.max(cursor, end - l.start - step.overlap);
     });
   }
+  // ---------- SHORT MODE: reacciones variadas y vida con intención durante el diálogo ----------
+  if (inp.short) {
+    // reacciones del cuerpo que la narración nombra (cada una con su pose y su duración); solo si en esa cláusula no se movió ya
+    const REACT: [RegExp, ActionPose, number][] = [[/\b(?:se encoge\w*|se hace pequen\w*)\b/, "shrink", 0.9], [/\b(?:baja la mirada|agacha la cabeza|se desinfla\w*|se hunde)\b/, "droop", 1.1], [/\b(?:aprieta\w*|se tensa|crispa\w*|se aferra)\b/, "tense", 0.9], [/\b(?:se queda paralizad\w*|se paraliza)\b/, "listen", 0.8]];
+    for (const l of inp.lines) { if (l.speaker) continue; chain(planClauses(l.text)).forEach((step) => { const clause = norm(step.clause), P = mentions(clause)[0] ?? actors[0], r = REACT.find(([re]) => re.test(clause)); if (P && r && !touched.has(P.id)) cues.push({ t: Math.max(0.1, l.start + step.start), type: "pose", actor: P.id, value: r[1], dur: r[2] }); }); }
+    // diálogo: quien escucha gira hacia quien habla, se queda atento y, si la frase pregunta o exclama, reacciona al terminar; quien habla mucho rato cambia de peso. Nadie se queda congelado sin motivo.
+    for (const l of inp.lines) {
+      if (!l.speaker) continue; const sp = actors.find((a) => norm(a.name) === norm(l.speaker!)) ?? actors.find((a) => norm(a.name).startsWith(norm(l.speaker!)) || norm(l.speaker!).startsWith(norm(a.name)));
+      const others = actors.filter((a) => a.id !== sp?.id && !touched.has(a.id)); if (!sp) continue;
+      for (const o of others) { const ox = xNow(o.id, l.start), sx = xNow(sp.id, l.start); cues.push({ t: l.start, type: "face", actor: o.id, dir: sx >= ox ? "right" : "left" }); if (l.end - l.start > 1.2 && !cues.some((c) => c.type === "pose" && c.actor === o.id && c.t >= l.start - 0.1 && c.t < l.end)) cues.push({ t: l.start + 0.2, type: "pose", actor: o.id, value: "listen", dur: Math.min(1.2, l.end - l.start - 0.2) });
+        if (/\?\s*$/.test(l.text)) cues.push({ t: l.end, type: "expression", actor: o.id, value: "confused" }); else if (/!\s*$/.test(l.text)) { cues.push({ t: l.end, type: "expression", actor: o.id, value: "surprised" }, { t: l.end, type: "pose", actor: o.id, value: "recoil", dur: 0.6 }); } }
+      if (l.end - l.start > 2.4 && !touched.has(sp.id) && !cues.some((c) => c.type === "pose" && c.actor === sp.id && c.t >= l.start && c.t < l.end)) cues.push({ t: l.start + (l.end - l.start) * 0.55, type: "pose", actor: sp.id, value: "settle", dur: 0.7 });
+    }
+  }
   { const acc: CamCand[] = []; for (const c of [...camCands].sort((p, q) => q.prio - p.prio || p.t0 - q.t0)) if (!acc.some((a) => c.t0 < a.t1 + 0.2 && c.t1 + 0.2 > a.t0)) acc.push(c); for (const c of acc) cues.push(...c.cues); }
 
   // ---------- acciones sugeridas por la narración ----------
@@ -307,5 +321,5 @@ export function direct(inp: DirectorInput): StageSpec {
       sounds.push({ t: gap.t0, kind: "ambience", dur: gap.t1 - gap.t0 }); filled++;
     }
     if (filled) warnings.push(`Pausa larga sin acción (${filled} tramo${filled > 1 ? "s" : ""}): se ha llenado con mirada, cámara y ambiente; si la escena queda vacía, la planificación es floja.`); }
-  return { v: 1, width: inp.width, height: inp.height, fps: inp.fps, duration: D + tail, seed: hash32(inp.location + inp.index) % 100000, set: resolveSet(inp.location, inp.tags, inp.mood, inp.set), actors, props, cues, style: inp.style, warnings, ...(musicCues.length ? { music: musicCues.sort((a, b) => a.t - b.t) } : {}), ...(sounds.length ? { sounds } : {}), ...(inp.safe ? { safe: inp.safe } : {}) };
+  return { v: 1, width: inp.width, height: inp.height, fps: inp.fps, duration: D + tail, seed: hash32(inp.location + inp.index) % 100000, set: resolveSet(inp.location, inp.tags, inp.mood, inp.set), actors, props, cues, style: inp.style, warnings, ...(inp.short ? { flow: true } : {}), ...(musicCues.length ? { music: musicCues.sort((a, b) => a.t - b.t) } : {}), ...(sounds.length ? { sounds } : {}), ...(inp.safe ? { safe: inp.safe } : {}) };
 }

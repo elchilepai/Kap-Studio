@@ -57,8 +57,8 @@ export function shortRetentionCheck(beats: ShortBeat[]): RetentionResult {
   const esc = beats.filter((b) => b.phase === "escalada").length; add({ id: "escalada", ok: esc >= 2, ...(esc >= 2 ? {} : { note: "no hay escalada (el problema no empeora ni cambia de estrategia)" }) });
   const gi = beats.findIndex((b) => b.phase === "giro"); add({ id: "giro", ok: gi >= 0 && starts[gi] <= secs * 0.9, ...(gi >= 0 && starts[gi] <= secs * 0.9 ? {} : { note: "falta un giro o descubrimiento (o llega demasiado tarde)", fix: "patch" as const, beats: [Math.max(0, n - 2)] }) });
   // 7) remate con consecuencia, sin moraleja
-  const last = beats.at(-1), moral = !!last && MORAL.test(`${last.action} ${last.reaction} ${last.dialogue?.text ?? ""} ${last.change}`), remOk = !!last && last.phase === "remate" && visible(body(last)) && !moral;
-  add({ id: "remate", ok: remOk, ...(remOk ? {} : { note: moral ? "el final suena a moraleja" : "el final no es una acción/consecuencia clara", fix: "patch" as const, beats: [n - 1] }) });
+  const last = beats.at(-1), moral = !!last && MORAL.test(`${last.action} ${last.reaction} ${last.dialogue?.text ?? ""} ${last.change}`), speechy = !!last?.dialogue && last.dialogue.text.split(/\s+/).length > 12, remOk = !!last && last.phase === "remate" && visible(body(last)) && !moral && !speechy;
+  add({ id: "remate", ok: remOk, ...(remOk ? {} : { note: moral || speechy ? "el final suena a moraleja o a discurso (una frase corta basta)" : "el final no es una acción/consecuencia clara", fix: "patch" as const, beats: [n - 1] }) });
   // 8) beats repetidos (mismo momento) → fusionar
   const rep: number[] = []; beats.forEach((b, i) => { if (i && similar(beats[i - 1], b)) rep.push(i); });
   add({ id: "sin-repetidos", ok: !rep.length, ...(rep.length ? { note: `${rep.length} beat(s) cuentan el mismo momento que el anterior`, fix: "merge" as const, beats: rep } : {}) });
@@ -67,7 +67,8 @@ export function shortRetentionCheck(beats: ShortBeat[]): RetentionResult {
   add({ id: "nada-eliminable", ok: !drop.length, ...(drop.length ? { note: `${drop.length} beat(s) se podrían quitar sin perder historia`, fix: "drop" as const, beats: drop } : {}) });
   // 10) tramos que dependen solo de diálogo (3 o más seguidos sin acción)
   let run = 0, runEnd = -1; for (let i = 0; i < n; i++) { run = !visible(body(beats[i])) && beats[i].dialogue ? run + 1 : 0; if (run >= 3 && runEnd < 0) runEnd = i; }
-  add({ id: "sin-tramos-solo-dialogo", ok: runEnd < 0, ...(runEnd < 0 ? {} : { note: `desde el beat ${runEnd - 1} hay 3 o más beats seguidos que solo dependen del diálogo` }) });
+  const speech = beats.findIndex((b) => (b.dialogue?.text.split(/\s+/).length ?? 0) > 22 || (!!b.dialogue && MORAL.test(b.dialogue.text))); if (runEnd < 0 && speech >= 0) runEnd = speech + 1;   // un monólogo largo también es «solo diálogo»
+  add({ id: "sin-tramos-solo-dialogo", ok: runEnd < 0, ...(runEnd < 0 ? {} : { note: `desde el beat ${runEnd - 1} el tramo depende solo del diálogo (3 beats seguidos o un monólogo largo): la idea debe verse, no explicarse` }) });
   // 11) predecible: 4 o más beats de escalada seguidos con el mismo objetivo
   let mono = 0, monoAt = -1; for (let i = 1; i < n; i++) { mono = beats[i].phase === "escalada" && beats[i - 1].phase === "escalada" && jac(stems(beats[i].goal), stems(beats[i - 1].goal)) >= 0.4 ? mono + 1 : 0; if (mono >= 3 && monoAt < 0) monoAt = i; }
   add({ id: "no-predecible", ok: monoAt < 0, ...(monoAt < 0 ? {} : { note: `desde el beat ${monoAt - 2} el espectador ya sabe qué va a pasar (la escalada repite el mismo objetivo)` }) });
