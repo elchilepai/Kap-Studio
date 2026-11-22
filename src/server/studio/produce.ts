@@ -24,6 +24,7 @@ import { SOUND_VOLUME, synthSound } from "./sfx";
 import { norm } from "./text";
 import { renderAnimatedClip } from "@/server/animation/clip2d";
 import { buildSceneStage } from "@/server/animation/stage";
+import { evaluate as evaluateStage } from "@/animation/timeline";
 import { audioEnvelope } from "@/server/animation/lipsync";
 
 export type ProduceParams = {
@@ -140,6 +141,17 @@ export async function produce(job: RenderJob, ctx: ExecContext, d: ProduceDeps):
   const clipThreads = workers > 1 ? Math.max(1, Math.floor((d.threads || os.cpus().length) / workers)) : d.threads;
   const frac = new Array<number>(scenes.length).fill(0); let started = 0;
   const report = () => step(3, 0.25 + 0.55 * (frac.reduce((a, b) => a + b, 0) / scenes.length), animation === "2d" ? `Animando escena ${Math.min(started, scenes.length)}/${scenes.length} (2D)` : `Componiendo escena ${Math.min(started, scenes.length)}/${scenes.length}`);
+  // SHORT MODE: en un Short propio cada escena empieza donde terminó la anterior si es el mismo lugar (sin saltos de posición entre escenas); se calcula en una pasada previa y barata (solo el director)
+  const startXOf: ({ [name: string]: { x: number; facing: 1 | -1 } } | undefined)[] = [];
+  if (animation === "2d" && prodNow.kind === "short" && !prodNow.parentId) {
+    let prev: { loc: string; end: { [name: string]: { x: number; facing: 1 | -1 } } } | undefined;
+    for (const [i, s] of scenes.entries()) {
+      const sx = prev && prev.loc === norm(s.location) && s.location ? prev.end : undefined; startXOf[i] = sx;
+      const b = await buildSceneStage(s, { durationSec: durs[i], tail: MAX_OVERLAP, width, height, index: i, subtitles: style, items: audios[i]?.items, startX: sx }, {
+        production: prodNow, characters: bibleChars, places: bibleKnownPlaces, style: styleBible, assetInfo: async () => undefined });
+      const f = evaluateStage(b.stage, b.stage.duration); prev = { loc: norm(s.location), end: Object.fromEntries(b.stage.actors.flatMap((a, k) => (f.actors[k].visible ? [[norm(a.name), { x: f.actors[k].x, facing: f.actors[k].facing }]] : []))) };
+    }
+  }
   const clips = await mapLimit(scenes, workers, async (s, i) => {
     const D = durs[i]; started++; report();
     const vis = await assetFile(s.visualAssetId);
@@ -150,7 +162,7 @@ export async function produce(job: RenderJob, ctx: ExecContext, d: ProduceDeps):
     let r: { file: string; cached: boolean };
     if (animation === "2d") {
       const env = audios[i] ? await audioEnvelope(audios[i]!.file, 30, ctx.signal).catch(() => undefined) : undefined;
-      const built = await buildSceneStage(s, { durationSec: D, tail: MAX_OVERLAP, width, height, envelope: env, index: i, subtitles: style, items: audios[i]?.items }, {
+      const built = await buildSceneStage(s, { durationSec: D, tail: MAX_OVERLAP, width, height, envelope: env, index: i, subtitles: style, items: audios[i]?.items, startX: startXOf[i] }, {
         production: prodNow, characters: bibleChars, places: bibleKnownPlaces, style: styleBible,
         assetInfo: async (id) => { const f = await assetFile(id); return f ? { path: f.f, sig: `${f.a.id}:${f.a.size}:${f.a.createdAt}`, kind: f.a.kind } : undefined; },
       });

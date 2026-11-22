@@ -19,6 +19,7 @@ export type DirectorActor = { id: string; name: string; appearance: Appearance }
 export type DirectorInput = {
   /** Rellena con vida (mirada, expresión, cámara lenta, ambiente) los tramos de ≥ 3 s sin nada que ocurra. Lo activa el montaje real. */ pacing?: boolean;
   /** SHORT MODE: sin relleno automático (ni aire muerto rellenado ni cámara a la deriva por defecto): todo lo que se ve lo ha pedido un beat. */ short?: boolean;
+  /** SHORT MODE: dónde terminó cada personaje en la escena anterior (mismo lugar): empieza ahí, sin saltar de sitio. Clave = nombre normalizado. */ startX?: Record<string, { x: number; facing: 1 | -1 }>;
   duration: number; tail?: number; aspect: number; index: number; fps: number; width: number; height: number;
   location: string; mood: string; tags: string[]; narration: string;
   characters: DirectorActor[]; lines: TimedLine[];
@@ -64,7 +65,7 @@ export function direct(inp: DirectorInput): StageSpec {
   const chars = inp.characters.slice(0, 4); const portraitShot = inp.aspect < 0.8;
   const sl = layoutSlots(chars.length, inp.aspect);                  // una fila en horizontal; en vertical con 3-4 personajes, dos filas sin solaparse
   const byName = (nm: string) => { const k = norm(nm); return chars.find((c) => norm(c.name) === k) ?? chars.find((c) => norm(c.name).startsWith(k) || k.startsWith(norm(c.name))); };
-  const actors = chars.map((c, i) => ({ id: c.id, name: c.name, appearance: c.appearance, slot: sl[i].x, ...(sl[i].row ? { row: sl[i].row } : {}), facing: (chars.length === 1 || i < chars.length / 2 ? 1 : -1) as 1 | -1, presentAtStart: true }));
+  const actors = chars.map((c, i) => ({ id: c.id, name: c.name, appearance: c.appearance, slot: inp.startX?.[norm(c.name)]?.x ?? sl[i].x, ...(sl[i].row ? { row: sl[i].row } : {}), facing: inp.startX?.[norm(c.name)]?.facing ?? ((chars.length === 1 || i < chars.length / 2 ? 1 : -1) as 1 | -1), presentAtStart: true }));
   const imageSet = inp.set?.preset === "image" || !!inp.set?.imageId;                 // con imagen de fondo no se abre por debajo de 1 (no hay imagen fuera)
   const actorX = actors.map((a) => a.slot), fitZoom = wideZoom(actorX, inp.aspect, 0.3, 3);      // zoom máximo con el que el reparto sigue entero
   const wideZ = portraitShot ? Math.min(1, imageSet ? Math.max(1, fitZoom) : Math.max(0.8, fitZoom)) : 1; // plano general: en vertical se abre si hace falta (solo ese plano)
@@ -310,7 +311,7 @@ export function direct(inp: DirectorInput): StageSpec {
   // ---------- AIRE MUERTO: una pausa tiene función ----------
   // Si pasan ≥ 3 s sin diálogo, acción, reacción, cámara ni sonido, no se deja el vídeo vacío (ni se acelera): se dan a la pausa vida y razón — una mirada entre personajes o hacia otro lado,
   // un cambio de expresión, un asentamiento del cuerpo, la cámara que se acerca despacio y sonido de ambiente. Solo rellena tramos que de otro modo estarían muertos.
-  sounds.push(...extraSounds);
+  for (const x of extraSounds) if (!(x.kind !== "ambience" && sounds.some((y) => y.kind === x.kind && Math.abs(y.t - x.t) < 0.8))) sounds.push(x);   // sin duplicar el que el director ya puso por el movimiento o la alerta
   if (inp.pacing && !inp.short) { let life = 0, filled = 0;   // lo activa el montaje real (stage.ts); los usos sueltos del director conservan su comportamiento
     for (let g = deadAir(cues, D, { sounds }); g.length && life < 14; g = deadAir(cues, D, { sounds }), life++) {
       const gap = g[0], t = gap.t0 + 1.2, a = actors[life % Math.max(1, actors.length)]; if (!a) break; const other = actors.find((o) => o.id !== a.id);

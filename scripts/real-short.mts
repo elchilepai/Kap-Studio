@@ -63,8 +63,8 @@ const gen = { number: NUMBER, title, request: REQUEST, request_parsed: { number:
   retention, beats, scenesPlan, checks: st0.realism, gate: { regenerated: st0.scenesRegenerated, localPatches: st0.localPatches, codeRepairs: st0.codeRepairs, dropped: st0.scenesDropped, patchKinds: st0.patchKinds, gateIssues: st0.gateIssues, arcRevisions: st0.arcRevisions, endingRevisions: st0.endingRevisions, varietyRevisions: st0.varietyRevisions, rhymeValid: st0.rhymeValid },
   usage: st0.usage, calls: st0.attempts, retries: st0.retries, warnings: r.warnings, story: author.lastStory,
   continuity: { critical: ms.findings.filter((f: any) => f.severity === "error").map((f: any) => `${f.rule}: ${f.text}`), warnings: ms.findings.filter((f: any) => f.severity === "warning").map((f: any) => `${f.rule}: ${f.text}`), info: ms.findings.filter((f: any) => f.severity === "info").length }, script: captured.script };
-await fs.writeFile(path.join(OUT, "short-02-candidato.json"), JSON.stringify(gen, null, 1));
-await fs.writeFile(path.join(OUT, "short-02-candidato.txt"), `Short 2 · «${title}» (CANDIDATO, sin aprobar)\nPetición: ${REQUEST}\n\n${captured.script}\n`);
+await fs.writeFile(path.join(OUT, "short-03-candidato.json"), JSON.stringify(gen, null, 1));
+await fs.writeFile(path.join(OUT, "short-03-candidato.txt"), `Short 3 · «${title}» (CANDIDATO, sin aprobar)\nPetición: ${REQUEST}\n\n${captured.script}\n`);
 console.log(`escenas ${gen.scenes} · palabras ${words} · ≈ ${(gen.estimatedSec / 60).toFixed(2)} min · IR ${gen.irValid ? "válida" : "INVÁLIDA"} · realismo ${st0.realism?.passed}/${st0.realism?.total}`);
 
 // 2) RENDER real (el modelo se descarga antes: la animación y FFmpeg necesitan la RAM)
@@ -78,12 +78,12 @@ const render: any = { status: job.status, error: job.error ?? null, renderSec: +
 if (job.status === "done") {
   const prod = (await st.productions.get(r.production.id))!, vid = (await st.assets.get(prod.videoAssetId!))!, file = path.join(media, vid.path), pr = await ffprobe(file);
   Object.assign(render, { width: pr.width, height: pr.height, video: pr.videoCodec, audio: pr.audioCodec, durationSec: +pr.durationSec.toFixed(1), sizeMb: +(vid.size / 1048576).toFixed(1), scenes: prod.scenes.length });
-  const dir = path.join(OUT, "frames-02"); await fs.mkdir(dir, { recursive: true }); const n = 12;
+  const dir = path.join(OUT, "frames-03"); await fs.mkdir(dir, { recursive: true }); const n = 12;
   for (let i = 0; i < n; i++) { const t = (pr.durationSec * (i + 0.5)) / n; try { execFileSync("ffmpeg", ["-v", "error", "-y", "-ss", t.toFixed(2), "-i", file, "-frames:v", "1", "-vf", "scale=270:-1", path.join(dir, `f${i + 1}.png`)]); } catch { /* sigue */ } }
-  try { execFileSync("ffmpeg", ["-v", "error", "-y", "-i", path.join(dir, "f%d.png"), "-filter_complex", "tile=6x2", "-frames:v", "1", path.join(OUT, "short-02-hoja-contacto.png")]); } catch { /* sigue */ }
-  await fs.copyFile(file, path.join(root, "short-02.mp4")); render.videoPath = path.join(root, "short-02.mp4");
+  try { execFileSync("ffmpeg", ["-v", "error", "-y", "-i", path.join(dir, "f%d.png"), "-filter_complex", "tile=6x2", "-frames:v", "1", path.join(OUT, "short-03-hoja-contacto.png")]); } catch { /* sigue */ }
+  await fs.copyFile(file, path.join(root, "short-03.mp4")); render.videoPath = path.join(root, "short-03.mp4");
   try { const vol = execFileSync("ffmpeg", ["-v", "info", "-i", file, "-af", "volumedetect", "-f", "null", "-"], { stdio: ["ignore", "ignore", "pipe"] }); void vol; } catch (e: any) { render.audio_stats = String(e.stderr ?? "").split("\n").filter((l: string) => /mean_volume|max_volume/.test(l)).map((l: string) => l.trim()); }
 }
-gen.render = render; await fs.writeFile(path.join(OUT, "short-02-candidato.json"), JSON.stringify(gen, null, 1));
+gen.render = render; await fs.writeFile(path.join(OUT, "short-03-candidato.json"), JSON.stringify(gen, null, 1));
 console.log("RENDER " + JSON.stringify(render)); await q.shutdown();
 console.log(`DIR ${root}`);

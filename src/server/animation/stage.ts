@@ -23,7 +23,7 @@ export type StageCtx = {
  * Construye el escenario 2D de UNA escena a partir de su descripción estructurada y de la biblia visual
  * (diseño de personajes, prenda del reparto, escenario del lugar, estilo). Misma función para vista previa y exportación.
  */
-export async function buildSceneStage(scene: Scene, o: { durationSec: number; tail: number; width: number; height: number; fps?: number; envelope?: number[]; index: number; subtitles?: SubStyle; /** Línea de tiempo real de la locución (diálogo + silencios de las acciones). */ items?: TItem[] }, ctx: StageCtx) {
+export async function buildSceneStage(scene: Scene, o: { durationSec: number; tail: number; width: number; height: number; fps?: number; envelope?: number[]; index: number; subtitles?: SubStyle; /** Línea de tiempo real de la locución (diálogo + silencios de las acciones). */ items?: TItem[]; /** SHORT MODE: posiciones finales de la escena anterior (mismo lugar) */ startX?: Record<string, { x: number; facing: 1 | -1 }> }, ctx: StageCtx) {
   const fps = o.fps ?? 30;
   // zona de subtítulos (la misma fórmula que el ASS): la cámara deja los pies por encima. Sin subtítulos no hay zona que respetar.
   const sub = o.subtitles ?? DEFAULT_SUB_STYLE; const m = subtitleMetrics(o.width, o.height, sub);
@@ -44,7 +44,7 @@ export async function buildSceneStage(scene: Scene, o: { durationSec: number; ta
     location: scene.location || scene.title, mood: scene.mood, tags: scene.tags, narration: scene.narration, characters: actors,
     lines: timed.map((c) => ({ speaker: c.speaker, text: c.text, start: c.start, end: c.end })), directions: scene.directions,
     set: { ...(place?.set ? { preset: place.set.preset, timeOfDay: place.set.timeOfDay, accent: place.set.accent, layers: place.set.layers, elements: place.set.elements, foreground: place.set.foreground } : {}), ...(useImage ? { preset: "image" as const, imageId: scene.visualAssetId && scene.visualSource !== "card" ? scene.visualAssetId : place?.set?.imageAssetId ?? place?.visualAssetId } : {}) },
-    envelopes, lipsync: LIPSYNC_PROVIDERS[env().KAP_LIPSYNC], style: styleParams(ctx.style), safe,
+    startX: o.startX, envelopes, lipsync: LIPSYNC_PROVIDERS[env().KAP_LIPSYNC], style: styleParams(ctx.style), safe,
   });
   const images: Record<string, { path: string; sig: string }> = useImage && stage.set.imageId ? { [stage.set.imageId]: { path: useImage.path, sig: useImage.sig } } : {};
   // imágenes de las capas del escenario y de los rigs por capas de los personajes

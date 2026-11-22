@@ -4,7 +4,7 @@ import type { ContextPack } from "@/memory";
 import { aiFrom, withShortMode } from "./registry";
 import { llmShortAuthor } from "./short";
 import { SHORT_SYSTEM } from "./prompts";
-import { good } from "@/narrative/short.fixture";
+import { good, OBJETO } from "@/narrative/short.fixture";
 import { direct } from "@/animation/director";
 import { createSqliteStorage } from "@/adapters/local/sqlite-storage";
 import { createEpisodeFromRequest } from "@/server/memory/service";
@@ -16,14 +16,14 @@ class Scripted implements LlmClient {
   async generate(req: LlmRequest) { this.calls.push(req); const r = this.replies.shift(); if (r === undefined) throw new Error("sin más respuestas"); return { text: typeof r === "string" ? r : JSON.stringify(r) }; }
 }
 const ctx = (over: Partial<ContextPack["request"]> = {}): ContextPack => ({ request: { text: "x", number: 1, season: 1, exact: false, cast: [], notes: "Un Short: KAP derrama leche en la consola y su hermano casi lo descubre", ...over }, budgetTokens: 1000, usedTokens: 10, sections: [{ id: "x", title: "x", text: "x", tokens: 1 }] as never, text: "# Contexto\nKAP", warnings: [] } as unknown as ContextPack);
-const story = (beats = good(), extra: Record<string, unknown> = {}) => ({ title: "El mando mojado", logline: "KAP moja el mando y lo esconde.", hook: "la leche cae", cast: ["KAP", "Hermano de KAP"], beats, ...extra });
+const story = (beats = good(), extra: Record<string, unknown> = {}) => ({ objeto: OBJETO, objetivo: "hacer una torre igual de alta", title: "El mando mojado", logline: "KAP moja el mando y lo esconde.", hook: "la leche cae", cast: ["KAP", "Hermano de KAP"], beats, ...extra });
 const write = async (replies: unknown[], c = ctx(), cast = ["KAP", "Hermano de KAP"]) => { const llm = new Scripted(replies), author = llmShortAuthor(llm), out = await author.write({ request: { ...c.request, cast }, context: c, hints: { mode: "short" } }); return { llm, author, out }; };
 
 describe("autor del Short (SHORT MODE)", () => {
   it("UNA sola llamada al modelo para toda la historia; guion con beats, sonido y música; stats con retención", async () => {
     const { llm, author, out } = await write([story()]);
     expect(llm.calls).toHaveLength(1); expect(llm.calls[0].system).toBe(SHORT_SYSTEM); expect(llm.calls[0].jsonSchema).toBeDefined();
-    expect(out.script).toMatch(/\[sonido: golpe en /); expect(out.script).toMatch(/\[impacto: en /); expect(out.stats?.retention).toMatchObject({ total: 12 }); expect(out.stats!.retention!.beats).toBe(8); expect(out.stats!.retention!.seconds).toBeGreaterThanOrEqual(45);
+    expect(out.script).toMatch(/\[sonido: golpe en /); expect(out.script).toMatch(/\[impacto: en /); expect(out.stats?.retention).toMatchObject({ total: 12 }); expect(out.stats!.retention!.beats).toBe(8); expect(out.stats!.retention!.seconds).toBeGreaterThanOrEqual(50);
     expect(out.ir).toBeDefined(); expect(author.lastBeats).toHaveLength(8); expect(out.stats!.localPatches).toBe(0);
   });
   it("la narración queda como dirección (sin hablante) y solo se dice el diálogo", async () => {
@@ -31,7 +31,7 @@ describe("autor del Short (SHORT MODE)", () => {
     expect(lines.filter((l) => /^HERMANO DE KAP: /.test(l))).toHaveLength(1); expect(lines.some((l) => /^KAP: /.test(l))).toBe(false);
   });
   it("si falla el gancho: como mucho UNA reescritura local, y se aplica", async () => {
-    const bad = story(); bad.beats[0] = { ...bad.beats[0], action: "Hay una habitación azul. Las paredes son lisas. La luz es amarilla. El suelo es de madera. La puerta es verde. El techo es alto. El aire es tibio. La mesa es redonda.", reaction: "Todo está en calma." };
+    const bad = story(); bad.beats[0] = { ...bad.beats[0], seconds: 6 };   // un gancho largo falla «hook-claro» (solo el parche local lo arregla; el contrato causal sigue cumpliéndose)
     const { llm, out } = await write([bad, { beats: [{ index: 0, action: "El hermano apila seis latas y las latas chocan con estruendo", reaction: "El hermano chisporrotea de risa", change: "la torre del hermano se mueve" }] }]);
     expect(llm.calls).toHaveLength(2); expect(out.stats!.localPatches).toBe(1); expect(out.script).toMatch(/chisporrotea/);
   });
@@ -63,9 +63,9 @@ describe("contrato narrativo del Short (reescritura completa, sin rellenar)", ()
     const { llm, out } = await write([hug(), hug()]); expect(llm.calls.filter((c) => /Corrección obligatoria/.test(c.prompt))).toHaveLength(1); expect(out.warnings.some((w) => /SHORT_RETENTION_CHECK · escalada/.test(w))).toBe(true); expect(out.warnings.some((w) => /SHORT_RETENTION_CHECK · duracion-justa/.test(w))).toBe(true);
     const lines = out.script.split("\n").filter((l) => l && !/^[#[]/.test(l)); expect(new Set(lines).size).toBe(lines.length);   // ninguna línea duplicada para llegar a un mínimo
   });
-  it("una duración de render menor de 45 s también pide la reescritura (20-30 s no es un Short terminado)", async () => {
+  it("una duración de render menor de 50 s también pide la reescritura (20-30 s no es un Short terminado)", async () => {
     const short = story(good().slice(0, 4).map((b, i) => ({ ...b, step: (["situacion", "intento", "fallo", "remate"] as const)[i], phase: (["hook", "escalada", "escalada", "remate"] as const)[i] })).concat(good().slice(0, 2) as never).map((b) => ({ ...b, action: b.action.split(". ")[0] + ".", reaction: "" })));
-    const { llm, out } = await write([short, story()]); expect(llm.calls.length).toBe(2); expect(out.stats!.retention!.seconds).toBeGreaterThanOrEqual(45);
+    const { llm, out } = await write([short, story()]); expect(llm.calls.length).toBe(2); expect(out.stats!.retention!.seconds).toBeGreaterThanOrEqual(50);
   });
   it("el prompt exige el contrato, prohíbe resolver con abrazos y fija 50-65 s", () => { for (const re of [/CONTRATO NARRATIVO OBLIGATORIO/, /intento.*fallo.*reaccion.*segundo-intento.*descubrimiento/s, /PROHIBIDO resolver con tristeza/, /50-65 s/, /\bestá triste\b/]) expect(SHORT_SYSTEM).toMatch(re); });
 });

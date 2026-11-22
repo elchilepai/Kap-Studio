@@ -7,20 +7,20 @@ import { z } from "zod";
 import type { AuthorStats, LlmClient, LlmUsage, ScriptAuthor } from "@/ports/studio";
 import { ScreenplayIR } from "@/domain/screenplay";
 import { norm } from "@/memory/text";
-import { beatsToScenes, estimateRenderSeconds, MORAL, PHASES, repairShort, shortRetentionCheck, shortSeconds, SHORT_MUSIC, SHORT_SOUNDS, SHOTS, STEPS, type RetentionResult, type ShortBeat, type ShortDraftScene } from "@/narrative/short";
+import { audioGaps, beatsToScenes, estimateRenderSeconds, MORAL, PHASES, repairShort, shortRetentionCheck, shortSeconds, SHORT_MUSIC, SHORT_SOUNDS, SHOTS, STEPS, type RetentionResult, type ShortBeat, type ShortDraftScene } from "@/narrative/short";
 import { draftToIR, irToScript, type EpisodeDraft } from "./episode";
 import { generateJson, sumUsage, type AttemptLog } from "./json";
 import { SHORT_SYSTEM, shortPrompt } from "./prompts";
 
 const Beat = z.object({
-  phase: z.enum(PHASES), step: z.enum(STEPS), goal: z.string().min(1).max(160), action: z.string().min(1).max(260), reaction: z.string().max(220), change: z.string().min(1).max(200), seconds: z.number().min(1).max(8),
+  phase: z.enum(PHASES), step: z.enum(STEPS), goal: z.string().min(1).max(160), action: z.string().min(1).max(420), reaction: z.string().max(300), change: z.string().min(1).max(200), seconds: z.number().min(1).max(8),
   shot: z.enum(SHOTS), characters: z.array(z.string().min(1).max(40)).min(1).max(4), location: z.string().min(1).max(80), time: z.string().max(20),
   sound: z.enum(SHORT_SOUNDS).optional(), music: z.enum(SHORT_MUSIC).optional(), dialogue: z.object({ speaker: z.string().min(1).max(40), text: z.string().min(1).max(300) }).optional(),
 });
-export const ShortStory = z.object({ title: z.string().min(1).max(100), logline: z.string().min(1).max(260), hook: z.string().max(200), cast: z.array(z.string().min(1).max(40)).max(6), beats: z.array(Beat).min(6).max(12) });
+export const ShortStory = z.object({ objeto: z.string().min(2).max(60), objetivo: z.string().min(3).max(160), title: z.string().min(1).max(100), logline: z.string().min(1).max(260), hook: z.string().max(200), cast: z.array(z.string().min(1).max(40)).max(6), beats: z.array(Beat).min(6).max(12) });
 export type ShortStory = z.infer<typeof ShortStory>;
 
-const PatchSchema = z.object({ beats: z.array(z.object({ index: z.number().int().min(0).max(20), action: z.string().min(1).max(260), reaction: z.string().max(220), change: z.string().min(1).max(200) })).min(1).max(4) });
+const PatchSchema = z.object({ beats: z.array(z.object({ index: z.number().int().min(0).max(20), action: z.string().min(1).max(420), reaction: z.string().max(300), change: z.string().min(1).max(200) })).min(1).max(4) });
 const NOTES: Record<string, string> = {
   "hook-claro": "El primer beat debe mostrar YA una acción visible y corta (sin empezar hablando).", giro: "Falta un giro o descubrimiento antes del remate: que algo cambie lo que KAP (o el público) creía.",
   remate: "El último beat debe cerrar con una acción o consecuencia visible, sin moraleja ni frase de lección.",
@@ -53,7 +53,7 @@ export function llmShortAuthor(llm: LlmClient, opts: { maxTokens?: number; tempe
         let beats: ShortBeat[] = story.beats.map((b) => ({ ...b, reaction: b.reaction ?? "" }));
         beats = beats.map((b) => { const keep = b.characters.filter((n) => allowed.has(norm(n))); b.characters.filter((n) => !allowed.has(norm(n))).forEach((n) => outside.add(n)); return { ...b, characters: keep.length ? keep : ["KAP"], ...(b.dialogue && !allowed.has(norm(b.dialogue.speaker)) ? { dialogue: undefined } : {}) }; });
         const rep = repairShort(beats); beats = rep.beats; const { draft, scenes } = storyToDraft(story, beats, cast);
-        return { story, beats, scenes, draft, merged: rep.merged, dropped: rep.dropped, outside: [...outside], ret: shortRetentionCheck(beats, { renderSeconds: estimateRenderSeconds(scenes) }) };
+        return { story, beats, scenes, draft, merged: rep.merged, dropped: rep.dropped, outside: [...outside], ret: shortRetentionCheck(beats, { renderSeconds: estimateRenderSeconds(scenes), objeto: story.objeto }) };
       };
       const gen = async (prompt: string) => { const r = await generateJson(llm, ShortStory, { ...base, prompt }, { retries: 2 }); logs.push(...r.log.map((l) => ({ ...l, attempt: logs.length + l.attempt }))); usages.push(r.usage); return r; };
       const first = await gen(shortPrompt(context, cast)); if (!first.ok) throw new Error(`El modelo no devolvió un Short válido tras ${first.attempts} intento(s): ${first.errors.join("; ")}`);
@@ -62,7 +62,7 @@ export function llmShortAuthor(llm: LlmClient, opts: { maxTokens?: number; tempe
       const hard = cand.ret.checks.filter((c) => !c.ok && c.fix === "rewrite");
       if (hard.length) {
         rewrites = 1; const why = hard.map((c) => c.note).join(" | ");
-        const again = await gen(`${shortPrompt(context, cast)}\n\n# Corrección obligatoria\nTu versión anterior («${cand.story.title}») NO es válida: ${why}.\nEscríbela DE NUEVO entera, con otra historia concreta si hace falta: un problema que KAP intenta resolver con acciones (construir, probar, fallar, corregir, cambiar de estrategia), SIN abrazos ni tristeza como solución, y con beats de ${"3-4"} frases de acción encadenadas para que dure 50-65 s.`);
+        const again = await gen(`${shortPrompt(context, cast)}\n\n# Corrección obligatoria\nTu versión anterior («${cand.story.title}») NO es válida: ${why}.\nEscríbela DE NUEVO entera, con otra historia concreta si hace falta: elige UN objeto o actividad concreta (campo «objeto»); alguien consigue algo con él al principio; KAP intenta lo mismo con ese objeto, le sale mal por una causa visible, reacciona con el cuerpo, prueba una estrategia DISTINTA con el mismo objeto, obtiene un resultado concreto distinto y lo usa después. SIN abrazos ni tristeza como solución, sin frases abstractas y con 3-4 frases de acción encadenadas por beat para que dure 50-65 s.`);
         if (again.ok) { const c2 = prepare(again.data); if (c2.ret.failed.length <= cand.ret.failed.length) cand = c2; }
       }
       // como mucho UNA reescritura local de los beats clave (gancho, giro, remate) si fallan
@@ -71,11 +71,12 @@ export function llmShortAuthor(llm: LlmClient, opts: { maxTokens?: number; tempe
         const { beats } = cand, ask = `${shortPrompt(context, cast)}\n\n# Reescritura local\nEl Short ya existe (beats en orden): ${JSON.stringify(beats.map((b, i) => ({ index: i, phase: b.phase, step: b.step, action: b.action, reaction: b.reaction, change: b.change })))}\nReescribe SOLO estos beats (índices ${idx.join(", ")}) sin cambiar el resto de la historia. ${fix.map((c) => NOTES[c.id] ?? c.note ?? "").join(" ")} Devuelve {"beats":[{"index","action","reaction","change"}]}.`;
         const pr = await generateJson(llm, PatchSchema, { ...base, maxTokens: 900, prompt: ask }, { retries: 1 }); logs.push(...pr.log.map((l) => ({ ...l, attempt: logs.length + l.attempt }))); usages.push(pr.usage); patches = 1;
         if (pr.ok) { const nb = beats.map((b) => ({ ...b })); for (const e of pr.data.beats) if (idx.includes(e.index) && nb[e.index]) { const b = { ...nb[e.index], action: e.action, reaction: e.reaction, change: e.change }; if (b.dialogue && MORAL.test(b.dialogue.text)) delete b.dialogue; nb[e.index] = b; }
-          const { draft, scenes } = storyToDraft(cand.story, nb, cast); cand = { ...cand, beats: nb, draft, scenes, ret: shortRetentionCheck(nb, { renderSeconds: estimateRenderSeconds(scenes) }) }; }
+          const { draft, scenes } = storyToDraft(cand.story, nb, cast); cand = { ...cand, beats: nb, draft, scenes, ret: shortRetentionCheck(nb, { renderSeconds: estimateRenderSeconds(scenes), objeto: cand.story.objeto }) }; }
       }
       const irCheck = ScreenplayIR.safeParse(draftToIR(cand.draft)); if (!irCheck.success) throw new Error(`La IR resultante no es válida: ${irCheck.error.issues[0]?.message}`);
       const warnings: string[] = []; for (const c of cand.ret.checks) if (!c.ok) warnings.push(`SHORT_RETENTION_CHECK · ${c.id}${c.note ? `: ${c.note}` : ""}`);
       if (cand.merged || cand.dropped) warnings.push(`Reparación local del Short: ${cand.merged} beat(s) fusionados, ${cand.dropped} eliminados.`);
+      { const gaps = audioGaps(cand.scenes); for (const g of gaps) warnings.push(`SHORT_AUDIO_GAP · ${g.from}-${g.to} s sin ningún sonido de acción ni diálogo (revisar: un silencio solo vale si tiene función dramática)`); }
       if (rewrites) warnings.push("El contrato narrativo del Short falló en la primera versión: se pidió una reescritura completa.");
       for (const n of cand.outside) warnings.push(`Personaje fuera del reparto retirado del Short: ${n}`);
       const secs = cand.ret.seconds, usage = sumUsage(usages);

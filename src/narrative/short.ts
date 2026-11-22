@@ -18,7 +18,7 @@ export type ShortBeat = {
 };
 /** Contrato narrativo del Short: cada paso se ve en acciones (no «está triste»). */
 export const STEPS = ["situacion", "intento", "fallo", "reaccion", "segundo-intento", "descubrimiento", "cambio", "remate"] as const;
-export const SHORT_MIN = 45, SHORT_MAX = 75, SHORT_IDEAL: [number, number] = [50, 65];
+export const SHORT_MIN = 50, SHORT_MAX = 75, SHORT_IDEAL: [number, number] = [50, 65];
 
 const plain = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
 const STOP = new Set(["para", "pero", "como", "esta", "este", "esto", "that", "unos", "unas", "sobre", "hacia", "desde", "entre", "cuando", "donde", "porque", "tambien", "mientras", "ahora", "todo", "toda", "solo"]);
@@ -44,8 +44,71 @@ export type RetentionId = "hook-claro" | "problema-rapido" | "accion-antes-de-ex
 export type RetentionCheck = { id: RetentionId; ok: boolean; note?: string; /** reparación local posible (en código) */ fix?: "merge" | "drop" | "patch" | "rewrite"; beats?: number[] };
 export type RetentionResult = { checks: RetentionCheck[]; failed: RetentionId[]; passed: number; total: number; seconds: number };
 
+
+// ---------------------------------------------------------------- CAUSALIDAD REAL (inspecciona el TEXTO de los beats, no las etiquetas)
+const sentencesOf = (t: string) => t.split(/(?<=[.!?…])\s+/).map((x) => x.trim()).filter(Boolean);
+const stem4 = (t: string) => new Set(plain(t).split(/[^a-z0-9ñ]+/).filter((w) => w.length > 3 && !STOP.has(w)).map((w) => w.slice(0, 4)));
+const OTHER_SUBJ = /^(?:el|la|los|las)\s+(?:hermano|ni[ñn]\w*|amig\w*|chic\w*|otr\w*|vecin\w*|compa\w*|grupo)|^(?:dani|ramiro|profesora)\b/;
+/** Lo que NO cambia la situación por sí solo: moverse sin objetivo, sentarse, escribir sin consecuencia, mirar, sonreír, suspirar, «con paso firme»… */
+const MOVE_ONLY = /\b(?:camin\w*|sal[eg]\w*|entr\w*|llega\w*|regres\w*|vuelve a (?:casa|la calle|su)\w*|se acerca\w*|se aleja\w*|avanza\w*|se dirige\w*|cruza\w*|se sient\w*|se levant\w*|se detien\w*|se par[ao]\w*|se queda\w*|pasea\w*|espera\w*|se gira\w*|se vuelve\w*|abre la puerta|sonr\w*|suspir\w*|mira\w*|piensa\w*|escrib\w*|garabate\w*|se pone serio|con paso firme|observa\w*)\b/g;
+const CONSEQ = /\b(?:se cae\w*|se caen|cae\w*|se derrumba\w*|se desmorona\w*|se rompe\w*|se tuerce|se inclina\w*|se tambale\w*|sale mal|falla\w*|rueda\w*|se vuelca\w*|se mancha\w*|se apaga\w*|se pierde\w*|se escapa\w*|se desinfla\w*|se atasca\w*|se rasga\w*|se desv[ií]a\w*|se arruga\w*|no (?:se mantiene|funciona|aguanta|llega|encaja|sale|consigue|logra|para|cabe|enciende|arranca)|se (?:queda|deshace)\s+(?:a medias|roto)|termina (?:rota|roto|torcid\w*))\b/;
+const RESULT_OK = /\b(?:se queda en pie|se mantiene|aguanta\w*|se sostiene|funciona\w*|encaja\w*|sale bien|consigue\w*|logra\w*|queda quiet\w*|queda firme|se equilibra|llega\w* (?:arriba|al final|a lo alto))\b/;
+const REACT = /\b(?:patea\w*|patada|resopla\w*|aprieta\w*|arruga\w*|tira\w*|rompe\w*|se agacha\w*|baja la cabeza|retrocede\w*|da un paso atras|se encoge\w*|cruza los brazos|golpea\w*|deja caer|esconde\w*|suelta\w*|aparta\w*|se tapa\w*|se muerde\w*|frunce\w*|bufa\w*|gruñe\w*|se rasca\w*|aprieta la mandibula|lo vuelve a)\b/;
+const ABSTRACT = /\b(?:se da cuenta de que|se da cuenta|comprende\w*|entiende que|descubre que|cada (?:uno|persona) tiene|su propio ritmo|su ritmo|no debe compararse|no hay que compararse|confiar en s[ií]|aprende\w*|se siente (?:mejor|libre|en paz)|encuentra (?:un )?(?:peque[ñn]o )?sentido)\b/;
+type Sent = { text: string; kap: boolean; beat: number; beatText: string };
+/** Frases de cada beat con su sujeto (KAP u otro): una frase sin sujeto continúa el sujeto de la anterior; el de arranque es KAP. */
+function sentencesOfBeats(beats: ShortBeat[]): Sent[] {
+  const out: Sent[] = [];
+  beats.forEach((b, i) => { let cur = true;   // sujeto en curso: KAP salvo que la frase nombre a otro personaje
+    for (const t of [...sentencesOf(b.action), ...sentencesOf(b.reaction)]) { const p = plain(t); let kap: boolean;
+      if (OTHER_SUBJ.test(p)) { cur = false; kap = false; } else if (/^kap\b/.test(p)) { cur = true; kap = true; } else if (/^(?:el|la|los|las|un|una)\s+[a-z]+(?:\s+de\s+[a-z]+)?\s+(?:se\b|no\b|cae\b|caen\b|rueda\b|ruedan\b|aguanta\b|funciona\b|queda\b|quedan\b|sigue\b|siguen\b|tiembla\b|chisporrotea\b|brilla\b|rebota\b)/.test(p)) kap = false;   // «La torre se derrumba»: lo hace una cosa, no KAP
+      else kap = cur;
+      out.push({ text: t, kap, beat: i, beatText: `${b.action} ${b.reaction}` }); } });
+  return out;
+}
+const acts = (t: string) => { const p = plain(t); return VISIBLE.test(p.replace(MOVE_ONLY, " ")) && !EMOTIVE.test(p.replace(MOVE_ONLY, " ")) || (/\b(?:coloca\w*|apil\w*|ajust\w*|pon[eg]\w*)\b/.test(p)); };
+/** Una frase se refiere al objeto si lo nombra ella o el beat en que está (los pronombres y los verbos sueltos no repiten el nombre). */
+const refs = (x: { text: string; beatText: string }, obj: Set<string>) => refsText(x.text, obj) || refsText(x.beatText, obj);
+/** Un INTENTO construye/hace/prueba algo con el objeto (no recoger lo caído, medir o apartarse). */
+const BUILD = /\b(?:apil\w*|coloc\w*|constru\w*|pon[eg]\w*|encaj\w*|ajust\w*|equilibr\w*|prob\w*|intent\w*|arregl\w*|sube\b|sub[eií]\w*|baja\w*|pega\w*|ata\b|corrig\w*|cambi\w*|usa\w*|prepar\w*|dibuj\w*|lanz\w*|empuj\w*|pedale\w*|arranc\w*|mont\w*|quita\w*|a[ñn]ad\w*|aca[bn]\w*|rehac\w*|apoya\w*|llena\w*|corta\w*|une\b|junta\w*)\b/;
+const tries = (t: string) => acts(t) && BUILD.test(plain(t));
+const refsText = (t: string, obj: Set<string>) => { const st = stem4(t); for (const x of obj) if (st.has(x)) return true; return false; };
+
+/** Cadena causal REAL del Short: objetivo concreto → acción de KAP con el objeto → consecuencia observable → reacción corporal → estrategia DISTINTA → resultado distinto → acción posterior que lo usa. Devuelve los motivos por los que NO se cumple (vacío = cumple). */
+export function causalReasons(beats: ShortBeat[], objeto = ""): string[] {
+  const why: string[] = [], S = sentencesOfBeats(beats), obj = stem4(objeto);
+  if (!obj.size) return ["falta el objeto concreto del conflicto (campo «objeto»)"];
+  // comparación visible: alguien consigue algo con el objeto en el arranque
+  if (!S.some((x) => x.beat <= 1 && !x.kap && acts(x.text) && refsText(x.text, obj))) why.push("el gancho no muestra a alguien consiguiendo algo con el objeto (la comparación debe verse desde el principio)");
+  if (!S.some((x) => x.beat === 0 && acts(x.text))) why.push("el primer beat no tiene una acción concreta (no basta mirar o estar)");
+  // 1+2) fallo: la primera consecuencia observable sobre el objeto que sigue a una acción concreta de KAP con ese objeto (no mover, sentarse, escribir sin consecuencia, mirar…); el intento es la última acción de KAP anterior a ella
+  const isAct = (x: Sent) => x.kap && tries(x.text) && refs(x, obj);
+  const iF = S.findIndex((x, k) => CONSEQ.test(plain(x.text)) && refs(x, obj) && S.slice(Math.max(0, k - 8), k).some(isAct));
+  if (!S.some(isAct)) { why.push("ninguna acción concreta de KAP con el objeto que pueda cambiar la situación (mirar, caminar, sentarse, escribir o sonreír no son un intento)"); return why; }
+  if (iF < 0) { why.push("tras el intento no hay una consecuencia observable sobre el objeto (se cae, se rompe, no funciona…); «nadie lo ve» no cuenta si KAP no intentó nada con ellos"); return why; }
+  const iA = S.slice(0, iF).map((x, k) => (isAct(x) ? k : -1)).filter((k) => k >= 0 && k >= iF - 8).pop() ?? -1;
+  // 3) reacción corporal de KAP al fallo
+  if (!S.some((x, k) => k > iF - 1 && k <= iF + 6 && x.kap && (REACT.test(plain(x.text)) || acts(x.text)))) why.push("KAP no reacciona con el cuerpo al fallo");
+  // 4) segundo intento: acción de KAP con el objeto DISTINTA de la primera (otra estrategia/objeto/contexto, no repetir igual)
+  const first = S[iA], iS = S.findIndex((x, k) => k > iF && x.kap && tries(x.text) && refs(x, obj) && k > iA);
+  if (iS < 0) { why.push("no hay un segundo intento de KAP con el objeto después del fallo"); return why; }
+  const a = stem4(S.filter((x) => x.beat === first.beat && x.kap && tries(x.text)).map((x) => x.text).join(" ")), sec = S.filter((x) => x.beat === S[iS].beat && x.kap && tries(x.text)).map((x) => x.text).join(" "), b = stem4(sec), inter = [...a].filter((x) => b.has(x)).length, jc = inter / Math.max(1, new Set([...a, ...b]).size), newStems = [...b].filter((x) => !a.has(x)).length;
+  if (jc >= 0.5 || newStems < 3) why.push("el segundo intento repite el primero: debe cambiar la acción, el objeto o la estrategia");
+  // 5) resultado distinto y concreto (no una frase abstracta)
+  const iD = S.findIndex((x, k) => k >= iS && RESULT_OK.test(plain(x.text)) && refs(x, obj));
+  if (iD < 0) { why.push("el segundo intento no produce un resultado concreto distinto (el objeto aguanta, funciona, encaja…)"); return why; }
+  // 6) el descubrimiento cambia una acción POSTERIOR de KAP con el objeto
+  if (!S.some((x, k) => k > iD && x.beat > S[iD].beat && x.kap && tries(x.text) && refs(x, obj))) why.push("el resultado no cambia ninguna acción posterior de KAP (sin un cambio visible después, no hay descubrimiento narrativo)");
+  // 7) frases abstractas explicando lo aprendido
+  if (S.some((x) => ABSTRACT.test(plain(x.text))) || beats.some((b) => b.dialogue && ABSTRACT.test(plain(b.dialogue.text)))) why.push("hay una frase abstracta («se da cuenta de que…», «cada uno tiene su ritmo», «confía en sí mismo»): la idea debe verse en acciones");
+  // 8) KAP provoca los cambios (el hermano u otros no lo resuelven por él)
+  const kapActs = S.filter((x) => x.kap && acts(x.text)).length, otherActs = S.filter((x) => !x.kap && acts(x.text)).length;
+  if (kapActs < (kapActs + otherActs) * 0.6) why.push("la situación cambia sobre todo por lo que hacen otros, no KAP");
+  return why;
+}
+
 /** SHORT_RETENTION_CHECK: las 12 preguntas de retención, sin llamar al modelo. Las que se pueden arreglar en código indican cómo (`fix`). */
-export function shortRetentionCheck(beats: ShortBeat[], o: { renderSeconds?: number } = {}): RetentionResult {
+export function shortRetentionCheck(beats: ShortBeat[], o: { renderSeconds?: number; objeto?: string } = {}): RetentionResult {
   const checks: RetentionCheck[] = [], add = (c: RetentionCheck) => checks.push(c), secs = o.renderSeconds ?? shortSeconds(beats), n = beats.length;   // con `renderSeconds` se mide lo que durará el render real (por el contenido), no los segundos que declara el modelo
   const starts: number[] = []; { let t = 0; for (const b of beats) { starts.push(t); t += b.seconds; } }
   // 1) hook claro: algo ocurre YA (acción visible, no diálogo ni descripción) y es corto
@@ -60,11 +123,10 @@ export function shortRetentionCheck(beats: ShortBeat[], o: { renderSeconds?: num
   let changes = 0; beats.forEach((b, i) => { if (i === 0 || jac(stems(b.change), stems(beats[i - 1].change)) < 0.5) changes++; });
   add({ id: "cambia-varias-veces", ok: changes >= 5, ...(changes >= 5 ? {} : { note: `la situación solo cambia ${changes} veces` }) });
   // 5) escalada y 6) giro
-  const at = (st: ShortBeat["step"], from = 0) => beats.findIndex((b, k) => k >= from && b.step === st), i1 = at("intento"), f = i1 >= 0 ? at("fallo", i1 + 1) : -1, i2 = f >= 0 ? at("segundo-intento", f + 1) : -1, dsc = i2 >= 0 ? at("descubrimiento", i2 + 1) : -1;
-  const first = i1 >= 0 ? beats[i1] : undefined, second = i2 >= 0 ? beats[i2] : undefined, differs = !!first && !!second && jac(stems(`${first.goal} ${first.action}`), stems(`${second.goal} ${second.action}`)) < 0.6;
-  const acts = !!first && !!second && doing(first.action) && doing(second.action), emo = beats.filter((b) => !doing(b.action)).length, hugs = beats.filter((b) => /abraz/.test(plain(body(b)))).length;
-  const missing = [i1 < 0 && "un INTENTO visible", f < 0 && "un FALLO tras el intento", i2 < 0 && "un SEGUNDO INTENTO tras el fallo", dsc < 0 && "un DESCUBRIMIENTO tras el segundo intento"].filter(Boolean), why = missing.length ? `falta ${missing.join(", ")}` : !differs ? "el segundo intento repite el primero (debe cambiar de estrategia)" : !acts ? "los intentos no son acciones concretas de KAP" : emo > n * 0.34 ? `${emo} de ${n} beats son solo emoción (mirar, sonreír, abrazar, estar triste): KAP debe hacer algo que cambie la situación` : hugs >= 2 ? "los abrazos sustituyen al conflicto y al descubrimiento" : "";
-  add({ id: "escalada", ok: !why, ...(why ? { note: `cadena intento → fallo → reacción → segundo intento → descubrimiento: ${why}`, fix: "rewrite" as const } : {}) });
+  const emo = beats.filter((b) => !doing(b.action)).length, hugs = beats.filter((b) => /abraz/.test(plain(body(b)))).length, reasons = causalReasons(beats, o.objeto ?? "");
+  if (!reasons.length && emo > n * 0.34) reasons.push(`${emo} de ${n} beats son solo emoción (mirar, sonreír, abrazar, estar triste)`); if (!reasons.length && hugs >= 2) reasons.push("los abrazos sustituyen al conflicto");
+  const why = reasons.join("; ");
+  add({ id: "escalada", ok: !why, ...(why ? { note: `cadena causal real (intento de KAP con un objeto → consecuencia → reacción → estrategia distinta → resultado → cambio posterior): ${why}`, fix: "rewrite" as const } : {}) });
   const gi = beats.findIndex((b) => b.phase === "giro"); const declared = shortSeconds(beats) || 1;
   add({ id: "giro", ok: gi >= 0 && starts[gi] <= declared * 0.9, ...(gi >= 0 && starts[gi] <= declared * 0.9 ? {} : { note: "falta un giro o descubrimiento (o llega demasiado tarde)", fix: "patch" as const, beats: [Math.max(0, n - 2)] }) });
   // 7) remate con consecuencia, sin moraleja
@@ -125,23 +187,57 @@ const ACT: Record<Phase, string> = { hook: "inicio", contexto: "conflicto", esca
 /** Duración (s) que tendrá el render de estas escenas por su CONTENIDO (como el pipeline: cada escena = acciones encadenadas + voz + 1 s de margen, entre 3 y 40 s). */
 export const estimateRenderSeconds = (scenes: { lines: { speaker: string; text: string }[] }[]) => Math.round(scenes.reduce((n, sc) => { const end = sc.lines.reduce((t, l) => t + lineSeconds(l) + (l.speaker ? 0.25 : 0), 0); return n + Math.min(40, Math.max(3, end + 1)); }, 0) * 10) / 10;
 
-/** Beats → escenas del borrador (formato del generador de episodios): narración = DIRECCIÓN (sin hablante), diálogo = solo lo que se dice; plano, sonido y marcas con su tiempo (calculado con la duración real de las líneas). Todas las directivas se conservan. */
+/** Sonido que sale de lo que se ve en una frase (pasos, puerta, golpe/caída, objeto colocado, llamada): sonidos sintetizados que ya existen; no se inventa música. */
+function soundsOfSentence(t: string, dur: number): { kind: "steps" | "door" | "bump" | "knock" | "ring"; dur?: number }[] {
+  const p = plain(t), out: { kind: "steps" | "door" | "bump" | "knock" | "ring"; dur?: number }[] = [];
+  if (/\b(?:corre\w*|camin\w*|sale\b|sal[eg]\w*|entra\w*|regres\w*|se acerca\w*|se aleja\w*|avanza\w*|cruza\w*|va hacia|se dirige\w*|llega\w*)\b/.test(p)) out.push({ kind: "steps", dur: Math.max(0.8, Math.min(3, dur)) });
+  if (/\bpuerta\b/.test(p) && /\b(?:abre|cierra|golpea|portazo|sale|entra)\w*/.test(p)) out.push({ kind: "door" });
+  if (/\b(?:cae\w*|se caen|derrumba\w*|rompe\w*|golpea\w*|patada|patea\w*|choca\w*|rebota\w*|estruendo|tira\w*|lanza\w*|se desmorona\w*|rueda\w*|vuelca\w*)\b/.test(p)) out.push({ kind: "bump" });
+  else if (/\b(?:coloca\w*|apila\w*|pone\b|pon[eg]\w*|deja\w*|apoya\w*|encaja\w*|toca\w*|empuja\w*|ajusta\w*|recoge\w*|saca\w*|guarda\w*|aprieta\w*|clava\w*|pega\w*)\b/.test(p)) out.push({ kind: "knock" });
+  if (/\b(?:suena\w*|timbre|llamada|telefono|movil)\b/.test(p)) out.push({ kind: "ring" });
+  return out;
+}
+/** Instantes (s, relativos al inicio de la línea) en que empieza cada frase de una línea de acción, repartidos según la duración real de la línea. */
+function sentenceStarts(text: string, lineDur: number): { text: string; t: number; dur: number }[] {
+  const ss = sentencesOf(text), d = ss.map((x) => actionDuration(x)), sum = d.reduce((a, b) => a + b, 0) || 1, k = lineDur / sum; let t = 0;
+  return ss.map((x, i) => { const r = { text: x, t, dur: d[i] * k }; t += d[i] * k; return r; });
+}
+
+/** Beats → escenas del borrador (formato del generador de episodios): narración = DIRECCIÓN (sin hablante), diálogo = solo lo que se dice. Las directivas (plano, reacción en primer plano, sonidos, impacto, silencio, marcas) caen en el instante de la frase/reacción que las motiva, con la duración real de las líneas; todas se conservan. Entre escenas de un Short propio, siempre CORTE. */
 export function beatsToScenes(beats: ShortBeat[], known: string[]): ShortDraftScene[] {
-  const lead = 0.3, seen = new Set<string>(); let prevLoc = "";
+  const lead = 0.3, seen = new Set<string>(); let index = 0;
   return groupScenes(beats).map((sc) => {
-    const lines: { speaker: string; text: string }[] = [], dirs: string[] = [], memory: string[] = []; let t = 0;
+    const lines: { speaker: string; text: string }[] = [], dirs: string[] = [], memory: string[] = []; let t = 0; const snd: { kind: string; at: number; dur?: number }[] = [];
     sc.beats.forEach((b) => {
-      const start = t, mine: { speaker: string; text: string }[] = [];
-      for (const x of [b.action, b.reaction]) { const n = x.trim() ? normalizeLine({ text: x }, known) : undefined; if (n) mine.push({ speaker: "", text: n.text }); }
-      if (b.dialogue) { const n = normalizeLine({ speaker: b.dialogue.speaker, text: b.dialogue.text }, known); if (n) mine.push({ speaker: n.speaker ?? "", text: n.text }); }
-      for (const l of mine) { lines.push(l); t += lineSeconds(l) + (l.speaker ? 0.25 : 0); }
-      const at = `en ${(start + lead).toFixed(1)}s`, who = b.characters[0] ?? "KAP";
-      dirs.push(b.shot === "general" ? `plano: general ${at}` : b.shot === "medio" ? `plano: medio ${who} ${at}` : b.shot === "seguimiento" ? `camara: seguir ${who} ${at}` : `plano: primer plano ${who} ${at}`);   // «objeto» = primer plano en quien lo maneja
-      if (b.sound && b.sound !== "none") dirs.push(`sonido: ${SOUND_WORD[b.sound]} ${at}`);
-      if (b.music === "impact") dirs.push(`impacto: ${at}`); else if (b.music === "silence") dirs.push(`silencio: ${at} durante 1.5s`); else if (b.music && b.music !== "none") dirs.push(`marca-musica: ${MUSIC_WORD[b.music]} ${at}`);
-      const act = ACT[b.phase]; if (!seen.has(act)) { seen.add(act); memory.push(`acto: ${act} | ${b.goal.slice(0, 140)}`); }
+      const start = t, mine: { speaker: string; text: string; at: number; dur: number }[] = [];
+      for (const x of [b.action, b.reaction]) { const n = x.trim() ? normalizeLine({ text: x }, known) : undefined; if (n) { const d = lineSeconds({ speaker: "", text: n.text }); mine.push({ speaker: "", text: n.text, at: t, dur: d }); lines.push({ speaker: "", text: n.text }); t += d; } }
+      if (b.dialogue) { const n = normalizeLine({ speaker: b.dialogue.speaker, text: b.dialogue.text }, known); if (n) { const d = lineSeconds({ speaker: n.speaker ?? "", text: n.text }); mine.push({ speaker: n.speaker ?? "", text: n.text, at: t, dur: d }); lines.push({ speaker: n.speaker ?? "", text: n.text }); t += d + 0.25; } }
+      const at = (x: number) => `en ${(x + lead).toFixed(1)}s`, who = b.characters[0] ?? "KAP", act = mine.find((m) => !m.speaker), react = mine.filter((m) => !m.speaker)[1];
+      dirs.push(b.shot === "general" ? `plano: general ${at(start)}` : b.shot === "medio" ? `plano: medio ${who} ${at(start)}` : b.shot === "seguimiento" ? `camara: seguir ${who} ${at(start)}` : `plano: primer plano ${who} ${at(start)}`);   // «objeto» = primer plano en quien lo maneja
+      // la reacción de KAP al fallo/resultado se ve de cerca (corte a la reacción), en el instante en que empieza
+      if (react && ["fallo", "reaccion", "descubrimiento"].includes(b.step) && b.shot !== "primer plano" && b.shot !== "objeto") dirs.push(`plano: primer plano ${who} ${at(react.at)}`);
+      // sonidos que salen de cada frase de acción, en su momento
+      let consequenceAt: number | undefined; const acting: number[] = [];
+      if (act) for (const ss of sentenceStarts(act.text, act.dur)) { if (acts(ss.text)) acting.push(act.at + ss.t); for (const so of soundsOfSentence(ss.text, ss.dur)) { if (!snd.some((x) => x.kind === so.kind && Math.abs(x.at - (act.at + ss.t)) < 0.9)) snd.push({ kind: so.kind, at: act.at + ss.t, dur: so.dur }); } if (consequenceAt === undefined && CONSEQ.test(plain(ss.text))) consequenceAt = act.at + ss.t; }
+      for (const ta of acting) if (!snd.some((x) => Math.abs(x.at - ta) < 1.4)) snd.push({ kind: "knock", at: ta });   // cada gesto con un objeto suena (un objeto que se coloca, se toca, se mueve): sin gestos mudos
+      if (b.sound && b.sound !== "none" && !snd.some((x) => x.kind === (b.sound === "door" ? "door" : b.sound) && x.at >= start && x.at < t)) snd.push({ kind: b.sound, at: consequenceAt ?? start });
+      if (b.music === "impact") dirs.push(`impacto: ${at(consequenceAt ?? start)}`); else if (b.music === "silence") dirs.push(`silencio: ${at(react?.at ?? start)} durante 1.5s`); else if (b.music && b.music !== "none") dirs.push(`marca-musica: ${MUSIC_WORD[b.music]} ${at(start)}`);
+      const ac = ACT[b.phase]; if (!seen.has(ac)) { seen.add(ac); memory.push(`acto: ${ac} | ${b.goal.slice(0, 140)}`); }
     });
-    const first = sc.beats[0], last = sc.beats.at(-1)!, loc = plain(sc.location), cut = !!prevLoc && prevLoc === loc; prevLoc = loc;
+    for (const x of snd) dirs.push(`sonido: ${SOUND_WORD[x.kind]} en ${(x.at + lead).toFixed(1)}s${x.dur ? ` durante ${x.dur.toFixed(1)}s` : ""}`);
+    dirs.push(`sonido: ambiente en 0.3s durante ${Math.min(40, Math.max(3, t + 1)).toFixed(1)}s`);   // el cuarto no está mudo entre acciones
+    const first = sc.beats[0], last = sc.beats.at(-1)!, loc = plain(sc.location), cut = index++ > 0;
     return { title: first.goal.slice(0, 60) || sc.location, location: sc.location, lines, memory: last === beats.at(-1) ? [...memory, `gancho: ${last.change.slice(0, 240)}`] : memory, stage: ACT[first.phase], shot: first.shot === "general" ? "general" : first.shot === "primer plano" || first.shot === "objeto" ? "primer plano" : "medio", time: sc.time, interior: INDOOR.test(loc) && !OUTDOOR.test(loc), directions: dirs, change: last.change, ...(cut ? { transition: "cut" as const } : {}) };
   });
+}
+
+/** Tramos de ≥ `min` s sin ningún elemento sonoro audible (acciones sonorizadas, impactos, diálogo; el ambiente de fondo no cuenta). Para revisar silencios sospechosos. */
+export function audioGaps(scenes: ShortDraftScene[], min = 5): { from: number; to: number }[] {
+  const ev: [number, number][] = []; let base = 0;
+  for (const sc of scenes) { const D = Math.min(40, Math.max(3, sc.lines.reduce((t, l) => t + lineSeconds(l) + (l.speaker ? 0.25 : 0), 0) + 1));
+    let t = 0; for (const l of sc.lines) { const d = lineSeconds(l); if (l.speaker) ev.push([base + t, base + t + d]); t += d + (l.speaker ? 0.25 : 0); }
+    for (const d of sc.directions) { const m = /^(sonido|impacto): (.*?)en ([\d.]+)s(?: durante ([\d.]+)s)?/.exec(d); if (m && !/ambiente/.test(m[2] ?? "") && !/ambiente/.test(d)) ev.push([base + Number(m[3]), base + Number(m[3]) + (m[4] ? Number(m[4]) : 0.6)]); const q = /^impacto: en ([\d.]+)s/.exec(d); if (q) ev.push([base + Number(q[1]), base + Number(q[1]) + 0.6]); }
+    base += D; }
+  ev.sort((a, b) => a[0] - b[0]); const gaps: { from: number; to: number }[] = []; let end = 0; for (const [a, b] of ev) { if (a - end >= min) gaps.push({ from: +end.toFixed(1), to: +a.toFixed(1) }); end = Math.max(end, b); } if (base - end >= min) gaps.push({ from: +end.toFixed(1), to: +base.toFixed(1) });
+  return gaps;
 }

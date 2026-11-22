@@ -49,3 +49,14 @@ describe("acting del Short en el director", () => {
   });
   it("marca el movimiento continuo en el escenario del Short y no en el del episodio", () => { expect(direct({ ...base, short: true, lines: [], directions: [] } as never).flow).toBe(true); expect(direct({ ...base, lines: [], directions: [] } as never).flow).toBeUndefined(); });
 });
+
+describe("continuidad entre escenas del Short", () => {
+  it("el personaje empieza donde terminó en la escena anterior (mismo lugar) en vez de volver a su sitio", () => {
+    const a = direct({ ...base, short: true, lines: [], directions: [] } as never), b = direct({ ...base, short: true, lines: [], directions: [], startX: { kap: { x: 12.3, facing: -1 } } } as never);
+    expect(a.actors[0].slot).not.toBe(12.3); expect(b.actors[0].slot).toBe(12.3); expect(b.actors[0].facing).toBe(-1); expect(b.actors[1].slot).toBe(a.actors[1].slot);   // el resto, con su colocación normal
+  });
+  it("el sonido de una directiva no duplica el que el director ya puso por el movimiento", () => {
+    const s = direct({ ...base, short: true, lines: [{ text: "KAP camina hacia la puerta.", start: 0.3, end: 3 }], directions: ["sonido: pasos en 0.4s durante 2s"] } as never);
+    expect(s.sounds!.filter((x) => x.kind === "steps")).toHaveLength(1);
+  });
+});

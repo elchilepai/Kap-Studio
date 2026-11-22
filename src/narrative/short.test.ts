@@ -1,16 +1,16 @@
 import { describe, expect, it } from "vitest";
-import { beatsToScenes, estimateRenderSeconds, groupScenes, repairShort, shortRetentionCheck, MAX_SCENE_WORDS, type ShortBeat } from "./short";
+import { audioGaps, beatsToScenes, causalReasons, estimateRenderSeconds, groupScenes, repairShort, shortRetentionCheck, MAX_SCENE_WORDS, type ShortBeat } from "./short";
 import { parseDirection, parseDirectorCue } from "../animation/beats";
 import { validateIR } from "../domain/screenplay";
 import { draftToIR } from "../server/ai/episode";
 import { draftToShortScript, storyToDraft, type ShortStory } from "../server/ai/short";
 import { parsedToIR } from "../server/studio/interpreter";
 import { parseScript } from "../server/studio/script";
-import { B, good } from "./short.fixture";
+import { B, good, OBJETO } from "./short.fixture";
 
 const names = ["KAP", "Hermano de KAP"];
-const story: ShortStory = { title: "Las latas", logline: "KAP copia una torre y la hace a su manera.", hook: "", cast: names, beats: [] };
-const failed = (b: ShortBeat[]) => shortRetentionCheck(b, { renderSeconds: estimateRenderSeconds(beatsToScenes(b, names)) }).failed;
+const story: ShortStory = { objeto: OBJETO, objetivo: "hacer una torre alta", title: "Las latas", logline: "KAP copia una torre y la hace a su manera.", hook: "", cast: names, beats: [] };
+const check = (b: ShortBeat[], objeto = OBJETO) => shortRetentionCheck(b, { renderSeconds: estimateRenderSeconds(beatsToScenes(b, names)), objeto });
 /** El primer Short real: tristeza → abrazo → sonrisa. No debe pasar. */
 const hugs = (): ShortBeat[] => [
   B("hook", "situacion", "KAP mira por la ventana con una mirada triste, observando a otros niños en el parque.", { location: "Habitación" }),
@@ -22,34 +22,76 @@ const hugs = (): ShortBeat[] => [
   B("remate", "remate", "KAP mira a su hermano y suspira, con una sonrisa pequeña. El hermano le devuelve la sonrisa.", { location: "Habitación", change: "sonrisa" }),
 ];
 
+/** El caso negativo pedido: miradas, caminar, sentarse, escribir y sonreír, aunque Qwen lo etiquete con la estructura completa. */
+const labelledEmpty = (): ShortBeat[] => [
+  B("hook", "situacion", "KAP mira a otros niños desde la ventana. Los niños juegan con un cuaderno de dibujos en la calle.", { location: "Habitación", characters: ["KAP"] }),
+  B("contexto", "intento", "KAP camina hacia la puerta con paso firme y sale a la calle. Camina despacio hasta el parque.", { location: "Calle", change: "KAP sale de casa" }),
+  B("escalada", "fallo", "KAP se queda parado a unos metros del grupo. Nadie lo ve. KAP se sienta en un banco.", { location: "Calle", change: "nadie lo ve" }),
+  B("escalada", "reaccion", "KAP suspira y mira el suelo. Se pone serio y se levanta.", { location: "Calle", change: "KAP se pone serio" }),
+  B("giro", "segundo-intento", "KAP vuelve a casa y se sienta con el cuaderno. Escribe algo en el cuaderno y lo cierra.", { location: "Habitación", change: "KAP escribe" }),
+  B("giro", "descubrimiento", "KAP se da cuenta de que cada uno tiene su ritmo. Vuelve a salir con paso firme.", { location: "Calle", change: "KAP comprende" }),
+  B("remate", "remate", "KAP sonríe levemente y camina hacia sus amigos. Mira al cielo y sonríe.", { location: "Calle", change: "KAP sonríe" }),
+];
+/** Otro tema (bici): el caso positivo genérico objetivo concreto → acción de KAP → consecuencia → reacción → estrategia distinta → consecuencia distinta → cambio. */
+const bike = (): ShortBeat[] => [
+  B("hook", "situacion", "El hermano de KAP pedalea sobre una bici sin ruedines y frena de golpe junto a la valla. Levanta los brazos. La bici se queda recta.", { characters: ["Hermano de KAP", "KAP"], location: "Patio" }),
+  B("contexto", "situacion", "KAP sube a su bici con los ruedines puestos. Agarra el manillar con las dos manos. Empuja el pedal y avanza dos metros.", { location: "Patio", reaction: "El hermano le hace un gesto para que se quite los ruedines.", change: "KAP quiere ir sin ruedines", goal: "montar la bici sin ruedines" }),
+  B("escalada", "intento", "KAP quita los ruedines con una llave. Sube a la bici y empuja el pedal con fuerza. Acelera deprisa para no caerse.", { location: "Patio", change: "KAP arranca sin ruedines", goal: "montar sin ruedines a toda velocidad" }),
+  B("escalada", "fallo", "La bici se tuerce y se cae contra la valla. La rueda delantera rueda sola por el suelo. KAP se levanta con la rodilla manchada de tierra.", { location: "Patio", reaction: "KAP patea la rueda y aprieta los puños. Esconde la rodilla detrás de la bici.", change: "la bici se cae", goal: "no hacer el ridículo" }),
+  B("giro", "segundo-intento", "KAP observa los pies del hermano y baja el sillín de la bici con la llave. Apoya los dos pies en el suelo y empuja despacio. La bici rueda sin pedalear hasta el final del patio.", { location: "Patio", change: "KAP prueba a ir despacio con los pies abajo", goal: "ir despacio con los pies abajo" }),
+  B("giro", "descubrimiento", "La bici se mantiene recta mientras rueda despacio. KAP levanta un pie y la bici sigue recta. Pedalea una vuelta entera sin caerse.", { location: "Patio", change: "la bici se mantiene con el sillín bajo" }),
+  B("remate", "remate", "KAP baja el sillín de la bici un dedo más y vuelve a pedalear junto a la valla. El hermano pedalea a su lado sin hablar.", { characters: ["Hermano de KAP", "KAP"], location: "Patio", change: "KAP pedalea junto a su hermano" }),
+];
+
 describe("SHORT_RETENTION_CHECK (12 comprobaciones, sin modelo)", () => {
-  it("un Short con la cadena completa pasa; el render dura lo que dice su contenido, no lo que declara el modelo", () => {
-    const g = good(), est = estimateRenderSeconds(beatsToScenes(g, names)); const r = shortRetentionCheck(g, { renderSeconds: est });
-    expect(r.total).toBe(12); expect(r.failed).toEqual([]); expect(est).toBeGreaterThanOrEqual(45); expect(est).toBeLessThanOrEqual(75);
-    expect(shortRetentionCheck(g, { renderSeconds: 25.9 }).checks.find((c) => c.id === "duracion-justa")).toMatchObject({ ok: false, fix: "rewrite" });   // 20-30 s no cuenta como Short terminado
-    expect(shortRetentionCheck(g, { renderSeconds: 58 }).checks.find((c) => c.id === "duracion-justa")!.ok).toBe(true); expect(shortRetentionCheck(g, { renderSeconds: 90 }).checks.find((c) => c.id === "duracion-justa")!.ok).toBe(false);
+  it("un Short con la cadena causal completa pasa; el render dura lo que dice su contenido, no lo que declara el modelo", () => {
+    const g = good(), est = estimateRenderSeconds(beatsToScenes(g, names)); const r = check(g);
+    expect(r.total).toBe(12); expect(r.failed).toEqual([]); expect(est).toBeGreaterThanOrEqual(50); expect(est).toBeLessThanOrEqual(70);
+    expect(shortRetentionCheck(g, { renderSeconds: 25.9, objeto: OBJETO }).checks.find((c) => c.id === "duracion-justa")).toMatchObject({ ok: false, fix: "rewrite" });   // 20-30 s no cuenta como Short terminado
+    expect(shortRetentionCheck(g, { renderSeconds: 47, objeto: OBJETO }).checks.find((c) => c.id === "duracion-justa")!.ok).toBe(false);   // el mínimo es 50 s
+    expect(shortRetentionCheck(g, { renderSeconds: 58, objeto: OBJETO }).checks.find((c) => c.id === "duracion-justa")!.ok).toBe(true); expect(shortRetentionCheck(g, { renderSeconds: 90, objeto: OBJETO }).checks.find((c) => c.id === "duracion-justa")!.ok).toBe(false);
   });
-  it("CONTRATO: sin intento → fallo → segundo intento → descubrimiento no pasa y pide reescritura", () => {
-    const g = good().map((b) => (b.step === "segundo-intento" ? { ...b, step: "reaccion" as const } : b)); const c = shortRetentionCheck(g).checks.find((x) => x.id === "escalada")!;
-    expect(c.ok).toBe(false); expect(c.fix).toBe("rewrite"); expect(c.note).toMatch(/SEGUNDO INTENTO/);
-    expect(shortRetentionCheck(good().map((b) => (b.step === "fallo" ? { ...b, step: "reaccion" as const } : b))).checks.find((x) => x.id === "escalada")!.note).toMatch(/FALLO/);
+  it("CAUSALIDAD REAL: miradas, paseos, sentarse, escribir y sonreír NO pasan aunque Qwen los etiquete como situación → intento → fallo → reacción → segundo intento → descubrimiento → remate", () => {
+    const g = labelledEmpty(); expect(g.map((b) => b.step)).toEqual(["situacion", "intento", "fallo", "reaccion", "segundo-intento", "descubrimiento", "remate"]);
+    const c = check(g, "cuaderno").checks.find((x) => x.id === "escalada")!; expect(c.ok).toBe(false); expect(c.fix).toBe("rewrite"); expect(c.note).toMatch(/ninguna acción concreta de KAP con el objeto|consecuencia observable/);
+    expect(causalReasons(g, "cuaderno").join(" ")).not.toBe("");
   });
-  it("el segundo intento no puede repetir el primero", () => { const g = good(), a = g.find((b) => b.step === "intento")!, k = g.findIndex((b) => b.step === "segundo-intento"); g[k] = { ...g[k], goal: a.goal, action: a.action }; expect(shortRetentionCheck(g).checks.find((x) => x.id === "escalada")!.note).toMatch(/repite el primero/); });
-  it("tristeza → abrazo → sonrisa (el primer Short real) NO pasa como Short válido, aunque declare los pasos", () => {
-    const c = shortRetentionCheck(hugs()).checks.find((x) => x.id === "escalada")!; expect(c.ok).toBe(false); expect(c.note).toMatch(/no son acciones concretas|solo emoción|abrazos/);
+  it("una cadena real (otro tema, otro objeto) pasa por lo que dice el texto, no por las etiquetas", () => {
+    expect(causalReasons(bike(), "bici")).toEqual([]);
+    const relabelled = good().map((b) => ({ ...b, step: "situacion" as const })); expect(causalReasons(relabelled, OBJETO)).toEqual([]);   // las etiquetas no importan
   });
-  it("muchos beats solo emocionales fallan aunque haya una acción", () => { const g = good().map((b, i) => (i === 1 || i === 4 || i === 7 ? { ...b, action: "KAP mira a su hermano y sonríe", reaction: "" } : b)); expect(shortRetentionCheck(g).checks.find((x) => x.id === "escalada")!.ok).toBe(false); });
+  it("«nadie lo ve» no es un fallo: sin acción previa de KAP con el objeto no hay intento ni fallo", () => {
+    const g = good().map((b, i) => (i === 2 || i === 3 ? { ...b, action: "KAP se acerca al grupo. Nadie lo ve. KAP se queda parado con las manos en los bolsillos.", reaction: "" } : b));
+    expect(causalReasons(g, OBJETO).join(" ")).toMatch(/consecuencia observable|ninguna acción concreta/);
+  });
+  it("el segundo intento no puede repetir el primero", () => {
+    const g = good(), k = g.findIndex((b) => b.step === "segundo-intento"), a = g[2]; g[k] = { ...g[k], action: a.action, reaction: "" };
+    expect(causalReasons(g, OBJETO).join(" ")).toMatch(/repite el primero|no hay un segundo intento/);
+  });
+  it("un descubrimiento abstracto o sin acción posterior no cuenta", () => {
+    const abs = good().map((b) => (b.step === "descubrimiento" ? { ...b, action: b.action + " KAP se da cuenta de que cada uno tiene su ritmo." } : b)); expect(causalReasons(abs, OBJETO).join(" ")).toMatch(/abstracta/);
+    const dead = good().map((b) => (b.step === "remate" ? { ...b, action: "El hermano mira las dos torres y se va. KAP levanta una ceja.", reaction: "" } : b.step === "descubrimiento" ? { ...b, action: "La torre de KAP se queda en pie, más baja y más ancha que la del hermano. Todo aguanta.", reaction: "" } : b)); expect(causalReasons(dead, OBJETO).join(" ")).toMatch(/no cambia ninguna acción posterior/);
+  });
+  it("el hermano no puede resolver el conflicto por KAP", () => {
+    const g = good().map((b) => (["segundo-intento", "descubrimiento", "remate"].includes(b.step) ? { ...b, action: b.action.replace(/KAP /g, "El hermano ").replace(/^El hermano /, "El hermano ") } : b)); expect(causalReasons(g, OBJETO).length).toBeGreaterThan(0);
+  });
+  it("el gancho tiene que mostrar a alguien consiguiendo algo con el objeto; «KAP mira por la ventana» no vale", () => {
+    const g = good(); g[0] = { ...g[0], action: "KAP mira por la ventana. Ve a otros niños corriendo en la calle.", reaction: "" }; expect(causalReasons(g, OBJETO).join(" ")).toMatch(/gancho/);
+  });
+  it("tristeza → abrazo → sonrisa (el primer Short real) NO pasa como Short válido", () => {
+    const c = check(hugs(), "ventana").checks.find((x) => x.id === "escalada")!; expect(c.ok).toBe(false);
+  });
   it("gancho: sin acción visible en el primer beat falla y pide parche local", () => {
-    const g = good(); g[0] = B("hook", "situacion", "Una casa vieja con paredes azules y mucha luz", { seconds: 3 }); const c = shortRetentionCheck(g).checks.find((x) => x.id === "hook-claro")!; expect(c.ok).toBe(false); expect(c.fix).toBe("patch");
+    const g = good(); g[0] = B("hook", "situacion", "Una casa vieja con paredes azules y mucha luz", { seconds: 3 }); const c = check(g).checks.find((x) => x.id === "hook-claro")!; expect(c.ok).toBe(false); expect(c.fix).toBe("patch");
   });
   it("remate: una moraleja o una conferencia falla; un final de frase corta pasa", () => {
-    const g = good(); g.at(-1)!.dialogue = { speaker: "KAP", text: "Desde ese día aprendió que la verdad es lo importante" }; expect(shortRetentionCheck(g).failed).toContain("remate");
-    g.at(-1)!.dialogue = { speaker: "KAP", text: "Bueno… algo es algo." }; expect(shortRetentionCheck(g).failed).not.toContain("remate");
-    g.at(-1)!.dialogue = { speaker: "KAP", text: "Cada persona tiene su propio ritmo y comparar el camino de los demás con el mío solo me hace daño sin motivo" }; expect(shortRetentionCheck(g).failed).toContain("remate");
-    const m = good(); m[4].dialogue = { speaker: "KAP", text: "Lo importante es que cada uno avance a su ritmo" }; expect(shortRetentionCheck(m).failed).toContain("sin-tramos-solo-dialogo");
+    const g = good(); g.at(-1)!.dialogue = { speaker: "KAP", text: "Desde ese día aprendió que la verdad es lo importante" }; expect(check(g).failed).toContain("remate");
+    g.at(-1)!.dialogue = { speaker: "KAP", text: "Bueno… algo es algo." }; expect(check(g).failed).not.toContain("remate");
+    g.at(-1)!.dialogue = { speaker: "KAP", text: "Cada persona tiene su propio ritmo y comparar el camino de los demás con el mío solo me hace daño sin motivo" }; expect(check(g).failed).toContain("remate");
+    const m = good(); m[4].dialogue = { speaker: "KAP", text: "Lo importante es que cada uno avance a su ritmo" }; expect(check(m).failed).toContain("sin-tramos-solo-dialogo");
   });
   it("beats repetidos y prescindibles se detectan y se reparan en código (nunca el hook, el giro ni el remate)", () => {
-    const g = good(); g.splice(3, 0, { ...g[2], seconds: 4 }); expect(shortRetentionCheck(g).failed).toContain("sin-repetidos");
+    const g = good(); g.splice(3, 0, { ...g[2], seconds: 4 }); expect(check(g).failed).toContain("sin-repetidos");
     const fixed = repairShort(g); expect(fixed.merged).toBeGreaterThanOrEqual(1); expect(fixed.beats.length).toBeLessThan(g.length); expect(fixed.beats[0].phase).toBe("hook"); expect(fixed.beats.some((b) => b.phase === "giro")).toBe(true); expect(fixed.beats.at(-1)!.phase).toBe("remate");
   });
 });
@@ -84,6 +126,25 @@ describe("beats → escenas: sin relleno ni pérdida", () => {
   it("las marcas de música NO se convierten en música real: ninguna escena recibe una pista (hint de música)", () => {
     const { draft, scenes } = storyToDraft(story, good(), names), script = draftToShortScript(draft, scenes), ir = parsedToIR(parseScript(script, names.map((n, i) => ({ id: String(i), name: n }))));
     expect(script).toMatch(/\[marca-musica: inicio/); expect(script).not.toMatch(/\[musica:/); expect(ir.scenes.every((s) => !s.hints.music)).toBe(true);
+  });
+});
+
+describe("montaje y audio del Short", () => {
+  const times = (d: string[], re: RegExp) => d.filter((x) => re.test(x)).map((x) => Number(/en ([\d.]+)s/.exec(x)![1]));
+  it("las directivas NO caen todas al principio de la escena: sonidos y reacción se reparten según el texto y la duración de las líneas", () => {
+    const sc = beatsToScenes(good(), names), multi = sc.filter((s) => s.directions.filter((d) => /^sonido: (?!ambiente)/.test(d)).length >= 2);
+    expect(multi.length).toBeGreaterThan(0); expect(multi.some((s) => new Set(times(s.directions, /^sonido: (?!ambiente)/)).size > 1)).toBe(true);
+    const nonAmbient = sc.flatMap((x) => x.directions).filter((d) => /^(sonido: (?!ambiente)|impacto|silencio)/.test(d)); expect(new Set(nonAmbient.map((d) => /en ([\d.]+)s/.exec(d)![1])).size).toBeGreaterThan(8);   // repartidos en el tiempo, no todos a 0,3 s
+    expect(sc.some((s) => times(s.directions, /^plano: primer plano/).some((t) => t > 1.5))).toBe(true);   // corte a la reacción en su momento
+  });
+  it("cada escena (salvo la primera) entra con CORTE, también al cambiar de lugar; sin fundidos que mezclen escenas", () => {
+    const g = good(); g[3].location = "Calle"; g[4].location = "Calle"; const sc = beatsToScenes(g, names); expect(sc.length).toBeGreaterThan(2); expect(sc[0].transition).toBeUndefined(); expect(sc.slice(1).every((s) => s.transition === "cut")).toBe(true);
+  });
+  it("hay sonido real de acción (pasos, golpes, objetos) y los tramos largos sin sonido se detectan", () => {
+    const sc = beatsToScenes(good(), names), all = sc.flatMap((s) => s.directions); expect(all.some((d) => /^sonido: golpe/.test(d))).toBe(true); expect(all.some((d) => /^sonido: llamar/.test(d))).toBe(true);   // llamar = objeto colocado/golpeado (toc)
+    expect(audioGaps(sc, 5).every((g) => g.to - g.from < 6)).toBe(true);
+    const mute = [{ title: "x", location: "Patio", lines: [{ speaker: "", text: "KAP espera." }, { speaker: "", text: "KAP mira el cielo con calma durante un buen rato y no pasa nada más aquí." }, { speaker: "", text: "KAP sigue mirando el cielo sin hacer ruido alguno por ahora." }, { speaker: "", text: "KAP espera otro rato junto a la valla sin moverse del sitio." }, { speaker: "", text: "KAP cuenta las nubes despacio una por una mientras espera." }, { speaker: "", text: "KAP mira el suelo y espera un poco más sin decir nada." }], memory: [], stage: "inicio", shot: "medio", time: "tarde", interior: false, directions: ["sonido: ambiente en 0.3s durante 10s"], change: "x" }];
+    expect(audioGaps(mute as never, 5).length).toBeGreaterThan(0);   // el ambiente de fondo no cuenta como sonido de acción
   });
 });
 
