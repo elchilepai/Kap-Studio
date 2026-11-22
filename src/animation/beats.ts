@@ -35,15 +35,15 @@ const sideOf = (s: string): Side | "fade" | undefined => (/izquierd/.test(s) ? "
 const find = <T,>(map: Record<string, T>, s: string): T | undefined => Object.entries(map).sort((a, b) => b[0].length - a[0].length).find(([w]) => s.includes(norm(w)))?.[1];
 
 /** Directivas SOLO del director (SHORT MODE): sonido, música e impacto/silencio. No son beats de la IR (la IR no cambia): viajan en el texto de la dirección y las lee el director. */
-export const DIRECTOR_ONLY = new Set(["sonido", "musica", "impacto", "silencio"]);
+export const DIRECTOR_ONLY = new Set(["sonido", "marca-musica", "impacto", "silencio"]);
 const SOUND_WORDS: Record<string, SoundKind> = { puerta: "door", portazo: "door", golpe: "bump", llamar: "knock", llamada: "ring", timbre: "ring", pasos: "steps", ambiente: "ambience" };
 const MUSIC_WORDS: Record<string, MusicCue["kind"]> = { inicio: "music_start", cambio: "music_change", fin: "music_stop" };
-/** «sonido: puerta en 2.1s» · «musica: inicio|cambio|fin en 3s» · «impacto: en 5s» · «silencio: en 6s durante 1.5s» → marca de sonido o de música (o aviso si no se entiende). */
+/** «sonido: puerta en 2.1s» · «marca-musica: inicio|cambio|fin en 3s» (solo una marca para el director: no hay música real) · «impacto: en 5s» · «silencio: en 6s durante 1.5s» → marca de sonido o de música (o aviso si no se entiende). */
 export function parseDirectorCue(raw: string): { sound?: SoundCue; music?: MusicCue; warning?: string } | undefined {
   const i = raw.indexOf(":"); if (i < 0) return undefined; const key = norm(raw.slice(0, i)); if (!DIRECTOR_ONLY.has(key)) return undefined;
   const nv = norm(raw.slice(i + 1)), at = num(nv, /\ben\s+(\d+(?:[.,]\d+)?)\s*s/) ?? 0.2, dur = num(nv, /durante\s+(\d+(?:[.,]\d+)?)\s*s/);
   if (key === "sonido") { const w = Object.entries(SOUND_WORDS).find(([k]) => nv.includes(k))?.[1]; return w ? { sound: { t: at, kind: w, ...(dur !== undefined ? { dur } : {}) } } : { warning: `sonido: no conozco «${raw}»` }; }
-  if (key === "musica") { const k = Object.entries(MUSIC_WORDS).find(([w]) => nv.includes(w))?.[1]; return k ? { music: { t: at, kind: k, ...(dur !== undefined ? { dur } : {}) } } : { warning: `musica: usa inicio, cambio o fin en «${raw}»` }; }
+  if (key === "marca-musica") { const k = Object.entries(MUSIC_WORDS).find(([w]) => nv.includes(w))?.[1]; return k ? { music: { t: at, kind: k, ...(dur !== undefined ? { dur } : {}) } } : { warning: `marca-musica: usa inicio, cambio o fin en «${raw}»` }; }
   if (key === "impacto") return { music: { t: at, kind: "impact" }, sound: { t: at, kind: "bump" } };
   return { music: { t: at, kind: "silence", dur: dur ?? 1.5 } };
 }

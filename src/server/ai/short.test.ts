@@ -23,16 +23,16 @@ describe("autor del Short (SHORT MODE)", () => {
   it("UNA sola llamada al modelo para toda la historia; guion con beats, sonido y música; stats con retención", async () => {
     const { llm, author, out } = await write([story()]);
     expect(llm.calls).toHaveLength(1); expect(llm.calls[0].system).toBe(SHORT_SYSTEM); expect(llm.calls[0].jsonSchema).toBeDefined();
-    expect(out.script).toMatch(/\[sonido: golpe en /); expect(out.script).toMatch(/\[impacto: en /); expect(out.stats?.retention).toMatchObject({ total: 12 }); expect(out.stats!.retention!.beats).toBe(9); expect(out.stats!.retention!.seconds).toBeGreaterThanOrEqual(45);
-    expect(out.ir).toBeDefined(); expect(author.lastBeats).toHaveLength(9); expect(out.stats!.localPatches).toBe(0);
+    expect(out.script).toMatch(/\[sonido: golpe en /); expect(out.script).toMatch(/\[impacto: en /); expect(out.stats?.retention).toMatchObject({ total: 12 }); expect(out.stats!.retention!.beats).toBe(8); expect(out.stats!.retention!.seconds).toBeGreaterThanOrEqual(45);
+    expect(out.ir).toBeDefined(); expect(author.lastBeats).toHaveLength(8); expect(out.stats!.localPatches).toBe(0);
   });
   it("la narración queda como dirección (sin hablante) y solo se dice el diálogo", async () => {
     const { out } = await write([story()]); const lines = out.script.split("\n").filter((l) => l && !l.startsWith("#") && !l.startsWith("["));
     expect(lines.filter((l) => /^HERMANO DE KAP: /.test(l))).toHaveLength(1); expect(lines.some((l) => /^KAP: /.test(l))).toBe(false);
   });
   it("si falla el gancho: como mucho UNA reescritura local, y se aplica", async () => {
-    const bad = story(); bad.beats[0] = { ...bad.beats[0], action: "Una habitación azul con mucha luz y paredes lisas", reaction: "" };
-    const { llm, out } = await write([bad, { beats: [{ index: 0, action: "KAP tira el vaso y la leche cae sobre el mando", reaction: "El mando chisporrotea", change: "la consola chispea" }] }]);
+    const bad = story(); bad.beats[0] = { ...bad.beats[0], action: "Hay una habitación azul. Las paredes son lisas. La luz es amarilla. El suelo es de madera. La puerta es verde. El techo es alto. El aire es tibio. La mesa es redonda.", reaction: "Todo está en calma." };
+    const { llm, out } = await write([bad, { beats: [{ index: 0, action: "El hermano apila seis latas y las latas chocan con estruendo", reaction: "El hermano chisporrotea de risa", change: "la torre del hermano se mueve" }] }]);
     expect(llm.calls).toHaveLength(2); expect(out.stats!.localPatches).toBe(1); expect(out.script).toMatch(/chisporrotea/);
   });
   it("repara en código los beats repetidos (sin llamar al modelo) y avisa", async () => {
@@ -47,9 +47,27 @@ describe("autor del Short (SHORT MODE)", () => {
   it("una moraleja final se avisa y se corrige con UNA reescritura local del remate", async () => {
     const s = story(); s.beats.at(-1)!.dialogue = { speaker: "KAP", text: "Desde ese día aprendió que lo importante es decir la verdad" };
     const bad = await write([s, "no es json", "tampoco"]); expect(bad.out.warnings.some((w) => /SHORT_RETENTION_CHECK · remate/.test(w))).toBe(true); expect(bad.out.stats!.localPatches).toBe(1);
-    const fixed = await write([s, { beats: [{ index: 8, action: "KAP empuja el vaso bajo el sofá con el pie", reaction: "El hermano lo ve y se ríe", change: "el hermano lo sabe y calla" }] }]);
-    expect(fixed.llm.calls).toHaveLength(2); expect(fixed.out.warnings.some((w) => /SHORT_RETENTION_CHECK · remate/.test(w))).toBe(false); expect(fixed.out.script).toMatch(/empuja el vaso/);
+    const fixed = await write([s, { beats: [{ index: 7, action: "KAP empuja una lata bajo la pelota con el pie. El hermano la ve y la deja caer", reaction: "El hermano se ríe y KAP se encoge de hombros", change: "el hermano lo sabe y calla" }] }]);
+    expect(fixed.llm.calls).toHaveLength(2); expect(fixed.out.warnings.some((w) => /SHORT_RETENTION_CHECK · remate/.test(w))).toBe(false); expect(fixed.out.script).toMatch(/empuja una lata/);
   });
+});
+
+describe("contrato narrativo del Short (reescritura completa, sin rellenar)", () => {
+  const hug = () => story(["Mira por la ventana", "El hermano lo abraza", "KAP sonríe", "El hermano lo abraza otra vez", "KAP limpia", "KAP suspira", "Sonríen"].map((a, i, all) => ({ ...good()[Math.min(i, 7)], step: (["situacion", "intento", "fallo", "reaccion", "segundo-intento", "descubrimiento", "remate"] as const)[i], phase: (["hook", "contexto", "escalada", "escalada", "escalada", "giro", "remate"] as const)[i], action: `${a} con una mirada triste.`, reaction: "", location: "Habitación", change: `cambio ${i} ${all[i]}`, goal: `quiere ${i}` })));
+  it("una historia de tristeza + abrazos + sonrisa activa UNA reescritura completa; si la segunda es válida se usa esa", async () => {
+    const { llm, out } = await write([hug(), story()]);
+    expect(llm.calls).toHaveLength(2); expect(llm.calls[1].prompt).toMatch(/Corrección obligatoria/); expect(llm.calls[1].prompt).toMatch(/SIN abrazos/); expect(out.stats!.lengthRetries).toBe(1); expect(out.warnings.some((w) => /reescritura completa/.test(w))).toBe(true);
+    expect(out.warnings.some((w) => /SHORT_RETENTION_CHECK · escalada/.test(w))).toBe(false); expect(out.script).toMatch(/latas/);
+  });
+  it("si la reescritura tampoco cumple, NO se fabrica nada: se entrega la mejor versión con el aviso, sin más llamadas", async () => {
+    const { llm, out } = await write([hug(), hug()]); expect(llm.calls.filter((c) => /Corrección obligatoria/.test(c.prompt))).toHaveLength(1); expect(out.warnings.some((w) => /SHORT_RETENTION_CHECK · escalada/.test(w))).toBe(true); expect(out.warnings.some((w) => /SHORT_RETENTION_CHECK · duracion-justa/.test(w))).toBe(true);
+    const lines = out.script.split("\n").filter((l) => l && !/^[#[]/.test(l)); expect(new Set(lines).size).toBe(lines.length);   // ninguna línea duplicada para llegar a un mínimo
+  });
+  it("una duración de render menor de 45 s también pide la reescritura (20-30 s no es un Short terminado)", async () => {
+    const short = story(good().slice(0, 4).map((b, i) => ({ ...b, step: (["situacion", "intento", "fallo", "remate"] as const)[i], phase: (["hook", "escalada", "escalada", "remate"] as const)[i] })).concat(good().slice(0, 2) as never).map((b) => ({ ...b, action: b.action.split(". ")[0] + ".", reaction: "" })));
+    const { llm, out } = await write([short, story()]); expect(llm.calls.length).toBe(2); expect(out.stats!.retention!.seconds).toBeGreaterThanOrEqual(45);
+  });
+  it("el prompt exige el contrato, prohíbe resolver con abrazos y fija 50-65 s", () => { for (const re of [/CONTRATO NARRATIVO OBLIGATORIO/, /intento.*fallo.*reaccion.*segundo-intento.*descubrimiento/s, /PROHIBIDO resolver con tristeza/, /50-65 s/, /\bestá triste\b/]) expect(SHORT_SYSTEM).toMatch(re); });
 });
 
 describe("enrutado por modo (el episodio no cambia)", () => {
@@ -75,7 +93,7 @@ describe("formato vertical", () => {
 describe("director en modo Short", () => {
   const base = { duration: 6, tail: 0.5, aspect: 9 / 16, index: 0, fps: 30, width: 1080, height: 1920, location: "Salón", mood: "tarde, interior", tags: [], narration: "KAP mira el mando.", characters: [{ id: "k", name: "KAP", appearance: { kind: "stickman" } as never }], lines: [], style: { ink: "#000", line: 0.045, grade: "none", vignette: 0.3, shadow: true, bars: 0 } as never };
   it("sin relleno automático: ni cámara a la deriva ni aire muerto rellenado; con directivas de sonido/música", () => {
-    const dir = ["sonido: puerta en 1s", "musica: inicio en 0.3s", "impacto: en 3s", "silencio: en 4s durante 1.5s"];
+    const dir = ["sonido: puerta en 1s", "marca-musica: inicio en 0.3s", "impacto: en 3s", "silencio: en 4s durante 1.5s"];
     const s = direct({ ...base, short: true, pacing: false, directions: dir }), e = direct({ ...base, pacing: true, directions: [] });
     expect(s.music).toEqual([{ t: 0.3, kind: "music_start" }, { t: 3, kind: "impact" }, { t: 4, kind: "silence", dur: 1.5 }]); expect(s.sounds?.map((x) => x.kind)).toEqual(expect.arrayContaining(["door", "bump"]));
     expect(s.warnings.filter((w) => /sonido|musica/.test(w))).toEqual([]); expect(s.cues.filter((c) => c.type === "camera").every((c) => c.dur === 0.01)).toBe(true);   // solo el encuadre inicial, sin deriva
