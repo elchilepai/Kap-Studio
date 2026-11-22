@@ -6,7 +6,7 @@
 | 02 | PROBLEMA | DETAIL_SHOT | 4.0 s | 3.5 s | detail | sí (ejemplo) | — silencio — |
 | 03 | PROBLEMA | BRAIN_VISUALIZATION | 7.5 s | 4.0 s | wide | sí (explicacion) | Porque tu cabeza ya está ensayando todas las respuestas. |
 | 04 | EJEMPLO | REACTION | 11.5 s | 3.0 s | close-up | sí (reaccion) | Y llega un «vale». Solo eso. |
-| 05 | CONSECUENCIA | VISUAL_METAPHOR | 14.5 s | 3.5 s | top-down | sí (ejemplo) | Y de repente analizas hasta la coma. |
+| 05 | CONSECUENCIA | VISUAL_METAPHOR | 14.5 s | 3.5 s | top-down | no | Y de repente analizas hasta la coma. |
 | 06 | REALIZACION | KAP_PRESENTADOR | 18.0 s | 2.5 s | close-up | sí (opinion) | Y aquí está el problema. |
 | 07 | REALIZACION | OBJECT_METAPHOR | 20.5 s | 3.5 s | wide | sí (ejemplo) | Esto ya no es interés. Es ansiedad. |
 | 08 | NUEVA_ESTRATEGIA | TRANSFORMATION | 24.0 s | 3.0 s | side | sí (decision) | — silencio — |

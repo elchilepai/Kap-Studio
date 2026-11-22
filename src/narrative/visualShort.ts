@@ -17,6 +17,11 @@ export type KapReason = (typeof KAP_REASONS)[number];
 /** Movimiento que la escena admite en el montaje (no depende de animación compleja: imagen + cámara + edición). */
 export const MOTION_KINDS = ["zoom-in", "zoom-out", "pan", "parallax", "slide", "rotate", "appear", "scale-change", "loop", "particles", "light", "object-move"] as const;
 export type MotionKind = (typeof MOTION_KINDS)[number];
+/** Biblioteca de poses de KAP (se pueden combinar de forma natural: «sentado + mirando el móvil») y de expresiones; la descripción en inglés entra en el prompt de imagen. */
+export const KAP_POSES = { "frente-a-camara": "standing facing the camera", "brazos-cruzados": "arms crossed", senalando: "pointing at something", "encogiendo-hombros": "shrugging", "mirando-el-movil": "looking down at a phone", "apoyado-en-mesa": "leaning on a table", "de-espaldas": "seen from behind", "de-perfil-caminando": "walking in profile", "manos-en-la-cabeza": "hands on his head", facepalm: "hand over his face", sentado: "sitting", "recogiendo-objeto": "crouching to pick something up", "levantando-objeto": "lifting an object", "girando-la-cabeza": "turning his head", "inclinado-hacia-delante": "leaning forward", "mano-en-la-barbilla": "hand on his chin", "dejando-objeto": "putting an object down", "manos-en-los-bolsillos": "hands in the pockets", asintiendo: "nodding slowly", "tapandose-la-cara": "covering his face" } as const;
+export type KapPose = keyof typeof KAP_POSES;
+export const KAP_EXPRESSIONS = { seco: "deadpan, flat mouth", incomodo: "awkward, uncomfortable", sorprendido: "surprised, eyebrows raised", frustrado: "frustrated, eyebrows pinched", comprension: "realizing something, eyes widening", alivio: "relieved, relaxed brows", duda: "doubtful, one eyebrow raised", socarron: "smirking, lopsided", ansioso: "anxious, tense", decepcionado: "disappointed, brows dropping", tranquilo: "calm, relaxed", "enfadado-contenido": "restrained anger" } as const;
+export type KapExpression = keyof typeof KAP_EXPRESSIONS;
 export const HOOK_TYPES = ["pregunta-incomoda", "contradiccion", "situacion-reconocible", "afirmacion-inesperada", "error-comun", "mini-historia", "curiosidad", "consecuencia"] as const;
 export type HookType = (typeof HOOK_TYPES)[number];
 export const SUBTITLE_SPACE = ["top", "bottom", "left", "right", "none"] as const;
@@ -31,11 +36,14 @@ export type VisualScene = {
   /** Descripción visual (se dibuja, NO se dice). */ visual: string;
   /** La misma ilustración en inglés, una frase: la acción exacta para el generador de imágenes. */ visualEn: string;
   bodyLanguageEn?: string; environmentEn?: string; depthEn?: string;
+  /** Pose(s) y expresión de KAP en la imagen (obligatorias si aparece): evitan «la misma pose con otro fondo». */ kapPose?: KapPose[]; kapExpression?: KapExpression;
   camera: string; composition: string; lighting: string;
+  /** Perspectiva del plano (ojo a la altura de…, picado, contrapicado, cenital, POV…). */ perspective: string;
+  /** Texto gráfico DENTRO de la ilustración (un número en una pantalla, una palabra en una burbuja…). Puede estar vacío. No es el subtítulo. */ onScreenText?: string;
   /** Lo que dice KAP (KAP_DIALOGUE). Preferente al narrador. */ dialogue?: string;
   /** Narración externa, solo cuando es realmente necesaria. */ narration?: string;
   /** Escena sin voz a propósito (el silencio o el sonido también cuentan). */ silent?: boolean;
-  subtitle: string; soundEffect: string; transition: string; purpose: string;
+  /** Subtítulo que se superpone al hablar (se añade en el montaje, no se dibuja). Puede estar vacío. */ subtitle: string; soundEffect: string; transition: string; purpose: string;
   motionKinds: MotionKind[]; motionPrompt: string;
   characters: string[]; location: string; shot: ShotType; emotion: string;
   objects?: string[]; contrast?: string;
@@ -100,9 +108,11 @@ export function structureErrors(scenes: VisualScene[]): Issue[] {
     if (!s.location.trim() || !s.emotion.trim() || !s.purpose.trim()) bad("faltan lugar, emoción o propósito");
     if (!SHOT_TYPES.includes(s.shot)) bad(`plano inválido «${s.shot}»`);
     if (!(s.duration > 0)) bad("la duración debe ser mayor que 0");
-    if (!s.subtitle.trim()) bad("falta el subtítulo");
     if (!s.visualAction.trim()) bad("falta qué cambia visualmente (visualAction)");
     if (!s.camera.trim() || !s.composition.trim() || !s.lighting.trim()) bad("faltan cámara, composición o iluminación");
+    if (!s.perspective.trim()) bad("falta la perspectiva");
+    if (["OBJECT_METAPHOR", "DETAIL_SHOT", "VISUAL_METAPHOR"].includes(s.sceneType) && !(s.objects ?? []).some((o) => o.trim())) bad(`${s.sceneType} necesita sus objetos importantes (objects)`);
+    if (s.kapPresent) { if (!s.kapPose?.length || s.kapPose.length > 2 || s.kapPose.some((p) => !(p in KAP_POSES))) bad("KAP aparece sin pose válida (1-2 de la biblioteca de poses)"); if (!s.kapExpression || !(s.kapExpression in KAP_EXPRESSIONS)) bad("KAP aparece sin expresión válida"); }
     if (!s.transition.trim()) bad("falta la transición");
     if (!s.motionKinds?.length || s.motionKinds.some((k) => !MOTION_KINDS.includes(k)) || !s.motionPrompt.trim()) bad("falta el movimiento sugerido (motionKinds + motionPrompt)");
   });
@@ -175,6 +185,12 @@ export function visualRhythmCheck(scenes: VisualScene[]): RhythmWarning[] {
   if (runs(kp, 2).length || kp.filter(Boolean).length / n > 0.4) w.push({ id: "kap-presentando-demasiado", message: "KAP habla a cámara demasiado seguido o en demasiadas escenas: alterna con KAP viviendo el ejemplo, POV, detalles y metáforas", scenes: scenes.filter((_, i) => kp[i]).map((s) => s.n) });
   const absent = scenes.map((s) => !onKapThread(s)), longAbsent = runs(absent, 3);   // KAP no tiene que salir en todas las escenas, pero el hilo no se pierde: plano subjetivo, metáfora o consecuencia que lo representa
   if (longAbsent.length || scenes.filter(onKapThread).length / n < 0.5) w.push({ id: "kap-ausente", message: "se pierde el hilo de KAP: varias escenas seguidas sin KAP y sin que la imagen represente lo que él vive (kapExperience)", scenes: longAbsent.flatMap((r) => ns(scenes, r)) });
+  const kapScenes = scenes.filter((s) => s.kapPresent && s.kapPose?.length), seen = new Map<string, number>(), dupPose = new Set<number>();
+  for (const s of kapScenes) { const k = `${[...(s.kapPose ?? [])].sort().join("+")}|${s.kapExpression}|${s.shot}`; if (seen.has(k)) { dupPose.add(seen.get(k)!); dupPose.add(s.n); } else seen.set(k, s.n); }   // misma pose + expresión + plano
+  const poseCount = new Set(kapScenes.flatMap((s) => s.kapPose ?? [])).size;
+  if (dupPose.size || (kapScenes.length >= 4 && poseCount < Math.min(4, Math.ceil(kapScenes.length / 2)))) w.push({ id: "kap-pose-repetida", message: "KAP repite pose y expresión (o usa muy pocas poses distintas): cambia el cuerpo, la expresión y el plano, no solo el fondo", scenes: [...dupPose].sort((a, b) => a - b) });
+  const simComp: number[] = []; for (let i = 1; i < n; i++) if (jac(stems(`${scenes[i].composition} ${scenes[i].perspective}`), stems(`${scenes[i - 1].composition} ${scenes[i - 1].perspective}`)) >= 0.5) simComp.push(scenes[i - 1].n, scenes[i].n);
+  if (simComp.length) w.push({ id: "composiciones-parecidas", message: "escenas seguidas con composiciones demasiado parecidas aunque cambie algún detalle: cambia la distribución, la perspectiva o la escala", scenes: [...new Set(simComp)] });
   const sameShot = sameRuns((s) => s.shot, scenes, 3), [topShot, topShotN] = share(scenes.map((s) => s.shot));
   if (sameShot.length || topShotN / n > 0.5) w.push({ id: "planos-iguales", message: `demasiados planos iguales (${topShot} × ${topShotN}): alterna general, medio, primer plano, detalle y POV`, scenes: sameShot.flatMap((r) => ns(scenes, r)) });
   const closeN = scenes.filter((s) => s.shot === "close-up").length; if (closeN / n > 0.4) w.push({ id: "primeros-planos", message: `demasiados primeros planos (${closeN} de ${n}): el mundo debe sentirse grande (generales, cambios de escala)`, scenes: scenes.filter((s) => s.shot === "close-up").map((s) => s.n) });

@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
+import { parseMarks } from "./imageStatus";
 import { qualityChecklist, srt, toSpecScene, voiceScript, writeShortPack } from "./shortPack";
 import { demoPack } from "@/narrative/visualShort.fixture";
 
@@ -24,11 +25,19 @@ describe("pack de un Short de KAP", () => {
     const s = toSpecScene(demoPack().scenes[0]); for (const k of ["sceneNumber", "sceneType", "duration", "kapPresent", "action", "visualDescription", "camera", "composition", "lighting", "dialogue", "narration", "subtitle", "soundEffect", "transition", "purpose"]) expect(s).toHaveProperty(k);
     expect(s.sceneNumber).toBe(1); expect(s.kap).toMatchObject({ why: "hook", speaks: true }); expect(toSpecScene(demoPack().scenes[1]).silent).toBe(true);
   });
-  it("los subtítulos .srt acumulan los tiempos de las duraciones", () => { const out = srt(demoPack().scenes); expect(out).toMatch(/^1\n00:00:00,000 --> 00:00:03,950\n¿Cuántas veces/); expect(out).toMatch(/\n2\n00:00:04,000 --> 00:00:07,450\n/); expect(out.trim().split(/\n\n/)).toHaveLength(11); });
+  it("los subtítulos .srt acumulan los tiempos de las duraciones", () => { const out = srt(demoPack().scenes); expect(out).toMatch(/^1\n00:00:00,000 --> 00:00:03,950\n¿Cuántas veces/); expect(out).toMatch(/\n2\n00:00:04,000 --> 00:00:07,450\n/); expect(out.trim().split(/\n\n/)).toHaveLength(10); expect(out).not.toMatch(/\n10\n/); });   // la escena 10 no tiene subtítulo: no hay entrada vacía
+  it("imagenes-estado.md lista TODAS las escenas con el nombre esperado; prompt listo ≠ imagen generada; se detectan ficheros y se conservan las marcas manuales al regenerar", async () => {
+    const dir = await tmp(), pack = demoPack(); await writeShortPack(dir, pack); let md = await fs.readFile(path.join(dir, "imagenes-estado.md"), "utf8");
+    expect(md).toMatch(/\*\*0 de 11 imágenes generadas\.\*\*/); for (let n = 1; n <= 11; n++) expect(md).toContain(`| ${String(n).padStart(2, "0")} | imagenes/scene-${String(n).padStart(2, "0")}.png | listo ✅ |`); expect(md).toMatch(/Pendientes: 01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11\./); expect(md.match(/\[ \] generada/g)).toHaveLength(11);
+    await fs.writeFile(path.join(dir, "imagenes", "scene-03.png"), "x"); md = md.replace("[ ] generada |\n| 05", "[x] generada |\n| 05"); await fs.writeFile(path.join(dir, "imagenes-estado.md"), md);
+    await writeShortPack(dir, pack); const after = await fs.readFile(path.join(dir, "imagenes-estado.md"), "utf8");
+    expect(after).toMatch(/\*\*2 de 11 imágenes generadas\.\*\*/); expect(after).toMatch(/\| 03 \|.*\[x\] generada/); expect(after).toMatch(/\| 04 \|.*\[x\] generada/); expect(after).toMatch(/Pendientes: 01, 02, 05, 06, 07, 08, 09, 10, 11\./);
+    expect(parseMarks(after)[4]).toBe(true); expect(parseMarks(after)[1]).toBe(false);
+  });
   it("el plan de CapCut, el de audio y los prompts de movimiento salen de los datos de cada escena", async () => {
     const dir = await tmp(); await writeShortPack(dir, demoPack());
     const cap = await fs.readFile(path.join(dir, "capcut-plan.md"), "utf8"), audio = await fs.readFile(path.join(dir, "audio-plan.md"), "utf8"), motion = await fs.readFile(path.join(dir, "video-motion-prompts.md"), "utf8");
-    expect(cap).toMatch(/Zoom in lento/); expect(cap).toMatch(/imagenes\/scene-09\.png/); expect(cap).toMatch(/wipe de izquierda a derecha/); expect(audio).toMatch(/\*\*tension\*\*/); expect(audio).toMatch(/## Silencios[\s\S]*Escena 06[\s\S]*sin efectos/); expect(audio).toMatch(/No hay música real generada/); expect(motion).toMatch(/Very slow push-in on KAP's face/);
+    expect(cap).toMatch(/Texto gráfico \(dentro de la imagen\)/); expect(cap).toMatch(/\| vale \|/); expect(cap).toMatch(/Zoom in lento/); expect(cap).toMatch(/imagenes\/scene-09\.png/); expect(cap).toMatch(/wipe de izquierda a derecha/); expect(audio).toMatch(/\*\*tension\*\*/); expect(audio).toMatch(/## Silencios[\s\S]*Escena 06[\s\S]*sin efectos/); expect(audio).toMatch(/No hay música real generada/); expect(motion).toMatch(/Very slow push-in on KAP's face/);
   });
   it("el control de calidad comprueba lo comprobable y marca ❌ lo que falla (hook con muletilla, voz con instrucciones visuales, contenido de gurú) y deja pendiente lo humano", () => {
     const bad = demoPack(); bad.hooks[bad.chosenHook].text = "Hola chicos, hoy vamos a hablar de los mensajes"; expect(qualityChecklist(bad).find((x) => /Hook: entra directo/.test(x.text))!.ok).toBe(false);

@@ -3,8 +3,9 @@ Characters: KAP.
 Environment: Estudio de KAP; pink neon studio.
 Composition: centered, table edge at the bottom.
 Camera: medium shot; static at eye level, very slow pull-out.
+Perspective: eye level, slight pull-out.
 Lighting: pink neon rim light.
-Body language / expression: deadpan shrug, steady eye contact.
+KAP pose: shrugging, while putting an object down; KAP expression: deadpan, flat mouth; deadpan shrug, steady eye contact.
 Key objects: phone face down.
 Depth: table edge in the foreground, neon ring behind.
 Visual purpose: Cierre corto con la idea del Short.
@@ -15,10 +16,10 @@ STYLE (global): 2D flat cartoon illustration for a YouTube explainer series, cle
 CHARACTERS (identical design in every scene; priority: 1 KAP's identity, 2 the exact action, 3 composition, 4 environment, 5 aesthetics — never sacrifice KAP's identity to make the scene more spectacular):
 - KAP (the main character; keep EXACTLY the same design in every scene, match the attached reference image): a kid with a big perfectly round plain white head, simple black oval eyes, thick black slightly angled eyebrows (serious, introverted look), small round ears with a small gold hoop earring in each ear, no hair, no nose, no visible mouth unless the scene needs one (then a simple single black line); oversized black hoodie with the hood bunched behind the neck and a kangaroo pocket; thick gold Cuban chain necklace with a gold brain-shaped pendant; wide baggy black pants; black-and-white low-top sneakers; white hands; compact chunky silhouette, head about one third of the body height
 
-FORMAT (global): vertical 9:16 (1080x1920) framing designed for a short-form video: the main subject sits in the central safe area, important elements away from the top 12% and bottom 22% of the frame, no text, no captions, no watermark.
+FORMAT (global): vertical 9:16 (1080x1920) framing designed for a short-form video: the main subject sits in the central safe area, important elements away from the top 12% and bottom 22% of the frame, no subtitles, no captions, no watermark, and no readable text anywhere unless the scene specifies graphic text inside the illustration.
 
 --- NEGATIVE PROMPT (global) ---
-photorealistic, 3D render, anime, manga, painterly, watercolor, blurry, noisy texture, text, letters, watermark, logo, caption, extra fingers, extra limbs, deformed hands, different outfit, different face, different hairstyle, cropped head, low contrast, dark muddy colors
+photorealistic, 3D render, anime, manga, painterly, watercolor, blurry, noisy texture, subtitles, captions, random letters, gibberish text, watermark, logo, extra fingers, extra limbs, deformed hands, different outfit, different face, different hairstyle, cropped head, low contrast, dark muddy colors
 
 --- ATTACH AS REFERENCE ---
 assets/kap/reference.jpg

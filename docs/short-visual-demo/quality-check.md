@@ -15,7 +15,7 @@
 - ✅ Duración total 20-60 s y escenas de 1,5-6 s — 40 s
 - ✅ La voz no contiene instrucciones visuales (lo que se dibuja no se dice)
 - ✅ Sin contenido manipulador, de gurú, de coach vacío ni generalizaciones sobre hombres o mujeres
-- ✅ Cada escena tiene subtítulo corto (≤ 60 caracteres) y prompt de imagen
+- ✅ Subtítulos cortos (≤ 60 caracteres; pueden estar vacíos) y un prompt de imagen por escena
 - ☐ Verificar las afirmaciones psicológicas o científicas marcadas (afirmaciones.md) contra una fuente fiable — Esperar compulsivamente una respuesta suele estar ligado a la necesidad de validación externa · Comprobar el móvil una y otra vez aumenta la ansiedad de espera
 - ☐ Comprobar que la frase de cierre no es un cliché vacío — No necesitas gustarle a todo el mundo. Necesitas dejar de traicionarte para conseguirlo.
 - ☐ Sin diagnósticos ni lenguaje clínico; en relaciones, enfoque respetuoso (comunicación, límites, interés mutuo)

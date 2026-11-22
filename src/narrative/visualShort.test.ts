@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { BLOCKS, KAP_REASONS, onKapThread, MOTION_KINDS, SCENE_TYPES, kapIssues, readinessIssues, speechSeconds, structureErrors, suggestSceneType, totalSeconds, visualRhythmCheck, type VisualScene } from "./visualShort";
 import { demoPack } from "./visualShort.fixture";
+import { KAP_EXPRESSIONS, KAP_POSES } from "./visualShort";
 
 const scenes = () => demoPack().scenes;
 const ids = (w: { id: string }[]) => w.map((x) => x.id);
@@ -18,8 +19,8 @@ describe("tipos de escena, bloques y storyboard variable", () => {
     expect(ids(structureErrors(scenes().slice(0, 8)))).not.toContain("numero-escenas"); expect(ids(structureErrors([...scenes(), ...scenes().slice(0, 3)].map((s, i) => ({ ...s, n: i + 1 }))))).not.toContain("numero-escenas");
   });
   it("cada escena lleva todos los campos de la especificación (acción, visual, cámara, composición, luz, voz o silencio, subtítulo, SFX, transición, propósito, movimiento)", () => {
-    const bad = edit((s) => { s[1].action = ""; s[2].camera = ""; s[3].composition = ""; s[4].lighting = ""; s[5].subtitle = ""; s[6].transition = ""; s[7].purpose = ""; s[8].motionPrompt = ""; s[9].dialogue = undefined; s[9].silent = false; s[10].visualAction = ""; (s[0] as { block: string }).block = "OTRO"; });
-    const m = structureErrors(bad).map((e) => e.message).join(" | "); for (const re of [/escena 2: falta qué hace KAP/, /escena 3: faltan cámara/, /escena 4: faltan cámara/, /escena 5: faltan cámara/, /escena 6: falta el subtítulo/, /escena 7: falta la transición/, /escena 8: faltan lugar, emoción o propósito/, /escena 9: falta el movimiento/, /escena 10: no tiene voz ni está marcada como silenciosa/, /escena 11: falta qué cambia visualmente/, /escena 1: bloque inválido/]) expect(m).toMatch(re);
+    const bad = edit((s) => { s[1].action = ""; s[2].camera = ""; s[3].composition = ""; s[4].lighting = ""; s[5].perspective = ""; s[6].transition = ""; s[7].purpose = ""; s[8].motionPrompt = ""; s[9].dialogue = undefined; s[9].silent = false; s[10].visualAction = ""; (s[0] as { block: string }).block = "OTRO"; });
+    const m = structureErrors(bad).map((e) => e.message).join(" | "); for (const re of [/escena 2: falta qué hace KAP/, /escena 3: faltan cámara/, /escena 4: faltan cámara/, /escena 5: faltan cámara/, /escena 6: falta la perspectiva/, /escena 7: falta la transición/, /escena 8: faltan lugar, emoción o propósito/, /escena 9: falta el movimiento/, /escena 10: no tiene voz ni está marcada como silenciosa/, /escena 11: falta qué cambia visualmente/, /escena 1: bloque inválido/]) expect(m).toMatch(re);
   });
   it("una escena sin voz solo vale si es silencio a propósito (el silencio también es un recurso)", () => { expect(structureErrors(edit((s) => { s[1].silent = false; })).map((e) => e.message).join()).toMatch(/escena 2: no tiene voz/); expect(structureErrors(scenes())).toEqual([]); expect(scenes().filter((s) => s.silent).length).toBe(3); });
   it("suggestSceneType clasifica por el contenido", () => {
@@ -41,6 +42,33 @@ describe("regla de aparición de KAP: protagonista, pero no «porque toca»", ()
     expect(kapIssues(edit((s) => { s[0].dialogue = ""; })).map((e) => e.message).join()).toMatch(/sin frase de KAP/); expect(ids(kapIssues(edit((s) => { s[5].kapReason = "hook"; })))).toContain("kap-razon-fuera-de-sitio"); expect(ids(kapIssues(edit((s) => { s[5].kapReason = "cierre"; })))).toContain("kap-razon-fuera-de-sitio");
   });
   it("los errores de KAP bloquean la estructura", () => { expect(structureErrors(edit((s) => { s[5].kapAdds = ""; })).some((e) => e.id === "kap-sin-aportar")).toBe(true); });
+});
+
+describe("pose y expresión de KAP, perspectiva, texto gráfico y objetos (cambios aprobados)", () => {
+  it("biblioteca de 20 poses y 12 expresiones; si KAP aparece lleva 1-2 poses (combinación natural) y una expresión válida", () => {
+    expect(Object.keys(KAP_POSES).length).toBe(20); expect(Object.keys(KAP_EXPRESSIONS).length).toBe(12); expect(scenes().filter((s) => s.kapPresent).every((s) => (s.kapPose ?? []).length >= 1 && s.kapExpression)).toBe(true);
+    expect(scenes()[3].kapPose).toEqual(["mirando-el-movil", "inclinado-hacia-delante"]);
+    const m = (f: (s: VisualScene[]) => void) => structureErrors(edit(f)).map((e) => e.message).join(" | ");
+    expect(m((s) => { s[0].kapPose = undefined; })).toMatch(/escena 1: KAP aparece sin pose válida/); expect(m((s) => { s[0].kapPose = ["frente-a-camara", "sentado", "asintiendo"]; })).toMatch(/sin pose válida/); expect(m((s) => { (s[0].kapPose as string[]) = ["volando"]; })).toMatch(/sin pose válida/); expect(m((s) => { s[0].kapExpression = undefined; })).toMatch(/sin expresión válida/);
+    expect(m((s) => { s[4].kapPose = undefined; })).toBe("");   // sin KAP no hace falta
+  });
+  it("detecta la misma pose + expresión + plano repetidas aunque cambie el fondo, y el uso de muy pocas poses", () => {
+    const rep = visualRhythmCheck(edit((s) => { s[7] = { ...s[7], kapPose: [...s[0].kapPose!], kapExpression: s[0].kapExpression, shot: s[0].shot }; })).find((w) => w.id === "kap-pose-repetida"); expect(rep?.scenes).toEqual([1, 8]);
+    const few = ids(visualRhythmCheck(edit((s) => { for (const x of s) if (x.kapPresent) { x.kapPose = ["frente-a-camara"]; x.kapExpression = "seco"; x.shot = x.n % 2 ? "medium" : "wide"; } }))); expect(few).toContain("kap-pose-repetida");
+    expect(ids(visualRhythmCheck(edit((s) => { s[7].kapExpression = "seco"; s[7].kapPose = ["frente-a-camara"]; })))).not.toContain("kap-pose-repetida");   // misma pose y expresión pero otro plano: vale
+  });
+  it("escenas CONSECUTIVAS con composiciones demasiado parecidas se avisan aunque cambie algún detalle", () => {
+    const sim = visualRhythmCheck(edit((s) => { s[2].composition = s[1].composition + " with a small lamp"; s[2].perspective = s[1].perspective; })).find((w) => w.id === "composiciones-parecidas"); expect(sim?.scenes).toEqual([2, 3]);
+    expect(ids(visualRhythmCheck(edit((s) => { s[5].composition = s[2].composition; s[5].perspective = s[2].perspective; })))).not.toContain("composiciones-parecidas");   // parecidas pero NO seguidas
+  });
+  it("perspectiva obligatoria; texto gráfico y subtítulo pueden estar vacíos, y son cosas distintas", () => {
+    expect(structureErrors(edit((s) => { s[1].perspective = ""; })).map((e) => e.message).join()).toMatch(/escena 2: falta la perspectiva/);
+    const ok = edit((s) => { s[3].onScreenText = ""; s[3].subtitle = ""; s[1].onScreenText = undefined; }); expect(structureErrors(ok)).toEqual([]); expect(scenes()[3].onScreenText).toBe("vale"); expect(scenes()[3].subtitle).not.toBe("vale"); expect(scenes()[9].subtitle).toBe("");
+  });
+  it("los objetos son obligatorios en escenas de objeto, detalle y metáfora; en las demás son opcionales", () => {
+    for (const [i, t] of [[1, "DETAIL_SHOT"], [4, "VISUAL_METAPHOR"], [6, "OBJECT_METAPHOR"]] as const) { const bad = edit((s) => { s[i].sceneType = t; s[i].objects = []; }); expect(structureErrors(bad).map((e) => e.message).join()).toContain(`${t} necesita sus objetos importantes`); }
+    expect(structureErrors(edit((s) => { s[0].objects = undefined; s[3].objects = undefined; s[9].objects = []; })).filter((e) => /objetos importantes/.test(e.message))).toEqual([]);
+  });
 });
 
 describe("matiz: KAP es el hilo conductor sin estar físicamente en todas las escenas", () => {

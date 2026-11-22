@@ -6,12 +6,12 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import type { LlmClient } from "@/ports/studio";
-import { CATEGORIES, scoreIdeas, selectIdeas, type Hook, type Idea, type ScoredIdea } from "@/narrative/ideas";
+import { scoreIdeas, selectIdeas, type Hook, type Idea, type ScoredIdea } from "@/narrative/ideas";
 import { generateHooks, generateIdeaBatch } from "@/server/ai/ideas";
 import type { StageFn } from "./stages";
 
-/** 15 categorías repartidas en 3 lotes de 5 (cada llamada es corta: en CPU, ≈ 1,5 tok/s). */
-export const BATCHES: (readonly string[])[] = [CATEGORIES.slice(0, 5), CATEGORIES.slice(5, 10), CATEGORIES.slice(10, 15)];
+/** 19 categorías en 4 lotes de 4-5 (cada llamada es corta: en CPU ≈ 1,5 tok/s). Cubre mentalidad, disciplina, autoestima, confianza, relaciones sanas, límites, rechazo, respeto propio, comunicación, independencia emocional, responsabilidad, hábitos, propósito, comparación, comportamiento humano, dinero, desarrollo personal, procrastinación y redes sociales. */
+export const BATCHES: (readonly string[])[] = [["mentalidad", "disciplina", "autoestima", "confianza", "relaciones-sanas"], ["limites", "rechazo", "respeto-propio", "comunicacion", "independencia-emocional"], ["responsabilidad", "habitos", "proposito", "comparacion", "comportamiento-humano"], ["dinero", "desarrollo-personal", "procrastinacion", "redes-sociales"]];
 const partFile = (dir: string, name: string) => path.join(dir, "stages", "parts", `${name}.json`);
 const readPart = async <T>(dir: string, name: string): Promise<T | undefined> => { try { return JSON.parse(await fs.readFile(partFile(dir, name), "utf8")) as T; } catch { return undefined; } };
 const writePart = async (dir: string, name: string, data: unknown) => { const f = partFile(dir, name); await fs.mkdir(path.dirname(f), { recursive: true }); await fs.writeFile(f + ".tmp", JSON.stringify(data, null, 1)); await fs.rename(f + ".tmp", f); };   // escritura atómica: un corte nunca deja un lote a medias

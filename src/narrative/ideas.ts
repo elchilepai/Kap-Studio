@@ -5,7 +5,7 @@
 import { CLICKBAIT, textWarningIds } from "./shortSafety.ts";
 import { BANNED_OPENINGS, showsAction, wordCount } from "./visualShort.ts";
 
-export const CATEGORIES = ["mentalidad", "disciplina", "autoestima", "confianza", "relaciones-sanas", "limites", "rechazo", "comunicacion", "habitos", "comparacion", "comportamiento-humano", "dinero", "desarrollo-personal", "procrastinacion", "redes-sociales"] as const;
+export const CATEGORIES = ["mentalidad", "disciplina", "autoestima", "confianza", "relaciones-sanas", "limites", "rechazo", "comunicacion", "habitos", "comparacion", "comportamiento-humano", "dinero", "desarrollo-personal", "procrastinacion", "redes-sociales", "respeto-propio", "responsabilidad", "proposito", "independencia-emocional"] as const;
 export type Category = (typeof CATEGORIES)[number];
 export const CRITERIA = ["originalidad", "identificacion", "claridad", "potencialVisual", "utilidad", "curiosidad"] as const;
 export type Criterion = (typeof CRITERIA)[number];

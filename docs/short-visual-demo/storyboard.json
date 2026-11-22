@@ -107,6 +107,15 @@
    "camera": "static at eye level, slow push-in",
    "composition": "centered, neon ring framing the head, phone in the lower third",
    "lighting": "pink neon rim light plus the cold glow of the phone",
+   "perspective": "eye level, straight on",
+   "onScreenText": "",
+   "kapPose": [
+    "frente-a-camara"
+   ],
+   "kapExpression": "seco",
+   "objects": [
+    "phone"
+   ],
    "dialogue": "¿Cuántas veces cambias lo que dices… para gustarle a alguien?",
    "narration": "",
    "silent": false,
@@ -127,7 +136,7 @@
     ],
     "prompt": "Very slow push-in on KAP's face; the phone screen glow pulses softly once; subtle neon flicker."
    },
-   "imagePrompt": "SCENE (exact action): KAP stands facing the camera in a dim studio with a pink neon ring behind him, holding a glowing phone between two fingers, one eyebrow raised, deadpan.\nCharacters: KAP.\nEnvironment: Estudio de KAP; dim studio with a pink neon ring.\nComposition: centered, neon ring framing the head, phone in the lower third.\nCamera: medium shot; static at eye level, slow push-in.\nLighting: pink neon rim light plus the cold glow of the phone.\nBody language / expression: deadpan, one eyebrow raised, shoulders relaxed, knowing look.\nKey objects: phone.\nDepth: phone glow in the foreground, neon ring in the background.\nVisual purpose: Hook: una pregunta incómoda en los primeros segundos.\nKeep the bottom third calm and uncluttered (room for subtitles)."
+   "imagePrompt": "SCENE (exact action): KAP stands facing the camera in a dim studio with a pink neon ring behind him, holding a glowing phone between two fingers, one eyebrow raised, deadpan.\nCharacters: KAP.\nEnvironment: Estudio de KAP; dim studio with a pink neon ring.\nComposition: centered, neon ring framing the head, phone in the lower third.\nCamera: medium shot; static at eye level, slow push-in.\nPerspective: eye level, straight on.\nLighting: pink neon rim light plus the cold glow of the phone.\nKAP pose: standing facing the camera; KAP expression: deadpan, flat mouth; deadpan, one eyebrow raised, shoulders relaxed, knowing look.\nKey objects: phone.\nDepth: phone glow in the foreground, neon ring in the background.\nVisual purpose: Hook: una pregunta incómoda en los primeros segundos.\nKeep the bottom third calm and uncluttered (room for subtitles)."
   },
   {
    "sceneNumber": 2,
@@ -147,6 +156,16 @@
    "camera": "locked-off macro, slight handheld drift",
    "composition": "hands and phone filling the center, empty space above",
    "lighting": "cold blue phone glow in a dark room",
+   "perspective": "macro, slightly tilted from above",
+   "onScreenText": "",
+   "kapPose": [
+    "mirando-el-movil"
+   ],
+   "kapExpression": "ansioso",
+   "objects": [
+    "phone",
+    "chat bubbles"
+   ],
    "dialogue": "",
    "narration": "",
    "silent": true,
@@ -167,7 +186,7 @@
     ],
     "prompt": "Loop of the gray-bar bubble appearing and being erased three times while crossed-out bubbles slide up behind it; tiny thumb tremor."
    },
-   "imagePrompt": "SCENE (exact action): Extreme close-up of KAP's white hands holding a phone, thumbs typing a chat bubble made of gray bars, erasing it, and rewriting it, crossed-out draft bubbles piling up behind, blue screen glow.\nCharacters: KAP.\nEnvironment: Dormitorio de KAP (noche); dark bedroom at night.\nComposition: hands and phone filling the center, empty space above.\nCamera: extreme close-up detail shot; locked-off macro, slight handheld drift.\nLighting: cold blue phone glow in a dark room.\nBody language / expression: tense thumbs hovering, slightly shaking.\nKey objects: phone, chat bubbles.\nDepth: hands in the foreground, blurred bedroom in the background.\nVisual purpose: Problema concreto: cambia el mensaje tres veces.\nKeep the top third calm and uncluttered (room for subtitles)."
+   "imagePrompt": "SCENE (exact action): Extreme close-up of KAP's white hands holding a phone, thumbs typing a chat bubble made of gray bars, erasing it, and rewriting it, crossed-out draft bubbles piling up behind, blue screen glow.\nCharacters: KAP.\nEnvironment: Dormitorio de KAP (noche); dark bedroom at night.\nComposition: hands and phone filling the center, empty space above.\nCamera: extreme close-up detail shot; locked-off macro, slight handheld drift.\nPerspective: macro, slightly tilted from above.\nLighting: cold blue phone glow in a dark room.\nKAP pose: looking down at a phone; KAP expression: anxious, tense; tense thumbs hovering, slightly shaking.\nKey objects: phone, chat bubbles.\nDepth: hands in the foreground, blurred bedroom in the background.\nVisual purpose: Problema concreto: cambia el mensaje tres veces.\nKeep the top third calm and uncluttered (room for subtitles)."
   },
   {
    "sceneNumber": 3,
@@ -187,6 +206,15 @@
    "camera": "wide, slow pull back to reveal the scale",
    "composition": "tiny KAP bottom center, giant KAP towering above, bubbles forming a ring",
    "lighting": "purple glow with warm bubble highlights",
+   "perspective": "low angle looking up at the giant KAP",
+   "onScreenText": "",
+   "kapPose": [
+    "mano-en-la-barbilla"
+   ],
+   "kapExpression": "duda",
+   "objects": [
+    "speech bubbles"
+   ],
    "dialogue": "Porque tu cabeza ya está ensayando todas las respuestas.",
    "narration": "",
    "silent": false,
@@ -208,7 +236,7 @@
     ],
     "prompt": "Slow pull-back revealing the giant KAP; bubbles pop into existence one by one with a small scale bounce; a few particles drift upward."
    },
-   "imagePrompt": "SCENE (exact action): Inside KAP's mind, a giant cartoon KAP floats among dozens of speech bubbles showing imagined replies, some smiling, some angry, while the tiny real KAP looks up from below, dreamy purple light.\nCharacters: KAP.\nEnvironment: Interior de la mente de KAP; a surreal purple mindscape.\nComposition: tiny KAP bottom center, giant KAP towering above, bubbles forming a ring.\nCamera: wide establishing shot; wide, slow pull back to reveal the scale.\nLighting: purple glow with warm bubble highlights.\nBody language / expression: giant KAP with hand on chin, eyes darting between bubbles.\nKey objects: speech bubbles.\nDepth: tiny real KAP in the foreground, giant KAP in the midground, bubbles receding into the background.\nVisual purpose: Visualización mental: ensayar respuestas.\nKeep the bottom third calm and uncluttered (room for subtitles)."
+   "imagePrompt": "SCENE (exact action): Inside KAP's mind, a giant cartoon KAP floats among dozens of speech bubbles showing imagined replies, some smiling, some angry, while the tiny real KAP looks up from below, dreamy purple light.\nCharacters: KAP.\nEnvironment: Interior de la mente de KAP; a surreal purple mindscape.\nComposition: tiny KAP bottom center, giant KAP towering above, bubbles forming a ring.\nCamera: wide establishing shot; wide, slow pull back to reveal the scale.\nPerspective: low angle looking up at the giant KAP.\nLighting: purple glow with warm bubble highlights.\nKAP pose: hand on his chin; KAP expression: doubtful, one eyebrow raised; giant KAP with hand on chin, eyes darting between bubbles.\nKey objects: speech bubbles.\nDepth: tiny real KAP in the foreground, giant KAP in the midground, bubbles receding into the background.\nVisual purpose: Visualización mental: ensayar respuestas.\nKeep the bottom third calm and uncluttered (room for subtitles)."
   },
   {
    "sceneNumber": 4,
@@ -228,6 +256,17 @@
    "camera": "static close-up with a tiny push-in at the moment of the message",
    "composition": "face on the right third, phone glow on the left",
    "lighting": "warm evening window light turning cooler with the phone glow",
+   "perspective": "eye level, slightly from the side",
+   "onScreenText": "vale",
+   "kapPose": [
+    "mirando-el-movil",
+    "inclinado-hacia-delante"
+   ],
+   "kapExpression": "decepcionado",
+   "objects": [
+    "phone",
+    "short chat bubble"
+   ],
    "dialogue": "Y llega un «vale». Solo eso.",
    "narration": "",
    "silent": false,
@@ -248,26 +287,28 @@
     ],
     "prompt": "Tiny push-in as the bubble appears; the warm light shifts cooler; eyes dim slightly."
    },
-   "imagePrompt": "SCENE (exact action): Close-up of KAP in a living room reading a phone, eyebrows rising with hope then dropping, eyes dimming, the screen showing a single short chat bubble.\nCharacters: KAP.\nEnvironment: Salón de KAP; evening living room with a sofa and a window.\nComposition: face on the right third, phone glow on the left.\nCamera: close-up; static close-up with a tiny push-in at the moment of the message.\nLighting: warm evening window light turning cooler with the phone glow.\nBody language / expression: eyebrows up then dropping, eyes dimming, shoulders sagging.\nKey objects: phone, short chat bubble.\nDepth: face and phone sharp, sofa and window softly blurred behind.\nVisual purpose: Ejemplo: la respuesta corta y su efecto.\nKeep the bottom third calm and uncluttered (room for subtitles)."
+   "imagePrompt": "SCENE (exact action): Close-up of KAP in a living room reading a phone, eyebrows rising with hope then dropping, eyes dimming, the screen showing a single short chat bubble.\nCharacters: KAP.\nEnvironment: Salón de KAP; evening living room with a sofa and a window.\nComposition: face on the right third, phone glow on the left.\nCamera: close-up; static close-up with a tiny push-in at the moment of the message.\nPerspective: eye level, slightly from the side.\nLighting: warm evening window light turning cooler with the phone glow.\nKAP pose: looking down at a phone, while leaning forward; KAP expression: disappointed, brows dropping; eyebrows up then dropping, eyes dimming, shoulders sagging.\nKey objects: phone, short chat bubble.\nDepth: face and phone sharp, sofa and window softly blurred behind.\nGraphic text inside the illustration (exact, nothing else readable): \"vale\".\nVisual purpose: Ejemplo: la respuesta corta y su efecto.\nKeep the bottom third calm and uncluttered (room for subtitles)."
   },
   {
    "sceneNumber": 5,
    "block": "CONSECUENCIA",
    "sceneType": "VISUAL_METAPHOR",
    "duration": 3.5,
-   "kapPresent": true,
-   "kap": {
-    "why": "ejemplo",
-    "because": "Es él quien se hunde en el análisis: la consecuencia de seguir igual.",
-    "adds": "Muestra la consecuencia en lugar de decirla",
-    "speaks": true
-   },
-   "action": "KAP sobreanaliza la respuesta y a su alrededor la habitación se llena de burbujas de pensamientos.",
-   "visualDescription": "Vista cenital del salón de KAP: él, sentado y diminuto en el centro, rodeado de cientos de burbujas de pensamiento que se multiplican hasta cubrir el suelo, el sofá y las paredes.",
+   "kapPresent": false,
+   "kap": null,
+   "action": "La habitación se llena de burbujas de pensamiento que se multiplican sin parar, como la cabeza de KAP.",
+   "visualDescription": "Vista cenital del salón de KAP, vacío y con el móvil abandonado en el sofá, mientras cientos de burbujas de pensamiento se multiplican hasta cubrir el suelo, el sofá y las paredes.",
    "visualChange": "Las burbujas de pensamiento se multiplican hasta llenar toda la habitación.",
    "camera": "top-down, slow rotation",
-   "composition": "tiny KAP at the center, bubbles forming concentric rings",
+   "composition": "phone small at the center, bubbles forming concentric rings",
    "lighting": "flat cool light with soft shadows under each bubble",
+   "perspective": "top-down overhead",
+   "onScreenText": "",
+   "kapPose": [],
+   "kapExpression": "",
+   "objects": [
+    "thought bubbles"
+   ],
    "dialogue": "Y de repente analizas hasta la coma.",
    "narration": "",
    "silent": false,
@@ -275,9 +316,7 @@
    "soundEffect": "burbujas que revientan en cascada",
    "transition": "whoosh de burbujas",
    "purpose": "Consecuencia: el pensamiento lo desborda.",
-   "characters": [
-    "KAP"
-   ],
+   "characters": [],
    "location": "Salón de KAP invadido de pensamientos",
    "shot": "top-down",
    "emotion": "agobio",
@@ -289,7 +328,7 @@
     ],
     "prompt": "Slow rotation of the overhead view while thought bubbles multiply and grow outward in waves; subtle pop particles."
    },
-   "imagePrompt": "SCENE (exact action): Top-down view of a living room where a small KAP sits in the center surrounded by hundreds of thought bubbles multiplying until they cover the floor, the sofa and the walls.\nCharacters: KAP.\nEnvironment: Salón de KAP invadido de pensamientos; living room swallowed by thought bubbles.\nComposition: tiny KAP at the center, bubbles forming concentric rings.\nCamera: top-down overhead shot; top-down, slow rotation.\nLighting: flat cool light with soft shadows under each bubble.\nBody language / expression: hunched, hands on his head, eyes wide.\nKey objects: thought bubbles.\nDepth: bubbles layered at different sizes creating a swarming depth.\nVisual purpose: Consecuencia: el pensamiento lo desborda.\nKeep the bottom third calm and uncluttered (room for subtitles)."
+   "imagePrompt": "SCENE (exact action): Top-down view of an empty living room with a phone left on the sofa while hundreds of thought bubbles multiply until they cover the floor, the sofa and the walls.\nCharacters: no characters.\nEnvironment: Salón de KAP invadido de pensamientos; living room swallowed by thought bubbles.\nComposition: phone small at the center, bubbles forming concentric rings.\nCamera: top-down overhead shot; top-down, slow rotation.\nPerspective: top-down overhead.\nLighting: flat cool light with soft shadows under each bubble.\nEmotion: agobio.\nKey objects: thought bubbles.\nDepth: bubbles layered at different sizes creating a swarming depth.\nVisual purpose: Consecuencia: el pensamiento lo desborda.\nKeep the bottom third calm and uncluttered (room for subtitles)."
   },
   {
    "sceneNumber": 6,
@@ -309,6 +348,13 @@
    "camera": "static close-up",
    "composition": "face centered, thumb entering from the right edge",
    "lighting": "pink neon rim light",
+   "perspective": "slightly low angle, straight on",
+   "onScreenText": "",
+   "kapPose": [
+    "senalando"
+   ],
+   "kapExpression": "socarron",
+   "objects": [],
    "dialogue": "Y aquí está el problema.",
    "narration": "",
    "silent": false,
@@ -328,7 +374,7 @@
     ],
     "prompt": "Almost still: a barely perceptible push-in and a small head tilt; silence before the next scene."
    },
-   "imagePrompt": "SCENE (exact action): Close-up of KAP in the pink neon studio, lopsided smirk, lowering the phone and pointing a thumb over his shoulder as if saying look at that.\nCharacters: KAP.\nEnvironment: Estudio de KAP; pink neon studio.\nComposition: face centered, thumb entering from the right edge.\nCamera: close-up; static close-up.\nLighting: pink neon rim light.\nBody language / expression: lopsided smirk, one eye half-closed, thumb pointing back.\nDepth: KAP sharp, neon ring softly glowing behind.\nVisual purpose: Realización: KAP señala el patrón.\nKeep the bottom third calm and uncluttered (room for subtitles)."
+   "imagePrompt": "SCENE (exact action): Close-up of KAP in the pink neon studio, lopsided smirk, lowering the phone and pointing a thumb over his shoulder as if saying look at that.\nCharacters: KAP.\nEnvironment: Estudio de KAP; pink neon studio.\nComposition: face centered, thumb entering from the right edge.\nCamera: close-up; static close-up.\nPerspective: slightly low angle, straight on.\nLighting: pink neon rim light.\nKAP pose: pointing at something; KAP expression: smirking, lopsided; lopsided smirk, one eye half-closed, thumb pointing back.\nDepth: KAP sharp, neon ring softly glowing behind.\nVisual purpose: Realización: KAP señala el patrón.\nKeep the bottom third calm and uncluttered (room for subtitles)."
   },
   {
    "sceneNumber": 7,
@@ -348,6 +394,17 @@
    "camera": "wide, slow orbit",
    "composition": "KAP in the center, ring of objects framing him symmetrically",
    "lighting": "cold blue glow from the phones, a single warm light on KAP's face",
+   "perspective": "eye level, orbiting around him",
+   "onScreenText": "",
+   "kapPose": [
+    "girando-la-cabeza"
+   ],
+   "kapExpression": "comprension",
+   "objects": [
+    "phones",
+    "notification icons",
+    "thought bubbles"
+   ],
    "dialogue": "Esto ya no es interés. Es ansiedad.",
    "narration": "",
    "silent": false,
@@ -369,7 +426,7 @@
     ],
     "prompt": "The ring of phones and bubbles slowly orbits with parallax; the buzzing fades; a warm light slowly rises on KAP's face."
    },
-   "imagePrompt": "SCENE (exact action): KAP stands trapped inside a closed ring made of phones, notification icons and thought bubbles slowly orbiting him, his expression shifting from overwhelmed to understanding.\nCharacters: KAP.\nEnvironment: Círculo de notificaciones (metáfora); an abstract dark-blue void.\nComposition: KAP in the center, ring of objects framing him symmetrically.\nCamera: wide establishing shot; wide, slow orbit.\nLighting: cold blue glow from the phones, a single warm light on KAP's face.\nBody language / expression: slowly turning on the spot, eyes widening as he understands.\nKey objects: phones, notification icons, thought bubbles.\nDepth: ring of objects at several depths orbiting around KAP.\nVisual purpose: Realización: visualiza el ciclo móvil-notificación-pensamiento.\nKeep the bottom third calm and uncluttered (room for subtitles)."
+   "imagePrompt": "SCENE (exact action): KAP stands trapped inside a closed ring made of phones, notification icons and thought bubbles slowly orbiting him, his expression shifting from overwhelmed to understanding.\nCharacters: KAP.\nEnvironment: Círculo de notificaciones (metáfora); an abstract dark-blue void.\nComposition: KAP in the center, ring of objects framing him symmetrically.\nCamera: wide establishing shot; wide, slow orbit.\nPerspective: eye level, orbiting around him.\nLighting: cold blue glow from the phones, a single warm light on KAP's face.\nKAP pose: turning his head; KAP expression: realizing something, eyes widening; slowly turning on the spot, eyes widening as he understands.\nKey objects: phones, notification icons, thought bubbles.\nDepth: ring of objects at several depths orbiting around KAP.\nVisual purpose: Realización: visualiza el ciclo móvil-notificación-pensamiento.\nKeep the bottom third calm and uncluttered (room for subtitles)."
   },
   {
    "sceneNumber": 8,
@@ -389,6 +446,16 @@
    "camera": "side tracking shot following KAP",
    "composition": "KAP on the left third walking right toward the light",
    "lighting": "warm window light replacing the cold blue glow",
+   "perspective": "side tracking at hip height",
+   "onScreenText": "",
+   "kapPose": [
+    "de-perfil-caminando",
+    "dejando-objeto"
+   ],
+   "kapExpression": "tranquilo",
+   "objects": [
+    "phone face down"
+   ],
    "dialogue": "",
    "narration": "",
    "silent": true,
@@ -410,7 +477,7 @@
     ],
     "prompt": "Gentle lateral slide following KAP; the ring crumbles into drifting dust; the light shifts from cold blue to warm."
    },
-   "imagePrompt": "SCENE (exact action): KAP puts the phone face down on a table, the ring of notifications crumbling into dust, then walks out of it toward warm window light.\nCharacters: KAP.\nEnvironment: Escritorio de KAP; room opening up as the ring dissolves.\nComposition: KAP on the left third walking right toward the light.\nCamera: side-on profile shot; side tracking shot following KAP.\nLighting: warm window light replacing the cold blue glow.\nBody language / expression: calm exhale, shoulders dropping, steady steps.\nKey objects: phone face down.\nDepth: dust ring behind, warm light ahead, table in the foreground.\nVisual purpose: Nueva estrategia: una decisión pequeña y real.\nKeep the bottom third calm and uncluttered (room for subtitles)."
+   "imagePrompt": "SCENE (exact action): KAP puts the phone face down on a table, the ring of notifications crumbling into dust, then walks out of it toward warm window light.\nCharacters: KAP.\nEnvironment: Escritorio de KAP; room opening up as the ring dissolves.\nComposition: KAP on the left third walking right toward the light.\nCamera: side-on profile shot; side tracking shot following KAP.\nPerspective: side tracking at hip height.\nLighting: warm window light replacing the cold blue glow.\nKAP pose: walking in profile, while putting an object down; KAP expression: calm, relaxed; calm exhale, shoulders dropping, steady steps.\nKey objects: phone face down.\nDepth: dust ring behind, warm light ahead, table in the foreground.\nVisual purpose: Nueva estrategia: una decisión pequeña y real.\nKeep the bottom third calm and uncluttered (room for subtitles)."
   },
   {
    "sceneNumber": 9,
@@ -430,6 +497,19 @@
    "camera": "locked wide with a slow slide toward the right half",
    "composition": "vertical split, equal weight, clocks at the top of each half",
    "lighting": "cold dim on the left, warm bright on the right",
+   "perspective": "flat frontal split screen",
+   "onScreenText": "",
+   "kapPose": [
+    "sentado",
+    "levantando-objeto"
+   ],
+   "kapExpression": "tranquilo",
+   "objects": [
+    "wall clocks",
+    "guitar",
+    "weights",
+    "books"
+   ],
    "dialogue": "Y sigues con tu día.",
    "narration": "",
    "silent": false,
@@ -451,7 +531,7 @@
     ],
     "prompt": "Slow slide toward the right half; the four mini-scenes loop in small motions; the right clock hand turns while the left stays frozen."
    },
-   "imagePrompt": "SCENE (exact action): Split-screen: left, KAP glued to his phone with a stopped wall clock; right, KAP in four small scenes training, studying, playing guitar and laughing with friends, the clock moving on.\nCharacters: KAP.\nEnvironment: Cuatro lugares en pantalla dividida; split between a dim room and bright varied places.\nComposition: vertical split, equal weight, clocks at the top of each half.\nCamera: wide establishing shot; locked wide with a slow slide toward the right half.\nLighting: cold dim on the left, warm bright on the right.\nBody language / expression: left: hunched and still; right: upright, moving, smiling a little.\nKey objects: wall clocks, guitar, weights, books.\nDepth: clear foreground on both halves, clocks as depth anchors.\nVisual purpose: Resultado: la diferencia entre esperar y vivir.\nKeep the bottom third calm and uncluttered (room for subtitles)."
+   "imagePrompt": "SCENE (exact action): Split-screen: left, KAP glued to his phone with a stopped wall clock; right, KAP in four small scenes training, studying, playing guitar and laughing with friends, the clock moving on.\nCharacters: KAP.\nEnvironment: Cuatro lugares en pantalla dividida; split between a dim room and bright varied places.\nComposition: vertical split, equal weight, clocks at the top of each half.\nCamera: wide establishing shot; locked wide with a slow slide toward the right half.\nPerspective: flat frontal split screen.\nLighting: cold dim on the left, warm bright on the right.\nKAP pose: sitting, while lifting an object; KAP expression: calm, relaxed; left: hunched and still; right: upright, moving, smiling a little.\nKey objects: wall clocks, guitar, weights, books.\nDepth: clear foreground on both halves, clocks as depth anchors.\nVisual purpose: Resultado: la diferencia entre esperar y vivir.\nKeep the bottom third calm and uncluttered (room for subtitles)."
   },
   {
    "sceneNumber": 10,
@@ -471,10 +551,20 @@
    "camera": "POV with a tiny glance shift",
    "composition": "hands and guitar in the lower half, phone small at the upper right",
    "lighting": "warm desk lamp light, the phone glow barely noticeable",
+   "perspective": "first-person POV with a small glance shift",
+   "onScreenText": "",
+   "kapPose": [
+    "sentado"
+   ],
+   "kapExpression": "tranquilo",
+   "objects": [
+    "guitar",
+    "phone"
+   ],
    "dialogue": "",
    "narration": "",
    "silent": true,
-   "subtitle": "Vibra. Lo miras. Sigues.",
+   "subtitle": "",
    "soundEffect": "vibración del móvil sobre la mesa",
    "transition": "corte seco",
    "purpose": "Resultado: no cambia su comportamiento al recibir la notificación.",
@@ -492,7 +582,7 @@
     ],
     "prompt": "Phone buzzes and lights up twice; the view shifts briefly toward it and returns; hands keep a gentle playing loop."
    },
-   "imagePrompt": "SCENE (exact action): First-person view of KAP's white hands playing an acoustic guitar on a desk, a phone on the far side of the desk vibrating and lighting up, the view glancing at it then returning to the strings.\nCharacters: KAP.\nEnvironment: Mesa de trabajo de KAP; warm evening desk with books and a lamp.\nComposition: hands and guitar in the lower half, phone small at the upper right.\nCamera: first-person POV shot; POV with a tiny glance shift.\nLighting: warm desk lamp light, the phone glow barely noticeable.\nBody language / expression: relaxed hands continuing to play, a brief glance then back.\nKey objects: guitar, phone.\nDepth: guitar neck in the foreground, phone blurred at the far end of the desk.\nVisual purpose: Resultado: no cambia su comportamiento al recibir la notificación.\nKeep the top third calm and uncluttered (room for subtitles)."
+   "imagePrompt": "SCENE (exact action): First-person view of KAP's white hands playing an acoustic guitar on a desk, a phone on the far side of the desk vibrating and lighting up, the view glancing at it then returning to the strings.\nCharacters: KAP.\nEnvironment: Mesa de trabajo de KAP; warm evening desk with books and a lamp.\nComposition: hands and guitar in the lower half, phone small at the upper right.\nCamera: first-person POV shot; POV with a tiny glance shift.\nPerspective: first-person POV with a small glance shift.\nLighting: warm desk lamp light, the phone glow barely noticeable.\nKAP pose: sitting; KAP expression: calm, relaxed; relaxed hands continuing to play, a brief glance then back.\nKey objects: guitar, phone.\nDepth: guitar neck in the foreground, phone blurred at the far end of the desk.\nVisual purpose: Resultado: no cambia su comportamiento al recibir la notificación.\nKeep the top third calm and uncluttered (room for subtitles)."
   },
   {
    "sceneNumber": 11,
@@ -512,6 +602,16 @@
    "camera": "static at eye level, very slow pull-out",
    "composition": "centered, table edge at the bottom",
    "lighting": "pink neon rim light",
+   "perspective": "eye level, slight pull-out",
+   "onScreenText": "",
+   "kapPose": [
+    "encogiendo-hombros",
+    "dejando-objeto"
+   ],
+   "kapExpression": "seco",
+   "objects": [
+    "phone face down"
+   ],
    "dialogue": "No necesitas gustarle a todo el mundo. Necesitas dejar de traicionarte para conseguirlo.",
    "narration": "",
    "silent": false,
@@ -531,7 +631,7 @@
     ],
     "prompt": "Very slow pull-out; a single small light flicker on the neon ring; the music fades under the last line."
    },
-   "imagePrompt": "SCENE (exact action): KAP at the pink neon studio shrugging at the camera and flipping a phone face down on a table with a deadpan expression.\nCharacters: KAP.\nEnvironment: Estudio de KAP; pink neon studio.\nComposition: centered, table edge at the bottom.\nCamera: medium shot; static at eye level, very slow pull-out.\nLighting: pink neon rim light.\nBody language / expression: deadpan shrug, steady eye contact.\nKey objects: phone face down.\nDepth: table edge in the foreground, neon ring behind.\nVisual purpose: Cierre corto con la idea del Short.\nKeep the bottom third calm and uncluttered (room for subtitles)."
+   "imagePrompt": "SCENE (exact action): KAP at the pink neon studio shrugging at the camera and flipping a phone face down on a table with a deadpan expression.\nCharacters: KAP.\nEnvironment: Estudio de KAP; pink neon studio.\nComposition: centered, table edge at the bottom.\nCamera: medium shot; static at eye level, very slow pull-out.\nPerspective: eye level, slight pull-out.\nLighting: pink neon rim light.\nKAP pose: shrugging, while putting an object down; KAP expression: deadpan, flat mouth; deadpan shrug, steady eye contact.\nKey objects: phone face down.\nDepth: table edge in the foreground, neon ring behind.\nVisual purpose: Cierre corto con la idea del Short.\nKeep the bottom third calm and uncluttered (room for subtitles)."
   }
  ]
 }
