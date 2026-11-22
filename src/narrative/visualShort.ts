@@ -25,6 +25,7 @@ export type VisualScene = {
   n: number; block: Block; sceneType: SceneType; duration: number;
   /** ¿Aparece KAP? Por qué (kapReason), qué hace (action) y qué aporta (kapAdds): si no hay respuesta, KAP no entra. */
   kapPresent: boolean; kapReason?: KapReason; kapWhy?: string; kapAdds?: string;
+  /** Si KAP NO aparece (plano subjetivo, detalle, visualización mental, metáfora, consecuencia), cómo la imagen representa lo que KAP está viviendo: así sigue siendo el hilo conductor sin estar en pantalla. */ kapExperience?: string;
   /** Qué hace KAP (o el sujeto principal) en la escena. */ action: string;
   /** Qué cambia visualmente (la acción visual: para el ritmo y el montaje). */ visualAction: string;
   /** Descripción visual (se dibuja, NO se dice). */ visual: string;
@@ -62,6 +63,8 @@ export const speechSeconds = (t: string) => (t.trim() ? Math.round((wordCount(t)
 export const totalSeconds = (s: VisualScene[]) => Math.round(s.reduce((n, x) => n + x.duration, 0) * 10) / 10;
 export const BANNED_OPENINGS = /^\s*(?:hola\b|hoy vamos a hablar|en este v[ií]deo|te voy a explicar|bienvenid|vamos a ver|antes de empezar)/i;
 const isKap = (c: string) => c.trim().toUpperCase() === "KAP";
+/** La escena forma parte del hilo de KAP: él aparece, o la imagen representa explícitamente lo que está viviendo (kapExperience). */
+export const onKapThread = (s: VisualScene) => s.kapPresent || wordCount(s.kapExperience ?? "") >= 3;
 
 /** Sugiere el tipo de escena a partir de su contenido (cuando el guionista no lo indica). */
 export function suggestSceneType(s: Pick<VisualScene, "visual" | "characters" | "shot" | "kapPresent"> & { dialogue?: string }): SceneType {
@@ -117,6 +120,7 @@ export function kapIssues(scenes: VisualScene[]): Issue[] {
       if (wordCount(s.kapAdds ?? "") < 3) e.push({ id: "kap-sin-aportar", message: `escena ${s.n}: KAP aparece pero no declara qué aporta (kapAdds): si no aporta, se elimina su aparición`, scenes: [s.n] });
       if (!inCast) e.push({ id: "kap-incoherente", message: `escena ${s.n}: kapPresent=true pero KAP no está en sus personajes`, scenes: [s.n] });
     } else if (inCast) e.push({ id: "kap-incoherente", message: `escena ${s.n}: KAP está en sus personajes pero kapPresent=false`, scenes: [s.n] });
+    if (s.kapPresent && s.kapExperience?.trim()) e.push({ id: "kap-incoherente", message: `escena ${s.n}: kapExperience solo se usa cuando KAP NO aparece`, scenes: [s.n] });
     if ((s.sceneType === "KAP_PRESENTADOR" || s.sceneType === "KAP_EXAMPLE") && !s.kapPresent) e.push({ id: "kap-incoherente", message: `escena ${s.n}: ${s.sceneType} sin KAP`, scenes: [s.n] });
     if (s.sceneType === "KAP_PRESENTADOR" && !(s.dialogue ?? "").trim()) e.push({ id: "kap-incoherente", message: `escena ${s.n}: KAP_PRESENTADOR sin frase de KAP (KAP habla a cámara)`, scenes: [s.n] });
     if (s.kapReason === "hook" && s.n > 2) e.push({ id: "kap-razon-fuera-de-sitio", message: `escena ${s.n}: «hook» solo vale al principio`, scenes: [s.n] });
@@ -131,7 +135,7 @@ export function readinessIssues(scenes: VisualScene[]): Issue[] {
   const e: Issue[] = [], at = (b: Block) => scenes.filter((s) => s.block === b), order = scenes.map((s) => BLOCKS.indexOf(s.block));
   for (const b of BLOCKS) if (!at(b).length) e.push({ id: "listo-bloque", message: `falta el bloque ${b}` });
   if (order.some((x, i) => i && x < order[i - 1])) e.push({ id: "listo-orden", message: "los bloques no siguen el orden HOOK → PROBLEMA → EJEMPLO → CONSECUENCIA → REALIZACIÓN → NUEVA ESTRATEGIA → RESULTADO → CIERRE" });
-  for (const b of ["EJEMPLO", "NUEVA_ESTRATEGIA", "RESULTADO"] as Block[]) if (at(b).length && !at(b).some((s) => s.kapPresent)) e.push({ id: "listo-kap", message: `en ${b} no aparece KAP viviendo la situación: ¿qué le pasa a KAP y qué hace diferente?`, scenes: at(b).map((s) => s.n) });
+  for (const b of ["EJEMPLO", "NUEVA_ESTRATEGIA", "RESULTADO"] as Block[]) if (at(b).length && !at(b).some(onKapThread)) e.push({ id: "listo-kap", message: `en ${b} no se ve a KAP viviendo la situación (ni él ni imágenes que lo representen): ¿qué le pasa a KAP y qué hace diferente?`, scenes: at(b).map((s) => s.n) });
   const ex = at("EJEMPLO").concat(at("CONSECUENCIA")).map((s) => s.action).join(" "), st = at("NUEVA_ESTRATEGIA").map((s) => s.action).join(" ");
   if (ex && st && jac(stems(ex), stems(st)) >= 0.6) e.push({ id: "listo-estrategia", message: "la nueva estrategia de KAP repite lo que hacía antes: debe hacer algo DIFERENTE" });
   if (at("RESULTADO").length && !scenes.some((s) => s.sceneType === "BEFORE_AFTER" || (s.contrast ?? "").trim())) e.push({ id: "listo-contraste", message: "no se ve el contraste antes/después (BEFORE_AFTER o contraste explícito)" });
@@ -146,6 +150,8 @@ const CONTRAST = /\b(?:frente a|versus|mientras que|en cambio|a la izquierda|a l
 const CHANGE = /\b(?:se (?:convierte|transforma|rompe|llena|vacia|pliega|encoge|apaga|enciende|desmorona|hace|libera|desinfla)\w*|crece\w*|cambia\w*|aparece\w*|desaparece\w*|sale del\w*|multiplic\w*)\b/;
 const CLICHE_END = /\b(?:tu puedes con todo|cree en ti|nada es imposible|todo es posible|la mejor version de ti|el exito|sal de tu zona de confort|lo importante es|nunca te rindas|persigue tus suenos|el secreto)\b/;
 const ABSTRACT = /\b(?:la sociedad actual|en la vida|el sentido de|la esencia|el camino hacia|trabajar en tu autoestima|debes trabajar|tienes que ser|el crecimiento personal es)\b/;
+/** ¿El texto describe algo que se puede ver hacer (acción, cambio, objeto que se mueve)? */
+export const showsAction = (t: string) => ACTION.test(plain(t)) || CHANGE.test(plain(t));
 const isStatic = (s: VisualScene) => !s.visualAction.trim() || (STATIC.test(plain(s.visualAction)) && !ACTION.test(plain(s.visualAction)));
 const hasAction = (s: VisualScene) => ACTION.test(plain(s.visualAction)) || ACTION.test(plain(s.action));
 const hasContrast = (s: VisualScene) => s.sceneType === "BEFORE_AFTER" || !!s.contrast?.trim() || CONTRAST.test(plain(`${s.visual} ${s.visualAction}`));
@@ -167,8 +173,8 @@ export function visualRhythmCheck(scenes: VisualScene[]): RhythmWarning[] {
   if (conv.filter(Boolean).length / n > 0.25 || runs(conv, 2).length) w.push({ id: "demasiados-dialogos", message: "demasiadas escenas de personajes hablando entre sí: que la imagen demuestre en vez de conversar", scenes: scenes.filter((s) => s.conversation).map((s) => s.n) });
   const kp = scenes.map((s) => s.sceneType === "KAP_PRESENTADOR");
   if (runs(kp, 2).length || kp.filter(Boolean).length / n > 0.4) w.push({ id: "kap-presentando-demasiado", message: "KAP habla a cámara demasiado seguido o en demasiadas escenas: alterna con KAP viviendo el ejemplo, POV, detalles y metáforas", scenes: scenes.filter((_, i) => kp[i]).map((s) => s.n) });
-  const absent = scenes.map((s) => !s.kapPresent), longAbsent = runs(absent, 4);
-  if (longAbsent.length || scenes.filter((s) => s.kapPresent).length / n < 0.4) w.push({ id: "kap-ausente", message: "KAP desaparece demasiado tiempo: es el protagonista y el hilo conductor, no un narrador invisible", scenes: longAbsent.flatMap((r) => ns(scenes, r)) });
+  const absent = scenes.map((s) => !onKapThread(s)), longAbsent = runs(absent, 3);   // KAP no tiene que salir en todas las escenas, pero el hilo no se pierde: plano subjetivo, metáfora o consecuencia que lo representa
+  if (longAbsent.length || scenes.filter(onKapThread).length / n < 0.5) w.push({ id: "kap-ausente", message: "se pierde el hilo de KAP: varias escenas seguidas sin KAP y sin que la imagen represente lo que él vive (kapExperience)", scenes: longAbsent.flatMap((r) => ns(scenes, r)) });
   const sameShot = sameRuns((s) => s.shot, scenes, 3), [topShot, topShotN] = share(scenes.map((s) => s.shot));
   if (sameShot.length || topShotN / n > 0.5) w.push({ id: "planos-iguales", message: `demasiados planos iguales (${topShot} × ${topShotN}): alterna general, medio, primer plano, detalle y POV`, scenes: sameShot.flatMap((r) => ns(scenes, r)) });
   const closeN = scenes.filter((s) => s.shot === "close-up").length; if (closeN / n > 0.4) w.push({ id: "primeros-planos", message: `demasiados primeros planos (${closeN} de ${n}): el mundo debe sentirse grande (generales, cambios de escala)`, scenes: scenes.filter((s) => s.shot === "close-up").map((s) => s.n) });

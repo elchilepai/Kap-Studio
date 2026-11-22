@@ -13,6 +13,10 @@ const RULES: { id: string; message: string; re: RegExp }[] = [
   { id: "generalizacion-genero", message: "generalización sobre hombres o mujeres", re: /\b(?:las mujeres (?:son|siempre|solo|nunca)|los hombres (?:son|siempre|solo|nunca)|todas las mujeres|todos los hombres|las chicas siempre|los chicos siempre)\b/ },
   { id: "humillacion", message: "humilla al espectador o se siente superior", re: /\b(?:eres (?:un )?(?:patetic\w+|perdedor|fracasad\w+|debil|inutil)|los demas son (?:borregos|ovejas|tontos)|ovejas|borregos|gente mediocre)\b/ },
 ];
+/** Ids de las reglas de contenido que salta un texto suelto (coach, gurú, manipulación, generalización, humillación). */
+export const textWarningIds = (text: string) => { const p = plain(text); return RULES.filter((r) => r.re.test(p)).map((r) => r.id); };
+/** Gancho vacío: promesas falsas, exageraciones y clickbait sin contenido. */
+export const CLICKBAIT = /\b(?:no vas a creer|no te lo vas a creer|nadie te (?:lo )?cuenta|nadie te lo dice|el secreto|esto (?:cambiara|va a cambiar) tu vida|te va a sorprender|increible|lo que (?:no )?te (?:cuentan|dicen)|para siempre|el 9\d ?% de (?:las personas|la gente)|en (?:solo )?\d+ (?:dias|segundos) (?:cambiaras|tendras)|garantizado|truco definitivo)\b/;
 /** Avisos de contenido sobre todo lo que se dice (hook, voz de KAP, narración, subtítulos, cierre de la idea). */
 export function contentWarnings(pack: ShortPack): ContentWarning[] {
   const out: ContentWarning[] = [], items: { where: string; text: string }[] = [

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { BLOCKS, KAP_REASONS, MOTION_KINDS, SCENE_TYPES, kapIssues, readinessIssues, speechSeconds, structureErrors, suggestSceneType, totalSeconds, visualRhythmCheck, type VisualScene } from "./visualShort";
+import { BLOCKS, KAP_REASONS, onKapThread, MOTION_KINDS, SCENE_TYPES, kapIssues, readinessIssues, speechSeconds, structureErrors, suggestSceneType, totalSeconds, visualRhythmCheck, type VisualScene } from "./visualShort";
 import { demoPack } from "./visualShort.fixture";
 
 const scenes = () => demoPack().scenes;
@@ -43,6 +43,21 @@ describe("regla de aparición de KAP: protagonista, pero no «porque toca»", ()
   it("los errores de KAP bloquean la estructura", () => { expect(structureErrors(edit((s) => { s[5].kapAdds = ""; })).some((e) => e.id === "kap-sin-aportar")).toBe(true); });
 });
 
+describe("matiz: KAP es el hilo conductor sin estar físicamente en todas las escenas", () => {
+  it("una escena sin KAP vale si la imagen representa lo que él vive (plano subjetivo, metáfora, consecuencia); la demo lo hace en la escena 5", () => {
+    const s = scenes()[4]; expect(s.kapPresent).toBe(false); expect(onKapThread(s)).toBe(true); expect(structureErrors(scenes())).toEqual([]); expect(visualRhythmCheck(scenes())).toEqual([]);
+  });
+  it("sin KAP y sin explicar qué representa de lo que vive, la escena no sigue el hilo; tres seguidas avisan «se pierde el hilo»", () => {
+    const lost = edit((s) => { for (const i of [3, 4, 5]) { s[i].kapPresent = false; s[i].characters = []; s[i].kapExperience = undefined; s[i].sceneType = "ENVIRONMENT"; } }); expect(onKapThread(lost[4])).toBe(false); expect(ids(visualRhythmCheck(lost))).toContain("kap-ausente");
+    const kept = edit((s) => { for (const i of [3, 4, 5]) { s[i].kapPresent = false; s[i].characters = []; s[i].kapExperience = "La imagen muestra lo que KAP siente en ese momento."; s[i].sceneType = i === 3 ? "POV" : i === 4 ? "VISUAL_METAPHOR" : "DETAIL_SHOT"; } }); expect(ids(visualRhythmCheck(kept))).not.toContain("kap-ausente");
+  });
+  it("el ejemplo, la estrategia y el resultado pueden contarse sin mostrar a KAP si las imágenes representan su experiencia; si no hay ni lo uno ni lo otro, no está listo", () => {
+    const ok = edit((s) => { for (const x of s) if (x.block === "EJEMPLO") { x.kapPresent = false; x.characters = []; x.kapExperience = "Su cara se ve reflejada en la pantalla: es lo que KAP lee y siente."; x.sceneType = "POV"; } }); expect(ids(readinessIssues(ok))).not.toContain("listo-kap");
+    const no = edit((s) => { for (const x of s) if (x.block === "EJEMPLO") { x.kapPresent = false; x.characters = []; x.kapExperience = undefined; } }); expect(ids(readinessIssues(no))).toContain("listo-kap");
+  });
+  it("kapExperience solo se usa cuando KAP no aparece", () => { expect(ids(kapIssues(edit((s) => { s[0].kapExperience = "Algo que KAP vive en pantalla."; })))).toContain("kap-incoherente"); });
+});
+
 describe("«¿Qué le pasa a KAP y qué hace diferente después de entenderlo?»", () => {
   it("la demo responde: bloques completos y en orden, KAP viviendo el ejemplo, estrategia distinta y contraste antes/después", () => { expect(readinessIssues(scenes())).toEqual([]); });
   it("sin respuesta clara el Short NO está listo: bloque ausente, desordenado, sin KAP en el ejemplo, estrategia repetida o sin contraste", () => {
@@ -61,7 +76,7 @@ describe("Visual Rhythm Check: avisos de calidad, no reglas rígidas", () => {
   it("demasiadas conversaciones entre personajes", () => { expect(ids(visualRhythmCheck(edit((s) => { for (const i of [1, 2, 8, 9]) s[i].conversation = true; })))).toContain("demasiados-dialogos"); });
   it("KAP hablando a cámara demasiado seguido, y KAP ausente demasiado tiempo", () => {
     expect(ids(visualRhythmCheck(edit((s) => { s[1] = { ...s[5], n: 2 }; })))).toContain("kap-presentando-demasiado");
-    const gone = ids(visualRhythmCheck(edit((s) => { for (const i of [1, 2, 3, 4, 5]) { s[i].kapPresent = false; s[i].characters = []; } }))); expect(gone).toContain("kap-ausente");
+    const gone = ids(visualRhythmCheck(edit((s) => { for (const i of [1, 2, 3, 4, 5]) { s[i].kapPresent = false; s[i].characters = []; s[i].kapExperience = undefined; } }))); expect(gone).toContain("kap-ausente");
   });
   it("planos iguales, demasiados primeros planos y escenarios repetidos", () => {
     expect(ids(visualRhythmCheck(edit((s) => { for (const i of [1, 2, 3, 4]) s[i].shot = "medium"; })))).toContain("planos-iguales");
