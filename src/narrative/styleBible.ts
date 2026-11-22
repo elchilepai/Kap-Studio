@@ -26,3 +26,16 @@ export const CHARACTER_SHEETS: Record<string, string> = {
   "HERMANO DE KAP": "KAP's little brother (a secondary character; keep EXACTLY the same design in every scene): about 80% of KAP's height, the same big round white head style with simple black dot eyes, thin eyebrows and a small friendly smile, a short brown hair tuft on top, no jewelry; mustard-yellow hoodie (#e9a23b), dark blue shorts, white sneakers with red soles; white hands; same line weight and flat-color style as KAP",
 };
 export const characterSheet = (name: string): string => { const k = Object.keys(CHARACTER_SHEETS).find((n) => n.toLowerCase() === name.trim().toLowerCase() || name.toLowerCase().includes(n.toLowerCase().split(" ").at(-1)!) && n !== "KAP"); return k ? CHARACTER_SHEETS[k] : `${name} (a new secondary character: describe it once in the first scene where it appears — face, hair, clothes, colors — and keep it IDENTICAL in every later scene; same drawing style as KAP)`; };
+
+// ---------------------------------------------------------------- BIBLIAS GLOBALES (se añaden UNA vez al prompt final; las descripciones de escena no las repiten)
+export const STYLE_BIBLE = `${STYLE_BLOCK} ${PALETTE_BLOCK}.`;
+export const KAP_CHARACTER_BIBLE = CHARACTER_SHEETS.KAP;
+/** Secundarios recurrentes (diseño fijo): se incluyen solo en los prompts de las escenas donde aparecen. */
+export const SECONDARY_CHARACTER_BIBLE: Record<string, string> = {
+  "HERMANO DE KAP": CHARACTER_SHEETS["HERMANO DE KAP"],
+  NOA: "NOA (a recurring secondary character, gender-neutral teenager; keep EXACTLY the same design in every scene): the same big round white head style as KAP with simple black dot eyes and thin eyebrows, a short teal hair tuft on top, an oversized teal sweater, gray joggers, white sneakers, white hands; same line weight and flat-color style as KAP",
+};
+export const GLOBAL_NEGATIVE_PROMPT = NEGATIVE_BLOCK;
+export const FORMAT_9_16 = "vertical 9:16 (1080x1920) framing designed for a short-form video: the main subject sits in the central safe area, important elements away from the top 12% and bottom 22% of the frame, no text, no captions, no watermark";
+/** Ficha de un secundario por nombre (o la instrucción para describir uno nuevo una sola vez y mantenerlo igual). */
+export const secondarySheet = (name: string): string => { const k = Object.keys(SECONDARY_CHARACTER_BIBLE).find((n) => n.toLowerCase() === name.trim().toLowerCase()); return k ? SECONDARY_CHARACTER_BIBLE[k] : `${name} (a new secondary character: describe its face, hair, clothes and colors once in the first scene where it appears and keep it IDENTICAL in every later scene; same drawing style as KAP)`; };

@@ -1,0 +1,296 @@
+{
+ "idea": {
+  "title": "Por qué borras el mensaje antes de enviarlo",
+  "category": "psicología cotidiana · errores humanos",
+  "premise": "Reescribir y borrar un mensaje una y otra vez no lo mejora: el miedo a quedar mal agranda un mensaje pequeño. Simplificarlo y enviarlo lo devuelve a su tamaño real.",
+  "whyItWorks": "Situación que casi todo el público joven reconoce («eso me pasa literalmente»), con una metáfora de escala muy visual (el avioncito que se convierte en torre) y un remate seco de KAP.",
+  "claims": [
+   "Solemos sobreestimar cuánto se fijan los demás en nuestros errores (efecto foco, Gilovich)",
+   "Reescribir en bucle suele aumentar la ansiedad anticipatoria en lugar de reducirla"
+  ]
+ },
+ "hooks": [
+  {
+   "type": "curiosity-gap",
+   "text": "Hay una razón por la que borras el mensaje justo antes de enviarlo, y no es que escribas mal."
+  },
+  {
+   "type": "contradiccion",
+   "text": "Cuanto más revisas un mensaje, peor te sale."
+  },
+  {
+   "type": "pregunta-incomoda",
+   "text": "¿Cuántas veces has escrito un mensaje… y lo has borrado antes de enviarlo?"
+  },
+  {
+   "type": "situacion-reconocible",
+   "text": "Son las dos de la madrugada y sigues reescribiendo un mensaje de cuatro palabras."
+  },
+  {
+   "type": "revelacion",
+   "text": "Tu cerebro no intenta que escribas mejor. Intenta que no te rechacen."
+  },
+  {
+   "type": "historia",
+   "text": "Noa tardó una hora en escribir «vale, nos vemos»."
+  },
+  {
+   "type": "afirmacion-inesperada",
+   "text": "Revisar un mensaje diez veces no lo mejora. Lo empeora."
+  }
+ ],
+ "chosenHook": 2,
+ "scenes": [
+  {
+   "n": 1,
+   "characters": [
+    "KAP"
+   ],
+   "kapPresent": true,
+   "subtitleSpace": "bottom",
+   "sceneType": "KAP_PRESENTADOR",
+   "narration": "¿Cuántas veces has escrito un mensaje… y lo has borrado antes de enviarlo?",
+   "visual": "KAP, a cámara en su estudio de neón rosa, levanta una ceja y balancea un móvil con la pantalla apagada entre dos dedos, con gesto seco.",
+   "visualEn": "KAP stands facing the camera in a dim studio with a pink neon ring behind him, one eyebrow raised, holding a dark phone between two fingers, deadpan expression",
+   "visualAction": "KAP levanta una ceja y balancea el móvil entre dos dedos.",
+   "location": "Estudio de KAP",
+   "shot": "medium",
+   "emotion": "seco, ceja levantada",
+   "purpose": "Hook: plantear una situación reconocible en dos segundos.",
+   "duration": 5.5,
+   "subtitle": "¿Cuántas veces lo has borrado antes de enviarlo?",
+   "kapReason": "hook",
+   "kapWhy": "Abre con una pregunta incómoda directa a cámara, sin presentación.",
+   "composition": "centered, neon ring framing the head",
+   "lighting": "pink neon rim light",
+   "objects": [
+    "phone"
+   ]
+  },
+  {
+   "n": 2,
+   "characters": [
+    "NOA"
+   ],
+   "kapPresent": false,
+   "subtitleSpace": "bottom",
+   "sceneType": "CINEMATIC_SCENE",
+   "narration": "Lo escribes. Lo lees. Y de repente suena fatal.",
+   "visual": "Noa, tumbada en la cama de su dormitorio a oscuras, ilumina su cara con la luz azul del móvil; los pulgares se quedan quietos sobre el teclado y las cejas se juntan.",
+   "visualEn": "Noa lies on a bed in a dark bedroom, face lit by the cold blue glow of a phone, thumbs frozen above the keyboard, eyebrows pinched, a clock on the nightstand showing late night",
+   "visualAction": "La luz azul parpadea en su cara y los pulgares dudan, a punto de pulsar.",
+   "location": "Dormitorio de Noa (noche)",
+   "shot": "wide",
+   "emotion": "inseguridad",
+   "purpose": "Situación cotidiana reconocible.",
+   "duration": 4,
+   "subtitle": "Lo escribes. Lo lees. Suena fatal.",
+   "lighting": "cold blue phone glow in a dark room",
+   "objects": [
+    "phone",
+    "bedside clock"
+   ]
+  },
+  {
+   "n": 3,
+   "characters": [],
+   "kapPresent": false,
+   "subtitleSpace": "top",
+   "sceneType": "POV",
+   "narration": "Lo borras. Lo reescribes. Lo borras otra vez.",
+   "visual": "Vista desde los ojos de Noa: la pantalla del móvil con una burbuja de mensaje hecha de barras grises que se borra barra a barra, y detrás docenas de versiones tachadas apiladas.",
+   "visualEn": "First-person view of a phone screen with a chat bubble made of gray bars being erased bar by bar, dozens of crossed-out draft bubbles piled up behind it, blue screen glow",
+   "visualAction": "Las barras grises se borran y reaparecen una y otra vez, tachando versiones.",
+   "location": "Pantalla del móvil",
+   "shot": "pov",
+   "emotion": "agobio",
+   "purpose": "Mostrar el bucle de borrar y reescribir desde dentro.",
+   "duration": 3.6,
+   "subtitle": "Lo borras. Lo reescribes. Otra vez.",
+   "objects": [
+    "phone screen",
+    "crossed-out bubbles"
+   ]
+  },
+  {
+   "n": 4,
+   "characters": [],
+   "kapPresent": false,
+   "subtitleSpace": "bottom",
+   "sceneType": "VISUAL_METAPHOR",
+   "narration": "Y cada versión lo hace más grande de lo que era.",
+   "visual": "Un avioncito de papel diminuto crece con cada borrador hasta convertirse en una torre gigante de hojas arrugadas que proyecta una sombra enorme sobre un escritorio pequeño.",
+   "visualEn": "A tiny paper plane on a small desk grows with each crumpled draft into a gigantic tower of crumpled paper casting a huge shadow, low-angle view, dramatic scale",
+   "visualAction": "El avioncito crece apilando hojas arrugadas hasta formar una torre gigante.",
+   "location": "Escritorio de Noa (metáfora)",
+   "shot": "low-angle",
+   "emotion": "presión",
+   "purpose": "Metáfora de escala: el miedo agranda el mensaje.",
+   "duration": 4.5,
+   "subtitle": "Cada versión lo agranda",
+   "contrast": "diminuto frente a gigante",
+   "objects": [
+    "paper plane",
+    "crumpled paper tower"
+   ],
+   "lighting": "single desk lamp, long dramatic shadow"
+  },
+  {
+   "n": 5,
+   "characters": [],
+   "kapPresent": false,
+   "subtitleSpace": "bottom",
+   "sceneType": "BRAIN_VISUALIZATION",
+   "narration": "Tu cerebro trata el miedo a quedar mal como si fuera un peligro de verdad.",
+   "visual": "Dentro de un cerebro de dibujos animados convertido en sala de control, un diminuto guardia pulsa un botón rojo de alarma que baña las paredes de luz roja, mientras un sobre pequeño espera tranquilo sobre la mesa.",
+   "visualEn": "Inside a cartoon brain shaped control room, a tiny guard slams a big red alarm button, red light washing the pink walls, while a small envelope sits calmly on a table in the middle",
+   "visualAction": "El guardia pulsa la alarma y la sala se llena de luz roja.",
+   "location": "Sala de control del cerebro",
+   "shot": "top-down",
+   "emotion": "alarma desproporcionada",
+   "purpose": "Explicar con una imagen por qué el cerebro reacciona así.",
+   "duration": 6.4,
+   "subtitle": "Tu cerebro lo trata como un peligro",
+   "contrast": "alarma enorme frente a un sobre inofensivo",
+   "objects": [
+    "red alarm button",
+    "small envelope"
+   ],
+   "lighting": "red alarm light against soft pink"
+  },
+  {
+   "n": 6,
+   "characters": [
+    "KAP"
+   ],
+   "kapPresent": true,
+   "subtitleSpace": "bottom",
+   "sceneType": "KAP_PRESENTADOR",
+   "narration": "Sí. Tu propia cabeza te está poniendo la trampa.",
+   "visual": "KAP en primer plano asiente despacio con media sonrisa torcida y un ojo entrecerrado, y señala con el pulgar hacia atrás como diciendo «mira lo que hay detrás».",
+   "visualEn": "Close-up of KAP in the pink neon studio, slow knowing nod, one eye half-closed with a lopsided smirk, thumb pointing over his shoulder",
+   "visualAction": "KAP asiente y señala con el pulgar hacia atrás con media sonrisa.",
+   "location": "Estudio de KAP",
+   "shot": "close-up",
+   "emotion": "socarrón",
+   "purpose": "Opinión seca de KAP sobre lo que se acaba de ver.",
+   "duration": 4,
+   "subtitle": "Tu cabeza te pone la trampa",
+   "kapReason": "opinion",
+   "kapWhy": "Opina con humor seco sobre la visualización del cerebro.",
+   "lighting": "pink neon rim light"
+  },
+  {
+   "n": 7,
+   "characters": [],
+   "kapPresent": false,
+   "subtitleSpace": "bottom",
+   "sceneType": "TRANSFORMATION",
+   "narration": "Pero un mensaje no tiene que ser perfecto. Solo tiene que ser claro.",
+   "visual": "La torre gigante de papel arrugado se pliega sola, hoja a hoja, y se convierte otra vez en un avioncito de papel limpio y ligero que flota sobre el escritorio.",
+   "visualEn": "The giant tower of crumpled paper folds itself sheet by sheet back into one clean light paper plane floating above the desk in warm light, side view",
+   "visualAction": "La torre se pliega y se encoge hasta ser un avioncito limpio.",
+   "location": "Escritorio de Noa (metáfora)",
+   "shot": "side",
+   "emotion": "alivio",
+   "purpose": "Transformación: simplificar el mensaje devuelve su tamaño real.",
+   "duration": 5.5,
+   "subtitle": "Perfecto no. Claro.",
+   "objects": [
+    "paper plane"
+   ],
+   "lighting": "warm light replacing the long shadow"
+  },
+  {
+   "n": 8,
+   "characters": [
+    "NOA"
+   ],
+   "kapPresent": false,
+   "subtitleSpace": "bottom",
+   "sceneType": "BEFORE_AFTER",
+   "narration": "Una hora dándole vueltas… o cinco segundos y enviarlo.",
+   "visual": "Pantalla dividida: a la izquierda, Noa rodeada de bolas de papel bajo un reloj de pared con las agujas muy avanzadas; a la derecha, Noa relajada con una sola burbuja de mensaje limpia y el mismo reloj casi sin avanzar.",
+   "visualEn": "Split-screen comparison: left Noa tense among crumpled paper balls under a wall clock with hands far advanced; right Noa relaxed with one single clean message bubble and the clock barely moved, warm light",
+   "visualAction": "El lado izquierdo se llena de papeles y el derecho se queda limpio.",
+   "location": "Pantalla dividida con dos relojes",
+   "shot": "wide",
+   "emotion": "tenso frente a ligero",
+   "purpose": "Comparación: el coste real de darle mil vueltas.",
+   "duration": 4.5,
+   "subtitle": "Una hora… o cinco segundos",
+   "contrast": "desordenado y tenso frente a limpio y ligero",
+   "objects": [
+    "wall clock",
+    "paper balls",
+    "message bubble"
+   ]
+  },
+  {
+   "n": 9,
+   "characters": [
+    "NOA"
+   ],
+   "kapPresent": false,
+   "subtitleSpace": "top",
+   "sceneType": "CINEMATIC_SCENE",
+   "narration": "Lo envías. Y no pasa nada terrible.",
+   "visual": "Noa pulsa enviar con el pulgar junto a una ventana abierta y el avioncito de papel sale volando hacia las luces de la ciudad al atardecer, mientras Noa sonríe un poco.",
+   "visualEn": "Noa presses send on a phone by an open window and a glowing paper plane flies out toward a warm sunset city skyline, Noa giving a small relieved smile, side view with long soft shadows",
+   "visualAction": "Noa pulsa enviar y el avioncito sale volando por la ventana.",
+   "location": "Ventana de Noa al atardecer",
+   "shot": "side",
+   "emotion": "alivio",
+   "purpose": "Payoff visual: enviar libera.",
+   "duration": 3.5,
+   "subtitle": "Lo envías. No pasa nada.",
+   "lighting": "warm sunset light",
+   "objects": [
+    "paper plane",
+    "open window"
+   ]
+  },
+  {
+   "n": 10,
+   "characters": [
+    "NOA"
+   ],
+   "kapPresent": false,
+   "subtitleSpace": "bottom",
+   "sceneType": "REACTION",
+   "narration": "La mayoría de las veces, la otra persona ni se fija en la coma.",
+   "visual": "Primer plano de Noa: una respuesta corta con un pulgar arriba aparece en el móvil y Noa levanta las cejas, sorprendida, y suelta el aire.",
+   "visualEn": "Close-up of Noa's surprised relieved face lit by a phone showing a short reply bubble with a thumbs-up emoji, eyebrows raised, a small exhale of air",
+   "visualAction": "Llega la respuesta y Noa levanta las cejas y suelta el aire.",
+   "location": "Dormitorio de Noa (día)",
+   "shot": "close-up",
+   "emotion": "sorpresa aliviada",
+   "purpose": "Reacción: el miedo era mayor que la realidad.",
+   "duration": 5.5,
+   "subtitle": "Casi nadie se fija en la coma",
+   "lighting": "soft daylight"
+  },
+  {
+   "n": 11,
+   "characters": [
+    "KAP"
+   ],
+   "kapPresent": true,
+   "subtitleSpace": "bottom",
+   "sceneType": "KAP_PRESENTADOR",
+   "narration": "Perfecto no sale. Enviado, sí.",
+   "visual": "KAP a cámara en su estudio se encoge de hombros y deja el móvil bocabajo sobre la mesa con un gesto seco.",
+   "visualEn": "KAP at the pink neon studio shrugging at the camera and flipping a phone face down on a table with a deadpan expression",
+   "visualAction": "KAP se encoge de hombros y deja el móvil bocabajo.",
+   "location": "Estudio de KAP",
+   "shot": "medium",
+   "emotion": "seco",
+   "purpose": "Cierre corto y seco, sin moraleja.",
+   "duration": 3,
+   "subtitle": "Perfecto no sale. Enviado, sí.",
+   "kapReason": "cierre",
+   "kapWhy": "Remata con una frase corta y seca en lugar de una lección.",
+   "lighting": "pink neon rim light"
+  }
+ ]
+}

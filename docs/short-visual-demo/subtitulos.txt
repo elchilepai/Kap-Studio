@@ -1,0 +1,11 @@
+01  ¿Cuántas veces lo has borrado antes de enviarlo?
+02  Lo escribes. Lo lees. Suena fatal.
+03  Lo borras. Lo reescribes. Otra vez.
+04  Cada versión lo agranda
+05  Tu cerebro lo trata como un peligro
+06  Tu cabeza te pone la trampa
+07  Perfecto no. Claro.
+08  Una hora… o cinco segundos
+09  Lo envías. No pasa nada.
+10  Casi nadie se fija en la coma
+11  Perfecto no sale. Enviado, sí.
