@@ -9,7 +9,7 @@ Emotion: seco, ceja levantada.
 Camera/composition: medium shot; centered, neon ring framing the head.
 Lighting: pink neon rim light.
 Key objects: phone.
-Visual purpose: Hook: plantear una situación reconocible en dos segundos..
+Visual purpose: Hook: plantear una situación reconocible en dos segundos.
 Keep the bottom third calm and uncluttered (room for subtitles).
 ```
 
@@ -22,7 +22,7 @@ Emotion: inseguridad.
 Camera/composition: wide establishing shot.
 Lighting: cold blue phone glow in a dark room.
 Key objects: phone, bedside clock.
-Visual purpose: Situación cotidiana reconocible..
+Visual purpose: Situación cotidiana reconocible.
 Keep the bottom third calm and uncluttered (room for subtitles).
 ```
 
@@ -34,7 +34,7 @@ Setting: Pantalla del móvil.
 Emotion: agobio.
 Camera/composition: first-person POV shot.
 Key objects: phone screen, crossed-out bubbles.
-Visual purpose: Mostrar el bucle de borrar y reescribir desde dentro..
+Visual purpose: Mostrar el bucle de borrar y reescribir desde dentro.
 Keep the top third calm and uncluttered (room for subtitles).
 ```
 
@@ -47,7 +47,7 @@ Emotion: presión.
 Camera/composition: low-angle shot.
 Lighting: single desk lamp, long dramatic shadow.
 Key objects: paper plane, crumpled paper tower.
-Visual purpose: Metáfora de escala: el miedo agranda el mensaje..
+Visual purpose: Metáfora de escala: el miedo agranda el mensaje.
 Keep the bottom third calm and uncluttered (room for subtitles).
 ```
 
@@ -60,7 +60,7 @@ Emotion: alarma desproporcionada.
 Camera/composition: top-down overhead shot.
 Lighting: red alarm light against soft pink.
 Key objects: red alarm button, small envelope.
-Visual purpose: Explicar con una imagen por qué el cerebro reacciona así..
+Visual purpose: Explicar con una imagen por qué el cerebro reacciona así.
 Keep the bottom third calm and uncluttered (room for subtitles).
 ```
 
@@ -72,7 +72,7 @@ Setting: Estudio de KAP.
 Emotion: socarrón.
 Camera/composition: close-up.
 Lighting: pink neon rim light.
-Visual purpose: Opinión seca de KAP sobre lo que se acaba de ver..
+Visual purpose: Opinión seca de KAP sobre lo que se acaba de ver.
 Keep the bottom third calm and uncluttered (room for subtitles).
 ```
 
@@ -85,7 +85,7 @@ Emotion: alivio.
 Camera/composition: side-on profile shot.
 Lighting: warm light replacing the long shadow.
 Key objects: paper plane.
-Visual purpose: Transformación: simplificar el mensaje devuelve su tamaño real..
+Visual purpose: Transformación: simplificar el mensaje devuelve su tamaño real.
 Keep the bottom third calm and uncluttered (room for subtitles).
 ```
 
@@ -97,7 +97,7 @@ Setting: Pantalla dividida con dos relojes.
 Emotion: tenso frente a ligero.
 Camera/composition: wide establishing shot.
 Key objects: wall clock, paper balls, message bubble.
-Visual purpose: Comparación: el coste real de darle mil vueltas..
+Visual purpose: Comparación: el coste real de darle mil vueltas.
 Keep the bottom third calm and uncluttered (room for subtitles).
 ```
 
@@ -110,7 +110,7 @@ Emotion: alivio.
 Camera/composition: side-on profile shot.
 Lighting: warm sunset light.
 Key objects: paper plane, open window.
-Visual purpose: Payoff visual: enviar libera..
+Visual purpose: Payoff visual: enviar libera.
 Keep the top third calm and uncluttered (room for subtitles).
 ```
 
@@ -122,7 +122,7 @@ Setting: Dormitorio de Noa (día).
 Emotion: sorpresa aliviada.
 Camera/composition: close-up.
 Lighting: soft daylight.
-Visual purpose: Reacción: el miedo era mayor que la realidad..
+Visual purpose: Reacción: el miedo era mayor que la realidad.
 Keep the bottom third calm and uncluttered (room for subtitles).
 ```
 
@@ -134,6 +134,6 @@ Setting: Estudio de KAP.
 Emotion: seco.
 Camera/composition: medium shot.
 Lighting: pink neon rim light.
-Visual purpose: Cierre corto y seco, sin moraleja..
+Visual purpose: Cierre corto y seco, sin moraleja.
 Keep the bottom third calm and uncluttered (room for subtitles).
 ```

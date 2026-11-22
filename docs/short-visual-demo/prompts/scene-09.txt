@@ -5,7 +5,7 @@ Emotion: alivio.
 Camera/composition: side-on profile shot.
 Lighting: warm sunset light.
 Key objects: paper plane, open window.
-Visual purpose: Payoff visual: enviar libera..
+Visual purpose: Payoff visual: enviar libera.
 Keep the top third calm and uncluttered (room for subtitles).
 
 STYLE (global): 2D flat cartoon illustration for a YouTube explainer series, clean vector look, finished full-scene illustration (character, background, props and lighting are one integrated drawing). uniform thick black outlines (about the same weight on characters, props and background), flat color fills with a single soft shadow tone, no gradients on characters, small hand-drawn detail lines on surfaces (cracks, bricks, planks, grass tufts, folds). characters are simple and expressive: big round head, small dot eyes or simple eyes, thick expressive eyebrows, single-line mouth, compact chunky bodies, very readable silhouettes. backgrounds are richly detailed but simplified: real depth with foreground, midground and background layers, perspective lines on floors and walls, props that tell the story, warm directional light with a long soft cast shadow. cinematic composition with one clear focal point, rule of thirds, strong shape contrast between the character and the setting, generous clean negative space where subtitles or voice-over graphics can go. color palette shared by every scene of the video: pale sky blue #d3e6ef, sand #bc9f7a, warm ochre #f5c371, terracotta #b57f59, deep brown #4c352b, soft shadow #8d715b, black linework #0c0806; warm late-afternoon light.

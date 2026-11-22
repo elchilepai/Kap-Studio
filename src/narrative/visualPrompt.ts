@@ -14,7 +14,7 @@ const isKap = (c: string) => c.trim().toUpperCase() === "KAP";
 export function scenePrompt(s: VisualScene): string {
   const chars = s.characters.length ? s.characters.join(", ") : "no characters";
   const cam = [SHOT[s.shot], s.camera, s.composition].filter(Boolean).join("; "), space = SPACE[s.subtitleSpace ?? "bottom"];
-  return [`SCENE: ${s.visualEn.trim().replace(/[.\s]+$/, "")}.`, `Characters: ${chars}.`, `Setting: ${s.location}.`, `Emotion: ${s.emotion}.`, `Camera/composition: ${cam}.`, s.lighting ? `Lighting: ${s.lighting}.` : "", s.objects?.length ? `Key objects: ${s.objects.join(", ")}.` : "", `Visual purpose: ${s.purpose}.`, space ? `${space[0].toUpperCase()}${space.slice(1)} (room for subtitles).` : ""].filter(Boolean).join("\n");
+  return [`SCENE: ${s.visualEn.trim().replace(/[.\s]+$/, "")}.`, `Characters: ${chars}.`, `Setting: ${s.location}.`, `Emotion: ${s.emotion.replace(/[.\s]+$/, "")}.`, `Camera/composition: ${cam}.`, s.lighting ? `Lighting: ${s.lighting}.` : "", s.objects?.length ? `Key objects: ${s.objects.join(", ")}.` : "", `Visual purpose: ${s.purpose.replace(/[.\s]+$/, "")}.`, space ? `${space[0].toUpperCase()}${space.slice(1)} (room for subtitles).` : ""].filter(Boolean).join("\n");
 }
 
 export type FinalPrompt = { scenePart: string; prompt: string; negative: string; references: string[]; globals: string[] };

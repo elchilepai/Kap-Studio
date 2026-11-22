@@ -14,7 +14,7 @@ describe("Style Bible dividida en bloques globales", () => {
 
 describe("prompt de imagen corto y específico de escena", () => {
   it("la parte de escena lleva solo lo específico (escena, personajes, entorno, emoción, cámara, luz, objetos, propósito, espacio de subtítulos) y es corta", () => {
-    const p = scenePrompt(S[1]); for (const re of [/^SCENE: /, /Characters: NOA/, /Setting: Dormitorio de Noa/, /Emotion: /, /Camera\/composition: wide establishing shot/, /Lighting: cold blue/, /Key objects: phone, bedside clock/, /Visual purpose: /, /bottom third calm/]) expect(p).toMatch(re); expect(p.length).toBeLessThan(700);
+    const p = scenePrompt(S[1]); for (const re of [/^SCENE: /, /Characters: NOA/, /Setting: Dormitorio de Noa/, /Emotion: /, /Camera\/composition: wide establishing shot/, /Lighting: cold blue/, /Key objects: phone, bedside clock/, /Visual purpose: /, /bottom third calm/]) expect(p).toMatch(re); expect(p.length).toBeLessThan(700); expect(p).not.toMatch(/\.\./);   // sin puntos duplicados
   });
   it("la escena NO repite la Style Bible, las fichas, el negativo ni el formato", () => {
     for (const s of S) { const p = scenePrompt(s); expect(p).not.toContain("thick black outlines"); expect(p).not.toContain("palette shared"); expect(p).not.toContain("Cuban chain"); expect(p).not.toContain("hair tuft"); expect(p).not.toContain("photorealistic"); expect(p).not.toContain("1080x1920"); }
