@@ -1,0 +1,38 @@
+# Habitación
+[mood: tarde, interior]
+[plano: general en 0.3s]
+[sonido: ambiente en 0.3s]
+[musica: inicio en 0.3s]
+[plano: medio KAP en 2.8s]
+[musica: cambio en 2.8s]
+[plano: primer plano KAP en 5.8s]
+[impacto: en 5.8s]
+[camara: seguir KAP en 9.3s]
+KAP mira por la ventana con una mirada triste, observando a otros niños en el parque.
+Se acerca a la ventana y suspira.
+KAP entra en la habitación donde su hermano juega con un viejo juguete.
+El hermano sonríe al ver a KAP y le ofrece el juguete.
+KAP mira a su hermano y luego se mira las manos, frustrado.
+El hermano lo observa y le da un abrazo pequeño.
+KAP se pone de pie y empieza a limpiar la habitación.
+El hermano lo mira con admiración.
+El hermano le da un pequeño abrazo y sonríe.
+KAP mira a su hermano y luego a la ventana, con una expresión más tranquila.
+KAP se pone de pie y le sonríe a su hermano.
+El hermano lo abraza con fuerza.
+KAP mira a su hermano y suspira, con una sonrisa pequeña.
+El hermano le devuelve la sonrisa.
+[acto: inicio | KAP siente que no está avanzando]
+[acto: conflicto | KAP intenta distraerse con su hermano]
+[acto: desarrollo | KAP compara su vida con la de otros]
+[acto: emocional | KAP empieza a ver que no está solo]
+[acto: resolucion | KAP toma una pequeña decisión]
+[gancho: KAP ha encontrado un pequeño sentido en su vida.]
+
+# Habitación
+[mood: tarde, interior]
+El hermano le devuelve la sonrisa.
+
+# Habitación
+[mood: tarde, interior]
+El hermano le devuelve la sonrisa.
