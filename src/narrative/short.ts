@@ -59,7 +59,7 @@ const MOVE_ONLY = /\b(?:camin\w*|sal[eg]\w*|entr\w*|llega\w*|regres\w*|vuelve a 
 const CONSEQ = /\b(?:se cae\w*|se caen|cae\w*|se derrumba\w*|se desmorona\w*|se rompe\w*|se tuerce|se inclina\w*|se tambale\w*|sale mal|falla\w*|rueda\w*|se vuelca\w*|se mancha\w*|se apaga\w*|se pierde\w*|se escapa\w*|se desinfla\w*|se atasca\w*|se rasga\w*|se desv[ií]a\w*|se arruga\w*|no (?:se mantiene|funciona|aguanta|llega|encaja|sale|consigue|logra|para|cabe|enciende|arranca)|se (?:queda|deshace)\s+(?:a medias|roto)|termina (?:rota|roto|torcid\w*))\b/;
 const RESULT_OK = /\b(?:se queda en pie|se mantiene|aguanta\w*|se sostiene|funciona\w*|encaja\w*|sale bien|consigue\w*|logra\w*|queda quiet\w*|queda firme|se equilibra|llega\w* (?:arriba|al final|a lo alto))\b/;
 const REACT = /\b(?:patea\w*|patada|resopla\w*|aprieta\w*|arruga\w*|tira\w*|rompe\w*|se agacha\w*|baja la cabeza|retrocede\w*|da un paso atras|se encoge\w*|cruza los brazos|golpea\w*|deja caer|esconde\w*|suelta\w*|aparta\w*|se tapa\w*|se muerde\w*|frunce\w*|bufa\w*|gruñe\w*|se rasca\w*|aprieta la mandibula|lo vuelve a)\b/;
-const ABSTRACT = /\b(?:se da cuenta de que|se da cuenta|comprende\w*|entiende que|descubre que|cada (?:uno|persona) tiene|su propio ritmo|su ritmo|no debe compararse|no hay que compararse|confiar en s[ií]|aprende\w*|se siente (?:mejor|libre|en paz)|encuentra (?:un )?(?:peque[ñn]o )?sentido)\b/;
+export const ABSTRACT = /\b(?:se da cuenta de que|se da cuenta|comprende\w*|entiende que|descubre que|cada (?:uno|persona) tiene|su propio ritmo|su ritmo|no debe compararse|no hay que compararse|confiar en s[ií]|aprende\w*|se siente (?:mejor|libre|en paz)|encuentra (?:un )?(?:peque[ñn]o )?sentido)\b/;
 type Sent = { text: string; kap: boolean; beat: number; beatText: string };
 /** Frases de cada beat con su sujeto (KAP u otro): una frase sin sujeto continúa el sujeto de la anterior; el de arranque es KAP. */
 function sentencesOfBeats(beats: ShortBeat[]): Sent[] {
@@ -115,7 +115,7 @@ export function causalReasons(beats: ShortBeat[], objeto = ""): string[] {
 
 // ---------------------------------------------------------------- PRESENTADOR (KAP a cámara al principio y al final)
 export type ShortPresenter = { intro: string; outro?: { gesto: string; texto: string } };
-const COACH = /\b(?:debes|debemos|tienes que|tenemos que|recuerda que|recuerda|la clave|el secreto|lo importante|todos deber[ií]amos|aprende\w*|nunca te rindas|conf[ií]a en ti|cree en ti|cada uno|su propio ritmo|el camino|el [eé]xito|la vida es|en la vida)\b/;
+export const COACH = /\b(?:debes|debemos|tienes que|tenemos que|recuerda que|recuerda|la clave|el secreto|lo importante|todos deber[ií]amos|aprende\w*|nunca te rindas|conf[ií]a en ti|cree en ti|cada uno|su propio ritmo|el camino|el [eé]xito|la vida es|en la vida)\b/;
 const wc = (t: string) => (t.trim().match(/\S+/g) ?? []).length;
 /** Gancho hablado: breve (≈ 3-6 s), plantea una duda concreta con una pregunta o una observación cotidiana y no suena a coach, filósofo ni discurso. */
 export function introReasons(intro: string): string[] {
