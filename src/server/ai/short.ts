@@ -6,6 +6,7 @@
 import { z } from "zod";
 import type { AuthorStats, LlmClient, LlmUsage, ScriptAuthor } from "@/ports/studio";
 import { ScreenplayIR } from "@/domain/screenplay";
+import { SUPPORTED_OBJECTS } from "@/narrative/objects";
 import { norm } from "@/memory/text";
 import { audioGaps, beatsToScenes, estimateRenderSeconds, MORAL, PHASES, repairShort, shortRetentionCheck, shortSeconds, SHORT_MUSIC, SHORT_SOUNDS, SHOTS, STEPS, type RetentionResult, type ShortBeat, type ShortDraftScene } from "@/narrative/short";
 import { draftToIR, irToScript, type EpisodeDraft } from "./episode";
@@ -17,10 +18,10 @@ const Beat = z.object({
   shot: z.enum(SHOTS), characters: z.array(z.string().min(1).max(40)).min(1).max(4), location: z.string().min(1).max(80), time: z.string().max(20),
   sound: z.enum(SHORT_SOUNDS).optional(), music: z.enum(SHORT_MUSIC).optional(), dialogue: z.object({ speaker: z.string().min(1).max(40), text: z.string().min(1).max(300) }).optional(),
 });
-export const ShortStory = z.object({ objeto: z.string().min(2).max(60), objetivo: z.string().min(3).max(160), title: z.string().min(1).max(100), logline: z.string().min(1).max(260), hook: z.string().max(200), cast: z.array(z.string().min(1).max(40)).max(6), beats: z.array(Beat).min(6).max(12) });
+export const ShortStory = z.object({ intro: z.string().min(8).max(140), outro: z.object({ gesto: z.string().min(5).max(120), texto: z.string().max(60) }), objeto: z.enum(SUPPORTED_OBJECTS), objetivo: z.string().min(3).max(160), title: z.string().min(1).max(100), logline: z.string().min(1).max(260), hook: z.string().max(200), cast: z.array(z.string().min(1).max(40)).max(6), beats: z.array(Beat).min(5).max(10) });
 export type ShortStory = z.infer<typeof ShortStory>;
 
-const PatchSchema = z.object({ beats: z.array(z.object({ index: z.number().int().min(0).max(20), action: z.string().min(1).max(420), reaction: z.string().max(300), change: z.string().min(1).max(200) })).min(1).max(4) });
+const PatchSchema = z.object({ intro: z.string().max(140).optional(), outro: z.object({ gesto: z.string().min(1).max(120), texto: z.string().max(60) }).optional(), beats: z.array(z.object({ index: z.number().int().min(0).max(20), action: z.string().min(1).max(420), reaction: z.string().max(300), change: z.string().min(1).max(200) })).max(4) });
 const NOTES: Record<string, string> = {
   "hook-claro": "El primer beat debe mostrar YA una acción visible y corta (sin empezar hablando).", giro: "Falta un giro o descubrimiento antes del remate: que algo cambie lo que KAP (o el público) creía.",
   remate: "El último beat debe cerrar con una acción o consecuencia visible, sin moraleja ni frase de lección.",
@@ -28,7 +29,7 @@ const NOTES: Record<string, string> = {
 
 /** Borrador del Short (formato del generador de episodios) a partir de los beats. Sin relleno: una escena existe solo si hay contenido propio (la IR admite desde 1 escena). */
 export function storyToDraft(story: ShortStory, beats: ShortBeat[], known: string[]): { draft: EpisodeDraft; scenes: ShortDraftScene[] } {
-  const scenes = beatsToScenes(beats, known);
+  const scenes = beatsToScenes(beats, known, { objeto: story.objeto, intro: story.intro, outro: story.outro });
   return { scenes, draft: { title: story.title, logline: story.logline, assumptions: [], scenes: scenes.map((s) => ({ title: s.title, location: s.location, lines: s.lines.length ? s.lines : [{ speaker: "", text: s.title }], memory: s.memory, stage: s.stage, shot: s.shot, time: s.time, interior: s.interior, directions: s.directions, change: s.change })) } };   // TODAS las directivas llegan al render
 }
 /** IR → guion conservando las directivas del director (sonido, impacto, silencio, marca-musica), que no son beats de la IR, y el corte seco entre escenas del mismo lugar. */
@@ -53,7 +54,7 @@ export function llmShortAuthor(llm: LlmClient, opts: { maxTokens?: number; tempe
         let beats: ShortBeat[] = story.beats.map((b) => ({ ...b, reaction: b.reaction ?? "" }));
         beats = beats.map((b) => { const keep = b.characters.filter((n) => allowed.has(norm(n))); b.characters.filter((n) => !allowed.has(norm(n))).forEach((n) => outside.add(n)); return { ...b, characters: keep.length ? keep : ["KAP"], ...(b.dialogue && !allowed.has(norm(b.dialogue.speaker)) ? { dialogue: undefined } : {}) }; });
         const rep = repairShort(beats); beats = rep.beats; const { draft, scenes } = storyToDraft(story, beats, cast);
-        return { story, beats, scenes, draft, merged: rep.merged, dropped: rep.dropped, outside: [...outside], ret: shortRetentionCheck(beats, { renderSeconds: estimateRenderSeconds(scenes), objeto: story.objeto }) };
+        return { story, beats, scenes, draft, merged: rep.merged, dropped: rep.dropped, outside: [...outside], ret: shortRetentionCheck(beats, { renderSeconds: estimateRenderSeconds(scenes), objeto: story.objeto, presenter: { intro: story.intro, outro: story.outro } }) };
       };
       const gen = async (prompt: string) => { const r = await generateJson(llm, ShortStory, { ...base, prompt }, { retries: 2 }); logs.push(...r.log.map((l) => ({ ...l, attempt: logs.length + l.attempt }))); usages.push(r.usage); return r; };
       const first = await gen(shortPrompt(context, cast)); if (!first.ok) throw new Error(`El modelo no devolvió un Short válido tras ${first.attempts} intento(s): ${first.errors.join("; ")}`);
@@ -65,13 +66,17 @@ export function llmShortAuthor(llm: LlmClient, opts: { maxTokens?: number; tempe
         const again = await gen(`${shortPrompt(context, cast)}\n\n# Corrección obligatoria\nTu versión anterior («${cand.story.title}») NO es válida: ${why}.\nEscríbela DE NUEVO entera, con otra historia concreta si hace falta: elige UN objeto o actividad concreta (campo «objeto»); alguien consigue algo con él al principio; KAP intenta lo mismo con ese objeto, le sale mal por una causa visible, reacciona con el cuerpo, prueba una estrategia DISTINTA con el mismo objeto, obtiene un resultado concreto distinto y lo usa después. SIN abrazos ni tristeza como solución, sin frases abstractas y con 3-4 frases de acción encadenadas por beat para que dure 50-65 s.`);
         if (again.ok) { const c2 = prepare(again.data); if (c2.ret.failed.length <= cand.ret.failed.length) cand = c2; }
       }
-      // como mucho UNA reescritura local de los beats clave (gancho, giro, remate) si fallan
-      const fix = cand.ret.checks.filter((c) => !c.ok && c.fix === "patch"), idx = [...new Set(fix.flatMap((c) => c.beats ?? []))].slice(0, 4);
-      if (idx.length) {
-        const { beats } = cand, ask = `${shortPrompt(context, cast)}\n\n# Reescritura local\nEl Short ya existe (beats en orden): ${JSON.stringify(beats.map((b, i) => ({ index: i, phase: b.phase, step: b.step, action: b.action, reaction: b.reaction, change: b.change })))}\nReescribe SOLO estos beats (índices ${idx.join(", ")}) sin cambiar el resto de la historia. ${fix.map((c) => NOTES[c.id] ?? c.note ?? "").join(" ")} Devuelve {"beats":[{"index","action","reaction","change"}]}.`;
+      // como mucho UNA reescritura local (beats clave, gancho hablado o remate de KAP a cámara) si fallan
+      const fix = cand.ret.checks.filter((c) => !c.ok && c.fix === "patch"), idx = [...new Set(fix.flatMap((c) => c.beats ?? []))].slice(0, 4), needIntro = fix.some((c) => c.id === "hook-claro"), needOutro = fix.some((c) => c.id === "remate" && !c.beats?.length);
+      if (idx.length || needIntro || needOutro) {
+        const { beats } = cand, what = [idx.length ? `los beats con índice ${idx.join(", ")}` : "", needIntro ? "el \"intro\" (gancho hablado de KAP a cámara: una pregunta o una observación cotidiana de 5-14 palabras, sin coach ni moraleja)" : "", needOutro ? "el \"outro\" (un gesto y, como mucho, una frase de ≤ 8 palabras sin moraleja)" : ""].filter(Boolean).join(" y ");
+        const ask = `${shortPrompt(context, cast)}\n\n# Reescritura local\nEl Short ya existe: intro «${cand.story.intro}», outro ${JSON.stringify(cand.story.outro)}, beats en orden: ${JSON.stringify(beats.map((b, i) => ({ index: i, step: b.step, action: b.action, reaction: b.reaction, change: b.change })))}\nReescribe SOLO ${what}. ${fix.map((c) => NOTES[c.id] ?? c.note ?? "").join(" ")} Devuelve {"intro"?, "outro"?, "beats":[{"index","action","reaction","change"}]} (beats puede ir vacío).`;
         const pr = await generateJson(llm, PatchSchema, { ...base, maxTokens: 900, prompt: ask }, { retries: 1 }); logs.push(...pr.log.map((l) => ({ ...l, attempt: logs.length + l.attempt }))); usages.push(pr.usage); patches = 1;
-        if (pr.ok) { const nb = beats.map((b) => ({ ...b })); for (const e of pr.data.beats) if (idx.includes(e.index) && nb[e.index]) { const b = { ...nb[e.index], action: e.action, reaction: e.reaction, change: e.change }; if (b.dialogue && MORAL.test(b.dialogue.text)) delete b.dialogue; nb[e.index] = b; }
-          const { draft, scenes } = storyToDraft(cand.story, nb, cast); cand = { ...cand, beats: nb, draft, scenes, ret: shortRetentionCheck(nb, { renderSeconds: estimateRenderSeconds(scenes), objeto: cand.story.objeto }) }; }
+        if (pr.ok) {
+          const nb = beats.map((b) => ({ ...b })); for (const e of pr.data.beats) if (idx.includes(e.index) && nb[e.index]) { const b = { ...nb[e.index], action: e.action, reaction: e.reaction, change: e.change }; if (b.dialogue && MORAL.test(b.dialogue.text)) delete b.dialogue; nb[e.index] = b; }
+          const story2: ShortStory = { ...cand.story, intro: needIntro && pr.data.intro ? pr.data.intro : cand.story.intro, outro: needOutro && pr.data.outro ? pr.data.outro : cand.story.outro };
+          const { draft, scenes } = storyToDraft(story2, nb, cast); cand = { ...cand, story: story2, beats: nb, draft, scenes, ret: shortRetentionCheck(nb, { renderSeconds: estimateRenderSeconds(scenes), objeto: story2.objeto, presenter: { intro: story2.intro, outro: story2.outro } }) };
+        }
       }
       const irCheck = ScreenplayIR.safeParse(draftToIR(cand.draft)); if (!irCheck.success) throw new Error(`La IR resultante no es válida: ${irCheck.error.issues[0]?.message}`);
       const warnings: string[] = []; for (const c of cand.ret.checks) if (!c.ok) warnings.push(`SHORT_RETENTION_CHECK · ${c.id}${c.note ? `: ${c.note}` : ""}`);

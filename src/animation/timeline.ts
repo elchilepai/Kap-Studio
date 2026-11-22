@@ -6,7 +6,7 @@ import type { Ease } from "./types.ts";
 type Seg = { t0: number; t1: number; x0: number; x1: number; run: boolean };
 type VisEv = { t: number; on: boolean; fade: number };
 type Track = {
-  segs: Seg[]; vis: VisEv[]; face: { t: number; dir: 1 | -1 }[]; expr: { t: number; v: ActionExpression }[];
+  segs: Seg[]; vis: VisEv[]; face: { t: number; dir: 1 | -1 | 0 }[]; expr: { t: number; v: ActionExpression }[];
   gest: { t0: number; t1: number; v: Gesture }[]; poses: { t: number; v: ActionPose }[]; speak: { t0: number; t1: number; env: number[]; vis?: Viseme[] }[]; x0: number; offscreen: boolean;
 };
 type CamSeg = { t0: number; t1: number; from: CameraState; to: CameraState; ease: Ease | undefined };
@@ -59,7 +59,7 @@ export function compile(stage: StageSpec): Compiled {
         if (c.to === "fade") tr.vis.push({ t: c.t, on: false, fade: c.dur ?? 0.5 });
         else { addSeg(tr, c.t, offX(c.to), c.dur ?? 1.8, false); tr.vis.push({ t: c.t + (c.dur ?? 1.8), on: false, fade: 0 }); }
       } else if (c.type === "move") addSeg(tr, c.t, c.x, c.dur, !!c.run);
-      else if (c.type === "face") tr.face.push({ t: c.t, dir: c.dir === "right" ? 1 : -1 });
+      else if (c.type === "face") tr.face.push({ t: c.t, dir: c.dir === "front" ? 0 : c.dir === "right" ? 1 : -1 });
       else if (c.type === "expression") tr.expr.push({ t: c.t, v: c.value });
       else if (c.type === "pose") { tr.poses.push({ t: c.t, v: c.value }); if (c.dur) tr.poses.push({ t: c.t + c.dur, v: "idle" }); }
       else if (c.type === "gesture") tr.gest.push({ t0: c.t, t1: c.t + c.dur, v: c.value });
@@ -86,7 +86,7 @@ function actorState(a: ActorSpec, tr: Track, t: number, fps: number, flow = fals
     const p = clamp((t - s.t0) / (s.t1 - s.t0), 0, 1); phase += dx * ease("inOut", p);
     if (t < s.t1) { moving = s.run ? 2 : 1; speed = (6 * p * (1 - p)) / 1.5; moveP = p; }   // derivada de la curva suave: arranca despacio, va rápido en medio y frena al llegar
   }
-  let facing = a.facing; for (const f of tr.face) { if (f.t <= t) facing = f.dir; else break; }
+  let facing = a.facing, front = false; for (const f of tr.face) { if (f.t <= t) { if (f.dir === 0) front = true; else { facing = f.dir; front = false; } } else break; }
   let expression: ActionExpression = "neutral"; for (const e of tr.expr) { if (e.t <= t) expression = e.v; else break; }
   let pose: ActionPose = "idle", poseT = 99, prev: ActionPose = "idle"; for (const e of tr.poses) { if (e.t <= t) { prev = pose; pose = e.v; poseT = t - e.t; } else break; }
   const FADE = 0.3, k0 = clamp(poseT / FADE, 0, 1);   // flow: la pose anterior no desaparece de golpe; se funde mientras entra la nueva (también al volver a «idle»)
@@ -98,7 +98,7 @@ function actorState(a: ActorSpec, tr: Track, t: number, fps: number, flow = fals
     viseme = s.vis?.[k] ?? (mouth < 0.1 ? "rest" : mouth < 0.3 ? "I" : mouth < 0.6 ? "E" : "A");   // sin pista fonética: solo la amplitud decide la forma
   }
   const alpha = alphaOf(tr.vis, t);
-  return { id: a.id, x, y: 0, facing, visible: alpha > 0.001, alpha, moving, speed, walkPhase: phase * 1.15, expression, gesture, gestureP: gp, mouth, viseme, speaking, pose, poseP: clamp(poseT / 0.3, 0, 1), ...(flow ? { ...fl, moveP: moving ? moveP : undefined } : {}) };
+  return { id: a.id, x, y: 0, facing, visible: alpha > 0.001, alpha, moving, speed, walkPhase: phase * 1.15, expression, gesture, gestureP: gp, mouth, viseme, speaking, pose, poseP: clamp(poseT / 0.3, 0, 1), ...(front ? { front: true } : {}), ...(flow ? { ...fl, moveP: moving ? moveP : undefined } : {}) };
 }
 
 /** Estado COMPLETO de la escena en el instante t. Función pura y determinista (mismo t ⇒ mismo resultado). */

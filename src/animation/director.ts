@@ -5,6 +5,7 @@ import { WORLD_W } from "./types.ts";
 import { hash32 } from "./util.ts";
 import { chain, planClauses } from "../narrative/action.ts";
 import { deadAir } from "./pacing.ts";
+import { DISMOUNT, FALL, OBJECT_LIBRARY, RIDE, objectDefFor } from "../narrative/objects.ts";
 import { amplitudeProvider, syntheticEnvelope, type LipSyncProvider, type LipSyncTrack } from "./lipsync.ts";
 import { norm as bnorm, parseDirection, parseDirectorCue, type Beat } from "./beats.ts";
 export type { Beat };
@@ -70,12 +71,12 @@ export function direct(inp: DirectorInput): StageSpec {
   const actorX = actors.map((a) => a.slot), fitZoom = wideZoom(actorX, inp.aspect, 0.3, 3);      // zoom máximo con el que el reparto sigue entero
   const wideZ = portraitShot ? Math.min(1, imageSet ? Math.max(1, fitZoom) : Math.max(0.8, fitZoom)) : 1; // plano general: en vertical se abre si hace falta (solo ese plano)
   const centroid = actors.length ? actors.reduce((n, a) => n + a.slot, 0) / actors.length : WORLD_W / 2;
-  const props: PropSpec[] = []; const touched = new Set<string>();   // actores con movimiento dirigido a mano
+  const props: PropSpec[] = []; const touched = new Set<string>(), shown = new Set<string>();   // actores con movimiento dirigido a mano
 
   // ---------- acciones: beats estructurados + texto editable (ambos se convierten al mismo vocabulario) ----------
   const beats: Beat[] = [...(inp.beats ?? [])];
-  const musicCues: MusicCue[] = [], extraSounds: SoundCue[] = [];
-  for (const raw of inp.directions) { const dc = parseDirectorCue(raw); if (dc) { if (dc.sound) extraSounds.push(dc.sound); if (dc.music) musicCues.push(dc.music); if (dc.warning) warnings.push(dc.warning); continue; } const r = parseDirection(raw); if (r.beat) beats.push(r.beat); else warnings.push(r.warning ?? `No entiendo «${raw}»`); }
+  const musicCues: MusicCue[] = [], extraSounds: SoundCue[] = []; let startObject: { kind: ObjectKind; fallen: boolean } | undefined, toCamera = false, camFrom = 0;
+  for (const raw of inp.directions) { { const od = /^\s*objeto\s*:\s*(.+?)(?:\s+(ca[ií]d[oa]))?\s*$/i.exec(raw), ac = /^\s*a-camara\s*:\s*\w+(?:\s+en\s+([\d.]+)\s*s)?/i.exec(raw), mc = /^\s*montaje\s*:/i.test(raw); if (od) { const d = objectDefFor(od[1]); if (d) startObject = { kind: d.kind as ObjectKind, fallen: !!od[2] }; else warnings.push(`objeto: no sé dibujar «${od[1]}»`); continue; } if (ac) { toCamera = true; camFrom = Number(ac[1] ?? 0); continue; } if (mc) continue; } const dc = parseDirectorCue(raw); if (dc) { if (dc.sound) extraSounds.push(dc.sound); if (dc.music) musicCues.push(dc.music); if (dc.warning) warnings.push(dc.warning); continue; } const r = parseDirection(raw); if (r.beat) beats.push(r.beat); else warnings.push(r.warning ?? `No entiendo «${raw}»`); }
   let explicitCamera = false, shotOnly = false;
   const who = (name: string | undefined, ctx: string) => { const a = name ? byName(name) : undefined; if (!a) warnings.push(`${ctx}: personaje «${name ?? "?"}» no está en la escena`); return a; };
   for (const b of beats) {
@@ -158,7 +159,7 @@ export function direct(inp: DirectorInput): StageSpec {
     [/\b(?:escucha\w*|oye\b)\b/, "listen", 0.9],
   ];
   const GESTURES: [RegExp, Gesture][] = [[/\basiente\w*/, "nod"], [/\bniega\w*/, "shake"], [/\bse encoge de hombros\b/, "shrug"], [/\b(?:senala\w*|apunta\w*)\b/, "point"], [/\b(?:saluda\w*)\b/, "wave"]];
-  const OBJECTS: [RegExp, ObjectKind][] = [[/\b(?:telefono|movil|celular)\b/, "phone"], [/\bmochila\b/, "backpack"], [/\b(?:cuaderno|libreta)\b/, "notebook"], [/\b(?:auriculares|cascos)\b/, "headphones"], [/\bmaleta\b/, "suitcase"], [/\b(?:pelota|balon)\b/, "ball"], [/\b(?:papel|hoja)\b/, "paper"], [/\bsilla\b/, "chair"]];
+  const OBJECTS: [RegExp, ObjectKind][] = [...OBJECT_LIBRARY.filter((o) => !["notebook", "ball", "paper"].includes(o.kind)).map((o) => [o.re, o.kind as ObjectKind] as [RegExp, ObjectKind]), [/\b(?:telefono|movil|celular)\b/, "phone"], [/\bmochila\b/, "backpack"], [/\b(?:cuaderno|libreta)\b/, "notebook"], [/\b(?:auriculares|cascos)\b/, "headphones"], [/\bmaleta\b/, "suitcase"], [/\b(?:pelota|balon)\b/, "ball"], [/\b(?:papel|hoja)\b/, "paper"], [/\bsilla\b/, "chair"]];
   const TAKE = /\b(?:coge\w*|agarra\w*|saca\w*|toma\w*|recoge\w*|sostiene|sujeta\w*|lleva|abraza\w*|se pone|se quita|mira (?:el|la|su) (?:telefono|movil|pantalla))\b/, PUT = /\b(?:deja\w*|apoya\w*|suelta\w*|tira\w*|lanza\w*|guarda\w*)\b/;
   const ALERT = /\b(?:se oye\w*|se escucha\w*|suena\w*|portazo|grito\w*|ruido|estruendo|golpe seco|se rompe\w*|truen\w*)\b/, STRONG = /grito|estruendo|golpe|rompe|portazo|truen/;
   const STOP = /\b(?:se detiene|se para|se queda (?:quiet\w*|inmovil\w*|paralizad\w*)|se congela\w*|deja de moverse)\b/, RUN = /\b(?:corre\w*|echa a correr|sale corriendo)\b/;
@@ -187,7 +188,10 @@ export function direct(inp: DirectorInput): StageSpec {
     if (dur > 1.2) sounds.push({ t: t1, kind: "steps", dur: dur - 0.1 });
     camera(t1, a.id, "follow", dur); return tEnd;
   };
-  const objSpecs = () => props.filter((p) => ["phone", "backpack", "notebook", "headphones", "suitcase", "ball", "paper", "chair"].includes(p.kind));
+  const objSpecs = () => props.filter((p) => !["box", "lantern", "door", "sign", "star", "moon", "tree"].includes(p.kind));
+  if (toCamera && actors[0]) cues.push({ t: camFrom, type: "face", actor: actors[0].id, dir: "front" });   // presentador: de frente a cámara (hasta que se mueva)
+  if (startObject) { const def = OBJECT_LIBRARY.find((o) => o.kind === startObject!.kind), kind = (startObject.fallen && def?.fallen ? `${startObject.kind}_fallen` : startObject.kind) as ObjectKind;   // el objeto central ya está en escena al empezar (en su estado actual), aunque la narración no lo nombre
+    const sp: PropSpec = { id: `o${props.length}`, kind, x: clampX(centroid < 8 ? 12.4 : 3.6), y: 7.55, scale: 1, visibleAtStart: true }; props.push(sp); shown.add(sp.id); }
   for (const l of inp.lines) {
     if (l.speaker) continue; let lastP: (typeof actors)[number] | undefined, cursor = 0;   // «…, confusa, no entiende nada» sigue siendo del último personaje nombrado de la línea
     chain(planClauses(l.text)).forEach((step) => {
@@ -223,6 +227,18 @@ export function direct(inp: DirectorInput): StageSpec {
       if (obj && objSpecs().length < 4) {
         const spec = (holder?: string, x = 0): PropSpec => { const sp: PropSpec = { id: `o${props.length}`, kind: obj, x, y: 7.55, scale: 1, visibleAtStart: false, ...(holder ? { holder } : {}) }; props.push(sp); return sp; };
         const held = props.find((q) => q.kind === obj && q.holder === P.id), floorAt = () => clampX(xNow(P.id, t0) + (P.slot < 8 ? 1 : -1) * 1.1);
+        const lib = OBJECT_LIBRARY.find((o) => o.kind === obj && (o.ride || o.fallen));
+        if (lib) {   // objetos centrales de los Shorts: se montan, se caen, se reconstruyen (cada estado es una forma distinta del mismo objeto)
+          const mk = (kind: ObjectKind, holder?: string, x = 0, ride = false): PropSpec => { const sp: PropSpec = { id: `o${props.length}`, kind, x, y: 7.55, scale: 1, visibleAtStart: false, ...(holder ? { holder } : {}), ...(ride ? { ride: true } : {}) }; props.push(sp); return sp; };
+          const of = (kind: string) => props.filter((q) => q.kind === kind), live = (kind: string) => of(kind).at(-1), x0 = live(obj)?.x ?? floorAt();
+          const hideAll = (t: number) => { for (const q of props) if ((q.kind === obj || q.kind === `${obj}_fallen`) && shown.has(q.id)) { cues.push({ t, type: "prop", id: q.id, action: "hide" }); shown.delete(q.id); } };
+          const showNew = (t: number, sp: PropSpec) => { cues.push({ t, type: "prop", id: sp.id, action: "show" }); shown.add(sp.id); };
+          if (FALL.test(clause) && lib.fallen) { const base = x0; hideAll(t0 + 0.1); showNew(t0 + 0.15, mk(`${obj}_fallen` as ObjectKind, undefined, base)); }
+          else if (lib.ride && RIDE.test(clause)) { hideAll(t0 + 0.1); showNew(t0 + 0.2, mk(obj, P.id, 0, true)); }
+          else if (lib.ride && DISMOUNT.test(clause)) { hideAll(t0 + 0.1); showNew(t0 + 0.2, mk(obj, undefined, floorAt())); }
+          else if (/\b(?:apila\w*|coloca\w*|levanta\w*|reconstru\w*|endereza\w*|vuelve a (?:poner|colocar|apilar|montar)|monta\w*|construye\w*)\b/.test(clause) && lib.fallen && [...shown].some((id) => props.find((q) => q.id === id)?.kind === `${obj}_fallen`)) { hideAll(t0 + 0.1); showNew(t0 + 0.2, mk(obj, undefined, x0)); }
+          else if (![...shown].some((id) => { const k = props.find((q) => q.id === id)?.kind; return k === obj || k === `${obj}_fallen`; })) showNew(t0, mk(obj, undefined, floorAt()));
+        } else
         if (TAKE.test(clause) && !PUT.test(clause)) { const floor = props.find((q) => q.kind === obj && !q.holder); if (floor) cues.push({ t: t0 + 0.3, type: "prop", id: floor.id, action: "hide" }); cues.push({ t: t0 + 0.35, type: "prop", id: (held ?? spec(P.id)).id, action: "show" }); }
         else if (PUT.test(clause)) { if (held) cues.push({ t: t0 + 0.1, type: "prop", id: held.id, action: "hide" }); if (!/guarda/.test(clause)) cues.push({ t: t0 + 0.25, type: "prop", id: spec(undefined, floorAt()).id, action: "show" }); }
         else if (!props.some((q) => q.kind === obj)) cues.push({ t: t0, type: "prop", id: spec(undefined, floorAt()).id, action: "show" });

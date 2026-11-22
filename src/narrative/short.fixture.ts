@@ -3,6 +3,8 @@ import type { ShortBeat } from "./short";
 export const B = (phase: ShortBeat["phase"], step: ShortBeat["step"], action: string, o: Partial<ShortBeat> = {}): ShortBeat => ({ phase, step, goal: `quiere ${action.split(" ").slice(-2).join(" ")}`, action, reaction: "", change: `cambia ${action}`, seconds: 7, shot: "medio", characters: ["KAP"], location: "Patio", time: "tarde", ...o });
 /** Short sano (tema distinto al real): problema concreto, intento, fallo, reacción, SEGUNDO intento distinto, descubrimiento, pequeño cambio y remate visual (≈ 5 frases por beat, ≈ 50 s de render). */
 export const OBJETO = "torre de latas";
+export const INTRO = "¿Nunca te pasa que parece que todos avanzan menos tú?";
+export const OUTRO = { gesto: "se encoge de hombros", texto: "Bueno… algo es algo." };
 export const good = (): ShortBeat[] => [
   B("hook", "situacion", "El hermano de KAP apila seis latas en una torre perfecta. Remata la torre con una pelota. Las latas no se mueven. El hermano da un salto y levanta los brazos.", { characters: ["Hermano de KAP", "KAP"], shot: "general", seconds: 4, change: "el hermano consigue la torre al primer intento", sound: "bump", music: "start", reaction: "KAP lo mira desde la puerta con las manos en los bolsillos." }),
   B("contexto", "situacion", "KAP recoge sus latas del suelo. Las cuenta una a una y se coloca frente a la torre del hermano. Aprieta los puños y respira hondo. Estira los brazos hacia la primera lata. Coloca la lata más gorda en el suelo.", { change: "KAP decide copiar la torre", goal: "hacer una torre igual de alta", reaction: "El hermano le hace sitio sin dejar de sonreír." }),

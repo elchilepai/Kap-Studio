@@ -4,7 +4,7 @@ import type { ContextPack } from "@/memory";
 import { aiFrom, withShortMode } from "./registry";
 import { llmShortAuthor } from "./short";
 import { SHORT_SYSTEM } from "./prompts";
-import { good, OBJETO } from "@/narrative/short.fixture";
+import { good, INTRO, OBJETO, OUTRO } from "@/narrative/short.fixture";
 import { direct } from "@/animation/director";
 import { createSqliteStorage } from "@/adapters/local/sqlite-storage";
 import { createEpisodeFromRequest } from "@/server/memory/service";
@@ -16,7 +16,7 @@ class Scripted implements LlmClient {
   async generate(req: LlmRequest) { this.calls.push(req); const r = this.replies.shift(); if (r === undefined) throw new Error("sin más respuestas"); return { text: typeof r === "string" ? r : JSON.stringify(r) }; }
 }
 const ctx = (over: Partial<ContextPack["request"]> = {}): ContextPack => ({ request: { text: "x", number: 1, season: 1, exact: false, cast: [], notes: "Un Short: KAP derrama leche en la consola y su hermano casi lo descubre", ...over }, budgetTokens: 1000, usedTokens: 10, sections: [{ id: "x", title: "x", text: "x", tokens: 1 }] as never, text: "# Contexto\nKAP", warnings: [] } as unknown as ContextPack);
-const story = (beats = good(), extra: Record<string, unknown> = {}) => ({ objeto: OBJETO, objetivo: "hacer una torre igual de alta", title: "El mando mojado", logline: "KAP moja el mando y lo esconde.", hook: "la leche cae", cast: ["KAP", "Hermano de KAP"], beats, ...extra });
+const story = (beats = good(), extra: Record<string, unknown> = {}) => ({ intro: INTRO, outro: OUTRO, objeto: OBJETO, objetivo: "hacer una torre igual de alta", title: "El mando mojado", logline: "KAP moja el mando y lo esconde.", hook: "la leche cae", cast: ["KAP", "Hermano de KAP"], beats, ...extra });
 const write = async (replies: unknown[], c = ctx(), cast = ["KAP", "Hermano de KAP"]) => { const llm = new Scripted(replies), author = llmShortAuthor(llm), out = await author.write({ request: { ...c.request, cast }, context: c, hints: { mode: "short" } }); return { llm, author, out }; };
 
 describe("autor del Short (SHORT MODE)", () => {
@@ -28,12 +28,13 @@ describe("autor del Short (SHORT MODE)", () => {
   });
   it("la narración queda como dirección (sin hablante) y solo se dice el diálogo", async () => {
     const { out } = await write([story()]); const lines = out.script.split("\n").filter((l) => l && !l.startsWith("#") && !l.startsWith("["));
-    expect(lines.filter((l) => /^HERMANO DE KAP: /.test(l))).toHaveLength(1); expect(lines.some((l) => /^KAP: /.test(l))).toBe(false);
+    expect(lines.filter((l) => /^HERMANO DE KAP: /.test(l))).toHaveLength(1); expect(lines.filter((l) => /^KAP: /.test(l))).toHaveLength(2);   // KAP solo habla a cámara: el gancho y el remate
+    expect(lines[0]).not.toMatch(/^KAP: /);   // la primera línea es la dirección «KAP mira a cámara.»
   });
-  it("si falla el gancho: como mucho UNA reescritura local, y se aplica", async () => {
-    const bad = story(); bad.beats[0] = { ...bad.beats[0], seconds: 6 };   // un gancho largo falla «hook-claro» (solo el parche local lo arregla; el contrato causal sigue cumpliéndose)
-    const { llm, out } = await write([bad, { beats: [{ index: 0, action: "El hermano apila seis latas y las latas chocan con estruendo", reaction: "El hermano chisporrotea de risa", change: "la torre del hermano se mueve" }] }]);
-    expect(llm.calls).toHaveLength(2); expect(out.stats!.localPatches).toBe(1); expect(out.script).toMatch(/chisporrotea/);
+  it("si el gancho hablado de KAP falla (suena a coach): como mucho UNA reescritura local, y se aplica", async () => {
+    const bad = story(); bad.intro = "Debes recordar que cada uno tiene su propio ritmo en la vida";
+    const { llm, out } = await write([bad, { intro: "¿Nunca te pasa que todos avanzan más rápido que tú?", beats: [] }]);
+    expect(llm.calls).toHaveLength(2); expect(out.stats!.localPatches).toBe(1); expect(out.script).toMatch(/KAP: ¿Nunca te pasa que todos avanzan más rápido/); expect(out.warnings.some((w) => /hook-claro/.test(w))).toBe(false);
   });
   it("repara en código los beats repetidos (sin llamar al modelo) y avisa", async () => {
     const s = story(); s.beats.splice(3, 0, { ...s.beats[2] }); const { llm, out } = await write([s]);
@@ -44,11 +45,11 @@ describe("autor del Short (SHORT MODE)", () => {
     const { out } = await write([s]); expect(out.warnings.some((w) => /fuera del reparto retirado.*Dani/.test(w))).toBe(true); expect(out.script).not.toMatch(/Dani/);
     const none = story(); const r = await write([none], ctx({ notes: "Un Short de KAP con el mando" }), ["KAP"]); expect(r.out.script).not.toMatch(/^HERMANO DE KAP:/m);
   });
-  it("una moraleja final se avisa y se corrige con UNA reescritura local del remate", async () => {
-    const s = story(); s.beats.at(-1)!.dialogue = { speaker: "KAP", text: "Desde ese día aprendió que lo importante es decir la verdad" };
+  it("un remate que explica la moraleja se avisa y se corrige con UNA reescritura local del remate", async () => {
+    const s = story(); s.outro = { gesto: "se encoge de hombros", texto: "Aprendí que lo importante es mi ritmo" };
     const bad = await write([s, "no es json", "tampoco"]); expect(bad.out.warnings.some((w) => /SHORT_RETENTION_CHECK · remate/.test(w))).toBe(true); expect(bad.out.stats!.localPatches).toBe(1);
-    const fixed = await write([s, { beats: [{ index: 7, action: "KAP empuja una lata bajo la pelota con el pie. El hermano la ve y la deja caer", reaction: "El hermano se ríe y KAP se encoge de hombros", change: "el hermano lo sabe y calla" }] }]);
-    expect(fixed.llm.calls).toHaveLength(2); expect(fixed.out.warnings.some((w) => /SHORT_RETENTION_CHECK · remate/.test(w))).toBe(false); expect(fixed.out.script).toMatch(/empuja una lata/);
+    const fixed = await write([s, { outro: { gesto: "levanta una ceja", texto: "Bueno… algo es algo." }, beats: [] }]);
+    expect(fixed.llm.calls).toHaveLength(2); expect(fixed.out.warnings.some((w) => /SHORT_RETENTION_CHECK · remate/.test(w))).toBe(false); expect(fixed.out.script).toMatch(/KAP: Bueno… algo es algo\./);
   });
 });
 

@@ -28,9 +28,10 @@ export async function buildSceneStage(scene: Scene, o: { durationSec: number; ta
   // zona de subtítulos (la misma fórmula que el ASS): la cámara deja los pies por encima. Sin subtítulos no hay zona que respetar.
   const sub = o.subtitles ?? DEFAULT_SUB_STYLE; const m = subtitleMetrics(o.width, o.height, sub);
   const safe = sub.enabled ? { top: +m.top.toFixed(4), bottom: +m.bottom.toFixed(4) } : { top: 1, bottom: 1 };
+  const ownShort = ctx.production.kind === "short" && !ctx.production.parentId;
   const cast = new Map(ctx.production.cast.map((c) => [c.characterId, c.outfitId]));
   const actors = scene.characterIds.map((id) => ctx.characters.find((c) => c.id === id)).filter(Boolean).map((c) => ({
-    id: c!.id, name: c!.name, appearance: resolveAppearance(c!.design ?? autoDesign(c!.name), cast.get(c!.id)),
+    id: c!.id, name: c!.name, appearance: ownShort && norm(c!.name) === "kap" ? { ...resolveAppearance(c!.design ?? autoDesign(c!.name), cast.get(c!.id)), look: "kap" as const, skin: "#fbfbf8" } : resolveAppearance(c!.design ?? autoDesign(c!.name), cast.get(c!.id)),   // KAP de los Shorts: la misma identidad visual (referencia) en todas las escenas
   }));
   const provisional = scene.characterIds.map((id) => ctx.characters.find((c) => c.id === id)).filter((c) => c && !c.design).map((c) => c!.name);
   const place = ctx.places.find((p) => scene.location && norm(p.name) === norm(scene.location));

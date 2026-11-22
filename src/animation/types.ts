@@ -50,14 +50,14 @@ export type Appearance = {
   /** Si existe y es «layered», el personaje se dibuja con sus propias capas en lugar del vector paramétrico. */
   rig?: LayeredRig;
   /** Estilo del personaje paramétrico: «stickman» (por defecto: cabeza + trazos) o «cutout» (figura completa con ropa y pelo, el diseño anterior). */
-  look?: "stickman" | "cutout";
+  look?: "stickman" | "cutout" | "kap";
 };
 
 export type Cue =
   | { t: number; type: "enter"; actor: string; from: Side | "fade"; x: number; dur?: number }
   | { t: number; type: "exit"; actor: string; to: Side | "fade"; dur?: number }
   | { t: number; type: "move"; actor: string; x: number; dur: number; run?: boolean }
-  | { t: number; type: "face"; actor: string; dir: Side }
+  | { t: number; type: "face"; actor: string; dir: Side | "front" }
   | { t: number; type: "pose"; actor: string; value: ActionPose; dur?: number }
   | { t: number; type: "expression"; actor: string; value: ActionExpression }
   | { t: number; type: "gesture"; actor: string; value: Gesture; dur: number }
@@ -70,9 +70,9 @@ export type EffectKind = "rain" | "snow" | "fog" | "flash" | "darken" | "dust";
 
 export type PropKind = "lantern" | "box" | "door" | "sign" | "star" | "moon" | "tree" | "lamp";
 /** Objetos que el director deduce de la narración (internos de la animación; la IR no cambia): teléfono, mochila, cuaderno, auriculares, maleta, pelota, papel, silla. */
-export type ObjectKind = "phone" | "backpack" | "notebook" | "headphones" | "suitcase" | "ball" | "paper" | "chair";
+export type ObjectKind = "phone" | "backpack" | "notebook" | "headphones" | "suitcase" | "ball" | "paper" | "chair" | "cans" | "cans_fallen" | "blocks" | "blocks_fallen" | "bike" | "bike_fallen" | "skateboard" | "skateboard_fallen" | "guitar" | "kite";
 /** `holder`: si existe, el objeto va en la mano de ese personaje (lo coge, lo sostiene) en vez de estar en el suelo. */
-export type PropSpec = { id: string; kind: PropKind | ObjectKind; x: number; y: number; scale: number; visibleAtStart: boolean; holder?: string };
+export type PropSpec = { id: string; kind: PropKind | ObjectKind; x: number; y: number; scale: number; visibleAtStart: boolean; holder?: string; /** montado por el holder (bici, monopatín): va con él a ras de suelo, no en la mano */ ride?: boolean };
 
 /** Capa de fondo con profundidad. depth: 0 = se mueve con el mundo; 0,8 = lejana (se desplaza poco); negativo = primer plano (se desplaza MÁS que la cámara). */
 export type SetLayer = { image: string; depth: number; y?: number; height?: number; tile?: boolean; alpha?: number };
@@ -108,6 +108,7 @@ export type ActorState = {
   moving: number; /** 0..1: velocidad relativa del tramo (arranca despacio, frena al llegar) */ speed: number; walkPhase: number; expression: ActionExpression; gesture: Gesture; gestureP: number; mouth: number; viseme: Viseme; speaking: boolean; pose: ActionPose; poseP: number;
   /** Solo con `StageSpec.flow` (Shorts): pose que se va (se mezcla hacia fuera mientras entra la nueva) y progreso 0..1 del tramo de movimiento (anticipación / frenada). */
   pose2?: ActionPose; pose2P?: number; moveP?: number;
+  /** De frente a cámara (presentador): solo el diseño «kap» lo dibuja distinto. */ front?: boolean;
 };
 export type CameraState = { x: number; y: number; zoom: number; rot: number };
 export type FrameState = {

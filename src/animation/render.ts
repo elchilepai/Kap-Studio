@@ -53,7 +53,7 @@ export function renderFrame(c: Ctx, stage: StageSpec, t: number, res: Resources,
   const accent = stage.set.accent ?? "#E9B949";
   stage.props.forEach((p) => { const a = st.props.find((x) => x.id === p.id)?.alpha ?? 0; if (a <= 0.001) return;
     const h = p.holder ? stage.actors.findIndex((x) => x.id === p.holder) : -1;   // en la mano de un personaje: lo acompaña (a la altura de la mano, delante del cuerpo)
-    drawProp(c, h >= 0 ? { ...p, x: st.actors[h].x + st.actors[h].facing * 0.5, y: GROUND_Y + 0.55 - 1.05 } : p, a, stage.style.ink, accent); });
+    drawProp(c, h >= 0 ? (p.ride ? { ...p, x: st.actors[h].x, y: GROUND_Y + 0.55 } : { ...p, x: st.actors[h].x + st.actors[h].facing * 0.5, y: GROUND_Y + 0.55 - 1.05 }) : p, a, stage.style.ink, accent); });
   const order = stage.actors.map((a, i) => ({ a, s: st.actors[i] })).filter((x) => x.s.visible).sort((p, q) => (q.a.row ?? 0) - (p.a.row ?? 0) || p.s.x - q.s.x);   // fila trasera primero
   for (const { a, s: as } of order) {
     const back = a.row === 1;

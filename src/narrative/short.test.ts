@@ -1,16 +1,17 @@
 import { describe, expect, it } from "vitest";
-import { audioGaps, beatsToScenes, causalReasons, estimateRenderSeconds, groupScenes, repairShort, shortRetentionCheck, MAX_SCENE_WORDS, type ShortBeat } from "./short";
+import { audioGaps, beatsToScenes, causalReasons, estimateRenderSeconds, groupScenes, repairShort, shortRetentionCheck, introReasons, outroReasons, type ShortBeat } from "./short";
 import { parseDirection, parseDirectorCue } from "../animation/beats";
 import { validateIR } from "../domain/screenplay";
 import { draftToIR } from "../server/ai/episode";
 import { draftToShortScript, storyToDraft, type ShortStory } from "../server/ai/short";
 import { parsedToIR } from "../server/studio/interpreter";
 import { parseScript } from "../server/studio/script";
-import { B, good, OBJETO } from "./short.fixture";
+import { B, good, INTRO, OBJETO, OUTRO } from "./short.fixture";
 
 const names = ["KAP", "Hermano de KAP"];
-const story: ShortStory = { objeto: OBJETO, objetivo: "hacer una torre alta", title: "Las latas", logline: "KAP copia una torre y la hace a su manera.", hook: "", cast: names, beats: [] };
-const check = (b: ShortBeat[], objeto = OBJETO) => shortRetentionCheck(b, { renderSeconds: estimateRenderSeconds(beatsToScenes(b, names)), objeto });
+const story: ShortStory = { intro: INTRO, outro: OUTRO, objeto: OBJETO, objetivo: "hacer una torre alta", title: "Las latas", logline: "KAP copia una torre y la hace a su manera.", hook: "", cast: names, beats: [] };
+const PRES = { intro: INTRO, outro: OUTRO };
+const check = (b: ShortBeat[], objeto = OBJETO) => shortRetentionCheck(b, { renderSeconds: estimateRenderSeconds(beatsToScenes(b, names, { objeto, ...PRES })), objeto, presenter: PRES });
 /** El primer Short real: tristeza → abrazo → sonrisa. No debe pasar. */
 const hugs = (): ShortBeat[] => [
   B("hook", "situacion", "KAP mira por la ventana con una mirada triste, observando a otros niños en el parque.", { location: "Habitación" }),
@@ -45,7 +46,7 @@ const bike = (): ShortBeat[] => [
 
 describe("SHORT_RETENTION_CHECK (12 comprobaciones, sin modelo)", () => {
   it("un Short con la cadena causal completa pasa; el render dura lo que dice su contenido, no lo que declara el modelo", () => {
-    const g = good(), est = estimateRenderSeconds(beatsToScenes(g, names)); const r = check(g);
+    const g = good(), est = estimateRenderSeconds(beatsToScenes(g, names, { objeto: OBJETO, ...PRES })); const r = check(g);
     expect(r.total).toBe(12); expect(r.failed).toEqual([]); expect(est).toBeGreaterThanOrEqual(50); expect(est).toBeLessThanOrEqual(70);
     expect(shortRetentionCheck(g, { renderSeconds: 25.9, objeto: OBJETO }).checks.find((c) => c.id === "duracion-justa")).toMatchObject({ ok: false, fix: "rewrite" });   // 20-30 s no cuenta como Short terminado
     expect(shortRetentionCheck(g, { renderSeconds: 47, objeto: OBJETO }).checks.find((c) => c.id === "duracion-justa")!.ok).toBe(false);   // el mínimo es 50 s
@@ -82,7 +83,9 @@ describe("SHORT_RETENTION_CHECK (12 comprobaciones, sin modelo)", () => {
     const c = check(hugs(), "ventana").checks.find((x) => x.id === "escalada")!; expect(c.ok).toBe(false);
   });
   it("gancho: sin acción visible en el primer beat falla y pide parche local", () => {
-    const g = good(); g[0] = B("hook", "situacion", "Una casa vieja con paredes azules y mucha luz", { seconds: 3 }); const c = check(g).checks.find((x) => x.id === "hook-claro")!; expect(c.ok).toBe(false); expect(c.fix).toBe("patch");
+    const g = good(); g[0] = B("hook", "situacion", "Una casa vieja con paredes azules y mucha luz", { seconds: 3 }); const c = shortRetentionCheck(g, { objeto: OBJETO }).checks.find((x) => x.id === "hook-claro")!; expect(c.ok).toBe(false); expect(c.fix).toBe("patch");   // sin presentador: el primer beat debe ser acción
+    expect(introReasons(INTRO)).toEqual([]); expect(introReasons("Debes recordar que cada uno tiene su propio ritmo en la vida").join(" ")).toMatch(/coach/); expect(introReasons("Hola").join(" ")).toMatch(/palabras/); expect(introReasons("Hoy vamos a hablar de lo que significa avanzar en tu camino personal junto a otros").length).toBeGreaterThan(0);
+    expect(outroReasons(OUTRO)).toEqual([]); expect(outroReasons({ gesto: "suspira", texto: "Cada persona tiene su ritmo y todos llegamos a donde tenemos que llegar" }).length).toBeGreaterThan(0); expect(outroReasons(undefined).length).toBe(1);
   });
   it("remate: una moraleja o una conferencia falla; un final de frase corta pasa", () => {
     const g = good(); g.at(-1)!.dialogue = { speaker: "KAP", text: "Desde ese día aprendió que la verdad es lo importante" }; expect(check(g).failed).toContain("remate");
@@ -99,14 +102,15 @@ describe("SHORT_RETENTION_CHECK (12 comprobaciones, sin modelo)", () => {
 describe("beats → escenas: sin relleno ni pérdida", () => {
   it("una historia de una sola localización NO duplica ninguna línea para fabricar escenas (la IR admite 1 escena)", () => {
     const one = [B("hook", "situacion", "KAP apila tres latas en el patio."), B("remate", "remate", "KAP empuja la torre con un dedo y aguanta.", { goal: "probar" })], sc = beatsToScenes(one, names), all = sc.flatMap((s) => s.lines.map((l) => l.text));
-    expect(new Set(all).size).toBe(all.length); expect(all).toHaveLength(2); expect(sc).toHaveLength(1);
-    const { draft, scenes } = storyToDraft(story, one, names); expect(draft.scenes).toHaveLength(1); expect(validateIR(parsedToIR(parseScript(draftToShortScript(draft, scenes), names.map((n, i) => ({ id: String(i), name: n })))), { characters: names, places: [] }).errors.filter((e) => !/lugar|place/i.test(e))).toEqual([]);
+    expect(new Set(all).size).toBe(all.length); expect(all).toHaveLength(2); expect(sc.length).toBeLessThanOrEqual(2);
+    const { draft, scenes } = storyToDraft(story, one, names); expect(draft.scenes.length).toBe(scenes.length); expect(scenes.length).toBe(sc.length + 2); expect(validateIR(parsedToIR(parseScript(draftToShortScript(draft, scenes), names.map((n, i) => ({ id: String(i), name: n })))), { characters: names, places: [] }).errors.filter((e) => !/lugar|place/i.test(e))).toEqual([]);
   });
-  it("varias escenas en el mismo sitio salen de beats distintos (≤ 46 palabras), con corte seco entre ellas y sin líneas repetidas", () => {
-    const g = good(), sc = beatsToScenes(g, names); expect(sc.length).toBeGreaterThan(1); const all = sc.flatMap((s) => s.lines.map((l) => l.text)); expect(new Set(all).size).toBe(all.length);
-    for (const s of sc) expect(s.lines.reduce((n, l) => n + l.text.split(/\s+/).length, 0)).toBeLessThanOrEqual(MAX_SCENE_WORDS + 40);   // un beat grande puede ser una escena sola
-    expect(sc.slice(1).every((s) => s.transition === "cut")).toBe(true); expect(sc[0].transition).toBeUndefined();
-    expect(groupScenes(g).flatMap((s) => s.beats)).toEqual(g);   // ningún beat se pierde ni se repite
+  it("varias acciones relacionadas forman UNA escena; el corte llega con una razón (cambio de clase de montaje o de lugar) y ningún beat se pierde ni se repite", () => {
+    const g = good(), sc = beatsToScenes(g, names), all = sc.flatMap((s) => s.lines.map((l) => l.text)); expect(new Set(all).size).toBe(all.length);
+    expect(sc.length).toBeGreaterThan(2); expect(sc.length).toBeLessThan(g.length);   // no hay una escena por beat
+    expect(sc.slice(1).every((s) => s.transition === "cut")).toBe(true); expect(sc[0].transition).toBeUndefined(); expect(groupScenes(g).flatMap((s) => s.beats)).toEqual(g);
+    expect(groupScenes(g).some((s) => s.beats.length > 1)).toBe(true);   // intento + fallo juntos, segundo intento + resultado juntos
+    for (const s of sc) expect(s.directions).toContain("montaje: continuo");   // el guion no parte la escena
   });
   it("NINGUNA directiva se recorta (antes: slice(0, 8)) y cada escena conserva las suyas, con tiempos de la duración real de las líneas", () => {
     const many = Array.from({ length: 9 }, (_, i) => B(i === 0 ? "hook" : i === 8 ? "remate" : "escalada", i === 8 ? "remate" : "intento", `KAP apila la lata ${i}.`, { sound: "bump", music: i % 2 ? "change" : "none", goal: `lata ${i}`, change: `lata ${i} puesta`, seconds: 2 }));

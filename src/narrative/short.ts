@@ -5,6 +5,7 @@
  * Aquí viven: el tipo del beat, SHORT_RETENTION_CHECK (12 comprobaciones sin llamar al modelo), las reparaciones en código y la conversión beats → borrador de guion.
  */
 import { actionDuration, hasAction } from "./action.ts";
+import { FALL, objectDefFor } from "./objects.ts";
 import { normalizeLine } from "./lines.ts";
 
 export const PHASES = ["hook", "contexto", "escalada", "giro", "remate"] as const;
@@ -107,13 +108,37 @@ export function causalReasons(beats: ShortBeat[], objeto = ""): string[] {
   return why;
 }
 
+
+// ---------------------------------------------------------------- PRESENTADOR (KAP a cámara al principio y al final)
+export type ShortPresenter = { intro: string; outro?: { gesto: string; texto: string } };
+const COACH = /\b(?:debes|debemos|tienes que|tenemos que|recuerda que|recuerda|la clave|el secreto|lo importante|todos deber[ií]amos|aprende\w*|nunca te rindas|conf[ií]a en ti|cree en ti|cada uno|su propio ritmo|el camino|el [eé]xito|la vida es|en la vida)\b/;
+const wc = (t: string) => (t.trim().match(/\S+/g) ?? []).length;
+/** Gancho hablado: breve (≈ 3-6 s), plantea una duda concreta con una pregunta o una observación cotidiana y no suena a coach, filósofo ni discurso. */
+export function introReasons(intro: string): string[] {
+  const why: string[] = [], t = intro.trim(), p = plain(t), n = wc(t);
+  if (!t) return ["falta el gancho hablado de KAP a cámara"];
+  if (n < 5 || n > 16) why.push(`el gancho hablado tiene ${n} palabras (debe durar ≈ 3-6 s: entre 5 y 16)`);
+  if (!/[?¿]/.test(t) && !/\b(?:alguna vez|te pasa|sientes que|parece que|por que)\b/.test(p)) why.push("el gancho no plantea una duda concreta (una pregunta o «parece que…»)");
+  if (COACH.test(p) || ABSTRACT.test(p) || MORAL.test(t)) why.push("el gancho suena a coach, filósofo o moraleja: KAP solo plantea la duda");
+  return why;
+}
+/** Remate: gesto + (opcional) frase de ≤ 8 palabras, sin lección ni discurso. */
+export function outroReasons(o: { gesto: string; texto: string } | undefined): string[] {
+  if (!o) return ["falta el remate de KAP a cámara (un gesto o una frase muy corta)"];
+  const why: string[] = [], p = plain(o.texto);
+  if (!o.gesto.trim()) why.push("el remate no indica ningún gesto");
+  if (wc(o.texto) > 8) why.push(`la frase final tiene ${wc(o.texto)} palabras (máximo 8)`);
+  if (o.texto && (COACH.test(p) || ABSTRACT.test(p) || MORAL.test(o.texto))) why.push("la frase final explica la moraleja");
+  return why;
+}
+
 /** SHORT_RETENTION_CHECK: las 12 preguntas de retención, sin llamar al modelo. Las que se pueden arreglar en código indican cómo (`fix`). */
-export function shortRetentionCheck(beats: ShortBeat[], o: { renderSeconds?: number; objeto?: string } = {}): RetentionResult {
+export function shortRetentionCheck(beats: ShortBeat[], o: { renderSeconds?: number; objeto?: string; presenter?: ShortPresenter } = {}): RetentionResult {
   const checks: RetentionCheck[] = [], add = (c: RetentionCheck) => checks.push(c), secs = o.renderSeconds ?? shortSeconds(beats), n = beats.length;   // con `renderSeconds` se mide lo que durará el render real (por el contenido), no los segundos que declara el modelo
   const starts: number[] = []; { let t = 0; for (const b of beats) { starts.push(t); t += b.seconds; } }
   // 1) hook claro: algo ocurre YA (acción visible, no diálogo ni descripción) y es corto
-  const h = beats[0], hookOk = !!h && visible(body(h)) && h.seconds <= 4.5 && (h.dialogue ? h.dialogue.text.split(/\s+/).length <= 8 : true);
-  add({ id: "hook-claro", ok: hookOk, ...(hookOk ? {} : { note: "el primer beat no tiene una acción visible inmediata (o es largo / empieza hablando)", fix: "patch" as const, beats: [0] }) });
+  const h = beats[0], pr = o.presenter, introWhy = pr ? introReasons(pr.intro) : [], hookOk = pr ? !introWhy.length : !!h && visible(body(h)) && h.seconds <= 4.5 && (h.dialogue ? h.dialogue.text.split(/\s+/).length <= 8 : true);
+  add({ id: "hook-claro", ok: hookOk, ...(hookOk ? {} : { note: pr ? introWhy.join("; ") : "el primer beat no tiene una acción visible inmediata (o es largo / empieza hablando)", fix: "patch" as const, beats: pr ? [] : [0] }) });
   // 2) el problema aparece rápido: antes de los 8 s ya hay un beat de contexto/escalada
   const early = beats.findIndex((b, i) => starts[i] > 0 && b.phase !== "hook"); add({ id: "problema-rapido", ok: early >= 0 && starts[early] <= 8, ...(early >= 0 && starts[early] <= 8 ? {} : { note: "pasan más de 8 s sin que aparezca el problema" }) });
   // 3) acción antes que explicación: en los 2 primeros beats casi no hay diálogo y sí acción
@@ -130,8 +155,8 @@ export function shortRetentionCheck(beats: ShortBeat[], o: { renderSeconds?: num
   const gi = beats.findIndex((b) => b.phase === "giro"); const declared = shortSeconds(beats) || 1;
   add({ id: "giro", ok: gi >= 0 && starts[gi] <= declared * 0.9, ...(gi >= 0 && starts[gi] <= declared * 0.9 ? {} : { note: "falta un giro o descubrimiento (o llega demasiado tarde)", fix: "patch" as const, beats: [Math.max(0, n - 2)] }) });
   // 7) remate con consecuencia, sin moraleja
-  const last = beats.at(-1), moral = !!last && MORAL.test(`${last.action} ${last.reaction} ${last.dialogue?.text ?? ""} ${last.change}`), speechy = !!last?.dialogue && last.dialogue.text.split(/\s+/).length > 12, remOk = !!last && last.phase === "remate" && visible(body(last)) && !moral && !speechy;
-  add({ id: "remate", ok: remOk, ...(remOk ? {} : { note: moral || speechy ? "el final suena a moraleja o a discurso (una frase corta basta)" : "el final no es una acción/consecuencia clara", fix: "patch" as const, beats: [n - 1] }) });
+  const last = beats.at(-1), moral = !!last && MORAL.test(`${last.action} ${last.reaction} ${last.dialogue?.text ?? ""} ${last.change}`), speechy = !!last?.dialogue && last.dialogue.text.split(/\s+/).length > 12, outroWhy = o.presenter ? outroReasons(o.presenter.outro) : [], remOk = !!last && last.phase === "remate" && visible(body(last)) && !moral && !speechy && !outroWhy.length;
+  add({ id: "remate", ok: remOk, ...(remOk ? {} : { note: outroWhy.length ? outroWhy.join("; ") : moral || speechy ? "el final suena a moraleja o a discurso (una frase corta basta)" : "el final no es una acción/consecuencia clara", fix: "patch" as const, beats: o.presenter ? [] : [n - 1] }) });
   // 8) beats repetidos (mismo momento) → fusionar
   const rep: number[] = []; beats.forEach((b, i) => { if (i && similar(beats[i - 1], b)) rep.push(i); });
   add({ id: "sin-repetidos", ok: !rep.length, ...(rep.length ? { note: `${rep.length} beat(s) cuentan el mismo momento que el anterior`, fix: "merge" as const, beats: rep } : {}) });
@@ -166,14 +191,17 @@ export function repairShort(beats: ShortBeat[]): { beats: ShortBeat[]; merged: n
 const words = (t: string) => (t.trim().match(/\S+/g) ?? []).length;
 /** Duración que dará el pipeline a una línea (misma fórmula que server/studio/timeline.ts: la acción sale de su cadena continua; la voz, de las palabras). */
 const lineSeconds = (l: { speaker: string; text: string }) => (l.speaker ? Math.max(0.7, words(l.text) / 2.6) + 0.25 : actionDuration(l.text));
-export const MAX_SCENE_WORDS = 46;   // el guion parte las escenas de más de 52 palabras y solo la primera parte conserva las direcciones: se evita escribiéndolas más cortas
 
 export type ShortScene = { location: string; time: string; beats: ShortBeat[] };
 const beatWords = (b: ShortBeat) => words(b.action) + words(b.reaction) + (b.dialogue ? words(b.dialogue.text) : 0);
-/** Los beats seguidos en el mismo lugar y momento forman una escena, sin pasar de ≈ 46 palabras (cada beat es contenido propio: nunca se repite ninguno para crear una escena). */
+/** Clase de montaje de cada paso: el CORTE llega cuando cambia la clase (nueva situación → intento y su consecuencia → reacción → otro intento y su resultado → remate). */
+const CLASS: Record<ShortBeat["step"], string> = { situacion: "A", intento: "B", fallo: "B", reaccion: "C", "segundo-intento": "D", descubrimiento: "D", cambio: "E", remate: "E" };
+const beatSeconds = (b: ShortBeat) => [b.action, b.reaction].reduce((n, t) => n + (t.trim() ? actionDuration(t) : 0), 0) + (b.dialogue ? lineSeconds({ speaker: b.dialogue.speaker, text: b.dialogue.text }) : 0);
+/** Los beats seguidos forman una escena (varias acciones relacionadas) hasta que hay una RAZÓN de corte: cambio de lugar u hora, cambio de clase de montaje (nuevo intento, corte a la reacción, remate) o escena demasiado larga (> 16 s). Nunca se repite un beat. */
 export function groupScenes(beats: ShortBeat[]): ShortScene[] {
-  const out: ShortScene[] = [], size: number[] = [];
-  for (const b of beats) { const s = out.at(-1), w = beatWords(b); if (s && plain(s.location) === plain(b.location) && plain(s.time) === plain(b.time) && size[size.length - 1] + w <= MAX_SCENE_WORDS) { s.beats.push(b); size[size.length - 1] += w; } else { out.push({ location: b.location, time: b.time, beats: [b] }); size.push(w); } }
+  const out: ShortScene[] = [], dur: number[] = [];
+  for (const b of beats) { const s = out.at(-1), prev = s?.beats.at(-1), d = beatSeconds(b);
+    if (s && prev && plain(s.location) === plain(b.location) && plain(s.time) === plain(b.time) && CLASS[prev.step] === CLASS[b.step] && dur[dur.length - 1] + d <= 16) { s.beats.push(b); dur[dur.length - 1] += d; } else { out.push({ location: b.location, time: b.time, beats: [b] }); dur.push(d); } }
   return out;
 }
 const SOUND_WORD: Record<string, string> = { door: "puerta", bump: "golpe", knock: "llamar", ring: "llamada", steps: "pasos", ambience: "ambiente" };
@@ -203,15 +231,24 @@ function sentenceStarts(text: string, lineDur: number): { text: string; t: numbe
   return ss.map((x, i) => { const r = { text: x, t, dur: d[i] * k }; t += d[i] * k; return r; });
 }
 
-/** Beats → escenas del borrador (formato del generador de episodios): narración = DIRECCIÓN (sin hablante), diálogo = solo lo que se dice. Las directivas (plano, reacción en primer plano, sonidos, impacto, silencio, marcas) caen en el instante de la frase/reacción que las motiva, con la duración real de las líneas; todas se conservan. Entre escenas de un Short propio, siempre CORTE. */
-export function beatsToScenes(beats: ShortBeat[], known: string[]): ShortDraftScene[] {
-  const lead = 0.3, seen = new Set<string>(); let index = 0;
-  return groupScenes(beats).map((sc) => {
+export type PresenterOpts = { objeto?: string; intro?: string; outro?: { gesto: string; texto: string } };
+const presenterScene = (kind: "intro" | "outro", lines: { speaker: string; text: string }[], time: string, last?: string): ShortDraftScene => {
+  const dur = Math.min(40, Math.max(3, lines.reduce((n, l) => n + lineSeconds(l) + (l.speaker ? 0.25 : 0), 0) + 1));
+  return { title: kind === "intro" ? "KAP plantea la duda" : "KAP remata", location: "A cámara", lines, memory: kind === "intro" ? ["acto: inicio | KAP plantea la duda a cámara"] : [`gancho: ${(last ?? "KAP cierra a cámara").slice(0, 240)}`], stage: kind === "intro" ? "inicio" : "resolucion", shot: "medio", time, interior: true, change: kind === "intro" ? "la duda queda planteada" : "KAP remata",
+    directions: ["a-camara: KAP en 0.3s", "plano: medio KAP en 0.3s", `marca-musica: ${kind === "intro" ? "inicio" : "fin"} en 0.3s`, `sonido: ambiente en 0.3s durante ${dur.toFixed(1)}s`, "montaje: continuo"], ...(kind === "outro" ? { transition: "cut" as const } : {}) };
+};
+
+/** Beats → escenas del borrador (formato del generador de episodios): narración = DIRECCIÓN (sin hablante), diálogo = solo lo que se dice. Las directivas (plano, reacción en primer plano, sonidos, impacto, silencio, marcas, estado del objeto) caen en el instante de la frase/reacción que las motiva, con la duración real de las líneas; todas se conservan. Con `intro`/`outro`, el Short abre y cierra con KAP presentador a cámara. Entre escenas, siempre CORTE. */
+export function beatsToScenes(beats: ShortBeat[], known: string[], pres: PresenterOpts = {}): ShortDraftScene[] {
+  const lead = 0.3, seen = new Set<string>(); let index = pres.intro ? 1 : 0; const odef = pres.objeto ? objectDefFor(pres.objeto) : undefined; let ostate: "intact" | "fallen" = "intact";
+  const story = groupScenes(beats).map((sc) => {
     const lines: { speaker: string; text: string }[] = [], dirs: string[] = [], memory: string[] = []; let t = 0; const snd: { kind: string; at: number; dur?: number }[] = [];
+    if (odef) dirs.push(`objeto: ${odef.name}${ostate === "fallen" ? " caido" : ""}`);   // el objeto central ya está en escena, en su estado actual
     sc.beats.forEach((b) => {
       const start = t, mine: { speaker: string; text: string; at: number; dur: number }[] = [];
       for (const x of [b.action, b.reaction]) { const n = x.trim() ? normalizeLine({ text: x }, known) : undefined; if (n) { const d = lineSeconds({ speaker: "", text: n.text }); mine.push({ speaker: "", text: n.text, at: t, dur: d }); lines.push({ speaker: "", text: n.text }); t += d; } }
       if (b.dialogue) { const n = normalizeLine({ speaker: b.dialogue.speaker, text: b.dialogue.text }, known); if (n) { const d = lineSeconds({ speaker: n.speaker ?? "", text: n.text }); mine.push({ speaker: n.speaker ?? "", text: n.text, at: t, dur: d }); lines.push({ speaker: n.speaker ?? "", text: n.text }); t += d + 0.25; } }
+      if (odef) for (const x of sentencesOf(`${b.action} ${b.reaction}`)) { const p = plain(x); if (odef.re.test(p) || p) { if (FALL.test(p) && odef.fallen && odef.re.test(plain(b.action + " " + b.reaction))) ostate = "fallen"; else if (/\b(?:apila\w*|coloca\w*|levanta\w*|reconstru\w*|endereza\w*|monta\w*|construye\w*|vuelve a (?:poner|colocar|apilar|montar))\b/.test(p) && odef.re.test(plain(b.action + " " + b.reaction))) ostate = "intact"; } }
       const at = (x: number) => `en ${(x + lead).toFixed(1)}s`, who = b.characters[0] ?? "KAP", act = mine.find((m) => !m.speaker), react = mine.filter((m) => !m.speaker)[1];
       dirs.push(b.shot === "general" ? `plano: general ${at(start)}` : b.shot === "medio" ? `plano: medio ${who} ${at(start)}` : b.shot === "seguimiento" ? `camara: seguir ${who} ${at(start)}` : `plano: primer plano ${who} ${at(start)}`);   // «objeto» = primer plano en quien lo maneja
       // la reacción de KAP al fallo/resultado se ve de cerca (corte a la reacción), en el instante en que empieza
@@ -222,13 +259,17 @@ export function beatsToScenes(beats: ShortBeat[], known: string[]): ShortDraftSc
       for (const ta of acting) if (!snd.some((x) => Math.abs(x.at - ta) < 1.4)) snd.push({ kind: "knock", at: ta });   // cada gesto con un objeto suena (un objeto que se coloca, se toca, se mueve): sin gestos mudos
       if (b.sound && b.sound !== "none" && !snd.some((x) => x.kind === (b.sound === "door" ? "door" : b.sound) && x.at >= start && x.at < t)) snd.push({ kind: b.sound, at: consequenceAt ?? start });
       if (b.music === "impact") dirs.push(`impacto: ${at(consequenceAt ?? start)}`); else if (b.music === "silence") dirs.push(`silencio: ${at(react?.at ?? start)} durante 1.5s`); else if (b.music && b.music !== "none") dirs.push(`marca-musica: ${MUSIC_WORD[b.music]} ${at(start)}`);
-      const ac = ACT[b.phase]; if (!seen.has(ac)) { seen.add(ac); memory.push(`acto: ${ac} | ${b.goal.slice(0, 140)}`); }
+      const ac = ACT[b.phase]; if (!seen.has(ac) && !(pres.intro && ac === "inicio")) { seen.add(ac); memory.push(`acto: ${ac} | ${b.goal.slice(0, 140)}`); }
     });
     for (const x of snd) dirs.push(`sonido: ${SOUND_WORD[x.kind]} en ${(x.at + lead).toFixed(1)}s${x.dur ? ` durante ${x.dur.toFixed(1)}s` : ""}`);
-    dirs.push(`sonido: ambiente en 0.3s durante ${Math.min(40, Math.max(3, t + 1)).toFixed(1)}s`);   // el cuarto no está mudo entre acciones
+    dirs.push(`sonido: ambiente en 0.3s durante ${Math.min(40, Math.max(3, t + 1)).toFixed(1)}s`, "montaje: continuo");   // el cuarto no está mudo entre acciones; varias acciones relacionadas en una escena
     const first = sc.beats[0], last = sc.beats.at(-1)!, loc = plain(sc.location), cut = index++ > 0;
-    return { title: first.goal.slice(0, 60) || sc.location, location: sc.location, lines, memory: last === beats.at(-1) ? [...memory, `gancho: ${last.change.slice(0, 240)}`] : memory, stage: ACT[first.phase], shot: first.shot === "general" ? "general" : first.shot === "primer plano" || first.shot === "objeto" ? "primer plano" : "medio", time: sc.time, interior: INDOOR.test(loc) && !OUTDOOR.test(loc), directions: dirs, change: last.change, ...(cut ? { transition: "cut" as const } : {}) };
+    return { title: first.goal.slice(0, 60) || sc.location, location: sc.location, lines, memory: last === beats.at(-1) && !pres.outro ? [...memory, `gancho: ${last.change.slice(0, 240)}`] : memory, stage: ACT[first.phase], shot: first.shot === "general" ? "general" : first.shot === "primer plano" || first.shot === "objeto" ? "primer plano" : "medio", time: sc.time, interior: INDOOR.test(loc) && !OUTDOOR.test(loc), directions: dirs, change: last.change, ...(cut ? { transition: "cut" as const } : {}) } as ShortDraftScene;
   });
+  const time = beats[0]?.time ?? "tarde", out = [...story];
+  if (pres.intro) out.unshift(presenterScene("intro", [{ speaker: "", text: "KAP mira a cámara." }, { speaker: "KAP", text: pres.intro.trim() }], time));
+  if (pres.outro) out.push(presenterScene("outro", [{ speaker: "", text: `KAP vuelve a mirar a cámara y ${pres.outro.gesto.trim().replace(/^KAP\s+/i, "").replace(/[.]+$/, "")}.` }, ...(pres.outro.texto.trim() ? [{ speaker: "KAP", text: pres.outro.texto.trim() }] : [])], time, beats.at(-1)?.change));
+  return out;
 }
 
 /** Tramos de ≥ `min` s sin ningún elemento sonoro audible (acciones sonorizadas, impactos, diálogo; el ambiente de fondo no cuenta). Para revisar silencios sospechosos. */

@@ -101,7 +101,7 @@ function shape(paras: ParsedScene[]): ParsedScene[] {
 export function splitLong(scenes: ParsedScene[], maxWords = 52): ParsedScene[] {
   const out: ParsedScene[] = [];
   for (const sc of scenes) {
-    if (sceneWords(sc) <= maxWords) { out.push(sc); continue; }
+    if (sceneWords(sc) <= maxWords || sc.directions?.some((d) => /^montaje:\s*continuo/i.test(d))) { out.push(sc); continue; }   // «montaje: continuo» (Shorts): una escena con varias acciones relacionadas no se parte
     const units: Line[] = sc.lines.flatMap((l) => l.speaker ? [l] : sentences(l.text).map((t) => ({ text: t })));
     let part: Line[] = [], w = 0, n = 1;
     const push = () => { if (part.length) { out.push({ ...sc, title: n === 1 ? sc.title : `${sc.title} (${n})`.trim(), lines: part, imagen: sc.imagen, duracion: undefined, directions: n === 1 ? sc.directions : undefined, memory: n === 1 ? sc.memory : undefined }); n++; part = []; w = 0; } };
