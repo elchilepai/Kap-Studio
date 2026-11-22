@@ -1,0 +1,550 @@
+{
+ "number": 1,
+ "title": "KAP y el ritmo de los demás (revisado)",
+ "request": "Crea un Short de KAP. Tema: «¿Por qué sentimos que todos avanzan menos nosotros?». KAP lo descubre mediante una pequeña historia visual, no mediante un discurso. Puede aparecer su hermano pequeño.",
+ "request_parsed": {
+  "number": 4,
+  "exact": false,
+  "cast": [
+   "KAP"
+  ]
+ },
+ "generationMin": 36.8,
+ "scenes": 7,
+ "words": 280,
+ "estimatedSec": 102,
+ "irValid": true,
+ "irErrors": [],
+ "retention": {
+  "checks": [
+   {
+    "id": "hook-claro",
+    "ok": false,
+    "note": "el primer beat no tiene una acción visible inmediata (o es largo / empieza hablando)",
+    "fix": "patch",
+    "beats": [
+     0
+    ]
+   },
+   {
+    "id": "problema-rapido",
+    "ok": true
+   },
+   {
+    "id": "accion-antes-de-explicar",
+    "ok": true
+   },
+   {
+    "id": "cambia-varias-veces",
+    "ok": true
+   },
+   {
+    "id": "escalada",
+    "ok": true
+   },
+   {
+    "id": "giro",
+    "ok": true
+   },
+   {
+    "id": "remate",
+    "ok": true
+   },
+   {
+    "id": "sin-repetidos",
+    "ok": true
+   },
+   {
+    "id": "nada-eliminable",
+    "ok": true
+   },
+   {
+    "id": "sin-tramos-solo-dialogo",
+    "ok": true
+   },
+   {
+    "id": "no-predecible",
+    "ok": true
+   },
+   {
+    "id": "duracion-justa",
+    "ok": true
+   }
+  ],
+  "failed": [
+   "hook-claro"
+  ],
+  "passed": 11,
+  "total": 12,
+  "seconds": 45.3
+ },
+ "beats": [
+  {
+   "phase": "contexto",
+   "step": "situacion",
+   "goal": "observar a otros niños jugando y sentirse excluido",
+   "action": "KAP mira por la ventana de su casa, con la camiseta gris desgastada. Ve a otros niños corriendo en la calle. Sus ojos se mueven lentamente entre ellos y la puerta cerrada de su casa.",
+   "reaction": "Kap baja la mirada y se acerca a una silla en la habitación, sentándose con las manos en las rodillas.",
+   "change": "KAP se siente observador y solo",
+   "seconds": 5,
+   "shot": "general",
+   "characters": [
+    "KAP"
+   ],
+   "location": "Habitación de KAP",
+   "time": "tarde",
+   "sound": "ambience",
+   "music": "start"
+  },
+  {
+   "phase": "contexto",
+   "step": "intento",
+   "goal": "intentar salir a jugar aunque sea solo",
+   "action": "KAP se levanta con lentitud, mira hacia la puerta y camina hacia ella. La abre con cuidado y sale al pasillo.",
+   "reaction": "Kap se detiene en el umbral, mira hacia la calle y retrocede un paso.",
+   "change": "KAP está a punto de salir pero duda",
+   "seconds": 4,
+   "shot": "seguimiento",
+   "characters": [
+    "KAP"
+   ],
+   "location": "Pasillo de casa",
+   "time": "tarde",
+   "sound": "steps",
+   "music": "change"
+  },
+  {
+   "phase": "escalada",
+   "step": "fallo",
+   "goal": "intentar unirse a los demás pero no tener éxito",
+   "action": "KAP sale al exterior, camina lentamente hacia el grupo de niños. Se detiene a unos metros y observa cómo juegan.",
+   "reaction": "Los niños no lo ven. KAP se queda parado, con la cabeza gacha y las manos en los bolsillos.",
+   "change": "KAP siente que no pertenece al grupo",
+   "seconds": 5,
+   "shot": "general",
+   "characters": [
+    "KAP"
+   ],
+   "location": "Calle",
+   "time": "tarde",
+   "sound": "ambience",
+   "music": "impact"
+  },
+  {
+   "phase": "escalada",
+   "step": "reaccion",
+   "goal": "intentar hacer algo diferente para no sentirse solo",
+   "action": "KAP mira hacia su casa y regresa lentamente. Llega a la puerta, se detiene y mira a su hermano pequeño sentado en el suelo.",
+   "reaction": "El hermano lo mira y sonríe tímidamente. KAP sonríe levemente y se sienta a su lado.",
+   "change": "KAP encuentra compañía en su hermano",
+   "seconds": 4,
+   "shot": "medio",
+   "characters": [
+    "KAP",
+    "Hermano de KAP"
+   ],
+   "location": "Pasillo de casa",
+   "time": "tarde",
+   "sound": "none",
+   "music": "silence"
+  },
+  {
+   "phase": "giro",
+   "step": "segundo-intento",
+   "goal": "intentar algo nuevo, aunque sea pequeño",
+   "action": "KAP saca un cuaderno de su mochila y empieza a escribir. Su hermano lo mira con interés.",
+   "reaction": "KAP escribe lentamente, mira hacia la calle y luego vuelve al cuaderno.",
+   "change": "KAP encuentra una nueva forma de avanzar",
+   "seconds": 5,
+   "shot": "primer plano",
+   "characters": [
+    "KAP",
+    "Hermano de KAP"
+   ],
+   "location": "Habitación de KAP",
+   "time": "tarde",
+   "sound": "none",
+   "music": "change"
+  },
+  {
+   "phase": "giro",
+   "step": "descubrimiento",
+   "goal": "darse cuenta de que no es necesario correr con los demás",
+   "action": "KAP cierra el cuaderno y mira a su hermano. Luego se levanta y camina hacia la puerta, esta vez con paso firme.",
+   "reaction": "El hermano lo sigue con una sonrisa. KAP mira hacia la calle y sale al exterior.",
+   "change": "KAP ya no siente que está atrás",
+   "seconds": 5,
+   "shot": "general",
+   "characters": [
+    "KAP",
+    "Hermano de KAP"
+   ],
+   "location": "Calle",
+   "time": "tarde",
+   "sound": "steps",
+   "music": "impact"
+  },
+  {
+   "phase": "remate",
+   "step": "cambio",
+   "goal": "mostrar que KAP ha cambiado su perspectiva",
+   "action": "KAP se para en la calle, mira hacia el grupo de niños y luego se vuelve hacia su hermano. Sonríe levemente y lo toma de la mano.",
+   "reaction": "El hermano lo mira con admiración. KAP camina con él hacia un lugar donde pueden jugar solos.",
+   "change": "KAP ya no compara, ahora construye su propio camino",
+   "seconds": 6,
+   "shot": "general",
+   "characters": [
+    "KAP",
+    "Hermano de KAP"
+   ],
+   "location": "Calle",
+   "time": "tarde",
+   "sound": "none",
+   "music": "stop"
+  }
+ ],
+ "scenesPlan": [
+  {
+   "title": "observar a otros niños jugando y sentirse excluido",
+   "location": "Habitación de KAP",
+   "lines": [
+    {
+     "speaker": "",
+     "text": "KAP mira por la ventana de su casa, con la camiseta gris desgastada. Ve a otros niños corriendo en la calle. Sus ojos se mueven lentamente entre ellos y la puerta cerrada de su casa."
+    },
+    {
+     "speaker": "",
+     "text": "Kap baja la mirada y se acerca a una silla en la habitación, sentándose con las manos en las rodillas."
+    }
+   ],
+   "memory": [
+    "acto: conflicto | observar a otros niños jugando y sentirse excluido"
+   ],
+   "stage": "conflicto",
+   "shot": "general",
+   "time": "tarde",
+   "interior": true,
+   "directions": [
+    "plano: general en 0.3s",
+    "sonido: ambiente en 0.3s",
+    "marca-musica: inicio en 0.3s"
+   ],
+   "change": "KAP se siente observador y solo"
+  },
+  {
+   "title": "intentar salir a jugar aunque sea solo",
+   "location": "Pasillo de casa",
+   "lines": [
+    {
+     "speaker": "",
+     "text": "KAP se levanta con lentitud, mira hacia la puerta y camina hacia ella. La abre con cuidado y sale al pasillo."
+    },
+    {
+     "speaker": "",
+     "text": "Kap se detiene en el umbral, mira hacia la calle y retrocede un paso."
+    }
+   ],
+   "memory": [],
+   "stage": "conflicto",
+   "shot": "medio",
+   "time": "tarde",
+   "interior": true,
+   "directions": [
+    "camara: seguir KAP en 0.3s",
+    "sonido: pasos en 0.3s",
+    "marca-musica: cambio en 0.3s"
+   ],
+   "change": "KAP está a punto de salir pero duda"
+  },
+  {
+   "title": "intentar unirse a los demás pero no tener éxito",
+   "location": "Calle",
+   "lines": [
+    {
+     "speaker": "",
+     "text": "KAP sale al exterior, camina lentamente hacia el grupo de niños. Se detiene a unos metros y observa cómo juegan."
+    },
+    {
+     "speaker": "",
+     "text": "Los niños no lo ven. KAP se queda parado, con la cabeza gacha y las manos en los bolsillos."
+    }
+   ],
+   "memory": [
+    "acto: desarrollo | intentar unirse a los demás pero no tener éxito"
+   ],
+   "stage": "desarrollo",
+   "shot": "general",
+   "time": "tarde",
+   "interior": false,
+   "directions": [
+    "plano: general en 0.3s",
+    "sonido: ambiente en 0.3s",
+    "impacto: en 0.3s"
+   ],
+   "change": "KAP siente que no pertenece al grupo"
+  },
+  {
+   "title": "intentar hacer algo diferente para no sentirse solo",
+   "location": "Pasillo de casa",
+   "lines": [
+    {
+     "speaker": "",
+     "text": "KAP mira hacia su casa y regresa lentamente. Llega a la puerta, se detiene y mira a su hermano pequeño sentado en el suelo."
+    },
+    {
+     "speaker": "",
+     "text": "El hermano lo mira y sonríe tímidamente. KAP sonríe levemente y se sienta a su lado."
+    }
+   ],
+   "memory": [],
+   "stage": "desarrollo",
+   "shot": "medio",
+   "time": "tarde",
+   "interior": true,
+   "directions": [
+    "plano: medio KAP en 0.3s",
+    "silencio: en 0.3s durante 1.5s"
+   ],
+   "change": "KAP encuentra compañía en su hermano"
+  },
+  {
+   "title": "intentar algo nuevo, aunque sea pequeño",
+   "location": "Habitación de KAP",
+   "lines": [
+    {
+     "speaker": "",
+     "text": "KAP saca un cuaderno de su mochila y empieza a escribir. Su hermano lo mira con interés."
+    },
+    {
+     "speaker": "",
+     "text": "KAP escribe lentamente, mira hacia la calle y luego vuelve al cuaderno."
+    }
+   ],
+   "memory": [
+    "acto: emocional | intentar algo nuevo, aunque sea pequeño"
+   ],
+   "stage": "emocional",
+   "shot": "primer plano",
+   "time": "tarde",
+   "interior": true,
+   "directions": [
+    "plano: primer plano KAP en 0.3s",
+    "marca-musica: cambio en 0.3s"
+   ],
+   "change": "KAP encuentra una nueva forma de avanzar"
+  },
+  {
+   "title": "darse cuenta de que no es necesario correr con los demás",
+   "location": "Calle",
+   "lines": [
+    {
+     "speaker": "",
+     "text": "KAP cierra el cuaderno y mira a su hermano. Luego se levanta y camina hacia la puerta, esta vez con paso firme."
+    },
+    {
+     "speaker": "",
+     "text": "El hermano lo sigue con una sonrisa. KAP mira hacia la calle y sale al exterior."
+    }
+   ],
+   "memory": [],
+   "stage": "emocional",
+   "shot": "general",
+   "time": "tarde",
+   "interior": false,
+   "directions": [
+    "plano: general en 0.3s",
+    "sonido: pasos en 0.3s",
+    "impacto: en 0.3s"
+   ],
+   "change": "KAP ya no siente que está atrás"
+  },
+  {
+   "title": "mostrar que KAP ha cambiado su perspectiva",
+   "location": "Calle",
+   "lines": [
+    {
+     "speaker": "",
+     "text": "KAP se para en la calle, mira hacia el grupo de niños y luego se vuelve hacia su hermano. Sonríe levemente y lo toma de la mano."
+    },
+    {
+     "speaker": "",
+     "text": "El hermano lo mira con admiración. KAP camina con él hacia un lugar donde pueden jugar solos."
+    }
+   ],
+   "memory": [
+    "acto: resolucion | mostrar que KAP ha cambiado su perspectiva",
+    "gancho: KAP ya no compara, ahora construye su propio camino"
+   ],
+   "stage": "resolucion",
+   "shot": "general",
+   "time": "tarde",
+   "interior": false,
+   "directions": [
+    "plano: general en 0.3s",
+    "marca-musica: fin en 0.3s"
+   ],
+   "change": "KAP ya no compara, ahora construye su propio camino",
+   "transition": "cut"
+  }
+ ],
+ "gate": {
+  "localPatches": 1,
+  "codeRepairs": 0
+ },
+ "usage": {
+  "promptTokens": 15557,
+  "outputTokens": 2821,
+  "totalMs": 2205459.502546,
+  "loadMs": 266419.798664,
+  "promptMs": 247903.381,
+  "evalMs": 1691035.142
+ },
+ "calls": 3,
+ "retries": 0,
+ "warnings": [
+  "SHORT_RETENTION_CHECK · hook-claro: el primer beat no tiene una acción visible inmediata (o es largo / empieza hablando)",
+  "El contrato narrativo del Short falló en la primera versión: se pidió una reescritura completa.",
+  "Personaje fuera del reparto retirado del Short: otros niños"
+ ],
+ "story": {
+  "title": "KAP y el ritmo de los demás (revisado)",
+  "logline": "KAP observa cómo otros niños juegan en la calle, pero no se atreve a unirse. Al final, descubre que avanzar no es sobre ir más rápido, sino sobre seguir adelante aunque sea lento.",
+  "hook": "KAP mira desde la ventana de su casa a un grupo de niños jugando en la calle. Se queda quieto, con la mano en el marco de la ventana.",
+  "cast": [
+   "KAP",
+   "Hermano de KAP"
+  ],
+  "beats": [
+   {
+    "phase": "contexto",
+    "step": "situacion",
+    "goal": "observar a otros niños jugando y sentirse excluido",
+    "action": "KAP mira por la ventana de su casa, con la camiseta gris desgastada. Ve a otros niños corriendo en la calle. Sus ojos se mueven lentamente entre ellos y la puerta cerrada de su casa.",
+    "reaction": "Kap baja la mirada y se acerca a una silla en la habitación, sentándose con las manos en las rodillas.",
+    "change": "KAP se siente observador y solo",
+    "seconds": 5,
+    "shot": "general",
+    "characters": [
+     "KAP"
+    ],
+    "location": "Habitación de KAP",
+    "time": "tarde",
+    "sound": "ambience",
+    "music": "start"
+   },
+   {
+    "phase": "contexto",
+    "step": "intento",
+    "goal": "intentar salir a jugar aunque sea solo",
+    "action": "KAP se levanta con lentitud, mira hacia la puerta y camina hacia ella. La abre con cuidado y sale al pasillo.",
+    "reaction": "Kap se detiene en el umbral, mira hacia la calle y retrocede un paso.",
+    "change": "KAP está a punto de salir pero duda",
+    "seconds": 4,
+    "shot": "seguimiento",
+    "characters": [
+     "KAP"
+    ],
+    "location": "Pasillo de casa",
+    "time": "tarde",
+    "sound": "steps",
+    "music": "change"
+   },
+   {
+    "phase": "escalada",
+    "step": "fallo",
+    "goal": "intentar unirse a los demás pero no tener éxito",
+    "action": "KAP sale al exterior, camina lentamente hacia el grupo de niños. Se detiene a unos metros y observa cómo juegan.",
+    "reaction": "Los niños no lo ven. KAP se queda parado, con la cabeza gacha y las manos en los bolsillos.",
+    "change": "KAP siente que no pertenece al grupo",
+    "seconds": 5,
+    "shot": "general",
+    "characters": [
+     "KAP",
+     "otros niños"
+    ],
+    "location": "Calle",
+    "time": "tarde",
+    "sound": "ambience",
+    "music": "impact"
+   },
+   {
+    "phase": "escalada",
+    "step": "reaccion",
+    "goal": "intentar hacer algo diferente para no sentirse solo",
+    "action": "KAP mira hacia su casa y regresa lentamente. Llega a la puerta, se detiene y mira a su hermano pequeño sentado en el suelo.",
+    "reaction": "El hermano lo mira y sonríe tímidamente. KAP sonríe levemente y se sienta a su lado.",
+    "change": "KAP encuentra compañía en su hermano",
+    "seconds": 4,
+    "shot": "medio",
+    "characters": [
+     "KAP",
+     "Hermano de KAP"
+    ],
+    "location": "Pasillo de casa",
+    "time": "tarde",
+    "sound": "none",
+    "music": "silence"
+   },
+   {
+    "phase": "giro",
+    "step": "segundo-intento",
+    "goal": "intentar algo nuevo, aunque sea pequeño",
+    "action": "KAP saca un cuaderno de su mochila y empieza a escribir. Su hermano lo mira con interés.",
+    "reaction": "KAP escribe lentamente, mira hacia la calle y luego vuelve al cuaderno.",
+    "change": "KAP encuentra una nueva forma de avanzar",
+    "seconds": 5,
+    "shot": "primer plano",
+    "characters": [
+     "KAP",
+     "Hermano de KAP"
+    ],
+    "location": "Habitación de KAP",
+    "time": "tarde",
+    "sound": "none",
+    "music": "change"
+   },
+   {
+    "phase": "giro",
+    "step": "descubrimiento",
+    "goal": "darse cuenta de que no es necesario correr con los demás",
+    "action": "KAP cierra el cuaderno y mira a su hermano. Luego se levanta y camina hacia la puerta, esta vez con paso firme.",
+    "reaction": "El hermano lo sigue con una sonrisa. KAP mira hacia la calle y sale al exterior.",
+    "change": "KAP ya no siente que está atrás",
+    "seconds": 5,
+    "shot": "general",
+    "characters": [
+     "KAP",
+     "Hermano de KAP"
+    ],
+    "location": "Calle",
+    "time": "tarde",
+    "sound": "steps",
+    "music": "impact"
+   },
+   {
+    "phase": "remate",
+    "step": "cambio",
+    "goal": "mostrar que KAP ha cambiado su perspectiva",
+    "action": "KAP se para en la calle, mira hacia el grupo de niños y luego se vuelve hacia su hermano. Sonríe levemente y lo toma de la mano.",
+    "reaction": "El hermano lo mira con admiración. KAP camina con él hacia un lugar donde pueden jugar solos.",
+    "change": "KAP ya no compara, ahora construye su propio camino",
+    "seconds": 6,
+    "shot": "general",
+    "characters": [
+     "KAP",
+     "Hermano de KAP"
+    ],
+    "location": "Calle",
+    "time": "tarde",
+    "sound": "none",
+    "music": "stop"
+   }
+  ]
+ },
+ "continuity": {
+  "critical": [],
+  "warnings": [],
+  "info": 0
+ },
+ "script": "# Habitación de KAP\n[mood: tarde, interior]\n[plano: general en 0.3s]\n[sonido: ambiente en 0.3s]\n[marca-musica: inicio en 0.3s]\nKAP mira por la ventana de su casa, con la camiseta gris desgastada. Ve a otros niños corriendo en la calle. Sus ojos se mueven lentamente entre ellos y la puerta cerrada de su casa.\nKap baja la mirada y se acerca a una silla en la habitación, sentándose con las manos en las rodillas.\n[acto: conflicto | observar a otros niños jugando y sentirse excluido]\n\n# Pasillo de casa\n[mood: tarde, interior]\n[camara: seguir KAP en 0.3s]\n[sonido: pasos en 0.3s]\n[marca-musica: cambio en 0.3s]\nKAP se levanta con lentitud, mira hacia la puerta y camina hacia ella. La abre con cuidado y sale al pasillo.\nKap se detiene en el umbral, mira hacia la calle y retrocede un paso.\n\n# Calle\n[mood: tarde, exterior]\n[plano: general en 0.3s]\n[sonido: ambiente en 0.3s]\n[impacto: en 0.3s]\nKAP sale al exterior, camina lentamente hacia el grupo de niños. Se detiene a unos metros y observa cómo juegan.\nLos niños no lo ven. KAP se queda parado, con la cabeza gacha y las manos en los bolsillos.\n[acto: desarrollo | intentar unirse a los demás pero no tener éxito]\n\n# Pasillo de casa\n[mood: tarde, interior]\n[plano: medio KAP en 0.3s]\n[silencio: en 0.3s durante 1.5s]\nKAP mira hacia su casa y regresa lentamente. Llega a la puerta, se detiene y mira a su hermano pequeño sentado en el suelo.\nEl hermano lo mira y sonríe tímidamente. KAP sonríe levemente y se sienta a su lado.\n\n# Habitación de KAP\n[mood: tarde, interior]\n[plano: primer plano KAP en 0.3s]\n[marca-musica: cambio en 0.3s]\nKAP saca un cuaderno de su mochila y empieza a escribir. Su hermano lo mira con interés.\nKAP escribe lentamente, mira hacia la calle y luego vuelve al cuaderno.\n[acto: emocional | intentar algo nuevo, aunque sea pequeño]\n\n# Calle\n[mood: tarde, exterior]\n[plano: general en 0.3s]\n[sonido: pasos en 0.3s]\n[impacto: en 0.3s]\nKAP cierra el cuaderno y mira a su hermano. Luego se levanta y camina hacia la puerta, esta vez con paso firme.\nEl hermano lo sigue con una sonrisa. KAP mira hacia la calle y sale al exterior.\n\n# Calle\n[mood: tarde, exterior]\n[transicion: cut]\n[plano: general en 0.3s]\n[marca-musica: fin en 0.3s]\nKAP se para en la calle, mira hacia el grupo de niños y luego se vuelve hacia su hermano. Sonríe levemente y lo toma de la mano.\nEl hermano lo mira con admiración. KAP camina con él hacia un lugar donde pueden jugar solos.\n[acto: resolucion | mostrar que KAP ha cambiado su perspectiva]\n[gancho: KAP ya no compara, ahora construye su propio camino]\n"
+}

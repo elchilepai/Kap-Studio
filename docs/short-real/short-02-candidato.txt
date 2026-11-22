@@ -1,0 +1,62 @@
+Short 2 · «KAP y el ritmo de los demás (revisado)» (CANDIDATO, sin aprobar)
+Petición: Crea un Short de KAP. Tema: «¿Por qué sentimos que todos avanzan menos nosotros?». KAP lo descubre mediante una pequeña historia visual, no mediante un discurso. Puede aparecer su hermano pequeño.
+
+# Habitación de KAP
+[mood: tarde, interior]
+[plano: general en 0.3s]
+[sonido: ambiente en 0.3s]
+[marca-musica: inicio en 0.3s]
+KAP mira por la ventana de su casa, con la camiseta gris desgastada. Ve a otros niños corriendo en la calle. Sus ojos se mueven lentamente entre ellos y la puerta cerrada de su casa.
+Kap baja la mirada y se acerca a una silla en la habitación, sentándose con las manos en las rodillas.
+[acto: conflicto | observar a otros niños jugando y sentirse excluido]
+
+# Pasillo de casa
+[mood: tarde, interior]
+[camara: seguir KAP en 0.3s]
+[sonido: pasos en 0.3s]
+[marca-musica: cambio en 0.3s]
+KAP se levanta con lentitud, mira hacia la puerta y camina hacia ella. La abre con cuidado y sale al pasillo.
+Kap se detiene en el umbral, mira hacia la calle y retrocede un paso.
+
+# Calle
+[mood: tarde, exterior]
+[plano: general en 0.3s]
+[sonido: ambiente en 0.3s]
+[impacto: en 0.3s]
+KAP sale al exterior, camina lentamente hacia el grupo de niños. Se detiene a unos metros y observa cómo juegan.
+Los niños no lo ven. KAP se queda parado, con la cabeza gacha y las manos en los bolsillos.
+[acto: desarrollo | intentar unirse a los demás pero no tener éxito]
+
+# Pasillo de casa
+[mood: tarde, interior]
+[plano: medio KAP en 0.3s]
+[silencio: en 0.3s durante 1.5s]
+KAP mira hacia su casa y regresa lentamente. Llega a la puerta, se detiene y mira a su hermano pequeño sentado en el suelo.
+El hermano lo mira y sonríe tímidamente. KAP sonríe levemente y se sienta a su lado.
+
+# Habitación de KAP
+[mood: tarde, interior]
+[plano: primer plano KAP en 0.3s]
+[marca-musica: cambio en 0.3s]
+KAP saca un cuaderno de su mochila y empieza a escribir. Su hermano lo mira con interés.
+KAP escribe lentamente, mira hacia la calle y luego vuelve al cuaderno.
+[acto: emocional | intentar algo nuevo, aunque sea pequeño]
+
+# Calle
+[mood: tarde, exterior]
+[plano: general en 0.3s]
+[sonido: pasos en 0.3s]
+[impacto: en 0.3s]
+KAP cierra el cuaderno y mira a su hermano. Luego se levanta y camina hacia la puerta, esta vez con paso firme.
+El hermano lo sigue con una sonrisa. KAP mira hacia la calle y sale al exterior.
+
+# Calle
+[mood: tarde, exterior]
+[transicion: cut]
+[plano: general en 0.3s]
+[marca-musica: fin en 0.3s]
+KAP se para en la calle, mira hacia el grupo de niños y luego se vuelve hacia su hermano. Sonríe levemente y lo toma de la mano.
+El hermano lo mira con admiración. KAP camina con él hacia un lugar donde pueden jugar solos.
+[acto: resolucion | mostrar que KAP ha cambiado su perspectiva]
+[gancho: KAP ya no compara, ahora construye su propio camino]
+
