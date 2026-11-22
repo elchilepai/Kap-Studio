@@ -1,296 +1,537 @@
 {
  "idea": {
-  "title": "Por qué borras el mensaje antes de enviarlo",
-  "category": "psicología cotidiana · errores humanos",
-  "premise": "Reescribir y borrar un mensaje una y otra vez no lo mejora: el miedo a quedar mal agranda un mensaje pequeño. Simplificarlo y enviarlo lo devuelve a su tamaño real.",
-  "whyItWorks": "Situación que casi todo el público joven reconoce («eso me pasa literalmente»), con una metáfora de escala muy visual (el avioncito que se convierte en torre) y un remate seco de KAP.",
+  "topic": "Deja de perseguir aprobación",
+  "category": "mentalidad · necesidad de aprobación · autoestima",
+  "approaches": [
+   "Esperar una respuesta: ya no es interés, es ansiedad (vivido con un mensaje)",
+   "El ciclo comprobar → analizar → comprobar (el móvil como trampa)",
+   "Comparar la respuesta de otro con tu propio valor"
+  ],
+  "conflict": "KAP cambia tres veces el mensaje que iba a enviar y se pasa el día esperando una respuesta que decide cómo se siente.",
+  "visualExample": "Un mensaje que se escribe y se borra; una versión gigante de KAP imaginando respuestas; un círculo de móvil, notificaciones y pensamientos que lo encierra.",
+  "solution": "Dejar el móvil boca abajo y seguir con lo suyo; cuando vibra, mirarlo sin cambiar lo que hace.",
+  "closing": "No necesitas gustarle a todo el mundo. Necesitas dejar de traicionarte para conseguirlo.",
+  "whyItWorks": "Situación que casi todo el público reconoce («eso lo hago yo»), vivida por KAP en imágenes muy visuales (el círculo que lo encierra, el antes/después) y una solución pequeña y real, sin discurso.",
   "claims": [
-   "Solemos sobreestimar cuánto se fijan los demás en nuestros errores (efecto foco, Gilovich)",
-   "Reescribir en bucle suele aumentar la ansiedad anticipatoria en lugar de reducirla"
+   {
+    "text": "Esperar compulsivamente una respuesta suele estar ligado a la necesidad de validación externa",
+    "type": "fact",
+    "needsVerification": true
+   },
+   {
+    "text": "Comprobar el móvil una y otra vez aumenta la ansiedad de espera",
+    "type": "fact",
+    "needsVerification": true
+   },
+   {
+    "text": "Cambiar lo que dices para gustar a alguien tiene un coste personal",
+    "type": "opinion",
+    "needsVerification": false
+   }
   ]
  },
  "hooks": [
   {
-   "type": "curiosity-gap",
-   "text": "Hay una razón por la que borras el mensaje justo antes de enviarlo, y no es que escribas mal."
-  },
-  {
-   "type": "contradiccion",
-   "text": "Cuanto más revisas un mensaje, peor te sale."
-  },
-  {
    "type": "pregunta-incomoda",
-   "text": "¿Cuántas veces has escrito un mensaje… y lo has borrado antes de enviarlo?"
+   "text": "¿Cuántas veces cambias lo que dices… para gustarle a alguien?"
   },
   {
    "type": "situacion-reconocible",
-   "text": "Son las dos de la madrugada y sigues reescribiendo un mensaje de cuatro palabras."
-  },
-  {
-   "type": "revelacion",
-   "text": "Tu cerebro no intenta que escribas mejor. Intenta que no te rechacen."
-  },
-  {
-   "type": "historia",
-   "text": "Noa tardó una hora en escribir «vale, nos vemos»."
+   "text": "Llevas veinte minutos mirando si te ha respondido."
   },
   {
    "type": "afirmacion-inesperada",
-   "text": "Revisar un mensaje diez veces no lo mejora. Lo empeora."
+   "text": "Si haces esto, probablemente no estás buscando una respuesta."
+  },
+  {
+   "type": "error-comun",
+   "text": "Reescribir el mismo mensaje cinco veces no lo mejora: lo vuelve más importante de lo que es."
+  },
+  {
+   "type": "consecuencia",
+   "text": "Cada vez que borras ese mensaje, le das un poco más de poder a quien lo va a leer."
   }
  ],
- "chosenHook": 2,
+ "chosenHook": 0,
+ "music": {
+  "mood": "Introspectivo y minimalista que se tensa con percusión ligera y termina en una subida esperanzadora y contenida",
+  "cues": [
+   {
+    "atScene": 1,
+    "change": "start",
+    "note": "pad suave y un pulso apenas audible"
+   },
+   {
+    "atScene": 3,
+    "change": "tension",
+    "note": "percusión ligera, latido grave"
+   },
+   {
+    "atScene": 5,
+    "change": "build",
+    "note": "capas que se acumulan como los pensamientos"
+   },
+   {
+    "atScene": 6,
+    "change": "silence",
+    "note": "casi silencio: solo la voz de KAP («aquí está el problema»)"
+   },
+   {
+    "atScene": 8,
+    "change": "resolve",
+    "note": "subida limpia cuando KAP deja el móvil"
+   },
+   {
+    "atScene": 11,
+    "change": "fade",
+    "note": "la música baja para que se oiga la última frase"
+   }
+  ]
+ },
  "scenes": [
   {
-   "n": 1,
+   "sceneNumber": 1,
+   "block": "HOOK",
+   "sceneType": "KAP_PRESENTADOR",
+   "duration": 4,
+   "kapPresent": true,
+   "kap": {
+    "why": "hook",
+    "because": "Abre con una pregunta incómoda directa a cámara, sin presentación.",
+    "adds": "Identidad del canal y curiosidad inmediata",
+    "speaks": true
+   },
+   "action": "KAP mira a cámara con el móvil en la mano, con la pantalla iluminada, y lo balancea entre dos dedos.",
+   "visualDescription": "KAP, a cámara en su estudio de neón rosa, sostiene un móvil encendido entre dos dedos y levanta una ceja con gesto seco, como si ya supiera la respuesta.",
+   "visualChange": "El móvil se enciende en su mano y KAP levanta una ceja.",
+   "camera": "static at eye level, slow push-in",
+   "composition": "centered, neon ring framing the head, phone in the lower third",
+   "lighting": "pink neon rim light plus the cold glow of the phone",
+   "dialogue": "¿Cuántas veces cambias lo que dices… para gustarle a alguien?",
+   "narration": "",
+   "silent": false,
+   "subtitle": "¿Cuántas veces cambias lo que dices?",
+   "soundEffect": "pop suave de notificación",
+   "transition": "corte seco",
+   "purpose": "Hook: una pregunta incómoda en los primeros segundos.",
    "characters": [
     "KAP"
    ],
-   "kapPresent": true,
-   "subtitleSpace": "bottom",
-   "sceneType": "KAP_PRESENTADOR",
-   "narration": "¿Cuántas veces has escrito un mensaje… y lo has borrado antes de enviarlo?",
-   "visual": "KAP, a cámara en su estudio de neón rosa, levanta una ceja y balancea un móvil con la pantalla apagada entre dos dedos, con gesto seco.",
-   "visualEn": "KAP stands facing the camera in a dim studio with a pink neon ring behind him, one eyebrow raised, holding a dark phone between two fingers, deadpan expression",
-   "visualAction": "KAP levanta una ceja y balancea el móvil entre dos dedos.",
    "location": "Estudio de KAP",
    "shot": "medium",
    "emotion": "seco, ceja levantada",
-   "purpose": "Hook: plantear una situación reconocible en dos segundos.",
-   "duration": 5.5,
-   "subtitle": "¿Cuántas veces lo has borrado antes de enviarlo?",
-   "kapReason": "hook",
-   "kapWhy": "Abre con una pregunta incómoda directa a cámara, sin presentación.",
-   "composition": "centered, neon ring framing the head",
-   "lighting": "pink neon rim light",
-   "objects": [
-    "phone"
-   ]
+   "motion": {
+    "kinds": [
+     "zoom-in",
+     "light"
+    ],
+    "prompt": "Very slow push-in on KAP's face; the phone screen glow pulses softly once; subtle neon flicker."
+   },
+   "imagePrompt": "SCENE (exact action): KAP stands facing the camera in a dim studio with a pink neon ring behind him, holding a glowing phone between two fingers, one eyebrow raised, deadpan.\nCharacters: KAP.\nEnvironment: Estudio de KAP; dim studio with a pink neon ring.\nComposition: centered, neon ring framing the head, phone in the lower third.\nCamera: medium shot; static at eye level, slow push-in.\nLighting: pink neon rim light plus the cold glow of the phone.\nBody language / expression: deadpan, one eyebrow raised, shoulders relaxed, knowing look.\nKey objects: phone.\nDepth: phone glow in the foreground, neon ring in the background.\nVisual purpose: Hook: una pregunta incómoda en los primeros segundos.\nKeep the bottom third calm and uncluttered (room for subtitles)."
   },
   {
-   "n": 2,
-   "characters": [
-    "NOA"
-   ],
-   "kapPresent": false,
-   "subtitleSpace": "bottom",
-   "sceneType": "CINEMATIC_SCENE",
-   "narration": "Lo escribes. Lo lees. Y de repente suena fatal.",
-   "visual": "Noa, tumbada en la cama de su dormitorio a oscuras, ilumina su cara con la luz azul del móvil; los pulgares se quedan quietos sobre el teclado y las cejas se juntan.",
-   "visualEn": "Noa lies on a bed in a dark bedroom, face lit by the cold blue glow of a phone, thumbs frozen above the keyboard, eyebrows pinched, a clock on the nightstand showing late night",
-   "visualAction": "La luz azul parpadea en su cara y los pulgares dudan, a punto de pulsar.",
-   "location": "Dormitorio de Noa (noche)",
-   "shot": "wide",
-   "emotion": "inseguridad",
-   "purpose": "Situación cotidiana reconocible.",
-   "duration": 4,
-   "subtitle": "Lo escribes. Lo lees. Suena fatal.",
+   "sceneNumber": 2,
+   "block": "PROBLEMA",
+   "sceneType": "DETAIL_SHOT",
+   "duration": 3.5,
+   "kapPresent": true,
+   "kap": {
+    "why": "ejemplo",
+    "because": "Sus manos viven el problema: escribe y borra el mismo mensaje.",
+    "adds": "Muestra el comportamiento sin decirlo",
+    "speaks": false
+   },
+   "action": "Las manos de KAP teclean un mensaje, lo borran de golpe y empiezan otra vez, tres veces.",
+   "visualDescription": "Primer plano de las manos de KAP sobre el móvil: los pulgares escriben una burbuja de mensaje, la borran de golpe y la reescriben, mientras versiones tachadas se acumulan detrás.",
+   "visualChange": "La burbuja se escribe, se borra y se reescribe tres veces y las versiones tachadas se apilan.",
+   "camera": "locked-off macro, slight handheld drift",
+   "composition": "hands and phone filling the center, empty space above",
    "lighting": "cold blue phone glow in a dark room",
-   "objects": [
-    "phone",
-    "bedside clock"
-   ]
-  },
-  {
-   "n": 3,
-   "characters": [],
-   "kapPresent": false,
-   "subtitleSpace": "top",
-   "sceneType": "POV",
-   "narration": "Lo borras. Lo reescribes. Lo borras otra vez.",
-   "visual": "Vista desde los ojos de Noa: la pantalla del móvil con una burbuja de mensaje hecha de barras grises que se borra barra a barra, y detrás docenas de versiones tachadas apiladas.",
-   "visualEn": "First-person view of a phone screen with a chat bubble made of gray bars being erased bar by bar, dozens of crossed-out draft bubbles piled up behind it, blue screen glow",
-   "visualAction": "Las barras grises se borran y reaparecen una y otra vez, tachando versiones.",
-   "location": "Pantalla del móvil",
-   "shot": "pov",
-   "emotion": "agobio",
-   "purpose": "Mostrar el bucle de borrar y reescribir desde dentro.",
-   "duration": 3.6,
-   "subtitle": "Lo borras. Lo reescribes. Otra vez.",
-   "objects": [
-    "phone screen",
-    "crossed-out bubbles"
-   ]
-  },
-  {
-   "n": 4,
-   "characters": [],
-   "kapPresent": false,
-   "subtitleSpace": "bottom",
-   "sceneType": "VISUAL_METAPHOR",
-   "narration": "Y cada versión lo hace más grande de lo que era.",
-   "visual": "Un avioncito de papel diminuto crece con cada borrador hasta convertirse en una torre gigante de hojas arrugadas que proyecta una sombra enorme sobre un escritorio pequeño.",
-   "visualEn": "A tiny paper plane on a small desk grows with each crumpled draft into a gigantic tower of crumpled paper casting a huge shadow, low-angle view, dramatic scale",
-   "visualAction": "El avioncito crece apilando hojas arrugadas hasta formar una torre gigante.",
-   "location": "Escritorio de Noa (metáfora)",
-   "shot": "low-angle",
-   "emotion": "presión",
-   "purpose": "Metáfora de escala: el miedo agranda el mensaje.",
-   "duration": 4.5,
-   "subtitle": "Cada versión lo agranda",
-   "contrast": "diminuto frente a gigante",
-   "objects": [
-    "paper plane",
-    "crumpled paper tower"
-   ],
-   "lighting": "single desk lamp, long dramatic shadow"
-  },
-  {
-   "n": 5,
-   "characters": [],
-   "kapPresent": false,
-   "subtitleSpace": "bottom",
-   "sceneType": "BRAIN_VISUALIZATION",
-   "narration": "Tu cerebro trata el miedo a quedar mal como si fuera un peligro de verdad.",
-   "visual": "Dentro de un cerebro de dibujos animados convertido en sala de control, un diminuto guardia pulsa un botón rojo de alarma que baña las paredes de luz roja, mientras un sobre pequeño espera tranquilo sobre la mesa.",
-   "visualEn": "Inside a cartoon brain shaped control room, a tiny guard slams a big red alarm button, red light washing the pink walls, while a small envelope sits calmly on a table in the middle",
-   "visualAction": "El guardia pulsa la alarma y la sala se llena de luz roja.",
-   "location": "Sala de control del cerebro",
-   "shot": "top-down",
-   "emotion": "alarma desproporcionada",
-   "purpose": "Explicar con una imagen por qué el cerebro reacciona así.",
-   "duration": 6.4,
-   "subtitle": "Tu cerebro lo trata como un peligro",
-   "contrast": "alarma enorme frente a un sobre inofensivo",
-   "objects": [
-    "red alarm button",
-    "small envelope"
-   ],
-   "lighting": "red alarm light against soft pink"
-  },
-  {
-   "n": 6,
+   "dialogue": "",
+   "narration": "",
+   "silent": true,
+   "subtitle": "Escribe. Borra. Escribe. Borra.",
+   "soundEffect": "teclear, borrar (backspace) y teclear otra vez",
+   "transition": "corte seco al compás del backspace",
+   "purpose": "Problema concreto: cambia el mensaje tres veces.",
    "characters": [
     "KAP"
    ],
+   "location": "Dormitorio de KAP (noche)",
+   "shot": "detail",
+   "emotion": "duda",
+   "motion": {
+    "kinds": [
+     "loop",
+     "object-move"
+    ],
+    "prompt": "Loop of the gray-bar bubble appearing and being erased three times while crossed-out bubbles slide up behind it; tiny thumb tremor."
+   },
+   "imagePrompt": "SCENE (exact action): Extreme close-up of KAP's white hands holding a phone, thumbs typing a chat bubble made of gray bars, erasing it, and rewriting it, crossed-out draft bubbles piling up behind, blue screen glow.\nCharacters: KAP.\nEnvironment: Dormitorio de KAP (noche); dark bedroom at night.\nComposition: hands and phone filling the center, empty space above.\nCamera: extreme close-up detail shot; locked-off macro, slight handheld drift.\nLighting: cold blue phone glow in a dark room.\nBody language / expression: tense thumbs hovering, slightly shaking.\nKey objects: phone, chat bubbles.\nDepth: hands in the foreground, blurred bedroom in the background.\nVisual purpose: Problema concreto: cambia el mensaje tres veces.\nKeep the top third calm and uncluttered (room for subtitles)."
+  },
+  {
+   "sceneNumber": 3,
+   "block": "PROBLEMA",
+   "sceneType": "BRAIN_VISUALIZATION",
+   "duration": 4,
    "kapPresent": true,
-   "subtitleSpace": "bottom",
+   "kap": {
+    "why": "explicacion",
+    "because": "Explica con su voz lo que pasa dentro de su cabeza.",
+    "adds": "Convierte un pensamiento abstracto en imagen",
+    "speaks": true
+   },
+   "action": "Una versión gigante de KAP, dentro de su mente, imagina respuestas posibles que aparecen como burbujas a su alrededor.",
+   "visualDescription": "Dentro de la mente de KAP, una versión gigante de KAP flota entre docenas de burbujas de respuesta posibles, unas sonrientes y otras con cara de enfado, mientras el KAP real, diminuto, mira desde abajo.",
+   "visualChange": "Las burbujas de respuestas aparecen una tras otra alrededor del KAP gigante y crecen.",
+   "camera": "wide, slow pull back to reveal the scale",
+   "composition": "tiny KAP bottom center, giant KAP towering above, bubbles forming a ring",
+   "lighting": "purple glow with warm bubble highlights",
+   "dialogue": "Porque tu cabeza ya está ensayando todas las respuestas.",
+   "narration": "",
+   "silent": false,
+   "subtitle": "Tu cabeza ensaya todas las respuestas",
+   "soundEffect": "latido grave con eco",
+   "transition": "zoom a través de una burbuja",
+   "purpose": "Visualización mental: ensayar respuestas.",
+   "characters": [
+    "KAP"
+   ],
+   "location": "Interior de la mente de KAP",
+   "shot": "wide",
+   "emotion": "ansiedad",
+   "motion": {
+    "kinds": [
+     "zoom-out",
+     "scale-change",
+     "particles"
+    ],
+    "prompt": "Slow pull-back revealing the giant KAP; bubbles pop into existence one by one with a small scale bounce; a few particles drift upward."
+   },
+   "imagePrompt": "SCENE (exact action): Inside KAP's mind, a giant cartoon KAP floats among dozens of speech bubbles showing imagined replies, some smiling, some angry, while the tiny real KAP looks up from below, dreamy purple light.\nCharacters: KAP.\nEnvironment: Interior de la mente de KAP; a surreal purple mindscape.\nComposition: tiny KAP bottom center, giant KAP towering above, bubbles forming a ring.\nCamera: wide establishing shot; wide, slow pull back to reveal the scale.\nLighting: purple glow with warm bubble highlights.\nBody language / expression: giant KAP with hand on chin, eyes darting between bubbles.\nKey objects: speech bubbles.\nDepth: tiny real KAP in the foreground, giant KAP in the midground, bubbles receding into the background.\nVisual purpose: Visualización mental: ensayar respuestas.\nKeep the bottom third calm and uncluttered (room for subtitles)."
+  },
+  {
+   "sceneNumber": 4,
+   "block": "EJEMPLO",
+   "sceneType": "REACTION",
+   "duration": 3,
+   "kapPresent": true,
+   "kap": {
+    "why": "reaccion",
+    "because": "Su cara cambia al leer la respuesta: se ve cómo le afecta.",
+    "adds": "Reacción emocional que el espectador reconoce",
+    "speaks": true
+   },
+   "action": "KAP lee la respuesta y su expresión pasa de la esperanza a la decepción.",
+   "visualDescription": "Primer plano de KAP en el salón leyendo el móvil: las cejas suben con esperanza y de golpe caen, y la mirada se apaga mientras en la pantalla se ve solo una burbuja corta.",
+   "visualChange": "La expresión de KAP cambia de la esperanza a la decepción en cuanto llega una burbuja corta.",
+   "camera": "static close-up with a tiny push-in at the moment of the message",
+   "composition": "face on the right third, phone glow on the left",
+   "lighting": "warm evening window light turning cooler with the phone glow",
+   "dialogue": "Y llega un «vale». Solo eso.",
+   "narration": "",
+   "silent": false,
+   "subtitle": "Y llega un «vale»",
+   "soundEffect": "notificación corta y luego silencio",
+   "transition": "corte seco",
+   "purpose": "Ejemplo: la respuesta corta y su efecto.",
+   "characters": [
+    "KAP"
+   ],
+   "location": "Salón de KAP",
+   "shot": "close-up",
+   "emotion": "decepción",
+   "motion": {
+    "kinds": [
+     "zoom-in",
+     "light"
+    ],
+    "prompt": "Tiny push-in as the bubble appears; the warm light shifts cooler; eyes dim slightly."
+   },
+   "imagePrompt": "SCENE (exact action): Close-up of KAP in a living room reading a phone, eyebrows rising with hope then dropping, eyes dimming, the screen showing a single short chat bubble.\nCharacters: KAP.\nEnvironment: Salón de KAP; evening living room with a sofa and a window.\nComposition: face on the right third, phone glow on the left.\nCamera: close-up; static close-up with a tiny push-in at the moment of the message.\nLighting: warm evening window light turning cooler with the phone glow.\nBody language / expression: eyebrows up then dropping, eyes dimming, shoulders sagging.\nKey objects: phone, short chat bubble.\nDepth: face and phone sharp, sofa and window softly blurred behind.\nVisual purpose: Ejemplo: la respuesta corta y su efecto.\nKeep the bottom third calm and uncluttered (room for subtitles)."
+  },
+  {
+   "sceneNumber": 5,
+   "block": "CONSECUENCIA",
+   "sceneType": "VISUAL_METAPHOR",
+   "duration": 3.5,
+   "kapPresent": true,
+   "kap": {
+    "why": "ejemplo",
+    "because": "Es él quien se hunde en el análisis: la consecuencia de seguir igual.",
+    "adds": "Muestra la consecuencia en lugar de decirla",
+    "speaks": true
+   },
+   "action": "KAP sobreanaliza la respuesta y a su alrededor la habitación se llena de burbujas de pensamientos.",
+   "visualDescription": "Vista cenital del salón de KAP: él, sentado y diminuto en el centro, rodeado de cientos de burbujas de pensamiento que se multiplican hasta cubrir el suelo, el sofá y las paredes.",
+   "visualChange": "Las burbujas de pensamiento se multiplican hasta llenar toda la habitación.",
+   "camera": "top-down, slow rotation",
+   "composition": "tiny KAP at the center, bubbles forming concentric rings",
+   "lighting": "flat cool light with soft shadows under each bubble",
+   "dialogue": "Y de repente analizas hasta la coma.",
+   "narration": "",
+   "silent": false,
+   "subtitle": "Analizas hasta la coma",
+   "soundEffect": "burbujas que revientan en cascada",
+   "transition": "whoosh de burbujas",
+   "purpose": "Consecuencia: el pensamiento lo desborda.",
+   "characters": [
+    "KAP"
+   ],
+   "location": "Salón de KAP invadido de pensamientos",
+   "shot": "top-down",
+   "emotion": "agobio",
+   "motion": {
+    "kinds": [
+     "rotate",
+     "scale-change",
+     "particles"
+    ],
+    "prompt": "Slow rotation of the overhead view while thought bubbles multiply and grow outward in waves; subtle pop particles."
+   },
+   "imagePrompt": "SCENE (exact action): Top-down view of a living room where a small KAP sits in the center surrounded by hundreds of thought bubbles multiplying until they cover the floor, the sofa and the walls.\nCharacters: KAP.\nEnvironment: Salón de KAP invadido de pensamientos; living room swallowed by thought bubbles.\nComposition: tiny KAP at the center, bubbles forming concentric rings.\nCamera: top-down overhead shot; top-down, slow rotation.\nLighting: flat cool light with soft shadows under each bubble.\nBody language / expression: hunched, hands on his head, eyes wide.\nKey objects: thought bubbles.\nDepth: bubbles layered at different sizes creating a swarming depth.\nVisual purpose: Consecuencia: el pensamiento lo desborda.\nKeep the bottom third calm and uncluttered (room for subtitles)."
+  },
+  {
+   "sceneNumber": 6,
+   "block": "REALIZACION",
    "sceneType": "KAP_PRESENTADOR",
-   "narration": "Sí. Tu propia cabeza te está poniendo la trampa.",
-   "visual": "KAP en primer plano asiente despacio con media sonrisa torcida y un ojo entrecerrado, y señala con el pulgar hacia atrás como diciendo «mira lo que hay detrás».",
-   "visualEn": "Close-up of KAP in the pink neon studio, slow knowing nod, one eye half-closed with a lopsided smirk, thumb pointing over his shoulder",
-   "visualAction": "KAP asiente y señala con el pulgar hacia atrás con media sonrisa.",
+   "duration": 2.5,
+   "kapPresent": true,
+   "kap": {
+    "why": "opinion",
+    "because": "Rompe la cuarta pared para señalar el patrón con humor seco.",
+    "adds": "Pausa de humor y señala el momento de darse cuenta",
+    "speaks": true
+   },
+   "action": "KAP mira a cámara, deja caer el móvil a un lado y señala con el pulgar hacia atrás, con una media sonrisa torcida.",
+   "visualDescription": "KAP en primer plano mira a cámara con una media sonrisa torcida, deja el móvil a un lado y señala con el pulgar por encima del hombro hacia la escena anterior.",
+   "visualChange": "KAP baja el móvil y señala con el pulgar hacia atrás con media sonrisa.",
+   "camera": "static close-up",
+   "composition": "face centered, thumb entering from the right edge",
+   "lighting": "pink neon rim light",
+   "dialogue": "Y aquí está el problema.",
+   "narration": "",
+   "silent": false,
+   "subtitle": "Y aquí está el problema",
+   "soundEffect": "",
+   "transition": "corte seco",
+   "purpose": "Realización: KAP señala el patrón.",
+   "characters": [
+    "KAP"
+   ],
    "location": "Estudio de KAP",
    "shot": "close-up",
    "emotion": "socarrón",
-   "purpose": "Opinión seca de KAP sobre lo que se acaba de ver.",
-   "duration": 4,
-   "subtitle": "Tu cabeza te pone la trampa",
-   "kapReason": "opinion",
-   "kapWhy": "Opina con humor seco sobre la visualización del cerebro.",
-   "lighting": "pink neon rim light"
+   "motion": {
+    "kinds": [
+     "zoom-in"
+    ],
+    "prompt": "Almost still: a barely perceptible push-in and a small head tilt; silence before the next scene."
+   },
+   "imagePrompt": "SCENE (exact action): Close-up of KAP in the pink neon studio, lopsided smirk, lowering the phone and pointing a thumb over his shoulder as if saying look at that.\nCharacters: KAP.\nEnvironment: Estudio de KAP; pink neon studio.\nComposition: face centered, thumb entering from the right edge.\nCamera: close-up; static close-up.\nLighting: pink neon rim light.\nBody language / expression: lopsided smirk, one eye half-closed, thumb pointing back.\nDepth: KAP sharp, neon ring softly glowing behind.\nVisual purpose: Realización: KAP señala el patrón.\nKeep the bottom third calm and uncluttered (room for subtitles)."
   },
   {
-   "n": 7,
-   "characters": [],
-   "kapPresent": false,
-   "subtitleSpace": "bottom",
-   "sceneType": "TRANSFORMATION",
-   "narration": "Pero un mensaje no tiene que ser perfecto. Solo tiene que ser claro.",
-   "visual": "La torre gigante de papel arrugado se pliega sola, hoja a hoja, y se convierte otra vez en un avioncito de papel limpio y ligero que flota sobre el escritorio.",
-   "visualEn": "The giant tower of crumpled paper folds itself sheet by sheet back into one clean light paper plane floating above the desk in warm light, side view",
-   "visualAction": "La torre se pliega y se encoge hasta ser un avioncito limpio.",
-   "location": "Escritorio de Noa (metáfora)",
-   "shot": "side",
-   "emotion": "alivio",
-   "purpose": "Transformación: simplificar el mensaje devuelve su tamaño real.",
-   "duration": 5.5,
-   "subtitle": "Perfecto no. Claro.",
-   "objects": [
-    "paper plane"
-   ],
-   "lighting": "warm light replacing the long shadow"
-  },
-  {
-   "n": 8,
-   "characters": [
-    "NOA"
-   ],
-   "kapPresent": false,
-   "subtitleSpace": "bottom",
-   "sceneType": "BEFORE_AFTER",
-   "narration": "Una hora dándole vueltas… o cinco segundos y enviarlo.",
-   "visual": "Pantalla dividida: a la izquierda, Noa rodeada de bolas de papel bajo un reloj de pared con las agujas muy avanzadas; a la derecha, Noa relajada con una sola burbuja de mensaje limpia y el mismo reloj casi sin avanzar.",
-   "visualEn": "Split-screen comparison: left Noa tense among crumpled paper balls under a wall clock with hands far advanced; right Noa relaxed with one single clean message bubble and the clock barely moved, warm light",
-   "visualAction": "El lado izquierdo se llena de papeles y el derecho se queda limpio.",
-   "location": "Pantalla dividida con dos relojes",
-   "shot": "wide",
-   "emotion": "tenso frente a ligero",
-   "purpose": "Comparación: el coste real de darle mil vueltas.",
-   "duration": 4.5,
-   "subtitle": "Una hora… o cinco segundos",
-   "contrast": "desordenado y tenso frente a limpio y ligero",
-   "objects": [
-    "wall clock",
-    "paper balls",
-    "message bubble"
-   ]
-  },
-  {
-   "n": 9,
-   "characters": [
-    "NOA"
-   ],
-   "kapPresent": false,
-   "subtitleSpace": "top",
-   "sceneType": "CINEMATIC_SCENE",
-   "narration": "Lo envías. Y no pasa nada terrible.",
-   "visual": "Noa pulsa enviar con el pulgar junto a una ventana abierta y el avioncito de papel sale volando hacia las luces de la ciudad al atardecer, mientras Noa sonríe un poco.",
-   "visualEn": "Noa presses send on a phone by an open window and a glowing paper plane flies out toward a warm sunset city skyline, Noa giving a small relieved smile, side view with long soft shadows",
-   "visualAction": "Noa pulsa enviar y el avioncito sale volando por la ventana.",
-   "location": "Ventana de Noa al atardecer",
-   "shot": "side",
-   "emotion": "alivio",
-   "purpose": "Payoff visual: enviar libera.",
+   "sceneNumber": 7,
+   "block": "REALIZACION",
+   "sceneType": "OBJECT_METAPHOR",
    "duration": 3.5,
-   "subtitle": "Lo envías. No pasa nada.",
-   "lighting": "warm sunset light",
-   "objects": [
-    "paper plane",
-    "open window"
-   ]
-  },
-  {
-   "n": 10,
-   "characters": [
-    "NOA"
-   ],
-   "kapPresent": false,
-   "subtitleSpace": "bottom",
-   "sceneType": "REACTION",
-   "narration": "La mayoría de las veces, la otra persona ni se fija en la coma.",
-   "visual": "Primer plano de Noa: una respuesta corta con un pulgar arriba aparece en el móvil y Noa levanta las cejas, sorprendida, y suelta el aire.",
-   "visualEn": "Close-up of Noa's surprised relieved face lit by a phone showing a short reply bubble with a thumbs-up emoji, eyebrows raised, a small exhale of air",
-   "visualAction": "Llega la respuesta y Noa levanta las cejas y suelta el aire.",
-   "location": "Dormitorio de Noa (día)",
-   "shot": "close-up",
-   "emotion": "sorpresa aliviada",
-   "purpose": "Reacción: el miedo era mayor que la realidad.",
-   "duration": 5.5,
-   "subtitle": "Casi nadie se fija en la coma",
-   "lighting": "soft daylight"
-  },
-  {
-   "n": 11,
+   "kapPresent": true,
+   "kap": {
+    "why": "ejemplo",
+    "because": "Es él quien se ve atrapado y entiende el patrón.",
+    "adds": "La realización: el círculo del que no sale",
+    "speaks": true
+   },
+   "action": "KAP, atrapado dentro de un círculo formado por el móvil, notificaciones y pensamientos, mira a su alrededor y entiende lo que pasa.",
+   "visualDescription": "KAP está encerrado dentro de un círculo cerrado hecho de móviles, notificaciones y burbujas de pensamiento que giran a su alrededor; su expresión cambia de agobio a comprensión.",
+   "visualChange": "El círculo de móviles y notificaciones gira alrededor de KAP y su expresión cambia de agobio a comprensión.",
+   "camera": "wide, slow orbit",
+   "composition": "KAP in the center, ring of objects framing him symmetrically",
+   "lighting": "cold blue glow from the phones, a single warm light on KAP's face",
+   "dialogue": "Esto ya no es interés. Es ansiedad.",
+   "narration": "",
+   "silent": false,
+   "subtitle": "Esto ya no es interés. Es ansiedad.",
+   "soundEffect": "zumbido de notificaciones que se va apagando",
+   "transition": "corte seco",
+   "purpose": "Realización: visualiza el ciclo móvil-notificación-pensamiento.",
    "characters": [
     "KAP"
    ],
+   "location": "Círculo de notificaciones (metáfora)",
+   "shot": "wide",
+   "emotion": "comprensión",
+   "motion": {
+    "kinds": [
+     "rotate",
+     "parallax",
+     "light"
+    ],
+    "prompt": "The ring of phones and bubbles slowly orbits with parallax; the buzzing fades; a warm light slowly rises on KAP's face."
+   },
+   "imagePrompt": "SCENE (exact action): KAP stands trapped inside a closed ring made of phones, notification icons and thought bubbles slowly orbiting him, his expression shifting from overwhelmed to understanding.\nCharacters: KAP.\nEnvironment: Círculo de notificaciones (metáfora); an abstract dark-blue void.\nComposition: KAP in the center, ring of objects framing him symmetrically.\nCamera: wide establishing shot; wide, slow orbit.\nLighting: cold blue glow from the phones, a single warm light on KAP's face.\nBody language / expression: slowly turning on the spot, eyes widening as he understands.\nKey objects: phones, notification icons, thought bubbles.\nDepth: ring of objects at several depths orbiting around KAP.\nVisual purpose: Realización: visualiza el ciclo móvil-notificación-pensamiento.\nKeep the bottom third calm and uncluttered (room for subtitles)."
+  },
+  {
+   "sceneNumber": 8,
+   "block": "NUEVA_ESTRATEGIA",
+   "sceneType": "TRANSFORMATION",
+   "duration": 3,
    "kapPresent": true,
-   "subtitleSpace": "bottom",
+   "kap": {
+    "why": "decision",
+    "because": "Es su decisión: deja el móvil y sale del círculo.",
+    "adds": "La nueva reacción, pequeña pero real",
+    "speaks": false
+   },
+   "action": "KAP deja el móvil boca abajo sobre la mesa y sale del círculo caminando.",
+   "visualDescription": "KAP pone el móvil boca abajo sobre la mesa, el círculo de notificaciones se deshace en polvo y KAP camina fuera de él hacia una luz cálida de ventana.",
+   "visualChange": "El círculo se deshace en polvo y KAP sale caminando hacia la luz.",
+   "camera": "side tracking shot following KAP",
+   "composition": "KAP on the left third walking right toward the light",
+   "lighting": "warm window light replacing the cold blue glow",
+   "dialogue": "",
+   "narration": "",
+   "silent": true,
+   "subtitle": "Lo deja. Sin drama.",
+   "soundEffect": "click del móvil sobre la mesa y una exhalación",
+   "transition": "match cut: la mano suelta el móvil",
+   "purpose": "Nueva estrategia: una decisión pequeña y real.",
+   "characters": [
+    "KAP"
+   ],
+   "location": "Escritorio de KAP",
+   "shot": "side",
+   "emotion": "alivio",
+   "motion": {
+    "kinds": [
+     "slide",
+     "light",
+     "particles"
+    ],
+    "prompt": "Gentle lateral slide following KAP; the ring crumbles into drifting dust; the light shifts from cold blue to warm."
+   },
+   "imagePrompt": "SCENE (exact action): KAP puts the phone face down on a table, the ring of notifications crumbling into dust, then walks out of it toward warm window light.\nCharacters: KAP.\nEnvironment: Escritorio de KAP; room opening up as the ring dissolves.\nComposition: KAP on the left third walking right toward the light.\nCamera: side-on profile shot; side tracking shot following KAP.\nLighting: warm window light replacing the cold blue glow.\nBody language / expression: calm exhale, shoulders dropping, steady steps.\nKey objects: phone face down.\nDepth: dust ring behind, warm light ahead, table in the foreground.\nVisual purpose: Nueva estrategia: una decisión pequeña y real.\nKeep the bottom third calm and uncluttered (room for subtitles)."
+  },
+  {
+   "sceneNumber": 9,
+   "block": "RESULTADO",
+   "sceneType": "BEFORE_AFTER",
+   "duration": 4,
+   "kapPresent": true,
+   "kap": {
+    "why": "ejemplo",
+    "because": "Es él quien vive la diferencia: hace cosas en lugar de esperar.",
+    "adds": "El resultado visible del cambio",
+    "speaks": true
+   },
+   "action": "KAP se entrena, estudia, toca la guitarra y queda con amigos mientras el reloj avanza.",
+   "visualDescription": "Pantalla dividida: a la izquierda, el KAP de antes, pegado al móvil con el reloj parado; a la derecha, el KAP de ahora en cuatro mini-escenas (entrenar, estudiar, tocar música, reír con amigos) con el reloj avanzando.",
+   "visualChange": "El lado derecho se llena de actividades y el reloj avanza mientras el izquierdo sigue quieto.",
+   "camera": "locked wide with a slow slide toward the right half",
+   "composition": "vertical split, equal weight, clocks at the top of each half",
+   "lighting": "cold dim on the left, warm bright on the right",
+   "dialogue": "Y sigues con tu día.",
+   "narration": "",
+   "silent": false,
+   "subtitle": "Y sigues con tu día",
+   "soundEffect": "pasos, guitarra, pesas y risas en mezcla ligera",
+   "transition": "wipe de izquierda a derecha",
+   "purpose": "Resultado: la diferencia entre esperar y vivir.",
+   "characters": [
+    "KAP"
+   ],
+   "location": "Cuatro lugares en pantalla dividida",
+   "shot": "wide",
+   "emotion": "contraste",
+   "motion": {
+    "kinds": [
+     "slide",
+     "loop",
+     "object-move"
+    ],
+    "prompt": "Slow slide toward the right half; the four mini-scenes loop in small motions; the right clock hand turns while the left stays frozen."
+   },
+   "imagePrompt": "SCENE (exact action): Split-screen: left, KAP glued to his phone with a stopped wall clock; right, KAP in four small scenes training, studying, playing guitar and laughing with friends, the clock moving on.\nCharacters: KAP.\nEnvironment: Cuatro lugares en pantalla dividida; split between a dim room and bright varied places.\nComposition: vertical split, equal weight, clocks at the top of each half.\nCamera: wide establishing shot; locked wide with a slow slide toward the right half.\nLighting: cold dim on the left, warm bright on the right.\nBody language / expression: left: hunched and still; right: upright, moving, smiling a little.\nKey objects: wall clocks, guitar, weights, books.\nDepth: clear foreground on both halves, clocks as depth anchors.\nVisual purpose: Resultado: la diferencia entre esperar y vivir.\nKeep the bottom third calm and uncluttered (room for subtitles)."
+  },
+  {
+   "sceneNumber": 10,
+   "block": "RESULTADO",
+   "sceneType": "POV",
+   "duration": 3,
+   "kapPresent": true,
+   "kap": {
+    "why": "ejemplo",
+    "because": "Es su punto de vista: el móvil vibra y esta vez no cambia lo que hace.",
+    "adds": "La prueba de que el cambio funciona",
+    "speaks": false
+   },
+   "action": "El móvil vibra mientras KAP practica la guitarra; KAP lo mira un segundo y sigue tocando.",
+   "visualDescription": "Vista desde los ojos de KAP: sus manos tocan la guitarra y, al fondo de la mesa, el móvil vibra y se ilumina; la mirada se desvía un segundo y vuelve a las cuerdas.",
+   "visualChange": "El móvil vibra y se ilumina un instante, la vista se desvía y vuelve a las cuerdas.",
+   "camera": "POV with a tiny glance shift",
+   "composition": "hands and guitar in the lower half, phone small at the upper right",
+   "lighting": "warm desk lamp light, the phone glow barely noticeable",
+   "dialogue": "",
+   "narration": "",
+   "silent": true,
+   "subtitle": "Vibra. Lo miras. Sigues.",
+   "soundEffect": "vibración del móvil sobre la mesa",
+   "transition": "corte seco",
+   "purpose": "Resultado: no cambia su comportamiento al recibir la notificación.",
+   "characters": [
+    "KAP"
+   ],
+   "location": "Mesa de trabajo de KAP",
+   "shot": "pov",
+   "emotion": "calma",
+   "motion": {
+    "kinds": [
+     "loop",
+     "light",
+     "object-move"
+    ],
+    "prompt": "Phone buzzes and lights up twice; the view shifts briefly toward it and returns; hands keep a gentle playing loop."
+   },
+   "imagePrompt": "SCENE (exact action): First-person view of KAP's white hands playing an acoustic guitar on a desk, a phone on the far side of the desk vibrating and lighting up, the view glancing at it then returning to the strings.\nCharacters: KAP.\nEnvironment: Mesa de trabajo de KAP; warm evening desk with books and a lamp.\nComposition: hands and guitar in the lower half, phone small at the upper right.\nCamera: first-person POV shot; POV with a tiny glance shift.\nLighting: warm desk lamp light, the phone glow barely noticeable.\nBody language / expression: relaxed hands continuing to play, a brief glance then back.\nKey objects: guitar, phone.\nDepth: guitar neck in the foreground, phone blurred at the far end of the desk.\nVisual purpose: Resultado: no cambia su comportamiento al recibir la notificación.\nKeep the top third calm and uncluttered (room for subtitles)."
+  },
+  {
+   "sceneNumber": 11,
+   "block": "CIERRE",
    "sceneType": "KAP_PRESENTADOR",
-   "narration": "Perfecto no sale. Enviado, sí.",
-   "visual": "KAP a cámara en su estudio se encoge de hombros y deja el móvil bocabajo sobre la mesa con un gesto seco.",
-   "visualEn": "KAP at the pink neon studio shrugging at the camera and flipping a phone face down on a table with a deadpan expression",
-   "visualAction": "KAP se encoge de hombros y deja el móvil bocabajo.",
+   "duration": 6,
+   "kapPresent": true,
+   "kap": {
+    "why": "cierre",
+    "because": "Remata a cámara con su frase, sin lección ni discurso.",
+    "adds": "Cierre con la idea y la identidad del canal",
+    "speaks": true
+   },
+   "action": "KAP mira a cámara, se encoge de hombros y deja el móvil boca abajo con un gesto seco.",
+   "visualDescription": "KAP a cámara en su estudio de neón rosa se encoge de hombros y deja el móvil boca abajo sobre la mesa con un gesto seco mientras dice la frase final.",
+   "visualChange": "KAP se encoge de hombros y deja el móvil boca abajo.",
+   "camera": "static at eye level, very slow pull-out",
+   "composition": "centered, table edge at the bottom",
+   "lighting": "pink neon rim light",
+   "dialogue": "No necesitas gustarle a todo el mundo. Necesitas dejar de traicionarte para conseguirlo.",
+   "narration": "",
+   "silent": false,
+   "subtitle": "Deja de traicionarte para gustar",
+   "soundEffect": "",
+   "transition": "corte seco al negro",
+   "purpose": "Cierre corto con la idea del Short.",
+   "characters": [
+    "KAP"
+   ],
    "location": "Estudio de KAP",
    "shot": "medium",
    "emotion": "seco",
-   "purpose": "Cierre corto y seco, sin moraleja.",
-   "duration": 3,
-   "subtitle": "Perfecto no sale. Enviado, sí.",
-   "kapReason": "cierre",
-   "kapWhy": "Remata con una frase corta y seca en lugar de una lección.",
-   "lighting": "pink neon rim light"
+   "motion": {
+    "kinds": [
+     "zoom-out"
+    ],
+    "prompt": "Very slow pull-out; a single small light flicker on the neon ring; the music fades under the last line."
+   },
+   "imagePrompt": "SCENE (exact action): KAP at the pink neon studio shrugging at the camera and flipping a phone face down on a table with a deadpan expression.\nCharacters: KAP.\nEnvironment: Estudio de KAP; pink neon studio.\nComposition: centered, table edge at the bottom.\nCamera: medium shot; static at eye level, very slow pull-out.\nLighting: pink neon rim light.\nBody language / expression: deadpan shrug, steady eye contact.\nKey objects: phone face down.\nDepth: table edge in the foreground, neon ring behind.\nVisual purpose: Cierre corto con la idea del Short.\nKeep the bottom third calm and uncluttered (room for subtitles)."
   }
  ]
 }

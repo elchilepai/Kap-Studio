@@ -1,71 +1,89 @@
 /**
- * PACK DE UN SHORT VISUAL (salida de KAP Studio; sin vídeo): idea, hooks, guion, storyboard, narración limpia para ElevenLabs, subtítulos, prompts de imagen,
- * orden y duración, apariciones de KAP, ritmo visual y checklist de calidad. El montaje final (voz, zoom, paneo, música, efectos) se hace fuera, en CapCut.
+ * PACK DE UN SHORT DE KAP (salida de KAP Studio; sin vídeo): idea, hooks, guion por voces (KAP / narrador) listo para ElevenLabs, storyboard, subtítulos, prompts de imagen,
+ * prompts de movimiento, plan de audio, plan de CapCut, afirmaciones a verificar y control de calidad. El montaje final (voz, zoom, paneo, música, efectos) se hace fuera.
  */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { FORMAT_9_16, GLOBAL_NEGATIVE_PROMPT, KAP_CHARACTER_BIBLE, KAP_REF, SECONDARY_CHARACTER_BIBLE, STYLE_BIBLE, STYLE_REFS } from "@/narrative/styleBible";
 import { finalPrompt, scenePrompt } from "@/narrative/visualPrompt";
-import { BANNED_OPENINGS, kapIssues, narrationSeconds, structureErrors, totalSeconds, visualRhythmCheck, type RhythmWarning, type ShortPack, type VisualScene } from "@/narrative/visualShort";
+import { claimsReport, contentWarnings } from "@/narrative/shortSafety";
+import { BANNED_OPENINGS, kapIssues, readinessIssues, spoken, structureErrors, totalSeconds, visualRhythmCheck, wordCount, type MotionKind, type RhythmWarning, type ShortPack, type VisualScene } from "@/narrative/visualShort";
 
 const pad = (n: number) => String(n).padStart(2, "0");
 const tc = (sec: number) => { const ms = Math.round(sec * 1000), h = Math.floor(ms / 3600000), m = Math.floor((ms % 3600000) / 60000), s = Math.floor((ms % 60000) / 1000); return `${pad(h)}:${pad(m)}:${pad(s)},${String(ms % 1000).padStart(3, "0")}`; };
+const starts = (S: VisualScene[]) => { let t = 0; return S.map((s) => { const a = t; t += s.duration; return a; }); };
 
-/** Subtítulos (.srt): una línea por escena, con los tiempos acumulados de las duraciones. */
-export function srt(scenes: VisualScene[]): string { let t = 0; return scenes.map((s) => { const a = t; t += s.duration; return `${s.n}\n${tc(a)} --> ${tc(t - 0.05)}\n${s.subtitle}\n`; }).join("\n"); }
-/** Guion limpio para ElevenLabs: SOLO lo que se dice, un párrafo por escena (la pausa entre párrafos marca el cambio de imagen). Nunca lleva descripciones visuales. */
-export const narrationClean = (scenes: VisualScene[]) => scenes.map((s) => s.narration.trim()).join("\n\n") + "\n";
-export const scriptText = (scenes: VisualScene[]) => scenes.map((s) => `${s.sceneType === "KAP_PRESENTADOR" ? "KAP: " : ""}${s.narration.trim()}`).join("\n");
+/** Subtítulos (.srt): una línea por escena con los tiempos acumulados de las duraciones. */
+export function srt(scenes: VisualScene[]): string { const st = starts(scenes); return scenes.map((s, i) => `${s.n}\n${tc(st[i])} --> ${tc(st[i] + s.duration - 0.05)}\n${s.subtitle}\n`).join("\n"); }
+/** Guion por voces para ElevenLabs: SOLO lo que se dice, etiquetado KAP / NARRADOR, en orden; nunca descripciones visuales. KAP habla antes que cualquier narrador. */
+export function voiceScript(scenes: VisualScene[]): { kap: string; narrator: string; ordered: string } {
+  const kap = scenes.filter((s) => s.dialogue?.trim()).map((s) => s.dialogue!.trim()).join("\n\n"), narrator = scenes.filter((s) => s.narration?.trim()).map((s) => s.narration!.trim()).join("\n\n");
+  const ordered = scenes.flatMap((s) => [...(s.dialogue?.trim() ? [`KAP: ${s.dialogue.trim()}`] : []), ...(s.narration?.trim() ? [`NARRADOR: ${s.narration.trim()}`] : [])]).join("\n");
+  return { kap: kap ? kap + "\n" : "", narrator: narrator ? narrator + "\n" : "", ordered: ordered ? ordered + "\n" : "" };
+}
+
+/** Escena con los nombres de campo de la especificación (sceneNumber, visualDescription…), para storyboard.json. */
+export const toSpecScene = (s: VisualScene) => ({ sceneNumber: s.n, block: s.block, sceneType: s.sceneType, duration: s.duration, kapPresent: s.kapPresent, kap: s.kapPresent ? { why: s.kapReason, because: s.kapWhy, adds: s.kapAdds, speaks: !!s.dialogue?.trim() } : null, action: s.action, visualDescription: s.visual, visualChange: s.visualAction, camera: s.camera, composition: s.composition, lighting: s.lighting, dialogue: s.dialogue ?? "", narration: s.narration ?? "", silent: !!s.silent, subtitle: s.subtitle, soundEffect: s.soundEffect, transition: s.transition, purpose: s.purpose, characters: s.characters, location: s.location, shot: s.shot, emotion: s.emotion, motion: { kinds: s.motionKinds, prompt: s.motionPrompt }, imagePrompt: scenePrompt(s) });
+
+const CAPCUT: Record<MotionKind, string> = { "zoom-in": "Zoom in lento (keyframes de escala 100 → 112 %)", "zoom-out": "Zoom out lento (keyframes de escala 115 → 100 %)", pan: "Paneo con keyframes de posición", parallax: "Parallax: separa las capas y muévelas a distinta velocidad", slide: "Desplazamiento lateral de la imagen", rotate: "Rotación mínima (±2°)", appear: "Aparición (escala/opacidad)", "scale-change": "Cambio de escala con keyframe (efecto «zoom brusco»)", loop: "Pequeño loop (respiración, parpadeo, vibración)", particles: "Partículas / overlay (polvo, burbujas, destellos)", light: "Cambio de luz o brillo (keyframes de exposición)", "object-move": "Movimiento de un objeto recortado en su propia capa" };
 
 export type CheckItem = { ok: boolean | null; text: string; detail?: string };   // null = revisión humana
-/** Checklist de calidad antes de exportar: lo comprobable se comprueba; lo que necesita criterio humano queda como pendiente (☐). */
+/** CONTROL DE CALIDAD antes de exportar: lo comprobable se comprueba; lo que necesita criterio humano queda pendiente (☐). */
 export function qualityChecklist(pack: ShortPack): CheckItem[] {
-  const S = pack.scenes, errs = structureErrors(S), warns = visualRhythmCheck(S), total = totalSeconds(S), hook = pack.hooks[pack.chosenHook];
-  const kap = S.filter((s) => s.kapPresent), kapErr = kapIssues(S);
-  const visualInNarration = S.filter((s) => /\b(?:KAP|la imagen|se ve|aparece en pantalla|plano)\b.*\b(?:camina|mira|se sienta|aparece)\b/i.test(s.narration));
+  const S = pack.scenes, errs = structureErrors(S), warns = visualRhythmCheck(S), ready = readinessIssues(S), total = totalSeconds(S), hook = pack.hooks[pack.chosenHook], safety = contentWarnings(pack), has = (...ids: string[]) => warns.some((w) => ids.includes(w.id));
+  const leaks = S.filter((s) => [s.dialogue, s.narration].some((t) => t && /\b(?:la imagen|se ve|aparece en pantalla|plano (?:general|medio)|zoom)\b/i.test(t)));
+  const long = S.filter((s) => wordCount(spoken(s)) > 24);
   return [
-    { ok: errs.length === 0, text: "Estructura válida (8-14 escenas, campos completos, tipos válidos)", detail: errs.map((e) => e.message).join("; ") || undefined },
-    { ok: total >= 30 && total <= 60, text: `Duración total entre 30 y 60 s`, detail: `${total} s` },
-    { ok: !!hook && !BANNED_OPENINGS.test(hook.text), text: "El hook elegido entra directo (sin «hoy vamos a hablar de…», «hola», «en este vídeo…»)", detail: hook?.text },
-    { ok: pack.hooks.length >= 3, text: "Hay varias variantes de hook de tipos distintos", detail: `${new Set(pack.hooks.map((h) => h.type)).size} tipos` },
-    { ok: kapErr.length === 0 && kap.length > 0, text: "KAP aparece y cada aparición está justificada", detail: kap.map((s) => `${pad(s.n)} (${s.kapReason})`).join(", ") || "KAP no aparece" },
-    { ok: !warns.some((w) => w.id === "kap-consecutivos" || w.id === "kap-demasiado"), text: "KAP no aparece en escenas seguidas ni en demasiadas" },
-    { ok: !warns.some((w) => w.id === "poca-variedad"), text: "Variedad de tipos de escena", detail: `${new Set(S.map((s) => s.sceneType)).size} tipos` },
-    { ok: !warns.some((w) => ["demasiados-dialogos", "escenas-estaticas", "sin-accion-visual"].includes(w.id)), text: "La imagen demuestra: no hay estructura de personajes hablando ni escenas estáticas" },
-    { ok: !warns.some((w) => ["sin-contraste", "sin-transformacion", "ilustra-literal"].includes(w.id)), text: "Hay contraste y cambio visual; las escenas no se limitan a ilustrar la frase" },
-    { ok: visualInNarration.length === 0, text: "La narración no contiene instrucciones visuales (lo que se dibuja no se dice)" },
-    { ok: S.every((s) => s.subtitle.trim().length > 0 && s.subtitle.length <= 60), text: "Cada escena tiene subtítulo corto (≤ 60 caracteres)" },
-    { ok: S.every((s) => s.visualEn.trim().length > 0), text: "Cada escena tiene prompt de imagen" },
-    { ok: null, text: "Revisar las afirmaciones psicológicas del guion contra una fuente fiable", detail: (pack.idea.claims ?? []).join(" · ") || "sin afirmaciones declaradas" },
-    { ok: null, text: "Sin diagnósticos ni lenguaje clínico; en relaciones, enfoque respetuoso (comunicación, escucha, límites), sin trucos de manipulación" },
-    { ok: null, text: "Las imágenes generadas mantienen a KAP, a los secundarios, la paleta y el mundo visual idénticos entre escenas" },
+    { ok: errs.length === 0, text: "Estructura válida (8-14 escenas, todos los campos, tipos, bloques, KAP justificado)", detail: errs.map((e) => e.message).join("; ") || undefined },
+    { ok: !!hook && !BANNED_OPENINGS.test(hook.text) && S[0].duration <= 4 && !has("hook-lento"), text: "Hook: entra directo, en 0-3 s, sin «hoy vamos a hablar de…»", detail: hook?.text },
+    { ok: pack.hooks.length >= 5 && new Set(pack.hooks.map((h) => h.type)).size >= 4, text: "Hay 5 hooks de tipos distintos", detail: `${pack.hooks.length} hooks · ${new Set(pack.hooks.map((h) => h.type)).size} tipos` },
+    { ok: !has("escenas-estaticas", "sin-accion-visual", "kap-quieto", "sin-contraste", "sin-transformacion", "ilustra-literal"), text: "Retención: acción, contraste y cambio visual; las escenas no se limitan a ilustrar la frase" },
+    { ok: long.length === 0 && !has("explicacion-abstracta", "demasiados-dialogos"), text: "Claridad: frases cortas, sin explicaciones abstractas ni personajes hablando entre sí", detail: long.length ? `escenas con más de 24 palabras: ${long.map((s) => s.n).join(", ")}` : undefined },
+    { ok: ready.length === 0, text: "Coherencia: responde a «¿qué le pasa a KAP y qué hace diferente después de entenderlo?»", detail: ready.map((r) => r.message).join("; ") || undefined },
+    { ok: kapIssues(S).length === 0 && !has("kap-ausente", "kap-presentando-demasiado"), text: "KAP consistente: protagonista y hilo conductor, justificado en cada escena, sin hablar a cámara todo el rato" },
+    { ok: !has("planos-iguales", "primeros-planos", "escenarios-repetidos", "poca-variedad"), text: "Variedad visual: tipos de escena, planos y escenarios", detail: `${new Set(S.map((s) => s.sceneType)).size} tipos` },
+    { ok: !has("final-generico") && !!S.at(-1) && S.at(-1)!.block === "CIERRE", text: "El final no es un cliché genérico de motivación", detail: spoken(S.at(-1)!) },
+    { ok: !has("sfx-saturado") && pack.music.cues.length >= 3, text: "Audio: plan de música con cambios y efectos sin saturar (hay espacio para el silencio)", detail: `${S.filter((s) => s.soundEffect.trim()).length} SFX · ${pack.music.cues.length} cambios de música` },
+    { ok: total >= 20 && total <= 60 && !has("duracion-escena", "duracion-ajustada"), text: "Duración total 20-60 s y escenas de 1,5-6 s", detail: `${total} s` },
+    { ok: leaks.length === 0, text: "La voz no contiene instrucciones visuales (lo que se dibuja no se dice)" },
+    { ok: safety.length === 0, text: "Sin contenido manipulador, de gurú, de coach vacío ni generalizaciones sobre hombres o mujeres", detail: safety.map((c) => `${c.where}: ${c.message}`).join("; ") || undefined },
+    { ok: S.every((s) => s.subtitle.trim().length > 0 && s.subtitle.length <= 60) && S.every((s) => !!s.visualEn.trim()), text: "Cada escena tiene subtítulo corto (≤ 60 caracteres) y prompt de imagen" },
+    { ok: null, text: "Verificar las afirmaciones psicológicas o científicas marcadas (afirmaciones.md) contra una fuente fiable", detail: claimsReport(pack.idea.claims).toVerify.map((c) => c.text).join(" · ") || "sin afirmaciones declaradas" },
+    { ok: null, text: "Comprobar que la frase de cierre no es un cliché vacío", detail: spoken(S.at(-1)!) },
+    { ok: null, text: "Sin diagnósticos ni lenguaje clínico; en relaciones, enfoque respetuoso (comunicación, límites, interés mutuo)" },
+    { ok: null, text: "Las imágenes generadas mantienen idéntico a KAP (cabeza, ropa, accesorios, proporciones), a los secundarios y el mundo visual" },
   ];
 }
 const mark = (c: CheckItem) => (c.ok === null ? "☐" : c.ok ? "✅" : "❌");
-const checklistMd = (items: CheckItem[]) => `# Checklist de calidad\n\n${items.map((c) => `- ${mark(c)} ${c.text}${c.detail ? ` — ${c.detail}` : ""}`).join("\n")}\n\n✅ cumple · ❌ no cumple · ☐ revisión humana pendiente\n`;
+const checklistMd = (items: CheckItem[], ready: boolean) => `# Control de calidad\n\n**${ready ? "LISTO para exportar" : "NO LISTO: hay puntos ❌"}**\n\n${items.map((c) => `- ${mark(c)} ${c.text}${c.detail ? ` — ${c.detail}` : ""}`).join("\n")}\n\n✅ cumple · ❌ no cumple · ☐ revisión humana pendiente\n`;
 const rhythmMd = (w: RhythmWarning[]) => `# Ritmo visual (avisos de calidad, no reglas rígidas)\n\n${w.length ? w.map((x) => `- **${x.id}**: ${x.message}${x.scenes?.length ? ` (escenas ${x.scenes.map(pad).join(", ")})` : ""}`).join("\n") : "Sin avisos."}\n`;
+const tableMd = (S: VisualScene[]) => { const st = starts(S); return `| # | Bloque | Tipo | Entra en | Dur. | Plano | KAP | Voz |\n|---|---|---|---|---|---|---|---|\n${S.map((s, i) => `| ${pad(s.n)} | ${s.block} | ${s.sceneType} | ${st[i].toFixed(1)} s | ${s.duration.toFixed(1)} s | ${s.shot} | ${s.kapPresent ? `sí (${s.kapReason})` : "no"} | ${(spoken(s) || "— silencio —").replace(/\|/g, "/")} |`).join("\n")}\n\n**Total: ${totalSeconds(S)} s · ${S.length} escenas**\n`; };
+const storyboardMd = (S: VisualScene[]) => S.map((s) => `## ESCENA ${pad(s.n)} — ${s.sceneType} (${s.block})\n- **KAP**: ${s.kapPresent ? `sí — ${s.kapReason}: ${s.kapWhy} · aporta: ${s.kapAdds}` : "no"} · **Qué hace**: ${s.action}\n- **Voz**: ${s.dialogue ? `KAP: «${s.dialogue}»` : ""}${s.narration ? ` NARRADOR: «${s.narration}»` : ""}${spoken(s) ? "" : "— silencio a propósito —"}\n- **Visual** (se dibuja, NO se dice): ${s.visual}\n- **Qué cambia visualmente**: ${s.visualAction}\n- **Cámara**: ${s.shot}, ${s.camera} · **Composición**: ${s.composition} · **Luz**: ${s.lighting}\n- **Lugar**: ${s.location} · **Emoción**: ${s.emotion} · **Personajes**: ${s.characters.join(", ") || "—"}\n- **SFX**: ${s.soundEffect || "—"} · **Transición**: ${s.transition} · **Subtítulo**: «${s.subtitle}» · **Duración**: ${s.duration.toFixed(1)} s${s.pauseWhy ? ` (pausa: ${s.pauseWhy})` : ""}\n- **Propósito**: ${s.purpose}\n`).join("\n");
+const audioMd = (pack: ShortPack) => { const S = pack.scenes, st = starts(S); return `# Plan de audio\n\n## Música\n**Ambiente general**: ${pack.music.mood}\n\n${pack.music.cues.map((c) => `- Escena ${pad(c.atScene)} (${(st[c.atScene - 1] ?? 0).toFixed(1)} s): **${c.change}** — ${c.note}`).join("\n")}\n\n## Efectos de sonido (solo donde aportan)\n${S.filter((s) => s.soundEffect.trim()).map((s) => `- Escena ${pad(s.n)} (${st[s.n - 1].toFixed(1)} s): ${s.soundEffect}`).join("\n") || "—"}\n\n## Silencios\n${S.filter((s) => !s.soundEffect.trim() || s.silent).map((s) => `- Escena ${pad(s.n)}: ${s.silent ? "sin voz a propósito" : "sin efectos"}${s.soundEffect.trim() ? ` (solo ${s.soundEffect})` : ""}`).join("\n") || "—"}\n\n> No hay música real generada: esto es una propuesta para elegir o generar fuera.\n`; };
+const capcutMd = (pack: ShortPack) => { const S = pack.scenes, st = starts(S); return `# Plan de CapCut\n\n| # | Entra | Dur. | Imagen | Movimiento (CapCut) | Transición | Texto | SFX | Música |\n|---|---|---|---|---|---|---|---|---|\n${S.map((s, i) => `| ${pad(s.n)} | ${st[i].toFixed(1)} s | ${s.duration.toFixed(1)} s | imagenes/scene-${pad(s.n)}.png | ${s.motionKinds.map((k) => CAPCUT[k]).join("; ")} | ${s.transition} | ${s.subtitle} | ${s.soundEffect || "—"} | ${pack.music.cues.filter((c) => c.atScene === s.n).map((c) => c.change).join(", ") || "—"} |`).join("\n")}\n\nVoces: importa \`elevenlabs-kap.txt\`${pack.scenes.some((s) => s.narration?.trim()) ? " y \`elevenlabs-narrador.txt\`" : ""} (una voz por fichero) y colócalas según \`orden-y-duracion.md\`.\n`; };
+const motionMd = (S: VisualScene[]) => `# Prompts de movimiento (para generadores de vídeo o notas de montaje)\n\n${S.map((s) => `## ${pad(s.n)} — ${s.sceneType} (${s.duration.toFixed(1)} s)\n${s.motionPrompt}\n*Técnicas*: ${s.motionKinds.join(", ")}\n`).join("\n")}`;
 
-const tableMd = (S: VisualScene[]) => { let t = 0; return `| # | Tipo | Entra en | Dur. | Plano | KAP | Narración |\n|---|---|---|---|---|---|---|\n${S.map((s) => { const a = t; t += s.duration; return `| ${pad(s.n)} | ${s.sceneType} | ${a.toFixed(1)} s | ${s.duration.toFixed(1)} s | ${s.shot} | ${s.kapPresent ? `sí (${s.kapReason})` : "no"} | ${s.narration.replace(/\|/g, "/")} |`; }).join("\n")}\n\n**Total: ${totalSeconds(S)} s · ${S.length} escenas**\n`; };
-const storyboardMd = (S: VisualScene[]) => S.map((s) => `## ESCENA ${pad(s.n)} — ${s.sceneType}\n- **Narración** (se dice): "${s.narration}"\n- **Visual** (se dibuja, NO se dice): ${s.visual}\n- **Acción visual**: ${s.visualAction}\n- **Personajes**: ${s.characters.join(", ") || "—"} · **KAP**: ${s.kapPresent ? `sí — ${s.kapReason}: ${s.kapWhy}` : "no"}\n- **Lugar**: ${s.location} · **Plano**: ${s.shot}${s.camera ? ` · ${s.camera}` : ""}${s.composition ? ` · ${s.composition}` : ""} · **Emoción**: ${s.emotion}\n- **Propósito**: ${s.purpose} · **Duración**: ${s.duration.toFixed(1)} s · **Subtítulo**: «${s.subtitle}»\n`).join("\n");
-
-/** Escribe el pack en `dir` y devuelve la lista de ficheros, el ritmo visual y la checklist. */
-export async function writeShortPack(dir: string, pack: ShortPack, o: { root?: string } = {}): Promise<{ files: string[]; warnings: RhythmWarning[]; checklist: CheckItem[] }> {
+/** Escribe el pack en `dir` y devuelve la lista de ficheros, el ritmo visual y el control de calidad. */
+export async function writeShortPack(dir: string, pack: ShortPack, o: { root?: string } = {}): Promise<{ files: string[]; warnings: RhythmWarning[]; checklist: CheckItem[]; ready: boolean }> {
   const errs = structureErrors(pack.scenes); if (errs.length) throw new Error(`El storyboard no es válido: ${errs.map((e) => e.message).join("; ")}`);
-  const root = o.root ?? process.cwd(), files: string[] = [], S = pack.scenes, warnings = visualRhythmCheck(S), checklist = qualityChecklist(pack);
+  const root = o.root ?? process.cwd(), files: string[] = [], S = pack.scenes, warnings = visualRhythmCheck(S), checklist = qualityChecklist(pack), ready = checklist.every((c) => c.ok !== false), voices = voiceScript(S), cr = claimsReport(pack.idea.claims);
   const w = async (rel: string, text: string) => { const f = path.join(dir, rel); await fs.mkdir(path.dirname(f), { recursive: true }); await fs.writeFile(f, text); files.push(rel); };
-  await w("01-idea.md", `# ${pack.idea.title}\n\n- **Categoría**: ${pack.idea.category}\n- **Planteamiento**: ${pack.idea.premise}\n- **Por qué funciona**: ${pack.idea.whyItWorks}\n${pack.idea.claims?.length ? `- **Afirmaciones a verificar**: ${pack.idea.claims.join(" · ")}\n` : ""}`);
+  const I = pack.idea;
+  await w("01-idea.md", `# ${I.topic}\n\n- **Categoría**: ${I.category}\n- **Enfoques posibles**: ${I.approaches.map((a, i) => `${i + 1}) ${a}`).join(" · ")}\n- **Conflicto**: ${I.conflict}\n- **Ejemplo visual**: ${I.visualExample}\n- **Solución**: ${I.solution}\n- **Cierre**: ${I.closing}\n- **Por qué funciona**: ${I.whyItWorks}\n`);
   await w("02-hooks.md", `# Hooks\n\n${pack.hooks.map((h, i) => `${i === pack.chosenHook ? "👉" : "-"} **${h.type}**: ${h.text}`).join("\n")}\n\n**Elegido**: ${pack.hooks[pack.chosenHook]?.text ?? "—"}\n`);
-  await w("03-guion.md", `# Guion (solo lo que se dice)\n\n${scriptText(S)}\n`);
-  await w("04-storyboard.md", `# Storyboard\n\n${tableMd(S)}\n${storyboardMd(S)}`); await w("storyboard.json", JSON.stringify(pack, null, 1));
-  await w("narracion-elevenlabs.txt", narrationClean(S)); await w("subtitulos.srt", srt(S)); await w("subtitulos.txt", S.map((s) => `${pad(s.n)}  ${s.subtitle}`).join("\n") + "\n");
+  await w("03-guion.md", `# Guion final (solo lo que se dice)\n\n${voices.ordered}`); await w("guion-por-voces.txt", voices.ordered); await w("elevenlabs-kap.txt", voices.kap); if (voices.narrator) await w("elevenlabs-narrador.txt", voices.narrator);
+  await w("04-storyboard.md", `# Storyboard\n\n${tableMd(S)}\n${storyboardMd(S)}`); await w("storyboard.json", JSON.stringify({ ...pack, scenes: S.map(toSpecScene) }, null, 1));
+  await w("subtitulos.srt", srt(S)); await w("subtitulos.txt", S.map((s) => `${pad(s.n)}  ${s.subtitle}`).join("\n") + "\n");
   for (const s of S) { const p = finalPrompt(s); await w(`prompts/scene-${pad(s.n)}.txt`, `${p.prompt}\n\n--- NEGATIVE PROMPT (global) ---\n${p.negative}\n\n--- ATTACH AS REFERENCE ---\n${p.references.join("\n")}\n`); }
-  await w("prompts-cortos.md", `# Prompts cortos (solo la escena; pega la Style Bible global una vez en tu generador, ver globales/)\n\n${S.map((s) => `## ${pad(s.n)} — ${s.sceneType}\n\`\`\`\n${scenePrompt(s)}\n\`\`\`\n`).join("\n")}`);
+  await w("prompts-cortos.md", `# Prompts cortos (solo la escena; carga la Style Bible global una vez en tu generador, ver globales/)\n\n${S.map((s) => `## ${pad(s.n)} — ${s.sceneType}\n\`\`\`\n${scenePrompt(s)}\n\`\`\`\n`).join("\n")}`);
+  await w("video-motion-prompts.md", motionMd(S)); await w("audio-plan.md", audioMd(pack)); await w("capcut-plan.md", capcutMd(pack));
+  await w("afirmaciones.md", `# Afirmaciones y opiniones\n\n## Afirmaciones psicológicas o científicas (separadas de la opinión)\n${cr.facts.map((c) => `- ${c.needsVerification ? "⚠️ VERIFICAR" : "ok"} — ${c.text}`).join("\n") || "—"}\n\n## Opiniones (del canal / de KAP)\n${cr.opinions.map((c) => `- ${c.text}`).join("\n") || "—"}\n`);
   await w("globales/style-bible.txt", STYLE_BIBLE + "\n"); await w("globales/kap-character-bible.txt", KAP_CHARACTER_BIBLE + "\n"); await w("globales/secondary-character-bible.txt", Object.values(SECONDARY_CHARACTER_BIBLE).map((x) => `- ${x}`).join("\n") + "\n"); await w("globales/global-negative-prompt.txt", GLOBAL_NEGATIVE_PROMPT + "\n"); await w("globales/format-9-16.txt", FORMAT_9_16 + "\n");
   await w("orden-y-duracion.md", `# Orden de las imágenes y duración\n\n${tableMd(S)}`);
-  await w("apariciones-kap.md", `# Apariciones de KAP\n\n${S.filter((s) => s.kapPresent).map((s) => `- Escena ${pad(s.n)} (${s.kapReason}): ${s.kapWhy} — «${s.narration}»`).join("\n") || "KAP no aparece."}\n\nKAP aparece en ${S.filter((s) => s.kapPresent).length} de ${S.length} escenas.\n`);
-  await w("ritmo-visual.md", rhythmMd(warnings)); await w("checklist.md", checklistMd(checklist));
+  await w("apariciones-kap.md", `# Apariciones de KAP\n\n${S.filter((s) => s.kapPresent).map((s) => `- Escena ${pad(s.n)} (${s.kapReason}${s.dialogue ? ", habla" : ""}): ${s.action} — aporta: ${s.kapAdds}`).join("\n") || "KAP no aparece."}\n\nKAP aparece en ${S.filter((s) => s.kapPresent).length} de ${S.length} escenas.\n`);
+  await w("ritmo-visual.md", rhythmMd(warnings)); await w("quality-check.md", checklistMd(checklist, ready));
   await fs.mkdir(path.join(dir, "imagenes"), { recursive: true }); await fs.mkdir(path.join(dir, "referencias"), { recursive: true });
   for (const ref of [KAP_REF, ...STYLE_REFS]) { try { await fs.copyFile(path.join(root, ref), path.join(dir, "referencias", path.basename(ref))); files.push(`referencias/${path.basename(ref)}`); } catch { /* sin referencia */ } }
-  await w("LEEME.md", `# Cómo usar este pack\n\n1. Carga (o pega una vez) los textos de \`globales/\` en tu generador de imágenes y adjunta \`referencias/\` (KAP: reference.jpg; estilo: el resto).\n2. Para cada escena usa \`prompts/scene-NN.txt\` (prompt final) o \`prompts-cortos.md\` si tu generador ya tiene la Style Bible cargada. Guarda la imagen como \`imagenes/scene-NN.png\`.\n3. \`narracion-elevenlabs.txt\` es lo único que se locuta (un párrafo por escena).\n4. Importa \`subtitulos.srt\` y monta en CapCut con \`orden-y-duracion.md\`: zoom, paneo, transiciones, música y efectos.\n5. Revisa \`checklist.md\` y \`ritmo-visual.md\` antes de exportar.\n`);
-  return { files, warnings, checklist };
+  await w("LEEME.md", `# Cómo usar este pack\n\n1. Carga (o pega una vez) los textos de \`globales/\` en tu generador y adjunta \`referencias/\` (KAP: reference.jpg; estilo: el resto).\n2. Cada escena: \`prompts/scene-NN.txt\` (prompt final) o \`prompts-cortos.md\` si ya tienes la Style Bible cargada. Guarda la imagen como \`imagenes/scene-NN.png\`. Si usas un generador de vídeo, \`video-motion-prompts.md\`.\n3. Voces: \`elevenlabs-kap.txt\` (KAP) y, si existe, \`elevenlabs-narrador.txt\`. Las descripciones visuales NO se locutan.\n4. Montaje: \`capcut-plan.md\` + \`subtitulos.srt\` + \`audio-plan.md\`.\n5. Antes de exportar: \`quality-check.md\` y \`ritmo-visual.md\`.\n`);
+  return { files, warnings, checklist, ready };
 }

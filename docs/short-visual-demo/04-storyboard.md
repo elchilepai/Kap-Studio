@@ -1,105 +1,127 @@
 # Storyboard
 
-| # | Tipo | Entra en | Dur. | Plano | KAP | Narración |
-|---|---|---|---|---|---|---|
-| 01 | KAP_PRESENTADOR | 0.0 s | 5.5 s | medium | sí (hook) | ¿Cuántas veces has escrito un mensaje… y lo has borrado antes de enviarlo? |
-| 02 | CINEMATIC_SCENE | 5.5 s | 4.0 s | wide | no | Lo escribes. Lo lees. Y de repente suena fatal. |
-| 03 | POV | 9.5 s | 3.6 s | pov | no | Lo borras. Lo reescribes. Lo borras otra vez. |
-| 04 | VISUAL_METAPHOR | 13.1 s | 4.5 s | low-angle | no | Y cada versión lo hace más grande de lo que era. |
-| 05 | BRAIN_VISUALIZATION | 17.6 s | 6.4 s | top-down | no | Tu cerebro trata el miedo a quedar mal como si fuera un peligro de verdad. |
-| 06 | KAP_PRESENTADOR | 24.0 s | 4.0 s | close-up | sí (opinion) | Sí. Tu propia cabeza te está poniendo la trampa. |
-| 07 | TRANSFORMATION | 28.0 s | 5.5 s | side | no | Pero un mensaje no tiene que ser perfecto. Solo tiene que ser claro. |
-| 08 | BEFORE_AFTER | 33.5 s | 4.5 s | wide | no | Una hora dándole vueltas… o cinco segundos y enviarlo. |
-| 09 | CINEMATIC_SCENE | 38.0 s | 3.5 s | side | no | Lo envías. Y no pasa nada terrible. |
-| 10 | REACTION | 41.5 s | 5.5 s | close-up | no | La mayoría de las veces, la otra persona ni se fija en la coma. |
-| 11 | KAP_PRESENTADOR | 47.0 s | 3.0 s | medium | sí (cierre) | Perfecto no sale. Enviado, sí. |
+| # | Bloque | Tipo | Entra en | Dur. | Plano | KAP | Voz |
+|---|---|---|---|---|---|---|---|
+| 01 | HOOK | KAP_PRESENTADOR | 0.0 s | 4.0 s | medium | sí (hook) | ¿Cuántas veces cambias lo que dices… para gustarle a alguien? |
+| 02 | PROBLEMA | DETAIL_SHOT | 4.0 s | 3.5 s | detail | sí (ejemplo) | — silencio — |
+| 03 | PROBLEMA | BRAIN_VISUALIZATION | 7.5 s | 4.0 s | wide | sí (explicacion) | Porque tu cabeza ya está ensayando todas las respuestas. |
+| 04 | EJEMPLO | REACTION | 11.5 s | 3.0 s | close-up | sí (reaccion) | Y llega un «vale». Solo eso. |
+| 05 | CONSECUENCIA | VISUAL_METAPHOR | 14.5 s | 3.5 s | top-down | sí (ejemplo) | Y de repente analizas hasta la coma. |
+| 06 | REALIZACION | KAP_PRESENTADOR | 18.0 s | 2.5 s | close-up | sí (opinion) | Y aquí está el problema. |
+| 07 | REALIZACION | OBJECT_METAPHOR | 20.5 s | 3.5 s | wide | sí (ejemplo) | Esto ya no es interés. Es ansiedad. |
+| 08 | NUEVA_ESTRATEGIA | TRANSFORMATION | 24.0 s | 3.0 s | side | sí (decision) | — silencio — |
+| 09 | RESULTADO | BEFORE_AFTER | 27.0 s | 4.0 s | wide | sí (ejemplo) | Y sigues con tu día. |
+| 10 | RESULTADO | POV | 31.0 s | 3.0 s | pov | sí (ejemplo) | — silencio — |
+| 11 | CIERRE | KAP_PRESENTADOR | 34.0 s | 6.0 s | medium | sí (cierre) | No necesitas gustarle a todo el mundo. Necesitas dejar de traicionarte para conseguirlo. |
 
-**Total: 50 s · 11 escenas**
+**Total: 40 s · 11 escenas**
 
-## ESCENA 01 — KAP_PRESENTADOR
-- **Narración** (se dice): "¿Cuántas veces has escrito un mensaje… y lo has borrado antes de enviarlo?"
-- **Visual** (se dibuja, NO se dice): KAP, a cámara en su estudio de neón rosa, levanta una ceja y balancea un móvil con la pantalla apagada entre dos dedos, con gesto seco.
-- **Acción visual**: KAP levanta una ceja y balancea el móvil entre dos dedos.
-- **Personajes**: KAP · **KAP**: sí — hook: Abre con una pregunta incómoda directa a cámara, sin presentación.
-- **Lugar**: Estudio de KAP · **Plano**: medium · centered, neon ring framing the head · **Emoción**: seco, ceja levantada
-- **Propósito**: Hook: plantear una situación reconocible en dos segundos. · **Duración**: 5.5 s · **Subtítulo**: «¿Cuántas veces lo has borrado antes de enviarlo?»
+## ESCENA 01 — KAP_PRESENTADOR (HOOK)
+- **KAP**: sí — hook: Abre con una pregunta incómoda directa a cámara, sin presentación. · aporta: Identidad del canal y curiosidad inmediata · **Qué hace**: KAP mira a cámara con el móvil en la mano, con la pantalla iluminada, y lo balancea entre dos dedos.
+- **Voz**: KAP: «¿Cuántas veces cambias lo que dices… para gustarle a alguien?»
+- **Visual** (se dibuja, NO se dice): KAP, a cámara en su estudio de neón rosa, sostiene un móvil encendido entre dos dedos y levanta una ceja con gesto seco, como si ya supiera la respuesta.
+- **Qué cambia visualmente**: El móvil se enciende en su mano y KAP levanta una ceja.
+- **Cámara**: medium, static at eye level, slow push-in · **Composición**: centered, neon ring framing the head, phone in the lower third · **Luz**: pink neon rim light plus the cold glow of the phone
+- **Lugar**: Estudio de KAP · **Emoción**: seco, ceja levantada · **Personajes**: KAP
+- **SFX**: pop suave de notificación · **Transición**: corte seco · **Subtítulo**: «¿Cuántas veces cambias lo que dices?» · **Duración**: 4.0 s
+- **Propósito**: Hook: una pregunta incómoda en los primeros segundos.
 
-## ESCENA 02 — CINEMATIC_SCENE
-- **Narración** (se dice): "Lo escribes. Lo lees. Y de repente suena fatal."
-- **Visual** (se dibuja, NO se dice): Noa, tumbada en la cama de su dormitorio a oscuras, ilumina su cara con la luz azul del móvil; los pulgares se quedan quietos sobre el teclado y las cejas se juntan.
-- **Acción visual**: La luz azul parpadea en su cara y los pulgares dudan, a punto de pulsar.
-- **Personajes**: NOA · **KAP**: no
-- **Lugar**: Dormitorio de Noa (noche) · **Plano**: wide · **Emoción**: inseguridad
-- **Propósito**: Situación cotidiana reconocible. · **Duración**: 4.0 s · **Subtítulo**: «Lo escribes. Lo lees. Suena fatal.»
+## ESCENA 02 — DETAIL_SHOT (PROBLEMA)
+- **KAP**: sí — ejemplo: Sus manos viven el problema: escribe y borra el mismo mensaje. · aporta: Muestra el comportamiento sin decirlo · **Qué hace**: Las manos de KAP teclean un mensaje, lo borran de golpe y empiezan otra vez, tres veces.
+- **Voz**: — silencio a propósito —
+- **Visual** (se dibuja, NO se dice): Primer plano de las manos de KAP sobre el móvil: los pulgares escriben una burbuja de mensaje, la borran de golpe y la reescriben, mientras versiones tachadas se acumulan detrás.
+- **Qué cambia visualmente**: La burbuja se escribe, se borra y se reescribe tres veces y las versiones tachadas se apilan.
+- **Cámara**: detail, locked-off macro, slight handheld drift · **Composición**: hands and phone filling the center, empty space above · **Luz**: cold blue phone glow in a dark room
+- **Lugar**: Dormitorio de KAP (noche) · **Emoción**: duda · **Personajes**: KAP
+- **SFX**: teclear, borrar (backspace) y teclear otra vez · **Transición**: corte seco al compás del backspace · **Subtítulo**: «Escribe. Borra. Escribe. Borra.» · **Duración**: 3.5 s
+- **Propósito**: Problema concreto: cambia el mensaje tres veces.
 
-## ESCENA 03 — POV
-- **Narración** (se dice): "Lo borras. Lo reescribes. Lo borras otra vez."
-- **Visual** (se dibuja, NO se dice): Vista desde los ojos de Noa: la pantalla del móvil con una burbuja de mensaje hecha de barras grises que se borra barra a barra, y detrás docenas de versiones tachadas apiladas.
-- **Acción visual**: Las barras grises se borran y reaparecen una y otra vez, tachando versiones.
-- **Personajes**: — · **KAP**: no
-- **Lugar**: Pantalla del móvil · **Plano**: pov · **Emoción**: agobio
-- **Propósito**: Mostrar el bucle de borrar y reescribir desde dentro. · **Duración**: 3.6 s · **Subtítulo**: «Lo borras. Lo reescribes. Otra vez.»
+## ESCENA 03 — BRAIN_VISUALIZATION (PROBLEMA)
+- **KAP**: sí — explicacion: Explica con su voz lo que pasa dentro de su cabeza. · aporta: Convierte un pensamiento abstracto en imagen · **Qué hace**: Una versión gigante de KAP, dentro de su mente, imagina respuestas posibles que aparecen como burbujas a su alrededor.
+- **Voz**: KAP: «Porque tu cabeza ya está ensayando todas las respuestas.»
+- **Visual** (se dibuja, NO se dice): Dentro de la mente de KAP, una versión gigante de KAP flota entre docenas de burbujas de respuesta posibles, unas sonrientes y otras con cara de enfado, mientras el KAP real, diminuto, mira desde abajo.
+- **Qué cambia visualmente**: Las burbujas de respuestas aparecen una tras otra alrededor del KAP gigante y crecen.
+- **Cámara**: wide, wide, slow pull back to reveal the scale · **Composición**: tiny KAP bottom center, giant KAP towering above, bubbles forming a ring · **Luz**: purple glow with warm bubble highlights
+- **Lugar**: Interior de la mente de KAP · **Emoción**: ansiedad · **Personajes**: KAP
+- **SFX**: latido grave con eco · **Transición**: zoom a través de una burbuja · **Subtítulo**: «Tu cabeza ensaya todas las respuestas» · **Duración**: 4.0 s
+- **Propósito**: Visualización mental: ensayar respuestas.
 
-## ESCENA 04 — VISUAL_METAPHOR
-- **Narración** (se dice): "Y cada versión lo hace más grande de lo que era."
-- **Visual** (se dibuja, NO se dice): Un avioncito de papel diminuto crece con cada borrador hasta convertirse en una torre gigante de hojas arrugadas que proyecta una sombra enorme sobre un escritorio pequeño.
-- **Acción visual**: El avioncito crece apilando hojas arrugadas hasta formar una torre gigante.
-- **Personajes**: — · **KAP**: no
-- **Lugar**: Escritorio de Noa (metáfora) · **Plano**: low-angle · **Emoción**: presión
-- **Propósito**: Metáfora de escala: el miedo agranda el mensaje. · **Duración**: 4.5 s · **Subtítulo**: «Cada versión lo agranda»
+## ESCENA 04 — REACTION (EJEMPLO)
+- **KAP**: sí — reaccion: Su cara cambia al leer la respuesta: se ve cómo le afecta. · aporta: Reacción emocional que el espectador reconoce · **Qué hace**: KAP lee la respuesta y su expresión pasa de la esperanza a la decepción.
+- **Voz**: KAP: «Y llega un «vale». Solo eso.»
+- **Visual** (se dibuja, NO se dice): Primer plano de KAP en el salón leyendo el móvil: las cejas suben con esperanza y de golpe caen, y la mirada se apaga mientras en la pantalla se ve solo una burbuja corta.
+- **Qué cambia visualmente**: La expresión de KAP cambia de la esperanza a la decepción en cuanto llega una burbuja corta.
+- **Cámara**: close-up, static close-up with a tiny push-in at the moment of the message · **Composición**: face on the right third, phone glow on the left · **Luz**: warm evening window light turning cooler with the phone glow
+- **Lugar**: Salón de KAP · **Emoción**: decepción · **Personajes**: KAP
+- **SFX**: notificación corta y luego silencio · **Transición**: corte seco · **Subtítulo**: «Y llega un «vale»» · **Duración**: 3.0 s
+- **Propósito**: Ejemplo: la respuesta corta y su efecto.
 
-## ESCENA 05 — BRAIN_VISUALIZATION
-- **Narración** (se dice): "Tu cerebro trata el miedo a quedar mal como si fuera un peligro de verdad."
-- **Visual** (se dibuja, NO se dice): Dentro de un cerebro de dibujos animados convertido en sala de control, un diminuto guardia pulsa un botón rojo de alarma que baña las paredes de luz roja, mientras un sobre pequeño espera tranquilo sobre la mesa.
-- **Acción visual**: El guardia pulsa la alarma y la sala se llena de luz roja.
-- **Personajes**: — · **KAP**: no
-- **Lugar**: Sala de control del cerebro · **Plano**: top-down · **Emoción**: alarma desproporcionada
-- **Propósito**: Explicar con una imagen por qué el cerebro reacciona así. · **Duración**: 6.4 s · **Subtítulo**: «Tu cerebro lo trata como un peligro»
+## ESCENA 05 — VISUAL_METAPHOR (CONSECUENCIA)
+- **KAP**: sí — ejemplo: Es él quien se hunde en el análisis: la consecuencia de seguir igual. · aporta: Muestra la consecuencia en lugar de decirla · **Qué hace**: KAP sobreanaliza la respuesta y a su alrededor la habitación se llena de burbujas de pensamientos.
+- **Voz**: KAP: «Y de repente analizas hasta la coma.»
+- **Visual** (se dibuja, NO se dice): Vista cenital del salón de KAP: él, sentado y diminuto en el centro, rodeado de cientos de burbujas de pensamiento que se multiplican hasta cubrir el suelo, el sofá y las paredes.
+- **Qué cambia visualmente**: Las burbujas de pensamiento se multiplican hasta llenar toda la habitación.
+- **Cámara**: top-down, top-down, slow rotation · **Composición**: tiny KAP at the center, bubbles forming concentric rings · **Luz**: flat cool light with soft shadows under each bubble
+- **Lugar**: Salón de KAP invadido de pensamientos · **Emoción**: agobio · **Personajes**: KAP
+- **SFX**: burbujas que revientan en cascada · **Transición**: whoosh de burbujas · **Subtítulo**: «Analizas hasta la coma» · **Duración**: 3.5 s
+- **Propósito**: Consecuencia: el pensamiento lo desborda.
 
-## ESCENA 06 — KAP_PRESENTADOR
-- **Narración** (se dice): "Sí. Tu propia cabeza te está poniendo la trampa."
-- **Visual** (se dibuja, NO se dice): KAP en primer plano asiente despacio con media sonrisa torcida y un ojo entrecerrado, y señala con el pulgar hacia atrás como diciendo «mira lo que hay detrás».
-- **Acción visual**: KAP asiente y señala con el pulgar hacia atrás con media sonrisa.
-- **Personajes**: KAP · **KAP**: sí — opinion: Opina con humor seco sobre la visualización del cerebro.
-- **Lugar**: Estudio de KAP · **Plano**: close-up · **Emoción**: socarrón
-- **Propósito**: Opinión seca de KAP sobre lo que se acaba de ver. · **Duración**: 4.0 s · **Subtítulo**: «Tu cabeza te pone la trampa»
+## ESCENA 06 — KAP_PRESENTADOR (REALIZACION)
+- **KAP**: sí — opinion: Rompe la cuarta pared para señalar el patrón con humor seco. · aporta: Pausa de humor y señala el momento de darse cuenta · **Qué hace**: KAP mira a cámara, deja caer el móvil a un lado y señala con el pulgar hacia atrás, con una media sonrisa torcida.
+- **Voz**: KAP: «Y aquí está el problema.»
+- **Visual** (se dibuja, NO se dice): KAP en primer plano mira a cámara con una media sonrisa torcida, deja el móvil a un lado y señala con el pulgar por encima del hombro hacia la escena anterior.
+- **Qué cambia visualmente**: KAP baja el móvil y señala con el pulgar hacia atrás con media sonrisa.
+- **Cámara**: close-up, static close-up · **Composición**: face centered, thumb entering from the right edge · **Luz**: pink neon rim light
+- **Lugar**: Estudio de KAP · **Emoción**: socarrón · **Personajes**: KAP
+- **SFX**: — · **Transición**: corte seco · **Subtítulo**: «Y aquí está el problema» · **Duración**: 2.5 s
+- **Propósito**: Realización: KAP señala el patrón.
 
-## ESCENA 07 — TRANSFORMATION
-- **Narración** (se dice): "Pero un mensaje no tiene que ser perfecto. Solo tiene que ser claro."
-- **Visual** (se dibuja, NO se dice): La torre gigante de papel arrugado se pliega sola, hoja a hoja, y se convierte otra vez en un avioncito de papel limpio y ligero que flota sobre el escritorio.
-- **Acción visual**: La torre se pliega y se encoge hasta ser un avioncito limpio.
-- **Personajes**: — · **KAP**: no
-- **Lugar**: Escritorio de Noa (metáfora) · **Plano**: side · **Emoción**: alivio
-- **Propósito**: Transformación: simplificar el mensaje devuelve su tamaño real. · **Duración**: 5.5 s · **Subtítulo**: «Perfecto no. Claro.»
+## ESCENA 07 — OBJECT_METAPHOR (REALIZACION)
+- **KAP**: sí — ejemplo: Es él quien se ve atrapado y entiende el patrón. · aporta: La realización: el círculo del que no sale · **Qué hace**: KAP, atrapado dentro de un círculo formado por el móvil, notificaciones y pensamientos, mira a su alrededor y entiende lo que pasa.
+- **Voz**: KAP: «Esto ya no es interés. Es ansiedad.»
+- **Visual** (se dibuja, NO se dice): KAP está encerrado dentro de un círculo cerrado hecho de móviles, notificaciones y burbujas de pensamiento que giran a su alrededor; su expresión cambia de agobio a comprensión.
+- **Qué cambia visualmente**: El círculo de móviles y notificaciones gira alrededor de KAP y su expresión cambia de agobio a comprensión.
+- **Cámara**: wide, wide, slow orbit · **Composición**: KAP in the center, ring of objects framing him symmetrically · **Luz**: cold blue glow from the phones, a single warm light on KAP's face
+- **Lugar**: Círculo de notificaciones (metáfora) · **Emoción**: comprensión · **Personajes**: KAP
+- **SFX**: zumbido de notificaciones que se va apagando · **Transición**: corte seco · **Subtítulo**: «Esto ya no es interés. Es ansiedad.» · **Duración**: 3.5 s
+- **Propósito**: Realización: visualiza el ciclo móvil-notificación-pensamiento.
 
-## ESCENA 08 — BEFORE_AFTER
-- **Narración** (se dice): "Una hora dándole vueltas… o cinco segundos y enviarlo."
-- **Visual** (se dibuja, NO se dice): Pantalla dividida: a la izquierda, Noa rodeada de bolas de papel bajo un reloj de pared con las agujas muy avanzadas; a la derecha, Noa relajada con una sola burbuja de mensaje limpia y el mismo reloj casi sin avanzar.
-- **Acción visual**: El lado izquierdo se llena de papeles y el derecho se queda limpio.
-- **Personajes**: NOA · **KAP**: no
-- **Lugar**: Pantalla dividida con dos relojes · **Plano**: wide · **Emoción**: tenso frente a ligero
-- **Propósito**: Comparación: el coste real de darle mil vueltas. · **Duración**: 4.5 s · **Subtítulo**: «Una hora… o cinco segundos»
+## ESCENA 08 — TRANSFORMATION (NUEVA_ESTRATEGIA)
+- **KAP**: sí — decision: Es su decisión: deja el móvil y sale del círculo. · aporta: La nueva reacción, pequeña pero real · **Qué hace**: KAP deja el móvil boca abajo sobre la mesa y sale del círculo caminando.
+- **Voz**: — silencio a propósito —
+- **Visual** (se dibuja, NO se dice): KAP pone el móvil boca abajo sobre la mesa, el círculo de notificaciones se deshace en polvo y KAP camina fuera de él hacia una luz cálida de ventana.
+- **Qué cambia visualmente**: El círculo se deshace en polvo y KAP sale caminando hacia la luz.
+- **Cámara**: side, side tracking shot following KAP · **Composición**: KAP on the left third walking right toward the light · **Luz**: warm window light replacing the cold blue glow
+- **Lugar**: Escritorio de KAP · **Emoción**: alivio · **Personajes**: KAP
+- **SFX**: click del móvil sobre la mesa y una exhalación · **Transición**: match cut: la mano suelta el móvil · **Subtítulo**: «Lo deja. Sin drama.» · **Duración**: 3.0 s
+- **Propósito**: Nueva estrategia: una decisión pequeña y real.
 
-## ESCENA 09 — CINEMATIC_SCENE
-- **Narración** (se dice): "Lo envías. Y no pasa nada terrible."
-- **Visual** (se dibuja, NO se dice): Noa pulsa enviar con el pulgar junto a una ventana abierta y el avioncito de papel sale volando hacia las luces de la ciudad al atardecer, mientras Noa sonríe un poco.
-- **Acción visual**: Noa pulsa enviar y el avioncito sale volando por la ventana.
-- **Personajes**: NOA · **KAP**: no
-- **Lugar**: Ventana de Noa al atardecer · **Plano**: side · **Emoción**: alivio
-- **Propósito**: Payoff visual: enviar libera. · **Duración**: 3.5 s · **Subtítulo**: «Lo envías. No pasa nada.»
+## ESCENA 09 — BEFORE_AFTER (RESULTADO)
+- **KAP**: sí — ejemplo: Es él quien vive la diferencia: hace cosas en lugar de esperar. · aporta: El resultado visible del cambio · **Qué hace**: KAP se entrena, estudia, toca la guitarra y queda con amigos mientras el reloj avanza.
+- **Voz**: KAP: «Y sigues con tu día.»
+- **Visual** (se dibuja, NO se dice): Pantalla dividida: a la izquierda, el KAP de antes, pegado al móvil con el reloj parado; a la derecha, el KAP de ahora en cuatro mini-escenas (entrenar, estudiar, tocar música, reír con amigos) con el reloj avanzando.
+- **Qué cambia visualmente**: El lado derecho se llena de actividades y el reloj avanza mientras el izquierdo sigue quieto.
+- **Cámara**: wide, locked wide with a slow slide toward the right half · **Composición**: vertical split, equal weight, clocks at the top of each half · **Luz**: cold dim on the left, warm bright on the right
+- **Lugar**: Cuatro lugares en pantalla dividida · **Emoción**: contraste · **Personajes**: KAP
+- **SFX**: pasos, guitarra, pesas y risas en mezcla ligera · **Transición**: wipe de izquierda a derecha · **Subtítulo**: «Y sigues con tu día» · **Duración**: 4.0 s
+- **Propósito**: Resultado: la diferencia entre esperar y vivir.
 
-## ESCENA 10 — REACTION
-- **Narración** (se dice): "La mayoría de las veces, la otra persona ni se fija en la coma."
-- **Visual** (se dibuja, NO se dice): Primer plano de Noa: una respuesta corta con un pulgar arriba aparece en el móvil y Noa levanta las cejas, sorprendida, y suelta el aire.
-- **Acción visual**: Llega la respuesta y Noa levanta las cejas y suelta el aire.
-- **Personajes**: NOA · **KAP**: no
-- **Lugar**: Dormitorio de Noa (día) · **Plano**: close-up · **Emoción**: sorpresa aliviada
-- **Propósito**: Reacción: el miedo era mayor que la realidad. · **Duración**: 5.5 s · **Subtítulo**: «Casi nadie se fija en la coma»
+## ESCENA 10 — POV (RESULTADO)
+- **KAP**: sí — ejemplo: Es su punto de vista: el móvil vibra y esta vez no cambia lo que hace. · aporta: La prueba de que el cambio funciona · **Qué hace**: El móvil vibra mientras KAP practica la guitarra; KAP lo mira un segundo y sigue tocando.
+- **Voz**: — silencio a propósito —
+- **Visual** (se dibuja, NO se dice): Vista desde los ojos de KAP: sus manos tocan la guitarra y, al fondo de la mesa, el móvil vibra y se ilumina; la mirada se desvía un segundo y vuelve a las cuerdas.
+- **Qué cambia visualmente**: El móvil vibra y se ilumina un instante, la vista se desvía y vuelve a las cuerdas.
+- **Cámara**: pov, POV with a tiny glance shift · **Composición**: hands and guitar in the lower half, phone small at the upper right · **Luz**: warm desk lamp light, the phone glow barely noticeable
+- **Lugar**: Mesa de trabajo de KAP · **Emoción**: calma · **Personajes**: KAP
+- **SFX**: vibración del móvil sobre la mesa · **Transición**: corte seco · **Subtítulo**: «Vibra. Lo miras. Sigues.» · **Duración**: 3.0 s
+- **Propósito**: Resultado: no cambia su comportamiento al recibir la notificación.
 
-## ESCENA 11 — KAP_PRESENTADOR
-- **Narración** (se dice): "Perfecto no sale. Enviado, sí."
-- **Visual** (se dibuja, NO se dice): KAP a cámara en su estudio se encoge de hombros y deja el móvil bocabajo sobre la mesa con un gesto seco.
-- **Acción visual**: KAP se encoge de hombros y deja el móvil bocabajo.
-- **Personajes**: KAP · **KAP**: sí — cierre: Remata con una frase corta y seca en lugar de una lección.
-- **Lugar**: Estudio de KAP · **Plano**: medium · **Emoción**: seco
-- **Propósito**: Cierre corto y seco, sin moraleja. · **Duración**: 3.0 s · **Subtítulo**: «Perfecto no sale. Enviado, sí.»
+## ESCENA 11 — KAP_PRESENTADOR (CIERRE)
+- **KAP**: sí — cierre: Remata a cámara con su frase, sin lección ni discurso. · aporta: Cierre con la idea y la identidad del canal · **Qué hace**: KAP mira a cámara, se encoge de hombros y deja el móvil boca abajo con un gesto seco.
+- **Voz**: KAP: «No necesitas gustarle a todo el mundo. Necesitas dejar de traicionarte para conseguirlo.»
+- **Visual** (se dibuja, NO se dice): KAP a cámara en su estudio de neón rosa se encoge de hombros y deja el móvil boca abajo sobre la mesa con un gesto seco mientras dice la frase final.
+- **Qué cambia visualmente**: KAP se encoge de hombros y deja el móvil boca abajo.
+- **Cámara**: medium, static at eye level, very slow pull-out · **Composición**: centered, table edge at the bottom · **Luz**: pink neon rim light
+- **Lugar**: Estudio de KAP · **Emoción**: seco · **Personajes**: KAP
+- **SFX**: — · **Transición**: corte seco al negro · **Subtítulo**: «Deja de traicionarte para gustar» · **Duración**: 6.0 s (pausa: Cierre: KAP a cámara con la última frase sin música para que se oiga.)
+- **Propósito**: Cierre corto con la idea del Short.

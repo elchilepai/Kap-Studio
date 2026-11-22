@@ -1,7 +1,7 @@
 # Cómo usar este pack
 
-1. Carga (o pega una vez) los textos de `globales/` en tu generador de imágenes y adjunta `referencias/` (KAP: reference.jpg; estilo: el resto).
-2. Para cada escena usa `prompts/scene-NN.txt` (prompt final) o `prompts-cortos.md` si tu generador ya tiene la Style Bible cargada. Guarda la imagen como `imagenes/scene-NN.png`.
-3. `narracion-elevenlabs.txt` es lo único que se locuta (un párrafo por escena).
-4. Importa `subtitulos.srt` y monta en CapCut con `orden-y-duracion.md`: zoom, paneo, transiciones, música y efectos.
-5. Revisa `checklist.md` y `ritmo-visual.md` antes de exportar.
+1. Carga (o pega una vez) los textos de `globales/` en tu generador y adjunta `referencias/` (KAP: reference.jpg; estilo: el resto).
+2. Cada escena: `prompts/scene-NN.txt` (prompt final) o `prompts-cortos.md` si ya tienes la Style Bible cargada. Guarda la imagen como `imagenes/scene-NN.png`. Si usas un generador de vídeo, `video-motion-prompts.md`.
+3. Voces: `elevenlabs-kap.txt` (KAP) y, si existe, `elevenlabs-narrador.txt`. Las descripciones visuales NO se locutan.
+4. Montaje: `capcut-plan.md` + `subtitulos.srt` + `audio-plan.md`.
+5. Antes de exportar: `quality-check.md` y `ritmo-visual.md`.

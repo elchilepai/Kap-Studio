@@ -20,3 +20,12 @@ El motor de animación procedural (`src/animation`, render de vídeo, lip-sync, 
 ## Prueba de concepto (5 escenas, sin vídeo)
 - `docs/storyboard-concept/propuesta-validada/`: paquete listo para generar las 5 imágenes (La torre de KAP: presenta → ve un logro → intenta y falla → observa y prueba otra estrategia → progreso). Está escrito a mano y **pasa** `storyboardReasons`.
 - `docs/storyboard-concept/qwen-sin-editar/`: lo que escribió Qwen3-14B con el mismo código (25 min, 1 reescritura): **no pasa** su propia comprobación (narración de la escena 1 como instrucción visual y sin segundo intento) y la historia es floja (libro de poesía, habitación oscura y triste). Se deja tal cual como evidencia.
+
+## Motor de Shorts virales de KAP (Paso 1 revisado)
+KAP es el protagonista y presentador: el hilo conductor (habla a cámara, vive el problema, reacciona, se equivoca, entiende, prueba otra cosa, remata). Un Short de 20-60 s son 8-14 escenas de 13 tipos (`KAP_PRESENTADOR`, `KAP_EXAMPLE`, `CINEMATIC_SCENE`, `POV`, `REACTION`, `VISUAL_METAPHOR`, `BRAIN_VISUALIZATION`, `BEFORE_AFTER`, `OBJECT_METAPHOR`, `TRANSFORMATION`, `DETAIL_SHOT`, `ENVIRONMENT`, `INFOGRAPHIC`) agrupadas en 8 bloques (HOOK → PROBLEMA → EJEMPLO → CONSECUENCIA → REALIZACIÓN → NUEVA ESTRATEGIA → RESULTADO → CIERRE). Regla: ACCIÓN > IMAGEN > DIÁLOGO > EXPLICACIÓN.
+- `narrative/visualShort.ts`: escena, regla de KAP (razón + qué hace + qué aporta), «¿qué le pasa a KAP y qué hace diferente?» (`readinessIssues`) y Visual Rhythm Check (avisos, no reglas rígidas).
+- `narrative/visualPrompt.ts`: prompt de escena corto + Style Bible global (una vez) + ficha de KAP solo donde sale.
+- `narrative/shortSafety.ts`: avisos de contenido (coach, gurú, manipulación, generalizaciones de género, humillación) y afirmaciones a verificar separadas de las opiniones.
+- `server/images/shortPack.ts`: pack completo (guion por voces KAP/NARRADOR para ElevenLabs, storyboard, subtítulos, prompts, movimiento, audio, CapCut, control de calidad).
+- `server/shorts/stages.ts`: 9 etapas recuperables (idea, hooks, script, storyboard, visual-prompts, motion, audio, quality-check, export) con resultado en disco por etapa.
+Ejemplo manual en `docs/short-visual-demo/` («Deja de perseguir aprobación»).

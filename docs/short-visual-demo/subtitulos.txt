@@ -1,11 +1,11 @@
-01  ¿Cuántas veces lo has borrado antes de enviarlo?
-02  Lo escribes. Lo lees. Suena fatal.
-03  Lo borras. Lo reescribes. Otra vez.
-04  Cada versión lo agranda
-05  Tu cerebro lo trata como un peligro
-06  Tu cabeza te pone la trampa
-07  Perfecto no. Claro.
-08  Una hora… o cinco segundos
-09  Lo envías. No pasa nada.
-10  Casi nadie se fija en la coma
-11  Perfecto no sale. Enviado, sí.
+01  ¿Cuántas veces cambias lo que dices?
+02  Escribe. Borra. Escribe. Borra.
+03  Tu cabeza ensaya todas las respuestas
+04  Y llega un «vale»
+05  Analizas hasta la coma
+06  Y aquí está el problema
+07  Esto ya no es interés. Es ansiedad.
+08  Lo deja. Sin drama.
+09  Y sigues con tu día
+10  Vibra. Lo miras. Sigues.
+11  Deja de traicionarte para gustar
