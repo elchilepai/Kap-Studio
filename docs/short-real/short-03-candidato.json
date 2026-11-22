@@ -1,0 +1,543 @@
+{
+ "number": 1,
+ "title": "KAP y la bicicleta",
+ "request": "Crea un Short de KAP. Tema: «¿Por qué sentimos que todos avanzan menos nosotros?». KAP lo descubre mediante una pequeña historia visual, no mediante un discurso. Puede aparecer su hermano pequeño.",
+ "request_parsed": {
+  "number": 4,
+  "exact": false,
+  "cast": [
+   "KAP"
+  ]
+ },
+ "generationMin": 33.3,
+ "scenes": 6,
+ "words": 222,
+ "estimatedSec": 81,
+ "irValid": true,
+ "irErrors": [],
+ "retention": {
+  "checks": [
+   {
+    "id": "hook-claro",
+    "ok": true
+   },
+   {
+    "id": "problema-rapido",
+    "ok": true
+   },
+   {
+    "id": "accion-antes-de-explicar",
+    "ok": true
+   },
+   {
+    "id": "cambia-varias-veces",
+    "ok": true
+   },
+   {
+    "id": "escalada",
+    "ok": false,
+    "note": "cadena causal real (intento de KAP con un objeto → consecuencia → reacción → estrategia distinta → resultado → cambio posterior): el gancho no muestra a alguien consiguiendo algo con el objeto (la comparación debe verse desde el principio); el segundo intento repite el primero: debe cambiar la acción, el objeto o la estrategia",
+    "fix": "rewrite"
+   },
+   {
+    "id": "giro",
+    "ok": true
+   },
+   {
+    "id": "remate",
+    "ok": true
+   },
+   {
+    "id": "sin-repetidos",
+    "ok": true
+   },
+   {
+    "id": "nada-eliminable",
+    "ok": true
+   },
+   {
+    "id": "sin-tramos-solo-dialogo",
+    "ok": true
+   },
+   {
+    "id": "no-predecible",
+    "ok": true
+   },
+   {
+    "id": "duracion-justa",
+    "ok": false,
+    "fix": "rewrite",
+    "note": "dura 39.6 s (< 50 s)"
+   }
+  ],
+  "failed": [
+   "escalada",
+   "duracion-justa"
+  ],
+  "passed": 10,
+  "total": 12,
+  "seconds": 39.6
+ },
+ "beats": [
+  {
+   "phase": "contexto",
+   "step": "intento",
+   "goal": "KAP quiere ayudar a su hermano montando en la bicicleta",
+   "action": "KAP mira a su hermano subir a la bicicleta y rodar con facilidad. KAP se acerca a la bicicleta, se sube y empieza a pedalear.",
+   "reaction": "La bicicleta se tambalea. KAP se equilibra con dificultad, pero no logra avanzar.",
+   "change": "KAP se queda quieto, mirando al suelo.",
+   "seconds": 4,
+   "shot": "general",
+   "characters": [
+    "KAP",
+    "Hermano de KAP"
+   ],
+   "location": "Calle",
+   "time": "mañana",
+   "sound": "steps",
+   "music": "start",
+   "dialogue": {
+    "speaker": "Hermano de KAP",
+    "text": "Vamos, KAP. Solo tienes que intentarlo."
+   }
+  },
+  {
+   "phase": "escalada",
+   "step": "fallo",
+   "goal": "KAP no logra mantener el equilibrio",
+   "action": "KAP vuelve a subir a la bicicleta, pero esta vez se desequilibra y cae al suelo.",
+   "reaction": "KAP se queda sentado en el suelo, con la cara hacia abajo, respirando con dificultad. Su hermano lo mira con preocupación.",
+   "change": "KAP se levanta lentamente, con la cabeza baja.",
+   "seconds": 4,
+   "shot": "primer plano",
+   "characters": [
+    "KAP"
+   ],
+   "location": "Calle",
+   "time": "mañana",
+   "sound": "bump",
+   "music": "impact",
+   "dialogue": {
+    "speaker": "KAP",
+    "text": "No puedo."
+   }
+  },
+  {
+   "phase": "escalada",
+   "step": "reaccion",
+   "goal": "KAP se compara con su hermano",
+   "action": "KAP mira a su hermano, que ahora está rodando sin dificultad. KAP baja la mirada y se frota las manos nerviosamente.",
+   "reaction": "El hermano de KAP lo observa y se detiene, luego camina hacia él con paso lento.",
+   "change": "KAP levanta la vista hacia su hermano.",
+   "seconds": 3,
+   "shot": "medio",
+   "characters": [
+    "KAP",
+    "Hermano de KAP"
+   ],
+   "location": "Calle",
+   "time": "mañana",
+   "sound": "none",
+   "music": "silence"
+  },
+  {
+   "phase": "giro",
+   "step": "segundo-intento",
+   "goal": "KAP cambia su enfoque al ver lo que hace su hermano",
+   "action": "KAP observa cómo su hermano se mueve con naturalidad. KAP sube a la bicicleta de nuevo, pero esta vez se concentra en los movimientos de su hermano.",
+   "reaction": "La bicicleta se mueve con mayor estabilidad. KAP empieza a avanzar, aunque lentamente.",
+   "change": "KAP comienza a rodar con mayor confianza.",
+   "seconds": 5,
+   "shot": "seguimiento",
+   "characters": [
+    "KAP",
+    "Hermano de KAP"
+   ],
+   "location": "Calle",
+   "time": "mañana",
+   "sound": "none",
+   "music": "change"
+  },
+  {
+   "phase": "remate",
+   "step": "descubrimiento",
+   "goal": "KAP entiende que cada uno tiene su ritmo",
+   "action": "KAP se detiene, mira a su hermano y luego a la bicicleta. Sonríe levemente.",
+   "reaction": "El hermano de KAP lo observa con una sonrisa pequeña y se aleja para seguir rodando.",
+   "change": "KAP continúa pedaleando, ahora con más seguridad.",
+   "seconds": 4,
+   "shot": "general",
+   "characters": [
+    "KAP",
+    "Hermano de KAP"
+   ],
+   "location": "Calle",
+   "time": "mañana",
+   "sound": "none",
+   "music": "stop",
+   "dialogue": {
+    "speaker": "KAP",
+    "text": "Bueno… algo es algo."
+   }
+  },
+  {
+   "phase": "remate",
+   "step": "cambio",
+   "goal": "KAP se siente un poco más seguro",
+   "action": "KAP sigue avanzando con la bicicleta, ahora con una postura más relajada. Mira al horizonte y sonríe levemente.",
+   "reaction": "La bicicleta rueda de forma estable. KAP no se detiene.",
+   "change": "KAP se mueve con mayor confianza.",
+   "seconds": 3,
+   "shot": "general",
+   "characters": [
+    "KAP"
+   ],
+   "location": "Calle",
+   "time": "mañana",
+   "sound": "none",
+   "music": "none"
+  }
+ ],
+ "scenesPlan": [
+  {
+   "title": "KAP quiere ayudar a su hermano montando en la bicicleta",
+   "location": "Calle",
+   "lines": [
+    {
+     "speaker": "",
+     "text": "KAP mira a su hermano subir a la bicicleta y rodar con facilidad. KAP se acerca a la bicicleta, se sube y empieza a pedalear."
+    },
+    {
+     "speaker": "",
+     "text": "La bicicleta se tambalea. KAP se equilibra con dificultad, pero no logra avanzar."
+    },
+    {
+     "speaker": "Hermano de KAP",
+     "text": "Vamos, KAP. Solo tienes que intentarlo."
+    }
+   ],
+   "memory": [
+    "acto: conflicto | KAP quiere ayudar a su hermano montando en la bicicleta"
+   ],
+   "stage": "conflicto",
+   "shot": "general",
+   "time": "mañana",
+   "interior": false,
+   "directions": [
+    "plano: general en 0.3s",
+    "marca-musica: inicio en 0.3s",
+    "sonido: pasos en 1.0s durante 1.9s",
+    "sonido: ambiente en 0.3s durante 9.4s"
+   ],
+   "change": "KAP se queda quieto, mirando al suelo."
+  },
+  {
+   "title": "KAP no logra mantener el equilibrio",
+   "location": "Calle",
+   "lines": [
+    {
+     "speaker": "",
+     "text": "KAP vuelve a subir a la bicicleta, pero esta vez se desequilibra y cae al suelo."
+    },
+    {
+     "speaker": "",
+     "text": "KAP se queda sentado en el suelo, con la cara hacia abajo, respirando con dificultad. Su hermano lo mira con preocupación."
+    },
+    {
+     "speaker": "KAP",
+     "text": "No puedo."
+    }
+   ],
+   "memory": [
+    "acto: desarrollo | KAP no logra mantener el equilibrio"
+   ],
+   "stage": "desarrollo",
+   "shot": "primer plano",
+   "time": "mañana",
+   "interior": false,
+   "directions": [
+    "plano: primer plano KAP en 0.3s",
+    "impacto: en 0.3s",
+    "sonido: golpe en 0.3s",
+    "sonido: ambiente en 0.3s durante 6.1s"
+   ],
+   "change": "KAP se levanta lentamente, con la cabeza baja.",
+   "transition": "cut"
+  },
+  {
+   "title": "KAP se compara con su hermano",
+   "location": "Calle",
+   "lines": [
+    {
+     "speaker": "",
+     "text": "KAP mira a su hermano, que ahora está rodando sin dificultad. KAP baja la mirada y se frota las manos nerviosamente."
+    },
+    {
+     "speaker": "",
+     "text": "El hermano de KAP lo observa y se detiene, luego camina hacia él con paso lento."
+    }
+   ],
+   "memory": [],
+   "stage": "desarrollo",
+   "shot": "medio",
+   "time": "mañana",
+   "interior": false,
+   "directions": [
+    "plano: medio KAP en 0.3s",
+    "plano: primer plano KAP en 2.2s",
+    "silencio: en 2.2s durante 1.5s",
+    "sonido: llamar en 1.5s",
+    "sonido: ambiente en 0.3s durante 5.8s"
+   ],
+   "change": "KAP levanta la vista hacia su hermano.",
+   "transition": "cut"
+  },
+  {
+   "title": "KAP cambia su enfoque al ver lo que hace su hermano",
+   "location": "Calle",
+   "lines": [
+    {
+     "speaker": "",
+     "text": "KAP observa cómo su hermano se mueve con naturalidad. KAP sube a la bicicleta de nuevo, pero esta vez se concentra en los movimientos de su hermano."
+    },
+    {
+     "speaker": "",
+     "text": "La bicicleta se mueve con mayor estabilidad. KAP empieza a avanzar, aunque lentamente."
+    }
+   ],
+   "memory": [
+    "acto: emocional | KAP cambia su enfoque al ver lo que hace su hermano"
+   ],
+   "stage": "emocional",
+   "shot": "medio",
+   "time": "mañana",
+   "interior": false,
+   "directions": [
+    "camara: seguir KAP en 0.3s",
+    "marca-musica: cambio en 0.3s",
+    "sonido: llamar en 1.0s",
+    "sonido: ambiente en 0.3s durante 5.5s"
+   ],
+   "change": "KAP comienza a rodar con mayor confianza.",
+   "transition": "cut"
+  },
+  {
+   "title": "KAP entiende que cada uno tiene su ritmo",
+   "location": "Calle",
+   "lines": [
+    {
+     "speaker": "",
+     "text": "KAP se detiene, mira a su hermano y luego a la bicicleta. Sonríe levemente."
+    },
+    {
+     "speaker": "",
+     "text": "El hermano de KAP lo observa con una sonrisa pequeña y se aleja para seguir rodando."
+    },
+    {
+     "speaker": "KAP",
+     "text": "Bueno… algo es algo."
+    }
+   ],
+   "memory": [
+    "acto: resolucion | KAP entiende que cada uno tiene su ritmo"
+   ],
+   "stage": "resolucion",
+   "shot": "general",
+   "time": "mañana",
+   "interior": false,
+   "directions": [
+    "plano: general en 0.3s",
+    "plano: primer plano KAP en 2.3s",
+    "marca-musica: fin en 0.3s",
+    "sonido: ambiente en 0.3s durante 7.2s"
+   ],
+   "change": "KAP continúa pedaleando, ahora con más seguridad.",
+   "transition": "cut"
+  },
+  {
+   "title": "KAP se siente un poco más seguro",
+   "location": "Calle",
+   "lines": [
+    {
+     "speaker": "",
+     "text": "KAP sigue avanzando con la bicicleta, ahora con una postura más relajada. Mira al horizonte y sonríe levemente."
+    },
+    {
+     "speaker": "",
+     "text": "La bicicleta rueda de forma estable. KAP no se detiene."
+    }
+   ],
+   "memory": [
+    "gancho: KAP se mueve con mayor confianza."
+   ],
+   "stage": "resolucion",
+   "shot": "general",
+   "time": "mañana",
+   "interior": false,
+   "directions": [
+    "plano: general en 0.3s",
+    "sonido: pasos en 0.3s durante 2.0s",
+    "sonido: ambiente en 0.3s durante 5.5s"
+   ],
+   "change": "KAP se mueve con mayor confianza.",
+   "transition": "cut"
+  }
+ ],
+ "gate": {
+  "localPatches": 0,
+  "codeRepairs": 0
+ },
+ "usage": {
+  "promptTokens": 10835,
+  "outputTokens": 2712,
+  "totalMs": 1995352.84923,
+  "loadMs": 11629.166425,
+  "promptMs": 239908.56999999998,
+  "evalMs": 1743722.474
+ },
+ "calls": 2,
+ "retries": 0,
+ "warnings": [
+  "SHORT_RETENTION_CHECK · escalada: cadena causal real (intento de KAP con un objeto → consecuencia → reacción → estrategia distinta → resultado → cambio posterior): el gancho no muestra a alguien consiguiendo algo con el objeto (la comparación debe verse desde el principio); el segundo intento repite el primero: debe cambiar la acción, el objeto o la estrategia",
+  "SHORT_RETENTION_CHECK · duracion-justa: dura 39.6 s (< 50 s)",
+  "SHORT_AUDIO_GAP · 22.8-31 s sin ningún sonido de acción ni diálogo (revisar: un silencio solo vale si tiene función dramática)",
+  "El contrato narrativo del Short falló en la primera versión: se pidió una reescritura completa."
+ ],
+ "story": {
+  "objeto": "Bicicleta destartalada",
+  "objetivo": "KAP quiere montar en la bicicleta para ayudar a su hermano a ir al colegio, pero no confía en sus habilidades",
+  "title": "KAP y la bicicleta",
+  "logline": "KAP intenta montar en una bicicleta destartalada para ayudar a su hermano, pero se siente atrapado por el miedo al fracaso. Solo al ver lo que su hermano hace, descubre que no todos avanzan al mismo ritmo.",
+  "hook": "KAP observa a su hermano pequeño subir a una bicicleta destartalada y rodar sin dificultad. Él intenta hacerlo, pero se cae.",
+  "cast": [
+   "KAP",
+   "Hermano de KAP"
+  ],
+  "beats": [
+   {
+    "phase": "contexto",
+    "step": "intento",
+    "goal": "KAP quiere ayudar a su hermano montando en la bicicleta",
+    "action": "KAP mira a su hermano subir a la bicicleta y rodar con facilidad. KAP se acerca a la bicicleta, se sube y empieza a pedalear.",
+    "reaction": "La bicicleta se tambalea. KAP se equilibra con dificultad, pero no logra avanzar.",
+    "change": "KAP se queda quieto, mirando al suelo.",
+    "seconds": 4,
+    "shot": "general",
+    "characters": [
+     "KAP",
+     "Hermano de KAP"
+    ],
+    "location": "Calle",
+    "time": "mañana",
+    "sound": "steps",
+    "music": "start",
+    "dialogue": {
+     "speaker": "Hermano de KAP",
+     "text": "Vamos, KAP. Solo tienes que intentarlo."
+    }
+   },
+   {
+    "phase": "escalada",
+    "step": "fallo",
+    "goal": "KAP no logra mantener el equilibrio",
+    "action": "KAP vuelve a subir a la bicicleta, pero esta vez se desequilibra y cae al suelo.",
+    "reaction": "KAP se queda sentado en el suelo, con la cara hacia abajo, respirando con dificultad. Su hermano lo mira con preocupación.",
+    "change": "KAP se levanta lentamente, con la cabeza baja.",
+    "seconds": 4,
+    "shot": "primer plano",
+    "characters": [
+     "KAP"
+    ],
+    "location": "Calle",
+    "time": "mañana",
+    "sound": "bump",
+    "music": "impact",
+    "dialogue": {
+     "speaker": "KAP",
+     "text": "No puedo."
+    }
+   },
+   {
+    "phase": "escalada",
+    "step": "reaccion",
+    "goal": "KAP se compara con su hermano",
+    "action": "KAP mira a su hermano, que ahora está rodando sin dificultad. KAP baja la mirada y se frota las manos nerviosamente.",
+    "reaction": "El hermano de KAP lo observa y se detiene, luego camina hacia él con paso lento.",
+    "change": "KAP levanta la vista hacia su hermano.",
+    "seconds": 3,
+    "shot": "medio",
+    "characters": [
+     "KAP",
+     "Hermano de KAP"
+    ],
+    "location": "Calle",
+    "time": "mañana",
+    "sound": "none",
+    "music": "silence"
+   },
+   {
+    "phase": "giro",
+    "step": "segundo-intento",
+    "goal": "KAP cambia su enfoque al ver lo que hace su hermano",
+    "action": "KAP observa cómo su hermano se mueve con naturalidad. KAP sube a la bicicleta de nuevo, pero esta vez se concentra en los movimientos de su hermano.",
+    "reaction": "La bicicleta se mueve con mayor estabilidad. KAP empieza a avanzar, aunque lentamente.",
+    "change": "KAP comienza a rodar con mayor confianza.",
+    "seconds": 5,
+    "shot": "seguimiento",
+    "characters": [
+     "KAP",
+     "Hermano de KAP"
+    ],
+    "location": "Calle",
+    "time": "mañana",
+    "sound": "none",
+    "music": "change"
+   },
+   {
+    "phase": "remate",
+    "step": "descubrimiento",
+    "goal": "KAP entiende que cada uno tiene su ritmo",
+    "action": "KAP se detiene, mira a su hermano y luego a la bicicleta. Sonríe levemente.",
+    "reaction": "El hermano de KAP lo observa con una sonrisa pequeña y se aleja para seguir rodando.",
+    "change": "KAP continúa pedaleando, ahora con más seguridad.",
+    "seconds": 4,
+    "shot": "general",
+    "characters": [
+     "KAP",
+     "Hermano de KAP"
+    ],
+    "location": "Calle",
+    "time": "mañana",
+    "sound": "none",
+    "music": "stop",
+    "dialogue": {
+     "speaker": "KAP",
+     "text": "Bueno… algo es algo."
+    }
+   },
+   {
+    "phase": "remate",
+    "step": "cambio",
+    "goal": "KAP se siente un poco más seguro",
+    "action": "KAP sigue avanzando con la bicicleta, ahora con una postura más relajada. Mira al horizonte y sonríe levemente.",
+    "reaction": "La bicicleta rueda de forma estable. KAP no se detiene.",
+    "change": "KAP se mueve con mayor confianza.",
+    "seconds": 3,
+    "shot": "general",
+    "characters": [
+     "KAP"
+    ],
+    "location": "Calle",
+    "time": "mañana",
+    "sound": "none",
+    "music": "none"
+   }
+  ]
+ },
+ "continuity": {
+  "critical": [],
+  "warnings": [],
+  "info": 0
+ },
+ "script": "# Calle\n[mood: mañana, exterior]\n[plano: general en 0.3s]\n[marca-musica: inicio en 0.3s]\n[sonido: pasos en 1.0s durante 1.9s]\n[sonido: ambiente en 0.3s durante 9.4s]\nKAP mira a su hermano subir a la bicicleta y rodar con facilidad. KAP se acerca a la bicicleta, se sube y empieza a pedalear.\nLa bicicleta se tambalea. KAP se equilibra con dificultad, pero no logra avanzar.\nHERMANO DE KAP: Vamos, KAP. Solo tienes que intentarlo.\n[acto: conflicto | KAP quiere ayudar a su hermano montando en la bicicleta]\n\n# Calle\n[mood: mañana, exterior]\n[transicion: cut]\n[plano: primer plano KAP en 0.3s]\n[impacto: en 0.3s]\n[sonido: golpe en 0.3s]\n[sonido: ambiente en 0.3s durante 6.1s]\nKAP vuelve a subir a la bicicleta, pero esta vez se desequilibra y cae al suelo.\nKAP se queda sentado en el suelo, con la cara hacia abajo, respirando con dificultad. Su hermano lo mira con preocupación.\nKAP: No puedo.\n[acto: desarrollo | KAP no logra mantener el equilibrio]\n\n# Calle\n[mood: mañana, exterior]\n[transicion: cut]\n[plano: medio KAP en 0.3s]\n[plano: primer plano KAP en 2.2s]\n[silencio: en 2.2s durante 1.5s]\n[sonido: llamar en 1.5s]\n[sonido: ambiente en 0.3s durante 5.8s]\nKAP mira a su hermano, que ahora está rodando sin dificultad. KAP baja la mirada y se frota las manos nerviosamente.\nEl hermano de KAP lo observa y se detiene, luego camina hacia él con paso lento.\n\n# Calle\n[mood: mañana, exterior]\n[transicion: cut]\n[camara: seguir KAP en 0.3s]\n[marca-musica: cambio en 0.3s]\n[sonido: llamar en 1.0s]\n[sonido: ambiente en 0.3s durante 5.5s]\nKAP observa cómo su hermano se mueve con naturalidad. KAP sube a la bicicleta de nuevo, pero esta vez se concentra en los movimientos de su hermano.\nLa bicicleta se mueve con mayor estabilidad. KAP empieza a avanzar, aunque lentamente.\n[acto: emocional | KAP cambia su enfoque al ver lo que hace su hermano]\n\n# Calle\n[mood: mañana, exterior]\n[transicion: cut]\n[plano: general en 0.3s]\n[plano: primer plano KAP en 2.3s]\n[marca-musica: fin en 0.3s]\n[sonido: ambiente en 0.3s durante 7.2s]\nKAP se detiene, mira a su hermano y luego a la bicicleta. Sonríe levemente.\nEl hermano de KAP lo observa con una sonrisa pequeña y se aleja para seguir rodando.\nKAP: Bueno… algo es algo.\n[acto: resolucion | KAP entiende que cada uno tiene su ritmo]\n\n# Calle\n[mood: mañana, exterior]\n[transicion: cut]\n[plano: general en 0.3s]\n[sonido: pasos en 0.3s durante 2.0s]\n[sonido: ambiente en 0.3s durante 5.5s]\nKAP sigue avanzando con la bicicleta, ahora con una postura más relajada. Mira al horizonte y sonríe levemente.\nLa bicicleta rueda de forma estable. KAP no se detiene.\n[gancho: KAP se mueve con mayor confianza.]\n"
+}

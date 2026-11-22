@@ -1,0 +1,70 @@
+Short 3 · «KAP y la bicicleta» (CANDIDATO, sin aprobar)
+Petición: Crea un Short de KAP. Tema: «¿Por qué sentimos que todos avanzan menos nosotros?». KAP lo descubre mediante una pequeña historia visual, no mediante un discurso. Puede aparecer su hermano pequeño.
+
+# Calle
+[mood: mañana, exterior]
+[plano: general en 0.3s]
+[marca-musica: inicio en 0.3s]
+[sonido: pasos en 1.0s durante 1.9s]
+[sonido: ambiente en 0.3s durante 9.4s]
+KAP mira a su hermano subir a la bicicleta y rodar con facilidad. KAP se acerca a la bicicleta, se sube y empieza a pedalear.
+La bicicleta se tambalea. KAP se equilibra con dificultad, pero no logra avanzar.
+HERMANO DE KAP: Vamos, KAP. Solo tienes que intentarlo.
+[acto: conflicto | KAP quiere ayudar a su hermano montando en la bicicleta]
+
+# Calle
+[mood: mañana, exterior]
+[transicion: cut]
+[plano: primer plano KAP en 0.3s]
+[impacto: en 0.3s]
+[sonido: golpe en 0.3s]
+[sonido: ambiente en 0.3s durante 6.1s]
+KAP vuelve a subir a la bicicleta, pero esta vez se desequilibra y cae al suelo.
+KAP se queda sentado en el suelo, con la cara hacia abajo, respirando con dificultad. Su hermano lo mira con preocupación.
+KAP: No puedo.
+[acto: desarrollo | KAP no logra mantener el equilibrio]
+
+# Calle
+[mood: mañana, exterior]
+[transicion: cut]
+[plano: medio KAP en 0.3s]
+[plano: primer plano KAP en 2.2s]
+[silencio: en 2.2s durante 1.5s]
+[sonido: llamar en 1.5s]
+[sonido: ambiente en 0.3s durante 5.8s]
+KAP mira a su hermano, que ahora está rodando sin dificultad. KAP baja la mirada y se frota las manos nerviosamente.
+El hermano de KAP lo observa y se detiene, luego camina hacia él con paso lento.
+
+# Calle
+[mood: mañana, exterior]
+[transicion: cut]
+[camara: seguir KAP en 0.3s]
+[marca-musica: cambio en 0.3s]
+[sonido: llamar en 1.0s]
+[sonido: ambiente en 0.3s durante 5.5s]
+KAP observa cómo su hermano se mueve con naturalidad. KAP sube a la bicicleta de nuevo, pero esta vez se concentra en los movimientos de su hermano.
+La bicicleta se mueve con mayor estabilidad. KAP empieza a avanzar, aunque lentamente.
+[acto: emocional | KAP cambia su enfoque al ver lo que hace su hermano]
+
+# Calle
+[mood: mañana, exterior]
+[transicion: cut]
+[plano: general en 0.3s]
+[plano: primer plano KAP en 2.3s]
+[marca-musica: fin en 0.3s]
+[sonido: ambiente en 0.3s durante 7.2s]
+KAP se detiene, mira a su hermano y luego a la bicicleta. Sonríe levemente.
+El hermano de KAP lo observa con una sonrisa pequeña y se aleja para seguir rodando.
+KAP: Bueno… algo es algo.
+[acto: resolucion | KAP entiende que cada uno tiene su ritmo]
+
+# Calle
+[mood: mañana, exterior]
+[transicion: cut]
+[plano: general en 0.3s]
+[sonido: pasos en 0.3s durante 2.0s]
+[sonido: ambiente en 0.3s durante 5.5s]
+KAP sigue avanzando con la bicicleta, ahora con una postura más relajada. Mira al horizonte y sonríe levemente.
+La bicicleta rueda de forma estable. KAP no se detiene.
+[gancho: KAP se mueve con mayor confianza.]
+
