@@ -64,7 +64,8 @@ export async function generateEpisode(fd: FormData) {
   return run(fd, "/render", async () => {
     const user = await requireAdmin();
     const p = await loadEpisode(fd.get("id"));
-    if (p.kind !== "episode") throw new UserError("Solo los episodios se generan; los Shorts se derivan del episodio");
+    const own = p.kind === "short" && !p.parentId;   // SHORT MODE: un Short propio (con guion de autor) se genera como tal; los derivados de un episodio no
+    if (p.kind !== "episode" && !own) throw new UserError("Solo los episodios se generan; los Shorts se derivan del episodio");
     if (!p.script.trim()) throw new UserError("Este episodio no tiene guion. Escríbelo en la ficha (la redacción automática con IA aún no está conectada).");
     const g = Generate.parse({ quality: fd.get("quality") || undefined, voice: fd.get("voice") || undefined, shortsCount: fd.get("shortsCount") || undefined, musicVolume: fd.get("musicVolume") || undefined });
     const brief = String(fd.get("brief") ?? "").slice(0, 2000);
@@ -73,7 +74,7 @@ export async function generateEpisode(fd: FormData) {
     const musicAssetId = String(fd.get("musicAssetId") ?? "") || undefined;
     const { storage } = getProviders();
     await storage.productions.save({ ...p, brief, musicAssetId, updatedAt: now() });
-    const jobId = await enqueueJob("episode", "16:9", g.quality, p.id, { mode: "full", brief, voice: g.voice, animation: g.animation, musicAssetId, musicVolume: g.musicVolume, shortsCount, targetSec: hints.targetSec });
+    const jobId = await enqueueJob(own ? "short" : "episode", own ? "9:16" : "16:9", g.quality, p.id, { mode: "full", brief, voice: g.voice, animation: g.animation, musicAssetId, musicVolume: g.musicVolume, shortsCount: own ? 0 : shortsCount, targetSec: own ? undefined : hints.targetSec });
     await audit("estudio.generar", p.id, `${g.quality} voz=${g.voice} shorts=${shortsCount} job=${jobId}`, user.username);
     refresh(); back(fd, "/render");
   });

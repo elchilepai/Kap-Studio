@@ -215,17 +215,20 @@ const lookOf = (c: Character) => c.design ? [c.design.hairStyle ? `pelo ${c.desi
 const lookOfPlace = (p: Place) => p.set ? `${p.set.preset ?? "escenario"} (${p.set.timeOfDay ?? "—"})` : undefined;
 
 /** Crea el borrador del episodio pedido («Crea el episodio 7 continuando el 6») y devuelve su contexto. No genera guion: eso lo hará el ScriptAuthor cuando exista. */
-export async function createEpisodeFromRequest(deps: MemoryDeps, text: string): Promise<{ production: Production; request: EpisodeRequest; pack: ContextPack; authored: boolean; warnings: string[] }> {
+export async function createEpisodeFromRequest(deps: MemoryDeps, text: string, opts: { mode?: "episode" | "short" } = {}): Promise<{ production: Production; request: EpisodeRequest; pack: ContextPack; authored: boolean; warnings: string[] }> {
   const { storage } = deps; const { request, pack } = await requestContext(storage, text, { interpreter: deps.ai?.requests });
-  const dup = (await storage.productions.list()).find((p) => p.kind === "episode" && p.season === request.season && p.number === request.number);
-  if (dup) throw new MemoryError(`El episodio ${request.number} (temporada ${request.season}) ya existe: «${dup.title}»`);
+  const kind = opts.mode === "short" ? "short" as const : "episode" as const, all = await storage.productions.list();
+  // SHORT MODE: los Shorts tienen su propia numeración («short 3»); el contexto de memoria sigue siendo el de la serie
+  const number = kind === "short" ? (/\bshort\s+(\d+)/i.exec(text) ? Number(/\bshort\s+(\d+)/i.exec(text)![1]) : all.filter((p) => p.kind === "short" && p.season === request.season).reduce((n, p) => Math.max(n, p.number), 0) + 1) : request.number;
+  const dup = all.find((p) => p.kind === kind && p.season === request.season && p.number === number);
+  if (dup) throw new MemoryError(`${kind === "short" ? "El Short" : "El episodio"} ${number} (temporada ${request.season}) ya existe: «${dup.title}»`);
   const now = nowOf(deps);
-  const production: Production = { id: crypto.randomUUID(), kind: "episode", number: request.number, season: request.season, title: `Episodio ${request.number}`, status: "SCRIPTING", synopsis: "", script: "", scenes: [], assetIds: [], durationSec: 0,
+  const production: Production = { id: crypto.randomUUID(), kind, number, season: request.season, title: kind === "short" ? `Short ${number}` : `Episodio ${request.number}`, status: "SCRIPTING", synopsis: "", script: "", scenes: [], assetIds: [], durationSec: 0,
     cast: [], storyTime: "", generated: false, brief: request.text, ...(request.continuesFrom !== undefined ? { continuesFrom: request.continuesFrom } : {}), createdAt: now, updatedAt: now };
   const warnings: string[] = []; let authored = false, saved = production;
   const au = deps.ai?.author;   // si hay IA, redacta el guion con el contexto; si no, el usuario lo escribe (el contexto queda a la vista)
   if (au && (await au.available().catch(() => false))) {
-    try { const r = await au.write({ request, context: pack, hints: { previousEpisodes: await previousEpisodesHints(storage, orderOf(request.season, request.number)) } }); saved = { ...production, script: r.script }; warnings.push(...r.warnings); authored = true; } catch (e) { warnings.push(`La IA no pudo redactar el guion: ${(e as Error).message}`); }
+    try { const r = await au.write({ request, context: pack, hints: { ...(kind === "short" ? { mode: "short" as const } : {}), previousEpisodes: await previousEpisodesHints(storage, orderOf(request.season, request.number)) } }); saved = { ...production, script: r.script }; warnings.push(...r.warnings); authored = true; } catch (e) { warnings.push(`La IA no pudo redactar el guion: ${(e as Error).message}`); }
   }
   await storage.productions.save(saved);
   await log(deps, "memoria.episodio", saved.id, `Pedido: «${request.text.slice(0, 200)}»${authored ? " · guion redactado por IA (pendiente de revisión)" : ""}`);

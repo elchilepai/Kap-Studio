@@ -14,6 +14,8 @@ export type ActionExpression = Expression | "scared" | "embarrassed" | "confused
 /** Sonido con función (puerta, golpe, teléfono, pasos, ambiente…): el director lo propone y el montaje lo sintetiza con FFmpeg. Interno de la animación; la IR no cambia. */
 export type SoundKind = "door" | "bump" | "knock" | "ring" | "steps" | "ambience";
 export type SoundCue = { t: number; kind: SoundKind; dur?: number };
+/** Marca de música del SHORT MODE (no hay sistema de música: solo se anota dónde el director quiere que empiece, cambie o pare la pista de fondo, un golpe o un silencio). */
+export type MusicCue = { t: number; kind: "music_start" | "music_change" | "music_stop" | "impact" | "silence"; dur?: number };
 export type Gesture = "none" | "wave" | "point" | "shrug" | "nod" | "shake" | "think" | "raise";
 export type Ease = "linear" | "in" | "out" | "inOut";
 export type Side = "left" | "right";
@@ -89,7 +91,7 @@ export type StyleParams = { ink: string; line: number; grade: Grade; vignette: n
 
 export type StageSpec = {
   v: 1; width: number; height: number; fps: number; duration: number; seed: number;
-  set: SetSpec; actors: ActorSpec[]; props: PropSpec[]; cues: Cue[]; style: StyleParams; sounds?: SoundCue[];
+  set: SetSpec; actors: ActorSpec[]; props: PropSpec[]; cues: Cue[]; style: StyleParams; sounds?: SoundCue[]; music?: MusicCue[];
   /** Zona de subtítulos (fracción de la altura). La cámara sube la escena para que los pies queden por encima. Si falta se asume el subtítulo por defecto. */
   safe?: { top: number; bottom: number };
   /** Avisos del director (directivas no entendidas…): se muestran al revisar. */

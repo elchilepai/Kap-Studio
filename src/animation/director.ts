@@ -1,12 +1,12 @@
 import { frameShot, layoutSlots, wideZoom, type SafeZone } from "./framing.ts";
 import { evaluate } from "./timeline.ts";
-import type { ActionExpression, Appearance, Cue, ObjectKind, SoundCue, EffectKind, Expression, Gesture, PropKind, PropSpec, SetPreset, SetSpec, Side, StageSpec, StyleParams, TimeOfDay } from "./types.ts";
+import type { ActionExpression, Appearance, Cue, MusicCue, ObjectKind, SoundCue, EffectKind, Expression, Gesture, PropKind, PropSpec, SetPreset, SetSpec, Side, StageSpec, StyleParams, TimeOfDay } from "./types.ts";
 import { WORLD_W } from "./types.ts";
 import { hash32 } from "./util.ts";
 import { chain, planClauses } from "../narrative/action.ts";
 import { deadAir } from "./pacing.ts";
 import { amplitudeProvider, syntheticEnvelope, type LipSyncProvider, type LipSyncTrack } from "./lipsync.ts";
-import { norm as bnorm, parseDirection, type Beat } from "./beats.ts";
+import { norm as bnorm, parseDirection, parseDirectorCue, type Beat } from "./beats.ts";
 export type { Beat };
 
 /**
@@ -18,6 +18,7 @@ export type TimedLine = { speaker?: string; text: string; start: number; end: nu
 export type DirectorActor = { id: string; name: string; appearance: Appearance };
 export type DirectorInput = {
   /** Rellena con vida (mirada, expresión, cámara lenta, ambiente) los tramos de ≥ 3 s sin nada que ocurra. Lo activa el montaje real. */ pacing?: boolean;
+  /** SHORT MODE: sin relleno automático (ni aire muerto rellenado ni cámara a la deriva por defecto): todo lo que se ve lo ha pedido un beat. */ short?: boolean;
   duration: number; tail?: number; aspect: number; index: number; fps: number; width: number; height: number;
   location: string; mood: string; tags: string[]; narration: string;
   characters: DirectorActor[]; lines: TimedLine[];
@@ -72,7 +73,8 @@ export function direct(inp: DirectorInput): StageSpec {
 
   // ---------- acciones: beats estructurados + texto editable (ambos se convierten al mismo vocabulario) ----------
   const beats: Beat[] = [...(inp.beats ?? [])];
-  for (const raw of inp.directions) { const r = parseDirection(raw); if (r.beat) beats.push(r.beat); else warnings.push(r.warning ?? `No entiendo «${raw}»`); }
+  const musicCues: MusicCue[] = [], extraSounds: SoundCue[] = [];
+  for (const raw of inp.directions) { const dc = parseDirectorCue(raw); if (dc) { if (dc.sound) extraSounds.push(dc.sound); if (dc.music) musicCues.push(dc.music); if (dc.warning) warnings.push(dc.warning); continue; } const r = parseDirection(raw); if (r.beat) beats.push(r.beat); else warnings.push(r.warning ?? `No entiendo «${raw}»`); }
   let explicitCamera = false, shotOnly = false;
   const who = (name: string | undefined, ctx: string) => { const a = name ? byName(name) : undefined; if (!a) warnings.push(`${ctx}: personaje «${name ?? "?"}» no está en la escena`); return a; };
   for (const b of beats) {
@@ -281,9 +283,10 @@ export function direct(inp: DirectorInput): StageSpec {
       }
     } else {
       const k = inp.index % 2, z0 = wideZ, z1 = Math.min(wideZ * 1.1, fitZoom);      // el empuje lento nunca llega a cortar a nadie
-      cues.push({ t: 0, type: "camera", x: centroid, zoom: k ? z1 : z0, dur: 0.01 }, { t: 0.01, type: "camera", x: centroid, zoom: k ? z0 : z1, dur: T, ease: "linear" });
+      if (inp.short) cues.push({ t: 0, type: "camera", x: centroid, zoom: z0, dur: 0.01 });   // SHORT MODE: sin empuje lento sin motivo; solo se mueve la cámara si un beat lo pide o alguien camina
+      else cues.push({ t: 0, type: "camera", x: centroid, zoom: k ? z1 : z0, dur: 0.01 }, { t: 0.01, type: "camera", x: centroid, zoom: k ? z0 : z1, dur: T, ease: "linear" });
     }
-  } else if (!explicitCamera && !dialogueCam && !shotOnly) {
+  } else if (!explicitCamera && !dialogueCam && !shotOnly && !inp.short) {
     const k = inp.index % 3, T = Math.max(1, D + tail);
     if (k === 0) cues.push({ t: 0, type: "camera", zoom: 1.0, dur: 0.01 }, { t: 0.01, type: "camera", zoom: 1.09, dur: T, ease: "linear" });
     else if (k === 1) cues.push({ t: 0, type: "camera", zoom: 1.1, dur: 0.01 }, { t: 0.01, type: "camera", zoom: 1.0, dur: T, ease: "linear" });
@@ -293,7 +296,8 @@ export function direct(inp: DirectorInput): StageSpec {
   // ---------- AIRE MUERTO: una pausa tiene función ----------
   // Si pasan ≥ 3 s sin diálogo, acción, reacción, cámara ni sonido, no se deja el vídeo vacío (ni se acelera): se dan a la pausa vida y razón — una mirada entre personajes o hacia otro lado,
   // un cambio de expresión, un asentamiento del cuerpo, la cámara que se acerca despacio y sonido de ambiente. Solo rellena tramos que de otro modo estarían muertos.
-  if (inp.pacing) { let life = 0, filled = 0;   // lo activa el montaje real (stage.ts); los usos sueltos del director conservan su comportamiento
+  sounds.push(...extraSounds);
+  if (inp.pacing && !inp.short) { let life = 0, filled = 0;   // lo activa el montaje real (stage.ts); los usos sueltos del director conservan su comportamiento
     for (let g = deadAir(cues, D, { sounds }); g.length && life < 14; g = deadAir(cues, D, { sounds }), life++) {
       const gap = g[0], t = gap.t0 + 1.2, a = actors[life % Math.max(1, actors.length)]; if (!a) break; const other = actors.find((o) => o.id !== a.id);
       if (life % 3 === 0) cues.push({ t, type: "face", actor: a.id, dir: other ? (other.slot >= a.slot ? "right" : "left") : (a.slot < 8 ? "right" : "left") });   // la mirada va a otro personaje (o a otro lado)
@@ -303,5 +307,5 @@ export function direct(inp: DirectorInput): StageSpec {
       sounds.push({ t: gap.t0, kind: "ambience", dur: gap.t1 - gap.t0 }); filled++;
     }
     if (filled) warnings.push(`Pausa larga sin acción (${filled} tramo${filled > 1 ? "s" : ""}): se ha llenado con mirada, cámara y ambiente; si la escena queda vacía, la planificación es floja.`); }
-  return { v: 1, width: inp.width, height: inp.height, fps: inp.fps, duration: D + tail, seed: hash32(inp.location + inp.index) % 100000, set: resolveSet(inp.location, inp.tags, inp.mood, inp.set), actors, props, cues, style: inp.style, warnings, ...(sounds.length ? { sounds } : {}), ...(inp.safe ? { safe: inp.safe } : {}) };
+  return { v: 1, width: inp.width, height: inp.height, fps: inp.fps, duration: D + tail, seed: hash32(inp.location + inp.index) % 100000, set: resolveSet(inp.location, inp.tags, inp.mood, inp.set), actors, props, cues, style: inp.style, warnings, ...(musicCues.length ? { music: musicCues.sort((a, b) => a.t - b.t) } : {}), ...(sounds.length ? { sounds } : {}), ...(inp.safe ? { safe: inp.safe } : {}) };
 }

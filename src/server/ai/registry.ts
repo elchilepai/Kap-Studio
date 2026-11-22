@@ -9,11 +9,14 @@ import { llmEpisodeSummarizer, llmRequestInterpreter, llmScriptAuthor } from "./
 import { createOllamaClient } from "./ollama";
 import { llmEpisodeAuthor } from "./episode";
 import { llmArcAuthor } from "./arc";
+import { llmShortAuthor } from "./short";
 
 export type Ai = { llm?: LlmClient; author?: ScriptAuthor; summarizer?: EpisodeSummarizer; requests?: EpisodeRequestInterpreter };
 /** Construye los adaptadores de IA a partir de un cliente (también lo usan los tests con un doble de prueba). */
 /** `authorMode`: «arc» (por defecto) = el modelo diseña primero el arco del episodio y lo convierte en escenas; «json» = borrador JSON de una pasada → IR; «text» = guion en texto libre. */
-export const aiFrom = (llm?: LlmClient, o: { authorMode?: "arc" | "json" | "text"; scenes?: number } = {}): Ai => (llm ? { llm, author: (o.authorMode ?? "arc") === "arc" ? llmArcAuthor(llm) : o.authorMode === "json" ? llmEpisodeAuthor(llm, { scenes: o.scenes }) : llmScriptAuthor(llm), summarizer: llmEpisodeSummarizer(llm), requests: llmRequestInterpreter(llm) } : {});
+/** SHORT MODE: con `hints.mode === "short"` el autor es el de Shorts (una llamada, beats activos); en cualquier otro caso se usa el autor de episodios sin cambios. */
+export const withShortMode = (episode: ScriptAuthor, llm: LlmClient): ScriptAuthor => { const short = llmShortAuthor(llm); return Object.assign(Object.create(episode) as ScriptAuthor, { write: (i: Parameters<ScriptAuthor["write"]>[0]) => (i.hints?.mode === "short" ? short.write(i) : episode.write(i)) }); };
+export const aiFrom = (llm?: LlmClient, o: { authorMode?: "arc" | "json" | "text"; scenes?: number } = {}): Ai => (llm ? { llm, author: withShortMode((o.authorMode ?? "arc") === "arc" ? llmArcAuthor(llm) : o.authorMode === "json" ? llmEpisodeAuthor(llm, { scenes: o.scenes }) : llmScriptAuthor(llm), llm), summarizer: llmEpisodeSummarizer(llm), requests: llmRequestInterpreter(llm) } : {});
 
 /** Clientes registrados. Añadir otro motor/modelo local = una entrada aquí; nada más cambia. */
 const CLIENTS: Record<string, (() => LlmClient) | undefined> = {

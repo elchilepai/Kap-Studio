@@ -46,3 +46,12 @@ La puerta de calidad añade `conversacion-estatica` (la misma conversación que 
 - **Repeticiones**: `mismo-momento` (misma escena en el mismo lugar con los mismos personajes y nada nuevo → se regenera y, si no cambia, se elimina), `accion-repetida` (se quita en código) y fusión de beats repetidos del arco. Prefiere 6 escenas buenas a 10 con relleno.
 - **Acting continuo**: escuchar (se queda quieto, levanta la cabeza y la gira hacia la fuente) ≠ asustarse (sobresalto); caminar con aceleración y frenado, anticipación al correr, asentamiento al llegar; cámara por prioridad (reacción > información/fuente > seguimiento > momento emocional).
 - **Sonido con función**: puerta, golpe, llamada, pasos y ambiente se sintetizan con FFmpeg (`src/server/studio/sfx.ts`) a partir de lo que cuenta la narración.
+
+## SHORT MODE (Shorts verticales de YouTube/TikTok)
+
+Variante del flujo, no un parche del episodio: `hints.mode = "short"` (registro de IA → `withShortMode`) y `createEpisodeFromRequest(deps, texto, { mode: "short" })`, que crea una producción `kind: "short"` con numeración propia («Short N»). Vertical 1080×1920, 30 fps (`dimensions("9:16","1080p")`).
+
+- **Un solo plan por beats** (`src/server/ai/short.ts`, prompt `SHORT_SYSTEM`): UNA llamada al modelo devuelve la historia entera como 6-16 beats (objetivo, acción visible, reacción, cambio, segundos, plano, sonido, música, diálogo solo si aporta). Fases: hook → contexto → escalada → giro → remate. La duración es la suma de los beats (ideal 50-65 s, rango 45-75).
+- **SHORT_RETENTION_CHECK** (`src/narrative/short.ts`, sin modelo): 12 comprobaciones (gancho, problema rápido, acción antes de explicar, cambios, escalada, giro, remate sin moraleja, repetidos, prescindibles, tramos solo diálogo, predecible, duración justa). Reparación en código (fusionar repetidos, quitar prescindibles; nunca hook/giro/remate) y, como mucho, UNA reescritura local de gancho/giro/remate.
+- **Beats → guion**: la escena de producción es el decorado (beats vecinos con mismo lugar/hora se agrupan); acción y reacción = narración invisible, diálogo = lo único que se dice; directivas `plano:`, `camara: seguir`, `sonido:`, `musica: inicio|cambio|fin`, `impacto:`, `silencio:` con tiempo. Las cuatro últimas son solo del director (`parseDirection` las ignora sin aviso; la IR no cambia; `StageSpec.music` y `StageSpec.sounds`).
+- **Director** (`short: true`, solo Shorts propios): sin relleno de aire muerto ni empuje lento por defecto.

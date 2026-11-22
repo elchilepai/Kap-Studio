@@ -99,7 +99,7 @@ export async function produce(job: RenderJob, ctx: ExecContext, d: ProduceDeps):
   // ① Analizar y planificar
   step(1, 0.01, "Analizando el guion");
   let scenes: Scene[];
-  if (job.kind === "episode" && prm.mode === "full") {
+  if ((job.kind === "episode" || (job.kind === "short" && !!prod.script.trim() && !prod.parentId)) && prm.mode === "full") {
     if (!prod.script.trim()) throw new RenderError("Este episodio no tiene guion. Escríbelo o pégalo en la ficha del episodio (la redacción automática requiere un proveedor de IA que aún no está conectado).", false);
     scenes = (await planProduction(prod, st, prm.brief ?? prod.brief)).scenes;
     if (!scenes.length) throw new RenderError("No se pudo extraer ninguna escena del guion", false);

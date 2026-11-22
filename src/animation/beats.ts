@@ -1,4 +1,4 @@
-import type { EffectKind, Expression, Gesture, PropKind, Side } from "./types.ts";
+import type { EffectKind, Expression, Gesture, MusicCue, PropKind, Side, SoundCue, SoundKind } from "./types.ts";
 
 /**
  * VOCABULARIO DE ACCIONES («beats»): el contrato entre la capa de INTERPRETACIÓN del guion y la capa de ANIMACIÓN.
@@ -34,10 +34,25 @@ const num = (s: string, re: RegExp) => { const m = re.exec(s); return m ? parseF
 const sideOf = (s: string): Side | "fade" | undefined => (/izquierd/.test(s) ? "left" : /derech/.test(s) ? "right" : /fundid|fade/.test(s) ? "fade" : undefined);
 const find = <T,>(map: Record<string, T>, s: string): T | undefined => Object.entries(map).sort((a, b) => b[0].length - a[0].length).find(([w]) => s.includes(norm(w)))?.[1];
 
+/** Directivas SOLO del director (SHORT MODE): sonido, música e impacto/silencio. No son beats de la IR (la IR no cambia): viajan en el texto de la dirección y las lee el director. */
+export const DIRECTOR_ONLY = new Set(["sonido", "musica", "impacto", "silencio"]);
+const SOUND_WORDS: Record<string, SoundKind> = { puerta: "door", portazo: "door", golpe: "bump", llamar: "knock", llamada: "ring", timbre: "ring", pasos: "steps", ambiente: "ambience" };
+const MUSIC_WORDS: Record<string, MusicCue["kind"]> = { inicio: "music_start", cambio: "music_change", fin: "music_stop" };
+/** «sonido: puerta en 2.1s» · «musica: inicio|cambio|fin en 3s» · «impacto: en 5s» · «silencio: en 6s durante 1.5s» → marca de sonido o de música (o aviso si no se entiende). */
+export function parseDirectorCue(raw: string): { sound?: SoundCue; music?: MusicCue; warning?: string } | undefined {
+  const i = raw.indexOf(":"); if (i < 0) return undefined; const key = norm(raw.slice(0, i)); if (!DIRECTOR_ONLY.has(key)) return undefined;
+  const nv = norm(raw.slice(i + 1)), at = num(nv, /\ben\s+(\d+(?:[.,]\d+)?)\s*s/) ?? 0.2, dur = num(nv, /durante\s+(\d+(?:[.,]\d+)?)\s*s/);
+  if (key === "sonido") { const w = Object.entries(SOUND_WORDS).find(([k]) => nv.includes(k))?.[1]; return w ? { sound: { t: at, kind: w, ...(dur !== undefined ? { dur } : {}) } } : { warning: `sonido: no conozco «${raw}»` }; }
+  if (key === "musica") { const k = Object.entries(MUSIC_WORDS).find(([w]) => nv.includes(w))?.[1]; return k ? { music: { t: at, kind: k, ...(dur !== undefined ? { dur } : {}) } } : { warning: `musica: usa inicio, cambio o fin en «${raw}»` }; }
+  if (key === "impacto") return { music: { t: at, kind: "impact" }, sound: { t: at, kind: "bump" } };
+  return { music: { t: at, kind: "silence", dur: dur ?? 1.5 } };
+}
+
 /** Texto «clave: valor» → beat. Devuelve un aviso (nunca inventa) si no lo entiende. */
 export function parseDirection(raw: string): { beat?: Beat; warning?: string } {
   const i = raw.indexOf(":"); if (i < 0) return { warning: `Dirección sin «clave: valor»: «${raw}»` };
   const key = norm(raw.slice(0, i)), val = raw.slice(i + 1).trim(), nv = norm(val);
+  if (DIRECTOR_ONLY.has(key)) return {};   // sonido/música: los lee el director desde el texto; no son beats ni avisos
   const at = num(nv, /\ben\s+(\d+(?:[.,]\d+)?)\s*s/), dur = num(nv, /durante\s+(\d+(?:[.,]\d+)?)\s*s/);
   const clean = nv.replace(/\ben\s+\d+(?:[.,]\d+)?\s*s/, "").replace(/durante\s+\d+(?:[.,]\d+)?\s*s/, "").trim();
   const first = val.split(/\s+/)[0] ?? ""; const rest = norm(val.slice(first.length)).replace(/\ben\s+\d+(?:[.,]\d+)?\s*s/, "").replace(/durante\s+\d+(?:[.,]\d+)?\s*s/, "").trim();
