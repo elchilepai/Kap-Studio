@@ -19,11 +19,12 @@ const joint = (role: string, pose: Pose): number =>
   role === "torso" ? pose.lean : role === "head" ? pose.headTilt
   : role === "armF" ? -arm(pose.armF) : role === "armB" ? -arm(pose.armB) : role === "legF" ? -pose.legF : role === "legB" ? -pose.legB : 0;
 
-export function drawLayered(c: Ctx, a: Appearance, rig: LayeredRig, pose: Pose, o: { alpha: number; facing: 1 | -1; shadow: boolean }, images: Record<string, unknown>) {
+export function drawLayered(c: Ctx, a: Appearance, rig: LayeredRig, pose0: Pose, o: { alpha: number; facing: 1 | -1; shadow: boolean }, images: Record<string, unknown>) {
+  const sprite = !!rig.animations?.includes("idle"), pose: Pose = sprite ? { ...pose0, lean: pose0.lean * 0.3, headTilt: pose0.headTilt * 1.3, bob: Math.min(0.03, Math.abs(pose0.bob)) * Math.sign(pose0.bob) } : pose0;   // ilustración: se inclina poco (no se tumba)
   const unit = a.height / rig.pxPerUnit;   // unidades de mundo por píxel de imagen (pxPerUnit = px por unidad a altura 1)
   c.save(); c.globalAlpha *= o.alpha; c.scale(o.facing, 1);
   if (o.shadow) { c.fillStyle = "rgba(0,0,0,0.28)"; c.beginPath(); c.ellipse(0, 0.03, 0.6 * a.height, 0.1 * a.height, 0, 0, Math.PI * 2); c.fill(); }
-  c.translate(0, -pose.bob * 3 * a.height);
+  c.translate(0, -pose.bob * 3 * a.height); if (rig.animations?.includes("idle")) c.scale(1, 1 + Math.max(-0.02, Math.min(0.02, pose.bob * 1.6)));   // respiración (el sprite no se estira al caminar)
   const byId = new Map(rig.parts.map((p) => [p.id, p])); const nodes = new Map<string, { m: M; rot: number }>();
   /** Matriz píxel-de-imagen → mundo de cada parte: se coloca su punto de giro en el punto de unión del padre y hereda su rotación. */
   const build = (p: LayerPart, depth = 0): { m: M; rot: number } => {
@@ -39,8 +40,8 @@ export function drawLayered(c: Ctx, a: Appearance, rig: LayeredRig, pose: Pose, 
     const img = images[p.image] as Img | undefined; if (!img) continue; const m = nodes.get(p.id)!.m;
     c.save(); c.transform(m[0], m[1], m[2], m[3], m[4], m[5]); c.drawImage(img as never, 0, 0); c.restore();
     if (rig.face && rig.face.parent === p.id) {
-      const e = rig.face.eyes?.[pose.blink > 0.6 ? "closed" : pose.expression] ?? rig.face.eyes?.neutral, v = (pose.viseme as Viseme) ?? "rest", mo = rig.face.mouths?.[v] ?? rig.face.mouths?.rest;
-      for (const id of [e, mo]) { const fi = id ? (images[id] as Img | undefined) : undefined; if (!fi) continue; c.save(); c.transform(m[0], m[1], m[2], m[3], m[4], m[5]); c.translate(rig.face.at[0], rig.face.at[1]); c.scale(rig.face.scale ?? 1, rig.face.scale ?? 1); c.drawImage(fi as never, -fi.width / 2, -fi.height / 2); c.restore(); }
+      const e = rig.face.eyes?.[pose.blink > 0.6 ? "closed" : pose.expression] ?? rig.face.eyes?.neutral, v = (pose.viseme as Viseme) ?? "rest", mo = (v === "rest" ? rig.face.restMouths?.[pose.expression] : undefined) ?? rig.face.mouths?.[v] ?? rig.face.mouths?.rest;
+      for (const id of [e, mo]) { const fi = id ? (images[id] as Img | undefined) : undefined; if (!fi) continue; c.save(); c.transform(m[0], m[1], m[2], m[3], m[4], m[5]); c.translate(rig.face.at[0] + (id === e ? pose.lookX * 16 : 0), rig.face.at[1]); c.scale(rig.face.scale ?? 1, rig.face.scale ?? 1); c.drawImage(fi as never, -fi.width / 2, -fi.height / 2); c.restore(); }
     }
   }
   c.restore();

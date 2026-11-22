@@ -39,7 +39,7 @@ export type CharacterDesign = z.infer<typeof CharacterDesign>;
 export const SetLayer = z.object({ image: z.string(), depth: z.number().min(-1).max(1), y: z.number().optional(), height: z.number().min(1).max(30).optional(), tile: z.boolean().optional(), alpha: z.number().min(0).max(1).optional() });
 export const SetElement = z.object({ id: z.string().max(40), kind: z.enum(["lantern", "box", "door", "sign", "star", "moon", "tree", "lamp", "bench", "pillar", "bush", "plant", "crate"]), x: z.number().min(-4).max(20), y: z.number().optional(), scale: z.number().min(0.2).max(5), depth: z.number().min(-1).max(1), flip: z.boolean().optional() });
 export const PlaceSet = z.object({
-  preset: z.enum(["room", "street", "city", "forest", "rooftop", "patio", "abstract", "image"]).default("abstract"),
+  preset: z.enum(["estudio", "room", "street", "city", "forest", "rooftop", "patio", "abstract", "image"]).default("abstract"),
   timeOfDay: z.enum(["day", "afternoon", "dusk", "night"]).default("dusk"), imageAssetId: z.string().optional(), accent: Color.optional(),
   /** Fondo por capas con paralaje (PNG propios), elementos reutilizables y primer plano: se guardan con el lugar. */
   layers: z.array(SetLayer).max(12).optional(), elements: z.array(SetElement).max(30).optional(), foreground: z.array(SetElement).max(12).optional(),

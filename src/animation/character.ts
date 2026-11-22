@@ -197,37 +197,37 @@ function drawStickman(c: Ctx, a: Appearance, pose: Pose, o: { ink: string; line:
  */
 const KAP_BLACK = "#1c1d23", KAP_GOLD = "#d9a521", KAP_WHITE = "#fbfbf8";
 function drawKap(c: Ctx, a: Appearance, pose: Pose, o: { ink: string; line: number; facing: 1 | -1; shadow: boolean; alpha: number }) {
-  const hh = 3.0 * (a.height ?? 1), ink = o.ink, lw = o.line * 1.25, front = (pose.front ?? 0) > 0.5;
+  const hh = 3.0 * (a.height ?? 1), ink = o.ink, lw = o.line * 1.25, front = (pose.front ?? 0) > 0.5, HOOD = a.top ?? KAP_BLACK, PANTS = a.bottom ?? KAP_BLACK, HEAD = a.skin ?? KAP_WHITE, chainOn = a.accessory === "chain";   // mismo estilo ilustrado; colores y cadena según el diseño (KAP: negro y dorado; secundarios: su propia ropa)
   c.save(); c.globalAlpha *= o.alpha; c.scale(front ? 1 : o.facing, 1);
   if (o.shadow) { c.fillStyle = "rgba(0,0,0,0.28)"; c.beginPath(); c.ellipse(0, 0.03, hh * 0.2, hh * 0.032, 0, 0, Math.PI * 2); c.fill(); }
   c.translate(0, -pose.bob * hh); c.rotate(pose.lean);
   const hipY = -0.36 * hh, shY = -0.62 * hh - pose.shrug * hh * 0.5, rH = 0.2 * hh, tw = 0.17 * hh, lsw = 0.1 * hh, asw = 0.085 * hh;
   const shoe = (x: number, y: number, dir: number) => { c.beginPath(); c.roundRect(Math.min(x, x + dir * 0.13 * hh) - 0.02 * hh, y - 0.05 * hh, 0.15 * hh, 0.075 * hh, 0.03 * hh); fs(c, "#2b2c33", ink, lw); c.beginPath(); c.roundRect(Math.min(x, x + dir * 0.13 * hh) - 0.02 * hh, y + 0.005 * hh, 0.15 * hh, 0.028 * hh, 0.014 * hh); fs(c, KAP_WHITE, ink, lw * 0.8); };
-  const leg = (ang: number, dx: number, dir: number) => { const [kx, ky] = limb(c, dx, hipY, ang * 0.9, 0.19 * hh, lsw, KAP_BLACK, ink, lw); const [fx, fy] = limb(c, kx, ky, ang * 0.9 - Math.max(0, -ang) * 0.9, 0.19 * hh, lsw * 0.92, KAP_BLACK, ink, lw); shoe(fx, fy, dir); };
-  const arm = (ang: [number, number], dx: number, shape: HandShape) => { const [ex, ey] = limb(c, dx, shY + 0.04 * hh, ang[0], 0.16 * hh, asw, KAP_BLACK, ink, lw); const [hx, hy] = limb(c, ex, ey, ang[0] + ang[1], 0.15 * hh, asw * 0.92, KAP_BLACK, ink, lw); c.beginPath(); c.arc(hx, hy, asw * (shape === "fist" ? 0.62 : 0.5), 0, Math.PI * 2); fs(c, KAP_WHITE, ink, lw); };
-  const torso = () => { c.beginPath(); c.roundRect(-tw, shY - 0.02 * hh, tw * 2, hipY - shY + 0.12 * hh, 0.07 * hh); fs(c, KAP_BLACK, ink, lw * 1.2);   // hoodie oversized
+  const leg = (ang: number, dx: number, dir: number) => { const [kx, ky] = limb(c, dx, hipY, ang * 0.9, 0.19 * hh, lsw, PANTS, ink, lw); const [fx, fy] = limb(c, kx, ky, ang * 0.9 - Math.max(0, -ang) * 0.9, 0.19 * hh, lsw * 0.92, PANTS, ink, lw); shoe(fx, fy, dir); };
+  const arm = (ang: [number, number], dx: number, shape: HandShape) => { const [ex, ey] = limb(c, dx, shY + 0.04 * hh, ang[0], 0.16 * hh, asw, HOOD, ink, lw); const [hx, hy] = limb(c, ex, ey, ang[0] + ang[1], 0.15 * hh, asw * 0.92, HOOD, ink, lw); c.beginPath(); c.arc(hx, hy, asw * (shape === "fist" ? 0.62 : 0.5), 0, Math.PI * 2); fs(c, KAP_WHITE, ink, lw); };
+  const torso = () => { c.beginPath(); c.roundRect(-tw, shY - 0.02 * hh, tw * 2, hipY - shY + 0.12 * hh, 0.07 * hh); fs(c, HOOD, ink, lw * 1.2);   // hoodie oversized
     c.beginPath(); c.roundRect(-tw * 0.7, hipY - 0.07 * hh, tw * 1.4, 0.1 * hh, 0.03 * hh); c.strokeStyle = "#3a3b44"; c.lineWidth = lw * 0.8; c.stroke(); };
   const chain = (cx: number, w: number) => { c.strokeStyle = ink; c.lineWidth = 0.05 * hh * 0.5 + lw * 1.4; c.lineCap = "round"; c.beginPath(); c.moveTo(cx - w, shY + 0.01 * hh); c.quadraticCurveTo(cx, shY + 0.2 * hh, cx + w, shY + 0.01 * hh); c.stroke();
     c.strokeStyle = KAP_GOLD; c.lineWidth = 0.05 * hh * 0.5; c.beginPath(); c.moveTo(cx - w, shY + 0.01 * hh); c.quadraticCurveTo(cx, shY + 0.2 * hh, cx + w, shY + 0.01 * hh); c.stroke();
     const py = shY + 0.12 * hh; c.beginPath(); c.arc(cx, py, 0.042 * hh, 0, Math.PI * 2); fs(c, KAP_GOLD, ink, lw * 0.8); c.strokeStyle = ink; c.lineWidth = lw * 0.6; c.beginPath(); c.moveTo(cx - 0.02 * hh, py); c.quadraticCurveTo(cx - 0.01 * hh, py - 0.025 * hh, cx, py); c.quadraticCurveTo(cx + 0.01 * hh, py + 0.025 * hh, cx + 0.02 * hh, py); c.stroke(); };   // colgante con cerebro
   if (front) {   // vista de frente: simétrica
     c.save(); c.globalAlpha *= 0.9; leg(pose.legB * 0.4, -0.08 * hh, -1); c.restore(); leg(pose.legF * 0.4, 0.08 * hh, 1);
-    arm([-pose.armB[0] * 0.4 - 0.1, pose.armB[1]], -tw, pose.handB); torso(); arm([pose.armF[0] * 0.5 + 0.1, pose.armF[1]], tw, pose.handF); chain(0, tw * 0.75);
+    arm([-pose.armB[0] * 0.4 - 0.1, pose.armB[1]], -tw, pose.handB); torso(); arm([pose.armF[0] * 0.5 + 0.1, pose.armF[1]], tw, pose.handF); if (chainOn) chain(0, tw * 0.75);
   } else {
-    c.save(); c.globalAlpha *= 0.85; arm(pose.armB, 0, pose.handB); leg(pose.legB, -0.03 * hh, 1); c.restore(); torso(); leg(pose.legF, 0.03 * hh, 1); chain(tw * 0.35, tw * 0.55); arm(pose.armF, 0, pose.handF);
+    c.save(); c.globalAlpha *= 0.85; arm(pose.armB, 0, pose.handB); leg(pose.legB, -0.03 * hh, 1); c.restore(); torso(); leg(pose.legF, 0.03 * hh, 1); if (chainOn) chain(tw * 0.35, tw * 0.55); arm(pose.armF, 0, pose.handF);
   }
   // capucha (arrugada tras el cuello) y cabeza
   const hy = shY - rH * 0.98 + pose.headDip * hh; c.save(); c.translate(0, shY); c.rotate(pose.headTilt); c.translate(0, -shY);
-  c.beginPath(); c.ellipse(front ? 0 : -rH * 0.15, shY - 0.01 * hh, tw * 0.95, 0.06 * hh, 0, 0, Math.PI * 2); fs(c, KAP_BLACK, ink, lw);
+  c.beginPath(); c.ellipse(front ? 0 : -rH * 0.15, shY - 0.01 * hh, tw * 0.95, 0.06 * hh, 0, 0, Math.PI * 2); fs(c, HOOD, ink, lw);
   const hx = front ? 0 : rH * 0.05;
-  c.beginPath(); c.arc(hx, hy, rH, 0, Math.PI * 2); fs(c, KAP_WHITE, ink, lw * 1.5);
-  for (const sx of front ? [-1, 1] : [-1]) { const ex = hx + sx * rH * (front ? 0.97 : 0.45), ey2 = hy + rH * 0.12; c.beginPath(); c.arc(ex, ey2, rH * 0.2, 0, Math.PI * 2); fs(c, KAP_WHITE, ink, lw); c.beginPath(); c.arc(ex, ey2 + rH * 0.34, rH * 0.15, 0, Math.PI * 2); c.strokeStyle = KAP_GOLD; c.lineWidth = lw * 1.5; c.stroke(); }   // orejas simples + aros dorados
+  c.beginPath(); c.arc(hx, hy, rH, 0, Math.PI * 2); fs(c, HEAD, ink, lw * 1.5);
+  for (const sx of front ? [-1, 1] : [-1]) { const ex = hx + sx * rH * (front ? 0.97 : 0.45), ey2 = hy + rH * 0.12; c.beginPath(); c.arc(ex, ey2, rH * 0.2, 0, Math.PI * 2); fs(c, HEAD, ink, lw); if (chainOn) { c.beginPath(); c.arc(ex, ey2 + rH * 0.34, rH * 0.15, 0, Math.PI * 2); c.strokeStyle = KAP_GOLD; c.lineWidth = lw * 1.5; c.stroke(); } }   // orejas simples + aros dorados
   const e = pose.expression, F = STICK_FACE[e] ?? {}, bl = 1 - pose.blink * 0.9, look = pose.lookX * rH * 0.1, eyeY = hy + rH * 0.08, exs = front ? [-0.36, 0.36] : [0.12, 0.5], mx = hx + (front ? 0 : rH * 0.3);
   exs.forEach((fx, i) => { const x = hx + fx * rH, er = rH * (F.eye ?? (e === "surprised" ? 0.17 : 0.1)) * (0.5 + bl * 0.5);
     if (((e === "happy" || F.closed) && !pose.blink) || bl < 0.2) { c.strokeStyle = ink; c.lineWidth = lw * 1.7; c.lineCap = "round"; c.beginPath(); c.arc(x, eyeY + rH * 0.04, rH * 0.14, Math.PI * 1.12, Math.PI * 1.88); c.stroke(); }
     else { c.beginPath(); c.arc(x + look + (front ? 0 : rH * 0.06), eyeY + (F.down ?? 0) * rH, er, 0, Math.PI * 2); c.fillStyle = ink; c.fill(); }
     const base = e === "angry" ? 0.5 : e === "sad" || e === "worried" ? -0.45 : e === "thinking" ? -0.15 : 0, inner = front ? (i === 0 ? 1 : -1) : 1, tilt = ((i === 0 ? F.tiltL : F.tiltR) ?? F.tilt ?? base) * inner, raise = (F.raise ?? 0) + (i === 1 ? (F.raiseR ?? 0) : 0) + (e === "surprised" ? 0.18 : 0);
-    c.save(); c.translate(x, eyeY - rH * (0.3 + raise)); c.rotate(tilt); c.strokeStyle = ink; c.lineWidth = lw * 3.4; c.lineCap = "round"; c.beginPath(); c.moveTo(-rH * 0.2, 0); c.lineTo(rH * 0.2, 0); c.stroke(); c.restore();   // cejas gruesas y expresivas
+    c.save(); c.translate(x, eyeY - rH * (0.3 + raise)); c.rotate(tilt); c.strokeStyle = ink; c.lineWidth = lw * (chainOn ? 3.4 : 1.8); c.lineCap = "round"; c.beginPath(); c.moveTo(-rH * 0.2, 0); c.lineTo(rH * 0.2, 0); c.stroke(); c.restore();   // cejas expresivas (gruesas en KAP)
     if (F.blush) { c.fillStyle = "rgba(232,131,107,0.5)"; c.beginPath(); c.arc(x, eyeY + rH * 0.42, rH * 0.12, 0, Math.PI * 2); c.fill(); } });
   const my = hy + rH * 0.52, speaking = pose.viseme !== "rest" || pose.mouth > 0.12;
   if (F.mouth && !speaking) { c.strokeStyle = ink; c.lineWidth = lw * 1.6; c.lineCap = "round"; c.beginPath();

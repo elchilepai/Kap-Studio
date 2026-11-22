@@ -9,6 +9,9 @@ import { autoDesign, resolveAppearance } from "./design";
 import { norm } from "@/server/studio/text";
 import { LIPSYNC_PROVIDERS } from "@/animation/lipsync";
 import { env } from "@/server/env";
+import { kapAssetPath, kapAvailable, kapRig } from "@/animation/kaprig";
+import fsp from "node:fs/promises";
+const kapInfo = async (p: string) => { try { const st = await fsp.stat(p); return { path: p, sig: `kap:${st.size}:${Math.round(st.mtimeMs)}`, kind: "image" as const }; } catch { return undefined; } };
 
 export const LEAD = 0.3, TAIL = 0.5;   // la narración arranca 0,3 s después del inicio de la escena (igual que el montaje)
 
@@ -31,7 +34,7 @@ export async function buildSceneStage(scene: Scene, o: { durationSec: number; ta
   const ownShort = ctx.production.kind === "short" && !ctx.production.parentId;
   const cast = new Map(ctx.production.cast.map((c) => [c.characterId, c.outfitId]));
   const actors = scene.characterIds.map((id) => ctx.characters.find((c) => c.id === id)).filter(Boolean).map((c) => ({
-    id: c!.id, name: c!.name, appearance: ownShort && norm(c!.name) === "kap" ? { ...resolveAppearance(c!.design ?? autoDesign(c!.name), cast.get(c!.id)), look: "kap" as const, skin: "#fbfbf8" } : resolveAppearance(c!.design ?? autoDesign(c!.name), cast.get(c!.id)),   // KAP de los Shorts: la misma identidad visual (referencia) en todas las escenas
+    id: c!.id, name: c!.name, appearance: ownShort && norm(c!.name) === "kap" ? { ...resolveAppearance(c!.design ?? autoDesign(c!.name), cast.get(c!.id)), ...(kapAvailable() ? { rig: kapRig() } : { look: "kap" as const, skin: "#fbfbf8", top: "#1c1d23", bottom: "#1c1d23", accessory: "chain" as const }) } : ownShort ? { ...resolveAppearance(c!.design ?? autoDesign(c!.name), cast.get(c!.id)), look: "kap" as const } : resolveAppearance(c!.design ?? autoDesign(c!.name), cast.get(c!.id)),   // KAP de los Shorts: la misma identidad visual (referencia) en todas las escenas
   }));
   const provisional = scene.characterIds.map((id) => ctx.characters.find((c) => c.id === id)).filter((c) => c && !c.design).map((c) => c!.name);
   const place = ctx.places.find((p) => scene.location && norm(p.name) === norm(scene.location));
@@ -49,7 +52,7 @@ export async function buildSceneStage(scene: Scene, o: { durationSec: number; ta
   });
   const images: Record<string, { path: string; sig: string }> = useImage && stage.set.imageId ? { [stage.set.imageId]: { path: useImage.path, sig: useImage.sig } } : {};
   // imágenes de las capas del escenario y de los rigs por capas de los personajes
-  const need = [...(stage.set.layers ?? []).map((l) => l.image), ...stage.actors.flatMap((a) => (a.appearance.rig?.kind === "layered" ? [...a.appearance.rig.parts.map((p) => p.image), ...Object.values(a.appearance.rig.face?.eyes ?? {}), ...Object.values(a.appearance.rig.face?.mouths ?? {})] : []))];
-  for (const id of new Set(need)) { const info = await ctx.assetInfo(id); if (info && info.kind === "image") images[id] = { path: info.path, sig: info.sig }; }
+  const need = [...(stage.set.layers ?? []).map((l) => l.image), ...stage.actors.flatMap((a) => (a.appearance.rig?.kind === "layered" ? [...a.appearance.rig.parts.map((p) => p.image), ...Object.values(a.appearance.rig.face?.eyes ?? {}), ...Object.values(a.appearance.rig.face?.mouths ?? {}), ...Object.values(a.appearance.rig.face?.restMouths ?? {})] : []))];
+  for (const id of new Set(need)) { const kp = kapAssetPath(id), info = kp ? await kapInfo(kp) : await ctx.assetInfo(id); if (info && info.kind === "image") images[id] = { path: info.path, sig: info.sig }; }
   return { stage, images, provisional };
 }

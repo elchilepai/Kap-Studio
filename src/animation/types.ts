@@ -20,7 +20,7 @@ export type Gesture = "none" | "wave" | "point" | "shrug" | "nod" | "shake" | "t
 export type Ease = "linear" | "in" | "out" | "inOut";
 export type Side = "left" | "right";
 export type HairStyle = "short" | "long" | "bun" | "bald" | "cap" | "spiky" | "ponytail" | "curly";
-export type Accessory = "none" | "glasses" | "scarf" | "hat" | "backpack" | "headphones" | "cape" | "tie";
+export type Accessory = "none" | "glasses" | "scarf" | "hat" | "backpack" | "headphones" | "cape" | "tie" | "chain";
 export type BodyType = "slim" | "regular" | "broad";
 export type EyeStyle = "round" | "narrow" | "big";
 /** Visemas (formas de boca): conjunto reducido tipo Preston Blair. La amplitud solo distingue reposo/E/A; un proveedor fonético los usaría todos. */
@@ -37,7 +37,7 @@ export type LayerPart = {
 };
 export type LayeredRig = {
   kind: "layered"; pxPerUnit: number; parts: LayerPart[];
-  face?: { parent: string; at: [number, number]; scale?: number; eyes?: Record<string, string>; mouths?: Record<string, string> };
+  face?: { parent: string; at: [number, number]; scale?: number; eyes?: Record<string, string>; mouths?: Record<string, string>; /** boca en reposo según la expresión (sonrisa, ceño…): se usa cuando no está hablando */ restMouths?: Record<string, string> };
   animations?: string[];
 };
 
@@ -79,7 +79,7 @@ export type SetLayer = { image: string; depth: number; y?: number; height?: numb
 export type ElementKind = PropKind | "bench" | "pillar" | "bush" | "plant" | "crate";
 /** Elemento reutilizable del escenario (se guarda con el lugar: aparece igual en todos los episodios). */
 export type SetElement = { id: string; kind: ElementKind; x: number; y?: number; scale: number; depth: number; flip?: boolean };
-export type SetPreset = "room" | "street" | "city" | "forest" | "rooftop" | "patio" | "abstract" | "image";
+export type SetPreset = "estudio" | "room" | "street" | "city" | "forest" | "rooftop" | "patio" | "abstract" | "image";
 export type TimeOfDay = "day" | "afternoon" | "dusk" | "night";
 /** Variante de una habitación (mobiliario que dice DÓNDE estamos): dormitorio, salón, cocina o pasillo. Se deduce del nombre del lugar; no se guarda. */
 export type RoomVariant = "bedroom" | "living" | "kitchen" | "hallway";

@@ -12,10 +12,14 @@ export const PHASES = ["hook", "contexto", "escalada", "giro", "remate"] as cons
 export type Phase = (typeof PHASES)[number];
 export const SHOTS = ["general", "medio", "primer plano", "objeto", "seguimiento"] as const;
 export const SHORT_SOUNDS = ["none", "door", "bump", "knock", "ring", "steps", "ambience"] as const;
+/** CÓMO se visualiza cada beat (separado de QUÉ ocurre): nivel de animación, cámara y tipo de movimiento. */
+export const VISUALS = ["illustration", "limited-animation", "action"] as const;
+export const CAMERAS = ["static", "slow-push", "slow-pull", "pan", "follow", "close-up", "wide", "reveal"] as const;
+export const MOTIONS = ["none", "subtle", "character", "object", "environment"] as const;
 export const SHORT_MUSIC = ["none", "start", "change", "stop", "impact", "silence"] as const;
 export type ShortBeat = {
   phase: Phase; step: (typeof STEPS)[number]; goal: string; action: string; reaction: string; change: string; seconds: number; shot: (typeof SHOTS)[number];
-  characters: string[]; location: string; time: string; sound?: (typeof SHORT_SOUNDS)[number]; music?: (typeof SHORT_MUSIC)[number]; dialogue?: { speaker: string; text: string };
+  characters: string[]; location: string; time: string; visual?: (typeof VISUALS)[number]; camera?: (typeof CAMERAS)[number]; motion?: (typeof MOTIONS)[number]; sound?: (typeof SHORT_SOUNDS)[number]; music?: (typeof SHORT_MUSIC)[number]; dialogue?: { speaker: string; text: string };
 };
 /** Contrato narrativo del Short: cada paso se ve en acciones (no «está triste»). */
 export const STEPS = ["situacion", "intento", "fallo", "reaccion", "segundo-intento", "descubrimiento", "cambio", "remate"] as const;
@@ -231,11 +235,32 @@ function sentenceStarts(text: string, lineDur: number): { text: string; t: numbe
   return ss.map((x, i) => { const r = { text: x, t, dur: d[i] * k }; t += d[i] * k; return r; });
 }
 
+
+/** Nivel visual del beat: lo que dice el beat; si no, acción para caídas/golpes/carreras, ilustración si no hay acción física y animación limitada en el resto. */
+export const visualOf = (b: ShortBeat): (typeof VISUALS)[number] => b.visual ?? (/\b(?:cae\w*|se caen|derrumba\w*|golpea\w*|corre\w*|lanza\w*|tropiez\w*|patea\w*|choca\w*|vuelca\w*|rueda\w*)\b/.test(plain(`${b.action} ${b.reaction}`)) ? "action" : !doing(b.action) ? "illustration" : "limited-animation");
+/** Cámara del beat (con función narrativa): la que declara el beat o, si no, la que sale del plano. */
+export const cameraOf = (b: ShortBeat): (typeof CAMERAS)[number] => b.camera ?? (b.shot === "general" ? "wide" : b.shot === "primer plano" || b.shot === "objeto" ? "close-up" : b.shot === "seguimiento" ? "follow" : "static");
+const VISUAL_WORD = { illustration: "ilustracion", "limited-animation": "limitada", action: "accion" } as const;
+/** Directivas de cámara de un beat (arrancan en `t`, duran `dur`): cada movimiento responde a la historia; la cámara estática se declara para que nada se mueva solo. */
+function cameraDirs(cam: (typeof CAMERAS)[number], who: string, t: number, dur: number): string[] {
+  const at = (x: number) => `en ${x.toFixed(1)}s`, d = Math.max(0.8, dur).toFixed(1);
+  switch (cam) {
+    case "slow-push": return [`camara: seguir ${who} zoom 1.3 ${at(t)} durante ${d}s`];
+    case "slow-pull": return [`plano: primer plano ${who} ${at(t)}`, `camara: centro ${at(t + 0.1)} durante ${d}s`];
+    case "pan": return [`camara: paneo derecha ${at(t)} durante ${d}s`];
+    case "follow": return [`camara: seguir ${who} ${at(t)} durante ${d}s`];
+    case "close-up": return [`plano: primer plano ${who} ${at(t)}`];
+    case "wide": return [`plano: general ${at(t)}`];
+    case "reveal": return [`camara: paneo derecha ${at(t)} durante ${(dur * 0.6).toFixed(1)}s`, `plano: general ${at(t + dur * 0.6)}`];
+    default: return [`camara: centro ${at(t)}`];   // estática: encuadre fijo
+  }
+}
+
 export type PresenterOpts = { objeto?: string; intro?: string; outro?: { gesto: string; texto: string } };
 const presenterScene = (kind: "intro" | "outro", lines: { speaker: string; text: string }[], time: string, last?: string): ShortDraftScene => {
   const dur = Math.min(40, Math.max(3, lines.reduce((n, l) => n + lineSeconds(l) + (l.speaker ? 0.25 : 0), 0) + 1));
   return { title: kind === "intro" ? "KAP plantea la duda" : "KAP remata", location: "A cámara", lines, memory: kind === "intro" ? ["acto: inicio | KAP plantea la duda a cámara"] : [`gancho: ${(last ?? "KAP cierra a cámara").slice(0, 240)}`], stage: kind === "intro" ? "inicio" : "resolucion", shot: "medio", time, interior: true, change: kind === "intro" ? "la duda queda planteada" : "KAP remata",
-    directions: ["a-camara: KAP en 0.3s", "plano: medio KAP en 0.3s", `marca-musica: ${kind === "intro" ? "inicio" : "fin"} en 0.3s`, `sonido: ambiente en 0.3s durante ${dur.toFixed(1)}s`, "montaje: continuo"], ...(kind === "outro" ? { transition: "cut" as const } : {}) };
+    directions: ["a-camara: KAP en 0.3s", "camara: seguir KAP zoom 1.7 en 0.3s durante 0.5s", "visual: ilustracion en 0.3s", `marca-musica: ${kind === "intro" ? "inicio" : "fin"} en 0.3s`, `sonido: ambiente en 0.3s durante ${dur.toFixed(1)}s`, "montaje: continuo"], ...(kind === "outro" ? { transition: "cut" as const } : {}) };
 };
 
 /** Beats → escenas del borrador (formato del generador de episodios): narración = DIRECCIÓN (sin hablante), diálogo = solo lo que se dice. Las directivas (plano, reacción en primer plano, sonidos, impacto, silencio, marcas, estado del objeto) caen en el instante de la frase/reacción que las motiva, con la duración real de las líneas; todas se conservan. Con `intro`/`outro`, el Short abre y cierra con KAP presentador a cámara. Entre escenas, siempre CORTE. */
@@ -248,9 +273,10 @@ export function beatsToScenes(beats: ShortBeat[], known: string[], pres: Present
       const start = t, mine: { speaker: string; text: string; at: number; dur: number }[] = [];
       for (const x of [b.action, b.reaction]) { const n = x.trim() ? normalizeLine({ text: x }, known) : undefined; if (n) { const d = lineSeconds({ speaker: "", text: n.text }); mine.push({ speaker: "", text: n.text, at: t, dur: d }); lines.push({ speaker: "", text: n.text }); t += d; } }
       if (b.dialogue) { const n = normalizeLine({ speaker: b.dialogue.speaker, text: b.dialogue.text }, known); if (n) { const d = lineSeconds({ speaker: n.speaker ?? "", text: n.text }); mine.push({ speaker: n.speaker ?? "", text: n.text, at: t, dur: d }); lines.push({ speaker: n.speaker ?? "", text: n.text }); t += d + 0.25; } }
-      if (odef) for (const x of sentencesOf(`${b.action} ${b.reaction}`)) { const p = plain(x); if (odef.re.test(p) || p) { if (FALL.test(p) && odef.fallen && odef.re.test(plain(b.action + " " + b.reaction))) ostate = "fallen"; else if (/\b(?:apila\w*|coloca\w*|levanta\w*|reconstru\w*|endereza\w*|monta\w*|construye\w*|vuelve a (?:poner|colocar|apilar|montar))\b/.test(p) && odef.re.test(plain(b.action + " " + b.reaction))) ostate = "intact"; } }
+      if (odef) for (const x of sentencesOfBeats([b])) { const p = plain(x.text), refsObj = odef.re.test(plain(b.action + " " + b.reaction)); if (refsObj && odef.fallen && FALL.test(p)) ostate = "fallen"; else if (refsObj && x.kap && /\b(?:apila\w*|coloca\w*|levanta\w*|reconstru\w*|endereza\w*|monta\w*|construye\w*|vuelve a (?:poner|colocar|apilar|montar))\b/.test(p)) ostate = "intact"; }   // solo KAP reconstruye su objeto
       const at = (x: number) => `en ${(x + lead).toFixed(1)}s`, who = b.characters[0] ?? "KAP", act = mine.find((m) => !m.speaker), react = mine.filter((m) => !m.speaker)[1];
-      dirs.push(b.shot === "general" ? `plano: general ${at(start)}` : b.shot === "medio" ? `plano: medio ${who} ${at(start)}` : b.shot === "seguimiento" ? `camara: seguir ${who} ${at(start)}` : `plano: primer plano ${who} ${at(start)}`);   // «objeto» = primer plano en quien lo maneja
+      const bd = Math.max(0.8, t - start); dirs.push(...cameraDirs(cameraOf(b), who, start + lead, bd), `visual: ${VISUAL_WORD[visualOf(b)]} ${at(start)} durante ${bd.toFixed(1)}s`);   // QUÉ ocurre ≠ CÓMO se ve: cámara y nivel de animación del beat
+      if (b.motion === "environment") dirs.push(`vfx: polvo ${at(start)} durante ${bd.toFixed(1)}s`);
       // la reacción de KAP al fallo/resultado se ve de cerca (corte a la reacción), en el instante en que empieza
       if (react && ["fallo", "reaccion", "descubrimiento"].includes(b.step) && b.shot !== "primer plano" && b.shot !== "objeto") dirs.push(`plano: primer plano ${who} ${at(react.at)}`);
       // sonidos que salen de cada frase de acción, en su momento

@@ -8,14 +8,14 @@ import type { AuthorStats, LlmClient, LlmUsage, ScriptAuthor } from "@/ports/stu
 import { ScreenplayIR } from "@/domain/screenplay";
 import { SUPPORTED_OBJECTS } from "@/narrative/objects";
 import { norm } from "@/memory/text";
-import { audioGaps, beatsToScenes, estimateRenderSeconds, MORAL, PHASES, repairShort, shortRetentionCheck, shortSeconds, SHORT_MUSIC, SHORT_SOUNDS, SHOTS, STEPS, type RetentionResult, type ShortBeat, type ShortDraftScene } from "@/narrative/short";
+import { CAMERAS, MOTIONS, VISUALS, audioGaps, beatsToScenes, estimateRenderSeconds, MORAL, PHASES, repairShort, shortRetentionCheck, shortSeconds, SHORT_MUSIC, SHORT_SOUNDS, SHOTS, STEPS, type RetentionResult, type ShortBeat, type ShortDraftScene } from "@/narrative/short";
 import { draftToIR, irToScript, type EpisodeDraft } from "./episode";
 import { generateJson, sumUsage, type AttemptLog } from "./json";
 import { SHORT_SYSTEM, shortPrompt } from "./prompts";
 
 const Beat = z.object({
   phase: z.enum(PHASES), step: z.enum(STEPS), goal: z.string().min(1).max(160), action: z.string().min(1).max(420), reaction: z.string().max(300), change: z.string().min(1).max(200), seconds: z.number().min(1).max(8),
-  shot: z.enum(SHOTS), characters: z.array(z.string().min(1).max(40)).min(1).max(4), location: z.string().min(1).max(80), time: z.string().max(20),
+  shot: z.enum(SHOTS), visual: z.enum(VISUALS).optional(), camera: z.enum(CAMERAS).optional(), motion: z.enum(MOTIONS).optional(), characters: z.array(z.string().min(1).max(40)).min(1).max(4), location: z.string().min(1).max(80), time: z.string().max(20),
   sound: z.enum(SHORT_SOUNDS).optional(), music: z.enum(SHORT_MUSIC).optional(), dialogue: z.object({ speaker: z.string().min(1).max(40), text: z.string().min(1).max(300) }).optional(),
 });
 export const ShortStory = z.object({ intro: z.string().min(8).max(140), outro: z.object({ gesto: z.string().min(5).max(120), texto: z.string().max(60) }), objeto: z.enum(SUPPORTED_OBJECTS), objetivo: z.string().min(3).max(160), title: z.string().min(1).max(100), logline: z.string().min(1).max(260), hook: z.string().max(200), cast: z.array(z.string().min(1).max(40)).max(6), beats: z.array(Beat).min(5).max(10) });

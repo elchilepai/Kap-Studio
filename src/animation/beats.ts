@@ -35,7 +35,7 @@ const sideOf = (s: string): Side | "fade" | undefined => (/izquierd/.test(s) ? "
 const find = <T,>(map: Record<string, T>, s: string): T | undefined => Object.entries(map).sort((a, b) => b[0].length - a[0].length).find(([w]) => s.includes(norm(w)))?.[1];
 
 /** Directivas SOLO del director (SHORT MODE): sonido, música e impacto/silencio. No son beats de la IR (la IR no cambia): viajan en el texto de la dirección y las lee el director. */
-export const DIRECTOR_ONLY = new Set(["sonido", "marca-musica", "impacto", "silencio", "objeto", "a-camara", "montaje"]);
+export const DIRECTOR_ONLY = new Set(["sonido", "marca-musica", "impacto", "silencio", "objeto", "a-camara", "montaje", "visual"]);
 const SOUND_WORDS: Record<string, SoundKind> = { puerta: "door", portazo: "door", golpe: "bump", llamar: "knock", llamada: "ring", timbre: "ring", pasos: "steps", ambiente: "ambience" };
 const MUSIC_WORDS: Record<string, MusicCue["kind"]> = { inicio: "music_start", cambio: "music_change", fin: "music_stop" };
 /** «sonido: puerta en 2.1s» · «marca-musica: inicio|cambio|fin en 3s» (solo una marca para el director: no hay música real) · «impacto: en 5s» · «silencio: en 6s durante 1.5s» → marca de sonido o de música (o aviso si no se entiende). */

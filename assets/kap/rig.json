@@ -1,0 +1,76 @@
+{
+ "size": [
+  889,
+  1783
+ ],
+ "head": {
+  "box": [
+   110,
+   0,
+   773,
+   521
+  ],
+  "pivot": [
+   441.0,
+   509.0
+  ]
+ },
+ "face": {
+  "center": [
+   440.5,
+   349.5
+  ],
+  "size": [
+   411,
+   293
+  ]
+ },
+ "feet": [
+  444.5,
+  1783
+ ],
+ "eyes": [
+  "angry",
+  "bored",
+  "closed",
+  "confused",
+  "curious",
+  "embarrassed",
+  "happy",
+  "neutral",
+  "relieved",
+  "sad",
+  "scared",
+  "surprised",
+  "thinking",
+  "uncomfortable",
+  "worried"
+ ],
+ "mouths": [
+  "A",
+  "E",
+  "FV",
+  "I",
+  "L",
+  "MBP",
+  "O",
+  "U",
+  "WQ",
+  "rest"
+ ],
+ "restMouths": [
+  "angry",
+  "bored",
+  "confused",
+  "curious",
+  "embarrassed",
+  "happy",
+  "relieved",
+  "sad",
+  "scared",
+  "surprised",
+  "thinking",
+  "uncomfortable",
+  "worried"
+ ]
+}

@@ -39,7 +39,7 @@ export const norm = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").to
 
 export { syntheticEnvelope };
 
-const SET_RULES: [RegExp, SetPreset][] = [
+const SET_RULES: [RegExp, SetPreset][] = [[/\b(?:a camara|estudio|presentador)\b/, "estudio"], 
   [/azotea|tejado|terraza/, "rooftop"],
   [/^(?:(?!interior|habitaci|cuarto|sala|cocina|taller)[\s\S])*?(?:patio|fachada|portal|porche|puerta (?:de |principal)|entrada de|jardin de (?:la )?casa)/, "patio"],   // el patio doméstico no es una calle
   [/^(?:(?!interior|habitaci|cuarto|casa|sala|cocina|taller)[\s\S])*?(?:calle|acera|puerta|entrada|exterior|afuera|fuera)/, "street"],   // lo exterior que se nombra ANTES que lo interior («Puerta de casa», «Calle cerca de la casa») es exterior
@@ -67,6 +67,7 @@ export function direct(inp: DirectorInput): StageSpec {
   const sl = layoutSlots(chars.length, inp.aspect);                  // una fila en horizontal; en vertical con 3-4 personajes, dos filas sin solaparse
   const byName = (nm: string) => { const k = norm(nm); return chars.find((c) => norm(c.name) === k) ?? chars.find((c) => norm(c.name).startsWith(k) || k.startsWith(norm(c.name))); };
   const actors = chars.map((c, i) => ({ id: c.id, name: c.name, appearance: c.appearance, slot: inp.startX?.[norm(c.name)]?.x ?? sl[i].x, ...(sl[i].row ? { row: sl[i].row } : {}), facing: inp.startX?.[norm(c.name)]?.facing ?? ((chars.length === 1 || i < chars.length / 2 ? 1 : -1) as 1 | -1), presentAtStart: true }));
+  if (inp.startX) { const order = [...actors].sort((p, q) => p.slot - q.slot); for (let i = 1; i < order.length; i++) if (order[i].slot - order[i - 1].slot < 1.5) order[i].slot = Math.min(WORLD_W - 0.8, order[i - 1].slot + 1.5); }   // al continuar de la escena anterior, nadie aparece encima de otro
   const imageSet = inp.set?.preset === "image" || !!inp.set?.imageId;                 // con imagen de fondo no se abre por debajo de 1 (no hay imagen fuera)
   const actorX = actors.map((a) => a.slot), fitZoom = wideZoom(actorX, inp.aspect, 0.3, 3);      // zoom máximo con el que el reparto sigue entero
   const wideZ = portraitShot ? Math.min(1, imageSet ? Math.max(1, fitZoom) : Math.max(0.8, fitZoom)) : 1; // plano general: en vertical se abre si hace falta (solo ese plano)
@@ -75,8 +76,8 @@ export function direct(inp: DirectorInput): StageSpec {
 
   // ---------- acciones: beats estructurados + texto editable (ambos se convierten al mismo vocabulario) ----------
   const beats: Beat[] = [...(inp.beats ?? [])];
-  const musicCues: MusicCue[] = [], extraSounds: SoundCue[] = []; let startObject: { kind: ObjectKind; fallen: boolean } | undefined, toCamera = false, camFrom = 0;
-  for (const raw of inp.directions) { { const od = /^\s*objeto\s*:\s*(.+?)(?:\s+(ca[ií]d[oa]))?\s*$/i.exec(raw), ac = /^\s*a-camara\s*:\s*\w+(?:\s+en\s+([\d.]+)\s*s)?/i.exec(raw), mc = /^\s*montaje\s*:/i.test(raw); if (od) { const d = objectDefFor(od[1]); if (d) startObject = { kind: d.kind as ObjectKind, fallen: !!od[2] }; else warnings.push(`objeto: no sé dibujar «${od[1]}»`); continue; } if (ac) { toCamera = true; camFrom = Number(ac[1] ?? 0); continue; } if (mc) continue; } const dc = parseDirectorCue(raw); if (dc) { if (dc.sound) extraSounds.push(dc.sound); if (dc.music) musicCues.push(dc.music); if (dc.warning) warnings.push(dc.warning); continue; } const r = parseDirection(raw); if (r.beat) beats.push(r.beat); else warnings.push(r.warning ?? `No entiendo «${raw}»`); }
+  const musicCues: MusicCue[] = [], extraSounds: SoundCue[] = []; let startObject: { kind: ObjectKind; fallen: boolean } | undefined, toCamera = false, camFrom = 0; const modes: { t0: number; t1: number; mode: "illustration" | "limited" | "action" }[] = [];
+  for (const raw of inp.directions) { { const od = /^\s*objeto\s*:\s*(.+?)(?:\s+(ca[ií]d[oa]))?\s*$/i.exec(raw), ac = /^\s*a-camara\s*:\s*\w+(?:\s+en\s+([\d.]+)\s*s)?/i.exec(raw), mc = /^\s*montaje\s*:/i.test(raw); if (od) { const d = objectDefFor(od[1]); if (d) startObject = { kind: d.kind as ObjectKind, fallen: !!od[2] }; else warnings.push(`objeto: no sé dibujar «${od[1]}»`); continue; } if (ac) { toCamera = true; camFrom = Number(ac[1] ?? 0); continue; } if (mc) continue; const vm = /^\s*visual\s*:\s*(ilustracion|limitada|accion)(?:\s+en\s+([\d.]+)\s*s)?(?:\s+durante\s+([\d.]+)\s*s)?/i.exec(raw); if (vm) { const t0 = Number(vm[2] ?? 0), m = norm(vm[1]); modes.push({ t0, t1: t0 + Number(vm[3] ?? 99), mode: m === "ilustracion" ? "illustration" : m === "accion" ? "action" : "limited" }); continue; } } const dc = parseDirectorCue(raw); if (dc) { if (dc.sound) extraSounds.push(dc.sound); if (dc.music) musicCues.push(dc.music); if (dc.warning) warnings.push(dc.warning); continue; } const r = parseDirection(raw); if (r.beat) beats.push(r.beat); else warnings.push(r.warning ?? `No entiendo «${raw}»`); }
   let explicitCamera = false, shotOnly = false;
   const who = (name: string | undefined, ctx: string) => { const a = name ? byName(name) : undefined; if (!a) warnings.push(`${ctx}: personaje «${name ?? "?"}» no está en la escena`); return a; };
   for (const b of beats) {
@@ -338,5 +339,8 @@ export function direct(inp: DirectorInput): StageSpec {
       sounds.push({ t: gap.t0, kind: "ambience", dur: gap.t1 - gap.t0 }); filled++;
     }
     if (filled) warnings.push(`Pausa larga sin acción (${filled} tramo${filled > 1 ? "s" : ""}): se ha llenado con mirada, cámara y ambiente; si la escena queda vacía, la planificación es floja.`); }
+  // NIVEL VISUAL de cada tramo (ilustración animada / animación limitada / acción): la ilustración solo vive con cámara, mirada, expresión y respiración; la limitada no corre; la acción lo conserva todo
+  if (modes.length) { const modeAt = (t: number) => modes.find((m) => t >= m.t0 - 0.01 && t < m.t1)?.mode ?? "limited";
+    for (let i = cues.length - 1; i >= 0; i--) { const c = cues[i]; if (c.type !== "move" && c.type !== "pose" && c.type !== "gesture") continue; const m = modeAt(c.t); if (m === "illustration") cues.splice(i, 1); else if (m === "limited" && c.type === "move" && c.run) cues[i] = { ...c, run: false, dur: Math.max(c.dur, 1.2) }; } }
   return { v: 1, width: inp.width, height: inp.height, fps: inp.fps, duration: D + tail, seed: hash32(inp.location + inp.index) % 100000, set: resolveSet(inp.location, inp.tags, inp.mood, inp.set), actors, props, cues, style: inp.style, warnings, ...(inp.short ? { flow: true } : {}), ...(musicCues.length ? { music: musicCues.sort((a, b) => a.t - b.t) } : {}), ...(sounds.length ? { sounds } : {}), ...(inp.safe ? { safe: inp.safe } : {}) };
 }
