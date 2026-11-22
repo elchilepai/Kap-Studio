@@ -1,0 +1,23 @@
+2D flat cartoon illustration for a YouTube explainer series, clean vector look, finished full-scene illustration (character, background, props and lighting are one integrated drawing). uniform thick black outlines (about the same weight on characters, props and background), flat color fills with a single soft shadow tone, no gradients on characters, small hand-drawn detail lines on surfaces (cracks, bricks, planks, grass tufts, folds). characters are simple and expressive: big round head, small dot eyes or simple eyes, thick expressive eyebrows, single-line mouth, compact chunky bodies, very readable silhouettes. backgrounds are richly detailed but simplified: real depth with foreground, midground and background layers, perspective lines on floors and walls, props that tell the story, warm directional light with a long soft cast shadow. cinematic composition with one clear focal point, rule of thirds, strong shape contrast between the character and the setting, generous clean negative space where subtitles or voice-over graphics can go.
+
+color palette shared by every scene of the video: pale sky blue #d3e6ef, sand #bc9f7a, warm ochre #f5c371, terracotta #b57f59, deep brown #4c352b, soft shadow #8d715b, black linework #0c0806; warm late-afternoon light.
+
+SCENE: KAP watches his brother and notices that he is drawing on the paper. KAP slowly approaches, takes a pencil from the desk, and starts drawing on a new sheet of paper. His expression is focused and curious.
+
+Location: Habitación de KAP. Mood / emotion: curious. Camera: side-on profile shot with room to travel sideways (good for a pan). Composition: leave the left side of the frame calm and uncluttered.
+
+CHARACTERS (identical design in every scene of the video):
+- KAP (the main character; keep EXACTLY the same design in every scene, match the attached reference image): a kid with a big perfectly round plain white head, simple black oval eyes, thick black slightly angled eyebrows (serious, introverted look), small round ears with a small gold hoop earring in each ear, no hair, no nose, no visible mouth unless the scene needs one (then a simple single black line); oversized black hoodie with the hood bunched behind the neck and a kangaroo pocket; thick gold Cuban chain necklace with a gold brain-shaped pendant; wide baggy black pants; black-and-white low-top sneakers; white hands; compact chunky silhouette, head about one third of the body height
+- KAP's little brother (a secondary character; keep EXACTLY the same design in every scene): about 80% of KAP's height, the same big round white head style with simple black dot eyes, thin eyebrows and a small friendly smile, a short brown hair tuft on top, no jewelry; mustard-yellow hoodie (#e9a23b), dark blue shorts, white sneakers with red soles; white hands; same line weight and flat-color style as KAP
+
+Format: vertical 9:16 (1080x1920), no text, no captions, no watermark.
+
+--- NEGATIVE PROMPT ---
+photorealistic, 3D render, anime, manga, painterly, watercolor, blurry, noisy texture, text, letters, watermark, logo, caption, extra fingers, extra limbs, deformed hands, different outfit, different face, different hairstyle, cropped head, low contrast, dark muddy colors
+
+--- ATTACH AS REFERENCE ---
+assets/kap/reference.jpg
+assets/style/refs/ref-desierto-ladrillo.png
+assets/style/refs/ref-cueva.png
+assets/style/refs/ref-laboratorio.png
+assets/style/refs/ref-palacio.png

@@ -16,3 +16,7 @@ Comprobado en el entorno del proyecto: **no hay GPU**, no hay `torch` ni `diffus
 
 ## Lo que deja de ser prioridad (se conserva, no se amplía)
 El motor de animación procedural (`src/animation`, render de vídeo, lip-sync, poses, cámara, fondos vectoriales) y SHORT MODE como generador de vídeo. Siguen en el repositorio y con sus tests, pero ya no se trabajan. Se mantienen: canon y memoria de KAP, personalidad, presentador, estructura narrativa, la validación por contenido (`causalReasons`, `introReasons`…) y la consistencia visual de KAP.
+
+## Prueba de concepto (5 escenas, sin vídeo)
+- `docs/storyboard-concept/propuesta-validada/`: paquete listo para generar las 5 imágenes (La torre de KAP: presenta → ve un logro → intenta y falla → observa y prueba otra estrategia → progreso). Está escrito a mano y **pasa** `storyboardReasons`.
+- `docs/storyboard-concept/qwen-sin-editar/`: lo que escribió Qwen3-14B con el mismo código (25 min, 1 reescritura): **no pasa** su propia comprobación (narración de la escena 1 como instrucción visual y sin segundo intento) y la historia es floja (libro de poesía, habitación oscura y triste). Se deja tal cual como evidencia.

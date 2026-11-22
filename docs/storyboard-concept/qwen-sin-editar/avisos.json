@@ -1,0 +1,21 @@
+{
+ "reasons": [
+  "la narración de la escena 1 es una instrucción visual («KAP mira el libro y pregunta en voz baja…»): lo que se dibuja no se dice",
+  "historia visual: no hay un segundo intento de KAP con el objeto después del fallo"
+ ],
+ "warnings": [
+  "STORYBOARD_CHECK · la narración de la escena 1 es una instrucción visual («KAP mira el libro y pregunta en voz baja…»): lo que se dibuja no se dice",
+  "STORYBOARD_CHECK · historia visual: no hay un segundo intento de KAP con el objeto después del fallo",
+  "La primera versión no cumplía el contrato del storyboard: se pidió una reescritura completa."
+ ],
+ "rewrites": 1,
+ "calls": 2,
+ "usage": {
+  "promptTokens": 6475,
+  "outputTokens": 2301,
+  "totalMs": 1499751.8169900002,
+  "loadMs": 74567.046025,
+  "promptMs": 133410.99,
+  "evalMs": 1291719.495
+ }
+}

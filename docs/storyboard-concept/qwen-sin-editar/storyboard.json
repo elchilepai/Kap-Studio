@@ -1,0 +1,85 @@
+{
+ "title": "¿Por qué sentimos que todos avanzan menos nosotros?",
+ "objeto": "Un libro de poesía",
+ "objetivo": "KAP quiere entender por qué siente que otros avanzan más que él",
+ "scenes": [
+  {
+   "n": 1,
+   "role": "presenta",
+   "narration": "KAP mira el libro y pregunta en voz baja: ¿Por qué todos avanzan menos yo?",
+   "visual": "KAP está sentado en una silla destartalada en su habitación, con las piernas cruzadas y el libro de poesía abierto en sus manos. Su expresión es pensativa y triste. La habitación está oscura y llena de cosas rotas.",
+   "visualEn": "KAP is sitting on a broken chair in his dark, cluttered room, legs crossed, holding an open poetry book. His expression is thoughtful and sad. The room is dimly lit and filled with broken items.",
+   "characters": [
+    "KAP"
+   ],
+   "location": "Habitación de KAP",
+   "shot": "medium",
+   "emotion": "curious",
+   "purpose": "Presentar el conflicto y la duda que KAP siente sobre su progreso en comparación con otros",
+   "negativeSpace": "right"
+  },
+  {
+   "n": 2,
+   "role": "ve-logro",
+   "narration": "",
+   "visual": "El hermano de KAP está sentado al lado de una mesa y lee el libro con entusiasmo. Sus ojos brillan y su postura es relajada y feliz. El libro está cerrado, pero a su lado hay una hoja de papel con dibujos.",
+   "visualEn": "KAP's younger brother is sitting next to a table, reading the poetry book with enthusiasm. His eyes are bright, and his posture is relaxed and happy. The book is closed, but next to it is a piece of paper with drawings on it.",
+   "characters": [
+    "KAP",
+    "Hermano de KAP"
+   ],
+   "location": "Habitación de KAP",
+   "shot": "wide",
+   "emotion": "happy",
+   "purpose": "Mostrar que su hermano pequeño puede avanzar y disfrutar del libro, algo que KAP no logra hacer por sí mismo",
+   "negativeSpace": "none"
+  },
+  {
+   "n": 3,
+   "role": "intenta-falla",
+   "narration": "",
+   "visual": "KAP intenta leer el libro con seriedad, pero se le cae de las manos. Sus ojos se llenan de frustración y su mandíbula se tensa. El libro se abre en una página con una imagen de un poema que no entiende.",
+   "visualEn": "KAP tries to read the book seriously, but it falls from his hands. His eyes show frustration and his jaw tightens. The book opens to a page with an image of a poem he doesn't understand.",
+   "characters": [
+    "KAP"
+   ],
+   "location": "Habitación de KAP",
+   "shot": "close-up",
+   "emotion": "frustrated",
+   "purpose": "Mostrar el momento en que KAP intenta seguir el ejemplo de su hermano pero falla",
+   "negativeSpace": "bottom"
+  },
+  {
+   "n": 4,
+   "role": "observa-prueba",
+   "narration": "",
+   "visual": "KAP mira a su hermano y nota que este dibuja en la hoja de papel. KAP se acerca lentamente, toma un lápiz del escritorio y empieza a dibujar en una hoja nueva. Su expresión es concentrada y curiosa.",
+   "visualEn": "KAP watches his brother and notices that he is drawing on the paper. KAP slowly approaches, takes a pencil from the desk, and starts drawing on a new sheet of paper. His expression is focused and curious.",
+   "characters": [
+    "KAP",
+    "Hermano de KAP"
+   ],
+   "location": "Habitación de KAP",
+   "shot": "side",
+   "emotion": "curious",
+   "purpose": "Mostrar que KAP observa lo que hace su hermano y decide probar algo diferente",
+   "negativeSpace": "left"
+  },
+  {
+   "n": 5,
+   "role": "progreso",
+   "narration": "",
+   "visual": "KAP mira su dibujo con una expresión de satisfacción. En la hoja, hay un pequeño dibujo de un personaje que parece inspirado en el poema. El hermano de KAP le sonríe y le muestra su propio dibujo.",
+   "visualEn": "KAP looks at his drawing with a satisfied expression. On the paper, there is a small drawing of a character inspired by the poem. His brother smiles and shows him his own drawing.",
+   "characters": [
+    "KAP",
+    "Hermano de KAP"
+   ],
+   "location": "Habitación de KAP",
+   "shot": "medium",
+   "emotion": "hopeful",
+   "purpose": "Mostrar un pequeño progreso en la comprensión y conexión de KAP con el objeto y su hermano",
+   "negativeSpace": "none"
+  }
+ ]
+}
