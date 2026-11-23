@@ -1,0 +1,107 @@
+{
+ "ideas": [
+  {
+   "category": "responsabilidad",
+   "titulo": "La factura sin nombre",
+   "problema": "No asumir responsabilidades por miedo a las consecuencias.",
+   "situacion": "KAP recibe una factura de un servicio compartido con su hermano pequeño, pero no sabe quién la debe pagar.",
+   "kapVive": "KAP se queda mirando la factura, evitando mirar a su hermano, y se niega a hablar del tema.",
+   "errorInicial": "KAP intenta ignorar el problema, pensando que se resolverá solo.",
+   "hacerDiferente": "Kap toma la factura, se acerca a su hermano y dice: «No sabemos quién debe esto. ¿Quieres que lo dividamos?»",
+   "aprendizaje": "Asumir responsabilidades no siempre es fácil, pero es necesario para avanzar.",
+   "visual": "La factura en la mesa, KAP mirando hacia otro lado, su hermano jugando con un juguete. Luego, KAP con la factura en la mano, mirando a su hermano.",
+   "publico": "Hombres jóvenes que evitan responsabilidades por miedo.",
+   "scores": {
+    "originalidad": 8,
+    "identificacion": 9,
+    "claridad": 7,
+    "potencialVisual": 9,
+    "utilidad": 8,
+    "curiosidad": 7
+   }
+  },
+  {
+   "category": "habitos",
+   "titulo": "El cepillo de dientes en el suelo",
+   "problema": "No mantener buenos hábitos por falta de constancia o motivación.",
+   "situacion": "KAP se levanta tarde y encuentra el cepillo de dientes en el suelo, sin haberlo usado.",
+   "kapVive": "KAP se siente frustrado, pero no hace nada para cambiar la situación.",
+   "errorInicial": "KAP se excusa diciendo que está cansado y lo hará más tarde.",
+   "hacerDiferente": "Kap coloca el cepillo en el lavabo y se mira al espejo antes de cepillarse los dientes.",
+   "aprendizaje": "Los hábitos se construyen con pequeños actos consistentes, no con promesas de mañana.",
+   "visual": "El cepillo en el suelo, KAP bostezando. Luego, el cepillo en su lugar, KAP mirándose al espejo.",
+   "publico": "Hombres jóvenes que procrastinan hábitos cotidianos.",
+   "scores": {
+    "originalidad": 7,
+    "identificacion": 8,
+    "claridad": 7,
+    "potencialVisual": 8,
+    "utilidad": 9,
+    "curiosidad": 6
+   }
+  },
+  {
+   "category": "proposito",
+   "titulo": "El diario sin páginas",
+   "problema": "No tener un propósito claro o no saber cómo definirlo.",
+   "situacion": "KAP encuentra un diario viejo en el armario, pero no sabe qué escribir en él.",
+   "kapVive": "KAP lo mira durante minutos y lo deja cerrado, sin saber por dónde empezar.",
+   "errorInicial": "KAP lo guarda de nuevo, diciendo que no sirve para nada.",
+   "hacerDiferente": "Kap abre el diario y escribe una sola frase: «Hoy quiero hacer algo que me haga sentir vivo».",
+   "aprendizaje": "Un propósito no tiene que ser grandioso; puede empezar con un pequeño acto de autenticidad.",
+   "visual": "El diario cerrado en la mano de KAP, luego abierto con una frase escrita en la primera página.",
+   "publico": "Hombres jóvenes que se sienten perdidos o sin dirección.",
+   "scores": {
+    "originalidad": 9,
+    "identificacion": 8,
+    "claridad": 8,
+    "potencialVisual": 10,
+    "utilidad": 8,
+    "curiosidad": 9
+   }
+  },
+  {
+   "category": "comparacion",
+   "titulo": "El reloj de la competencia",
+   "problema": "Compararse con otros y sentirse inferior por ello.",
+   "situacion": "KAP ve en redes sociales a un amigo que ha logrado algo que él no, y se siente frustrado.",
+   "kapVive": "KAP cierra la app, pero sigue pensando en lo que vio, sin hacer nada al respecto.",
+   "errorInicial": "KAP se compara con el amigo y se dice que no es lo suficiente bueno.",
+   "hacerDiferente": "Kap abre su propio diario y escribe: «Hoy hice algo que me gustó. No necesito competir».",
+   "aprendizaje": "Compararse no construye identidad; lo que importa es lo que uno elige hacer por sí mismo.",
+   "visual": "KAP mirando la pantalla del móvil, luego cerrándola y escribiendo en un diario.",
+   "publico": "Hombres jóvenes que se comparan con otros en redes sociales.",
+   "scores": {
+    "originalidad": 8,
+    "identificacion": 9,
+    "claridad": 7,
+    "potencialVisual": 8,
+    "utilidad": 9,
+    "curiosidad": 7
+   }
+  },
+  {
+   "category": "comportamiento-humano",
+   "titulo": "El silencio de la conversación",
+   "problema": "No saber cómo comunicarse o entender a los demás.",
+   "situacion": "KAP está en un grupo de amigos y alguien le pregunta algo, pero KAP no sabe qué responder.",
+   "kapVive": "KAP se queda callado, mirando al suelo, sin querer incomodar a nadie.",
+   "errorInicial": "KAP intenta no decir nada, pensando que lo mejor es no meterse.",
+   "hacerDiferente": "Kap levanta la mirada y dice: «No estoy seguro. Pero me gustaría entender más».",
+   "aprendizaje": "La comunicación no es sobre tener todas las respuestas, sino sobre mostrar interés en entender.",
+   "visual": "KAP con la mirada al suelo, luego mirando a los ojos de un amigo y hablando con voz baja.",
+   "publico": "Hombres jóvenes que tienen dificultad para comunicarse.",
+   "scores": {
+    "originalidad": 9,
+    "identificacion": 8,
+    "claridad": 8,
+    "potencialVisual": 9,
+    "utilidad": 8,
+    "curiosidad": 8
+   }
+  }
+ ],
+ "calls": 1,
+ "dropped": 0,
+ "ms": 527006
+}
