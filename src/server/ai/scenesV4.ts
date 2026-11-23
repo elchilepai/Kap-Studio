@@ -5,13 +5,13 @@
 import { z } from "zod";
 import type { LlmClient, LlmUsage } from "@/ports/studio";
 import { FIELDS_V4, type Chain, type Issue } from "@/narrative/chainV4";
-import { DURACION, MOTION_KINDS, SCENE_TYPES, SHOT_TYPES, planIssues, type Plan } from "@/narrative/scenePlanV4";
+import { CAMARAS, DURACION, SCENE_TYPES, SHOT_TYPES, planIssues, type Plan } from "@/narrative/scenePlanV4";
 import { EDITORIAL_V2 } from "./ideasV2";
 import { generateJson } from "./json";
 import { KAP_PERSONALITY } from "./prompts";
 
 const t = (min: number, max: number) => z.string().min(min).max(max);
-export const EscenaSchema = z.object({ n: z.number().int().min(1).max(12), cubre: z.array(z.enum(FIELDS_V4)).min(1).max(3), tipo: z.enum(SCENE_TYPES), kapPresente: z.boolean(), experiencia: t(0, 300), queOcurre: t(20, 400), enPantalla: z.array(t(2, 80)).min(2).max(6), textoEnPantalla: t(0, 60), plano: z.enum(SHOT_TYPES), perspectiva: t(3, 60), camara: z.enum(MOTION_KINDS), camaraNota: t(8, 200), dialogo: t(0, 300), duracion: z.number().min(2).max(7) });
+export const EscenaSchema = z.object({ n: z.number().int().min(1).max(12), cubre: z.array(z.enum(FIELDS_V4)).min(1).max(3), tipo: z.enum(SCENE_TYPES), kapPresente: z.boolean(), experiencia: t(0, 300), queOcurre: t(20, 400), enPantalla: z.array(t(2, 80)).min(2).max(6), textoEnPantalla: t(0, 60), plano: z.enum(SHOT_TYPES), perspectiva: t(3, 60), camara: z.enum(CAMARAS), camaraNota: t(8, 200), dialogo: t(0, 300), duracion: z.number().min(2).max(7) });
 export const PlanSchema = z.object({ musica: t(8, 200), escenas: z.array(EscenaSchema).min(8).max(10) });
 
 export const SCENES_SYSTEM = `Eres el guionista y storyboarder de los Shorts de KAP. Recibes una CADENA NARRATIVA YA APROBADA y la conviertes en un guion hablado de ${DURACION.min}-${DURACION.max} segundos y en 8-10 ESCENAS ilustradas (ilustraciones estáticas 2D estilo stickman, profesional y cinematográfico; sin animación corporal: después solo se añade movimiento ligero de cámara).
@@ -22,8 +22,8 @@ REGLAS DE LAS ESCENAS
 - Las escenas siguen el ORDEN de la cadena (situación, conflicto, motivo, acción, consecuencia, decisión, nueva acción, resultado). En "cubre" indica qué pasos de la cadena cuenta cada escena (1 o 2; puedes usar "mentalidad" en la última). Ningún paso se queda sin escena.
 - "queOcurre": lo que ocurre VISUALMENTE (una acción o un cambio, ≥ 8 palabras): abrir, borrar, esconder, romper, guardar, tirar, entregar, cambiar, comparar… NO escenas donde KAP solo está de pie hablando, mira, piensa, respira o sonríe.
 - "enPantalla": 2-6 elementos concretos que se ven (objetos, entorno, pantalla, personajes). El OBJETO CENTRAL de la cadena aparece en al menos 5 escenas y TAMBIÉN en el resultado final.
-- KAP NO sale en todas: en 3-5 escenas "kapPresente" es false (primer plano del objeto, detalle, POV de KAP, entorno, metáfora o consecuencia) y en "experiencia" explicas cómo esa imagen representa lo que KAP está viviendo. Si KAP sale, "experiencia" va vacía.
-- "tipo": ${SCENE_TYPES.join(", ")} (usa al menos 5 distintos; KAP_PRESENTADOR como mucho 2 veces). "plano": ${SHOT_TYPES.join(", ")} (al menos 4 distintos). "perspectiva": cómo se mira (cenital, contrapicado, POV de KAP, de perfil, sobre el hombro…). "camara": movimiento ligero SUGERIDO para el montaje: ${MOTION_KINDS.join(", ")} (al menos 3 distintos) y "camaraNota" qué hace exactamente («zoom lento hacia la pantalla del reloj»).
+- KAP no tiene que salir en todas: cuando "kapPresente" es false (detalle del objeto, POV de KAP, entorno, metáfora o consecuencia) explica en "experiencia" cómo esa imagen representa lo que KAP está viviendo; si KAP sale, "experiencia" va vacía. Lo importante es la variedad visual y narrativa, no un número de escenas sin KAP.
+- "tipo": ${SCENE_TYPES.join(", ")} (usa al menos 5 distintos; KAP_PRESENTADOR como mucho 2 veces). "plano": ${SHOT_TYPES.join(", ")} (al menos 4 distintos). "perspectiva": cómo se mira (cenital, contrapicado, POV de KAP, de perfil, sobre el hombro…). "camara": movimiento ligero SUGERIDO para el montaje en CapCut sobre una imagen estática: ${CAMARAS.join(", ")} (al menos 3 distintos; nada de rotaciones, bucles alrededor de KAP ni movimientos que requieran vídeo) y "camaraNota" qué hace exactamente («zoom lento hacia la pantalla del reloj»).
 - "textoEnPantalla": texto gráfico DENTRO de la ilustración (un número, una palabra); puede ir vacío; máximo 6 palabras.
 REGLAS DEL GUION
 - KAP cuenta lo que le pasó en PRIMERA PERSONA, con su humor seco; nunca habla de sí mismo en tercera persona ni te habla de «tú». "dialogo" es lo que se dice en esa escena (puede ir vacío: algunas escenas en silencio).

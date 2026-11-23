@@ -10,7 +10,9 @@ import { REACCION, persona } from "./ideasV3.ts";
 import { FIELDS_V4, type Chain, type FieldV4, type Issue } from "./chainV4.ts";
 import { similarity } from "./ideas.ts";
 
-export type Escena = { n: number; cubre: FieldV4[]; tipo: SceneType; kapPresente: boolean; experiencia: string; queOcurre: string; enPantalla: string[]; textoEnPantalla: string; plano: ShotType; perspectiva: string; camara: MotionKind; camaraNota: string; dialogo: string; duracion: number };
+/** Movimientos que se pueden hacer razonablemente en CapCut sobre una imagen estática (nada de rotaciones 3D, bucles alrededor del personaje ni vídeo generado). */
+export const CAMARAS = ["zoom-in", "zoom-out", "pan", "slide", "scale-change", "parallax", "particles", "light"] as const satisfies readonly MotionKind[];
+export type Escena = { n: number; cubre: FieldV4[]; tipo: SceneType; kapPresente: boolean; experiencia: string; queOcurre: string; enPantalla: string[]; textoEnPantalla: string; plano: ShotType; perspectiva: string; camara: MotionKind; camaraNota: string; dialogo: string; duracion: number; /** Opcionales (storyboard revisado): función narrativa, composición del encuadre y objeto principal. */ funcion?: string; composicion?: string; objetoPrincipal?: string };
 export type Plan = { musica: string; escenas: Escena[] };
 export const DURACION = { min: 30, max: 45 };
 const plain = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
@@ -35,10 +37,10 @@ export function planIssues(p: Plan, chain: Chain): Issue[] {
   let rep = false; es.forEach((a, x) => es.forEach((b, y) => { if (y < x && similarity(a.queOcurre, b.queOcurre) >= 0.45) rep = true; })); if (rep) add("repetida", "hay escenas cuyo acontecimiento se repite (si dos escenas se pueden intercambiar sin cambiar la historia, sobra una)");
   es.forEach((e) => { if (wordCount(e.queOcurre) < 8) add("repetida", `escena ${e.n}: «qué ocurre» demasiado corto (< 8 palabras)`); });
   // KAP no tiene que salir siempre, pero sus escenas sin él siguen siendo su experiencia
-  const sinKap = es.filter((e) => !e.kapPresente), conKap = es.filter((e) => e.kapPresente); if (sinKap.length < 3 || sinKap.length > 5 || conKap.length < 3) add("kap", `KAP aparece en ${conKap.length} escenas y falta en ${sinKap.length} (se piden 3-5 sin KAP y al menos 3 con KAP)`);
+  const sinKap = es.filter((e) => !e.kapPresente), conKap = es.filter((e) => e.kapPresente); if (conKap.length < 3) add("kap", `KAP aparece en ${conKap.length} escenas (al menos 3: es el protagonista; en las demás no hace falta, pero cada imagen debe seguir siendo parte de su historia)`);
   sinKap.forEach((e) => { if (wordCount(e.experiencia) < 6) add("kap", `escena ${e.n} (sin KAP): explica cómo representa lo que KAP está viviendo`); });
   // variedad real y poca pasividad
-  if (new Set(es.map((e) => e.plano)).size < 4) add("variedad", "menos de 4 planos distintos"); if (new Set(es.map((e) => e.tipo)).size < 5) add("variedad", "menos de 5 tipos de escena distintos"); if (new Set(es.map((e) => e.camara)).size < 3) add("variedad", "menos de 3 movimientos de cámara distintos");
+  if (new Set(es.map((e) => e.plano)).size < 4) add("variedad", "menos de 4 planos distintos"); if (new Set(es.map((e) => e.tipo)).size < 5) add("variedad", "menos de 5 tipos de escena distintos"); if (new Set(es.map((e) => e.camara)).size < 3) add("variedad", "menos de 3 movimientos de cámara distintos"); es.forEach((e) => { if (!(CAMARAS as readonly string[]).includes(e.camara)) add("camara", `escena ${e.n}: «${e.camara}» no se puede hacer razonablemente en CapCut sobre una imagen estática (usa ${CAMARAS.join(", ")})`); });
   if (es.filter((e) => e.tipo === "KAP_PRESENTADOR").length > 2) add("variedad", "más de 2 escenas con KAP presentando a cámara"); if (es.filter(pureReaction).length > 2) add("pasiva", `${es.filter(pureReaction).length} escenas son solo reacción (mirar, pensar, respirar…): máximo 2`);
   const inert = es.filter((e) => !acts(e.queOcurre) && e.enPantalla.length < 3); if (inert.length > 1) add("pasiva", `escenas sin acción ni elementos en pantalla: ${inert.map((e) => e.n).join(", ")}`);
   // el objeto central participa en la historia y aparece en el resultado
