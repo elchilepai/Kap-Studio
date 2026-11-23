@@ -1,0 +1,27 @@
+{
+ "titulo": "El reloj del «mañana»",
+ "hooks": [
+  {
+   "type": "situacion-reconocible",
+   "text": "Estás frente al ordenador, miras el reloj y piensas: «Mañana lo haré»."
+  },
+  {
+   "type": "pregunta-incomoda",
+   "text": "¿Cuántas veces has pospuesto algo importante solo porque creías que «mañana» sería mejor?"
+  },
+  {
+   "type": "contradiccion",
+   "text": "El reloj marca las 3 de la tarde, pero tu mente está en el amanecer del día siguiente."
+  },
+  {
+   "type": "afirmacion-inesperada",
+   "text": "El «mañana» no es un plan, es una excusa disfrazada de esperanza."
+  },
+  {
+   "type": "curiosidad",
+   "text": "¿Qué pasaría si cerraras todas las ventanas y empezaras ahora mismo?"
+  }
+ ],
+ "issues": [],
+ "repaired": false
+}
