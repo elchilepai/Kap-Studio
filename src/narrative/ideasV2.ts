@@ -26,13 +26,13 @@ const DOES = /\b(?:dice|responde|contesta|pide|acepta|rechaza|compra|paga|cancel
 const STATIVE = new Set(["es", "esta", "siente", "piensa", "cree", "sabe", "quiere", "duda", "imagina", "recuerda", "reflexiona", "entiende", "necesita", "espera", "parece", "tiene", "mira", "observa", "ve", "escucha", "teme", "desea", "se", "queda", "calla", "siente"]);
 /** «KAP + verbo conjugado» que no sea un estado (sentir, pensar, mirar…): cualquier verbo de hacer algo, sin lista cerrada. */
 const kapDoes = (t: string) => { const m = /^\s*kap\s+(?:(?:se|le|lo|la|les)\s+)?([a-zñ]+)/.exec(plain(t)); return !!m && !STATIVE.has(m[1]) && /(?:a|e|o|an|en|io)$/.test(m[1]) && m[1].length > 3; };
-const acts = (t: string) => showsAction(t) || DOES.test(plain(t)) || kapDoes(t);
+export const acts = (t: string) => showsAction(t) || DOES.test(plain(t)) || kapDoes(t);
 /** ¿el texto menciona el objeto (por raíz de palabra)? */
 export const mentions = (objeto: string, text: string) => { const o = stemSet(objeto); if (!o.size) return plain(text).includes(plain(objeto).trim()); const t = stemSet(text); for (const k of o) if (t.has(k)) return true; return false; };
 
 /** El patrón que NO puede dominar: callarse, mirar al suelo/móvil/espejo, pensar, voz baja, sentirse inseguro. */
 export const PASSIVE = /\b(?:se (?:queda|calla|siente|paraliza|pone a pensar)\w*|queda(?:se|ndose)? (?:callad\w+|en silencio|inmovil\w*)|mira(?:ndo|r)? (?:fijamente )?(?:al suelo|el movil|su movil|el telefono|su telefono|el espejo|su reflejo|la pantalla|al vacio)|piensa\w*|reflexiona\w*|voz (?:baja|tranquila|suave)|se da cuenta de que|se siente|inseguro)\b/;
-const GENERIC = /\b(?:cree en ti|eres suficiente|tu valor no depende|zona de confort|el manana es (?:una )?excusa|trabaja en ti|a veces,? (?:debes|hay que|necesitas)|mejor version|tu puedes con todo|no depende de los demas|lo importante es)\b/;
+export const GENERIC = /\b(?:cree en ti|eres suficiente|tu valor no depende|zona de confort|el manana es (?:una )?excusa|trabaja en ti|a veces,? (?:debes|hay que|necesitas)|mejor version|tu puedes con todo|no depende de los demas|lo importante es)\b/;
 const FEELING_ONLY = /^\s*(?:kap )?(?:se siente|siente|se da cuenta|piensa|reflexiona|entiende)\b/;
 
 /** Puertas de calidad de UNA idea (solo devuelve las que FALLAN). critical = descarta por sí sola; ≥2 no críticas también descartan. */
