@@ -1,0 +1,107 @@
+{
+ "ideas": [
+  {
+   "category": "limites",
+   "titulo": "La puerta del «ya está bien»",
+   "problema": "Aceptar lo que no se quiere por no querer incomodar a los demás.",
+   "situacion": "KAP entra en un evento familiar donde su primo menor se pone a jugar con su teléfono en la mesa, ignorando a todos.",
+   "kapVive": "KAP observa la situación y se siente incómodo, pero no dice nada para no hacer el ridículo.",
+   "errorInicial": "Se calla y se aleja de la mesa, evitando confrontar al primo.",
+   "hacerDiferente": "Se acerca con calma, le pide que lo deje en silencio y le ofrece un juguete para distraerlo.",
+   "aprendizaje": "A veces, respetar tus límites no significa ser grosero, sino mostrar respeto a ti mismo y a los demás.",
+   "visual": "KAP se acerca a la mesa con paso firme, el primo mira el teléfono, KAP le ofrece un juguete de forma tranquila. El primo lo acepta y se distrae.",
+   "publico": "Hombres jóvenes que tienen dificultad para establecer límites en situc",
+   "scores": {
+    "originalidad": 8,
+    "identificacion": 9,
+    "claridad": 7,
+    "potencialVisual": 8,
+    "utilidad": 7,
+    "curiosidad": 6
+   }
+  },
+  {
+   "category": "rechazo",
+   "titulo": "El «no me gusta» que no se dijo",
+   "problema": "Evitar expresar opiniones para no ofender a alguien.",
+   "situacion": "KAP está en una reunión de amigos donde un compañero propone hacer una actividad que KAP no quiere hacer.",
+   "kapVive": "KAP se siente incómodo, pero no dice nada para no parecer antipático.",
+   "errorInicial": "Se queda callado y se muestra indiferente, lo que le genera ansiedad interna.",
+   "hacerDiferente": "Al final, dice con voz baja: «No me gusta esa idea».",
+   "aprendizaje": "Decir lo que no te gusta no es ser antipático, es tener claridad sobre tus preferencias.",
+   "visual": "KAP mira al suelo, luego levanta la vista y habla con una voz tranquila. Los amigos lo escuchan en silencio.",
+   "publico": "Hombres jóvenes que evitan expresar sus opiniones para no ofender ajen",
+   "scores": {
+    "originalidad": 7,
+    "identificacion": 8,
+    "claridad": 7,
+    "potencialVisual": 8,
+    "utilidad": 7,
+    "curiosidad": 6
+   }
+  },
+  {
+   "category": "respeto-propio",
+   "titulo": "La frase del «no soy nadie»",
+   "problema": "Dejar de lado tu valor porque te sientes insignificante.",
+   "situacion": "KAP está en una conversación con un compañero de trabajo donde se le pregunta su opinión sobre un proyecto.",
+   "kapVive": "KAP escucha, pero no habla, convencido de que su opinión no importa.",
+   "errorInicial": "Se calla y se sienta en silencio, dejando pasar la oportunidad de participar.",
+   "hacerDiferente": "Al final, dice con voz baja: «No estoy seguro, pero tal vez...».",
+   "aprendizaje": "Tu voz vale aunque no estés seguro; no dejar que la duda te quite el derecho a participar.",
+   "visual": "KAP mira al suelo durante la conversación, luego levanta la vista y habla con una voz baja y titubeante.",
+   "publico": "Hombres jóvenes que se sienten insignificantes y no expresan sus ideas",
+   "scores": {
+    "originalidad": 9,
+    "identificacion": 8,
+    "claridad": 7,
+    "potencialVisual": 8,
+    "utilidad": 8,
+    "curiosidad": 7
+   }
+  },
+  {
+   "category": "comunicacion",
+   "titulo": "El mensaje del «no sé»",
+   "problema": "Evitar responder a mensajes por miedo a no saber qué decir.",
+   "situacion": "KAP recibe un mensaje de su hermano pequeño preguntando si quiere jugar, pero KAP está ocupado y no sabe cómo responder.",
+   "kapVive": "KAP se queda mirando el teléfono, incómodo, sin saber qué decir.",
+   "errorInicial": "No responde y se queda callado, lo que genera ansiedad en su hermano.",
+   "hacerDiferente": "Escribe un mensaje breve: «Ahora no puedo, pero pronto jugamos».",
+   "aprendizaje": "A veces, una respuesta simple es mejor que no responder; la claridad ayuda a evitar malentendidos.",
+   "visual": "KAP mira el teléfono, luego escribe rápidamente un mensaje y lo envía. Su hermano responde con una sonrisa.",
+   "publico": "Hombres jóvenes que tienen dificultad para comunicarse con claridad",
+   "scores": {
+    "originalidad": 7,
+    "identificacion": 9,
+    "claridad": 8,
+    "potencialVisual": 9,
+    "utilidad": 8,
+    "curiosidad": 7
+   }
+  },
+  {
+   "category": "independencia-emocional",
+   "titulo": "El «me da igual» que no se dice",
+   "problema": "Depender emocionalmente de la aprobación de otros.",
+   "situacion": "KAP está en una reunión de amigos donde su amigo le pregunta si piensa que es guapo.",
+   "kapVive": "KAP se siente incómodo, pero no quiere ofender al amigo.",
+   "errorInicial": "Se calla y sonríe con nerviosismo, lo que le genera inseguridad.",
+   "hacerDiferente": "Dice con voz tranquila: «No me importa mucho».",
+   "aprendizaje": "Tu valor no depende de lo que otros piensen de ti; la honestidad consigo mismo es más importante que la aprobación ajena.",
+   "visual": "KAP mira al suelo, luego levanta la vista y habla con voz tranquila. Su amigo lo escucha en silencio.",
+   "publico": "Hombres jóvenes que dependen emocionalmente de la aprobación de otros",
+   "scores": {
+    "originalidad": 8,
+    "identificacion": 8,
+    "claridad": 7,
+    "potencialVisual": 8,
+    "utilidad": 8,
+    "curiosidad": 7
+   }
+  }
+ ],
+ "calls": 1,
+ "dropped": 0,
+ "ms": 577399
+}
