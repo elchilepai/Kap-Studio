@@ -1,0 +1,69 @@
+# TOP 3 — prompts cortos (para generadores con límite de caracteres)
+
+Versión resumida (≈ 150 palabras) de los 11 prompts. Conserva KAP, composición, luz y texto. Adjunta siempre la referencia de KAP.
+
+## Escena 1 (154 palabras)
+
+```
+Premium 2D stickman cartoon, thick black outlines, cel shading with volume from lighting and depth, detailed textured background, cinematic light. KAP exactly as in the attached reference: big round bald white head, black dot eyes, thick black eyebrows, gold hoop earrings, oversized black hoodie, thick gold chain with brain pendant, baggy black pants, black-and-white sneakers without logos. Do not redesign him. Medium low-angle shot. KAP in the left third facing the camera, one eyebrow raised, deadpan, right thumb pointing over his shoulder. Dim bedroom at dusk, cool blue window rim light, warm lamp glow. Behind him in depth, slightly out of focus and grounded in the room: a phone on a low shelf, a small speech-bubble sign reading "Claro" on the wall, a closed laptop on a side desk; nothing floats. Text in the upper right: "3 cosas para caer bien". Vertical 9:16; keep the top 12% and bottom 20% free of key details.
+```
+
+## Escena 2 (91 palabras)
+
+```
+Premium 2D stickman cartoon, thick black outlines, cel shading with volume from lighting and depth, detailed textured background, cinematic light. No character. High-angle view (60°) of a wooden table by a window, warm afternoon light. A phone in the lower third shows a chat with one sent message and no reply. A huge chunky solid number "1" in the right foreground casts a long shadow over the table. Mug and keys blurred behind. Text: "1" and "Perseguir respuestas". Vertical 9:16; keep the top 12% and bottom 20% free of key details.
+```
+
+## Escena 3 (91 palabras)
+
+```
+Premium 2D stickman cartoon, thick black outlines, cel shading with volume from lighting and depth, detailed textured background, cinematic light. No character. First-person POV: a smartphone fills most of the frame at close range, only the tip of a thumb visible at the bottom edge. The chat shows one outgoing bubble "¿Qué tal el finde?" and a small grey line "Entregado 16:02", generic grey avatar circle. No other text. Cold coffee mug very blurred behind, warm window light. Vertical 9:16; keep the top 12% and bottom 20% free of key details.
+```
+
+## Escena 4 (127 palabras)
+
+```
+Premium 2D stickman cartoon, thick black outlines, cel shading with volume from lighting and depth, detailed textured background, cinematic light. KAP exactly as in the attached reference: big round bald white head, black dot eyes, thick black eyebrows, gold hoop earrings, oversized black hoodie, thick gold chain with brain pendant, baggy black pants, black-and-white sneakers without logos. Do not redesign him. Medium-wide shot at sofa height. KAP slumped in the right third, phone held to his chest, flat hollow expression, blue screen light on his face. Low table in front with an untouched full pizza and a closed laptop; large digital wall clock showing "20:40"; dark window; room almost dark, lit by the phone. Vertical 9:16; keep the top 12% and bottom 20% free of key details.
+```
+
+## Escena 5 (130 palabras)
+
+```
+Premium 2D stickman cartoon, thick black outlines, cel shading with volume from lighting and depth, detailed textured background, cinematic light. KAP exactly as in the attached reference: big round bald white head, black dot eyes, thick black eyebrows, gold hoop earrings, oversized black hoodie, thick gold chain with brain pendant, baggy black pants, black-and-white sneakers without logos. Do not redesign him. Medium frontal shot. KAP slightly right, hands open in a resigned shrug, dry eyebrows lifted, three yellow sticky notes on his hoodie with tiny icons (calendar, fork and knife, coin), no words. Huge chunky number "2" behind him on the left. Mustard hallway wall, coat rack, warm overhead light. Text: "2" and "Decir sí a todo". Vertical 9:16; keep the top 12% and bottom 20% free of key details.
+```
+
+## Escena 6 (107 palabras)
+
+```
+Premium 2D stickman cartoon, thick black outlines, cel shading with volume from lighting and depth, detailed textured background, cinematic light. No character. Straight-on close-up of a phone screen filling the frame, dark blue. Six large, perfectly legible, exactly spelled bubbles: grey on the left "¿Me ayudas el sábado?", "¿Vienes a cenar?", "¿Me prestas 50?"; yellow on the right, each below its question, "Claro", "Claro", "Claro". Keep every accent and ¿? mark. No names, avatars, icons, logos or any other text; plain generic bubbles. If the text cannot be exact, draw the six bubbles empty. Vertical 9:16; keep the top 12% and bottom 20% free of key details.
+```
+
+## Escena 7 (127 palabras)
+
+```
+Premium 2D stickman cartoon, thick black outlines, cel shading with volume from lighting and depth, detailed textured background, cinematic light. KAP exactly as in the attached reference: big round bald white head, black dot eyes, thick black eyebrows, gold hoop earrings, oversized black hoodie, thick gold chain with brain pendant, baggy black pants, black-and-white sneakers without logos. Do not redesign him. Wide high-angle shot from behind. Small KAP bent under a gigantic backpack with three hanging bags with icon tags (calendar, fork and knife, coin), dragging his feet toward a clearly closed gym entrance: lowered metal shutter, chain and padlock, dark windows, nobody around. Brick wall, sidewalk, long sunset shadows, orange light. No text. Vertical 9:16; keep the top 12% and bottom 20% free of key details.
+```
+
+## Escena 8 (134 palabras)
+
+```
+Premium 2D stickman cartoon, thick black outlines, cel shading with volume from lighting and depth, detailed textured background, cinematic light. KAP exactly as in the attached reference: big round bald white head, black dot eyes, thick black eyebrows, gold hoop earrings, oversized black hoodie, thick gold chain with brain pendant, baggy black pants, black-and-white sneakers without logos. Do not redesign him. Medium-wide frontal shot. KAP in the right third, hands in the hoodie pocket, head tilted toward the desk behind him, calm dry expression. Left: a desk with an open laptop showing a half-finished audio waveform, headphones hanging from it. Huge chunky number "3" on the wall. Night window; warm laptop glow against cool blue. Text: "3" and "Dejar tu vida". Vertical 9:16; keep the top 12% and bottom 20% free of key details.
+```
+
+## Escena 9 (159 palabras)
+
+```
+Premium 2D stickman cartoon, thick black outlines, cel shading with volume from lighting and depth, detailed textured background, cinematic light. KAP exactly as in the attached reference: big round bald white head, black dot eyes, thick black eyebrows, gold hoop earrings, oversized black hoodie, thick gold chain with brain pendant, baggy black pants, black-and-white sneakers without logos. Do not redesign him. One real bedroom in depth, not a collage, no split screen. KAP lies on his stomach on the bed in the foreground, back to the room, face lit by his phone in cool blue light, dominant in the frame. Farther back in the same room, a desk with an open laptop and an unfinished music track glows warm amber, clearly visible. Headphones on the floor connect both zones. Warm-cool change by light and depth only. Text on the laptop screen: "Pista 3 · sin terminar". Vertical 9:16; keep the top 12% and bottom 20% free of key details.
+```
+
+## Escena 10 (94 palabras)
+
+```
+Premium 2D stickman cartoon, thick black outlines, cel shading with volume from lighting and depth, detailed textured background, cinematic light. No character. Close-up at desk level, shallow depth of field. Laptop screen at the left back with a stopped music timeline and the line "Última modificación: hace 3 semanas". A large bright phone face up in the right foreground shows a generic notification banner with a bell icon and "12 nuevas reacciones", no logos. Headphones and a pencil on the desk. Vertical 9:16; keep the top 12% and bottom 20% free of key details.
+```
+
+## Escena 11 (138 palabras)
+
+```
+Premium 2D stickman cartoon, thick black outlines, cel shading with volume from lighting and depth, detailed textured background, cinematic light. KAP exactly as in the attached reference: big round bald white head, black dot eyes, thick black eyebrows, gold hoop earrings, oversized black hoodie, thick gold chain with brain pendant, baggy black pants, black-and-white sneakers without logos. Do not redesign him. Medium frontal shot. KAP in the left third, right hand just placing a phone face down on the desk (blurred foreground), left hand opening the laptop, headphones around his neck. Calm relief, dry half smile; never a guru, superior or triumphant look, no gesture to the viewer. Same music corner as scene 8, warm laptop glow on his face, blue window behind. No text. Vertical 9:16; keep the top 12% and bottom 20% free of key details.
+```
