@@ -1,0 +1,140 @@
+{
+ "ideas": [
+  {
+   "category": "limites-decir-no",
+   "titulo": "El libro prestado",
+   "situacion": "KAP está en su habitación, sentado a la mesa con un libro abierto. Su hermano pequeño entra y le pide el libro para hacer una tarea escolar. KAP lo da sin pensar, pero al día siguiente descu",
+   "problema": "El libro que prestó a su hermano se pierde o se daña, y ahora su hermano no puede devolverlo. KAP se siente responsable y frustra",
+   "accionKap": "KAP devuelve el libro sin pedir nada en cambio, pensando que es lo correcto.",
+   "objeto": "libro prestado",
+   "consecuencia": "El libro se daña al caer al suelo, y su hermano se siente culpable. KAP se frustra porque no podía decir que no a su hermano en ese momento.",
+   "momentoDecision": "Cuando su hermano le pide el libro por segunda vez, esta vez con una promesa de cuidarlo.",
+   "hacerDiferente": "KAP le dice que no, pero le ofrece un libro alternativo que puede usar sin dañarlo.",
+   "mentalidad": "Decir que no no es ser egoísta, es proteger lo que tienes y ayudar a los demás de verdad.",
+   "imagenes": [
+    {
+     "plano": "general",
+     "que": "KAP sentado a la mesa con un libro abierto, su hermano entra en la habitación."
+    },
+    {
+     "plano": "medio",
+     "que": "El hermano pequeño le pide el libro con una sonrisa y KAP lo entrega sin dudar."
+    },
+    {
+     "plano": "detalle",
+     "que": "La cubierta del libro se ve bien cuidada en la primera imagen."
+    },
+    {
+     "plano": "pov",
+     "que": "Vista desde el suelo, el libro cae al suelo y se daña."
+    },
+    {
+     "plano": "contrapicado",
+     "que": "KAP mira al suelo con frustración, el hermano le pide disculpas."
+    },
+    {
+     "plano": "entorno",
+     "que": "La habitación de KAP, con libros en estantería, incluye un libro nuevo en la mesa."
+    },
+    {
+     "plano": "silueta",
+     "que": "El hermano entra nuevamente, sosteniendo el libro dañado y con una cara de preocupación."
+    },
+    {
+     "plano": "decision",
+     "que": "KAP se levanta de la silla y le dice que no, pero le ofrece un libro nuevo."
+    },
+    {
+     "plano": "detalle",
+     "que": "El libro nuevo tiene la misma portada que el anterior, pero está intacto."
+    },
+    {
+     "plano": "metafora",
+     "que": "Un libro cerrado sobre una mesa representa la responsabilidad y el cuidado de lo que se comparte."
+    },
+    {
+     "plano": "reaccion",
+     "que": "El hermano acepta el libro nuevo con una sonrisa y KAP respira aliviado."
+    },
+    {
+     "plano": "general",
+     "que": "Ambos están en la habitación, ahora con el libro nuevo sobre la mesa y el dañado en un cajón."
+    }
+   ]
+  },
+  {
+   "category": "aprobacion",
+   "titulo": "La camisa de la fiesta",
+   "situacion": "KAP está preparándose para una fiesta en casa de su primo. Su madre le dice que vaya vestido con ropa elegante, pero cuando llega, su primo lo invita a ir con una camisa más casual que tiene",
+   "problema": "KAP se siente presionado por la expectativa de su madre y la presión social de encajar con los demás. Lleva la camisa elegante, se",
+   "accionKap": "KAP lleva la camisa elegante que le pidió su madre, pero se siente incómodo al ver a los demás vestidos de forma más relajada.",
+   "objeto": "camisa elegante",
+   "consecuencia": "KAP no se siente cómodo y pasa la noche callado, observando desde un rincón. Su primo lo nota y le pregunta por qué no usa su camisa casua",
+   "momentoDecision": "Cuando su primo le pregunta sobre su ropa, KAP decide decirle que no quiere seguir las reglas impuestas y elige usar la camisa casual.",
+   "hacerDiferente": "KAP le pide a su primo que le preste su camisa casual y se la pone, ignorando la expectativa de su madre.",
+   "mentalidad": "No necesitas vestir como otros para ser aceptado; lo que importa es sentirte bien contigo mismo.",
+   "imagenes": [
+    {
+     "plano": "general",
+     "que": "KAP mira su camisa elegante en el armario, con su madre detrás diciéndole que vaya así a la fiesta."
+    },
+    {
+     "plano": "medio",
+     "que": "KAP lleva la camisa elegante al coche, mira por la ventana y parece incómodo."
+    },
+    {
+     "plano": "detalle",
+     "que": "La camisa elegante tiene botones dorados y un cuello rígido que le incomoda."
+    },
+    {
+     "plano": "pov",
+     "que": "Desde el suelo, KAP ve a los demás en la fiesta con camisas más relajadas y se siente fuera de lugar."
+    },
+    {
+     "plano": "contrapicado",
+     "que": "KAP está en un rincón, observando a los demás, con una expresión seria y callado."
+    },
+    {
+     "plano": "entorno",
+     "que": "La fiesta está llena de personas riendo y jugando, mientras KAP permanece al margen."
+    },
+    {
+     "plano": "silueta",
+     "que": "Su primo entra en el cuarto y le pregunta por qué no lleva su camisa casual."
+    },
+    {
+     "plano": "decision",
+     "que": "KAP se levanta, mira a su primo y le dice que quiere usar la camisa casual que tiene."
+    },
+    {
+     "plano": "detalle",
+     "que": "La camisa casual de su primo está colgada en una silla y tiene un cuello más suelto y mangas más cortas."
+    },
+    {
+     "plano": "metafora",
+     "que": "Una camisa elegante colgada junto a otra casual representa la presión de encajar versus sentirse auténtico."
+    },
+    {
+     "plano": "reaccion",
+     "que": "KAP se pone la camisa casual y suena más relajado, con una sonrisa en el rostro."
+    },
+    {
+     "plano": "general",
+     "que": "KAP ahora está entre los demás, riendo con su primo, mientras su madre lo ve desde lejos con una expresión sor"
+    }
+   ]
+  }
+ ],
+ "calls": 2,
+ "dropped": 0,
+ "regenerated": [
+  {
+   "category": "aprobacion",
+   "why": [
+    "cae en el patrón pasivo (se calla / mira al suelo o al móvil / piensa / voz baja / se siente inseguro)"
+   ],
+   "improved": false
+  }
+ ],
+ "ms": 1224089
+}
