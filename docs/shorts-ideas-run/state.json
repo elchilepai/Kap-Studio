@@ -8,8 +8,9 @@
    "at": "2026-11-23T00:30:57.580Z"
   },
   "hooks": {
-   "status": "pending",
-   "attempts": 0
+   "status": "done",
+   "attempts": 1,
+   "at": "2026-11-23T00:37:11.459Z"
   },
   "script": {
    "status": "pending",

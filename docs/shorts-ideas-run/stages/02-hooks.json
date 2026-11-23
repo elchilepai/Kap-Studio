@@ -1,0 +1,145 @@
+{
+ "byIdea": {
+  "idea-18": {
+   "titulo": "El reloj del «mañana»",
+   "hooks": [
+    {
+     "type": "situacion-reconocible",
+     "text": "Estás frente al ordenador, miras el reloj y piensas: «Mañana lo haré»."
+    },
+    {
+     "type": "pregunta-incomoda",
+     "text": "¿Cuántas veces has pospuesto algo importante solo porque creías que «mañana» sería mejor?"
+    },
+    {
+     "type": "contradiccion",
+     "text": "El reloj marca las 3 de la tarde, pero tu mente está en el amanecer del día siguiente."
+    },
+    {
+     "type": "afirmacion-inesperada",
+     "text": "El «mañana» no es un plan, es una excusa disfrazada de esperanza."
+    },
+    {
+     "type": "curiosidad",
+     "text": "¿Qué pasaría si cerraras todas las ventanas y empezaras ahora mismo?"
+    }
+   ],
+   "issues": [],
+   "repaired": false
+  },
+  "idea-15": {
+   "titulo": "El silencio de la conversación",
+   "hooks": [
+    {
+     "type": "situacion-reconocible",
+     "text": "Estás en un grupo de amigos y alguien te pregunta algo, pero no sabes qué responder."
+    },
+    {
+     "type": "afirmacion-inesperada",
+     "text": "A veces, callar es más honesto que mentir, pero también más dañino."
+    },
+    {
+     "type": "pregunta-incomoda",
+     "text": "¿Cuántas veces has preferido quedarte callado antes que decir lo que realmente piensas?"
+    },
+    {
+     "type": "contradiccion",
+     "text": "El silencio puede ser una forma de respeto… pero también de miedo."
+    },
+    {
+     "type": "curiosidad",
+     "text": "¿Qué pasaría si en vez de callar, simplemente dijeras: 'No estoy seguro'?"
+    }
+   ],
+   "issues": [],
+   "repaired": false
+  },
+  "idea-09": {
+   "titulo": "El mensaje del «no sé»",
+   "hooks": [
+    {
+     "type": "mini-historia",
+     "text": "Miré el teléfono, incómodo, sin saber qué decir a mi hermano pequeño."
+    },
+    {
+     "type": "contradiccion",
+     "text": "El silencio no es una respuesta, pero tampoco lo es un mensaje perfecto."
+    },
+    {
+     "type": "afirmacion-inesperada",
+     "text": "A veces, lo mejor que puedes hacer es decir que no sabes."
+    },
+    {
+     "type": "situacion-reconocible",
+     "text": "¿Cuántas veces has visto el mensaje y no has sabido qué responder?"
+    },
+    {
+     "type": "pregunta-incomoda",
+     "text": "¿Qué te pasa cuando no sabes qué decir a alguien que te importa?"
+    }
+   ],
+   "issues": [],
+   "repaired": false
+  },
+  "idea-16": {
+   "titulo": "La factura sin nombre",
+   "hooks": [
+    {
+     "type": "situacion-reconocible",
+     "text": "Recibes una factura con un monto alto, pero no sabes de qué es."
+    },
+    {
+     "type": "pregunta-incomoda",
+     "text": "¿Cuánto gastas al mes sin saberlo, y qué te cuesta pagar?"
+    },
+    {
+     "type": "contradiccion",
+     "text": "Ignorar la factura era más fácil que entender qué estaba pagando."
+    },
+    {
+     "type": "afirmacion-inesperada",
+     "text": "Algunos gastos no se ven, pero te arruinan la vida."
+    },
+    {
+     "type": "curiosidad",
+     "text": "¿Qué pasó cuando finalmente llamé al número de esa factura?"
+    }
+   ],
+   "issues": [],
+   "repaired": false
+  },
+  "idea-08": {
+   "titulo": "La frase del «no soy nadie»",
+   "hooks": [
+    {
+     "type": "situacion-reconocible",
+     "text": "Estás en una reunión y no hablas, aunque tienes algo que decir."
+    },
+    {
+     "type": "afirmacion-inesperada",
+     "text": "A veces, el miedo a ser ignorado te hace parecer invisible."
+    },
+    {
+     "type": "pregunta-incomoda",
+     "text": "¿Cuántas veces has tenido razón, pero no lo dijiste?"
+    },
+    {
+     "type": "contradiccion",
+     "text": "Decir 'no soy nadie' es una forma de creer que sí lo eres."
+    },
+    {
+     "type": "curiosidad",
+     "text": "¿Qué pasa si tu opinión no es tan insignificante como crees?"
+    }
+   ],
+   "issues": [],
+   "repaired": false
+  }
+ },
+ "stats": {
+  "ideas": 5,
+  "resumed": 0,
+  "calls": 5,
+  "ms": 373878
+ }
+}

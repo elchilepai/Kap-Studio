@@ -1,0 +1,27 @@
+{
+ "titulo": "La frase del «no soy nadie»",
+ "hooks": [
+  {
+   "type": "situacion-reconocible",
+   "text": "Estás en una reunión y no hablas, aunque tienes algo que decir."
+  },
+  {
+   "type": "afirmacion-inesperada",
+   "text": "A veces, el miedo a ser ignorado te hace parecer invisible."
+  },
+  {
+   "type": "pregunta-incomoda",
+   "text": "¿Cuántas veces has tenido razón, pero no lo dijiste?"
+  },
+  {
+   "type": "contradiccion",
+   "text": "Decir 'no soy nadie' es una forma de creer que sí lo eres."
+  },
+  {
+   "type": "curiosidad",
+   "text": "¿Qué pasa si tu opinión no es tan insignificante como crees?"
+  }
+ ],
+ "issues": [],
+ "repaired": false
+}
