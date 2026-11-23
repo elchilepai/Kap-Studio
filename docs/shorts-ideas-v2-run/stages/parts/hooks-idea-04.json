@@ -1,0 +1,39 @@
+{
+ "titulo": "El paquete que no se entregó",
+ "hooks": [
+  {
+   "type": "situacion",
+   "text": "Recibió un paquete vacío con una nota: 'Entrega fallida. Reenvío en 72 horas'."
+  },
+  {
+   "type": "conflicto",
+   "text": "Sabía que no quería el regalo, pero no podía dejar de mirar la caja cada día."
+  },
+  {
+   "type": "curiosidad",
+   "text": "¿Qué pasaría si ignoraba el paquete por completo y nunca lo abriera?"
+  },
+  {
+   "type": "contradiccion",
+   "text": "Quería evitar el regalo, pero al final llamó a la empresa para cancelarlo."
+  },
+  {
+   "type": "mini-historia",
+   "text": "Abrió el paquete con cuidado, revisó su contenido y marcó un número de teléfono."
+  }
+ ],
+ "best": [
+  {
+   "type": "situacion",
+   "text": "Recibió un paquete vacío con una nota: 'Entrega fallida. Reenvío en 72 horas'."
+  },
+  {
+   "type": "curiosidad",
+   "text": "¿Qué pasaría si ignoraba el paquete por completo y nunca lo abriera?"
+  }
+ ],
+ "issues": [
+  "hook 4: no nace de la situación (no menciona nada concreto de la idea)"
+ ],
+ "repaired": true
+}
