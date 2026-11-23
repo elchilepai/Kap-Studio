@@ -1,0 +1,135 @@
+{
+ "byIdea": {
+  "idea-02": {
+   "titulo": "El espejo del vecino",
+   "candidates": [
+    {
+     "type": "situacion",
+     "text": "KAP tenía una maqueta de barco en la mesa. Afuera, su vecino construía un jardín con herramientas y ayudantes."
+    },
+    {
+     "type": "conflicto",
+     "text": "Kap escondió la maqueta bajo su cama, pero no logró quitarse la sensación de que era insignificante."
+    },
+    {
+     "type": "curiosidad",
+     "text": "Al revisar la caja, Kap descubrió que la maqueta brillaba débilmente bajo el polvo acumulado."
+    },
+    {
+     "type": "contradiccion",
+     "text": "Quería sentirse orgulloso, pero cada vez que miraba la maqueta, pensaba en lo poco que valía."
+    },
+    {
+     "type": "mini-historia",
+     "text": "Kap volvió a colocar la maqueta en la mesa. Esta vez, encendió una lámpara y se sentó a mirarla."
+    }
+   ],
+   "final": [
+    {
+     "type": "situacion",
+     "text": "KAP tenía una maqueta de barco en la mesa. Afuera, su vecino construía un jardín con herramientas y ayudantes."
+    },
+    {
+     "type": "contradiccion",
+     "text": "Quería sentirse orgulloso, pero cada vez que miraba la maqueta, pensaba en lo poco que valía."
+    },
+    {
+     "type": "curiosidad",
+     "text": "Al revisar la caja, Kap descubrió que la maqueta brillaba débilmente bajo el polvo acumulado."
+    }
+   ],
+   "issues": [],
+   "repaired": false
+  },
+  "idea-04": {
+   "titulo": "El retraso del cuarto",
+   "candidates": [
+    {
+     "type": "situacion",
+     "text": "KAP tenía un trabajo pendiente. Pasó la tarde ordenando el cuarto, ignorando el reloj y el plazo."
+    },
+    {
+     "type": "conflicto",
+     "text": "Aunque sabía que debía empezar, KAP no lo hizo. En su lugar, arregló cada libro y cada prenda en el armario."
+    },
+    {
+     "type": "curiosidad",
+     "text": "Mientras ordenaba el cuarto, KAP notó algo extraño: el trabajo seguía en la mesa, pero él no lo miraba."
+    },
+    {
+     "type": "contradiccion",
+     "text": "KAP quería evitar el fracaso, pero su obsesión por el orden lo mantenía atrapado en el retraso."
+    },
+    {
+     "type": "mini-historia",
+     "text": "KAP cerró la puerta del cuarto. Frente al trabajo, se sentó en el suelo y miró fijamente el papel sin moverse."
+    }
+   ],
+   "final": [
+    {
+     "type": "curiosidad",
+     "text": "Mientras ordenaba el cuarto, KAP notó algo extraño: el trabajo seguía en la mesa, pero él no lo miraba."
+    },
+    {
+     "type": "contradiccion",
+     "text": "KAP quería evitar el fracaso, pero su obsesión por el orden lo mantenía atrapado en el retraso."
+    },
+    {
+     "type": "conflicto",
+     "text": "Aunque sabía que debía empezar, KAP no lo hizo. En su lugar, arregló cada libro y cada prenda en el armario."
+    }
+   ],
+   "issues": [],
+   "repaired": false
+  },
+  "idea-01": {
+   "titulo": "El compromiso invisible",
+   "candidates": [
+    {
+     "type": "situacion",
+     "text": "KAP estaba sentado en el sofá, mirando a su hermano jugar con un juguete mientras su madre le preguntaba si quería ir a una fiesta."
+    },
+    {
+     "type": "conflicto",
+     "text": "KAP aceptó la invitación aunque no quería ir, pero se sintió más incómodo en el sofá que antes."
+    },
+    {
+     "type": "curiosidad",
+     "text": "KAP descubrió que decir sí no siempre era la mejor opción, aunque su madre lo viera como un triunfo."
+    },
+    {
+     "type": "contradiccion",
+     "text": "KAP quería evitar la fiesta, pero su respuesta generó una felicidad que no sentía en el sofá."
+    },
+    {
+     "type": "mini-historia",
+     "text": "KAP dijo que sí a la fiesta. Al rato, cambió de idea y prefirió quedarse en casa, aunque no le gustaba hacerlo."
+    }
+   ],
+   "final": [
+    {
+     "type": "contradiccion",
+     "text": "KAP quería evitar la fiesta, pero su respuesta generó una felicidad que no sentía en el sofá."
+    },
+    {
+     "type": "conflicto",
+     "text": "KAP aceptó la invitación aunque no quería ir, pero se sintió más incómodo en el sofá que antes."
+    },
+    {
+     "type": "curiosidad",
+     "text": "KAP descubrió que decir sí no siempre era la mejor opción, aunque su madre lo viera como un triunfo."
+    }
+   ],
+   "issues": [
+    "hook 1: 25 palabras (8-22)"
+   ],
+   "repaired": true
+  }
+ },
+ "stats": {
+  "ideas": 3,
+  "resumed": 0,
+  "calls": 4,
+  "ms": 459270
+ }
+}

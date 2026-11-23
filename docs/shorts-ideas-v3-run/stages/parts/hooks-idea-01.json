@@ -1,0 +1,43 @@
+{
+ "titulo": "El compromiso invisible",
+ "candidates": [
+  {
+   "type": "situacion",
+   "text": "KAP estaba sentado en el sofá, mirando a su hermano jugar con un juguete mientras su madre le preguntaba si quería ir a una fiesta."
+  },
+  {
+   "type": "conflicto",
+   "text": "KAP aceptó la invitación aunque no quería ir, pero se sintió más incómodo en el sofá que antes."
+  },
+  {
+   "type": "curiosidad",
+   "text": "KAP descubrió que decir sí no siempre era la mejor opción, aunque su madre lo viera como un triunfo."
+  },
+  {
+   "type": "contradiccion",
+   "text": "KAP quería evitar la fiesta, pero su respuesta generó una felicidad que no sentía en el sofá."
+  },
+  {
+   "type": "mini-historia",
+   "text": "KAP dijo que sí a la fiesta. Al rato, cambió de idea y prefirió quedarse en casa, aunque no le gustaba hacerlo."
+  }
+ ],
+ "final": [
+  {
+   "type": "contradiccion",
+   "text": "KAP quería evitar la fiesta, pero su respuesta generó una felicidad que no sentía en el sofá."
+  },
+  {
+   "type": "conflicto",
+   "text": "KAP aceptó la invitación aunque no quería ir, pero se sintió más incómodo en el sofá que antes."
+  },
+  {
+   "type": "curiosidad",
+   "text": "KAP descubrió que decir sí no siempre era la mejor opción, aunque su madre lo viera como un triunfo."
+  }
+ ],
+ "issues": [
+  "hook 1: 25 palabras (8-22)"
+ ],
+ "repaired": true
+}
