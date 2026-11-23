@@ -1,0 +1,140 @@
+{
+ "ideas": [
+  {
+   "category": "independencia-emocional",
+   "titulo": "El mensaje en el aire",
+   "situacion": "KAP está sentado en su habitación, mirando su teléfono. En la pantalla hay un mensaje que le envió hace horas: '¿Te gustaría salir a caminar?'. El teléfono sigue sin recibir respuesta.",
+   "problema": "KAP pasa horas esperando una respuesta para decidir si va a salir o no, y se siente atrapado por la ambigüedad del otro.",
+   "accionKap": "KAP cierra el teléfono y lo pone sobre la mesa de noche, lejos de su alcance.",
+   "objeto": "teléfono",
+   "consecuencia": "El teléfono sigue en silencio, pero KAP ya no mira la pantalla. En lugar de eso, se levanta y empieza a caminar por la habitación.",
+   "momentoDecision": "Cuando se da cuenta de que no hay una respuesta que le obligue a actuar, decide no esperar más.",
+   "hacerDiferente": "KAP busca su ropa para salir y la pone en una bolsa.",
+   "mentalidad": "La incertidumbre del otro no define lo que KAP hace. Su decisión es suya.",
+   "imagenes": [
+    {
+     "plano": "general",
+     "que": "KAP sentado en su cama con el teléfono en las manos."
+    },
+    {
+     "plano": "primer-plano",
+     "que": "El mensaje en la pantalla: '¿Te gustaría salir a caminar?'. El cursor parpadea."
+    },
+    {
+     "plano": "detalle",
+     "que": "El borde del teléfono, con marcas de uso y un fondo de pantalla simple."
+    },
+    {
+     "plano": "contrapicado",
+     "que": "KAP mira el teléfono, pero su postura es rígida y sus hombros están caídos."
+    },
+    {
+     "plano": "general",
+     "que": "KAP camina por la habitación, con las manos en los bolsillos."
+    },
+    {
+     "plano": "entorno",
+     "que": "La habitación tiene libros en las paredes y una silla con cojines desordenados."
+    },
+    {
+     "plano": "pov",
+     "que": "La vista desde el suelo, mostrando los zapatos de KAP al caminar."
+    },
+    {
+     "plano": "metafora",
+     "que": "Un reloj de arena en el suelo, con la arena cayendo lentamente."
+    },
+    {
+     "plano": "silueta",
+     "que": "KAP se para frente al armario, mirando hacia dentro."
+    },
+    {
+     "plano": "detalle",
+     "que": "Una camiseta colgando del perchero, con un letrero que dice '2Pac'."
+    },
+    {
+     "plano": "general",
+     "que": "KAP saca una mochila y empieza a llenarla con ropa y un libro."
+    },
+    {
+     "plano": "reaccion",
+     "que": "KAP mira al teléfono por última vez, lo deja en la mesa y sale de la habitación."
+    }
+   ]
+  },
+  {
+   "category": "proposito",
+   "titulo": "El camino sin fin",
+   "situacion": "KAP está frente a una pared llena de carteles, mapas y listas. Cada uno representa un proyecto que empezó pero no terminó: 'Aprender piano', 'Escribir libro', 'Viajar a África', 'Hacer un jú",
+   "problema": "KAP se siente abrumado por la cantidad de proyectos que ha comenzado, pero ninguno avanza. No tiene claridad sobre qué hacer con t",
+   "accionKap": "KAP toma un lápiz y empieza a tachar los carteles uno por uno, comenzando por el más viejo.",
+   "objeto": "carteles",
+   "consecuencia": "Los carteles se llenan de tachaduras, pero KAP no los quita. En su lugar, coloca un solo cartel en el centro de la pared: 'Aprender a decir'",
+   "momentoDecision": "Cuando ya no puede más con la sobrecarga de metas y proyectos, decide simplificar.",
+   "hacerDiferente": "KAP pega un nuevo cartel en el centro y lo escribe con una letra clara y firme.",
+   "mentalidad": "No todos los objetivos son útiles. A veces, el propósito está en elegir uno y avanzar con él.",
+   "imagenes": [
+    {
+     "plano": "general",
+     "que": "KAP frente a una pared llena de carteles, mapas y listas."
+    },
+    {
+     "plano": "detalle",
+     "que": "Un cartel que dice 'Aprender piano' con una fecha de hace dos años."
+    },
+    {
+     "plano": "primer-plano",
+     "que": "KAP sostiene un lápiz y mira el primer cartel con una expresión seria."
+    },
+    {
+     "plano": "entorno",
+     "que": "La habitación tiene libros, cuadernos y herramientas de escritura en el suelo."
+    },
+    {
+     "plano": "contrapicado",
+     "que": "KAP camina hacia la pared, con el lápiz detrás de su espalda."
+    },
+    {
+     "plano": "metafora",
+     "que": "Un camino con múltiples bifurcaciones en el suelo, cada una etiquetada con un proyecto."
+    },
+    {
+     "plano": "detalle",
+     "que": "El lápiz se mueve sobre el cartel 'Escribir libro', tachando las palabras con firmeza."
+    },
+    {
+     "plano": "general",
+     "que": "KAP tacha varios carteles mientras mira hacia la pared con expresión determinada."
+    },
+    {
+     "plano": "pov",
+     "que": "La vista desde el suelo, mostrando los carteles tachados y el lápiz de KAP."
+    },
+    {
+     "plano": "silueta",
+     "que": "KAP se para frente al centro de la pared, con el lápiz en la mano."
+    },
+    {
+     "plano": "detalle",
+     "que": "El nuevo cartel que dice 'Aprender a decir' está pegado en el centro, aún sin completar."
+    },
+    {
+     "plano": "reaccion",
+     "que": "KAP mira el nuevo cartel por un momento y luego lo escribe con una letra clara y decidida."
+    }
+   ]
+  }
+ ],
+ "calls": 2,
+ "dropped": 0,
+ "regenerated": [
+  {
+   "category": "independencia-emocional",
+   "why": [
+    "cae en el patrón pasivo (se calla / mira al suelo o al móvil / piensa / voz baja / se siente inseguro)"
+   ],
+   "improved": false
+  }
+ ],
+ "ms": 889823
+}
