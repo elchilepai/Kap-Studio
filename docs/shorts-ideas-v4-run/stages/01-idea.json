@@ -1,0 +1,154 @@
+{
+ "chains": [
+  {
+   "id": "cadena-01",
+   "chain": {
+    "category": "aprobacion",
+    "titulo": "El regalo no deseado",
+    "objeto": "llave",
+    "situacion": "KAP recibe una llave de una caja que le ofrece su amigo como regalo de cumpleaños.",
+    "conflicto": "La caja está vacía y KAP no sabe cómo rechazarla sin ofender a su amigo.",
+    "motivo": "KAP quiere evitar una discusión y mantener la amistad.",
+    "accion": "KAP acepta la llave y esconde la caja en el armario.",
+    "consecuencia": "Al mes, el amigo pregunta por la caja y KAP se siente obligado a mentir sobre su paradero.",
+    "decision": "KAP decide que no puede seguir ocultando la verdad y confiesa que no quería la caja.",
+    "nuevaAccion": "KAP le devuelve la llave y le explica que prefirió no aceptar el regalo.",
+    "resultado": "El amigo entiende y se disculpa por presionarle a aceptar algo que no quería.",
+    "mentalidad": "KAP descubre que decir la verdad a veces es más fácil que mentir para no ofender."
+   },
+   "issues": [
+    {
+     "id": "mentalidad",
+     "msg": "la mentalidad debe decir qué entiende KAP a partir de lo que acaba de ocurrir (menciona a KAP y se apoya en su acción, su motivo o el objeto)",
+     "field": "mentalidad"
+    },
+    {
+     "id": "visual",
+     "msg": "solo 2 de los 4 pasos clave (acción, consecuencia, nueva acción, resultado) se pueden dibujar como algo que ocurre: hacen falta al menos 3"
+    }
+   ],
+   "attempts": 2,
+   "structurallyOk": false
+  },
+  {
+   "id": "cadena-02",
+   "chain": {
+    "category": "comparacion",
+    "titulo": "El espejo del progreso",
+    "objeto": "reloj",
+    "situacion": "KAP observa en redes sociales cómo un amigo completa su primer maratón y se pregunta si su propio entrenamiento es suficiente.",
+    "conflicto": "KAP siente que su ritmo de entrenamiento no es tan rápido como el de su amigo y teme quedarse atrás.",
+    "motivo": "KAP quiere sentirse igual de competente y no ser el último en lograr algo.",
+    "accion": "KAP cambia la configuración de su reloj para que muestre una distancia más corta en cada entrenamiento.",
+    "consecuencia": "El reloj muestra progresos falsos, lo que hace que KAP se sienta motivado pero sin mejorar realmente.",
+    "decision": "KAP descubre que no puede correr la distancia real del maratón y se pregunta si lo que ve es verdad.",
+    "nuevaAccion": "KAP vuelve a ajustar el reloj para que muestre la distancia correcta y empieza a entrenar con honestidad.",
+    "resultado": "KAP logra completar un entrenamiento completo y se da cuenta de que el progreso real no se mide en números, sino en esfuerzo.",
+    "mentalidad": "KAP descubre que compararse con otros le hace perder de vista su propio camino y que la autenticidad es más valiosa que la apariencia."
+   },
+   "issues": [
+    {
+     "id": "mentalidad",
+     "msg": "la mentalidad debe decir qué entiende KAP a partir de lo que acaba de ocurrir (menciona a KAP y se apoya en su acción, su motivo o el objeto)",
+     "field": "mentalidad"
+    }
+   ],
+   "attempts": 2,
+   "structurallyOk": false
+  },
+  {
+   "id": "cadena-03",
+   "chain": {
+    "category": "justificarse",
+    "titulo": "La culpa del mensaje",
+    "objeto": "mensaje",
+    "situacion": "KAP recibe un mensaje de su madre preguntando por su hermano, que no ha llegado a casa.",
+    "conflicto": "KAP se siente acusado y empieza a justificarse antes de escuchar la explicación completa.",
+    "motivo": "KAP quiere evitar que su madre se preocupe y se sienta responsable del hermano.",
+    "accion": "KAP escribe un mensaje rápido explicando que su hermano se fue a jugar al parque.",
+    "consecuencia": "El mensaje no responde a las preguntas de su madre y la confusión aumenta.",
+    "decision": "KAP decide seguir justificándose con más detalles para demostrar que todo está bien.",
+    "nuevaAccion": "KAP envía otro mensaje diciendo que ya llamó al hermano y que está bien.",
+    "resultado": "Su madre sigue sin creerlo y se inquieta más, pensando que algo pasa.",
+    "mentalidad": "KAP entiende que justificarse no ayuda si no hay acciones claras para resolver el problema."
+   },
+   "issues": [
+    {
+     "id": "mentalidad",
+     "msg": "la mentalidad debe decir qué entiende KAP a partir de lo que acaba de ocurrir (menciona a KAP y se apoya en su acción, su motivo o el objeto)",
+     "field": "mentalidad"
+    }
+   ],
+   "attempts": 2,
+   "structurallyOk": false
+  },
+  {
+   "id": "cadena-04",
+   "chain": {
+    "category": "rechazo-identidad",
+    "titulo": "La mascarada del talento",
+    "objeto": "camiseta",
+    "situacion": "KAP intenta unirse al club de teatro, pero le dicen que no tiene talento y que su voz suena rara.",
+    "conflicto": "KAP quiere pertenecer al club y cambiar su imagen para encajar.",
+    "motivo": "KAP teme que lo rechacen por no ser lo suficientemente interesante.",
+    "accion": "KAP compra una camiseta con estampado de actor y se pone un acento falso al hablar.",
+    "consecuencia": "Los miembros del club lo ven como alguien ridículo y lo ignoran durante toda la reunión.",
+    "decision": "KAP se da cuenta de que estar fingiendo no le hace más aceptable ni menos solo.",
+    "nuevaAccion": "KAP vuelve a la escuela con su camiseta normal y canta una canción de rap sin acento.",
+    "resultado": "Algunos del club lo escuchan y le piden que participe en una obra.",
+    "mentalidad": "KAP descubre que no necesita cambiar para que lo escuchen, solo para que lo vean."
+   },
+   "issues": [
+    {
+     "id": "objeto",
+     "msg": "el objeto «camiseta» solo aparece en 2 pasos de la cadena (mínimo 3): no participa en la historia",
+     "field": "objeto"
+    },
+    {
+     "id": "mentalidad",
+     "msg": "la mentalidad debe decir qué entiende KAP a partir de lo que acaba de ocurrir (menciona a KAP y se apoya en su acción, su motivo o el objeto)",
+     "field": "mentalidad"
+    },
+    {
+     "id": "visual",
+     "msg": "solo 2 de los 4 pasos clave (acción, consecuencia, nueva acción, resultado) se pueden dibujar como algo que ocurre: hacen falta al menos 3"
+    }
+   ],
+   "attempts": 2,
+   "structurallyOk": false
+  },
+  {
+   "id": "cadena-05",
+   "chain": {
+    "category": "limites-costumbre",
+    "titulo": "La puerta del silencio",
+    "objeto": "llave",
+    "situacion": "KAP ve a su hermano pequeño intentar abrir una puerta con la llave equivocada y se acerca para ayudarle.",
+    "conflicto": "El hermano insiste en usar la llave de la habitación de invitados, aunque KAP ya le advirtió que no sirve.",
+    "motivo": "KAP quiere evitar una discusión y no quiere que su hermano se sienta rechazado.",
+    "accion": "KAP le da la llave correcta y le dice que puede intentar otra vez.",
+    "consecuencia": "El hermano repite el error al día siguiente y KAP vuelve a ayudarle.",
+    "decision": "KAP se pregunta si debe dejar de corregirlo o si es mejor enseñarle.",
+    "nuevaAccion": "KAP le muestra cómo usar la llave correctamente y le pide que intente solo.",
+    "resultado": "El hermano logra abrir la puerta sin ayuda y KAP se siente satisfecho.",
+    "mentalidad": "KAP descubre que poner un límite con paciencia puede ser más útil que callar."
+   },
+   "issues": [
+    {
+     "id": "mentalidad",
+     "msg": "la mentalidad debe decir qué entiende KAP a partir de lo que acaba de ocurrir (menciona a KAP y se apoya en su acción, su motivo o el objeto)",
+     "field": "mentalidad"
+    }
+   ],
+   "attempts": 2,
+   "structurallyOk": false,
+   "duplicateOf": "cadena-01",
+   "duplicateWhy": "mismo objeto central"
+  }
+ ],
+ "stats": {
+  "calls": 10,
+  "resumed": 0,
+  "ms": 1797429
+ }
+}

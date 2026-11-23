@@ -1,0 +1,24 @@
+{
+ "chain": {
+  "category": "limites-costumbre",
+  "titulo": "La puerta del silencio",
+  "objeto": "llave",
+  "situacion": "KAP ve a su hermano pequeño intentar abrir una puerta con la llave equivocada y se acerca para ayudarle.",
+  "conflicto": "El hermano insiste en usar la llave de la habitación de invitados, aunque KAP ya le advirtió que no sirve.",
+  "motivo": "KAP quiere evitar una discusión y no quiere que su hermano se sienta rechazado.",
+  "accion": "KAP le da la llave correcta y le dice que puede intentar otra vez.",
+  "consecuencia": "El hermano repite el error al día siguiente y KAP vuelve a ayudarle.",
+  "decision": "KAP se pregunta si debe dejar de corregirlo o si es mejor enseñarle.",
+  "nuevaAccion": "KAP le muestra cómo usar la llave correctamente y le pide que intente solo.",
+  "resultado": "El hermano logra abrir la puerta sin ayuda y KAP se siente satisfecho.",
+  "mentalidad": "KAP descubre que poner un límite con paciencia puede ser más útil que callar."
+ },
+ "issues": [
+  {
+   "id": "mentalidad",
+   "msg": "la mentalidad debe decir qué entiende KAP a partir de lo que acaba de ocurrir (menciona a KAP y se apoya en su acción, su motivo o el objeto)",
+   "field": "mentalidad"
+  }
+ ],
+ "attempts": 2
+}

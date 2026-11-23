@@ -1,0 +1,43 @@
+{
+ "topic": "Cadenas narrativas para Shorts de KAP",
+ "created": "2026-11-23T15:17:31.448Z",
+ "stages": {
+  "idea": {
+   "status": "done",
+   "attempts": 1,
+   "at": "2026-11-23T15:47:28.878Z"
+  },
+  "hooks": {
+   "status": "pending",
+   "attempts": 0
+  },
+  "script": {
+   "status": "pending",
+   "attempts": 0
+  },
+  "storyboard": {
+   "status": "pending",
+   "attempts": 0
+  },
+  "visual-prompts": {
+   "status": "pending",
+   "attempts": 0
+  },
+  "motion": {
+   "status": "pending",
+   "attempts": 0
+  },
+  "audio": {
+   "status": "pending",
+   "attempts": 0
+  },
+  "quality-check": {
+   "status": "pending",
+   "attempts": 0
+  },
+  "export": {
+   "status": "pending",
+   "attempts": 0
+  }
+ }
+}
