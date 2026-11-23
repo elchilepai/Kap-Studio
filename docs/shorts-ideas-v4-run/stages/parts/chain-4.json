@@ -1,0 +1,33 @@
+{
+ "chain": {
+  "category": "rechazo-identidad",
+  "titulo": "La mascarada del talento",
+  "objeto": "camiseta",
+  "situacion": "KAP intenta unirse al club de teatro, pero le dicen que no tiene talento y que su voz suena rara.",
+  "conflicto": "KAP quiere pertenecer al club y cambiar su imagen para encajar.",
+  "motivo": "KAP teme que lo rechacen por no ser lo suficientemente interesante.",
+  "accion": "KAP compra una camiseta con estampado de actor y se pone un acento falso al hablar.",
+  "consecuencia": "Los miembros del club lo ven como alguien ridículo y lo ignoran durante toda la reunión.",
+  "decision": "KAP se da cuenta de que estar fingiendo no le hace más aceptable ni menos solo.",
+  "nuevaAccion": "KAP vuelve a la escuela con su camiseta normal y canta una canción de rap sin acento.",
+  "resultado": "Algunos del club lo escuchan y le piden que participe en una obra.",
+  "mentalidad": "KAP descubre que no necesita cambiar para que lo escuchen, solo para que lo vean."
+ },
+ "issues": [
+  {
+   "id": "objeto",
+   "msg": "el objeto «camiseta» solo aparece en 2 pasos de la cadena (mínimo 3): no participa en la historia",
+   "field": "objeto"
+  },
+  {
+   "id": "mentalidad",
+   "msg": "la mentalidad debe decir qué entiende KAP a partir de lo que acaba de ocurrir (menciona a KAP y se apoya en su acción, su motivo o el objeto)",
+   "field": "mentalidad"
+  },
+  {
+   "id": "visual",
+   "msg": "solo 2 de los 4 pasos clave (acción, consecuencia, nueva acción, resultado) se pueden dibujar como algo que ocurre: hacen falta al menos 3"
+  }
+ ],
+ "attempts": 2
+}
