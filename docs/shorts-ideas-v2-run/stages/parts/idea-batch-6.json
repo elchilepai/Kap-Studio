@@ -1,0 +1,132 @@
+{
+ "ideas": [
+  {
+   "category": "habitos",
+   "titulo": "El calendario de las promesas",
+   "situacion": "KAP está sentado en su habitación, mirando un calendario colgado en la pared. Cada día tiene una nota escrita con su propia letra: 'correr', 'leer', 'llamar a papá'. Hoy es el día 7 de la 'c",
+   "problema": "KAP se compromete a hacer algo cada día, pero siempre termina posponiéndolo para el día siguiente. El calendario se llena de prome",
+   "accionKap": "KAP tacha la nota del día con un rotulador rojo y escribe 'mañana' encima.",
+   "objeto": "calendario",
+   "consecuencia": "La nota queda tachada, pero el calendario sigue lleno de promesas. El rotulador se deja caer al suelo.",
+   "momentoDecision": "Cuando KAP ve que ya ha tachado la misma nota por tercera vez, se para y mira el calendario de frente.",
+   "hacerDiferente": "KAP toma un lápiz y escribe 'hoy' encima de una nueva nota en el calendario, sin tacharla.",
+   "mentalidad": "Las promesas no valen nada si no las cumple hoy. Lo que se pospone, se pierde.",
+   "imagenes": [
+    {
+     "plano": "general",
+     "que": "KAP sentado en su habitación con un calendario colgado en la pared."
+    },
+    {
+     "plano": "detalle",
+     "que": "El calendario tiene notas escritas en cada día con 'correr', 'leer', 'llamar a papá'."
+    },
+    {
+     "plano": "primer-plano",
+     "que": "KAP tacha una nota del calendario con un rotulador rojo."
+    },
+    {
+     "plano": "detalle",
+     "que": "La nota dice 'correr' y ahora tiene escrito 'mañana' encima."
+    },
+    {
+     "plano": "entorno",
+     "que": "El suelo está lleno de rotuladores y hojas de papel en el suelo."
+    },
+    {
+     "plano": "pov",
+     "que": "Vista desde abajo del calendario, con notas tachadas y escritas."
+    },
+    {
+     "plano": "reaccion",
+     "que": "KAP se para y mira el calendario con la cabeza inclinada hacia un lado."
+    },
+    {
+     "plano": "decision",
+     "que": "KAP toma un lápiz y escribe 'hoy' encima de una nueva nota en el calendario."
+    },
+    {
+     "plano": "silueta",
+     "que": "La silueta de KAP frente al calendario con la mano extendida hacia él."
+    },
+    {
+     "plano": "metafora",
+     "que": "El calendario se ve como un camino lleno de puntos que no se alcanzan."
+    },
+    {
+     "plano": "detalle",
+     "que": "La nota en el calendario dice 'leer' y tiene escrito 'hoy' encima, sin tachar."
+    },
+    {
+     "plano": "general",
+     "que": "KAP mira el calendario con una expresión diferente, más firme."
+    }
+   ]
+  },
+  {
+   "category": "autoestima",
+   "titulo": "El espejo de la feria",
+   "situacion": "KAP se encuentra frente a un espejo de feria en una fiesta. Algunos amigos lo animan a probar suerte en el juego de los globos, donde se pone un sombrero ridículo y gana un premio.",
+   "problema": "KAP quiere demostrar que no le importa lo que piensen los demás, pero al final se siente incómodo y se avergüenza al ver su refle",
+   "accionKap": "KAP se pone el sombrero ridículo y se sube al podio con la cabeza alta, aunque sus manos tiemblan.",
+   "objeto": "espejo de feria",
+   "consecuencia": "El espejo refleja a KAP con el sombrero de forma exagerada, lo que hace que otros rían y KAP se sienta más vergonzoso.",
+   "momentoDecision": "Cuando escucha a alguien reírse del sombrero, KAP baja la mirada y se quita el sombrero de inmediato.",
+   "hacerDiferente": "KAP se acerca al espejo y mira directamente a su reflejo sin hacer nada, sin sonreír ni reírse.",
+   "mentalidad": "No necesito demostrar que no me importa. A veces, lo mejor es no hacer nada.",
+   "imagenes": [
+    {
+     "plano": "general",
+     "que": "KAP frente a un espejo de feria en una fiesta con amigos alrededor."
+    },
+    {
+     "plano": "detalle",
+     "que": "El espejo de feria está deformado y refleja la cara de KAP con distorsión."
+    },
+    {
+     "plano": "primer-plano",
+     "que": "KAP se pone un sombrero de payaso muy grande y colorido."
+    },
+    {
+     "plano": "pov",
+     "que": "Vista desde el espejo, KAP parece gigante con el sombrero exagerado."
+    },
+    {
+     "plano": "entorno",
+     "que": "Los amigos ríen alrededor del espejo mientras KAP se sube al podio."
+    },
+    {
+     "plano": "reaccion",
+     "que": "KAP mira al espejo y sus manos tiemblan mientras se ajusta el sombrero."
+    },
+    {
+     "plano": "decision",
+     "que": "Al escuchar risas, KAP baja la mirada y se quita el sombrero rápidamente."
+    },
+    {
+     "plano": "silueta",
+     "que": "La silueta de KAP con el sombrero en el suelo y las manos en los bolsillos."
+    },
+    {
+     "plano": "detalle",
+     "que": "El espejo refleja a KAP sin el sombrero, mirando directamente al reflejo."
+    },
+    {
+     "plano": "metafora",
+     "que": "El espejo se ve como un espejo de verdad, sin distorsión ni exageración."
+    },
+    {
+     "plano": "general",
+     "que": "KAP se aleja del espejo y camina hacia la salida de la fiesta con la cabeza alta."
+    },
+    {
+     "plano": "entorno",
+     "que": "El espejo sigue en su lugar, pero ahora KAP no lo mira."
+    }
+   ]
+  }
+ ],
+ "calls": 1,
+ "dropped": 0,
+ "regenerated": [],
+ "ms": 615810
+}
