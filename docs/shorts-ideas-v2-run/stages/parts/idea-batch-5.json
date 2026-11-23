@@ -1,0 +1,141 @@
+{
+ "ideas": [
+  {
+   "category": "decisiones",
+   "titulo": "El semáforo equivocado",
+   "situacion": "KAP está en un cruce de calles con su hermano pequeño, que quiere cruzar por el lado opuesto al que indica el semáforo. KAP mira la luz roja del semáforo y luego a su hermano, que ya está a点",
+   "problema": "El hermano pequeño insiste en cruzar antes de que cambie la luz, ignorando el semáforo y la seguridad.",
+   "accionKap": "KAP camina hacia el lado opuesto del cruce, siguiendo la indicación del semáforo.",
+   "objeto": "semáforo",
+   "consecuencia": "El hermano se queda parado en el medio de la calle, confundido y esperando que KAP lo siga.",
+   "momentoDecision": "Cuando el hermano empieza a cruzar por el lado incorrecto.",
+   "hacerDiferente": "KAP se detiene y le hace una señal con la mano para que retroceda.",
+   "mentalidad": "KAP aprende que no siempre es mejor seguir la decisión de los demás, aunque parezca la más segura.",
+   "imagenes": [
+    {
+     "plano": "general",
+     "que": "KAP y su hermano frente a un semáforo en rojo, con coches parados a ambos lados."
+    },
+    {
+     "plano": "medio",
+     "que": "El hermano pequeño comienza a caminar hacia el lado del cruce que no indica el semáforo."
+    },
+    {
+     "plano": "primer-plano",
+     "que": "KAP mira al suelo y luego al semáforo, dudando."
+    },
+    {
+     "plano": "pov",
+     "que": "Vista desde el suelo: los pies de KAP se mueven hacia el lado correcto del cruce."
+    },
+    {
+     "plano": "detalle",
+     "que": "El semáforo muestra una luz roja clara en la parte superior."
+    },
+    {
+     "plano": "contrapicado",
+     "que": "El hermano ya está en el medio de la calle, mirando a KAP con cara de confusión."
+    },
+    {
+     "plano": "entorno",
+     "que": "El cruce tiene señales de tráfico y peatones que esperan en ambos lados."
+    },
+    {
+     "plano": "reaccion",
+     "que": "KAP se para y levanta la mano para llamar la atención de su hermano."
+    },
+    {
+     "plano": "decision",
+     "que": "KAP hace una señal con la mano para que su hermano retroceda."
+    },
+    {
+     "plano": "silueta",
+     "que": "La silueta de KAP está alineada con el borde del cruce, señalando hacia atrás."
+    },
+    {
+     "plano": "metafora",
+     "que": "Un letrero de 'PARE' se proyecta sobre el cuerpo del hermano pequeño."
+    },
+    {
+     "plano": "kap-presenta",
+     "que": "KAP camina de regreso hacia su hermano, con una mirada firme pero tranquila."
+    },
+    {
+     "plano": "detalle",
+     "que": "El semáforo cambia a verde, pero KAP no lo mira; está enfocado en su hermano."
+    }
+   ]
+  },
+  {
+   "category": "caracter",
+   "titulo": "La crítica en el papel",
+   "situacion": "Kap recibe un papel con una crítica escrita por su profesor. Lo encuentra en su casillero después de clase, junto a un mensaje que dice 'lee esto antes de irte'. Se sienta en el suelo del aú",
+   "problema": "Kap se siente inmediatamente ofendido y empieza a escribir una respuesta para defenderse",
+   "accionKap": "KAP escribe una carta de defensa en el papel",
+   "objeto": "papel con crítica",
+   "consecuencia": "El profesor lo encuentra al día siguiente y le entrega un nuevo papel con una corrección y una nota: 'Pensé que te gustaría mejorar'",
+   "momentoDecision": "cuando Kap se da cuenta de que su respuesta no ha hecho más que enfadar al profesor",
+   "hacerDiferente": "KAP guarda el papel, lo dobla y lo deja en el casillero sin responder",
+   "mentalidad": "A veces, la crítica no es una ofensa. Puede ser una oportunidad para mejorar",
+   "imagenes": [
+    {
+     "plano": "general",
+     "que": "Kap sentado en el suelo del aula, con un papel en la mano y mirada seria"
+    },
+    {
+     "plano": "medio",
+     "que": "El papel con la crítica escrita, Kap lo sostiene con ambas manos"
+    },
+    {
+     "plano": "primer-plano",
+     "que": "La cara de Kap con expresión de ofensa, mientras escribe una respuesta"
+    },
+    {
+     "plano": "detalle",
+     "que": "La letra de Kap en el papel, con frases como 'no entiendo por qué me critica'"
+    },
+    {
+     "plano": "entorno",
+     "que": "El aula vacía, con mesas y sillas alrededor, Kap solo en el centro"
+    },
+    {
+     "plano": "pov",
+     "que": "Vista desde arriba, el papel que Kap escribe sobre la mesa del aula"
+    },
+    {
+     "plano": "reaccion",
+     "que": "El profesor entra al aula al día siguiente y se acerca a donde Kap está sentado"
+    },
+    {
+     "plano": "decision",
+     "que": "Kap mira al profesor y luego el papel, lo dobla y lo coloca en el casillero"
+    },
+    {
+     "plano": "detalle",
+     "que": "El nuevo papel con una corrección y una nota escrita por el profesor"
+    },
+    {
+     "plano": "silueta",
+     "que": "Kap parado junto al casillero, el profesor le entrega el nuevo papel"
+    },
+    {
+     "plano": "metafora",
+     "que": "Un libro abierto en la mesa con dos hojas: una con crítica y otra con corrección"
+    }
+   ]
+  }
+ ],
+ "calls": 2,
+ "dropped": 0,
+ "regenerated": [
+  {
+   "category": "decisiones",
+   "why": [
+    "la consecuencia no se puede ver (es un sentimiento o no muestra un cambio)",
+    "no hay un cambio de comportamiento claro (decisión + acción distinta)"
+   ],
+   "improved": true
+  }
+ ],
+ "ms": 856374
+}
