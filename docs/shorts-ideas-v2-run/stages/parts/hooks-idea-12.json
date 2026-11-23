@@ -1,0 +1,37 @@
+{
+ "titulo": "El espejo de la feria",
+ "hooks": [
+  {
+   "type": "situacion",
+   "text": "Estaba en una fiesta cuando me ofrecieron probar el juego de los globos con un sombrero ridículo."
+  },
+  {
+   "type": "conflicto",
+   "text": "Sabía que era absurdo, pero no podía dejar de mirar mi reflejo en el espejo de la feria."
+  },
+  {
+   "type": "curiosidad",
+   "text": "¿Qué pasa cuando miras tu reflejo en un espejo de feria y no haces nada?"
+  },
+  {
+   "type": "contradiccion",
+   "text": "Quise parecer valiente, pero me escapé corriendo al ver mi cara con el sombrero."
+  },
+  {
+   "type": "mini-historia",
+   "text": "Me puse el sombrero y subí al podio. Luego me quedé mirando mi reflejo sin hacer nada."
+  }
+ ],
+ "best": [
+  {
+   "type": "mini-historia",
+   "text": "Me puse el sombrero y subí al podio. Luego me quedé mirando mi reflejo sin hacer nada."
+  },
+  {
+   "type": "situacion",
+   "text": "Estaba en una fiesta cuando me ofrecieron probar el juego de los globos con un sombrero ridículo."
+  }
+ ],
+ "issues": [],
+ "repaired": true
+}
