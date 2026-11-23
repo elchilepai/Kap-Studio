@@ -1,0 +1,70 @@
+{
+ "ideas": [
+  {
+   "category": "relaciones",
+   "titulo": "El mensaje borrado",
+   "situacion": "KAP está sentado en un sofá, mirando su teléfono. Hay una conversación abierta con su hermano pequeño, que le pregunta por algo importante. KAP evita responder y se dedica a escribir y bborr",
+   "problema": "KAP no quiere hablar de un malentendido con su hermano, pero esto genera tensión y confusión.",
+   "accionKap": "KAP escribe un mensaje en su teléfono y lo borra repetidamente.",
+   "objeto": "teléfono",
+   "consecuencia": "El hermano pequeño se siente ignorado y se aleja de KAP, dejando el mensaje sin enviar.",
+   "momentoDecision": "Cuando su hermano le pregunta directamente por el mensaje que no envió.",
+   "hacerDiferente": "KAP envía el mensaje en lugar de borrarlo.",
+   "mentalidad": "A veces, hablar es más fácil que callar, aunque sea incómodo.",
+   "imagenes": [
+    {
+     "plano": "general",
+     "que": "KAP sentado en un sofá, mirando su teléfono. Su hermano pequeño está de pie al lado, con las manos en los bols"
+    },
+    {
+     "plano": "primer-plano",
+     "que": "La pantalla del teléfono muestra un mensaje parcialmente escrito: 'No sé cómo decirte que...'"
+    },
+    {
+     "plano": "detalle",
+     "que": "El dedo de KAP desliza la pantalla hacia arriba para borrar el mensaje, pero lo vuelve a escribir"
+    },
+    {
+     "plano": "pov",
+     "que": "La vista desde el teléfono muestra la cara de KAP, serio y evitando mirar al hermano"
+    },
+    {
+     "plano": "entorno",
+     "que": "El sofá y la sala están iluminados por una luz tenue. En el suelo, hay un juguete que el hermano dejó caer"
+    },
+    {
+     "plano": "silueta",
+     "que": "KAP y su hermano forman siluetas en la ventana, con la luz detrás de ellos"
+    },
+    {
+     "plano": "metafora",
+     "que": "La pantalla del teléfono representa una pared entre KAP y su hermano"
+    },
+    {
+     "plano": "reaccion",
+     "que": "El hermano pequeño cruza los brazos y mira hacia otra parte, molesto"
+    },
+    {
+     "plano": "decision",
+     "que": "KAP respira profundamente y finalmente envía el mensaje"
+    },
+    {
+     "plano": "detalle",
+     "que": "La pantalla muestra el mensaje enviado: 'No sé cómo decirte que no me gusta cómo te tratas con mamá'"
+    },
+    {
+     "plano": "general",
+     "que": "KAP y su hermano se miran a los ojos por primera vez en mucho tiempo"
+    },
+    {
+     "plano": "contrapicado",
+     "que": "KAP se sienta al lado de su hermano, que ya no está molesto, y ambos miran el teléfono"
+    }
+   ]
+  }
+ ],
+ "calls": 1,
+ "dropped": 0,
+ "regenerated": [],
+ "ms": 278459
+}

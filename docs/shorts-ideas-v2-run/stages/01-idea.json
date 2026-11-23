@@ -1,0 +1,1046 @@
+{
+ "ideas": [
+  {
+   "category": "limites-decir-no",
+   "titulo": "El libro prestado",
+   "situacion": "KAP está en su habitación, sentado a la mesa con un libro abierto. Su hermano pequeño entra y le pide el libro para hacer una tarea escolar. KAP lo da sin pensar, pero al día siguiente descu",
+   "problema": "El libro que prestó a su hermano se pierde o se daña, y ahora su hermano no puede devolverlo. KAP se siente responsable y frustra",
+   "accionKap": "KAP devuelve el libro sin pedir nada en cambio, pensando que es lo correcto.",
+   "objeto": "libro prestado",
+   "consecuencia": "El libro se daña al caer al suelo, y su hermano se siente culpable. KAP se frustra porque no podía decir que no a su hermano en ese momento.",
+   "momentoDecision": "Cuando su hermano le pide el libro por segunda vez, esta vez con una promesa de cuidarlo.",
+   "hacerDiferente": "KAP le dice que no, pero le ofrece un libro alternativo que puede usar sin dañarlo.",
+   "mentalidad": "Decir que no no es ser egoísta, es proteger lo que tienes y ayudar a los demás de verdad.",
+   "imagenes": [
+    {
+     "plano": "general",
+     "que": "KAP sentado a la mesa con un libro abierto, su hermano entra en la habitación."
+    },
+    {
+     "plano": "medio",
+     "que": "El hermano pequeño le pide el libro con una sonrisa y KAP lo entrega sin dudar."
+    },
+    {
+     "plano": "detalle",
+     "que": "La cubierta del libro se ve bien cuidada en la primera imagen."
+    },
+    {
+     "plano": "pov",
+     "que": "Vista desde el suelo, el libro cae al suelo y se daña."
+    },
+    {
+     "plano": "contrapicado",
+     "que": "KAP mira al suelo con frustración, el hermano le pide disculpas."
+    },
+    {
+     "plano": "entorno",
+     "que": "La habitación de KAP, con libros en estantería, incluye un libro nuevo en la mesa."
+    },
+    {
+     "plano": "silueta",
+     "que": "El hermano entra nuevamente, sosteniendo el libro dañado y con una cara de preocupación."
+    },
+    {
+     "plano": "decision",
+     "que": "KAP se levanta de la silla y le dice que no, pero le ofrece un libro nuevo."
+    },
+    {
+     "plano": "detalle",
+     "que": "El libro nuevo tiene la misma portada que el anterior, pero está intacto."
+    },
+    {
+     "plano": "metafora",
+     "que": "Un libro cerrado sobre una mesa representa la responsabilidad y el cuidado de lo que se comparte."
+    },
+    {
+     "plano": "reaccion",
+     "que": "El hermano acepta el libro nuevo con una sonrisa y KAP respira aliviado."
+    },
+    {
+     "plano": "general",
+     "que": "Ambos están en la habitación, ahora con el libro nuevo sobre la mesa y el dañado en un cajón."
+    }
+   ],
+   "id": "idea-01",
+   "fails": [],
+   "subs": {
+    "fuerzaVisual": 10,
+    "accion": 10,
+    "conflicto": 10,
+    "consecuencia": 10,
+    "variedad": 10,
+    "potencial": 10,
+    "originalidad": 7.1,
+    "transformacion": 10
+   },
+   "score": 9.6,
+   "rejected": false
+  },
+  {
+   "category": "aprobacion",
+   "titulo": "La camisa de la fiesta",
+   "situacion": "KAP está preparándose para una fiesta en casa de su primo. Su madre le dice que vaya vestido con ropa elegante, pero cuando llega, su primo lo invita a ir con una camisa más casual que tiene",
+   "problema": "KAP se siente presionado por la expectativa de su madre y la presión social de encajar con los demás. Lleva la camisa elegante, se",
+   "accionKap": "KAP lleva la camisa elegante que le pidió su madre, pero se siente incómodo al ver a los demás vestidos de forma más relajada.",
+   "objeto": "camisa elegante",
+   "consecuencia": "KAP no se siente cómodo y pasa la noche callado, observando desde un rincón. Su primo lo nota y le pregunta por qué no usa su camisa casua",
+   "momentoDecision": "Cuando su primo le pregunta sobre su ropa, KAP decide decirle que no quiere seguir las reglas impuestas y elige usar la camisa casual.",
+   "hacerDiferente": "KAP le pide a su primo que le preste su camisa casual y se la pone, ignorando la expectativa de su madre.",
+   "mentalidad": "No necesitas vestir como otros para ser aceptado; lo que importa es sentirte bien contigo mismo.",
+   "imagenes": [
+    {
+     "plano": "general",
+     "que": "KAP mira su camisa elegante en el armario, con su madre detrás diciéndole que vaya así a la fiesta."
+    },
+    {
+     "plano": "medio",
+     "que": "KAP lleva la camisa elegante al coche, mira por la ventana y parece incómodo."
+    },
+    {
+     "plano": "detalle",
+     "que": "La camisa elegante tiene botones dorados y un cuello rígido que le incomoda."
+    },
+    {
+     "plano": "pov",
+     "que": "Desde el suelo, KAP ve a los demás en la fiesta con camisas más relajadas y se siente fuera de lugar."
+    },
+    {
+     "plano": "contrapicado",
+     "que": "KAP está en un rincón, observando a los demás, con una expresión seria y callado."
+    },
+    {
+     "plano": "entorno",
+     "que": "La fiesta está llena de personas riendo y jugando, mientras KAP permanece al margen."
+    },
+    {
+     "plano": "silueta",
+     "que": "Su primo entra en el cuarto y le pregunta por qué no lleva su camisa casual."
+    },
+    {
+     "plano": "decision",
+     "que": "KAP se levanta, mira a su primo y le dice que quiere usar la camisa casual que tiene."
+    },
+    {
+     "plano": "detalle",
+     "que": "La camisa casual de su primo está colgada en una silla y tiene un cuello más suelto y mangas más cortas."
+    },
+    {
+     "plano": "metafora",
+     "que": "Una camisa elegante colgada junto a otra casual representa la presión de encajar versus sentirse auténtico."
+    },
+    {
+     "plano": "reaccion",
+     "que": "KAP se pone la camisa casual y suena más relajado, con una sonrisa en el rostro."
+    },
+    {
+     "plano": "general",
+     "que": "KAP ahora está entre los demás, riendo con su primo, mientras su madre lo ve desde lejos con una expresión sor"
+    }
+   ],
+   "id": "idea-02",
+   "fails": [
+    {
+     "id": "patron-pasivo",
+     "critical": true,
+     "msg": "cae en el patrón pasivo (se calla / mira al suelo o al móvil / piensa / voz baja / se siente inseguro)"
+    }
+   ],
+   "subs": {
+    "fuerzaVisual": 10,
+    "accion": 10,
+    "conflicto": 10,
+    "consecuencia": 10,
+    "variedad": 10,
+    "potencial": 10,
+    "originalidad": 8.7,
+    "transformacion": 10
+   },
+   "score": 9.8,
+   "rejected": true
+  },
+  {
+   "category": "disciplina",
+   "titulo": "La tarea sin empezar",
+   "situacion": "KAP está en su habitación con un ordenador encendido, una tarea abierta en la pantalla y la habitación llena de ropa, libros y juguetes esparcidos por el suelo.",
+   "problema": "KAP no quiere empezar la tarea importante que le han asignado y se distrae con actividades menores para evitarlo.",
+   "accionKap": "KAP ordena un montón de ropa del suelo y lo coloca en una silla.",
+   "objeto": "ordenador",
+   "consecuencia": "La pantalla del ordenador sigue abierta con la tarea sin tocar, mientras KAP se distrae con la ropa.",
+   "momentoDecision": "Cuando ya ha ordenado la ropa y se sienta frente al ordenador, pero no empieza la tarea.",
+   "hacerDiferente": "KAP cierra el ordenador y se levanta para ir a hacer algo en la cocina.",
+   "mentalidad": "A veces, dejar de posponer es empezar a actuar, aunque sea con una acción pequeña.",
+   "imagenes": [
+    {
+     "plano": "general",
+     "que": "KAP está en su habitación con ropa y juguetes esparcidos por el suelo, un ordenador encendido en la mesa."
+    },
+    {
+     "plano": "medio",
+     "que": "KAP se agacha para recoger una camiseta del suelo y la coloca en una silla."
+    },
+    {
+     "plano": "detalle",
+     "que": "La pantalla del ordenador muestra una tarea abierta con el título 'Proyecto final'."
+    },
+    {
+     "plano": "primer-plano",
+     "que": "KAP sostiene una camiseta en sus manos, mirando hacia la silla donde las va colocando."
+    },
+    {
+     "plano": "entorno",
+     "que": "La habitación está llena de ropa, libros y juguetes desordenados, con el ordenador en el centro."
+    },
+    {
+     "plano": "contrapicado",
+     "que": "KAP se levanta tras colocar varias prendas en la silla, mirando hacia el ordenador."
+    },
+    {
+     "plano": "pov",
+     "que": "La vista desde la pantalla del ordenador muestra que KAP no ha empezado la tarea aún."
+    },
+    {
+     "plano": "reaccion",
+     "que": "KAP respira profundamente, mira a su alrededor y se levanta para salir de la habitación."
+    },
+    {
+     "plano": "decision",
+     "que": "KAP cierra el ordenador con una mano y camina hacia la puerta con paso firme."
+    },
+    {
+     "plano": "silueta",
+     "que": "La silueta de KAP se ve en la puerta, mirando hacia la cocina antes de salir."
+    },
+    {
+     "plano": "metafora",
+     "que": "Una sombra de un reloj se proyecta sobre el suelo, señalando que el tiempo no espera."
+    },
+    {
+     "plano": "detalle",
+     "que": "El ordenador está cerrado, y en la pantalla se ve el mensaje 'Tarea sin empezar'."
+    }
+   ],
+   "id": "idea-03",
+   "fails": [
+    {
+     "id": "mentalidad",
+     "critical": false,
+     "msg": "la mentalidad que descubre es vaga o un aforismo"
+    }
+   ],
+   "subs": {
+    "fuerzaVisual": 10,
+    "accion": 10,
+    "conflicto": 10,
+    "consecuencia": 10,
+    "variedad": 10,
+    "potencial": 10,
+    "originalidad": 7.1,
+    "transformacion": 6
+   },
+   "score": 9.1,
+   "rejected": false
+  },
+  {
+   "category": "responsabilidad",
+   "titulo": "El paquete que no se entregó",
+   "situacion": "KAP recibe un paquete en la puerta de su casa, pero al abrirlo, descubre que contiene una caja vacía y un mensaje: 'Entrega fallida. Reenvío en 72 horas'. Su hermano pequeño, curioso, empiea",
+   "problema": "KAP se niega a hacerse responsable del paquete, lo ignora y lo deja en el suelo, esperando que desaparezca por sí solo.",
+   "accionKap": "KAP tira el paquete al suelo y lo cubre con una manta",
+   "objeto": "paquete vacío",
+   "consecuencia": "El paquete vuelve a aparecer en la puerta, ahora con una nota: 'Entrega fallida. Último intento'.",
+   "momentoDecision": "Cuando KAP ve la nota del último intento y el paquete en la puerta de nuevo, se da cuenta de que no puede ignorarlo más.",
+   "hacerDiferente": "KAP abre el paquete con cuidado, lo revisa y luego llama a la empresa para informarle que no puede recibirlo",
+   "mentalidad": "Algunas responsabilidades no se van si las ignores; hay que enfrentarlas directamente, aunque no sean tu culpa.",
+   "imagenes": [
+    {
+     "plano": "general",
+     "que": "KAP de pie frente a la puerta de su casa con un paquete en manos."
+    },
+    {
+     "plano": "primer-plano",
+     "que": "KAP mira el paquete con cara de desinterés y lo tira al suelo."
+    },
+    {
+     "plano": "detalle",
+     "que": "El paquete vacío en el suelo, con un mensaje que dice: 'Entrega fallida. Reenvío en 72 horas'."
+    },
+    {
+     "plano": "pov",
+     "que": "Vista desde abajo del paquete cubierto con una manta en el suelo."
+    },
+    {
+     "plano": "entorno",
+     "que": "El paquete vacío en el suelo de la entrada, rodeado de zapatos y ropa."
+    },
+    {
+     "plano": "general",
+     "que": "El paquete vuelve a aparecer en la puerta con una nota: 'Entrega fallida. Último intento'."
+    },
+    {
+     "plano": "contrapicado",
+     "que": "KAP mira el paquete desde abajo, con expresión de frustración."
+    },
+    {
+     "plano": "detalle",
+     "que": "La nota 'Último intento' pegada en el paquete vacío."
+    },
+    {
+     "plano": "medio",
+     "que": "KAP abre el paquete con cuidado, revisa su contenido y luego lo cierra."
+    },
+    {
+     "plano": "pov",
+     "que": "Vista desde la pantalla de un teléfono mientras KAP llama a la empresa."
+    },
+    {
+     "plano": "silueta",
+     "que": "KAP de espaldas, mirando el paquete en el suelo, ahora vacío y abandonado."
+    },
+    {
+     "plano": "metafora",
+     "que": "Un peso invisible sobre los hombros de KAP, representando la responsabilidad que finalmente asumió."
+    }
+   ],
+   "id": "idea-04",
+   "fails": [],
+   "subs": {
+    "fuerzaVisual": 10,
+    "accion": 10,
+    "conflicto": 10,
+    "consecuencia": 10,
+    "variedad": 10,
+    "potencial": 10,
+    "originalidad": 8.2,
+    "transformacion": 10
+   },
+   "score": 9.8,
+   "rejected": false
+  },
+  {
+   "category": "comparacion",
+   "titulo": "El reloj del vecino",
+   "situacion": "KAP está sentado en el suelo de su habitación, arreglando un pequeño jardín de macetas en una caja de madera. En la ventana, puede ver a su vecino trabajando en su terraza, donde hay un relo",
+   "problema": "KAP siente que su vecino está logrando más que él, y eso le genera una sensación de frustración y desaliento.",
+   "accionKap": "KAP tira la caja de madera al suelo, rompiendo algunas macetas y dejando el jardín hecho polvo.",
+   "objeto": "reloj",
+   "consecuencia": "El reloj del vecino sigue funcionando normalmente, mientras que el jardín de KAP está destrozado y las plantas están rotas.",
+   "momentoDecision": "KAP se detiene un momento, mira el reloj desde la ventana y luego se levanta para recoger las piezas de la caja.",
+   "hacerDiferente": "KAP toma una de las macetas rotas y la coloca en un lugar visible, junto a su mesa de estudio.",
+   "mentalidad": "Lo que cuenta no es lo que logra otro, sino lo que KAP elige hacer con lo que tiene.",
+   "imagenes": [
+    {
+     "plano": "general",
+     "que": "KAP arregla un jardín en una caja de madera en su habitación, mientras ve a su vecino trabajando en la terraza"
+    },
+    {
+     "plano": "pov",
+     "que": "La vista desde la ventana muestra al vecino con un reloj en la mano, mirando hacia el sol"
+    },
+    {
+     "plano": "detalle",
+     "que": "El reloj del vecino está colgado en una pared de su terraza"
+    },
+    {
+     "plano": "contrapicado",
+     "que": "KAP mira con frustración hacia la ventana, con la caja de madera a sus pies"
+    },
+    {
+     "plano": "silueta",
+     "que": "KAP está de pie, con la caja rota a sus pies y las macetas esparcidas por el suelo"
+    },
+    {
+     "plano": "entorno",
+     "que": "La habitación de KAP está llena de plantas rotas y la caja de madera está completamente destruida"
+    },
+    {
+     "plano": "detalle",
+     "que": "Una de las macetas tiene un agujero grande, pero aún contiene una planta viva"
+    },
+    {
+     "plano": "metafora",
+     "que": "Un reloj está parado en la pared de KAP, como si también se detuviera el tiempo"
+    },
+    {
+     "plano": "primer-plano",
+     "que": "KAP sostiene una maceta rota con cuidado y mira hacia la mesa de estudio"
+    },
+    {
+     "plano": "decision",
+     "que": "KAP coloca la maceta rota en la mesa de estudio, junto a un cuaderno y un lápiz"
+    },
+    {
+     "plano": "reaccion",
+     "que": "El reloj del vecino sigue funcionando, pero KAP ya no lo mira desde la ventana"
+    },
+    {
+     "plano": "entorno",
+     "que": "La habitación de KAP ahora tiene una maceta rota en la mesa, junto a sus herramientas y el jardín aún en el su"
+    }
+   ],
+   "id": "idea-05",
+   "fails": [],
+   "subs": {
+    "fuerzaVisual": 10,
+    "accion": 9.4,
+    "conflicto": 10,
+    "consecuencia": 10,
+    "variedad": 10,
+    "potencial": 10,
+    "originalidad": 8.2,
+    "transformacion": 10
+   },
+   "score": 9.7,
+   "rejected": false
+  },
+  {
+   "category": "rechazo",
+   "titulo": "La puerta que no se abre",
+   "situacion": "KAP está frente a una puerta de un taller de arte en el centro. Tiene una hoja de inscripción en la mano y mira con nerviosismo al portero, quien le dice que ya no hay cupos",
+   "problema": "KAP siente que no tiene lugar en ese espacio y decide irse sin intentar otra opción",
+   "accionKap": "KAP camina lentamente hacia atrás, dejando caer la hoja de inscripción en el suelo",
+   "objeto": "puerta cerrada",
+   "consecuencia": "La hoja de inscripción se mueve con el viento y se queda atrapada debajo de la puerta",
+   "momentoDecision": "Cuando el portero se gira para ver qué pasa",
+   "hacerDiferente": "KAP se agacha y recoge la hoja, volviendo a entregársela al portero",
+   "mentalidad": "A veces, lo único que se necesita es un segundo intento para abrir una puerta",
+   "imagenes": [
+    {
+     "plano": "general",
+     "que": "KAP está frente a una puerta de un taller de arte con un letrero que dice 'No hay cupos'"
+    },
+    {
+     "plano": "medio",
+     "que": "El portero le habla, mientras KAP mira la hoja de inscripción en su mano"
+    },
+    {
+     "plano": "primer-plano",
+     "que": "KAP camina hacia atrás, dejando caer la hoja de inscripción"
+    },
+    {
+     "plano": "detalle",
+     "que": "La hoja se mueve con el viento y se queda atrapada debajo de la puerta"
+    },
+    {
+     "plano": "pov",
+     "que": "Desde el suelo, se ve la hoja de inscripción bajo la puerta"
+    },
+    {
+     "plano": "entorno",
+     "que": "El portero mira hacia abajo y se gira para ver qué ocurre"
+    },
+    {
+     "plano": "contrapicado",
+     "que": "KAP se agacha para recoger la hoja de inscripción"
+    },
+    {
+     "plano": "reaccion",
+     "que": "El portero lo observa con curiosidad mientras KAP se acerca de nuevo"
+    },
+    {
+     "plano": "decision",
+     "que": "KAP le entrega la hoja al portero, quien la examina por un momento"
+    },
+    {
+     "plano": "metafora",
+     "que": "Una puerta que se abre lentamente, mostrando una sala llena de arte en progreso"
+    }
+   ],
+   "id": "idea-06",
+   "fails": [
+    {
+     "id": "mentalidad",
+     "critical": false,
+     "msg": "la mentalidad que descubre es vaga o un aforismo"
+    }
+   ],
+   "subs": {
+    "fuerzaVisual": 10,
+    "accion": 10,
+    "conflicto": 10,
+    "consecuencia": 10,
+    "variedad": 10,
+    "potencial": 9.8,
+    "originalidad": 7.8,
+    "transformacion": 6
+   },
+   "score": 9.2,
+   "rejected": false
+  },
+  {
+   "category": "independencia-emocional",
+   "titulo": "El mensaje en el aire",
+   "situacion": "KAP está sentado en su habitación, mirando su teléfono. En la pantalla hay un mensaje que le envió hace horas: '¿Te gustaría salir a caminar?'. El teléfono sigue sin recibir respuesta.",
+   "problema": "KAP pasa horas esperando una respuesta para decidir si va a salir o no, y se siente atrapado por la ambigüedad del otro.",
+   "accionKap": "KAP cierra el teléfono y lo pone sobre la mesa de noche, lejos de su alcance.",
+   "objeto": "teléfono",
+   "consecuencia": "El teléfono sigue en silencio, pero KAP ya no mira la pantalla. En lugar de eso, se levanta y empieza a caminar por la habitación.",
+   "momentoDecision": "Cuando se da cuenta de que no hay una respuesta que le obligue a actuar, decide no esperar más.",
+   "hacerDiferente": "KAP busca su ropa para salir y la pone en una bolsa.",
+   "mentalidad": "La incertidumbre del otro no define lo que KAP hace. Su decisión es suya.",
+   "imagenes": [
+    {
+     "plano": "general",
+     "que": "KAP sentado en su cama con el teléfono en las manos."
+    },
+    {
+     "plano": "primer-plano",
+     "que": "El mensaje en la pantalla: '¿Te gustaría salir a caminar?'. El cursor parpadea."
+    },
+    {
+     "plano": "detalle",
+     "que": "El borde del teléfono, con marcas de uso y un fondo de pantalla simple."
+    },
+    {
+     "plano": "contrapicado",
+     "que": "KAP mira el teléfono, pero su postura es rígida y sus hombros están caídos."
+    },
+    {
+     "plano": "general",
+     "que": "KAP camina por la habitación, con las manos en los bolsillos."
+    },
+    {
+     "plano": "entorno",
+     "que": "La habitación tiene libros en las paredes y una silla con cojines desordenados."
+    },
+    {
+     "plano": "pov",
+     "que": "La vista desde el suelo, mostrando los zapatos de KAP al caminar."
+    },
+    {
+     "plano": "metafora",
+     "que": "Un reloj de arena en el suelo, con la arena cayendo lentamente."
+    },
+    {
+     "plano": "silueta",
+     "que": "KAP se para frente al armario, mirando hacia dentro."
+    },
+    {
+     "plano": "detalle",
+     "que": "Una camiseta colgando del perchero, con un letrero que dice '2Pac'."
+    },
+    {
+     "plano": "general",
+     "que": "KAP saca una mochila y empieza a llenarla con ropa y un libro."
+    },
+    {
+     "plano": "reaccion",
+     "que": "KAP mira al teléfono por última vez, lo deja en la mesa y sale de la habitación."
+    }
+   ],
+   "id": "idea-07",
+   "fails": [
+    {
+     "id": "patron-pasivo",
+     "critical": true,
+     "msg": "cae en el patrón pasivo (se calla / mira al suelo o al móvil / piensa / voz baja / se siente inseguro)"
+    }
+   ],
+   "subs": {
+    "fuerzaVisual": 10,
+    "accion": 10,
+    "conflicto": 10,
+    "consecuencia": 10,
+    "variedad": 10,
+    "potencial": 10,
+    "originalidad": 7.4,
+    "transformacion": 10
+   },
+   "score": 9.7,
+   "rejected": true
+  },
+  {
+   "category": "proposito",
+   "titulo": "El camino sin fin",
+   "situacion": "KAP está frente a una pared llena de carteles, mapas y listas. Cada uno representa un proyecto que empezó pero no terminó: 'Aprender piano', 'Escribir libro', 'Viajar a África', 'Hacer un jú",
+   "problema": "KAP se siente abrumado por la cantidad de proyectos que ha comenzado, pero ninguno avanza. No tiene claridad sobre qué hacer con t",
+   "accionKap": "KAP toma un lápiz y empieza a tachar los carteles uno por uno, comenzando por el más viejo.",
+   "objeto": "carteles",
+   "consecuencia": "Los carteles se llenan de tachaduras, pero KAP no los quita. En su lugar, coloca un solo cartel en el centro de la pared: 'Aprender a decir'",
+   "momentoDecision": "Cuando ya no puede más con la sobrecarga de metas y proyectos, decide simplificar.",
+   "hacerDiferente": "KAP pega un nuevo cartel en el centro y lo escribe con una letra clara y firme.",
+   "mentalidad": "No todos los objetivos son útiles. A veces, el propósito está en elegir uno y avanzar con él.",
+   "imagenes": [
+    {
+     "plano": "general",
+     "que": "KAP frente a una pared llena de carteles, mapas y listas."
+    },
+    {
+     "plano": "detalle",
+     "que": "Un cartel que dice 'Aprender piano' con una fecha de hace dos años."
+    },
+    {
+     "plano": "primer-plano",
+     "que": "KAP sostiene un lápiz y mira el primer cartel con una expresión seria."
+    },
+    {
+     "plano": "entorno",
+     "que": "La habitación tiene libros, cuadernos y herramientas de escritura en el suelo."
+    },
+    {
+     "plano": "contrapicado",
+     "que": "KAP camina hacia la pared, con el lápiz detrás de su espalda."
+    },
+    {
+     "plano": "metafora",
+     "que": "Un camino con múltiples bifurcaciones en el suelo, cada una etiquetada con un proyecto."
+    },
+    {
+     "plano": "detalle",
+     "que": "El lápiz se mueve sobre el cartel 'Escribir libro', tachando las palabras con firmeza."
+    },
+    {
+     "plano": "general",
+     "que": "KAP tacha varios carteles mientras mira hacia la pared con expresión determinada."
+    },
+    {
+     "plano": "pov",
+     "que": "La vista desde el suelo, mostrando los carteles tachados y el lápiz de KAP."
+    },
+    {
+     "plano": "silueta",
+     "que": "KAP se para frente al centro de la pared, con el lápiz en la mano."
+    },
+    {
+     "plano": "detalle",
+     "que": "El nuevo cartel que dice 'Aprender a decir' está pegado en el centro, aún sin completar."
+    },
+    {
+     "plano": "reaccion",
+     "que": "KAP mira el nuevo cartel por un momento y luego lo escribe con una letra clara y decidida."
+    }
+   ],
+   "id": "idea-08",
+   "fails": [],
+   "subs": {
+    "fuerzaVisual": 10,
+    "accion": 10,
+    "conflicto": 10,
+    "consecuencia": 10,
+    "variedad": 10,
+    "potencial": 10,
+    "originalidad": 7.7,
+    "transformacion": 10
+   },
+   "score": 9.7,
+   "rejected": false
+  },
+  {
+   "category": "decisiones",
+   "titulo": "El semáforo equivocado",
+   "situacion": "KAP está en un cruce de calles con su hermano pequeño, que quiere cruzar por el lado opuesto al que indica el semáforo. KAP mira la luz roja del semáforo y luego a su hermano, que ya está a点",
+   "problema": "El hermano pequeño insiste en cruzar antes de que cambie la luz, ignorando el semáforo y la seguridad.",
+   "accionKap": "KAP camina hacia el lado opuesto del cruce, siguiendo la indicación del semáforo.",
+   "objeto": "semáforo",
+   "consecuencia": "El hermano se queda parado en el medio de la calle, confundido y esperando que KAP lo siga.",
+   "momentoDecision": "Cuando el hermano empieza a cruzar por el lado incorrecto.",
+   "hacerDiferente": "KAP se detiene y le hace una señal con la mano para que retroceda.",
+   "mentalidad": "KAP aprende que no siempre es mejor seguir la decisión de los demás, aunque parezca la más segura.",
+   "imagenes": [
+    {
+     "plano": "general",
+     "que": "KAP y su hermano frente a un semáforo en rojo, con coches parados a ambos lados."
+    },
+    {
+     "plano": "medio",
+     "que": "El hermano pequeño comienza a caminar hacia el lado del cruce que no indica el semáforo."
+    },
+    {
+     "plano": "primer-plano",
+     "que": "KAP mira al suelo y luego al semáforo, dudando."
+    },
+    {
+     "plano": "pov",
+     "que": "Vista desde el suelo: los pies de KAP se mueven hacia el lado correcto del cruce."
+    },
+    {
+     "plano": "detalle",
+     "que": "El semáforo muestra una luz roja clara en la parte superior."
+    },
+    {
+     "plano": "contrapicado",
+     "que": "El hermano ya está en el medio de la calle, mirando a KAP con cara de confusión."
+    },
+    {
+     "plano": "entorno",
+     "que": "El cruce tiene señales de tráfico y peatones que esperan en ambos lados."
+    },
+    {
+     "plano": "reaccion",
+     "que": "KAP se para y levanta la mano para llamar la atención de su hermano."
+    },
+    {
+     "plano": "decision",
+     "que": "KAP hace una señal con la mano para que su hermano retroceda."
+    },
+    {
+     "plano": "silueta",
+     "que": "La silueta de KAP está alineada con el borde del cruce, señalando hacia atrás."
+    },
+    {
+     "plano": "metafora",
+     "que": "Un letrero de 'PARE' se proyecta sobre el cuerpo del hermano pequeño."
+    },
+    {
+     "plano": "kap-presenta",
+     "que": "KAP camina de regreso hacia su hermano, con una mirada firme pero tranquila."
+    },
+    {
+     "plano": "detalle",
+     "que": "El semáforo cambia a verde, pero KAP no lo mira; está enfocado en su hermano."
+    }
+   ],
+   "id": "idea-09",
+   "fails": [
+    {
+     "id": "consecuencia",
+     "critical": false,
+     "msg": "la consecuencia no se puede ver (es un sentimiento o no muestra un cambio)"
+    }
+   ],
+   "subs": {
+    "fuerzaVisual": 10,
+    "accion": 10,
+    "conflicto": 10,
+    "consecuencia": 2,
+    "variedad": 10,
+    "potencial": 10,
+    "originalidad": 7.8,
+    "transformacion": 10
+   },
+   "score": 8.7,
+   "rejected": false
+  },
+  {
+   "category": "caracter",
+   "titulo": "La crítica en el papel",
+   "situacion": "Kap recibe un papel con una crítica escrita por su profesor. Lo encuentra en su casillero después de clase, junto a un mensaje que dice 'lee esto antes de irte'. Se sienta en el suelo del aú",
+   "problema": "Kap se siente inmediatamente ofendido y empieza a escribir una respuesta para defenderse",
+   "accionKap": "KAP escribe una carta de defensa en el papel",
+   "objeto": "papel con crítica",
+   "consecuencia": "El profesor lo encuentra al día siguiente y le entrega un nuevo papel con una corrección y una nota: 'Pensé que te gustaría mejorar'",
+   "momentoDecision": "cuando Kap se da cuenta de que su respuesta no ha hecho más que enfadar al profesor",
+   "hacerDiferente": "KAP guarda el papel, lo dobla y lo deja en el casillero sin responder",
+   "mentalidad": "A veces, la crítica no es una ofensa. Puede ser una oportunidad para mejorar",
+   "imagenes": [
+    {
+     "plano": "general",
+     "que": "Kap sentado en el suelo del aula, con un papel en la mano y mirada seria"
+    },
+    {
+     "plano": "medio",
+     "que": "El papel con la crítica escrita, Kap lo sostiene con ambas manos"
+    },
+    {
+     "plano": "primer-plano",
+     "que": "La cara de Kap con expresión de ofensa, mientras escribe una respuesta"
+    },
+    {
+     "plano": "detalle",
+     "que": "La letra de Kap en el papel, con frases como 'no entiendo por qué me critica'"
+    },
+    {
+     "plano": "entorno",
+     "que": "El aula vacía, con mesas y sillas alrededor, Kap solo en el centro"
+    },
+    {
+     "plano": "pov",
+     "que": "Vista desde arriba, el papel que Kap escribe sobre la mesa del aula"
+    },
+    {
+     "plano": "reaccion",
+     "que": "El profesor entra al aula al día siguiente y se acerca a donde Kap está sentado"
+    },
+    {
+     "plano": "decision",
+     "que": "Kap mira al profesor y luego el papel, lo dobla y lo coloca en el casillero"
+    },
+    {
+     "plano": "detalle",
+     "que": "El nuevo papel con una corrección y una nota escrita por el profesor"
+    },
+    {
+     "plano": "silueta",
+     "que": "Kap parado junto al casillero, el profesor le entrega el nuevo papel"
+    },
+    {
+     "plano": "metafora",
+     "que": "Un libro abierto en la mesa con dos hojas: una con crítica y otra con corrección"
+    }
+   ],
+   "id": "idea-10",
+   "fails": [
+    {
+     "id": "mentalidad",
+     "critical": false,
+     "msg": "la mentalidad que descubre es vaga o un aforismo"
+    }
+   ],
+   "subs": {
+    "fuerzaVisual": 10,
+    "accion": 10,
+    "conflicto": 10,
+    "consecuencia": 10,
+    "variedad": 10,
+    "potencial": 10,
+    "originalidad": 8.5,
+    "transformacion": 6
+   },
+   "score": 9.3,
+   "rejected": false
+  },
+  {
+   "category": "habitos",
+   "titulo": "El calendario de las promesas",
+   "situacion": "KAP está sentado en su habitación, mirando un calendario colgado en la pared. Cada día tiene una nota escrita con su propia letra: 'correr', 'leer', 'llamar a papá'. Hoy es el día 7 de la 'c",
+   "problema": "KAP se compromete a hacer algo cada día, pero siempre termina posponiéndolo para el día siguiente. El calendario se llena de prome",
+   "accionKap": "KAP tacha la nota del día con un rotulador rojo y escribe 'mañana' encima.",
+   "objeto": "calendario",
+   "consecuencia": "La nota queda tachada, pero el calendario sigue lleno de promesas. El rotulador se deja caer al suelo.",
+   "momentoDecision": "Cuando KAP ve que ya ha tachado la misma nota por tercera vez, se para y mira el calendario de frente.",
+   "hacerDiferente": "KAP toma un lápiz y escribe 'hoy' encima de una nueva nota en el calendario, sin tacharla.",
+   "mentalidad": "Las promesas no valen nada si no las cumple hoy. Lo que se pospone, se pierde.",
+   "imagenes": [
+    {
+     "plano": "general",
+     "que": "KAP sentado en su habitación con un calendario colgado en la pared."
+    },
+    {
+     "plano": "detalle",
+     "que": "El calendario tiene notas escritas en cada día con 'correr', 'leer', 'llamar a papá'."
+    },
+    {
+     "plano": "primer-plano",
+     "que": "KAP tacha una nota del calendario con un rotulador rojo."
+    },
+    {
+     "plano": "detalle",
+     "que": "La nota dice 'correr' y ahora tiene escrito 'mañana' encima."
+    },
+    {
+     "plano": "entorno",
+     "que": "El suelo está lleno de rotuladores y hojas de papel en el suelo."
+    },
+    {
+     "plano": "pov",
+     "que": "Vista desde abajo del calendario, con notas tachadas y escritas."
+    },
+    {
+     "plano": "reaccion",
+     "que": "KAP se para y mira el calendario con la cabeza inclinada hacia un lado."
+    },
+    {
+     "plano": "decision",
+     "que": "KAP toma un lápiz y escribe 'hoy' encima de una nueva nota en el calendario."
+    },
+    {
+     "plano": "silueta",
+     "que": "La silueta de KAP frente al calendario con la mano extendida hacia él."
+    },
+    {
+     "plano": "metafora",
+     "que": "El calendario se ve como un camino lleno de puntos que no se alcanzan."
+    },
+    {
+     "plano": "detalle",
+     "que": "La nota en el calendario dice 'leer' y tiene escrito 'hoy' encima, sin tachar."
+    },
+    {
+     "plano": "general",
+     "que": "KAP mira el calendario con una expresión diferente, más firme."
+    }
+   ],
+   "id": "idea-11",
+   "fails": [],
+   "subs": {
+    "fuerzaVisual": 10,
+    "accion": 10,
+    "conflicto": 10,
+    "consecuencia": 10,
+    "variedad": 10,
+    "potencial": 10,
+    "originalidad": 7.7,
+    "transformacion": 10
+   },
+   "score": 9.7,
+   "rejected": false
+  },
+  {
+   "category": "autoestima",
+   "titulo": "El espejo de la feria",
+   "situacion": "KAP se encuentra frente a un espejo de feria en una fiesta. Algunos amigos lo animan a probar suerte en el juego de los globos, donde se pone un sombrero ridículo y gana un premio.",
+   "problema": "KAP quiere demostrar que no le importa lo que piensen los demás, pero al final se siente incómodo y se avergüenza al ver su refle",
+   "accionKap": "KAP se pone el sombrero ridículo y se sube al podio con la cabeza alta, aunque sus manos tiemblan.",
+   "objeto": "espejo de feria",
+   "consecuencia": "El espejo refleja a KAP con el sombrero de forma exagerada, lo que hace que otros rían y KAP se sienta más vergonzoso.",
+   "momentoDecision": "Cuando escucha a alguien reírse del sombrero, KAP baja la mirada y se quita el sombrero de inmediato.",
+   "hacerDiferente": "KAP se acerca al espejo y mira directamente a su reflejo sin hacer nada, sin sonreír ni reírse.",
+   "mentalidad": "No necesito demostrar que no me importa. A veces, lo mejor es no hacer nada.",
+   "imagenes": [
+    {
+     "plano": "general",
+     "que": "KAP frente a un espejo de feria en una fiesta con amigos alrededor."
+    },
+    {
+     "plano": "detalle",
+     "que": "El espejo de feria está deformado y refleja la cara de KAP con distorsión."
+    },
+    {
+     "plano": "primer-plano",
+     "que": "KAP se pone un sombrero de payaso muy grande y colorido."
+    },
+    {
+     "plano": "pov",
+     "que": "Vista desde el espejo, KAP parece gigante con el sombrero exagerado."
+    },
+    {
+     "plano": "entorno",
+     "que": "Los amigos ríen alrededor del espejo mientras KAP se sube al podio."
+    },
+    {
+     "plano": "reaccion",
+     "que": "KAP mira al espejo y sus manos tiemblan mientras se ajusta el sombrero."
+    },
+    {
+     "plano": "decision",
+     "que": "Al escuchar risas, KAP baja la mirada y se quita el sombrero rápidamente."
+    },
+    {
+     "plano": "silueta",
+     "que": "La silueta de KAP con el sombrero en el suelo y las manos en los bolsillos."
+    },
+    {
+     "plano": "detalle",
+     "que": "El espejo refleja a KAP sin el sombrero, mirando directamente al reflejo."
+    },
+    {
+     "plano": "metafora",
+     "que": "El espejo se ve como un espejo de verdad, sin distorsión ni exageración."
+    },
+    {
+     "plano": "general",
+     "que": "KAP se aleja del espejo y camina hacia la salida de la fiesta con la cabeza alta."
+    },
+    {
+     "plano": "entorno",
+     "que": "El espejo sigue en su lugar, pero ahora KAP no lo mira."
+    }
+   ],
+   "id": "idea-12",
+   "fails": [],
+   "subs": {
+    "fuerzaVisual": 10,
+    "accion": 10,
+    "conflicto": 10,
+    "consecuencia": 10,
+    "variedad": 10,
+    "potencial": 10,
+    "originalidad": 9.1,
+    "transformacion": 10
+   },
+   "score": 9.9,
+   "rejected": false
+  },
+  {
+   "category": "relaciones",
+   "titulo": "El mensaje borrado",
+   "situacion": "KAP está sentado en un sofá, mirando su teléfono. Hay una conversación abierta con su hermano pequeño, que le pregunta por algo importante. KAP evita responder y se dedica a escribir y bborr",
+   "problema": "KAP no quiere hablar de un malentendido con su hermano, pero esto genera tensión y confusión.",
+   "accionKap": "KAP escribe un mensaje en su teléfono y lo borra repetidamente.",
+   "objeto": "teléfono",
+   "consecuencia": "El hermano pequeño se siente ignorado y se aleja de KAP, dejando el mensaje sin enviar.",
+   "momentoDecision": "Cuando su hermano le pregunta directamente por el mensaje que no envió.",
+   "hacerDiferente": "KAP envía el mensaje en lugar de borrarlo.",
+   "mentalidad": "A veces, hablar es más fácil que callar, aunque sea incómodo.",
+   "imagenes": [
+    {
+     "plano": "general",
+     "que": "KAP sentado en un sofá, mirando su teléfono. Su hermano pequeño está de pie al lado, con las manos en los bols"
+    },
+    {
+     "plano": "primer-plano",
+     "que": "La pantalla del teléfono muestra un mensaje parcialmente escrito: 'No sé cómo decirte que...'"
+    },
+    {
+     "plano": "detalle",
+     "que": "El dedo de KAP desliza la pantalla hacia arriba para borrar el mensaje, pero lo vuelve a escribir"
+    },
+    {
+     "plano": "pov",
+     "que": "La vista desde el teléfono muestra la cara de KAP, serio y evitando mirar al hermano"
+    },
+    {
+     "plano": "entorno",
+     "que": "El sofá y la sala están iluminados por una luz tenue. En el suelo, hay un juguete que el hermano dejó caer"
+    },
+    {
+     "plano": "silueta",
+     "que": "KAP y su hermano forman siluetas en la ventana, con la luz detrás de ellos"
+    },
+    {
+     "plano": "metafora",
+     "que": "La pantalla del teléfono representa una pared entre KAP y su hermano"
+    },
+    {
+     "plano": "reaccion",
+     "que": "El hermano pequeño cruza los brazos y mira hacia otra parte, molesto"
+    },
+    {
+     "plano": "decision",
+     "que": "KAP respira profundamente y finalmente envía el mensaje"
+    },
+    {
+     "plano": "detalle",
+     "que": "La pantalla muestra el mensaje enviado: 'No sé cómo decirte que no me gusta cómo te tratas con mamá'"
+    },
+    {
+     "plano": "general",
+     "que": "KAP y su hermano se miran a los ojos por primera vez en mucho tiempo"
+    },
+    {
+     "plano": "contrapicado",
+     "que": "KAP se sienta al lado de su hermano, que ya no está molesto, y ambos miran el teléfono"
+    }
+   ],
+   "id": "idea-13",
+   "fails": [
+    {
+     "id": "mentalidad",
+     "critical": false,
+     "msg": "la mentalidad que descubre es vaga o un aforismo"
+    }
+   ],
+   "subs": {
+    "fuerzaVisual": 10,
+    "accion": 10,
+    "conflicto": 10,
+    "consecuencia": 7,
+    "variedad": 10,
+    "potencial": 10,
+    "originalidad": 7.4,
+    "transformacion": 6
+   },
+   "score": 8.8,
+   "rejected": false
+  }
+ ],
+ "selected": [
+  "idea-12",
+  "idea-04",
+  "idea-05",
+  "idea-08",
+  "idea-11",
+  "idea-01",
+  "idea-10",
+  "idea-06",
+  "idea-03",
+  "idea-13"
+ ],
+ "stats": {
+  "batches": 7,
+  "resumedBatches": 0,
+  "calls": 12,
+  "dropped": 0,
+  "regenerated": 5,
+  "ms": 5638840
+ }
+}
