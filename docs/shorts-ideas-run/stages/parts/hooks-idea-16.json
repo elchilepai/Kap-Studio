@@ -1,0 +1,27 @@
+{
+ "titulo": "La factura sin nombre",
+ "hooks": [
+  {
+   "type": "situacion-reconocible",
+   "text": "Recibes una factura con un monto alto, pero no sabes de qué es."
+  },
+  {
+   "type": "pregunta-incomoda",
+   "text": "¿Cuánto gastas al mes sin saberlo, y qué te cuesta pagar?"
+  },
+  {
+   "type": "contradiccion",
+   "text": "Ignorar la factura era más fácil que entender qué estaba pagando."
+  },
+  {
+   "type": "afirmacion-inesperada",
+   "text": "Algunos gastos no se ven, pero te arruinan la vida."
+  },
+  {
+   "type": "curiosidad",
+   "text": "¿Qué pasó cuando finalmente llamé al número de esa factura?"
+  }
+ ],
+ "issues": [],
+ "repaired": false
+}
