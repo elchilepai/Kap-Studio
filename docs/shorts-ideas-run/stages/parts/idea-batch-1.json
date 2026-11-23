@@ -1,0 +1,107 @@
+{
+ "ideas": [
+  {
+   "category": "mentalidad",
+   "titulo": "El error del «me lo merezco»",
+   "problema": "Asumir que algo malo que ocurre es por culpa propia sin evidencia.",
+   "situacion": "KAP recibe una notificación de un rechazo en una solicitud de trabajo o una aplicación a un curso.",
+   "kapVive": "KAP se encierra en su habitación, mira la pantalla del móvil y suspira con frustración.",
+   "errorInicial": "Se dice a sí mismo: «Me lo merezco, no soy suficiente» sin analizar el motivo real.",
+   "hacerDiferente": "En lugar de autoacusarse, escribe una nota en papel con tres razones objetivas por las que creyó que era candidato adecuado.",
+   "aprendizaje": "No todas las cosas que nos pasan son por culpa nuestra; a veces son circunstancias externas o decisiones ajenas.",
+   "visual": "KAP sentado en el suelo, con la luz tenue, mirando una nota de papel con frases simples y claras. El móvil está sobre la mesa, pero no lo toca.",
+   "publico": "Hombres jóvenes que buscan entender mejor sus emociones y reacciones.",
+   "scores": {
+    "originalidad": 8,
+    "identificacion": 9,
+    "claridad": 7,
+    "potencialVisual": 8,
+    "utilidad": 7,
+    "curiosidad": 6
+   }
+  },
+  {
+   "category": "disciplina",
+   "titulo": "El reloj del «mañana»",
+   "problema": "Postergar tareas importantes por la creencia de que «lo haré mañana».",
+   "situacion": "KAP mira una lista de tareas pendientes en su escritorio, incluyendo algo importante como un proyecto o estudio.",
+   "kapVive": "KAP se levanta y empieza a caminar de un lado a otro, evitando mirar la lista.",
+   "errorInicial": "Dice en voz alta: «Lo haré mañana, ya tengo tiempo» y vuelve a su rutina sin hacer nada.",
+   "hacerDiferente": "Toma el reloj de su muñeca y lo coloca sobre la lista, como un recordatorio físico de que el tiempo no espera.",
+   "aprendizaje": "La procrastinación no es una solución; actuar ahora, aunque sea un poco, evita que las cosas se acumulen.",
+   "visual": "KAP con el reloj en la mano, mirando fijamente la lista. El reloj se mueve lentamente en primer plano mientras él lo coloca encima de la lista.",
+   "publico": "Hombres jóvenes que luchan por mantener el control de sus hábitos y ti",
+   "scores": {
+    "originalidad": 7,
+    "identificacion": 8,
+    "claridad": 7,
+    "potencialVisual": 8,
+    "utilidad": 7,
+    "curiosidad": 6
+   }
+  },
+  {
+   "category": "autoestima",
+   "titulo": "La mirada del espejo",
+   "problema": "Compararse con otros en situaciones que no reflejan el verdadero valor personal.",
+   "situacion": "KAP se mira al espejo antes de salir a una reunión social o una cita.",
+   "kapVive": "KAP frunce el ceño, mirándose a los ojos y luego desviando la vista hacia el suelo.",
+   "errorInicial": "Se dice: «No soy interesante, no valgo nada» y se queda parado en el baño sin salir.",
+   "hacerDiferente": "Toma un lápiz y escribe una frase positiva sobre sí mismo en la parte trasera de un espejo, como «Soy capaz de hacerlo».",
+   "aprendizaje": "La autoestima no se construye comparándose con otros, sino reconociendo lo que uno puede aportar.",
+   "visual": "KAP mirando al espejo, con una frase escrita en la parte trasera. La cámara se mueve lentamente entre el rostro de KAP y la frase.",
+   "publico": "Hombres jóvenes que buscan mejorar su autoestima y evitar el perfeccin",
+   "scores": {
+    "originalidad": 8,
+    "identificacion": 9,
+    "claridad": 7,
+    "potencialVisual": 8,
+    "utilidad": 7,
+    "curiosidad": 6
+   }
+  },
+  {
+   "category": "confianza",
+   "titulo": "La llamada que no se hizo",
+   "problema": "No tener la seguridad para pedir algo importante o hablar con alguien.",
+   "situacion": "KAP recibe un mensaje de un amigo que le pregunta si quiere unirse a un proyecto juntos.",
+   "kapVive": "KAP mira el mensaje, lo lee varias veces y lo cierra sin responder.",
+   "errorInicial": "Se dice: «No me atrevo a decir que sí, puede que no sea lo suficientemente bueno».",
+   "hacerDiferente": "Toma el teléfono, abre el mensaje y escribe: «Sí, me gustaría participar. ¿Cuándo empezamos?».",
+   "aprendizaje": "La confianza no se gana esperando a ser perfecto, sino actuando aunque haya dudas.",
+   "visual": "KAP con el teléfono en la mano, mirando fijamente la pantalla. El mensaje aparece en la pantalla mientras escribe la respuesta.",
+   "publico": "Hombres jóvenes que buscan desarrollar más confianza en sus decisiones",
+   "scores": {
+    "originalidad": 7,
+    "identificacion": 8,
+    "claridad": 7,
+    "potencialVisual": 8,
+    "utilidad": 7,
+    "curiosidad": 6
+   }
+  },
+  {
+   "category": "relaciones-sanas",
+   "titulo": "El «no gracias» que no se dijo",
+   "problema": "Aceptarse en una relación sin tener claro lo que se quiere o necesita.",
+   "situacion": "KAP está con su hermano pequeño y le ofrece algo que no quiere, como un juguete o una actividad.",
+   "kapVive": "KAP mira a su hermano, luego a la oferta, y se queda callado.",
+   "errorInicial": "Se dice: «No debo rechazarlo, puede sentirse mal» y acepta sin pensar.",
+   "hacerDiferente": "Hace una pausa, respira profundamente y dice: «No, gracias. No me gusta eso» con tono firme pero tranquilo.",
+   "aprendizaje": "Las relaciones sanas no se basan en hacer siempre lo que otros quieren, sino en expresar con claridad lo que uno necesita.",
+   "visual": "KAP mirando a su hermano, luego al objeto que le ofrece. Finalmente, habla mirando directamente a los ojos de su hermano.",
+   "publico": "Hombres jóvenes que buscan mejorar sus relaciones personales y estable",
+   "scores": {
+    "originalidad": 8,
+    "identificacion": 9,
+    "claridad": 7,
+    "potencialVisual": 8,
+    "utilidad": 7,
+    "curiosidad": 6
+   }
+  }
+ ],
+ "calls": 1,
+ "dropped": 0,
+ "ms": 811087
+}
