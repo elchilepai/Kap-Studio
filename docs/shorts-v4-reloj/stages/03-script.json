@@ -1,0 +1,211 @@
+{
+ "chain": {
+  "category": "comparacion",
+  "titulo": "El espejo del progreso",
+  "objeto": "reloj",
+  "situacion": "KAP ve en redes que un amigo termina su primer maratón y lo entrena cada mañana con su reloj deportivo.",
+  "conflicto": "KAP empieza a compararse con su amigo y siente que sus propios entrenos no valen nada.",
+  "motivo": "KAP quiere aparentar que él también avanza para no quedar por debajo de su amigo.",
+  "accion": "KAP edita en su reloj los registros de sus carreras para que marquen más kilómetros de los que corre.",
+  "consecuencia": "Los números falsos le hacen sentirse mejor, pero en la calle se queda sin aire a los dos kilómetros.",
+  "decision": "Con el reloj marcando seis kilómetros y sus piernas en dos, KAP debe elegir entre seguir fingiendo o enfrentarse al dato real.",
+  "nuevaAccion": "KAP borra los registros falsos del reloj y anota honestamente cada carrera, aunque sean pocos kilómetros.",
+  "resultado": "Semanas después el reloj muestra una gráfica corta pero real que sube, y KAP corre cinco kilómetros sin parar.",
+  "mentalidad": "KAP descubre que intentaba parecer avanzado en lugar de avanzar, y que el reloj solo le servía si marcaba lo que de verdad corría.",
+  "origen": "cadena-02 de Qwen V4, causalidad reescrita según las indicaciones del usuario",
+  "estado": "aprobada"
+ },
+ "plan": {
+  "musica": "Ambiental con un ritmo suave al inicio, que se acelera ligeramente durante la tensión y vuelve a un ritmo calmado al final.",
+  "escenas": [
+   {
+    "n": 1,
+    "cubre": [
+     "situacion"
+    ],
+    "tipo": "KAP_PRESENTADOR",
+    "kapPresente": true,
+    "experiencia": "",
+    "queOcurre": "KAP mira con expresión dudosa la pantalla de su teléfono mientras un amigo celebra su primer maratón.",
+    "enPantalla": [
+     "KAP",
+     "teléfono",
+     "reloj en el brazo de KAP"
+    ],
+    "textoEnPantalla": "100km",
+    "plano": "medium",
+    "perspectiva": "contrapicado",
+    "camara": "zoom-in",
+    "camaraNota": "Zoom suave desde la cara de KAP hacia el reloj en su muñeca.",
+    "dialogo": "El reloj no miente, solo muestra lo que le dices que muestre.",
+    "duracion": 5
+   },
+   {
+    "n": 2,
+    "cubre": [
+     "conflicto"
+    ],
+    "tipo": "CINEMATIC_SCENE",
+    "kapPresente": true,
+    "experiencia": "",
+    "queOcurre": "KAP compara su reloj con el de su amigo, que tiene una gráfica alargada y brillante.",
+    "enPantalla": [
+     "reloj de KAP",
+     "reloj de su amigo",
+     "KAP mirando el reloj",
+     "amigo sonriendo"
+    ],
+    "textoEnPantalla": "6km",
+    "plano": "side",
+    "perspectiva": "sobre el hombro de KAP",
+    "camara": "slide",
+    "camaraNota": "La cámara se desliza de la cara de KAP al reloj de su amigo.",
+    "dialogo": "Mi gráfica parece un guisante. El suyo, un río.",
+    "duracion": 4
+   },
+   {
+    "n": 3,
+    "cubre": [
+     "motivo"
+    ],
+    "tipo": "VISUAL_METAPHOR",
+    "kapPresente": false,
+    "experiencia": "El reloj refleja la presión interna de KAP.",
+    "queOcurre": "El reloj se ve con una sombra que se alarga y se vuelve más densa.",
+    "enPantalla": [
+     "reloj",
+     "sombra del reloj",
+     "fondo de entrenamiento"
+    ],
+    "textoEnPantalla": "¿Quién soy?",
+    "plano": "close-up",
+    "perspectiva": "top-down",
+    "camara": "rotate",
+    "camaraNota": "La sombra gira lentamente alrededor del reloj.",
+    "dialogo": "",
+    "duracion": 3
+   },
+   {
+    "n": 4,
+    "cubre": [
+     "accion"
+    ],
+    "tipo": "OBJECT_METAPHOR",
+    "kapPresente": true,
+    "experiencia": "",
+    "queOcurre": "KAP pulsa el botón del reloj y aparece un menú con opciones de edición.",
+    "enPantalla": [
+     "reloj",
+     "menú de edición",
+     "dedo de KAP sobre el botón"
+    ],
+    "textoEnPantalla": "Editar",
+    "plano": "detail",
+    "perspectiva": "low-angle",
+    "camara": "scale-change",
+    "camaraNota": "El reloj se ve más grande mientras aparece el menú de edición.",
+    "dialogo": "Si no puedo correr 10, al menos puedo hacer creer que lo hago.",
+    "duracion": 5
+   },
+   {
+    "n": 5,
+    "cubre": [
+     "consecuencia"
+    ],
+    "tipo": "REACTION",
+    "kapPresente": true,
+    "experiencia": "",
+    "queOcurre": "KAP corre con la cara roja y el pecho subiendo y bajando con esfuerzo, mientras el reloj marca 6 km.",
+    "enPantalla": [
+     "KAP corriendo",
+     "reloj en su muñeca",
+     "calle vacía"
+    ],
+    "textoEnPantalla": "6km",
+    "plano": "wide",
+    "perspectiva": "pov de KAP",
+    "camara": "pan",
+    "camaraNota": "La cámara se mueve hacia la derecha, mostrando que KAP no está solo en la calle.",
+    "dialogo": "¿Por qué me siento tan vacío si el reloj dice que voy bien?",
+    "duracion": 6
+   },
+   {
+    "n": 6,
+    "cubre": [
+     "decision"
+    ],
+    "tipo": "KAP_PRESENTADOR",
+    "kapPresente": true,
+    "experiencia": "",
+    "queOcurre": "KAP detiene la carrera, se para en el suelo y mira el reloj con cara seria.",
+    "enPantalla": [
+     "KAP",
+     "reloj",
+     "suelo",
+     "aire en movimiento"
+    ],
+    "textoEnPantalla": "¿Verdad o mentira?",
+    "plano": "medium",
+    "perspectiva": "contrapicado",
+    "camara": "zoom-out",
+    "camaraNota": "Zoom hacia atrás desde la cara de KAP hasta el reloj.",
+    "dialogo": "No puedo seguir engañándome. El reloj no miente, solo yo.",
+    "duracion": 5
+   },
+   {
+    "n": 7,
+    "cubre": [
+     "nuevaAccion"
+    ],
+    "tipo": "OBJECT_METAPHOR",
+    "kapPresente": true,
+    "experiencia": "",
+    "queOcurre": "KAP pulsa el reloj y borra los registros falsos, apareciendo una pantalla vacía.",
+    "enPantalla": [
+     "reloj",
+     "pantalla vacía",
+     "dedo de KAP sobre el botón"
+    ],
+    "textoEnPantalla": "Borrar",
+    "plano": "detail",
+    "perspectiva": "low-angle",
+    "camara": "particles",
+    "camaraNota": "Pequeñas partículas se mueven alrededor del reloj, simbolizando la eliminación de datos.",
+    "dialogo": "Voy a correr solo lo que sea real.",
+    "duracion": 4
+   },
+   {
+    "n": 8,
+    "cubre": [
+     "resultado",
+     "mentalidad"
+    ],
+    "tipo": "TRANSFORMATION",
+    "kapPresente": true,
+    "experiencia": "",
+    "queOcurre": "KAP corre con paso constante, el reloj muestra una gráfica corta pero recta y ascendente.",
+    "enPantalla": [
+     "KAP corriendo",
+     "reloj con gráfica real",
+     "cielo claro"
+    ],
+    "textoEnPantalla": "5km",
+    "plano": "wide",
+    "perspectiva": "pov de KAP",
+    "camara": "loop",
+    "camaraNota": "La cámara se mueve en un bucle alrededor de KAP, mostrando su progreso.",
+    "dialogo": "El reloj solo me sirve si mide lo que de verdad hago.",
+    "duracion": 6
+   }
+  ]
+ },
+ "issues": [
+  {
+   "id": "kap",
+   "msg": "KAP aparece en 7 escenas y falta en 1 (se piden 3-5 sin KAP y al menos 3 con KAP)"
+  }
+ ],
+ "attempts": 2,
+ "seconds": 38,
+ "script": "El reloj no miente, solo muestra lo que le dices que muestre. Mi gráfica parece un guisante. El suyo, un río. Si no puedo correr 10, al menos puedo hacer creer que lo hago. ¿Por qué me siento tan vacío si el reloj dice que voy bien? No puedo seguir engañándome. El reloj no miente, solo yo. Voy a correr solo lo que sea real. El reloj solo me sirve si mide lo que de verdad hago."
+}
