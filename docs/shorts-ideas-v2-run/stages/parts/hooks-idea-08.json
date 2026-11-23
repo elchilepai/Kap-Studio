@@ -1,0 +1,37 @@
+{
+ "titulo": "El camino sin fin",
+ "hooks": [
+  {
+   "type": "situacion",
+   "text": "Miré la pared llena de carteles que nunca terminé. Cada uno me recordaba lo que dejé a medias."
+  },
+  {
+   "type": "conflicto",
+   "text": "Sabía que no podía seguir con todo eso, pero no sabía cómo empezar a dejarlo ir."
+  },
+  {
+   "type": "curiosidad",
+   "text": "¿Qué pasaría si solo me quedara con una meta en lugar de cien?"
+  },
+  {
+   "type": "contradiccion",
+   "text": "Quise tenerlo todo. Al final, lo único que me quedó fue un cartel nuevo en el centro."
+  },
+  {
+   "type": "mini-historia",
+   "text": "Taché cada proyecto como si fuera un peso. Al final, escribí 'Aprender a decir' y lo dejé allí."
+  }
+ ],
+ "best": [
+  {
+   "type": "situacion",
+   "text": "Miré la pared llena de carteles que nunca terminé. Cada uno me recordaba lo que dejé a medias."
+  },
+  {
+   "type": "curiosidad",
+   "text": "¿Qué pasaría si solo me quedara con una meta en lugar de cien?"
+  }
+ ],
+ "issues": [],
+ "repaired": false
+}
