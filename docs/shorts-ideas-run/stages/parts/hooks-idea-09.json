@@ -1,0 +1,27 @@
+{
+ "titulo": "El mensaje del «no sé»",
+ "hooks": [
+  {
+   "type": "mini-historia",
+   "text": "Miré el teléfono, incómodo, sin saber qué decir a mi hermano pequeño."
+  },
+  {
+   "type": "contradiccion",
+   "text": "El silencio no es una respuesta, pero tampoco lo es un mensaje perfecto."
+  },
+  {
+   "type": "afirmacion-inesperada",
+   "text": "A veces, lo mejor que puedes hacer es decir que no sabes."
+  },
+  {
+   "type": "situacion-reconocible",
+   "text": "¿Cuántas veces has visto el mensaje y no has sabido qué responder?"
+  },
+  {
+   "type": "pregunta-incomoda",
+   "text": "¿Qué te pasa cuando no sabes qué decir a alguien que te importa?"
+  }
+ ],
+ "issues": [],
+ "repaired": false
+}
