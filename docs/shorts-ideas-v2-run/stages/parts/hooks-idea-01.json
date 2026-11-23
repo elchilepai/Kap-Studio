@@ -1,0 +1,37 @@
+{
+ "titulo": "El libro prestado",
+ "hooks": [
+  {
+   "type": "situacion",
+   "text": "Abrió el libro en la mesa. Su hermano lo tomó y se lo llevó sin pedir permiso."
+  },
+  {
+   "type": "conflicto",
+   "text": "Sabía que no debía prestárselo. Pero no supo decir que no cuando lo pidió."
+  },
+  {
+   "type": "curiosidad",
+   "text": "¿Qué pasó cuando el libro cayó al suelo y se rompió?"
+  },
+  {
+   "type": "contradiccion",
+   "text": "Quería ayudar a su hermano, pero terminó frustrado por no haber dicho no."
+  },
+  {
+   "type": "mini-historia",
+   "text": "Su hermano volvió a pedir el libro. Esta vez, KAP le dio otro y le dijo que no."
+  }
+ ],
+ "best": [
+  {
+   "type": "situacion",
+   "text": "Abrió el libro en la mesa. Su hermano lo tomó y se lo llevó sin pedir permiso."
+  },
+  {
+   "type": "curiosidad",
+   "text": "¿Qué pasó cuando el libro cayó al suelo y se rompió?"
+  }
+ ],
+ "issues": [],
+ "repaired": false
+}
