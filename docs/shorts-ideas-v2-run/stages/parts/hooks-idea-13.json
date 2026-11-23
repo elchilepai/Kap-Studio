@@ -1,0 +1,39 @@
+{
+ "titulo": "El mensaje borrado",
+ "hooks": [
+  {
+   "type": "situacion",
+   "text": "Estaba en el sofá con el teléfono en la mano, escribiendo y borrando un mensaje que no quería enviar."
+  },
+  {
+   "type": "conflicto",
+   "text": "Sabía que debía decir algo, pero se quedaba mirando la pantalla sin hacerlo."
+  },
+  {
+   "type": "curiosidad",
+   "text": "¿Qué pasó cuando finalmente decidió enviar lo que tanto tiempo llevaba oculto?"
+  },
+  {
+   "type": "contradiccion",
+   "text": "Quería ser claro, pero lo único que logró fue dejarlo en blanco."
+  },
+  {
+   "type": "mini-historia",
+   "text": "Su hermano le preguntó por el mensaje. KAP lo envió antes de que se diera cuenta."
+  }
+ ],
+ "best": [
+  {
+   "type": "mini-historia",
+   "text": "Su hermano le preguntó por el mensaje. KAP lo envió antes de que se diera cuenta."
+  },
+  {
+   "type": "situacion",
+   "text": "Estaba en el sofá con el teléfono en la mano, escribiendo y borrando un mensaje que no quería enviar."
+  }
+ ],
+ "issues": [
+  "hook 4: no nace de la situación (no menciona nada concreto de la idea)"
+ ],
+ "repaired": true
+}

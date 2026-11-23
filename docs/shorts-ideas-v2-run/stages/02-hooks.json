@@ -1,0 +1,386 @@
+{
+ "byIdea": {
+  "idea-12": {
+   "titulo": "El espejo de la feria",
+   "hooks": [
+    {
+     "type": "situacion",
+     "text": "Estaba en una fiesta cuando me ofrecieron probar el juego de los globos con un sombrero ridículo."
+    },
+    {
+     "type": "conflicto",
+     "text": "Sabía que era absurdo, pero no podía dejar de mirar mi reflejo en el espejo de la feria."
+    },
+    {
+     "type": "curiosidad",
+     "text": "¿Qué pasa cuando miras tu reflejo en un espejo de feria y no haces nada?"
+    },
+    {
+     "type": "contradiccion",
+     "text": "Quise parecer valiente, pero me escapé corriendo al ver mi cara con el sombrero."
+    },
+    {
+     "type": "mini-historia",
+     "text": "Me puse el sombrero y subí al podio. Luego me quedé mirando mi reflejo sin hacer nada."
+    }
+   ],
+   "best": [
+    {
+     "type": "mini-historia",
+     "text": "Me puse el sombrero y subí al podio. Luego me quedé mirando mi reflejo sin hacer nada."
+    },
+    {
+     "type": "situacion",
+     "text": "Estaba en una fiesta cuando me ofrecieron probar el juego de los globos con un sombrero ridículo."
+    }
+   ],
+   "issues": [],
+   "repaired": true
+  },
+  "idea-04": {
+   "titulo": "El paquete que no se entregó",
+   "hooks": [
+    {
+     "type": "situacion",
+     "text": "Recibió un paquete vacío con una nota: 'Entrega fallida. Reenvío en 72 horas'."
+    },
+    {
+     "type": "conflicto",
+     "text": "Sabía que no quería el regalo, pero no podía dejar de mirar la caja cada día."
+    },
+    {
+     "type": "curiosidad",
+     "text": "¿Qué pasaría si ignoraba el paquete por completo y nunca lo abriera?"
+    },
+    {
+     "type": "contradiccion",
+     "text": "Quería evitar el regalo, pero al final llamó a la empresa para cancelarlo."
+    },
+    {
+     "type": "mini-historia",
+     "text": "Abrió el paquete con cuidado, revisó su contenido y marcó un número de teléfono."
+    }
+   ],
+   "best": [
+    {
+     "type": "situacion",
+     "text": "Recibió un paquete vacío con una nota: 'Entrega fallida. Reenvío en 72 horas'."
+    },
+    {
+     "type": "curiosidad",
+     "text": "¿Qué pasaría si ignoraba el paquete por completo y nunca lo abriera?"
+    }
+   ],
+   "issues": [
+    "hook 4: no nace de la situación (no menciona nada concreto de la idea)"
+   ],
+   "repaired": true
+  },
+  "idea-05": {
+   "titulo": "El reloj del vecino",
+   "hooks": [
+    {
+     "type": "situacion",
+     "text": "Arreglaba un jardín en una caja de madera, mirando el reloj del vecino desde la ventana."
+    },
+    {
+     "type": "conflicto",
+     "text": "Sabía que no debía comparar su progreso con lo que veía en la terraza."
+    },
+    {
+     "type": "curiosidad",
+     "text": "¿Qué pasa cuando algo que haces se rompe frente a un reloj que sigue adelante?"
+    },
+    {
+     "type": "contradiccion",
+     "text": "Quería controlar su tiempo, pero el jardín se fue al piso antes de que lo notara."
+    },
+    {
+     "type": "mini-historia",
+     "text": "Tiró la caja, rompió las macetas y dejó el jardín en pedazos, sin tocar el reloj."
+    }
+   ],
+   "best": [
+    {
+     "type": "mini-historia",
+     "text": "Tiró la caja, rompió las macetas y dejó el jardín en pedazos, sin tocar el reloj."
+    },
+    {
+     "type": "situacion",
+     "text": "Arreglaba un jardín en una caja de madera, mirando el reloj del vecino desde la ventana."
+    }
+   ],
+   "issues": [],
+   "repaired": true
+  },
+  "idea-08": {
+   "titulo": "El camino sin fin",
+   "hooks": [
+    {
+     "type": "situacion",
+     "text": "Miré la pared llena de carteles que nunca terminé. Cada uno me recordaba lo que dejé a medias."
+    },
+    {
+     "type": "conflicto",
+     "text": "Sabía que no podía seguir con todo eso, pero no sabía cómo empezar a dejarlo ir."
+    },
+    {
+     "type": "curiosidad",
+     "text": "¿Qué pasaría si solo me quedara con una meta en lugar de cien?"
+    },
+    {
+     "type": "contradiccion",
+     "text": "Quise tenerlo todo. Al final, lo único que me quedó fue un cartel nuevo en el centro."
+    },
+    {
+     "type": "mini-historia",
+     "text": "Taché cada proyecto como si fuera un peso. Al final, escribí 'Aprender a decir' y lo dejé allí."
+    }
+   ],
+   "best": [
+    {
+     "type": "situacion",
+     "text": "Miré la pared llena de carteles que nunca terminé. Cada uno me recordaba lo que dejé a medias."
+    },
+    {
+     "type": "curiosidad",
+     "text": "¿Qué pasaría si solo me quedara con una meta en lugar de cien?"
+    }
+   ],
+   "issues": [],
+   "repaired": false
+  },
+  "idea-11": {
+   "titulo": "El calendario de las promesas",
+   "hooks": [
+    {
+     "type": "situacion",
+     "text": "Miraba el calendario con notas: 'correr', 'leer', 'llamar a papá'. Hoy era el día 7 de la 'c"
+    },
+    {
+     "type": "conflicto",
+     "text": "Sabía que las promesas no se cumplían si las posponía cada vez que aparecían"
+    },
+    {
+     "type": "curiosidad",
+     "text": "¿Qué pasaba cuando una nota se tachaba tres veces y seguía allí, igual que antes?"
+    },
+    {
+     "type": "contradiccion",
+     "text": "Quería cambiar, pero el calendario lo mantenía atrapado en lo mismo"
+    },
+    {
+     "type": "mini-historia",
+     "text": "Escribió 'hoy' sobre una nueva nota, sin tacharla. Por primera vez, no la pospuso"
+    }
+   ],
+   "best": [
+    {
+     "type": "mini-historia",
+     "text": "Escribió 'hoy' sobre una nueva nota, sin tacharla. Por primera vez, no la pospuso"
+    },
+    {
+     "type": "situacion",
+     "text": "Miraba el calendario con notas: 'correr', 'leer', 'llamar a papá'. Hoy era el día 7 de la 'c"
+    }
+   ],
+   "issues": [],
+   "repaired": false
+  },
+  "idea-01": {
+   "titulo": "El libro prestado",
+   "hooks": [
+    {
+     "type": "situacion",
+     "text": "Abrió el libro en la mesa. Su hermano lo tomó y se lo llevó sin pedir permiso."
+    },
+    {
+     "type": "conflicto",
+     "text": "Sabía que no debía prestárselo. Pero no supo decir que no cuando lo pidió."
+    },
+    {
+     "type": "curiosidad",
+     "text": "¿Qué pasó cuando el libro cayó al suelo y se rompió?"
+    },
+    {
+     "type": "contradiccion",
+     "text": "Quería ayudar a su hermano, pero terminó frustrado por no haber dicho no."
+    },
+    {
+     "type": "mini-historia",
+     "text": "Su hermano volvió a pedir el libro. Esta vez, KAP le dio otro y le dijo que no."
+    }
+   ],
+   "best": [
+    {
+     "type": "situacion",
+     "text": "Abrió el libro en la mesa. Su hermano lo tomó y se lo llevó sin pedir permiso."
+    },
+    {
+     "type": "curiosidad",
+     "text": "¿Qué pasó cuando el libro cayó al suelo y se rompió?"
+    }
+   ],
+   "issues": [],
+   "repaired": false
+  },
+  "idea-10": {
+   "titulo": "La crítica en el papel",
+   "hooks": [
+    {
+     "type": "situacion",
+     "text": "Recibió un papel en el casillero con una crítica y una nota que decía 'lee esto antes de irte'."
+    },
+    {
+     "type": "conflicto",
+     "text": "Sabía que la crítica era dura, pero le costaba no responder con otra crítica más fuerte."
+    },
+    {
+     "type": "curiosidad",
+     "text": "¿Qué pasó cuando escribió una carta de defensa en el mismo papel?"
+    },
+    {
+     "type": "contradiccion",
+     "text": "Quería mostrar su punto de vista, pero terminó enfadando al profesor sin darse cuenta."
+    },
+    {
+     "type": "mini-historia",
+     "text": "Kap dobló el papel con la crítica, lo guardó y lo dejó en el casillero sin responder."
+    }
+   ],
+   "best": [
+    {
+     "type": "curiosidad",
+     "text": "¿Qué pasó cuando escribió una carta de defensa en el mismo papel?"
+    },
+    {
+     "type": "mini-historia",
+     "text": "Kap dobló el papel con la crítica, lo guardó y lo dejó en el casillero sin responder."
+    }
+   ],
+   "issues": [],
+   "repaired": true
+  },
+  "idea-06": {
+   "titulo": "La puerta que no se abre",
+   "hooks": [
+    {
+     "type": "situacion",
+     "text": "Tenía la hoja de inscripción en la mano, pero el portero ya no aceptaba más alumnos."
+    },
+    {
+     "type": "conflicto",
+     "text": "Sabía que quería aprender, pero le costaba dejar de esperar a que le dieran la oportunidad."
+    },
+    {
+     "type": "curiosidad",
+     "text": "¿Qué pasó cuando la hoja de inscripción se quedó atrapada debajo de la puerta?"
+    },
+    {
+     "type": "contradiccion",
+     "text": "Quería entrar al taller, pero se quedó afuera hasta que se agachó a recoger la hoja."
+    },
+    {
+     "type": "mini-historia",
+     "text": "Kap entregó la hoja al portero, pero no entró hasta que se la volvió a dar."
+    }
+   ],
+   "best": [
+    {
+     "type": "situacion",
+     "text": "Tenía la hoja de inscripción en la mano, pero el portero ya no aceptaba más alumnos."
+    },
+    {
+     "type": "curiosidad",
+     "text": "¿Qué pasó cuando la hoja de inscripción se quedó atrapada debajo de la puerta?"
+    }
+   ],
+   "issues": [
+    "hook 2: no nace de la situación (no menciona nada concreto de la idea)"
+   ],
+   "repaired": true
+  },
+  "idea-03": {
+   "titulo": "La tarea sin empezar",
+   "hooks": [
+    {
+     "type": "situacion",
+     "text": "El ordenador estaba encendido, la tarea abierta y el suelo cubierto de ropa y libros."
+    },
+    {
+     "type": "conflicto",
+     "text": "Sabía que debía empezar la tarea, pero no podía dejar de mover cosas en la habitación."
+    },
+    {
+     "type": "curiosidad",
+     "text": "¿Qué pasa cuando algo importante se queda atrás por un montón de cosas pequeñas?"
+    },
+    {
+     "type": "contradiccion",
+     "text": "Quería terminar la tarea, pero terminó ordenando la habitación en su lugar."
+    },
+    {
+     "type": "mini-historia",
+     "text": "Kap cerró el ordenador y fue a la cocina, dejando la tarea abierta en la pantalla."
+    }
+   ],
+   "best": [
+    {
+     "type": "contradiccion",
+     "text": "Quería terminar la tarea, pero terminó ordenando la habitación en su lugar."
+    },
+    {
+     "type": "conflicto",
+     "text": "Sabía que debía empezar la tarea, pero no podía dejar de mover cosas en la habitación."
+    }
+   ],
+   "issues": [],
+   "repaired": true
+  },
+  "idea-13": {
+   "titulo": "El mensaje borrado",
+   "hooks": [
+    {
+     "type": "situacion",
+     "text": "Estaba en el sofá con el teléfono en la mano, escribiendo y borrando un mensaje que no quería enviar."
+    },
+    {
+     "type": "conflicto",
+     "text": "Sabía que debía decir algo, pero se quedaba mirando la pantalla sin hacerlo."
+    },
+    {
+     "type": "curiosidad",
+     "text": "¿Qué pasó cuando finalmente decidió enviar lo que tanto tiempo llevaba oculto?"
+    },
+    {
+     "type": "contradiccion",
+     "text": "Quería ser claro, pero lo único que logró fue dejarlo en blanco."
+    },
+    {
+     "type": "mini-historia",
+     "text": "Su hermano le preguntó por el mensaje. KAP lo envió antes de que se diera cuenta."
+    }
+   ],
+   "best": [
+    {
+     "type": "mini-historia",
+     "text": "Su hermano le preguntó por el mensaje. KAP lo envió antes de que se diera cuenta."
+    },
+    {
+     "type": "situacion",
+     "text": "Estaba en el sofá con el teléfono en la mano, escribiendo y borrando un mensaje que no quería enviar."
+    }
+   ],
+   "issues": [
+    "hook 4: no nace de la situación (no menciona nada concreto de la idea)"
+   ],
+   "repaired": true
+  }
+ },
+ "stats": {
+  "ideas": 10,
+  "resumed": 0,
+  "calls": 17,
+  "ms": 1415803
+ }
+}
