@@ -1,0 +1,133 @@
+{
+ "ideas": [
+  {
+   "category": "comparacion",
+   "titulo": "El reloj del vecino",
+   "situacion": "KAP está sentado en el suelo de su habitación, arreglando un pequeño jardín de macetas en una caja de madera. En la ventana, puede ver a su vecino trabajando en su terraza, donde hay un relo",
+   "problema": "KAP siente que su vecino está logrando más que él, y eso le genera una sensación de frustración y desaliento.",
+   "accionKap": "KAP tira la caja de madera al suelo, rompiendo algunas macetas y dejando el jardín hecho polvo.",
+   "objeto": "reloj",
+   "consecuencia": "El reloj del vecino sigue funcionando normalmente, mientras que el jardín de KAP está destrozado y las plantas están rotas.",
+   "momentoDecision": "KAP se detiene un momento, mira el reloj desde la ventana y luego se levanta para recoger las piezas de la caja.",
+   "hacerDiferente": "KAP toma una de las macetas rotas y la coloca en un lugar visible, junto a su mesa de estudio.",
+   "mentalidad": "Lo que cuenta no es lo que logra otro, sino lo que KAP elige hacer con lo que tiene.",
+   "imagenes": [
+    {
+     "plano": "general",
+     "que": "KAP arregla un jardín en una caja de madera en su habitación, mientras ve a su vecino trabajando en la terraza"
+    },
+    {
+     "plano": "pov",
+     "que": "La vista desde la ventana muestra al vecino con un reloj en la mano, mirando hacia el sol"
+    },
+    {
+     "plano": "detalle",
+     "que": "El reloj del vecino está colgado en una pared de su terraza"
+    },
+    {
+     "plano": "contrapicado",
+     "que": "KAP mira con frustración hacia la ventana, con la caja de madera a sus pies"
+    },
+    {
+     "plano": "silueta",
+     "que": "KAP está de pie, con la caja rota a sus pies y las macetas esparcidas por el suelo"
+    },
+    {
+     "plano": "entorno",
+     "que": "La habitación de KAP está llena de plantas rotas y la caja de madera está completamente destruida"
+    },
+    {
+     "plano": "detalle",
+     "que": "Una de las macetas tiene un agujero grande, pero aún contiene una planta viva"
+    },
+    {
+     "plano": "metafora",
+     "que": "Un reloj está parado en la pared de KAP, como si también se detuviera el tiempo"
+    },
+    {
+     "plano": "primer-plano",
+     "que": "KAP sostiene una maceta rota con cuidado y mira hacia la mesa de estudio"
+    },
+    {
+     "plano": "decision",
+     "que": "KAP coloca la maceta rota en la mesa de estudio, junto a un cuaderno y un lápiz"
+    },
+    {
+     "plano": "reaccion",
+     "que": "El reloj del vecino sigue funcionando, pero KAP ya no lo mira desde la ventana"
+    },
+    {
+     "plano": "entorno",
+     "que": "La habitación de KAP ahora tiene una maceta rota en la mesa, junto a sus herramientas y el jardín aún en el su"
+    }
+   ]
+  },
+  {
+   "category": "rechazo",
+   "titulo": "La puerta que no se abre",
+   "situacion": "KAP está frente a una puerta de un taller de arte en el centro. Tiene una hoja de inscripción en la mano y mira con nerviosismo al portero, quien le dice que ya no hay cupos",
+   "problema": "KAP siente que no tiene lugar en ese espacio y decide irse sin intentar otra opción",
+   "accionKap": "KAP camina lentamente hacia atrás, dejando caer la hoja de inscripción en el suelo",
+   "objeto": "puerta cerrada",
+   "consecuencia": "La hoja de inscripción se mueve con el viento y se queda atrapada debajo de la puerta",
+   "momentoDecision": "Cuando el portero se gira para ver qué pasa",
+   "hacerDiferente": "KAP se agacha y recoge la hoja, volviendo a entregársela al portero",
+   "mentalidad": "A veces, lo único que se necesita es un segundo intento para abrir una puerta",
+   "imagenes": [
+    {
+     "plano": "general",
+     "que": "KAP está frente a una puerta de un taller de arte con un letrero que dice 'No hay cupos'"
+    },
+    {
+     "plano": "medio",
+     "que": "El portero le habla, mientras KAP mira la hoja de inscripción en su mano"
+    },
+    {
+     "plano": "primer-plano",
+     "que": "KAP camina hacia atrás, dejando caer la hoja de inscripción"
+    },
+    {
+     "plano": "detalle",
+     "que": "La hoja se mueve con el viento y se queda atrapada debajo de la puerta"
+    },
+    {
+     "plano": "pov",
+     "que": "Desde el suelo, se ve la hoja de inscripción bajo la puerta"
+    },
+    {
+     "plano": "entorno",
+     "que": "El portero mira hacia abajo y se gira para ver qué ocurre"
+    },
+    {
+     "plano": "contrapicado",
+     "que": "KAP se agacha para recoger la hoja de inscripción"
+    },
+    {
+     "plano": "reaccion",
+     "que": "El portero lo observa con curiosidad mientras KAP se acerca de nuevo"
+    },
+    {
+     "plano": "decision",
+     "que": "KAP le entrega la hoja al portero, quien la examina por un momento"
+    },
+    {
+     "plano": "metafora",
+     "que": "Una puerta que se abre lentamente, mostrando una sala llena de arte en progreso"
+    }
+   ]
+  }
+ ],
+ "calls": 2,
+ "dropped": 0,
+ "regenerated": [
+  {
+   "category": "comparacion",
+   "why": [
+    "contiene frases de coach genérico",
+    "el objeto «contador de seguidores» no es protagonista visual: aparece en 1 imágenes (mínimo 3)"
+   ],
+   "improved": true
+  }
+ ],
+ "ms": 775028
+}
