@@ -1,0 +1,24 @@
+{
+ "chain": {
+  "category": "comparacion",
+  "titulo": "El espejo del progreso",
+  "objeto": "reloj",
+  "situacion": "KAP observa en redes sociales cómo un amigo completa su primer maratón y se pregunta si su propio entrenamiento es suficiente.",
+  "conflicto": "KAP siente que su ritmo de entrenamiento no es tan rápido como el de su amigo y teme quedarse atrás.",
+  "motivo": "KAP quiere sentirse igual de competente y no ser el último en lograr algo.",
+  "accion": "KAP cambia la configuración de su reloj para que muestre una distancia más corta en cada entrenamiento.",
+  "consecuencia": "El reloj muestra progresos falsos, lo que hace que KAP se sienta motivado pero sin mejorar realmente.",
+  "decision": "KAP descubre que no puede correr la distancia real del maratón y se pregunta si lo que ve es verdad.",
+  "nuevaAccion": "KAP vuelve a ajustar el reloj para que muestre la distancia correcta y empieza a entrenar con honestidad.",
+  "resultado": "KAP logra completar un entrenamiento completo y se da cuenta de que el progreso real no se mide en números, sino en esfuerzo.",
+  "mentalidad": "KAP descubre que compararse con otros le hace perder de vista su propio camino y que la autenticidad es más valiosa que la apariencia."
+ },
+ "issues": [
+  {
+   "id": "mentalidad",
+   "msg": "la mentalidad debe decir qué entiende KAP a partir de lo que acaba de ocurrir (menciona a KAP y se apoya en su acción, su motivo o el objeto)",
+   "field": "mentalidad"
+  }
+ ],
+ "attempts": 2
+}
