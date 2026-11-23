@@ -1,0 +1,39 @@
+{
+ "titulo": "La puerta que no se abre",
+ "hooks": [
+  {
+   "type": "situacion",
+   "text": "Tenía la hoja de inscripción en la mano, pero el portero ya no aceptaba más alumnos."
+  },
+  {
+   "type": "conflicto",
+   "text": "Sabía que quería aprender, pero le costaba dejar de esperar a que le dieran la oportunidad."
+  },
+  {
+   "type": "curiosidad",
+   "text": "¿Qué pasó cuando la hoja de inscripción se quedó atrapada debajo de la puerta?"
+  },
+  {
+   "type": "contradiccion",
+   "text": "Quería entrar al taller, pero se quedó afuera hasta que se agachó a recoger la hoja."
+  },
+  {
+   "type": "mini-historia",
+   "text": "Kap entregó la hoja al portero, pero no entró hasta que se la volvió a dar."
+  }
+ ],
+ "best": [
+  {
+   "type": "situacion",
+   "text": "Tenía la hoja de inscripción en la mano, pero el portero ya no aceptaba más alumnos."
+  },
+  {
+   "type": "curiosidad",
+   "text": "¿Qué pasó cuando la hoja de inscripción se quedó atrapada debajo de la puerta?"
+  }
+ ],
+ "issues": [
+  "hook 2: no nace de la situación (no menciona nada concreto de la idea)"
+ ],
+ "repaired": true
+}
