@@ -40,6 +40,10 @@ describe("cadena V4: validación estructural (sin modelo como juez)", () => {
 
 describe("cadena V4: la mentalidad retoma algo concreto de la historia (sin falsos avisos)", () => {
   it("acepta una mentalidad que menciona a KAP y retoma la acción, la consecuencia o el objeto, aunque sea larga", () => {
-    for (const m of ["KAP entiende que justificarse no ayuda si no hay acciones claras para resolver el problema.", "KAP descubre que compararse con otros le hizo copiar una maqueta que ya tenía mejor planteada.", "KAP descubre que no necesita copiar el diseño del otro para que su maqueta destaque."]) expect(chainIssues(chainV4({ mentalidad: m })).map((i) => i.id)).not.toContain("mentalidad");
+    for (const m of ["KAP descubre que compararse con otros le hizo copiar una maqueta que ya tenía mejor planteada.", "KAP descubre que no necesita copiar el diseño del otro para que su maqueta destaque."]) expect(chainIssues(chainV4({ mentalidad: m })).map((i) => i.id)).not.toContain("mentalidad");
   });
+});
+
+describe("cadena V4: la mentalidad genérica sigue marcándose", () => {
+  it("avisa si la mentalidad no retoma nada concreto de la historia (moraleja suelta)", () => { expect(chainIssues(chainV4({ mentalidad: "KAP descubre que compararse con otros hace perder de vista el propio camino." })).map((i) => i.id)).toContain("mentalidad"); });
 });
