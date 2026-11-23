@@ -1,0 +1,37 @@
+{
+ "titulo": "El reloj del vecino",
+ "hooks": [
+  {
+   "type": "situacion",
+   "text": "Arreglaba un jardín en una caja de madera, mirando el reloj del vecino desde la ventana."
+  },
+  {
+   "type": "conflicto",
+   "text": "Sabía que no debía comparar su progreso con lo que veía en la terraza."
+  },
+  {
+   "type": "curiosidad",
+   "text": "¿Qué pasa cuando algo que haces se rompe frente a un reloj que sigue adelante?"
+  },
+  {
+   "type": "contradiccion",
+   "text": "Quería controlar su tiempo, pero el jardín se fue al piso antes de que lo notara."
+  },
+  {
+   "type": "mini-historia",
+   "text": "Tiró la caja, rompió las macetas y dejó el jardín en pedazos, sin tocar el reloj."
+  }
+ ],
+ "best": [
+  {
+   "type": "mini-historia",
+   "text": "Tiró la caja, rompió las macetas y dejó el jardín en pedazos, sin tocar el reloj."
+  },
+  {
+   "type": "situacion",
+   "text": "Arreglaba un jardín en una caja de madera, mirando el reloj del vecino desde la ventana."
+  }
+ ],
+ "issues": [],
+ "repaired": true
+}
