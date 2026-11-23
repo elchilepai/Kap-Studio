@@ -34,7 +34,8 @@ const CORE: FieldV4[] = ["situacion", "conflicto", "motivo", "accion", "consecue
 /** Una frase está truncada si no termina en puntuación final o termina en una palabra que no puede cerrar una frase («…Ahora, al»). */
 export function truncated(t: string): boolean {
   const s = t.trim(); if (!/[.!?»”"')]$/.test(s)) return true;
-  const last = (plain(s).replace(/[^a-z0-9ñ ]+$/g, "").trim().split(/\s+/).pop() ?? ""); return DANGLING.has(last);
+  const raw = (s.toLowerCase().replace(/[^a-záéíóúñü0-9 ]+$/g, "").trim().split(/\s+/).pop() ?? ""); if (/[áéíóú]/.test(raw)) return false;   // «él», «sí», «más»… con tilde cierran frase (no son el artículo «el»)
+  return DANGLING.has(plain(raw));
 }
 /** Validación estructural de UNA cadena (vacío = bien formada). No juzga la lógica de la historia. */
 export function chainIssues(c: Chain): Issue[] {

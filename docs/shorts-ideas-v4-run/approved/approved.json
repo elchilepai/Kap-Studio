@@ -1,0 +1,40 @@
+{
+ "approved": [
+  "cadena-02",
+  "cadena-04"
+ ],
+ "chains": {
+  "cadena-02": {
+   "category": "comparacion",
+   "titulo": "El espejo del progreso",
+   "objeto": "reloj",
+   "situacion": "KAP ve en redes que un amigo termina su primer maratón y lo entrena cada mañana con su reloj deportivo.",
+   "conflicto": "KAP empieza a compararse con su amigo y siente que sus propios entrenos no valen nada.",
+   "motivo": "KAP quiere aparentar que él también avanza para no quedar por debajo de su amigo.",
+   "accion": "KAP edita en su reloj los registros de sus carreras para que marquen más kilómetros de los que corre.",
+   "consecuencia": "Los números falsos le hacen sentirse mejor, pero en la calle se queda sin aire a los dos kilómetros.",
+   "decision": "Con el reloj marcando seis kilómetros y sus piernas en dos, KAP debe elegir entre seguir fingiendo o enfrentarse al dato real.",
+   "nuevaAccion": "KAP borra los registros falsos del reloj y anota honestamente cada carrera, aunque sean pocos kilómetros.",
+   "resultado": "Semanas después el reloj muestra una gráfica corta pero real que sube, y KAP corre cinco kilómetros sin parar.",
+   "mentalidad": "KAP descubre que intentaba parecer avanzado en lugar de avanzar, y que el reloj solo le servía si marcaba lo que de verdad corría.",
+   "origen": "cadena-02 de Qwen V4, causalidad reescrita según las indicaciones del usuario",
+   "estado": "aprobada"
+  },
+  "cadena-04": {
+   "category": "rechazo-identidad",
+   "titulo": "La mascarada del talento",
+   "objeto": "camiseta",
+   "situacion": "KAP prueba para entrar al club de teatro del instituto y el director le dice que no encaja.",
+   "conflicto": "En lugar de aceptar el rechazo, KAP decide que el problema es cómo es y no cómo actuó.",
+   "motivo": "KAP cree que el club solo aceptaría a alguien distinto de él y quiere parecerse a ese alguien.",
+   "accion": "KAP guarda su camiseta negra de siempre en el armario y se pone una camiseta de actor con acento falso.",
+   "consecuencia": "Cuanto más actúa, peor sale: el acento se le escapa y la camiseta de actor le queda grande y ridícula.",
+   "decision": "Tras el ensayo, con la camiseta de actor arrugada en la mano, KAP debe elegir entre seguir fingiendo o volver a ser él.",
+   "nuevaAccion": "KAP se pone otra vez su camiseta negra de siempre, abandona el acento y se presenta al director con su voz.",
+   "resultado": "El director le ofrece repetir la prueba la semana siguiente, y KAP se presenta con su camiseta negra y su voz.",
+   "mentalidad": "KAP descubre que la camiseta de actor y el acento no lo acercaban al club, solo lo alejaban de la persona que quería presentar.",
+   "origen": "cadena-04 de Qwen V4, cambio de identidad reescrito según las indicaciones del usuario",
+   "estado": "aprobada"
+  }
+ }
+}

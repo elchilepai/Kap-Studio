@@ -1,6 +1,38 @@
-# Cadenas narrativas — para aprobación
+# Cadenas aprobadas para la siguiente fase
 
-Solo hay validación ESTRUCTURAL (campos completos y sin truncar, acciones de KAP concretas, objeto con función, mentalidad derivada, sin duplicados). La lógica de la historia la decides tú.
+Cadenas **2 y 4** aprobadas por el usuario (reescritas según sus indicaciones; estructura validada sin modelo). Las originales de Qwen siguen en `stages/` y más abajo.
+
+## ✅ cadena-02 · El espejo del progreso — APROBADA
+*Categoría: comparacion · Objeto central: **reloj** · estructura OK*
+
+1. **Situación:** KAP ve en redes que un amigo termina su primer maratón y lo entrena cada mañana con su reloj deportivo.
+2. **Conflicto:** KAP empieza a compararse con su amigo y siente que sus propios entrenos no valen nada.
+3. **Motivo de KAP:** KAP quiere aparentar que él también avanza para no quedar por debajo de su amigo.
+4. **Acción:** KAP edita en su reloj los registros de sus carreras para que marquen más kilómetros de los que corre.
+5. **Consecuencia:** Los números falsos le hacen sentirse mejor, pero en la calle se queda sin aire a los dos kilómetros.
+6. **Momento de decisión:** Con el reloj marcando seis kilómetros y sus piernas en dos, KAP debe elegir entre seguir fingiendo o enfrentarse al dato real.
+7. **Nueva acción:** KAP borra los registros falsos del reloj y anota honestamente cada carrera, aunque sean pocos kilómetros.
+8. **Resultado:** Semanas después el reloj muestra una gráfica corta pero real que sube, y KAP corre cinco kilómetros sin parar.
+9. **Mentalidad:** KAP descubre que intentaba parecer avanzado en lugar de avanzar, y que el reloj solo le servía si marcaba lo que de verdad corría.
+
+## ✅ cadena-04 · La mascarada del talento — APROBADA
+*Categoría: rechazo-identidad · Objeto central: **camiseta** · estructura OK*
+
+1. **Situación:** KAP prueba para entrar al club de teatro del instituto y el director le dice que no encaja.
+2. **Conflicto:** En lugar de aceptar el rechazo, KAP decide que el problema es cómo es y no cómo actuó.
+3. **Motivo de KAP:** KAP cree que el club solo aceptaría a alguien distinto de él y quiere parecerse a ese alguien.
+4. **Acción:** KAP guarda su camiseta negra de siempre en el armario y se pone una camiseta de actor con acento falso.
+5. **Consecuencia:** Cuanto más actúa, peor sale: el acento se le escapa y la camiseta de actor le queda grande y ridícula.
+6. **Momento de decisión:** Tras el ensayo, con la camiseta de actor arrugada en la mano, KAP debe elegir entre seguir fingiendo o volver a ser él.
+7. **Nueva acción:** KAP se pone otra vez su camiseta negra de siempre, abandona el acento y se presenta al director con su voz.
+8. **Resultado:** El director le ofrece repetir la prueba la semana siguiente, y KAP se presenta con su camiseta negra y su voz.
+9. **Mentalidad:** KAP descubre que la camiseta de actor y el acento no lo acercaban al club, solo lo alejaban de la persona que quería presentar.
+
+---
+
+# Cadenas originales de Qwen (V4)
+
+Las cadenas 1, 3 y 5 no están aprobadas.
 
 ## cadena-01 · El regalo no deseado
 *Categoría: aprobacion · Objeto: **llave** · Estructura: CON AVISOS · intentos: 2*
