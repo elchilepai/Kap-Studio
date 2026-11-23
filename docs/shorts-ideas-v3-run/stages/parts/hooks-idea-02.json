@@ -1,0 +1,41 @@
+{
+ "titulo": "El espejo del vecino",
+ "candidates": [
+  {
+   "type": "situacion",
+   "text": "KAP tenía una maqueta de barco en la mesa. Afuera, su vecino construía un jardín con herramientas y ayudantes."
+  },
+  {
+   "type": "conflicto",
+   "text": "Kap escondió la maqueta bajo su cama, pero no logró quitarse la sensación de que era insignificante."
+  },
+  {
+   "type": "curiosidad",
+   "text": "Al revisar la caja, Kap descubrió que la maqueta brillaba débilmente bajo el polvo acumulado."
+  },
+  {
+   "type": "contradiccion",
+   "text": "Quería sentirse orgulloso, pero cada vez que miraba la maqueta, pensaba en lo poco que valía."
+  },
+  {
+   "type": "mini-historia",
+   "text": "Kap volvió a colocar la maqueta en la mesa. Esta vez, encendió una lámpara y se sentó a mirarla."
+  }
+ ],
+ "final": [
+  {
+   "type": "situacion",
+   "text": "KAP tenía una maqueta de barco en la mesa. Afuera, su vecino construía un jardín con herramientas y ayudantes."
+  },
+  {
+   "type": "contradiccion",
+   "text": "Quería sentirse orgulloso, pero cada vez que miraba la maqueta, pensaba en lo poco que valía."
+  },
+  {
+   "type": "curiosidad",
+   "text": "Al revisar la caja, Kap descubrió que la maqueta brillaba débilmente bajo el polvo acumulado."
+  }
+ ],
+ "issues": [],
+ "repaired": false
+}
