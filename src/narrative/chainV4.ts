@@ -25,6 +25,10 @@ export const DECORATIVE = /^(?:el |la |los |las |un |una )?(?:sofa|pared|mesa|si
 const DANGLING = new Set(["de", "del", "la", "el", "los", "las", "al", "a", "y", "o", "que", "en", "con", "por", "para", "su", "sus", "un", "una", "se", "lo", "le", "como", "pero", "si", "no", "e", "ni", "sin", "entre", "sobre", "hacia", "ahora", "al"]);
 const NON_LATIN = /[぀-ヿ㐀-鿿가-힯Ѐ-ӿ؀-ۿ]/;
 const MENTALIDAD_PROHIBIDA = /^\s*(?:a veces|el problema es|debes\b|la clave es|recuerda\b|hay que|tienes que|lo importante es|siempre|nunca)/;
+const STOP = new Set(["descubre", "entiende", "comprende", "cuando", "aunque", "porque", "mucho", "mejor", "sobre", "entre", "puede", "tiene", "hacer", "algo", "otros", "otras", "cada", "solo", "ahora", "antes", "despues", "nunca", "siempre", "mismo", "misma", "para", "como", "esta", "este", "esto"]);
+const stemsOf = (t: string) => new Set(plain(t).split(/[^a-z0-9ñ]+/).filter((w) => w.length > 4 && !STOP.has(w)).map((w) => w.slice(0, 5)));
+/** Raíces de palabra de `a` que también aparecen en `b` (la mentalidad debe retomar algo concreto de la historia). */
+export const sharedStems = (a: string, b: string) => { const y = stemsOf(b); return [...stemsOf(a)].filter((k) => y.has(k)).length; };
 const CORE: FieldV4[] = ["situacion", "conflicto", "motivo", "accion", "consecuencia", "decision", "nuevaAccion", "resultado"];
 
 /** Una frase está truncada si no termina en puntuación final o termina en una palabra que no puede cerrar una frase («…Ahora, al»). */
@@ -47,7 +51,7 @@ export function chainIssues(c: Chain): Issue[] {
   if (wordCount(c.objeto) < 1 || wordCount(c.objeto) > 5) add("objeto", "«objeto» debe tener 1-5 palabras", "objeto"); else if (DECORATIVE.test(obj)) add("objeto", `el objeto «${c.objeto}» es decorativo: debe participar en la historia`, "objeto");
   else { const uses = CORE.filter((f) => mentions(c.objeto, c[f])); if (uses.length < 3) add("objeto", `el objeto «${c.objeto}» solo aparece en ${uses.length} pasos de la cadena (mínimo 3): no participa en la historia`, "objeto"); }
   if (MENTALIDAD_PROHIBIDA.test(plain(c.mentalidad)) || GENERIC.test(plain(c.mentalidad))) add("mentalidad", "la mentalidad es una moraleja genérica (empieza por «A veces», «Debes», «La clave es», «Recuerda»…)", "mentalidad");
-  else if (!/\bkap\b/i.test(c.mentalidad) || similarity(c.mentalidad, [c.accion, c.nuevaAccion, c.consecuencia, c.motivo, c.objeto].join(" ")) < 0.06 && !mentions(c.objeto, c.mentalidad)) add("mentalidad", "la mentalidad debe decir qué entiende KAP a partir de lo que acaba de ocurrir (menciona a KAP y se apoya en su acción, su motivo o el objeto)", "mentalidad");
+  else if (!/\bkap\b/i.test(c.mentalidad) || sharedStems(c.mentalidad, [c.accion, c.nuevaAccion, c.consecuencia, c.motivo, c.conflicto, c.resultado, c.objeto].join(" ")) < 1) add("mentalidad", "la mentalidad debe decir qué entiende KAP a partir de lo que acaba de ocurrir (menciona a KAP y retoma algo concreto de la historia: su acción, su motivo, la consecuencia o el objeto)", "mentalidad");
   const visual = (["accion", "consecuencia", "nuevaAccion", "resultado"] as const).filter((f) => acts(c[f]) && !(REACCION.test(plain(c[f])) && !acts(c[f].replace(REACCION, "")))); if (visual.length < 3) add("visual", `solo ${visual.length} de los 4 pasos clave (acción, consecuencia, nueva acción, resultado) se pueden dibujar como algo que ocurre: hacen falta al menos 3`);
   for (let a = 0; a < CORE.length; a++) for (let b = a + 1; b < CORE.length; b++) if (similarity(c[CORE[a]], c[CORE[b]]) >= 0.6) add("repetida", `«${CORE[a]}» y «${CORE[b]}» dicen casi lo mismo: cada paso debe añadir información`);
   const all = plain(FIELDS_V4.map((f) => c[f]).join(" ") + " " + c.titulo), bad = textWarningIds(all); if (bad.length || CLICKBAIT.test(all) || GENERIC.test(all)) add("contenido", `coach genérico, clickbait o contenido no permitido${bad.length ? ` (${bad.join(", ")})` : ""}`);

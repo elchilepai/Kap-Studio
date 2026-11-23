@@ -37,3 +37,9 @@ describe("cadena V4: validación estructural (sin modelo como juez)", () => {
     expect(duplicateChain(chainV4(), chainV4({ titulo: "Distinta", objeto: "la maqueta", accion: "KAP borra el mensaje que había escrito para su jefe.", situacion: "En la oficina KAP recibe un correo urgente de su jefe un viernes por la tarde." }))).toBe("mismo objeto central");
   });
 });
+
+describe("cadena V4: la mentalidad retoma algo concreto de la historia (sin falsos avisos)", () => {
+  it("acepta una mentalidad que menciona a KAP y retoma la acción, la consecuencia o el objeto, aunque sea larga", () => {
+    for (const m of ["KAP entiende que justificarse no ayuda si no hay acciones claras para resolver el problema.", "KAP descubre que compararse con otros le hizo copiar una maqueta que ya tenía mejor planteada.", "KAP descubre que no necesita copiar el diseño del otro para que su maqueta destaque."]) expect(chainIssues(chainV4({ mentalidad: m })).map((i) => i.id)).not.toContain("mentalidad");
+  });
+});

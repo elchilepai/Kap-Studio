@@ -16,7 +16,6 @@ Solo hay validación ESTRUCTURAL (campos completos y sin truncar, acciones de KA
 9. **Mentalidad:** KAP descubre que decir la verdad a veces es más fácil que mentir para no ofender.
 
 Avisos estructurales:
-- la mentalidad debe decir qué entiende KAP a partir de lo que acaba de ocurrir (menciona a KAP y se apoya en su acción, su motivo o el objeto)
 - solo 2 de los 4 pasos clave (acción, consecuencia, nueva acción, resultado) se pueden dibujar como algo que ocurre: hacen falta al menos 3
 
 - [ ] aprobada · [ ] descartada · [ ] cambiar: 
@@ -35,12 +34,12 @@ Avisos estructurales:
 9. **Mentalidad:** KAP descubre que compararse con otros le hace perder de vista su propio camino y que la autenticidad es más valiosa que la apariencia.
 
 Avisos estructurales:
-- la mentalidad debe decir qué entiende KAP a partir de lo que acaba de ocurrir (menciona a KAP y se apoya en su acción, su motivo o el objeto)
+- la mentalidad debe decir qué entiende KAP a partir de lo que acaba de ocurrir (menciona a KAP y retoma algo concreto de la historia: su acción, su motivo, la consecuencia o el objeto)
 
 - [ ] aprobada · [ ] descartada · [ ] cambiar: 
 
 ## cadena-03 · La culpa del mensaje
-*Categoría: justificarse · Objeto: **mensaje** · Estructura: CON AVISOS · intentos: 2*
+*Categoría: justificarse · Objeto: **mensaje** · Estructura: OK · intentos: 2*
 
 1. **Situación:** KAP recibe un mensaje de su madre preguntando por su hermano, que no ha llegado a casa.
 2. **Conflicto:** KAP se siente acusado y empieza a justificarse antes de escuchar la explicación completa.
@@ -51,9 +50,6 @@ Avisos estructurales:
 7. **Nueva acción:** KAP envía otro mensaje diciendo que ya llamó al hermano y que está bien.
 8. **Resultado:** Su madre sigue sin creerlo y se inquieta más, pensando que algo pasa.
 9. **Mentalidad:** KAP entiende que justificarse no ayuda si no hay acciones claras para resolver el problema.
-
-Avisos estructurales:
-- la mentalidad debe decir qué entiende KAP a partir de lo que acaba de ocurrir (menciona a KAP y se apoya en su acción, su motivo o el objeto)
 
 - [ ] aprobada · [ ] descartada · [ ] cambiar: 
 
@@ -72,7 +68,6 @@ Avisos estructurales:
 
 Avisos estructurales:
 - el objeto «camiseta» solo aparece en 2 pasos de la cadena (mínimo 3): no participa en la historia
-- la mentalidad debe decir qué entiende KAP a partir de lo que acaba de ocurrir (menciona a KAP y se apoya en su acción, su motivo o el objeto)
 - solo 2 de los 4 pasos clave (acción, consecuencia, nueva acción, resultado) se pueden dibujar como algo que ocurre: hacen falta al menos 3
 
 - [ ] aprobada · [ ] descartada · [ ] cambiar: 
@@ -91,7 +86,7 @@ Avisos estructurales:
 9. **Mentalidad:** KAP descubre que poner un límite con paciencia puede ser más útil que callar.
 
 Avisos estructurales:
-- la mentalidad debe decir qué entiende KAP a partir de lo que acaba de ocurrir (menciona a KAP y se apoya en su acción, su motivo o el objeto)
+- la mentalidad debe decir qué entiende KAP a partir de lo que acaba de ocurrir (menciona a KAP y retoma algo concreto de la historia: su acción, su motivo, la consecuencia o el objeto)
 - duplica a cadena-01: mismo objeto central
 
 - [ ] aprobada · [ ] descartada · [ ] cambiar: 

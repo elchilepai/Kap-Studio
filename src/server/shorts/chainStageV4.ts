@@ -5,7 +5,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import type { LlmClient } from "@/ports/studio";
-import { CATEGORIES_V4, FIELDS_V4, duplicateChain, type CategoryV4, type Chain, type Issue } from "@/narrative/chainV4";
+import { CATEGORIES_V4, FIELDS_V4, chainIssues, duplicateChain, type CategoryV4, type Chain, type Issue } from "@/narrative/chainV4";
 import { generateChainV4 } from "@/server/ai/chainV4";
 import type { StageFn } from "./stages";
 
@@ -16,6 +16,12 @@ export type Log = (msg: string) => void;
 export type ChainRecord = { id: string; chain: Chain; issues: Issue[]; attempts: number; duplicateOf?: string; duplicateWhy?: string; structurallyOk: boolean };
 export type ChainStageOut = { chains: ChainRecord[]; stats: { calls: number; resumed: number; ms: number } };
 
+/** Valida la estructura de cada cadena y marca duplicados entre todas (se puede repetir sobre cadenas ya guardadas, sin llamar al modelo). */
+export function evaluateChains(raw: { chain: Chain; attempts: number }[]): ChainRecord[] {
+  const chains: ChainRecord[] = raw.map((r, n) => { const issues = chainIssues(r.chain); return { id: `cadena-${String(n + 1).padStart(2, "0")}`, chain: r.chain, issues, attempts: r.attempts, structurallyOk: issues.length === 0 }; });
+  for (let a = 0; a < chains.length; a++) for (let b = a + 1; b < chains.length; b++) { const w = duplicateChain(chains[a].chain, chains[b].chain); if (w && !chains[b].duplicateOf) { chains[b].duplicateOf = chains[a].id; chains[b].duplicateWhy = w; chains[b].structurallyOk = false; } }
+  return chains;
+}
 export function chainStageV4(llm: LlmClient, dir: string, o: { log?: Log; categories?: readonly CategoryV4[] } = {}): StageFn {
   const cats = o.categories ?? CATEGORIES_V4, log = o.log ?? (() => {});
   return async ({ signal }) => {
@@ -27,8 +33,7 @@ export function chainStageV4(llm: LlmClient, dir: string, o: { log?: Log; catego
       const rec = { chain: g.chain, issues: g.issues, attempts: g.attempts.length }; await writePart(dir, `chain-${n + 1}`, rec); raw.push(rec);
       log(`cadena ${n + 1}/${cats.length}: «${g.chain.titulo}» ${g.issues.length ? `con ${g.issues.length} aviso(s) estructural(es)` : "estructura OK"} (${g.attempts.length} intento/s) · ${((Date.now() - b) / 60000).toFixed(1)} min`);
     }
-    const chains: ChainRecord[] = raw.map((r, n) => ({ id: `cadena-${String(n + 1).padStart(2, "0")}`, ...r, structurallyOk: r.issues.length === 0 }));
-    for (let a = 0; a < chains.length; a++) for (let b = a + 1; b < chains.length; b++) { const w = duplicateChain(chains[a].chain, chains[b].chain); if (w && !chains[b].duplicateOf) { chains[b].duplicateOf = chains[a].id; chains[b].duplicateWhy = w; chains[b].structurallyOk = false; } }
+    const chains = evaluateChains(raw);
     return { chains, stats: { calls, resumed, ms: Date.now() - t0 } } satisfies ChainStageOut;
   };
 }
