@@ -1,0 +1,169 @@
+{
+ "idea": {
+  "category": "aprobacion",
+  "titulo": "El compromiso invisible",
+  "situacion": "KAP está sentado en el sofá de su casa, mirando a su hermano pequeño que juega con un juguete. Su madre entra y le pregunta si quiere ir a una fiesta escolar con algunos compañeros.",
+  "motivo": "KAP no quiere ir a la fiesta porque se siente incómodo en grupos grandes y no le gustan las fiestas escolares, pero teme que su madre lo vea como un m",
+  "accionKap": "KAP dice que sí, aunque no quiere ir.",
+  "objeto": "el sofá",
+  "consecuencia": "Su madre sonríe y le da un abrazo, feliz por su respuesta. KAP se siente incómodo y apretado en el sofá.",
+  "decision": "KAP se da cuenta de que mentirle a su madre le genera tensión y no quiere seguir así.",
+  "nuevaAccion": "KAP le dice a su madre que prefiere quedarse en casa, aunque no es algo que le guste hacer.",
+  "resultado": "Su madre entiende y le dice que está bien. KAP se siente aliviado y más tranquilo.",
+  "mentalidad": "KAP descubre que ser honesto con sus sentimientos, incluso cuando cuesta, le da más paz que fingir.",
+  "vinetas": [
+   {
+    "funcion": "accion",
+    "sujeto": "KAP",
+    "que": "KAP dice que sí a su madre cuando le pregunta si quiere ir a la fiesta escolar",
+    "objeto": "el sofá",
+    "plano": "medio",
+    "perspectiva": "lateral",
+    "composicion": "KAP sentado en el sofá, mirando a su hermano"
+   },
+   {
+    "funcion": "consecuencia",
+    "sujeto": "la madre",
+    "que": "La madre sonríe y le da un abrazo por su respuesta",
+    "objeto": "el sofá",
+    "plano": "general",
+    "perspectiva": "frontal",
+    "composicion": "La madre abraza a KAP, que parece incómodo"
+   },
+   {
+    "funcion": "decision",
+    "sujeto": "KAP",
+    "que": "KAP se da cuenta de que mentir le genera tensión y no quiere seguir así",
+    "objeto": "el sofá",
+    "plano": "primer-plano",
+    "perspectiva": "contrapicado",
+    "composicion": "KAP mira al suelo, con expresión seria"
+   },
+   {
+    "funcion": "nueva-accion",
+    "sujeto": "KAP",
+    "que": "KAP le dice a su madre que prefiere quedarse en casa",
+    "objeto": "la madre",
+    "plano": "medio",
+    "perspectiva": "frontal",
+    "composicion": "KAP habla con su madre, que lo escucha atentamente"
+   },
+   {
+    "funcion": "resultado",
+    "sujeto": "la madre",
+    "que": "La madre entiende y le dice que está bien",
+    "objeto": "el sofá",
+    "plano": "general",
+    "perspectiva": "lateral",
+    "composicion": "La madre sonríe y KAP se relaja en el sofá"
+   },
+   {
+    "funcion": "metafora",
+    "sujeto": "el juguete",
+    "que": "El juguete del hermano pequeño sigue allí, sin moverse, como si esperara a que KAP se sintiera más seguro",
+    "objeto": "el juguete",
+    "plano": "detalle",
+    "perspectiva": "pov",
+    "composicion": "La vista desde el suelo, con el juguete en primer plano"
+   },
+   {
+    "funcion": "accion",
+    "sujeto": "KAP",
+    "que": "KAP se queda en casa y pasa tiempo con su hermano",
+    "objeto": "el hermano",
+    "plano": "general",
+    "perspectiva": "frontal",
+    "composicion": "KAP y su hermano juegan juntos en el suelo"
+   },
+   {
+    "funcion": "consecuencia",
+    "sujeto": "el hermano",
+    "que": "El hermano sonríe al ver que KAP está más relajado",
+    "objeto": "el juguete",
+    "plano": "medio",
+    "perspectiva": "lateral",
+    "composicion": "El hermano mira a KAP con una sonrisa"
+   },
+   {
+    "funcion": "decision",
+    "sujeto": "KAP",
+    "que": "KAP decide que no necesitará mentir para encajar",
+    "objeto": "el hermano",
+    "plano": "primer-plano",
+    "perspectiva": "contrapicado",
+    "composicion": "KAP mira a su hermano con una expresión tranquila"
+   },
+   {
+    "funcion": "nueva-accion",
+    "sujeto": "KAP",
+    "que": "KAP se sienta en el sofá y respira profundamente",
+    "objeto": "el sofá",
+    "plano": "general",
+    "perspectiva": "frontal",
+    "composicion": "KAP en el sofá, con los ojos cerrados y una expresión de paz"
+   },
+   {
+    "funcion": "resultado",
+    "sujeto": "KAP",
+    "que": "KAP se siente más tranquilo al haber sido honesto",
+    "objeto": "el sofá",
+    "plano": "detalle",
+    "perspectiva": "pov",
+    "composicion": "La vista desde el suelo, con KAP relajado en el sofá"
+   },
+   {
+    "funcion": "metafora",
+    "sujeto": "el juguete",
+    "que": "El juguete del hermano sigue allí, como un recordatorio de que no siempre hay que encajar para ser aceptado",
+    "objeto": "el juguete",
+    "plano": "detalle",
+    "perspectiva": "lateral",
+    "composicion": "El juguete en primer plano, con KAP detrás"
+   }
+  ]
+ },
+ "critic": {
+  "enlaces": [
+   {
+    "enlace": "situacion-motivo",
+    "coherente": true,
+    "motivo": "La situación describe a KAP en un entorno familiar, y el motivo está relacionado con su incomodidad social, lo cual es coherente."
+   },
+   {
+    "enlace": "motivo-accion",
+    "coherente": true,
+    "motivo": "El motivo (incomodidad social) lleva a KAP a mentir, lo cual es una reacción plausible."
+   },
+   {
+    "enlace": "accion-consecuencia",
+    "coherente": true,
+    "motivo": "La consecuencia (incertidumbre y tensión) es coherente con la acción de mentir."
+   },
+   {
+    "enlace": "consecuencia-decision",
+    "coherente": true,
+    "motivo": "La consecuencia de la tensión lleva a KAP a tomar una decisión de ser honesto, lo cual es lógico."
+   },
+   {
+    "enlace": "decision-nueva-accion",
+    "coherente": true,
+    "motivo": "La decisión de ser honesto lleva a la nueva acción de decir la verdad, lo cual es coherente."
+   },
+   {
+    "enlace": "nueva-accion-resultado",
+    "coherente": true,
+    "motivo": "El resultado (alivio y tranquilidad) es coherente con la nueva acción de ser honesto."
+   },
+   {
+    "enlace": "resultado-mentalidad",
+    "coherente": true,
+    "motivo": "La mentalidad final refleja el aprendizaje de la honestidad, lo cual es coherente con el resultado."
+   }
+  ],
+  "accionCausadaPorMotivo": true,
+  "identificacion": 4,
+  "fuerzaSituacion": 4,
+  "potencialShort": 4
+ },
+ "blocks": []
+}
