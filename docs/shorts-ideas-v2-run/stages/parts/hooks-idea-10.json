@@ -1,0 +1,37 @@
+{
+ "titulo": "La crítica en el papel",
+ "hooks": [
+  {
+   "type": "situacion",
+   "text": "Recibió un papel en el casillero con una crítica y una nota que decía 'lee esto antes de irte'."
+  },
+  {
+   "type": "conflicto",
+   "text": "Sabía que la crítica era dura, pero le costaba no responder con otra crítica más fuerte."
+  },
+  {
+   "type": "curiosidad",
+   "text": "¿Qué pasó cuando escribió una carta de defensa en el mismo papel?"
+  },
+  {
+   "type": "contradiccion",
+   "text": "Quería mostrar su punto de vista, pero terminó enfadando al profesor sin darse cuenta."
+  },
+  {
+   "type": "mini-historia",
+   "text": "Kap dobló el papel con la crítica, lo guardó y lo dejó en el casillero sin responder."
+  }
+ ],
+ "best": [
+  {
+   "type": "curiosidad",
+   "text": "¿Qué pasó cuando escribió una carta de defensa en el mismo papel?"
+  },
+  {
+   "type": "mini-historia",
+   "text": "Kap dobló el papel con la crítica, lo guardó y lo dejó en el casillero sin responder."
+  }
+ ],
+ "issues": [],
+ "repaired": true
+}
