@@ -22,7 +22,7 @@ const plain = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerC
 /** Acontecimientos que son solo reacción: mirar, pensar, suspirar, respirar, sonreír, quedarse quieto. */
 export const REACCION = /\b(?:mira\w*|observa\w*|piensa\w*|suspira\w*|respira\w*|sonrie\w*|sonrisa|se queda\w*|cruza\w* los brazos|reflexiona\w*|duda\w*|se siente|parpadea\w*|se pregunta)\b/;
 /** El verbo principal de KAP es un estado o una reacción (callarse, mirar, pensar, esperar…), no una acción. */
-const mainPassive = (t: string) => /^\s*kap\s+(?:se\s+(?:queda|calla|siente|paraliza|bloquea|encoge)|piensa|mira|observa|reflexiona|duda|espera|escucha|siente|imagina)\w*\b/.test(plain(t));
+export const mainPassive = (t: string) => /^\s*kap\s+(?:se\s+(?:queda|calla|siente|paraliza|bloquea|encoge)|piensa|mira|observa|reflexiona|duda|espera|escucha|siente|imagina)\w*\b/.test(plain(t));
 const MENTALIDAD_PROHIBIDA = /^\s*(?:a veces|el problema es|debes entender|la clave es|recuerda que|hay que|lo importante es|tienes que|siempre|nunca)\b/;
 export const isReaction = (v: Vineta) => REACCION.test(plain(v.que)) && !acts(v.que.replace(REACCION, ""));
 
