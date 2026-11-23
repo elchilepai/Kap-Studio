@@ -1,0 +1,37 @@
+{
+ "titulo": "La tarea sin empezar",
+ "hooks": [
+  {
+   "type": "situacion",
+   "text": "El ordenador estaba encendido, la tarea abierta y el suelo cubierto de ropa y libros."
+  },
+  {
+   "type": "conflicto",
+   "text": "Sabía que debía empezar la tarea, pero no podía dejar de mover cosas en la habitación."
+  },
+  {
+   "type": "curiosidad",
+   "text": "¿Qué pasa cuando algo importante se queda atrás por un montón de cosas pequeñas?"
+  },
+  {
+   "type": "contradiccion",
+   "text": "Quería terminar la tarea, pero terminó ordenando la habitación en su lugar."
+  },
+  {
+   "type": "mini-historia",
+   "text": "Kap cerró el ordenador y fue a la cocina, dejando la tarea abierta en la pantalla."
+  }
+ ],
+ "best": [
+  {
+   "type": "contradiccion",
+   "text": "Quería terminar la tarea, pero terminó ordenando la habitación en su lugar."
+  },
+  {
+   "type": "conflicto",
+   "text": "Sabía que debía empezar la tarea, pero no podía dejar de mover cosas en la habitación."
+  }
+ ],
+ "issues": [],
+ "repaired": true
+}
