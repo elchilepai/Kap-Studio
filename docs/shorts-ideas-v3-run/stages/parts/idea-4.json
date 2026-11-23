@@ -1,0 +1,169 @@
+{
+ "idea": {
+  "category": "evitacion",
+  "titulo": "El retraso del cuarto",
+  "situacion": "KAP necesita entregar un trabajo importante para clase, pero en lugar de empezarlo, se dedica a organizar su cuarto con obsesión.",
+  "motivo": "KAP teme que si empieza el trabajo, no podrá hacerlo bien y será juzgado por su profesor o sus compañeros.",
+  "accionKap": "KAP empieza a ordenar los libros en el estante según el tamaño, y luego separa la ropa por colores.",
+  "objeto": "el cuarto",
+  "consecuencia": "El reloj marca que ya es tarde, pero KAP no se da cuenta; el trabajo sigue sin tocarlo.",
+  "decision": "KAP se detiene al escuchar a su hermano pequeño llamarlo desde el otro cuarto, preguntando si ya terminó el trabajo.",
+  "nuevaAccion": "KAP cierra la puerta del cuarto, se sienta en el suelo y mira directamente el trabajo que está en la mesa.",
+  "resultado": "El trabajo se completa en una hora; KAP lo entrega a tiempo y no hay críticas.",
+  "mentalidad": "KAP descubre que evitar lo importante por tareas pequeñas solo retrasa el momento de enfrentar lo real.",
+  "vinetas": [
+   {
+    "funcion": "accion",
+    "sujeto": "KAP",
+    "que": "KAP empieza a ordenar los libros en el estante según el tamaño",
+    "objeto": "el cuarto",
+    "plano": "medio",
+    "perspectiva": "lateral",
+    "composicion": "KAP de perfil, mirando los libros y moviendo sus manos"
+   },
+   {
+    "funcion": "consecuencia",
+    "sujeto": "el reloj",
+    "que": "El reloj marca que ya es tarde, pero KAP no se da cuenta",
+    "objeto": "el cuarto",
+    "plano": "general",
+    "perspectiva": "cenital",
+    "composicion": "Vista desde arriba del cuarto, con el reloj en la pared y KAP en un rincón"
+   },
+   {
+    "funcion": "decision",
+    "sujeto": "el hermano",
+    "que": "KAP se detiene al escuchar a su hermano pequeño llamarlo desde el otro cuarto",
+    "objeto": "la puerta",
+    "plano": "primer-plano",
+    "perspectiva": "pov",
+    "composicion": "Vista desde el suelo del cuarto, con la puerta abierta y el hermano en el umbral"
+   },
+   {
+    "funcion": "nueva-accion",
+    "sujeto": "KAP",
+    "que": "KAP cierra la puerta del cuarto y se sienta en el suelo",
+    "objeto": "el cuarto",
+    "plano": "medio",
+    "perspectiva": "contrapicado",
+    "composicion": "KAP sentado, mirando el trabajo en la mesa con la puerta cerrada detrás"
+   },
+   {
+    "funcion": "resultado",
+    "sujeto": "KAP",
+    "que": "KAP completa el trabajo en una hora y lo entrega a tiempo",
+    "objeto": "la mesa",
+    "plano": "general",
+    "perspectiva": "frontal",
+    "composicion": "KAP con el trabajo en la mano, mirando al profesor"
+   },
+   {
+    "funcion": "metafora",
+    "sujeto": "el cuarto",
+    "que": "El cuarto se queda vacío y ordenado, como si nunca hubiera estado desordenado",
+    "objeto": "el cuarto",
+    "plano": "general",
+    "perspectiva": "cenital",
+    "composicion": "El cuarto perfectamente ordenado, con el reloj marcando la hora en que KAP terminó el trbq"
+   },
+   {
+    "funcion": "accion",
+    "sujeto": "KAP",
+    "que": "KAP camina hacia la mesa y se sienta para empezar el trabajo",
+    "objeto": "la mesa",
+    "plano": "medio",
+    "perspectiva": "lateral",
+    "composicion": "KAP de perfil, con el trabajo frente a él"
+   },
+   {
+    "funcion": "consecuencia",
+    "sujeto": "el trabajo",
+    "que": "El trabajo está en la mesa, pero KAP no lo toca aún",
+    "objeto": "la mesa",
+    "plano": "primer-plano",
+    "perspectiva": "frontal",
+    "composicion": "El trabajo sobre la mesa, con KAP mirándolo de frente"
+   },
+   {
+    "funcion": "decision",
+    "sujeto": "KAP",
+    "que": "KAP inspira profundamente y cierra los ojos por un momento",
+    "objeto": "la mesa",
+    "plano": "detalle",
+    "perspectiva": "frontal",
+    "composicion": "KAP con los ojos cerrados, respirando con la mano sobre el trabajo"
+   },
+   {
+    "funcion": "nueva-accion",
+    "sujeto": "KAP",
+    "que": "KAP abre los ojos y comienza a escribir en el trabajo",
+    "objeto": "el trabajo",
+    "plano": "medio",
+    "perspectiva": "lateral",
+    "composicion": "KAP de perfil, escribiendo con una mano"
+   },
+   {
+    "funcion": "resultado",
+    "sujeto": "KAP",
+    "que": "El trabajo está terminado y KAP lo entrega al profesor",
+    "objeto": "el profesor",
+    "plano": "general",
+    "perspectiva": "frontal",
+    "composicion": "KAP entregando el trabajo, con el profesor recibiendo"
+   },
+   {
+    "funcion": "metafora",
+    "sujeto": "el reloj",
+    "que": "El reloj sigue marcando el tiempo, pero ahora KAP no lo evita",
+    "objeto": "el reloj",
+    "plano": "detalle",
+    "perspectiva": "frontal",
+    "composicion": "El reloj con la hora marcada, y KAP mirándolo desde lejos"
+   }
+  ]
+ },
+ "critic": {
+  "enlaces": [
+   {
+    "enlace": "situacion-motivo",
+    "coherente": true,
+    "motivo": "La situación es coherente con el motivo: KAP necesita entregar un trabajo importante y su motivo es el miedo al juicio, lo cual es una reseñ"
+   },
+   {
+    "enlace": "motivo-accion",
+    "coherente": true,
+    "motivo": "El motivo (miedo al juicio) lleva a KAP a evitar el trabajo y en su lugar ordenar su cuarto, lo cual es coherente con una reacción de evit"
+   },
+   {
+    "enlace": "accion-consecuencia",
+    "coherente": true,
+    "motivo": "La acción de ordenar el cuarto lleva a que el tiempo se pierda y el trabajo no se toque, lo cual es lógico"
+   },
+   {
+    "enlace": "consecuencia-decision",
+    "coherente": true,
+    "motivo": "La consecuencia (que ya es tarde) lleva a la decisión de KAP al escuchar a su hermano, lo cual es coherente"
+   },
+   {
+    "enlace": "decision-nueva-accion",
+    "coherente": true,
+    "motivo": "La decisión de su hermano lleva a KAP a tomar una nueva acción (sentarse y mirar el trabajo), lo cual es lógico"
+   },
+   {
+    "enlace": "nueva-accion-resultado",
+    "coherente": true,
+    "motivo": "La nueva acción (mirar el trabajo) lleva al resultado de completarlo a tiempo, lo cual es coherente"
+   },
+   {
+    "enlace": "resultado-mentalidad",
+    "coherente": true,
+    "motivo": "El resultado (entregar el trabajo a tiempo) lleva a la mentalidad de KAP sobre evitar lo importante, lo cual es coherente"
+   }
+  ],
+  "accionCausadaPorMotivo": true,
+  "identificacion": 4,
+  "fuerzaSituacion": 4,
+  "potencialShort": 4
+ },
+ "blocks": []
+}
