@@ -1,0 +1,24 @@
+{
+ "chain": {
+  "category": "justificarse",
+  "titulo": "La culpa del mensaje",
+  "objeto": "mensaje",
+  "situacion": "KAP recibe un mensaje de su madre preguntando por su hermano, que no ha llegado a casa.",
+  "conflicto": "KAP se siente acusado y empieza a justificarse antes de escuchar la explicación completa.",
+  "motivo": "KAP quiere evitar que su madre se preocupe y se sienta responsable del hermano.",
+  "accion": "KAP escribe un mensaje rápido explicando que su hermano se fue a jugar al parque.",
+  "consecuencia": "El mensaje no responde a las preguntas de su madre y la confusión aumenta.",
+  "decision": "KAP decide seguir justificándose con más detalles para demostrar que todo está bien.",
+  "nuevaAccion": "KAP envía otro mensaje diciendo que ya llamó al hermano y que está bien.",
+  "resultado": "Su madre sigue sin creerlo y se inquieta más, pensando que algo pasa.",
+  "mentalidad": "KAP entiende que justificarse no ayuda si no hay acciones claras para resolver el problema."
+ },
+ "issues": [
+  {
+   "id": "mentalidad",
+   "msg": "la mentalidad debe decir qué entiende KAP a partir de lo que acaba de ocurrir (menciona a KAP y se apoya en su acción, su motivo o el objeto)",
+   "field": "mentalidad"
+  }
+ ],
+ "attempts": 2
+}
