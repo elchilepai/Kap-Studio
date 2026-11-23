@@ -1,0 +1,41 @@
+{
+ "titulo": "El retraso del cuarto",
+ "candidates": [
+  {
+   "type": "situacion",
+   "text": "KAP tenía un trabajo pendiente. Pasó la tarde ordenando el cuarto, ignorando el reloj y el plazo."
+  },
+  {
+   "type": "conflicto",
+   "text": "Aunque sabía que debía empezar, KAP no lo hizo. En su lugar, arregló cada libro y cada prenda en el armario."
+  },
+  {
+   "type": "curiosidad",
+   "text": "Mientras ordenaba el cuarto, KAP notó algo extraño: el trabajo seguía en la mesa, pero él no lo miraba."
+  },
+  {
+   "type": "contradiccion",
+   "text": "KAP quería evitar el fracaso, pero su obsesión por el orden lo mantenía atrapado en el retraso."
+  },
+  {
+   "type": "mini-historia",
+   "text": "KAP cerró la puerta del cuarto. Frente al trabajo, se sentó en el suelo y miró fijamente el papel sin moverse."
+  }
+ ],
+ "final": [
+  {
+   "type": "curiosidad",
+   "text": "Mientras ordenaba el cuarto, KAP notó algo extraño: el trabajo seguía en la mesa, pero él no lo miraba."
+  },
+  {
+   "type": "contradiccion",
+   "text": "KAP quería evitar el fracaso, pero su obsesión por el orden lo mantenía atrapado en el retraso."
+  },
+  {
+   "type": "conflicto",
+   "text": "Aunque sabía que debía empezar, KAP no lo hizo. En su lugar, arregló cada libro y cada prenda en el armario."
+  }
+ ],
+ "issues": [],
+ "repaired": false
+}
