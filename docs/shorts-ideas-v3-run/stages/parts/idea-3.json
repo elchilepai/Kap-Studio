@@ -1,0 +1,149 @@
+{
+ "idea": {
+  "category": "justificarse",
+  "titulo": "La culpa de la cafetera",
+  "situacion": "KAP está en la cocina de su casa, preparando café para su hermano pequeño. La cafetera se ha caído al suelo y está rota.",
+  "motivo": "Kap teme que su hermano lo critique por no haber cuidado de la cafetera, y siente la necesidad de justificarse antes de escuchar lo que su hermano dig",
+  "accionKap": "KAP se agacha rápidamente para recoger los trozos de la cafetera y comienza a hablar con urgencia.",
+  "objeto": "cafetera",
+  "consecuencia": "Su hermano, en lugar de escuchar, se pone a llorar al ver que la cafetera está rota.",
+  "decision": "KAP se detiene, mira a su hermano y se da cuenta de que su justificación no ha ayudado.",
+  "nuevaAccion": "KAP se sienta junto a su hermano y le ofrece una taza de café que ya había preparado antes.",
+  "resultado": "Su hermano se calma y le sonríe, aunque sigue triste por la cafetera.",
+  "mentalidad": "KAP descubre que a veces escuchar antes de justificarse puede ser más útil que intentar explicar lo que no se entiende.",
+  "vinetas": [
+   {
+    "funcion": "accion",
+    "sujeto": "KAP",
+    "que": "KAP se agacha rápidamente para recoger los trozos de la cafetera y comienza a hablar con urgencia.",
+    "objeto": "cafetera",
+    "plano": "medio",
+    "perspectiva": "lateral",
+    "composicion": "KAP está de perfil, con la cafetera rota a sus pies y su boca moviéndose rápidamente."
+   },
+   {
+    "funcion": "consecuencia",
+    "sujeto": "el hermano pequeño",
+    "que": "Su hermano, en lugar de escuchar, se pone a llorar al ver que la cafetera está rota.",
+    "objeto": "hermano pequeño",
+    "plano": "general",
+    "perspectiva": "frontal",
+    "composicion": "El hermano pequeño está sentado en el suelo, con las manos en la cara y el cuerpo inclinad"
+   },
+   {
+    "funcion": "decision",
+    "sujeto": "KAP",
+    "que": "KAP se detiene, mira a su hermano y se da cuenta de que su justificación no ha ayudado.",
+    "objeto": "hermano pequeño",
+    "plano": "medio",
+    "perspectiva": "lateral",
+    "composicion": "KAP está de pie, mirando hacia el hermano pequeño que sigue llorando, con una expresión de"
+   },
+   {
+    "funcion": "nueva-accion",
+    "sujeto": "KAP",
+    "que": "KAP se sienta junto a su hermano y le ofrece una taza de café que ya había preparado antes.",
+    "objeto": "hermano pequeño",
+    "plano": "medio",
+    "perspectiva": "frontal",
+    "composicion": "KAP está sentado al lado de su hermano, con una taza de café en la mano, mirándolo con ser"
+   },
+   {
+    "funcion": "resultado",
+    "sujeto": "el hermano pequeño",
+    "que": "Su hermano se calma y le sonríe, aunque sigue triste por la cafetera.",
+    "objeto": "hermano pequeño",
+    "plano": "general",
+    "perspectiva": "frontal",
+    "composicion": "El hermano pequeño está sentado junto a KAP, con una expresión más tranquila y una sonrisa"
+   },
+   {
+    "funcion": "metafora",
+    "sujeto": "la cafetera",
+    "que": "La cafetera rota yace en el suelo, como un recordatorio de lo que no se puede recuperar.",
+    "objeto": "cafetera",
+    "plano": "detalle",
+    "perspectiva": "contrapicado",
+    "composicion": "La cafetera está en primer plano, con los trozos esparcidos alrededor y una gota de café c"
+   },
+   {
+    "funcion": "accion",
+    "sujeto": "KAP",
+    "que": "KAP se levanta y empieza a recoger los trozos de la cafetera.",
+    "objeto": "cafetera",
+    "plano": "medio",
+    "perspectiva": "lateral",
+    "composicion": "KAP está de pie, con un trozo de la cafetera en la mano, mirando hacia el suelo."
+   },
+   {
+    "funcion": "consecuencia",
+    "sujeto": "el hermano pequeño",
+    "que": "El hermano pequeño observa a KAP recoger los trozos y se acerca para ayudar.",
+    "objeto": "hermano pequeño",
+    "plano": "general",
+    "perspectiva": "frontal",
+    "composicion": "El hermano pequeño se acerca a KAP, con una expresión de ayuda en su rostro."
+   },
+   {
+    "funcion": "decision",
+    "sujeto": "KAP",
+    "que": "KAP se da cuenta de que no necesita justificarse para que su hermano lo entienda.",
+    "objeto": "hermano pequeño",
+    "plano": "medio",
+    "perspectiva": "lateral",
+    "composicion": "KAP mira a su hermano con una expresión más tranquila, mientras sigue recogiendo los trozo"
+   },
+   {
+    "funcion": "nueva-accion",
+    "sujeto": "KAP",
+    "que": "KAP le ofrece al hermano pequeño una taza de café que había preparado antes.",
+    "objeto": "hermano pequeño",
+    "plano": "medio",
+    "perspectiva": "frontal",
+    "composicion": "KAP le entrega la taza a su hermano, que la acepta con una sonrisa."
+   },
+   {
+    "funcion": "resultado",
+    "sujeto": "el hermano pequeño",
+    "que": "El hermano pequeño toma la taza de café y se siente reconfortado.",
+    "objeto": "hermano pequeño",
+    "plano": "general",
+    "perspectiva": "frontal",
+    "composicion": "El hermano pequeño está sentado en una silla, con la taza de café en manos, mirando a KAP."
+   },
+   {
+    "funcion": "metafora",
+    "sujeto": "la taza de café",
+    "que": "La taza de café simboliza el esfuerzo de KAP por compensar y reconfortar a su hermano.",
+    "objeto": "taza de café",
+    "plano": "detalle",
+    "perspectiva": "contrapicado",
+    "composicion": "La taza de café está en primer plano, con vapor saliendo de ella y un reflejo de la cara d"
+   },
+   {
+    "funcion": "accion",
+    "sujeto": "KAP",
+    "que": "KAP se sienta junto a su hermano y le pregunta cómo se siente.",
+    "objeto": "hermano pequeño",
+    "plano": "medio",
+    "perspectiva": "lateral",
+    "composicion": "KAP está sentado al lado de su hermano, con una expresión seria, mirándolo directamente."
+   },
+   {
+    "funcion": "consecuencia",
+    "sujeto": "el hermano pequeño",
+    "que": "El hermano pequeño le responde con una sonrisa y le dice que está mejor.",
+    "objeto": "hermano pequeño",
+    "plano": "general",
+    "perspectiva": "frontal",
+    "composicion": "El hermano pequeño mira a KAP con una sonrisa, mostrando que se siente reconfortado."
+   }
+  ]
+ },
+ "blocks": [
+  {
+   "id": "vinetas",
+   "msg": "hay viñetas que repiten el mismo acontecimiento o no describen un acontecimiento"
+  }
+ ]
+}
