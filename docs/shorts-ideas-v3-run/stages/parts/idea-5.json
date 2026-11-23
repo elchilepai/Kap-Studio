@@ -1,0 +1,95 @@
+{
+ "idea": {
+  "category": "hablar-sin-hacer",
+  "titulo": "El primer kilómetro",
+  "situacion": "KAP se sienta en un banco de parque con su hermano pequeño, mirando el camino que lleva al centro de la ciudad. Su mochila está a su lado, llena de libros y folletos de cursos online.",
+  "motivo": "KAP ha estado hablando durante meses de que va a cambiar su vida, estudiar más, aprender nuevas habilidades, pero no ha hecho nada concreto. Ahora, al",
+  "accionKap": "ver el camino y el peso de la mochila, KAP se levanta y empieza a caminar hacia el centro sin decir nada.",
+  "objeto": "mochila",
+  "consecuencia": "El hermano pequeño mira a KAP con sorpresa, luego corre tras él, riendo y gritando: «¡Vamos, KAP! ¡No te dejes atrás!»",
+  "decision": "KAP se da cuenta de que el primer paso no es el más difícil si lo haces aunque sea solo para no decepcionar a alguien que te importa.",
+  "nuevaAccion": "KAP acelera el paso y le sonríe al hermano sin hablar, manteniendo el ritmo.",
+  "resultado": "El camino se vuelve menos intimidante con cada paso. KAP mira la mochila y piensa que, por una vez, no va a dejar las cosas para mañana.",
+  "mentalidad": "KAP descubre que el primer kilómetro no es el más pesado, sino el que decides dar aunque sea solo para no quedarte atrás.",
+  "vinetas": [
+   {
+    "funcion": "accion",
+    "sujeto": "KAP",
+    "que": "se levanta del banco y empieza a caminar hacia el centro",
+    "objeto": "mochila",
+    "plano": "general",
+    "perspectiva": "lateral",
+    "composicion": "KAP a la izquierda, camino a la derecha"
+   },
+   {
+    "funcion": "consecuencia",
+    "sujeto": "el hermano pequeño",
+    "que": "corre tras KAP riendo y gritando «¡Vamos, KAP!»",
+    "objeto": "",
+    "plano": "medio",
+    "perspectiva": "lateral",
+    "composicion": "KAP y el hermano en movimiento, KAP delante"
+   },
+   {
+    "funcion": "decision",
+    "sujeto": "KAP",
+    "que": "mira hacia atrás y sonríe al ver a su hermano corriendo tras él",
+    "objeto": "hermano",
+    "plano": "primer-plano",
+    "perspectiva": "contrapicado",
+    "composicion": "rostro de KAP con una sonrisa pequeña"
+   },
+   {
+    "funcion": "nueva-accion",
+    "sujeto": "KAP",
+    "que": "acelera el paso y mantiene un ritmo constante",
+    "objeto": "mochila",
+    "plano": "general",
+    "perspectiva": "frontal",
+    "composicion": "KAP caminando con paso decidido"
+   },
+   {
+    "funcion": "resultado",
+    "sujeto": "KAP",
+    "que": "se detiene en un cruce de calles y mira la mochila a sus pies",
+    "objeto": "mochila",
+    "plano": "detalle",
+    "perspectiva": "pov",
+    "composicion": "manos de KAP sobre la mochila, mirada firme"
+   },
+   {
+    "funcion": "resultado",
+    "sujeto": "el hermano",
+    "que": "se para junto a KAP y le pregunta: «¿Y ahora qué?»",
+    "objeto": "",
+    "plano": "medio",
+    "perspectiva": "frontal",
+    "composicion": "ambos mirándose, KAP con una mirada de determinación"
+   },
+   {
+    "funcion": "resultado",
+    "sujeto": "KAP",
+    "que": "se encoge de hombros y dice: «No lo sé. Pero ya estoy aquí»",
+    "objeto": "",
+    "plano": "primer-plano",
+    "perspectiva": "frontal",
+    "composicion": "rostro de KAP con una mirada serena"
+   },
+   {
+    "funcion": "resultado",
+    "sujeto": "el hermano",
+    "que": "sonríe y le da la mano, caminando juntos hacia el centro",
+    "objeto": "",
+    "plano": "general",
+    "perspectiva": "lateral",
+    "composicion": "ambos caminando, KAP con la mochila"
+   }
+  ]
+ },
+ "blocks": [
+  {
+   "id": "accion",
+   "msg": "la acción principal no es una acción visible de KAP (o es pasiva)"
+  }
+ ]
+}

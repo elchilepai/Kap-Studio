@@ -1,0 +1,806 @@
+{
+ "candidates": [
+  {
+   "id": "idea-01",
+   "idea": {
+    "category": "aprobacion",
+    "titulo": "El compromiso invisible",
+    "situacion": "KAP está sentado en el sofá de su casa, mirando a su hermano pequeño que juega con un juguete. Su madre entra y le pregunta si quiere ir a una fiesta escolar con algunos compañeros.",
+    "motivo": "KAP no quiere ir a la fiesta porque se siente incómodo en grupos grandes y no le gustan las fiestas escolares, pero teme que su madre lo vea como un m",
+    "accionKap": "KAP dice que sí, aunque no quiere ir.",
+    "objeto": "el sofá",
+    "consecuencia": "Su madre sonríe y le da un abrazo, feliz por su respuesta. KAP se siente incómodo y apretado en el sofá.",
+    "decision": "KAP se da cuenta de que mentirle a su madre le genera tensión y no quiere seguir así.",
+    "nuevaAccion": "KAP le dice a su madre que prefiere quedarse en casa, aunque no es algo que le guste hacer.",
+    "resultado": "Su madre entiende y le dice que está bien. KAP se siente aliviado y más tranquilo.",
+    "mentalidad": "KAP descubre que ser honesto con sus sentimientos, incluso cuando cuesta, le da más paz que fingir.",
+    "vinetas": [
+     {
+      "funcion": "accion",
+      "sujeto": "KAP",
+      "que": "KAP dice que sí a su madre cuando le pregunta si quiere ir a la fiesta escolar",
+      "objeto": "el sofá",
+      "plano": "medio",
+      "perspectiva": "lateral",
+      "composicion": "KAP sentado en el sofá, mirando a su hermano"
+     },
+     {
+      "funcion": "consecuencia",
+      "sujeto": "la madre",
+      "que": "La madre sonríe y le da un abrazo por su respuesta",
+      "objeto": "el sofá",
+      "plano": "general",
+      "perspectiva": "frontal",
+      "composicion": "La madre abraza a KAP, que parece incómodo"
+     },
+     {
+      "funcion": "decision",
+      "sujeto": "KAP",
+      "que": "KAP se da cuenta de que mentir le genera tensión y no quiere seguir así",
+      "objeto": "el sofá",
+      "plano": "primer-plano",
+      "perspectiva": "contrapicado",
+      "composicion": "KAP mira al suelo, con expresión seria"
+     },
+     {
+      "funcion": "nueva-accion",
+      "sujeto": "KAP",
+      "que": "KAP le dice a su madre que prefiere quedarse en casa",
+      "objeto": "la madre",
+      "plano": "medio",
+      "perspectiva": "frontal",
+      "composicion": "KAP habla con su madre, que lo escucha atentamente"
+     },
+     {
+      "funcion": "resultado",
+      "sujeto": "la madre",
+      "que": "La madre entiende y le dice que está bien",
+      "objeto": "el sofá",
+      "plano": "general",
+      "perspectiva": "lateral",
+      "composicion": "La madre sonríe y KAP se relaja en el sofá"
+     },
+     {
+      "funcion": "metafora",
+      "sujeto": "el juguete",
+      "que": "El juguete del hermano pequeño sigue allí, sin moverse, como si esperara a que KAP se sintiera más seguro",
+      "objeto": "el juguete",
+      "plano": "detalle",
+      "perspectiva": "pov",
+      "composicion": "La vista desde el suelo, con el juguete en primer plano"
+     },
+     {
+      "funcion": "accion",
+      "sujeto": "KAP",
+      "que": "KAP se queda en casa y pasa tiempo con su hermano",
+      "objeto": "el hermano",
+      "plano": "general",
+      "perspectiva": "frontal",
+      "composicion": "KAP y su hermano juegan juntos en el suelo"
+     },
+     {
+      "funcion": "consecuencia",
+      "sujeto": "el hermano",
+      "que": "El hermano sonríe al ver que KAP está más relajado",
+      "objeto": "el juguete",
+      "plano": "medio",
+      "perspectiva": "lateral",
+      "composicion": "El hermano mira a KAP con una sonrisa"
+     },
+     {
+      "funcion": "decision",
+      "sujeto": "KAP",
+      "que": "KAP decide que no necesitará mentir para encajar",
+      "objeto": "el hermano",
+      "plano": "primer-plano",
+      "perspectiva": "contrapicado",
+      "composicion": "KAP mira a su hermano con una expresión tranquila"
+     },
+     {
+      "funcion": "nueva-accion",
+      "sujeto": "KAP",
+      "que": "KAP se sienta en el sofá y respira profundamente",
+      "objeto": "el sofá",
+      "plano": "general",
+      "perspectiva": "frontal",
+      "composicion": "KAP en el sofá, con los ojos cerrados y una expresión de paz"
+     },
+     {
+      "funcion": "resultado",
+      "sujeto": "KAP",
+      "que": "KAP se siente más tranquilo al haber sido honesto",
+      "objeto": "el sofá",
+      "plano": "detalle",
+      "perspectiva": "pov",
+      "composicion": "La vista desde el suelo, con KAP relajado en el sofá"
+     },
+     {
+      "funcion": "metafora",
+      "sujeto": "el juguete",
+      "que": "El juguete del hermano sigue allí, como un recordatorio de que no siempre hay que encajar para ser aceptado",
+      "objeto": "el juguete",
+      "plano": "detalle",
+      "perspectiva": "lateral",
+      "composicion": "El juguete en primer plano, con KAP detrás"
+     }
+    ]
+   },
+   "blocks": [],
+   "critic": {
+    "enlaces": [
+     {
+      "enlace": "situacion-motivo",
+      "coherente": true,
+      "motivo": "La situación describe a KAP en un entorno familiar, y el motivo está relacionado con su incomodidad social, lo cual es coherente."
+     },
+     {
+      "enlace": "motivo-accion",
+      "coherente": true,
+      "motivo": "El motivo (incomodidad social) lleva a KAP a mentir, lo cual es una reacción plausible."
+     },
+     {
+      "enlace": "accion-consecuencia",
+      "coherente": true,
+      "motivo": "La consecuencia (incertidumbre y tensión) es coherente con la acción de mentir."
+     },
+     {
+      "enlace": "consecuencia-decision",
+      "coherente": true,
+      "motivo": "La consecuencia de la tensión lleva a KAP a tomar una decisión de ser honesto, lo cual es lógico."
+     },
+     {
+      "enlace": "decision-nueva-accion",
+      "coherente": true,
+      "motivo": "La decisión de ser honesto lleva a la nueva acción de decir la verdad, lo cual es coherente."
+     },
+     {
+      "enlace": "nueva-accion-resultado",
+      "coherente": true,
+      "motivo": "El resultado (alivio y tranquilidad) es coherente con la nueva acción de ser honesto."
+     },
+     {
+      "enlace": "resultado-mentalidad",
+      "coherente": true,
+      "motivo": "La mentalidad final refleja el aprendizaje de la honestidad, lo cual es coherente con el resultado."
+     }
+    ],
+    "accionCausadaPorMotivo": true,
+    "identificacion": 4,
+    "fuerzaSituacion": 4,
+    "potencialShort": 4
+   },
+   "rejected": false,
+   "subs": {
+    "variedadAcontecimientos": 4.6,
+    "visualidad": 10,
+    "transformacion": 4,
+    "originalidad": 7.1,
+    "identificacion": 7.5,
+    "fuerzaSituacion": 7.5,
+    "potencialShort": 7.5
+   },
+   "score": 6.7
+  },
+  {
+   "id": "idea-02",
+   "idea": {
+    "category": "comparacion",
+    "titulo": "El espejo del vecino",
+    "situacion": "KAP está sentado en su habitación, trabajando en una maqueta de un barco de madera. Afuera, su vecino está construyendo un gran jardín en su terraza con herramientas profesionales y ayuda de un grupo.",
+    "motivo": "KAP siente que su trabajo es insignificante frente a la ambición y los recursos del vecino, lo que le genera duda sobre el valor de su proyecto.",
+    "accionKap": "KAP coloca la maqueta en una caja y la esconde debajo de su cama.",
+    "objeto": "maqueta de barco",
+    "consecuencia": "La maqueta se ve cubierta por ropa y juguetes, como si ya no tuviera importancia.",
+    "decision": "KAP escucha el sonido del vecino trabajando afuera y se pregunta si su proyecto es lo suficientemente importante para seguir con él.",
+    "nuevaAccion": "KAP saca la maqueta de la caja y la coloca nuevamente en la mesa, esta vez con una lámpara encendida sobre ella.",
+    "resultado": "La maqueta brilla suavemente bajo la luz, como si ahora tuviera vida propia.",
+    "mentalidad": "KAP descubre que no necesita compararse con otros para saber si su trabajo vale la pena; lo que importa es el tiempo y el cuidado que pone en él.",
+    "vinetas": [
+     {
+      "funcion": "accion",
+      "sujeto": "KAP",
+      "que": "KAP coloca la maqueta de barco en una caja y la cubre con ropa",
+      "objeto": "maqueta de barco",
+      "plano": "medio",
+      "perspectiva": "lateral",
+      "composicion": "KAP está de espaldas, mirando hacia la cama mientras coloca la maqueta"
+     },
+     {
+      "funcion": "consecuencia",
+      "sujeto": "la caja",
+      "que": "La caja con la maqueta se ve cubierta por ropa y juguetes",
+      "objeto": "cama",
+      "plano": "general",
+      "perspectiva": "frontal",
+      "composicion": "La cama está desordenada, con ropa y juguetes sobre ella"
+     },
+     {
+      "funcion": "decision",
+      "sujeto": "KAP",
+      "que": "KAP se queda mirando el sonido de herramientas afuera por la ventana",
+      "objeto": "ventana",
+      "plano": "primer-plano",
+      "perspectiva": "pov",
+      "composicion": "La vista desde la ventana muestra al vecino trabajando con herramientas"
+     },
+     {
+      "funcion": "nueva-accion",
+      "sujeto": "KAP",
+      "que": "KAP saca la maqueta de la caja y la coloca en la mesa",
+      "objeto": "mesa",
+      "plano": "medio",
+      "perspectiva": "lateral",
+      "composicion": "KAP está de espaldas, colocando la maqueta en la mesa"
+     },
+     {
+      "funcion": "resultado",
+      "sujeto": "la maqueta",
+      "que": "La maqueta brilla suavemente bajo la luz de una lámpara encendida",
+      "objeto": "lámpara",
+      "plano": "detalle",
+      "perspectiva": "contrapicado",
+      "composicion": "La luz se refleja en la madera de la maqueta"
+     },
+     {
+      "funcion": "metafora",
+      "sujeto": "la habitación",
+      "que": "La habitación se ilumina con una energía más suave y presente",
+      "objeto": "habitación",
+      "plano": "general",
+      "perspectiva": "cenital",
+      "composicion": "La habitación ahora parece más tranquila, como si hubiera encontrado su equilibrio"
+     },
+     {
+      "funcion": "accion",
+      "sujeto": "KAP",
+      "que": "KAP toma un clavo y lo coloca en la maqueta con cuidado",
+      "objeto": "clavo",
+      "plano": "primer-plano",
+      "perspectiva": "lateral",
+      "composicion": "KAP sostiene el clavo con una mano, mirando cómo se ajusta a la madera"
+     },
+     {
+      "funcion": "consecuencia",
+      "sujeto": "la maqueta",
+      "que": "La maqueta empieza a tomar forma de nuevo, como si resurgiera",
+      "objeto": "maqueta",
+      "plano": "medio",
+      "perspectiva": "frontal",
+      "composicion": "La estructura del barco se ve más definida"
+     },
+     {
+      "funcion": "decision",
+      "sujeto": "KAP",
+      "que": "KAP sonríe por un momento, mirando el progreso de la maqueta",
+      "objeto": "maqueta",
+      "plano": "primer-plano",
+      "perspectiva": "lateral",
+      "composicion": "KAP tiene una expresión de satisfacción en su rostro"
+     },
+     {
+      "funcion": "nueva-accion",
+      "sujeto": "KAP",
+      "que": "KAP vuelve a trabajar en la maqueta con más concentración que antes",
+      "objeto": "maqueta",
+      "plano": "medio",
+      "perspectiva": "lateral",
+      "composicion": "KAP está de espaldas, trabajando con herramientas en la mesa"
+     },
+     {
+      "funcion": "resultado",
+      "sujeto": "la habitación",
+      "que": "La habitación se llena de un silencio productivo y sostenible",
+      "objeto": "habitación",
+      "plano": "general",
+      "perspectiva": "cenital",
+      "composicion": "La habitación está tranquila, con la luz de la lámpara iluminando el trabajo en la mesa"
+     },
+     {
+      "funcion": "metafora",
+      "sujeto": "la maqueta",
+      "que": "La maqueta representa ahora algo personal y único, no una copia de nada",
+      "objeto": "maqueta",
+      "plano": "detalle",
+      "perspectiva": "frontal",
+      "composicion": "La maqueta se ve completa, con un toque personal en el diseño"
+     }
+    ]
+   },
+   "blocks": [],
+   "critic": {
+    "enlaces": [
+     {
+      "enlace": "situacion-motivo",
+      "coherente": true,
+      "motivo": "La situación describe a KAP trabajando en una maqueta mientras su vecino construye un jardín con recursos profesionales, lo que lógicamente引"
+     },
+     {
+      "enlace": "motivo-accion",
+      "coherente": true,
+      "motivo": "El motivo de sentirse insignificante frente al vecino lleva a KAP a esconder su trabajo, lo cual es una reacción emocional coherente."
+     },
+     {
+      "enlace": "accion-consecuencia",
+      "coherente": true,
+      "motivo": "Esconder la maqueta bajo la cama y cubrirla con ropa y juguetes es una consecuencia natural de su acción."
+     },
+     {
+      "enlace": "consecuencia-decision",
+      "coherente": true,
+      "motivo": "La consecuencia de que la maqueta se vea sin importancia lleva a KAP a cuestionar si su proyecto vale la pena, lo cual es una decisión coher"
+     },
+     {
+      "enlace": "decision-nueva-accion",
+      "coherente": true,
+      "motivo": "La duda sobre el valor de su proyecto lleva a KAP a tomar una nueva acción: sacar la maqueta y colocarla bajo una lámpara, lo cual es coher"
+     },
+     {
+      "enlace": "nueva-accion-resultado",
+      "coherente": true,
+      "motivo": "Colocar la maqueta bajo una lámpara encendida resulta en que brille suavemente, lo cual es un resultado lógico y visualmente coherente."
+     },
+     {
+      "enlace": "resultado-mentalidad",
+      "coherente": true,
+      "motivo": "El resultado de que la maqueta brille lleva a KAP a una mentalidad de autovaloración, lo cual es coherente con el desarrollo emocional de la"
+     }
+    ],
+    "accionCausadaPorMotivo": true,
+    "identificacion": 4,
+    "fuerzaSituacion": 4,
+    "potencialShort": 5
+   },
+   "rejected": false,
+   "subs": {
+    "variedadAcontecimientos": 5.8,
+    "visualidad": 10,
+    "transformacion": 7,
+    "originalidad": 8.7,
+    "identificacion": 7.5,
+    "fuerzaSituacion": 7.5,
+    "potencialShort": 10
+   },
+   "score": 7.9
+  },
+  {
+   "id": "idea-03",
+   "idea": {
+    "category": "justificarse",
+    "titulo": "La culpa de la cafetera",
+    "situacion": "KAP está en la cocina de su casa, preparando café para su hermano pequeño. La cafetera se ha caído al suelo y está rota.",
+    "motivo": "Kap teme que su hermano lo critique por no haber cuidado de la cafetera, y siente la necesidad de justificarse antes de escuchar lo que su hermano dig",
+    "accionKap": "KAP se agacha rápidamente para recoger los trozos de la cafetera y comienza a hablar con urgencia.",
+    "objeto": "cafetera",
+    "consecuencia": "Su hermano, en lugar de escuchar, se pone a llorar al ver que la cafetera está rota.",
+    "decision": "KAP se detiene, mira a su hermano y se da cuenta de que su justificación no ha ayudado.",
+    "nuevaAccion": "KAP se sienta junto a su hermano y le ofrece una taza de café que ya había preparado antes.",
+    "resultado": "Su hermano se calma y le sonríe, aunque sigue triste por la cafetera.",
+    "mentalidad": "KAP descubre que a veces escuchar antes de justificarse puede ser más útil que intentar explicar lo que no se entiende.",
+    "vinetas": [
+     {
+      "funcion": "accion",
+      "sujeto": "KAP",
+      "que": "KAP se agacha rápidamente para recoger los trozos de la cafetera y comienza a hablar con urgencia.",
+      "objeto": "cafetera",
+      "plano": "medio",
+      "perspectiva": "lateral",
+      "composicion": "KAP está de perfil, con la cafetera rota a sus pies y su boca moviéndose rápidamente."
+     },
+     {
+      "funcion": "consecuencia",
+      "sujeto": "el hermano pequeño",
+      "que": "Su hermano, en lugar de escuchar, se pone a llorar al ver que la cafetera está rota.",
+      "objeto": "hermano pequeño",
+      "plano": "general",
+      "perspectiva": "frontal",
+      "composicion": "El hermano pequeño está sentado en el suelo, con las manos en la cara y el cuerpo inclinad"
+     },
+     {
+      "funcion": "decision",
+      "sujeto": "KAP",
+      "que": "KAP se detiene, mira a su hermano y se da cuenta de que su justificación no ha ayudado.",
+      "objeto": "hermano pequeño",
+      "plano": "medio",
+      "perspectiva": "lateral",
+      "composicion": "KAP está de pie, mirando hacia el hermano pequeño que sigue llorando, con una expresión de"
+     },
+     {
+      "funcion": "nueva-accion",
+      "sujeto": "KAP",
+      "que": "KAP se sienta junto a su hermano y le ofrece una taza de café que ya había preparado antes.",
+      "objeto": "hermano pequeño",
+      "plano": "medio",
+      "perspectiva": "frontal",
+      "composicion": "KAP está sentado al lado de su hermano, con una taza de café en la mano, mirándolo con ser"
+     },
+     {
+      "funcion": "resultado",
+      "sujeto": "el hermano pequeño",
+      "que": "Su hermano se calma y le sonríe, aunque sigue triste por la cafetera.",
+      "objeto": "hermano pequeño",
+      "plano": "general",
+      "perspectiva": "frontal",
+      "composicion": "El hermano pequeño está sentado junto a KAP, con una expresión más tranquila y una sonrisa"
+     },
+     {
+      "funcion": "metafora",
+      "sujeto": "la cafetera",
+      "que": "La cafetera rota yace en el suelo, como un recordatorio de lo que no se puede recuperar.",
+      "objeto": "cafetera",
+      "plano": "detalle",
+      "perspectiva": "contrapicado",
+      "composicion": "La cafetera está en primer plano, con los trozos esparcidos alrededor y una gota de café c"
+     },
+     {
+      "funcion": "accion",
+      "sujeto": "KAP",
+      "que": "KAP se levanta y empieza a recoger los trozos de la cafetera.",
+      "objeto": "cafetera",
+      "plano": "medio",
+      "perspectiva": "lateral",
+      "composicion": "KAP está de pie, con un trozo de la cafetera en la mano, mirando hacia el suelo."
+     },
+     {
+      "funcion": "consecuencia",
+      "sujeto": "el hermano pequeño",
+      "que": "El hermano pequeño observa a KAP recoger los trozos y se acerca para ayudar.",
+      "objeto": "hermano pequeño",
+      "plano": "general",
+      "perspectiva": "frontal",
+      "composicion": "El hermano pequeño se acerca a KAP, con una expresión de ayuda en su rostro."
+     },
+     {
+      "funcion": "decision",
+      "sujeto": "KAP",
+      "que": "KAP se da cuenta de que no necesita justificarse para que su hermano lo entienda.",
+      "objeto": "hermano pequeño",
+      "plano": "medio",
+      "perspectiva": "lateral",
+      "composicion": "KAP mira a su hermano con una expresión más tranquila, mientras sigue recogiendo los trozo"
+     },
+     {
+      "funcion": "nueva-accion",
+      "sujeto": "KAP",
+      "que": "KAP le ofrece al hermano pequeño una taza de café que había preparado antes.",
+      "objeto": "hermano pequeño",
+      "plano": "medio",
+      "perspectiva": "frontal",
+      "composicion": "KAP le entrega la taza a su hermano, que la acepta con una sonrisa."
+     },
+     {
+      "funcion": "resultado",
+      "sujeto": "el hermano pequeño",
+      "que": "El hermano pequeño toma la taza de café y se siente reconfortado.",
+      "objeto": "hermano pequeño",
+      "plano": "general",
+      "perspectiva": "frontal",
+      "composicion": "El hermano pequeño está sentado en una silla, con la taza de café en manos, mirando a KAP."
+     },
+     {
+      "funcion": "metafora",
+      "sujeto": "la taza de café",
+      "que": "La taza de café simboliza el esfuerzo de KAP por compensar y reconfortar a su hermano.",
+      "objeto": "taza de café",
+      "plano": "detalle",
+      "perspectiva": "contrapicado",
+      "composicion": "La taza de café está en primer plano, con vapor saliendo de ella y un reflejo de la cara d"
+     },
+     {
+      "funcion": "accion",
+      "sujeto": "KAP",
+      "que": "KAP se sienta junto a su hermano y le pregunta cómo se siente.",
+      "objeto": "hermano pequeño",
+      "plano": "medio",
+      "perspectiva": "lateral",
+      "composicion": "KAP está sentado al lado de su hermano, con una expresión seria, mirándolo directamente."
+     },
+     {
+      "funcion": "consecuencia",
+      "sujeto": "el hermano pequeño",
+      "que": "El hermano pequeño le responde con una sonrisa y le dice que está mejor.",
+      "objeto": "hermano pequeño",
+      "plano": "general",
+      "perspectiva": "frontal",
+      "composicion": "El hermano pequeño mira a KAP con una sonrisa, mostrando que se siente reconfortado."
+     }
+    ]
+   },
+   "blocks": [
+    {
+     "id": "vinetas",
+     "msg": "hay viñetas que repiten el mismo acontecimiento o no describen un acontecimiento"
+    }
+   ],
+   "rejected": true
+  },
+  {
+   "id": "idea-04",
+   "idea": {
+    "category": "evitacion",
+    "titulo": "El retraso del cuarto",
+    "situacion": "KAP necesita entregar un trabajo importante para clase, pero en lugar de empezarlo, se dedica a organizar su cuarto con obsesión.",
+    "motivo": "KAP teme que si empieza el trabajo, no podrá hacerlo bien y será juzgado por su profesor o sus compañeros.",
+    "accionKap": "KAP empieza a ordenar los libros en el estante según el tamaño, y luego separa la ropa por colores.",
+    "objeto": "el cuarto",
+    "consecuencia": "El reloj marca que ya es tarde, pero KAP no se da cuenta; el trabajo sigue sin tocarlo.",
+    "decision": "KAP se detiene al escuchar a su hermano pequeño llamarlo desde el otro cuarto, preguntando si ya terminó el trabajo.",
+    "nuevaAccion": "KAP cierra la puerta del cuarto, se sienta en el suelo y mira directamente el trabajo que está en la mesa.",
+    "resultado": "El trabajo se completa en una hora; KAP lo entrega a tiempo y no hay críticas.",
+    "mentalidad": "KAP descubre que evitar lo importante por tareas pequeñas solo retrasa el momento de enfrentar lo real.",
+    "vinetas": [
+     {
+      "funcion": "accion",
+      "sujeto": "KAP",
+      "que": "KAP empieza a ordenar los libros en el estante según el tamaño",
+      "objeto": "el cuarto",
+      "plano": "medio",
+      "perspectiva": "lateral",
+      "composicion": "KAP de perfil, mirando los libros y moviendo sus manos"
+     },
+     {
+      "funcion": "consecuencia",
+      "sujeto": "el reloj",
+      "que": "El reloj marca que ya es tarde, pero KAP no se da cuenta",
+      "objeto": "el cuarto",
+      "plano": "general",
+      "perspectiva": "cenital",
+      "composicion": "Vista desde arriba del cuarto, con el reloj en la pared y KAP en un rincón"
+     },
+     {
+      "funcion": "decision",
+      "sujeto": "el hermano",
+      "que": "KAP se detiene al escuchar a su hermano pequeño llamarlo desde el otro cuarto",
+      "objeto": "la puerta",
+      "plano": "primer-plano",
+      "perspectiva": "pov",
+      "composicion": "Vista desde el suelo del cuarto, con la puerta abierta y el hermano en el umbral"
+     },
+     {
+      "funcion": "nueva-accion",
+      "sujeto": "KAP",
+      "que": "KAP cierra la puerta del cuarto y se sienta en el suelo",
+      "objeto": "el cuarto",
+      "plano": "medio",
+      "perspectiva": "contrapicado",
+      "composicion": "KAP sentado, mirando el trabajo en la mesa con la puerta cerrada detrás"
+     },
+     {
+      "funcion": "resultado",
+      "sujeto": "KAP",
+      "que": "KAP completa el trabajo en una hora y lo entrega a tiempo",
+      "objeto": "la mesa",
+      "plano": "general",
+      "perspectiva": "frontal",
+      "composicion": "KAP con el trabajo en la mano, mirando al profesor"
+     },
+     {
+      "funcion": "metafora",
+      "sujeto": "el cuarto",
+      "que": "El cuarto se queda vacío y ordenado, como si nunca hubiera estado desordenado",
+      "objeto": "el cuarto",
+      "plano": "general",
+      "perspectiva": "cenital",
+      "composicion": "El cuarto perfectamente ordenado, con el reloj marcando la hora en que KAP terminó el trbq"
+     },
+     {
+      "funcion": "accion",
+      "sujeto": "KAP",
+      "que": "KAP camina hacia la mesa y se sienta para empezar el trabajo",
+      "objeto": "la mesa",
+      "plano": "medio",
+      "perspectiva": "lateral",
+      "composicion": "KAP de perfil, con el trabajo frente a él"
+     },
+     {
+      "funcion": "consecuencia",
+      "sujeto": "el trabajo",
+      "que": "El trabajo está en la mesa, pero KAP no lo toca aún",
+      "objeto": "la mesa",
+      "plano": "primer-plano",
+      "perspectiva": "frontal",
+      "composicion": "El trabajo sobre la mesa, con KAP mirándolo de frente"
+     },
+     {
+      "funcion": "decision",
+      "sujeto": "KAP",
+      "que": "KAP inspira profundamente y cierra los ojos por un momento",
+      "objeto": "la mesa",
+      "plano": "detalle",
+      "perspectiva": "frontal",
+      "composicion": "KAP con los ojos cerrados, respirando con la mano sobre el trabajo"
+     },
+     {
+      "funcion": "nueva-accion",
+      "sujeto": "KAP",
+      "que": "KAP abre los ojos y comienza a escribir en el trabajo",
+      "objeto": "el trabajo",
+      "plano": "medio",
+      "perspectiva": "lateral",
+      "composicion": "KAP de perfil, escribiendo con una mano"
+     },
+     {
+      "funcion": "resultado",
+      "sujeto": "KAP",
+      "que": "El trabajo está terminado y KAP lo entrega al profesor",
+      "objeto": "el profesor",
+      "plano": "general",
+      "perspectiva": "frontal",
+      "composicion": "KAP entregando el trabajo, con el profesor recibiendo"
+     },
+     {
+      "funcion": "metafora",
+      "sujeto": "el reloj",
+      "que": "El reloj sigue marcando el tiempo, pero ahora KAP no lo evita",
+      "objeto": "el reloj",
+      "plano": "detalle",
+      "perspectiva": "frontal",
+      "composicion": "El reloj con la hora marcada, y KAP mirándolo desde lejos"
+     }
+    ]
+   },
+   "blocks": [],
+   "critic": {
+    "enlaces": [
+     {
+      "enlace": "situacion-motivo",
+      "coherente": true,
+      "motivo": "La situación es coherente con el motivo: KAP necesita entregar un trabajo importante y su motivo es el miedo al juicio, lo cual es una reseñ"
+     },
+     {
+      "enlace": "motivo-accion",
+      "coherente": true,
+      "motivo": "El motivo (miedo al juicio) lleva a KAP a evitar el trabajo y en su lugar ordenar su cuarto, lo cual es coherente con una reacción de evit"
+     },
+     {
+      "enlace": "accion-consecuencia",
+      "coherente": true,
+      "motivo": "La acción de ordenar el cuarto lleva a que el tiempo se pierda y el trabajo no se toque, lo cual es lógico"
+     },
+     {
+      "enlace": "consecuencia-decision",
+      "coherente": true,
+      "motivo": "La consecuencia (que ya es tarde) lleva a la decisión de KAP al escuchar a su hermano, lo cual es coherente"
+     },
+     {
+      "enlace": "decision-nueva-accion",
+      "coherente": true,
+      "motivo": "La decisión de su hermano lleva a KAP a tomar una nueva acción (sentarse y mirar el trabajo), lo cual es lógico"
+     },
+     {
+      "enlace": "nueva-accion-resultado",
+      "coherente": true,
+      "motivo": "La nueva acción (mirar el trabajo) lleva al resultado de completarlo a tiempo, lo cual es coherente"
+     },
+     {
+      "enlace": "resultado-mentalidad",
+      "coherente": true,
+      "motivo": "El resultado (entregar el trabajo a tiempo) lleva a la mentalidad de KAP sobre evitar lo importante, lo cual es coherente"
+     }
+    ],
+    "accionCausadaPorMotivo": true,
+    "identificacion": 4,
+    "fuerzaSituacion": 4,
+    "potencialShort": 4
+   },
+   "rejected": false,
+   "subs": {
+    "variedadAcontecimientos": 5.6,
+    "visualidad": 10,
+    "transformacion": 4,
+    "originalidad": 8.9,
+    "identificacion": 7.5,
+    "fuerzaSituacion": 7.5,
+    "potencialShort": 7.5
+   },
+   "score": 7.1
+  },
+  {
+   "id": "idea-05",
+   "idea": {
+    "category": "hablar-sin-hacer",
+    "titulo": "El primer kilómetro",
+    "situacion": "KAP se sienta en un banco de parque con su hermano pequeño, mirando el camino que lleva al centro de la ciudad. Su mochila está a su lado, llena de libros y folletos de cursos online.",
+    "motivo": "KAP ha estado hablando durante meses de que va a cambiar su vida, estudiar más, aprender nuevas habilidades, pero no ha hecho nada concreto. Ahora, al",
+    "accionKap": "ver el camino y el peso de la mochila, KAP se levanta y empieza a caminar hacia el centro sin decir nada.",
+    "objeto": "mochila",
+    "consecuencia": "El hermano pequeño mira a KAP con sorpresa, luego corre tras él, riendo y gritando: «¡Vamos, KAP! ¡No te dejes atrás!»",
+    "decision": "KAP se da cuenta de que el primer paso no es el más difícil si lo haces aunque sea solo para no decepcionar a alguien que te importa.",
+    "nuevaAccion": "KAP acelera el paso y le sonríe al hermano sin hablar, manteniendo el ritmo.",
+    "resultado": "El camino se vuelve menos intimidante con cada paso. KAP mira la mochila y piensa que, por una vez, no va a dejar las cosas para mañana.",
+    "mentalidad": "KAP descubre que el primer kilómetro no es el más pesado, sino el que decides dar aunque sea solo para no quedarte atrás.",
+    "vinetas": [
+     {
+      "funcion": "accion",
+      "sujeto": "KAP",
+      "que": "se levanta del banco y empieza a caminar hacia el centro",
+      "objeto": "mochila",
+      "plano": "general",
+      "perspectiva": "lateral",
+      "composicion": "KAP a la izquierda, camino a la derecha"
+     },
+     {
+      "funcion": "consecuencia",
+      "sujeto": "el hermano pequeño",
+      "que": "corre tras KAP riendo y gritando «¡Vamos, KAP!»",
+      "objeto": "",
+      "plano": "medio",
+      "perspectiva": "lateral",
+      "composicion": "KAP y el hermano en movimiento, KAP delante"
+     },
+     {
+      "funcion": "decision",
+      "sujeto": "KAP",
+      "que": "mira hacia atrás y sonríe al ver a su hermano corriendo tras él",
+      "objeto": "hermano",
+      "plano": "primer-plano",
+      "perspectiva": "contrapicado",
+      "composicion": "rostro de KAP con una sonrisa pequeña"
+     },
+     {
+      "funcion": "nueva-accion",
+      "sujeto": "KAP",
+      "que": "acelera el paso y mantiene un ritmo constante",
+      "objeto": "mochila",
+      "plano": "general",
+      "perspectiva": "frontal",
+      "composicion": "KAP caminando con paso decidido"
+     },
+     {
+      "funcion": "resultado",
+      "sujeto": "KAP",
+      "que": "se detiene en un cruce de calles y mira la mochila a sus pies",
+      "objeto": "mochila",
+      "plano": "detalle",
+      "perspectiva": "pov",
+      "composicion": "manos de KAP sobre la mochila, mirada firme"
+     },
+     {
+      "funcion": "resultado",
+      "sujeto": "el hermano",
+      "que": "se para junto a KAP y le pregunta: «¿Y ahora qué?»",
+      "objeto": "",
+      "plano": "medio",
+      "perspectiva": "frontal",
+      "composicion": "ambos mirándose, KAP con una mirada de determinación"
+     },
+     {
+      "funcion": "resultado",
+      "sujeto": "KAP",
+      "que": "se encoge de hombros y dice: «No lo sé. Pero ya estoy aquí»",
+      "objeto": "",
+      "plano": "primer-plano",
+      "perspectiva": "frontal",
+      "composicion": "rostro de KAP con una mirada serena"
+     },
+     {
+      "funcion": "resultado",
+      "sujeto": "el hermano",
+      "que": "sonríe y le da la mano, caminando juntos hacia el centro",
+      "objeto": "",
+      "plano": "general",
+      "perspectiva": "lateral",
+      "composicion": "ambos caminando, KAP con la mochila"
+     }
+    ]
+   },
+   "blocks": [
+    {
+     "id": "accion",
+     "msg": "la acción principal no es una acción visible de KAP (o es pasiva)"
+    }
+   ],
+   "rejected": true
+  }
+ ],
+ "selected": [
+  "idea-02",
+  "idea-04",
+  "idea-01"
+ ],
+ "stats": {
+  "calls": 5,
+  "criticCalls": 3,
+  "resumed": 0,
+  "ms": 4073111
+ }
+}
