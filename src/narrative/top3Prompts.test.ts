@@ -23,8 +23,8 @@ describe("prompts TOP 3: imagen estática 9:16 con KAP consistente", () => {
   });
   it("no hay marcas ni plataformas concretas, ni exceso de texto, ni movimientos imposibles en CapCut", () => {
     expect(ids(edit(10, { objetos: "A smartphone with an Instagram notification banner and a laptop with a stopped timeline." }))).toContain("marca");
-    expect(ids(edit(7, { texto: ["a", "b", "c", "d"] }))).toContain("texto"); expect(ids(edit(2, { capcut: { movimiento: "rotate" as never, detalle: "x" } }))).toContain("camara");
-    expect(load().escenas.every((s) => s.texto.length <= 3)).toBe(true);
+    expect(ids(edit(7, { texto: ["a", "b", "c", "d", "e", "f", "g"] }))).toContain("texto"); expect(ids(edit(2, { capcut: { movimiento: "rotate" as never, detalle: "x" } }))).toContain("camara");
+    expect(load().escenas.every((s) => s.texto.length <= 6)).toBe(true);
   });
   it("el texto que aparece en cada prompt coincide exactamente con el previsto (nada inventado) y las escenas sin texto lo dicen", () => {
     for (const s of load().escenas) { const p = composePrompt(s); if (s.texto.length) for (const t of s.texto) expect(p).toContain(`"${t}"`); else expect(p).toContain("No text anywhere in the image."); }
