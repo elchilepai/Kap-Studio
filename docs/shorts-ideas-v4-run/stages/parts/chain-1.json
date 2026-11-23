@@ -1,0 +1,28 @@
+{
+ "chain": {
+  "category": "aprobacion",
+  "titulo": "El regalo no deseado",
+  "objeto": "llave",
+  "situacion": "KAP recibe una llave de una caja que le ofrece su amigo como regalo de cumpleaños.",
+  "conflicto": "La caja está vacía y KAP no sabe cómo rechazarla sin ofender a su amigo.",
+  "motivo": "KAP quiere evitar una discusión y mantener la amistad.",
+  "accion": "KAP acepta la llave y esconde la caja en el armario.",
+  "consecuencia": "Al mes, el amigo pregunta por la caja y KAP se siente obligado a mentir sobre su paradero.",
+  "decision": "KAP decide que no puede seguir ocultando la verdad y confiesa que no quería la caja.",
+  "nuevaAccion": "KAP le devuelve la llave y le explica que prefirió no aceptar el regalo.",
+  "resultado": "El amigo entiende y se disculpa por presionarle a aceptar algo que no quería.",
+  "mentalidad": "KAP descubre que decir la verdad a veces es más fácil que mentir para no ofender."
+ },
+ "issues": [
+  {
+   "id": "mentalidad",
+   "msg": "la mentalidad debe decir qué entiende KAP a partir de lo que acaba de ocurrir (menciona a KAP y se apoya en su acción, su motivo o el objeto)",
+   "field": "mentalidad"
+  },
+  {
+   "id": "visual",
+   "msg": "solo 2 de los 4 pasos clave (acción, consecuencia, nueva acción, resultado) se pueden dibujar como algo que ocurre: hacen falta al menos 3"
+  }
+ ],
+ "attempts": 2
+}
