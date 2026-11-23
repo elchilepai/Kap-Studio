@@ -1,0 +1,169 @@
+{
+ "idea": {
+  "category": "comparacion",
+  "titulo": "El espejo del vecino",
+  "situacion": "KAP está sentado en su habitación, trabajando en una maqueta de un barco de madera. Afuera, su vecino está construyendo un gran jardín en su terraza con herramientas profesionales y ayuda de un grupo.",
+  "motivo": "KAP siente que su trabajo es insignificante frente a la ambición y los recursos del vecino, lo que le genera duda sobre el valor de su proyecto.",
+  "accionKap": "KAP coloca la maqueta en una caja y la esconde debajo de su cama.",
+  "objeto": "maqueta de barco",
+  "consecuencia": "La maqueta se ve cubierta por ropa y juguetes, como si ya no tuviera importancia.",
+  "decision": "KAP escucha el sonido del vecino trabajando afuera y se pregunta si su proyecto es lo suficientemente importante para seguir con él.",
+  "nuevaAccion": "KAP saca la maqueta de la caja y la coloca nuevamente en la mesa, esta vez con una lámpara encendida sobre ella.",
+  "resultado": "La maqueta brilla suavemente bajo la luz, como si ahora tuviera vida propia.",
+  "mentalidad": "KAP descubre que no necesita compararse con otros para saber si su trabajo vale la pena; lo que importa es el tiempo y el cuidado que pone en él.",
+  "vinetas": [
+   {
+    "funcion": "accion",
+    "sujeto": "KAP",
+    "que": "KAP coloca la maqueta de barco en una caja y la cubre con ropa",
+    "objeto": "maqueta de barco",
+    "plano": "medio",
+    "perspectiva": "lateral",
+    "composicion": "KAP está de espaldas, mirando hacia la cama mientras coloca la maqueta"
+   },
+   {
+    "funcion": "consecuencia",
+    "sujeto": "la caja",
+    "que": "La caja con la maqueta se ve cubierta por ropa y juguetes",
+    "objeto": "cama",
+    "plano": "general",
+    "perspectiva": "frontal",
+    "composicion": "La cama está desordenada, con ropa y juguetes sobre ella"
+   },
+   {
+    "funcion": "decision",
+    "sujeto": "KAP",
+    "que": "KAP se queda mirando el sonido de herramientas afuera por la ventana",
+    "objeto": "ventana",
+    "plano": "primer-plano",
+    "perspectiva": "pov",
+    "composicion": "La vista desde la ventana muestra al vecino trabajando con herramientas"
+   },
+   {
+    "funcion": "nueva-accion",
+    "sujeto": "KAP",
+    "que": "KAP saca la maqueta de la caja y la coloca en la mesa",
+    "objeto": "mesa",
+    "plano": "medio",
+    "perspectiva": "lateral",
+    "composicion": "KAP está de espaldas, colocando la maqueta en la mesa"
+   },
+   {
+    "funcion": "resultado",
+    "sujeto": "la maqueta",
+    "que": "La maqueta brilla suavemente bajo la luz de una lámpara encendida",
+    "objeto": "lámpara",
+    "plano": "detalle",
+    "perspectiva": "contrapicado",
+    "composicion": "La luz se refleja en la madera de la maqueta"
+   },
+   {
+    "funcion": "metafora",
+    "sujeto": "la habitación",
+    "que": "La habitación se ilumina con una energía más suave y presente",
+    "objeto": "habitación",
+    "plano": "general",
+    "perspectiva": "cenital",
+    "composicion": "La habitación ahora parece más tranquila, como si hubiera encontrado su equilibrio"
+   },
+   {
+    "funcion": "accion",
+    "sujeto": "KAP",
+    "que": "KAP toma un clavo y lo coloca en la maqueta con cuidado",
+    "objeto": "clavo",
+    "plano": "primer-plano",
+    "perspectiva": "lateral",
+    "composicion": "KAP sostiene el clavo con una mano, mirando cómo se ajusta a la madera"
+   },
+   {
+    "funcion": "consecuencia",
+    "sujeto": "la maqueta",
+    "que": "La maqueta empieza a tomar forma de nuevo, como si resurgiera",
+    "objeto": "maqueta",
+    "plano": "medio",
+    "perspectiva": "frontal",
+    "composicion": "La estructura del barco se ve más definida"
+   },
+   {
+    "funcion": "decision",
+    "sujeto": "KAP",
+    "que": "KAP sonríe por un momento, mirando el progreso de la maqueta",
+    "objeto": "maqueta",
+    "plano": "primer-plano",
+    "perspectiva": "lateral",
+    "composicion": "KAP tiene una expresión de satisfacción en su rostro"
+   },
+   {
+    "funcion": "nueva-accion",
+    "sujeto": "KAP",
+    "que": "KAP vuelve a trabajar en la maqueta con más concentración que antes",
+    "objeto": "maqueta",
+    "plano": "medio",
+    "perspectiva": "lateral",
+    "composicion": "KAP está de espaldas, trabajando con herramientas en la mesa"
+   },
+   {
+    "funcion": "resultado",
+    "sujeto": "la habitación",
+    "que": "La habitación se llena de un silencio productivo y sostenible",
+    "objeto": "habitación",
+    "plano": "general",
+    "perspectiva": "cenital",
+    "composicion": "La habitación está tranquila, con la luz de la lámpara iluminando el trabajo en la mesa"
+   },
+   {
+    "funcion": "metafora",
+    "sujeto": "la maqueta",
+    "que": "La maqueta representa ahora algo personal y único, no una copia de nada",
+    "objeto": "maqueta",
+    "plano": "detalle",
+    "perspectiva": "frontal",
+    "composicion": "La maqueta se ve completa, con un toque personal en el diseño"
+   }
+  ]
+ },
+ "critic": {
+  "enlaces": [
+   {
+    "enlace": "situacion-motivo",
+    "coherente": true,
+    "motivo": "La situación describe a KAP trabajando en una maqueta mientras su vecino construye un jardín con recursos profesionales, lo que lógicamente引"
+   },
+   {
+    "enlace": "motivo-accion",
+    "coherente": true,
+    "motivo": "El motivo de sentirse insignificante frente al vecino lleva a KAP a esconder su trabajo, lo cual es una reacción emocional coherente."
+   },
+   {
+    "enlace": "accion-consecuencia",
+    "coherente": true,
+    "motivo": "Esconder la maqueta bajo la cama y cubrirla con ropa y juguetes es una consecuencia natural de su acción."
+   },
+   {
+    "enlace": "consecuencia-decision",
+    "coherente": true,
+    "motivo": "La consecuencia de que la maqueta se vea sin importancia lleva a KAP a cuestionar si su proyecto vale la pena, lo cual es una decisión coher"
+   },
+   {
+    "enlace": "decision-nueva-accion",
+    "coherente": true,
+    "motivo": "La duda sobre el valor de su proyecto lleva a KAP a tomar una nueva acción: sacar la maqueta y colocarla bajo una lámpara, lo cual es coher"
+   },
+   {
+    "enlace": "nueva-accion-resultado",
+    "coherente": true,
+    "motivo": "Colocar la maqueta bajo una lámpara encendida resulta en que brille suavemente, lo cual es un resultado lógico y visualmente coherente."
+   },
+   {
+    "enlace": "resultado-mentalidad",
+    "coherente": true,
+    "motivo": "El resultado de que la maqueta brille lleva a KAP a una mentalidad de autovaloración, lo cual es coherente con el desarrollo emocional de la"
+   }
+  ],
+  "accionCausadaPorMotivo": true,
+  "identificacion": 4,
+  "fuerzaSituacion": 4,
+  "potencialShort": 5
+ },
+ "blocks": []
+}
