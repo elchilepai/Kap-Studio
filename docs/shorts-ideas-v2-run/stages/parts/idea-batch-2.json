@@ -1,0 +1,143 @@
+{
+ "ideas": [
+  {
+   "category": "disciplina",
+   "titulo": "La tarea sin empezar",
+   "situacion": "KAP está en su habitación con un ordenador encendido, una tarea abierta en la pantalla y la habitación llena de ropa, libros y juguetes esparcidos por el suelo.",
+   "problema": "KAP no quiere empezar la tarea importante que le han asignado y se distrae con actividades menores para evitarlo.",
+   "accionKap": "KAP ordena un montón de ropa del suelo y lo coloca en una silla.",
+   "objeto": "ordenador",
+   "consecuencia": "La pantalla del ordenador sigue abierta con la tarea sin tocar, mientras KAP se distrae con la ropa.",
+   "momentoDecision": "Cuando ya ha ordenado la ropa y se sienta frente al ordenador, pero no empieza la tarea.",
+   "hacerDiferente": "KAP cierra el ordenador y se levanta para ir a hacer algo en la cocina.",
+   "mentalidad": "A veces, dejar de posponer es empezar a actuar, aunque sea con una acción pequeña.",
+   "imagenes": [
+    {
+     "plano": "general",
+     "que": "KAP está en su habitación con ropa y juguetes esparcidos por el suelo, un ordenador encendido en la mesa."
+    },
+    {
+     "plano": "medio",
+     "que": "KAP se agacha para recoger una camiseta del suelo y la coloca en una silla."
+    },
+    {
+     "plano": "detalle",
+     "que": "La pantalla del ordenador muestra una tarea abierta con el título 'Proyecto final'."
+    },
+    {
+     "plano": "primer-plano",
+     "que": "KAP sostiene una camiseta en sus manos, mirando hacia la silla donde las va colocando."
+    },
+    {
+     "plano": "entorno",
+     "que": "La habitación está llena de ropa, libros y juguetes desordenados, con el ordenador en el centro."
+    },
+    {
+     "plano": "contrapicado",
+     "que": "KAP se levanta tras colocar varias prendas en la silla, mirando hacia el ordenador."
+    },
+    {
+     "plano": "pov",
+     "que": "La vista desde la pantalla del ordenador muestra que KAP no ha empezado la tarea aún."
+    },
+    {
+     "plano": "reaccion",
+     "que": "KAP respira profundamente, mira a su alrededor y se levanta para salir de la habitación."
+    },
+    {
+     "plano": "decision",
+     "que": "KAP cierra el ordenador con una mano y camina hacia la puerta con paso firme."
+    },
+    {
+     "plano": "silueta",
+     "que": "La silueta de KAP se ve en la puerta, mirando hacia la cocina antes de salir."
+    },
+    {
+     "plano": "metafora",
+     "que": "Una sombra de un reloj se proyecta sobre el suelo, señalando que el tiempo no espera."
+    },
+    {
+     "plano": "detalle",
+     "que": "El ordenador está cerrado, y en la pantalla se ve el mensaje 'Tarea sin empezar'."
+    }
+   ]
+  },
+  {
+   "category": "responsabilidad",
+   "titulo": "El paquete que no se entregó",
+   "situacion": "KAP recibe un paquete en la puerta de su casa, pero al abrirlo, descubre que contiene una caja vacía y un mensaje: 'Entrega fallida. Reenvío en 72 horas'. Su hermano pequeño, curioso, empiea",
+   "problema": "KAP se niega a hacerse responsable del paquete, lo ignora y lo deja en el suelo, esperando que desaparezca por sí solo.",
+   "accionKap": "KAP tira el paquete al suelo y lo cubre con una manta",
+   "objeto": "paquete vacío",
+   "consecuencia": "El paquete vuelve a aparecer en la puerta, ahora con una nota: 'Entrega fallida. Último intento'.",
+   "momentoDecision": "Cuando KAP ve la nota del último intento y el paquete en la puerta de nuevo, se da cuenta de que no puede ignorarlo más.",
+   "hacerDiferente": "KAP abre el paquete con cuidado, lo revisa y luego llama a la empresa para informarle que no puede recibirlo",
+   "mentalidad": "Algunas responsabilidades no se van si las ignores; hay que enfrentarlas directamente, aunque no sean tu culpa.",
+   "imagenes": [
+    {
+     "plano": "general",
+     "que": "KAP de pie frente a la puerta de su casa con un paquete en manos."
+    },
+    {
+     "plano": "primer-plano",
+     "que": "KAP mira el paquete con cara de desinterés y lo tira al suelo."
+    },
+    {
+     "plano": "detalle",
+     "que": "El paquete vacío en el suelo, con un mensaje que dice: 'Entrega fallida. Reenvío en 72 horas'."
+    },
+    {
+     "plano": "pov",
+     "que": "Vista desde abajo del paquete cubierto con una manta en el suelo."
+    },
+    {
+     "plano": "entorno",
+     "que": "El paquete vacío en el suelo de la entrada, rodeado de zapatos y ropa."
+    },
+    {
+     "plano": "general",
+     "que": "El paquete vuelve a aparecer en la puerta con una nota: 'Entrega fallida. Último intento'."
+    },
+    {
+     "plano": "contrapicado",
+     "que": "KAP mira el paquete desde abajo, con expresión de frustración."
+    },
+    {
+     "plano": "detalle",
+     "que": "La nota 'Último intento' pegada en el paquete vacío."
+    },
+    {
+     "plano": "medio",
+     "que": "KAP abre el paquete con cuidado, revisa su contenido y luego lo cierra."
+    },
+    {
+     "plano": "pov",
+     "que": "Vista desde la pantalla de un teléfono mientras KAP llama a la empresa."
+    },
+    {
+     "plano": "silueta",
+     "que": "KAP de espaldas, mirando el paquete en el suelo, ahora vacío y abandonado."
+    },
+    {
+     "plano": "metafora",
+     "que": "Un peso invisible sobre los hombros de KAP, representando la responsabilidad que finalmente asumió."
+    }
+   ]
+  }
+ ],
+ "calls": 2,
+ "dropped": 0,
+ "regenerated": [
+  {
+   "category": "responsabilidad",
+   "why": [
+    "el objeto «factura» no es protagonista visual: aparece en 2 imágenes (mínimo 3)",
+    "la consecuencia no se puede ver (es un sentimiento o no muestra un cambio)",
+    "las imágenes no son suficientemente distintas (≥5 planos distintos, ≥1 sin KAP, sin repetirse)",
+    "la mentalidad que descubre es vaga o un aforismo"
+   ],
+   "improved": true
+  }
+ ],
+ "ms": 999225
+}
