@@ -7,14 +7,14 @@
 - **[0.0 s · 1 · HOOK]** Tres cosas que haces para caer bien y que, sin darte cuenta, te hacen perderte.
 - **[6.5 s · 2 · TOP 1]** Uno: perseguir una respuesta.
 - **[9.0 s · 3 · TOP 1]** Mando un mensaje. Nada. Lo vuelvo a mirar. Nada.
-- **[13.0 s · 4 · TOP 1]** Mi día entero, colgado de una notificación. Le di el mando.
+- **[13.0 s · 4 · TOP 1]** Tu día no depende de una respuesta. Envía y sigue.
 - **[17.5 s · 5 · TOP 2]** Dos: decir que sí cuando quieres decir no.
 - **[21.0 s · 6 · TOP 2]** ¿Me ayudas el sábado? Claro. ¿Vienes a cenar? Claro. ¿Cincuenta? Claro.
-- **[25.5 s · 7 · TOP 2]** Tres «claro» después, no me quedaba tiempo para mí.
+- **[25.5 s · 7 · TOP 2]** Cada «claro» falso te roba tiempo. Di no, y punto.
 - **[29.5 s · 8 · TOP 3]** Tres: abandonar tu vida para que te elijan.
 - **[33.0 s · 9 · TOP 3]** Tenía mi música a medias. Y yo, pendiente del móvil.
-- **[37.5 s · 10 · TOP 3]** Tres semanas sin tocar el proyecto. Pero sabía quién había conectado.
-- **[42.0 s · 11 · CONCLUSIÓN]** Cuando tienes algo tuyo que construir, dejas de vivir pendiente de que te elijan. Yo me voy a lo mío.
+- **[37.5 s · 10 · TOP 3]** Tres semanas sin tocar mi proyecto. Pero sabía quién había reaccionado.
+- **[42.0 s · 11 · CONCLUSIÓN]** Si vas en serio, construye lo tuyo y deja de esperar a que te elijan. Yo me voy a lo mío.
 
 *Música:* Electrónica ambiental seca y discreta; ligera tensión en cada ejemplo y alivio en la conclusión
 
@@ -48,7 +48,7 @@
 - **Cámara posible (CapCut):** zoom-in — Zoom lento hacia la palabra «Entregado»
 
 ### 4. TOP 1 — Ejemplo 1 · la consecuencia (vida en pausa) · 13.0-17.5 s
-- **Narración:** «Mi día entero, colgado de una notificación. Le di el mando.» (4.6 s de voz en 4.5 s)
+- **Narración:** «Tu día no depende de una respuesta. Envía y sigue.» (4.2 s de voz en 4.5 s)
 - **Qué vemos:** KAP, hundido en el sofá, tiene la cara iluminada por la pantalla del móvil; delante, sobre la mesa baja, una pizza intacta y un portátil cerrado; en la pared un reloj digital marca 20:40 y la ventana ya está oscura.
 - **Composición:** Plano medio-general a la altura del sofá; KAP en el tercio derecho con el móvil entre las manos; mesa baja con pizza y portátil cerrado en primer término; reloj de pared grande arriba a la izquierda; habitación casi a oscuras con la luz azul de la pantalla sobre su cara.
 - **KAP:** aparece (viviendo la situación)
@@ -75,7 +75,7 @@
 - **Cámara posible (CapCut):** pan — Paneo vertical lento del primer mensaje al tercero
 
 ### 7. TOP 2 — Ejemplo 2 · el coste · 25.5-29.5 s
-- **Narración:** «Tres «claro» después, no me quedaba tiempo para mí.» (3.9 s de voz en 4 s)
+- **Narración:** «Cada «claro» falso te roba tiempo. Di no, y punto.» (4.2 s de voz en 4 s)
 - **Qué vemos:** KAP, encorvado bajo una mochila enorme de la que cuelgan tres bolsas etiquetadas «sábado», «cena» y «50 €», llega arrastrando los pies a la puerta cerrada de su gimnasio con el cartel «Cerrado».
 - **Composición:** Plano general desde atrás y ligeramente picado; KAP pequeño abajo a la izquierda; mochila gigante que ocupa el tercio derecho y se proyecta sobre él en sombra larga; puerta del gimnasio al fondo.
 - **KAP:** aparece (reacción)
@@ -102,7 +102,7 @@
 - **Cámara posible (CapCut):** parallax — Parallax suave entre el escritorio, la cama y el primer plano de los auriculares
 
 ### 10. TOP 3 — Ejemplo 3 · la prueba · 37.5-42.0 s
-- **Narración:** «Tres semanas sin tocar el proyecto. Pero sabía quién había conectado.» (4.6 s de voz en 4.5 s)
+- **Narración:** «Tres semanas sin tocar mi proyecto. Pero sabía quién había reaccionado.» (4.6 s de voz en 4.5 s)
 - **Qué vemos:** Primer plano de la pantalla del portátil con la pista de música parada y la línea «Última modificación: hace 3 semanas»; en primer plano a la derecha, el móvil boca arriba brilla con una notificación social genérica de «12 nuevas reacciones».
 - **Composición:** La pantalla del portátil a la izquierda y al fondo con la línea de «Última modificación» resaltada; el móvil grande y brillante en primer término a la derecha, con la notificación luminosa; profundidad de campo corta entre ambos.
 - **KAP:** no aparece (detalle)
@@ -111,7 +111,7 @@
 - **Cámara posible (CapCut):** zoom-in — Slide lento de la pantalla del portátil al móvil, con luz que se apaga un poco en el portátil
 
 ### 11. CONCLUSIÓN — Conclusión de KAP a cámara · 42.0-50.0 s
-- **Narración:** «Cuando tienes algo tuyo que construir, dejas de vivir pendiente de que te elijan. Yo me voy a lo mío.» (8.1 s de voz en 8 s)
+- **Narración:** «Si vas en serio, construye lo tuyo y deja de esperar a que te elijan. Yo me voy a lo mío.» (8.5 s de voz en 8 s)
 - **Qué vemos:** KAP deja el móvil boca abajo sobre el escritorio, abre el portátil con la pista de música y mira a cámara con media sonrisa seca, con los auriculares ya al cuello y la luz cálida del portátil en la cara.
 - **Composición:** Plano medio frontal; KAP en el tercio izquierdo; el móvil boca abajo en primer plano desenfocado; el portátil iluminado detrás de él; aire a la derecha para el subtítulo.
 - **KAP:** presentador
